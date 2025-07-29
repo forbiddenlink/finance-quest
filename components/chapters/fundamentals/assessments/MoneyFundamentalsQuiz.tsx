@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useProgressActions } from '@/lib/context/ProgressContext';
 
 interface QuizQuestion {
   id: number;
@@ -74,6 +75,7 @@ const quizQuestions: QuizQuestion[] = [
 ];
 
 export default function MoneyFundamentalsQuiz() {
+  const { recordQuizScore, addStrugglingTopic, removeStrugglingTopic } = useProgressActions();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(quizQuestions.length).fill(-1));
   const [showResults, setShowResults] = useState(false);
@@ -127,6 +129,29 @@ export default function MoneyFundamentalsQuiz() {
     const score = calculateScore();
     const percentage = Math.round((score / quizQuestions.length) * 100);
     const passed = percentage >= 80;
+
+    // Record the quiz score
+    recordQuizScore('money-fundamentals-quiz', percentage);
+
+    // Track struggling topics
+    selectedAnswers.forEach((answer, index) => {
+      const question = quizQuestions[index];
+      if (answer !== question.correctAnswer) {
+        // Add struggling topics based on wrong answers
+        if (index === 0) addStrugglingTopic('gross-vs-net-pay');
+        if (index === 1) addStrugglingTopic('fica-taxes');
+        if (index === 2) addStrugglingTopic('banking-basics');
+        if (index === 3) addStrugglingTopic('paycheck-calculations');
+        if (index === 4) addStrugglingTopic('fdic-insurance');
+      } else {
+        // Remove from struggling topics if they got it right
+        if (index === 0) removeStrugglingTopic('gross-vs-net-pay');
+        if (index === 1) removeStrugglingTopic('fica-taxes');
+        if (index === 2) removeStrugglingTopic('banking-basics');
+        if (index === 3) removeStrugglingTopic('paycheck-calculations');
+        if (index === 4) removeStrugglingTopic('fdic-insurance');
+      }
+    });
 
     return (
       <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">

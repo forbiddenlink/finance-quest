@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ProgressDisplay } from "@/components/shared/ui/ProgressDisplay";
 
 export default function Home() {
   return (
@@ -10,9 +11,7 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold text-gray-900">Finance Quest</h1>
             <div className="flex items-center space-x-4">
-              <div className="bg-green-100 px-3 py-1 rounded-full">
-                <span className="text-sm font-medium text-green-800">Progress: 0%</span>
-              </div>
+              <ProgressDisplay />
             </div>
           </div>
         </div>

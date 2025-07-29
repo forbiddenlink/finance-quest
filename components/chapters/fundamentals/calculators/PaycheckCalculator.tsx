@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useProgressActions } from '@/lib/context/ProgressContext';
 
 interface PaycheckBreakdown {
   grossPay: number;
@@ -12,12 +13,20 @@ interface PaycheckBreakdown {
 }
 
 export default function PaycheckCalculator() {
+  const { useCalculator } = useProgressActions();
   const [grossPay, setGrossPay] = useState<string>('');
   const [breakdown, setBreakdown] = useState<PaycheckBreakdown | null>(null);
+  const [hasUsedCalculator, setHasUsedCalculator] = useState(false);
 
   const calculatePaycheck = () => {
     const gross = parseFloat(grossPay);
     if (isNaN(gross) || gross <= 0) return;
+
+    // Track calculator usage (only once per session)
+    if (!hasUsedCalculator) {
+      useCalculator('paycheck-calculator');
+      setHasUsedCalculator(true);
+    }
 
     // Simplified tax calculations (rough estimates)
     const federalTax = gross * 0.12; // 12% federal tax bracket

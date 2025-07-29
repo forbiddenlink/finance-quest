@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useProgress, useProgressActions } from '@/lib/context/ProgressContext';
 
 interface LessonContent {
   title: string;
@@ -42,10 +43,23 @@ const lessons: LessonContent[] = [
 ];
 
 export default function MoneyFundamentalsLesson() {
+  const { state } = useProgress();
+  const { completeLesson } = useProgressActions();
   const [currentLesson, setCurrentLesson] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<boolean[]>(new Array(lessons.length).fill(false));
 
+  // Load completed lessons from global state
+  useEffect(() => {
+    const newCompleted = lessons.map((lesson, index) => 
+      state.userProgress.completedLessons.includes(`money-fundamentals-${index}`)
+    );
+    setCompletedLessons(newCompleted);
+  }, [state.userProgress.completedLessons]);
+
   const markComplete = () => {
+    const lessonId = `money-fundamentals-${currentLesson}`;
+    completeLesson(lessonId);
+    
     const newCompleted = [...completedLessons];
     newCompleted[currentLesson] = true;
     setCompletedLessons(newCompleted);
