@@ -42,7 +42,7 @@ Always end responses with encouragement or a specific next step they can take in
 
 export async function POST(request: NextRequest) {
   try {
-    const { message, userProgress } = await request.json();
+    const { message, context } = await request.json();
 
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json(
@@ -51,19 +51,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Build context-aware prompt based on user progress
+    // Build context-aware prompt based on request type and user progress
     let contextPrompt = '';
-    if (userProgress) {
-      const progress = userProgress as UserProgress;
+    if (context?.userProgress) {
+      const progress = context.userProgress;
       contextPrompt = `
 USER CONTEXT:
-- Currently on Chapter ${progress.currentChapter}
-- Completed lessons: ${progress.completedLessons.join(', ') || 'None yet'}
-- Recent quiz scores: ${Object.entries(progress.quizScores).map(([quiz, score]) => `${quiz}: ${score}%`).join(', ') || 'No quizzes taken'}
-- Used calculators: ${progress.calculatorUsage.join(', ') || 'None yet'}
-- Struggling with: ${progress.strugglingTopics.join(', ') || 'No identified struggles'}
+- Currently on Chapter ${progress.currentChapter || 1}
+- Completed lessons: ${progress.completedLessons?.join(', ') || 'None yet'}
+- Recent quiz scores: ${Object.entries(progress.quizScores || {}).map(([quiz, score]) => `${quiz}: ${score}%`).join(', ') || 'No quizzes taken'}
+- Used calculators: ${progress.calculatorUsage?.join(', ') || 'None yet'}
+- Struggling with: ${progress.strugglingTopics?.join(', ') || 'No identified struggles'}
 
-Tailor your response to their current progress and learning needs.
+${context.type === 'qa_system' ? 
+  'This is a general Q&A question. Provide comprehensive, educational answers that connect to Finance Quest content when relevant.' :
+  'Tailor your response to their current progress and learning needs.'}
 `;
     }
 
@@ -73,7 +75,7 @@ Tailor your response to their current progress and learning needs.
         { role: "system", content: FINANCIAL_COACH_SYSTEM_PROMPT + contextPrompt },
         { role: "user", content: message }
       ],
-      max_tokens: 300,
+      max_tokens: 400, // Increased for Q&A responses
       temperature: 0.7,
     });
 

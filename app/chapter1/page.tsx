@@ -5,6 +5,7 @@ import MoneyFundamentalsLesson from '@/components/chapters/fundamentals/lessons/
 import PaycheckCalculator from '@/components/chapters/fundamentals/calculators/PaycheckCalculator';
 import MoneyFundamentalsQuiz from '@/components/chapters/fundamentals/assessments/MoneyFundamentalsQuiz';
 import AITeachingAssistant from '@/components/shared/ai-assistant/AITeachingAssistant';
+import QASystem from '@/components/shared/QASystem';
 
 type TabType = 'lesson' | 'calculator' | 'quiz' | 'assistant';
 
@@ -72,6 +73,12 @@ export default function Chapter1Page() {
                 </p>
               </div>
               <MoneyFundamentalsLesson />
+              
+              {/* Q&A System for Lesson Tab */}
+              <QASystem 
+                className="mt-6"
+                isQuizMode={false}
+              />
             </div>
           )}
 
@@ -84,6 +91,12 @@ export default function Chapter1Page() {
                 </p>
               </div>
               <PaycheckCalculator />
+              
+              {/* Q&A System for Calculator Tab */}
+              <QASystem 
+                className="mt-6"
+                isQuizMode={false}
+              />
             </div>
           )}
 
@@ -96,6 +109,12 @@ export default function Chapter1Page() {
                 </p>
               </div>
               <MoneyFundamentalsQuiz />
+              
+              {/* Q&A System DISABLED during quiz */}
+              <QASystem 
+                className="mt-6"
+                isQuizMode={true}
+              />
             </div>
           )}
 
