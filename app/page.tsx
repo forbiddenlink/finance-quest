@@ -46,6 +46,11 @@ export default function Home() {
                 💰 Try Calculator
               </button>
             </Link>
+            <Link href="/progress">
+              <button className="bg-gradient-to-r from-purple-600 to-indigo-700 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-purple-700 hover:to-indigo-800 transition-all shadow-lg">
+                📊 View Progress
+              </button>
+            </Link>
           </div>
         </div>
 
@@ -193,55 +198,81 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Compound Interest Calculator */}
             <div className="group bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-6 border border-green-200 hover:shadow-lg transition-all transform hover:scale-105">
               <div className="flex items-center mb-4">
                 <div className="bg-green-500 text-white p-3 rounded-lg mr-4 group-hover:bg-green-600 transition-colors">
-                  <span className="text-2xl">💰</span>
+                  <span className="text-2xl">�</span>
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-green-900">Compound Interest Calculator</h4>
-                  <p className="text-green-700 text-sm">The 8th Wonder of the World</p>
+                  <h4 className="text-lg font-bold text-green-900">Compound Interest</h4>
+                  <p className="text-green-700 text-xs">The 8th Wonder</p>
                 </div>
               </div>
-              <p className="text-green-800 mb-6 leading-relaxed">
-                Watch your money grow exponentially over time. See how small amounts become life-changing sums through the magic of compound interest.
+              <p className="text-green-800 mb-4 leading-relaxed text-sm">
+                Watch your money grow exponentially over time through the magic of compound interest.
               </p>
               <div className="mb-4 bg-white bg-opacity-60 rounded-lg p-3">
-                <div className="text-xs text-green-700 mb-1">Example: $100/month at 7% for 30 years</div>
-                <div className="text-2xl font-bold text-green-900">$122,709 → $303,219</div>
-                <div className="text-xs text-green-600">$36,000 invested becomes $303k!</div>
+                <div className="text-xs text-green-700 mb-1">$100/month × 30 years</div>
+                <div className="text-xl font-bold text-green-900">$303,219</div>
+                <div className="text-xs text-green-600">From $36k invested!</div>
               </div>
               <Link href="/calculators/compound-interest">
-                <button className="w-full bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-all group-hover:shadow-md">
-                  🚀 Start Building Wealth
+                <button className="w-full bg-green-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-600 transition-all text-sm">
+                  Start Building Wealth
                 </button>
               </Link>
             </div>
             
-            {/* Paycheck Calculator */}
-            <div className="group bg-gradient-to-br from-blue-50 to-cyan-100 rounded-xl p-6 border border-blue-200 hover:shadow-lg transition-all transform hover:scale-105">
+            {/* Budget Builder Calculator */}
+            <div className="group bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl p-6 border border-blue-200 hover:shadow-lg transition-all transform hover:scale-105">
               <div className="flex items-center mb-4">
                 <div className="bg-blue-500 text-white p-3 rounded-lg mr-4 group-hover:bg-blue-600 transition-colors">
-                  <span className="text-2xl">🧮</span>
+                  <span className="text-2xl">📊</span>
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-blue-900">Paycheck Calculator</h4>
-                  <p className="text-blue-700 text-sm">Understand Your Take-Home Pay</p>
+                  <h4 className="text-lg font-bold text-blue-900">Budget Builder</h4>
+                  <p className="text-blue-700 text-xs">50/30/20 Rule</p>
                 </div>
               </div>
-              <p className="text-blue-800 mb-6 leading-relaxed">
-                Discover the difference between gross and net pay. Understand taxes, deductions, and what you actually take home.
+              <p className="text-blue-800 mb-4 leading-relaxed text-sm">
+                Master the proven 50/30/20 budgeting rule for needs, wants, and savings.
               </p>
               <div className="mb-4 bg-white bg-opacity-60 rounded-lg p-3">
-                <div className="text-xs text-blue-700 mb-1">Example: $60,000 salary breakdown</div>
-                <div className="text-2xl font-bold text-blue-900">$60,000 → $45,180</div>
-                <div className="text-xs text-blue-600">After taxes and deductions</div>
+                <div className="text-xs text-blue-700 mb-1">$5,000 income breakdown</div>
+                <div className="text-xl font-bold text-blue-900">Perfect Balance</div>
+                <div className="text-xs text-blue-600">Needs, wants, savings!</div>
               </div>
-              <Link href="/calculators/paycheck">
-                <button className="w-full bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-all group-hover:shadow-md">
-                  💡 Calculate Take-Home Pay
+              <Link href="/calculators/budget-builder">
+                <button className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-all text-sm">
+                  Build Your Budget
+                </button>
+              </Link>
+            </div>
+
+            {/* Debt Payoff Calculator */}
+            <div className="group bg-gradient-to-br from-red-50 to-pink-100 rounded-xl p-6 border border-red-200 hover:shadow-lg transition-all transform hover:scale-105">
+              <div className="flex items-center mb-4">
+                <div className="bg-red-500 text-white p-3 rounded-lg mr-4 group-hover:bg-red-600 transition-colors">
+                  <span className="text-2xl">�</span>
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-red-900">Debt Destroyer</h4>
+                  <p className="text-red-700 text-xs">Break Free</p>
+                </div>
+              </div>
+              <p className="text-red-800 mb-4 leading-relaxed text-sm">
+                Compare avalanche vs snowball strategies to eliminate debt faster.
+              </p>
+              <div className="mb-4 bg-white bg-opacity-60 rounded-lg p-3">
+                <div className="text-xs text-red-700 mb-1">$25k debt + $200 extra</div>
+                <div className="text-xl font-bold text-red-900">5 Years Saved</div>
+                <div className="text-xs text-red-600">Thousands in interest!</div>
+              </div>
+              <Link href="/calculators/debt-payoff">
+                <button className="w-full bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600 transition-all text-sm">
+                  Destroy Your Debt
                 </button>
               </Link>
             </div>
@@ -250,22 +281,18 @@ export default function Home() {
           {/* Coming Soon Calculators */}
           <div className="mt-8 pt-6 border-t border-blue-200">
             <p className="text-center text-blue-700 font-medium mb-4">🔮 Coming Soon</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
                 <span className="text-2xl block mb-1">🏠</span>
                 <p className="text-xs font-medium text-blue-800">Mortgage Calculator</p>
               </div>
               <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
-                <span className="text-2xl block mb-1">💳</span>
-                <p className="text-xs font-medium text-blue-800">Debt Payoff</p>
-              </div>
-              <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
-                <span className="text-2xl block mb-1">📊</span>
-                <p className="text-xs font-medium text-blue-800">Budget Builder</p>
-              </div>
-              <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
                 <span className="text-2xl block mb-1">🏖️</span>
                 <p className="text-xs font-medium text-blue-800">Retirement Planner</p>
+              </div>
+              <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
+                <span className="text-2xl block mb-1">�</span>
+                <p className="text-xs font-medium text-blue-800">Auto Loan Calculator</p>
               </div>
             </div>
           </div>
