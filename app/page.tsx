@@ -73,14 +73,26 @@ export default function Home() {
           <p className="text-gray-600 mb-6">
             Experience the power of compound interest and see your money grow over time
           </p>
-          <div className="bg-gradient-to-r from-green-100 to-blue-100 rounded-lg p-6">
-            <h4 className="text-lg font-semibold mb-2">Compound Interest Calculator</h4>
-            <p className="text-gray-700 mb-4">See how your savings can grow exponentially over time</p>
-            <Link href="/calculators">
-              <button className="bg-green-500 text-white px-6 py-3 rounded-md hover:bg-green-600 transition-colors">
-                Explore Calculator
-              </button>
-            </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-gradient-to-r from-green-100 to-emerald-100 rounded-lg p-6">
+              <h4 className="text-lg font-semibold mb-2 text-green-900">💰 Compound Interest Calculator</h4>
+              <p className="text-green-800 mb-4">See how your savings can grow exponentially over time</p>
+              <Link href="/calculators/compound-interest">
+                <button className="bg-green-500 text-white px-6 py-3 rounded-md hover:bg-green-600 transition-colors">
+                  Build Your Wealth
+                </button>
+              </Link>
+            </div>
+            
+            <div className="bg-gradient-to-r from-blue-100 to-cyan-100 rounded-lg p-6">
+              <h4 className="text-lg font-semibold mb-2 text-blue-900">🧮 Paycheck Calculator</h4>
+              <p className="text-blue-800 mb-4">Understand gross vs net pay and tax deductions</p>
+              <Link href="/calculators/paycheck">
+                <button className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition-colors">
+                  Calculate Take-Home
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
 
