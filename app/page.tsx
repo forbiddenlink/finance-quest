@@ -20,95 +20,320 @@ export default function Home() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Master Your Money, Master Your Future
+          <div className="mb-6">
+            <span className="bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">
+              🚨 Solving the 64% Financial Illiteracy Crisis
+            </span>
+          </div>
+          <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            Master Your Money,<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600">
+              Master Your Future
+            </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Learn financial literacy from zero to hero through interactive lessons, 
-            hands-on calculators, and real-world scenarios. No prior knowledge required!
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Transform from financial novice to money master through AI-powered personalized coaching, 
+            interactive calculators, and real-world scenarios. <strong>No prior knowledge required!</strong>
           </p>
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/chapter1">
+              <button className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg">
+                🚀 Start Your Journey
+              </button>
+            </Link>
+            <Link href="/calculators/compound-interest">
+              <button className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold border-2 border-blue-600 hover:bg-blue-50 transition-all shadow-lg">
+                💰 Try Calculator
+              </button>
+            </Link>
+          </div>
         </div>
 
-        {/* Chapter Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Chapter 1: Money Fundamentals</h3>
-            <p className="text-gray-600 mb-4">Income, banking, and paycheck basics</p>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-blue-600 font-medium">Available Now</span>
-              <Link href="/chapter1">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">
-                  Start Learning
+        {/* Comprehensive Chapter Overview - 10 Modules */}
+        <div className="mb-16">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">Complete Financial Education Curriculum</h3>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              10 comprehensive modules covering everything from basic budgeting to advanced wealth building
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {/* Chapter 1 - Available */}
+            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500 transform hover:scale-105 transition-all">
+              <div className="flex items-center mb-3">
+                <span className="text-2xl mr-3">💰</span>
+                <h4 className="text-lg font-bold text-gray-900">Money Fundamentals</h4>
+              </div>
+              <p className="text-gray-600 mb-4">Income, banking, paycheck basics, direct deposits</p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-green-600 font-medium bg-green-100 px-2 py-1 rounded">✅ Available Now</span>
+                <Link href="/chapter1">
+                  <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                    Start Learning
+                  </button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Chapter 2 - Locked */}
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
+              <div className="flex items-center mb-3">
+                <span className="text-2xl mr-3 opacity-50">📊</span>
+                <h4 className="text-lg font-bold text-gray-500">Budgeting Mastery</h4>
+              </div>
+              <p className="text-gray-500 mb-4">50/30/20 rule, expense tracking, emergency funds, cash flow</p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded">🔒 Complete Chapter 1</span>
+                <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
+                  Locked
                 </button>
-              </Link>
+              </div>
+            </div>
+
+            {/* Chapter 3 - Locked */}
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
+              <div className="flex items-center mb-3">
+                <span className="text-2xl mr-3 opacity-50">💳</span>
+                <h4 className="text-lg font-bold text-gray-500">Debt & Credit</h4>
+              </div>
+              <p className="text-gray-500 mb-4">Credit scores, good vs bad debt, loan strategies, credit cards</p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded">🔒 Complete Chapter 2</span>
+                <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
+                  Locked
+                </button>
+              </div>
+            </div>
+
+            {/* Chapter 4 - Locked */}
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
+              <div className="flex items-center mb-3">
+                <span className="text-2xl mr-3 opacity-50">📈</span>
+                <h4 className="text-lg font-bold text-gray-500">Investment Fundamentals</h4>
+              </div>
+              <p className="text-gray-500 mb-4">Compound interest, stocks/bonds, 401k matching, diversification</p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded">🔒 Complete Chapter 3</span>
+                <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
+                  Locked
+                </button>
+              </div>
+            </div>
+
+            {/* Chapter 5 - Locked */}
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
+              <div className="flex items-center mb-3">
+                <span className="text-2xl mr-3 opacity-50">🎯</span>
+                <h4 className="text-lg font-bold text-gray-500">Advanced Investing</h4>
+              </div>
+              <p className="text-gray-500 mb-4">ETFs, mutual funds, index funds, risk tolerance, portfolio allocation</p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded">🔒 Complete Chapter 4</span>
+                <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
+                  Locked
+                </button>
+              </div>
+            </div>
+
+            {/* Chapter 6 - Locked */}
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
+              <div className="flex items-center mb-3">
+                <span className="text-2xl mr-3 opacity-50">🧾</span>
+                <h4 className="text-lg font-bold text-gray-500">Taxes & Planning</h4>
+              </div>
+              <p className="text-gray-500 mb-4">Tax brackets, deductions, credits, W-4s, tax-advantaged accounts</p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded">🔒 Complete Chapter 5</span>
+                <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
+                  Locked
+                </button>
+              </div>
             </div>
           </div>
 
-          <div className="bg-gray-50 rounded-lg shadow-md p-6 border-l-4 border-gray-300">
-            <h3 className="text-lg font-semibold text-gray-500 mb-2">Chapter 2: Budgeting Mastery</h3>
-            <p className="text-gray-500 mb-4">50/30/20 rule, expense tracking, emergency funds</p>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-400 font-medium">Locked</span>
-              <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-md cursor-not-allowed">
-                Complete Chapter 1
-              </button>
-            </div>
-          </div>
-
-          <div className="bg-gray-50 rounded-lg shadow-md p-6 border-l-4 border-gray-300">
-            <h3 className="text-lg font-semibold text-gray-500 mb-2">Chapter 3: Debt & Credit</h3>
-            <p className="text-gray-500 mb-4">Credit scores, good vs bad debt, loan strategies</p>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-400 font-medium">Locked</span>
-              <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-md cursor-not-allowed">
-                Complete Chapter 2
-              </button>
-            </div>
+          {/* Show More Button */}
+          <div className="text-center">
+            <details className="inline-block">
+              <summary className="bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 px-6 py-3 rounded-lg cursor-pointer hover:from-purple-200 hover:to-pink-200 transition-all font-medium">
+                📚 View All 10 Chapters (4 More)
+              </summary>
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
+                  <span className="text-lg mr-2 opacity-50">🛡️</span>
+                  <h5 className="font-semibold text-gray-500 text-sm">Insurance & Protection</h5>
+                  <p className="text-xs text-gray-400 mt-1">Health, auto, life, disability insurance</p>
+                </div>
+                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
+                  <span className="text-lg mr-2 opacity-50">🏠</span>
+                  <h5 className="font-semibold text-gray-500 text-sm">Real Estate Finance</h5>
+                  <p className="text-xs text-gray-400 mt-1">Mortgages, down payments, rent vs buy</p>
+                </div>
+                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
+                  <span className="text-lg mr-2 opacity-50">📊</span>
+                  <h5 className="font-semibold text-gray-500 text-sm">Economic Concepts</h5>
+                  <p className="text-xs text-gray-400 mt-1">Inflation, interest rates, market cycles</p>
+                </div>
+                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
+                  <span className="text-lg mr-2 opacity-50">🏖️</span>
+                  <h5 className="font-semibold text-gray-500 text-sm">Advanced Planning</h5>
+                  <p className="text-xs text-gray-400 mt-1">Retirement, estate basics, financial independence</p>
+                </div>
+              </div>
+            </details>
           </div>
         </div>
 
-        {/* Featured Calculator Preview */}
-        <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">Try Our Interactive Calculators</h3>
-          <p className="text-gray-600 mb-6">
-            Experience the power of compound interest and see your money grow over time
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-gradient-to-r from-green-100 to-emerald-100 rounded-lg p-6">
-              <h4 className="text-lg font-semibold mb-2 text-green-900">💰 Compound Interest Calculator</h4>
-              <p className="text-green-800 mb-4">See how your savings can grow exponentially over time</p>
+        {/* Featured Interactive Tools */}
+        <div className="bg-gradient-to-r from-white to-blue-50 rounded-2xl shadow-xl p-8 mb-16 border border-blue-100">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">🧮 Interactive Financial Tools</h3>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Experience the power of financial concepts through hands-on calculators with real-time feedback
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Compound Interest Calculator */}
+            <div className="group bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-6 border border-green-200 hover:shadow-lg transition-all transform hover:scale-105">
+              <div className="flex items-center mb-4">
+                <div className="bg-green-500 text-white p-3 rounded-lg mr-4 group-hover:bg-green-600 transition-colors">
+                  <span className="text-2xl">💰</span>
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-green-900">Compound Interest Calculator</h4>
+                  <p className="text-green-700 text-sm">The 8th Wonder of the World</p>
+                </div>
+              </div>
+              <p className="text-green-800 mb-6 leading-relaxed">
+                Watch your money grow exponentially over time. See how small amounts become life-changing sums through the magic of compound interest.
+              </p>
+              <div className="mb-4 bg-white bg-opacity-60 rounded-lg p-3">
+                <div className="text-xs text-green-700 mb-1">Example: $100/month at 7% for 30 years</div>
+                <div className="text-2xl font-bold text-green-900">$122,709 → $303,219</div>
+                <div className="text-xs text-green-600">$36,000 invested becomes $303k!</div>
+              </div>
               <Link href="/calculators/compound-interest">
-                <button className="bg-green-500 text-white px-6 py-3 rounded-md hover:bg-green-600 transition-colors">
-                  Build Your Wealth
+                <button className="w-full bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-all group-hover:shadow-md">
+                  🚀 Start Building Wealth
                 </button>
               </Link>
             </div>
             
-            <div className="bg-gradient-to-r from-blue-100 to-cyan-100 rounded-lg p-6">
-              <h4 className="text-lg font-semibold mb-2 text-blue-900">🧮 Paycheck Calculator</h4>
-              <p className="text-blue-800 mb-4">Understand gross vs net pay and tax deductions</p>
+            {/* Paycheck Calculator */}
+            <div className="group bg-gradient-to-br from-blue-50 to-cyan-100 rounded-xl p-6 border border-blue-200 hover:shadow-lg transition-all transform hover:scale-105">
+              <div className="flex items-center mb-4">
+                <div className="bg-blue-500 text-white p-3 rounded-lg mr-4 group-hover:bg-blue-600 transition-colors">
+                  <span className="text-2xl">🧮</span>
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-blue-900">Paycheck Calculator</h4>
+                  <p className="text-blue-700 text-sm">Understand Your Take-Home Pay</p>
+                </div>
+              </div>
+              <p className="text-blue-800 mb-6 leading-relaxed">
+                Discover the difference between gross and net pay. Understand taxes, deductions, and what you actually take home.
+              </p>
+              <div className="mb-4 bg-white bg-opacity-60 rounded-lg p-3">
+                <div className="text-xs text-blue-700 mb-1">Example: $60,000 salary breakdown</div>
+                <div className="text-2xl font-bold text-blue-900">$60,000 → $45,180</div>
+                <div className="text-xs text-blue-600">After taxes and deductions</div>
+              </div>
               <Link href="/calculators/paycheck">
-                <button className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition-colors">
-                  Calculate Take-Home
+                <button className="w-full bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-all group-hover:shadow-md">
+                  💡 Calculate Take-Home Pay
                 </button>
               </Link>
             </div>
           </div>
+
+          {/* Coming Soon Calculators */}
+          <div className="mt-8 pt-6 border-t border-blue-200">
+            <p className="text-center text-blue-700 font-medium mb-4">🔮 Coming Soon</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
+                <span className="text-2xl block mb-1">🏠</span>
+                <p className="text-xs font-medium text-blue-800">Mortgage Calculator</p>
+              </div>
+              <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
+                <span className="text-2xl block mb-1">💳</span>
+                <p className="text-xs font-medium text-blue-800">Debt Payoff</p>
+              </div>
+              <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
+                <span className="text-2xl block mb-1">📊</span>
+                <p className="text-xs font-medium text-blue-800">Budget Builder</p>
+              </div>
+              <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
+                <span className="text-2xl block mb-1">🏖️</span>
+                <p className="text-xs font-medium text-blue-800">Retirement Planner</p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="text-3xl font-bold text-blue-600 mb-2">64%</div>
-            <p className="text-gray-600">of Americans can't pass a basic financial literacy test</p>
+        {/* AI-Powered Features Section */}
+        <div className="bg-gradient-to-r from-purple-50 to-indigo-100 rounded-2xl shadow-xl p-8 mb-16 border border-purple-200">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">🤖 AI-Powered Learning Experience</h3>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Unlike other platforms with simulated chatbots, we use real OpenAI GPT-4o-mini for personalized financial coaching
+            </p>
           </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="text-3xl font-bold text-green-600 mb-2">80%+</div>
-            <p className="text-gray-600">mastery rate required to unlock next chapter</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-xl p-6 shadow-lg border border-purple-100">
+              <div className="bg-purple-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <span className="text-2xl">🧠</span>
+              </div>
+              <h4 className="text-lg font-bold text-gray-900 mb-2">Contextual AI Coaching</h4>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Our AI knows your learning progress, quiz scores, and struggling topics to provide personalized guidance exactly when you need it.
+              </p>
+            </div>
+            
+            <div className="bg-white rounded-xl p-6 shadow-lg border border-purple-100">
+              <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <span className="text-2xl">📊</span>
+              </div>
+              <h4 className="text-lg font-bold text-gray-900 mb-2">Progress Tracking</h4>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Every lesson completed, calculator used, and quiz taken is tracked across sessions with persistent localStorage and analytics.
+              </p>
+            </div>
+            
+            <div className="bg-white rounded-xl p-6 shadow-lg border border-purple-100">
+              <div className="bg-green-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <span className="text-2xl">💬</span>
+              </div>
+              <h4 className="text-lg font-bold text-gray-900 mb-2">Ask Anything</h4>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Got a financial question? Ask our AI assistant anytime during lessons. It's disabled during quizzes to maintain assessment integrity.
+              </p>
+            </div>
           </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="text-3xl font-bold text-purple-600 mb-2">5</div>
-            <p className="text-gray-600">comprehensive chapters covering all financial basics</p>
+        </div>
+
+        {/* Impact Statistics */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center mb-16">
+          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500">
+            <div className="text-4xl font-bold text-red-600 mb-2">64%</div>
+            <p className="text-gray-600 text-sm">of Americans can't pass a basic financial literacy test</p>
+            <p className="text-xs text-red-500 mt-2 font-medium">The problem we're solving</p>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
+            <div className="text-4xl font-bold text-green-600 mb-2">80%+</div>
+            <p className="text-gray-600 text-sm">mastery rate required to unlock next chapter</p>
+            <p className="text-xs text-green-500 mt-2 font-medium">Real learning outcomes</p>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
+            <div className="text-4xl font-bold text-purple-600 mb-2">10</div>
+            <p className="text-gray-600 text-sm">comprehensive chapters covering all financial basics</p>
+            <p className="text-xs text-purple-500 mt-2 font-medium">Complete curriculum</p>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500">
+            <div className="text-4xl font-bold text-blue-600 mb-2">Real</div>
+            <p className="text-gray-600 text-sm">OpenAI GPT-4o-mini integration, not simulated chatbots</p>
+            <p className="text-xs text-blue-500 mt-2 font-medium">Genuine AI coaching</p>
           </div>
         </div>
       </main>
