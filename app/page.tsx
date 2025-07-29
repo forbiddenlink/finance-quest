@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -36,9 +37,11 @@ export default function Home() {
             <p className="text-gray-600 mb-4">Income, banking, and paycheck basics</p>
             <div className="flex items-center justify-between">
               <span className="text-sm text-blue-600 font-medium">Available Now</span>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">
-                Start Learning
-              </button>
+              <Link href="/chapter1">
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">
+                  Start Learning
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -74,9 +77,11 @@ export default function Home() {
           <div className="bg-gradient-to-r from-green-100 to-blue-100 rounded-lg p-6">
             <h4 className="text-lg font-semibold mb-2">Compound Interest Calculator</h4>
             <p className="text-gray-700 mb-4">See how your savings can grow exponentially over time</p>
-            <button className="bg-green-500 text-white px-6 py-3 rounded-md hover:bg-green-600 transition-colors">
-              Explore Calculator
-            </button>
+            <Link href="/calculators">
+              <button className="bg-green-500 text-white px-6 py-3 rounded-md hover:bg-green-600 transition-colors">
+                Explore Calculator
+              </button>
+            </Link>
           </div>
         </div>
 
