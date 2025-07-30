@@ -354,10 +354,10 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
             <div
               key={index}
               className={`w-3 h-3 rounded-full transition-colors ${index === currentLesson
-                  ? 'bg-blue-500'
-                  : index < currentLesson
-                    ? 'bg-green-500'
-                    : 'bg-gray-300'
+                ? 'bg-blue-500'
+                : index < currentLesson
+                  ? 'bg-green-500'
+                  : 'bg-gray-300'
                 }`}
             />
           ))}
