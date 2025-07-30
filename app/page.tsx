@@ -12,7 +12,32 @@ import TypingText from "@/components/shared/ui/TypingText";
 import GuidedTour from "@/components/demo/GuidedTour";
 import JudgeMode from "@/components/demo/JudgeMode";
 import { useProgress } from "@/lib/context/ProgressContext";
-import { TrendingUp, Award, Brain, Calculator, BookOpen, Sparkles, Target, Zap, BarChart3, CreditCard, PieChart, ShieldCheck, FileText, Building, Lightbulb, Briefcase, Umbrella, Lock, CheckCircle, Play, Trophy } from "lucide-react";
+import { 
+  BookOpen, 
+  Calculator, 
+  Target, 
+  TrendingUp, 
+  Shield, 
+  Brain, 
+  CheckCircle, 
+  ArrowRight, 
+  Star, 
+  Bot, 
+  BarChart3, 
+  Clock, 
+  Lightbulb, 
+  Award,
+  Sparkles,
+  Play,
+  Zap,
+  Building,
+  Lock,
+  Briefcase,
+  PieChart,
+  FileText,
+  Umbrella,
+  CreditCard
+} from 'lucide-react';
 
 export default function Home() {
   const { state } = useProgress();
@@ -373,7 +398,7 @@ export default function Home() {
               </summary>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
-                  <ShieldCheck className="w-6 h-6 mr-2 text-gray-400 mb-2" />
+                  <Shield className="w-6 h-6 mr-2 text-gray-400 mb-2" />
                   <h5 className="font-semibold text-gray-500 text-sm">Credit Track (Chapters 7-10)</h5>
                   <p className="text-xs text-gray-400 mt-1">Credit scores, cards, loans, student debt</p>
                 </div>

@@ -8,7 +8,6 @@ import {
   Shield, 
   PiggyBank, 
   CreditCard, 
-  Building, 
   CheckCircle,
   AlertTriangle,
   XCircle,

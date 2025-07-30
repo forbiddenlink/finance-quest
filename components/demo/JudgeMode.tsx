@@ -6,13 +6,11 @@ import {
   Trophy, 
   Target, 
   Zap, 
-  Users, 
   TrendingUp, 
   Award,
   Brain,
   Mic,
   BarChart3,
-  Calculator,
   Eye,
   EyeOff
 } from 'lucide-react';

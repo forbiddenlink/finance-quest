@@ -35,6 +35,8 @@ class MarketDataService {
   private baseFredUrl = 'https://api.stlouisfed.org/fred';
   private yahooFinanceUrl = 'https://query1.finance.yahoo.com/v8/finance/chart';
   private alphaVantageKey: string | undefined;
+  private rateLimitReached = false;
+  private lastRateLimitCheck = 0;
 
   constructor() {
     this.fredApiKey = process.env.FRED_API_KEY;
@@ -45,8 +47,17 @@ class MarketDataService {
   private educationalStocks = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'SPY'];
 
   async getStockQuotes(): Promise<StockQuote[]> {
+    // Check if we've hit rate limit recently (reset daily)
+    const now = Date.now();
+    const oneDayMs = 24 * 60 * 60 * 1000;
+    
+    if (this.rateLimitReached && (now - this.lastRateLimitCheck) < oneDayMs) {
+      console.log('Rate limit previously reached, using fallback data');
+      return this.getFallbackStockData();
+    }
+
     // Use Alpha Vantage API with your key for reliable data
-    if (this.alphaVantageKey) {
+    if (this.alphaVantageKey && !this.rateLimitReached) {
       console.log('Using Alpha Vantage API for stock data...');
       try {
         const quotes = await Promise.all(
@@ -64,6 +75,13 @@ class MarketDataService {
               console.log(`Alpha Vantage response for ${symbol}:`, data);
               
               if (data['Error Message'] || data['Note']) {
+                // Check if it's a rate limit message
+                if (data['Note'] && data['Note'].includes('rate limit')) {
+                  console.warn(`Rate limit reached for ${symbol}, switching to fallback mode`);
+                  this.rateLimitReached = true;
+                  this.lastRateLimitCheck = Date.now();
+                  return this.getFallbackStockBySymbol(symbol);
+                }
                 throw new Error(`API Error for ${symbol}: ${data['Error Message'] || data['Note']}`);
               }
 

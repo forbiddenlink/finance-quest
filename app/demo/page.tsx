@@ -15,12 +15,9 @@ import {
   Brain, 
   Mic, 
   BarChart3, 
-  Calculator,
   ArrowRight,
   CheckCircle,
-  Star,
-  Users,
-  TrendingUp
+  Star
 } from 'lucide-react';
 
 export default function DemoPage() {
