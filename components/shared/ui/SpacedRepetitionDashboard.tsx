@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useProgress } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 import { spacedRepetitionSystem, ReviewItem, ReviewResponse } from '@/lib/algorithms/spacedRepetition';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import { Brain, Clock, CheckCircle, AlertTriangle, Star, RefreshCw } from 'lucide-react';
@@ -11,7 +11,7 @@ interface SpacedRepetitionDashboardProps {
 }
 
 export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepetitionDashboardProps) {
-  const { state } = useProgress();
+  const userProgress = useProgressStore(state => state.userProgress);
   const [reviewItems, setReviewItems] = useState<ReviewItem[]>([]);
   const [dueItems, setDueItems] = useState<ReviewItem[]>([]);
   const [stats, setStats] = useState({
@@ -35,7 +35,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
     const items: ReviewItem[] = [];
 
     // Add completed lessons
-    state.userProgress.completedLessons.forEach(lessonId => {
+    userProgress.completedLessons.forEach((lessonId: string) => {
       const chapterNumber = parseInt(lessonId.split('-')[2]) || 1;
       items.push(spacedRepetitionSystem.createReviewItem(
         lessonId,
@@ -46,8 +46,8 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
     });
 
     // Add quiz concepts
-    Object.entries(state.userProgress.quizScores).forEach(([quizId, score]) => {
-      if (score >= 80) { // Only add passed quizzes
+    Object.entries(userProgress.quizScores).forEach(([quizId, score]) => {
+      if (typeof score === 'number' && score >= 80) { // Only add passed quizzes
         const chapterNumber = parseInt(quizId.split('-')[2]) || 1;
         items.push(spacedRepetitionSystem.createReviewItem(
           `${quizId}-concepts`,
@@ -59,7 +59,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
     });
 
     // Add calculator usage
-    Object.keys(state.userProgress.calculatorUsage).forEach(calculatorId => {
+    Object.keys(userProgress.calculatorUsage).forEach(calculatorId => {
       items.push(spacedRepetitionSystem.createReviewItem(
         `${calculatorId}-concepts`,
         'calculator',
@@ -78,7 +78,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
     setDueItems(due);
     setStats(statistics);
     setRecommendation(rec);
-  }, [state.userProgress]);
+  }, [userProgress]);
 
   const handleReviewResponse = (quality: number, confidence: number) => {
     if (currentReviewIndex >= dueItems.length) return;

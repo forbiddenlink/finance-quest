@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useProgress } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LineChart, Line, Legend } from 'recharts';
 import {
@@ -23,19 +23,19 @@ import {
 } from 'lucide-react';
 
 export default function ProgressDashboard() {
-  const { state } = useProgress();
-  const { userProgress } = state;
+  const userProgress = useProgressStore(state => state.userProgress);
 
   // Calculate comprehensive metrics
   const totalChapters = 10;
   const completionPercentage = Math.round((userProgress.currentChapter / totalChapters) * 100);
   const totalLessonsCompleted = userProgress.completedLessons.length;
-  const totalCalculatorsUsed = userProgress.calculatorUsage.length;
-  const averageQuizScore = Object.values(userProgress.quizScores).length > 0
-    ? Math.round(Object.values(userProgress.quizScores).reduce((sum, score) => sum + score, 0) / Object.values(userProgress.quizScores).length)
+  const totalCalculatorsUsed = Object.keys(userProgress.calculatorUsage).length;
+  const quizScores = Object.values(userProgress.quizScores).filter((score): score is number => typeof score === 'number');
+  const averageQuizScore = quizScores.length > 0
+    ? Math.round(quizScores.reduce((sum, score) => sum + score, 0) / quizScores.length)
     : 0;
-  const timeSpentHours = Math.round(userProgress.totalTimeSpent / 60 * 10) / 10;
-  const achievementsCount = userProgress.achievementsUnlocked.length;
+  const timeSpentHours = Math.round(userProgress.totalTimeSpent / 3600 * 10) / 10;
+  const achievementsCount = userProgress.achievements.length;
 
   // Progress breakdown data for pie chart
   const progressData = [
@@ -213,8 +213,8 @@ export default function ProgressDashboard() {
             Achievements Unlocked
           </h3>
           <div className="space-y-3">
-            {userProgress.achievementsUnlocked.length > 0 ? (
-              userProgress.achievementsUnlocked.map((achievement, index) => (
+            {userProgress.achievements.length > 0 ? (
+              userProgress.achievements.map((achievement: string, index: number) => (
                 <div key={index} className="bg-white bg-opacity-60 rounded-lg p-3 flex items-center">
                   <div className="bg-yellow-500 text-white p-2 rounded-full mr-3">
                     <Medal className="w-4 h-4" />
@@ -271,13 +271,13 @@ export default function ProgressDashboard() {
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage.includes('PaycheckCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['paycheck-calculator'] ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
               }`}>
               <Calculator className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Paycheck Calculator</p>
             <p className="text-xs text-indigo-600 flex items-center justify-center gap-1">
-              {userProgress.calculatorUsage.includes('PaycheckCalculator') ? (
+              {userProgress.calculatorUsage['paycheck-calculator'] ? (
                 <>
                   <CheckCircle className="w-3 h-3" />
                   Mastered
@@ -292,13 +292,13 @@ export default function ProgressDashboard() {
           </div>
 
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage.includes('CompoundInterestCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['compound-interest'] ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
               }`}>
               <TrendingUp className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Compound Interest</p>
             <p className="text-xs text-indigo-600 flex items-center justify-center gap-1">
-              {userProgress.calculatorUsage.includes('CompoundInterestCalculator') ? (
+              {userProgress.calculatorUsage['compound-interest'] ? (
                 <>
                   <CheckCircle className="w-3 h-3" />
                   Mastered
@@ -313,13 +313,13 @@ export default function ProgressDashboard() {
           </div>
 
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage.includes('BudgetBuilderCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['budget-builder'] ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
               }`}>
               <PieChartIcon className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Budget Builder</p>
             <p className="text-xs text-indigo-600 flex items-center justify-center gap-1">
-              {userProgress.calculatorUsage.includes('BudgetBuilderCalculator') ? (
+              {userProgress.calculatorUsage['budget-builder'] ? (
                 <>
                   <CheckCircle className="w-3 h-3" />
                   Mastered
@@ -334,13 +334,13 @@ export default function ProgressDashboard() {
           </div>
 
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage.includes('DebtPayoffCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['debt-payoff-calculator'] ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
               }`}>
               <CreditCard className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Debt Destroyer</p>
             <p className="text-xs text-indigo-600 flex items-center justify-center gap-1">
-              {userProgress.calculatorUsage.includes('DebtPayoffCalculator') ? (
+              {userProgress.calculatorUsage['debt-payoff-calculator'] ? (
                 <>
                   <CheckCircle className="w-3 h-3" />
                   Mastered

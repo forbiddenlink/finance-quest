@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import GradientCard from './GradientCard';
-import { useProgress } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 
 interface LearningMetrics {
   sessionTime: number;
@@ -38,7 +38,7 @@ interface TimeDistribution {
 }
 
 export default function LearningAnalyticsDashboard() {
-  const { state } = useProgress();
+  const userProgress = useProgressStore(state => state.userProgress);
   const [metrics, setMetrics] = useState<LearningMetrics>({
     sessionTime: 0,
     conceptsMastered: 0,
@@ -55,33 +55,31 @@ export default function LearningAnalyticsDashboard() {
   useEffect(() => {
     // Calculate learning metrics from user progress
     const calculateMetrics = () => {
-      const progress = state.userProgress;
-
       // Calculate session time (simulated)
-      const avgSessionTime = progress.totalTimeSpent || 45;
+      const avgSessionTime = userProgress.totalTimeSpent || 45;
 
       // Calculate concepts mastered
-      const conceptsMastered = progress.completedLessons.length +
-        Object.keys(progress.quizScores).filter(quiz => progress.quizScores[quiz] >= 80).length;
+      const conceptsMastered = userProgress.completedLessons.length +
+        Object.keys(userProgress.quizScores).filter(quiz => userProgress.quizScores[quiz] >= 80).length;
 
       // Calculate retention rate based on quiz performance
-      const quizScores = Object.values(progress.quizScores);
+      const quizScores = Object.values(userProgress.quizScores).filter((score): score is number => typeof score === 'number');
       const retentionRate = quizScores.length > 0
         ? quizScores.reduce((acc, score) => acc + score, 0) / quizScores.length
         : 0;
 
       // Calculate engagement score
       const engagementScore = Math.min(100,
-        (progress.completedLessons.length * 20) +
-        (progress.calculatorUsage.length * 15) +
-        (progress.achievementsUnlocked.length * 10)
+        (userProgress.completedLessons.length * 20) +
+        (Object.keys(userProgress.calculatorUsage).length * 15) +
+        (userProgress.achievements.length * 10)
       );
 
       // Calculate streak (simulated)
-      const lastActive = new Date(progress.lastActiveDate);
+      const lastActive = new Date(userProgress.lastActiveDate);
       const today = new Date();
       const daysDiff = Math.floor((today.getTime() - lastActive.getTime()) / (1000 * 60 * 60 * 24));
-      const streakDays = daysDiff <= 1 ? Math.max(1, progress.completedLessons.length) : 0;
+      const streakDays = daysDiff <= 1 ? Math.max(1, userProgress.completedLessons.length) : 0;
 
       setMetrics({
         sessionTime: avgSessionTime,
@@ -89,14 +87,14 @@ export default function LearningAnalyticsDashboard() {
         retentionRate: Math.round(retentionRate),
         engagementScore: Math.round(engagementScore),
         streakDays,
-        calculatorUsage: progress.calculatorUsage.length
+        calculatorUsage: Object.keys(userProgress.calculatorUsage).length
       });
 
       // Generate performance data
       const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
       const performanceData = weeks.map((week, index) => ({
         week,
-        progress: Math.min(100, (index + 1) * 25 + (progress.currentChapter - 1) * 10),
+        progress: Math.min(100, (index + 1) * 25 + (userProgress.currentChapter - 1) * 10),
         engagement: Math.max(60, engagementScore - (3 - index) * 5),
         retention: Math.max(70, retentionRate - (3 - index) * 3)
       }));
@@ -115,7 +113,7 @@ export default function LearningAnalyticsDashboard() {
     };
 
     calculateMetrics();
-  }, [state.userProgress]);
+  }, [userProgress]);
 
   if (isLoading) {
     return (

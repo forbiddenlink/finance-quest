@@ -2,15 +2,15 @@
 
 import React from 'react';
 import MarketDashboard from '@/components/shared/ui/MarketDashboard';
-import { useProgressActions } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 
 export default function MarketDashboardPage() {
-  const progressActions = useProgressActions();
+  const recordCalculatorUsage = useProgressStore(state => state.recordCalculatorUsage);
 
   // Track tool usage when component mounts
   React.useEffect(() => {
-    progressActions.useCalculator('market-dashboard');
-  }, [progressActions]);
+    recordCalculatorUsage('market-dashboard');
+  }, [recordCalculatorUsage]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8">
