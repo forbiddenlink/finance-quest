@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useProgressActions } from '@/lib/context/ProgressContext';
-import { TrendingUp, DollarSign, Target } from 'lucide-react';
+import React, { useState } from 'react';
+import { TrendingUp, Target } from 'lucide-react';
 
 interface NegotiationAnalysis {
     currentSalary: number;
@@ -14,13 +13,11 @@ interface NegotiationAnalysis {
 }
 
 export default function SalaryNegotiationCalculator() {
-    const { useCalculator } = useProgressActions();
     const [currentSalary, setCurrentSalary] = useState<string>('');
     const [targetSalary, setTargetSalary] = useState<string>('');
     const [yearsOfService, setYearsOfService] = useState<string>('');
     const [marketResearch, setMarketResearch] = useState<boolean>(false);
     const [analysis, setAnalysis] = useState<NegotiationAnalysis | null>(null);
-    const [hasUsedCalculator, setHasUsedCalculator] = useState(false);
 
     const calculateNegotiation = () => {
         const current = parseFloat(currentSalary);
@@ -49,14 +46,6 @@ export default function SalaryNegotiationCalculator() {
             confidenceScore: Math.min(confidenceScore, 100)
         });
     };
-
-    // Track calculator usage
-    useEffect(() => {
-        if (analysis && !hasUsedCalculator) {
-            useCalculator('salary-negotiation-calculator');
-            setHasUsedCalculator(true);
-        }
-    }, [analysis, hasUsedCalculator, useCalculator]);
 
     return (
         <div className="bg-white rounded-lg shadow-lg p-6 max-w-2xl mx-auto">
