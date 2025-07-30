@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useProgress, useProgressActions } from '@/lib/context/ProgressContext';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
-import TypingEffect from '@/components/shared/ui/TypingEffect';
 import { CheckCircle, Star, DollarSign, TrendingUp, BookOpen, ChevronRight, ChevronLeft, Lightbulb, Brain, Target, Heart } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -130,12 +129,8 @@ export default function MoneyFundamentalsLesson() {
             </span>
           </div>
 
-          <h1 className="text-3xl font-bold text-gray-900 mb-4 animate-fade-in-up stagger-2">
-            <TypingEffect
-              text={lesson.title}
-              speed={50}
-              className="gradient-text-purple"
-            />
+          <h1 className="text-3xl font-bold text-gray-900 mb-4 animate-fade-in-up stagger-2 gradient-text-purple">
+            {lesson.title}
           </h1>
         </div>
 
