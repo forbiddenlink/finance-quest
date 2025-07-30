@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, HelpCircle, Loader2 } from 'lucide-react';
+import { Send, HelpCircle, Loader2, Sparkles } from 'lucide-react';
 import { useProgress } from '@/lib/context/ProgressContext';
+import LoadingSpinner from './ui/LoadingSpinner';
+import toast from 'react-hot-toast';
 
 interface QAMessage {
   id: string;
@@ -119,7 +121,9 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center gap-2">
-          <HelpCircle className="w-5 h-5 text-blue-600" />
+          <div className="bg-blue-100 p-1 rounded-full">
+            <Sparkles className="w-4 h-4 text-blue-600" />
+          </div>
           <h3 className="font-semibold text-gray-900">Ask Any Financial Question</h3>
         </div>
         <button className="text-sm text-blue-600 hover:text-blue-700">
@@ -166,11 +170,12 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
             
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-gray-100 text-gray-900 px-4 py-2 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span className="text-sm">Thinking...</span>
-                  </div>
+                <div className="bg-gradient-to-r from-blue-100 to-purple-100 text-gray-900 px-4 py-3 rounded-lg border border-blue-200">
+                  <LoadingSpinner 
+                    size="sm" 
+                    text="AI is thinking..." 
+                    className="text-blue-600"
+                  />
                 </div>
               </div>
             )}

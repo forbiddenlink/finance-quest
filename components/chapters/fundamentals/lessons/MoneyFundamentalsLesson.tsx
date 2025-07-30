@@ -2,6 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { useProgress, useProgressActions } from '@/lib/context/ProgressContext';
+import GradientCard from '@/components/shared/ui/GradientCard';
+import ProgressRing from '@/components/shared/ui/ProgressRing';
+import TypingEffect from '@/components/shared/ui/TypingEffect';
+import { CheckCircle, Star, DollarSign, TrendingUp, BookOpen, ChevronRight, ChevronLeft } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 interface LessonContent {
   title: string;
@@ -63,6 +68,12 @@ export default function MoneyFundamentalsLesson() {
     const newCompleted = [...completedLessons];
     newCompleted[currentLesson] = true;
     setCompletedLessons(newCompleted);
+
+    // Show success toast
+    toast.success(`✅ "${lesson.title}" completed!`, {
+      duration: 3000,
+      position: 'top-center',
+    });
   };
 
   const nextLesson = () => {
@@ -81,47 +92,68 @@ export default function MoneyFundamentalsLesson() {
   const progress = ((currentLesson + 1) / lessons.length) * 100;
 
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg">
-      {/* Progress Bar */}
-      <div className="bg-gray-200 rounded-t-lg">
-        <div 
-          className="bg-blue-500 h-2 rounded-t-lg transition-all duration-300"
-          style={{ width: `${progress}%` }}
-        ></div>
+    <div className="max-w-4xl mx-auto">
+      {/* Enhanced Progress Ring */}
+      <div className="flex justify-center mb-6">
+        <ProgressRing 
+          progress={progress} 
+          size={100} 
+          color="#3B82F6"
+          className="animate-bounce-in"
+        />
       </div>
 
-      <div className="p-8">
-        {/* Header */}
+      <GradientCard variant="glass" gradient="blue" className="p-8">
+        {/* Header with Icons */}
         <div className="mb-6">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-blue-600">
-              Lesson {currentLesson + 1} of {lessons.length}
-            </span>
-            <span className="text-sm text-gray-500">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-3">
+              <div className="bg-blue-100 p-2 rounded-lg animate-float">
+                <BookOpen className="w-6 h-6 text-blue-600" />
+              </div>
+              <span className="text-sm font-medium text-blue-600 animate-fade-in-up">
+                Lesson {currentLesson + 1} of {lessons.length}
+              </span>
+            </div>
+            <span className="text-sm text-gray-500 animate-fade-in-up stagger-1">
               Chapter 1: Money Fundamentals
             </span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">{lesson.title}</h1>
+          
+          <h1 className="text-3xl font-bold text-gray-900 mb-4 animate-fade-in-up stagger-2">
+            <TypingEffect 
+              text={lesson.title}
+              speed={50}
+              className="gradient-text-blue"
+            />
+          </h1>
         </div>
 
-        {/* Content */}
+        {/* Content with Enhanced Styling */}
         <div className="mb-8">
-          <p className="text-lg text-gray-700 leading-relaxed mb-6">
+          <p className="text-lg text-gray-700 leading-relaxed mb-6 animate-fade-in-up stagger-3">
             {lesson.content}
           </p>
 
-          {/* Key Points */}
-          <div className="bg-blue-50 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-blue-900 mb-4">🎯 Key Points</h3>
+          {/* Enhanced Key Points */}
+          <GradientCard variant="glass" gradient="green" className="p-6 animate-fade-in-up stagger-4">
+            <div className="flex items-center mb-4">
+              <div className="bg-green-100 p-2 rounded-lg mr-3 animate-wiggle">
+                <Star className="w-5 h-5 text-green-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-green-900">Key Points</h3>
+            </div>
             <ul className="space-y-3">
               {lesson.keyPoints.map((point, index) => (
-                <li key={index} className="flex items-start">
-                  <span className="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3"></span>
-                  <span className="text-blue-800">{point}</span>
+                <li key={index} className={`flex items-start animate-slide-in-right stagger-${(index % 4) + 1}`}>
+                  <div className="flex-shrink-0 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mt-1 mr-3 animate-glow-pulse">
+                    <CheckCircle className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-green-800 font-medium">{point}</span>
                 </li>
               ))}
             </ul>
-          </div>
+          </GradientCard>
         </div>
 
         {/* Interactive Example */}
@@ -138,22 +170,24 @@ export default function MoneyFundamentalsLesson() {
           </div>
         )}
 
-        {/* Navigation */}
-        <div className="flex items-center justify-between">
+        {/* Enhanced Navigation */}
+        <div className="flex items-center justify-between animate-fade-in-up stagger-4">
           <div className="flex space-x-3">
             <button
               onClick={prevLesson}
               disabled={currentLesson === 0}
-              className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group flex items-center px-6 py-3 text-gray-600 border-2 border-gray-300 rounded-xl hover:border-blue-400 hover:text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button"
             >
-              ← Previous
+              <ChevronLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+              Previous
             </button>
             <button
               onClick={nextLesson}
               disabled={currentLesson === lessons.length - 1}
-              className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group flex items-center px-6 py-3 text-gray-600 border-2 border-gray-300 rounded-xl hover:border-blue-400 hover:text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button"
             >
-              Next →
+              Next
+              <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
 
@@ -161,15 +195,17 @@ export default function MoneyFundamentalsLesson() {
             {!completedLessons[currentLesson] && (
               <button
                 onClick={markComplete}
-                className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
+                className="group flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all shadow-lg hover-lift morph-button animate-glow-pulse"
               >
-                Mark Complete ✓
+                <CheckCircle className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                Mark Complete
               </button>
             )}
             {completedLessons[currentLesson] && (
-              <span className="px-4 py-2 bg-green-100 text-green-800 rounded-md font-medium">
-                ✓ Completed
-              </span>
+              <div className="flex items-center px-6 py-3 bg-green-100 text-green-800 rounded-xl font-medium animate-bounce-in">
+                <CheckCircle className="w-5 h-5 mr-2 animate-wiggle" />
+                Completed
+              </div>
             )}
           </div>
         </div>
@@ -181,7 +217,7 @@ export default function MoneyFundamentalsLesson() {
             <span>{progress.toFixed(0)}% Complete</span>
           </div>
         </div>
-      </div>
+      </GradientCard>
     </div>
   );
 }

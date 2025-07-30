@@ -1,16 +1,38 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ProgressDisplay } from "@/components/shared/ui/ProgressDisplay";
+import FloatingBackground from "@/components/shared/ui/FloatingBackground";
+import AnimatedCounter from "@/components/shared/ui/AnimatedCounter";
+import MarketTicker from "@/components/shared/ui/MarketTicker";
+import InteractiveCard from "@/components/shared/ui/InteractiveCard";
+import ParticleSystem from "@/components/shared/ui/ParticleSystem";
+import TypingText from "@/components/shared/ui/TypingText";
+import CelebrationConfetti from "@/components/shared/ui/CelebrationConfetti";
+import { TrendingUp, Users, Award, Brain, Calculator, BookOpen, Sparkles, Target, Zap } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 relative overflow-hidden">
+      {/* Particle System Background */}
+      <ParticleSystem particleCount={30} />
+      
+      {/* Floating Background Icons */}
+      <FloatingBackground />
+      
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-white/80 backdrop-blur-md shadow-sm relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900">Finance Quest</h1>
+            <div className="flex items-center space-x-3">
+              <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg animate-pulse-glow">
+                <Sparkles className="w-6 h-6 text-white" />
+              </div>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-space">
+                Finance Quest
+              </h1>
+            </div>
             <div className="flex items-center space-x-4">
+              <MarketTicker />
               <ProgressDisplay />
             </div>
           </div>
@@ -18,68 +40,151 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <div className="mb-6">
-            <span className="bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        {/* Hero Section with Animations */}
+        <div className="text-center mb-16">
+          <div className="mb-6 animate-fade-in-up">
+            <span className="bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full border border-red-200 animate-pulse-glow">
               🚨 Solving the 64% Financial Illiteracy Crisis
             </span>
           </div>
-          <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
-            Master Your Money,<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600">
+          
+          <h2 className="text-6xl font-bold text-gray-900 mb-6 leading-tight animate-fade-in-up stagger-1 font-space">
+            <TypingText 
+              texts={["Master Your Money", "Build Your Wealth", "Secure Your Future", "Take Control"]}
+              className="gradient-text-premium"
+            />
+            <br />
+            <span className="gradient-text-gold animate-gradient">
               Master Your Future
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8 animate-fade-in-up stagger-2 font-inter">
             Transform from financial novice to money master through AI-powered personalized coaching, 
             interactive calculators, and real-world scenarios. <strong>No prior knowledge required!</strong>
           </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up stagger-3">
             <Link href="/chapter1">
-              <button className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg">
-                🚀 Start Your Journey
+              <button className="group bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 transition-all shadow-lg card-lift animate-pulse-glow font-poppins relative overflow-hidden">
+                <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <span className="flex items-center relative z-10">
+                  🚀 Start Your Journey
+                  <BookOpen className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </span>
               </button>
             </Link>
             <Link href="/calculators/compound-interest">
-              <button className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold border-2 border-blue-600 hover:bg-blue-50 transition-all shadow-lg">
-                💰 Try Calculator
+              <button className="group premium-card text-blue-600 px-8 py-4 rounded-xl text-lg font-semibold border-2 border-blue-600/20 hover:border-blue-600/40 transition-all shadow-lg font-poppins relative overflow-hidden">
+                <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <span className="flex items-center relative z-10">
+                  💰 Try Calculator
+                  <Calculator className="ml-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
+                </span>
               </button>
             </Link>
             <Link href="/progress">
-              <button className="bg-gradient-to-r from-purple-600 to-indigo-700 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-purple-700 hover:to-indigo-800 transition-all shadow-lg">
-                📊 View Progress
+              <button className="group bg-gradient-to-r from-purple-600 to-indigo-700 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-purple-700 hover:to-indigo-800 transition-all shadow-lg hover-lift">
+                <span className="flex items-center">
+                  📊 View Progress
+                  <Award className="ml-2 w-5 h-5 group-hover:scale-110 transition-transform" />
+                </span>
               </button>
             </Link>
           </div>
         </div>
 
+        {/* Animated Stats Section */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center mb-16">
+          <InteractiveCard 
+            className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-red-500 animate-fade-in-up stagger-1"
+            glowColor="rgba(239, 68, 68, 0.3)"
+          >
+            <div className="text-4xl font-bold text-red-600 mb-2 font-space">
+              <AnimatedCounter end={64} suffix="%" className="text-4xl font-bold text-red-600" />
+            </div>
+            <p className="text-gray-600 text-sm font-inter">of Americans can't pass a basic financial literacy test</p>
+            <p className="text-xs text-red-500 mt-2 font-medium flex items-center justify-center font-poppins">
+              <Target className="w-3 h-3 mr-1" />
+              The problem we're solving
+            </p>
+          </InteractiveCard>
+          
+          <InteractiveCard 
+            className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-6 border-l-4 border-green-500 animate-fade-in-up stagger-2"
+            glowColor="rgba(34, 197, 94, 0.3)"
+          >
+            <div className="text-4xl font-bold text-green-600 mb-2">
+              <AnimatedCounter end={80} suffix="%+" className="text-4xl font-bold text-green-600" />
+            </div>
+            <p className="text-gray-600 text-sm">mastery rate required to unlock next chapter</p>
+            <p className="text-xs text-green-500 mt-2 font-medium flex items-center justify-center">
+              <Award className="w-3 h-3 mr-1" />
+              Real learning outcomes
+            </p>
+          </InteractiveCard>
+          
+          <InteractiveCard 
+            className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-6 border-l-4 border-purple-500 animate-fade-in-up stagger-3"
+            glowColor="rgba(139, 92, 246, 0.3)"
+          >
+            <div className="text-4xl font-bold text-purple-600 mb-2">
+              <AnimatedCounter end={10} className="text-4xl font-bold text-purple-600" />
+            </div>
+            <p className="text-gray-600 text-sm">comprehensive chapters covering all financial basics</p>
+            <p className="text-xs text-purple-500 mt-2 font-medium flex items-center justify-center">
+              <BookOpen className="w-3 h-3 mr-1" />
+              Complete curriculum
+            </p>
+          </InteractiveCard>
+          
+          <InteractiveCard 
+            className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-6 border-l-4 border-blue-500 animate-fade-in-up stagger-4"
+            glowColor="rgba(59, 130, 246, 0.3)"
+          >
+            <div className="text-4xl font-bold text-blue-600 mb-2 flex items-center justify-center">
+              <Zap className="w-10 h-10 mr-2" />
+              Real
+            </div>
+            <p className="text-gray-600 text-sm">OpenAI GPT-4o-mini integration, not simulated chatbots</p>
+            <p className="text-xs text-blue-500 mt-2 font-medium flex items-center justify-center">
+              <Brain className="w-3 h-3 mr-1" />
+              Genuine AI coaching
+            </p>
+          </InteractiveCard>
+        </div>
+
         {/* Comprehensive Chapter Overview - 10 Modules */}
         <div className="mb-16">
           <div className="text-center mb-8">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">Complete Financial Education Curriculum</h3>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4 font-space gradient-text-premium">Complete Financial Education Curriculum</h3>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-inter">
               10 comprehensive modules covering everything from basic budgeting to advanced wealth building
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {/* Chapter 1 - Available */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500 transform hover:scale-105 transition-all">
+            <InteractiveCard 
+              className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-blue-500 transform transition-all"
+              glowColor="rgba(59, 130, 246, 0.3)"
+            >
               <div className="flex items-center mb-3">
                 <span className="text-2xl mr-3">💰</span>
-                <h4 className="text-lg font-bold text-gray-900">Money Fundamentals</h4>
+                <h4 className="text-lg font-bold text-gray-900 font-space">Money Fundamentals</h4>
               </div>
-              <p className="text-gray-600 mb-4">Income, banking, paycheck basics, direct deposits</p>
+              <p className="text-gray-600 mb-4 font-inter">Income, banking, paycheck basics, direct deposits</p>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-green-600 font-medium bg-green-100 px-2 py-1 rounded">✅ Available Now</span>
+                <span className="text-sm text-green-600 font-medium bg-green-100 px-2 py-1 rounded animate-pulse-glow font-poppins">✅ Available Now</span>
                 <Link href="/chapter1">
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
-                    Start Learning
+                  <button className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-all hover:shadow-lg transform hover:scale-105 font-poppins relative overflow-hidden group">
+                    <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <span className="relative z-10">Start Learning</span>
                   </button>
                 </Link>
               </div>
-            </div>
+            </InteractiveCard>
 
             {/* Chapter 2 - Locked */}
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
@@ -200,10 +305,13 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Compound Interest Calculator */}
-            <div className="group bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-6 border border-green-200 hover:shadow-lg transition-all transform hover:scale-105">
+            <InteractiveCard 
+              className="group bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-6 border border-green-200"
+              glowColor="rgba(34, 197, 94, 0.3)"
+            >
               <div className="flex items-center mb-4">
                 <div className="bg-green-500 text-white p-3 rounded-lg mr-4 group-hover:bg-green-600 transition-colors">
-                  <span className="text-2xl">�</span>
+                  <span className="text-2xl">📈</span>
                 </div>
                 <div>
                   <h4 className="text-lg font-bold text-green-900">Compound Interest</h4>
@@ -219,11 +327,11 @@ export default function Home() {
                 <div className="text-xs text-green-600">From $36k invested!</div>
               </div>
               <Link href="/calculators/compound-interest">
-                <button className="w-full bg-green-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-600 transition-all text-sm">
+                <button className="w-full bg-green-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-600 transition-all text-sm hover:shadow-lg transform hover:scale-105">
                   Start Building Wealth
                 </button>
               </Link>
-            </div>
+            </InteractiveCard>
             
             {/* Budget Builder Calculator */}
             <div className="group bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl p-6 border border-blue-200 hover:shadow-lg transition-all transform hover:scale-105">
@@ -299,46 +407,46 @@ export default function Home() {
         </div>
 
         {/* AI-Powered Features Section */}
-        <div className="bg-gradient-to-r from-purple-50 to-indigo-100 rounded-2xl shadow-xl p-8 mb-16 border border-purple-200">
+        <InteractiveCard className="premium-card bg-gradient-to-r from-purple-50 to-indigo-100 rounded-2xl shadow-xl p-8 mb-16 border border-purple-200">
           <div className="text-center mb-8">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">🤖 AI-Powered Learning Experience</h3>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4 font-space gradient-text-premium">🤖 AI-Powered Learning Experience</h3>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-inter">
               Unlike other platforms with simulated chatbots, we use real OpenAI GPT-4o-mini for personalized financial coaching
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl p-6 shadow-lg border border-purple-100">
-              <div className="bg-purple-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+            <InteractiveCard className="premium-card rounded-xl p-6 shadow-lg border border-purple-100" glowColor="rgba(147, 51, 234, 0.3)">
+              <div className="bg-gradient-to-br from-purple-100 to-purple-200 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                 <span className="text-2xl">🧠</span>
               </div>
-              <h4 className="text-lg font-bold text-gray-900 mb-2">Contextual AI Coaching</h4>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <h4 className="text-lg font-bold text-gray-900 mb-2 font-space">Contextual AI Coaching</h4>
+              <p className="text-gray-600 text-sm leading-relaxed font-inter">
                 Our AI knows your learning progress, quiz scores, and struggling topics to provide personalized guidance exactly when you need it.
               </p>
-            </div>
+            </InteractiveCard>
             
-            <div className="bg-white rounded-xl p-6 shadow-lg border border-purple-100">
-              <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+            <InteractiveCard className="premium-card rounded-xl p-6 shadow-lg border border-purple-100" glowColor="rgba(59, 130, 246, 0.3)">
+              <div className="bg-gradient-to-br from-blue-100 to-blue-200 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                 <span className="text-2xl">📊</span>
               </div>
-              <h4 className="text-lg font-bold text-gray-900 mb-2">Progress Tracking</h4>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <h4 className="text-lg font-bold text-gray-900 mb-2 font-space">Progress Tracking</h4>
+              <p className="text-gray-600 text-sm leading-relaxed font-inter">
                 Every lesson completed, calculator used, and quiz taken is tracked across sessions with persistent localStorage and analytics.
               </p>
-            </div>
+            </InteractiveCard>
             
-            <div className="bg-white rounded-xl p-6 shadow-lg border border-purple-100">
-              <div className="bg-green-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-2xl">💬</span>
+            <InteractiveCard className="premium-card rounded-xl p-6 shadow-lg border border-purple-100" glowColor="rgba(34, 197, 94, 0.3)">
+              <div className="bg-gradient-to-br from-green-100 to-green-200 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <span className="text-2xl">❓</span>
               </div>
-              <h4 className="text-lg font-bold text-gray-900 mb-2">Ask Anything</h4>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Got a financial question? Ask our AI assistant anytime during lessons. It's disabled during quizzes to maintain assessment integrity.
+              <h4 className="text-lg font-bold text-gray-900 mb-2 font-space">Smart Q&A System</h4>
+              <p className="text-gray-600 text-sm leading-relaxed font-inter">
+                Ask any financial question and get expert-level answers that adapt to your current learning level and progress.
               </p>
-            </div>
+            </InteractiveCard>
           </div>
-        </div>
+        </InteractiveCard>
 
         {/* Impact Statistics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center mb-16">

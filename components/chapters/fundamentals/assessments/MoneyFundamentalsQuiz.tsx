@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useProgressActions } from '@/lib/context/ProgressContext';
+import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
+import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 
 interface QuizQuestion {
   id: number;
@@ -80,6 +82,7 @@ export default function MoneyFundamentalsQuiz() {
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(quizQuestions.length).fill(-1));
   const [showResults, setShowResults] = useState(false);
   const [showExplanation, setShowExplanation] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   const handleAnswerSelect = (answerIndex: number) => {
     const newAnswers = [...selectedAnswers];
@@ -133,6 +136,11 @@ export default function MoneyFundamentalsQuiz() {
     // Record the quiz score
     recordQuizScore('money-fundamentals-quiz', percentage);
 
+    // Show celebration for passing
+    if (passed) {
+      setShowCelebration(true);
+    }
+
     // Track struggling topics
     selectedAnswers.forEach((answer, index) => {
       const question = quizQuestions[index];
@@ -154,8 +162,17 @@ export default function MoneyFundamentalsQuiz() {
     });
 
     return (
-      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
-        <div className="text-center">
+      <>
+        <SuccessCelebration
+          show={showCelebration}
+          title="🎉 Quiz Mastered!"
+          message={`Amazing! You scored ${percentage}% and unlocked Chapter 2!`}
+          onComplete={() => setShowCelebration(false)}
+          type="quiz"
+        />
+        
+        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8 animate-fade-in-up">
+          <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Quiz Results</h2>
           <div className={`text-6xl font-bold mb-4 ${passed ? 'text-green-600' : 'text-red-600'}`}>
             {percentage}%
@@ -194,7 +211,8 @@ export default function MoneyFundamentalsQuiz() {
             )}
           </div>
         </div>
-      </div>
+        </div>
+      </>
     );
   }
 
