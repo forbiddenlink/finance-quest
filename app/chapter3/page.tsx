@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
-import { useProgress, useProgressActions } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 import IncomeCareerLesson from '@/components/chapters/fundamentals/lessons/IncomeCareerLesson';
 import IncomeCareerQuiz from '@/components/chapters/fundamentals/assessments/IncomeCareerQuiz';
 import SalaryNegotiationCalculator from '@/components/chapters/fundamentals/calculators/SalaryNegotiationCalculator';
@@ -12,8 +12,7 @@ import SalaryNegotiationCalculator from '@/components/chapters/fundamentals/calc
 export default function Chapter3Page() {
   const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
   const [lessonCompleted, setLessonCompleted] = useState(false);
-  const { state } = useProgress();
-  const { completeLesson, recordQuizScore, advanceChapter, updateTimeSpent } = useProgressActions();
+  const { userProgress, completeLesson, recordQuizScore } = useProgressStore();
 
   const pageVariants = {
     initial: { opacity: 0, x: 20 },
@@ -29,15 +28,12 @@ export default function Chapter3Page() {
 
   const handleLessonComplete = () => {
     setLessonCompleted(true);
-    completeLesson('chapter3-lesson');
-    updateTimeSpent(20);
+    completeLesson('chapter3-lesson', 20);
   };
 
   const handleQuizComplete = (score: number) => {
-    recordQuizScore('chapter3', score);
-    if (score >= 0.85) {
-      advanceChapter();
-    }
+    recordQuizScore('chapter3-quiz', score, 10);
+    // Quiz completion advances chapter automatically in Zustand store
   };
 
   return (
@@ -75,7 +71,7 @@ export default function Chapter3Page() {
               </p>
             </div>
 
-            {state.userProgress.completedLessons.includes('chapter3-lesson') && (
+            {userProgress.completedLessons.includes('chapter3-lesson') && (
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -130,8 +126,8 @@ export default function Chapter3Page() {
               key={tab.key}
               onClick={() => setCurrentSection(tab.key as 'lesson' | 'calculator' | 'quiz')}
               className={`flex-1 py-3 px-4 rounded-md font-medium transition-all ${currentSection === tab.key
-                  ? 'bg-green-500 text-white shadow-md'
-                  : 'text-gray-600 hover:text-green-500 hover:bg-green-50'
+                ? 'bg-green-500 text-white shadow-md'
+                : 'text-gray-600 hover:text-green-500 hover:bg-green-50'
                 }`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -180,7 +176,7 @@ export default function Chapter3Page() {
             Previous Chapter
           </Link>
 
-          {state.userProgress.currentChapter > 3 && (
+          {userProgress.currentChapter > 3 && (
             <Link
               href="/chapter4"
               className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-lg hover:from-green-600 hover:to-blue-700 transition-colors"

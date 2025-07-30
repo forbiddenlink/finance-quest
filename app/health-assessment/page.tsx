@@ -3,11 +3,11 @@
 import FinancialHealthScoreCalculator from '@/components/shared/ui/FinancialHealthScoreCalculator';
 import EconomicDashboard from '@/components/shared/ui/EconomicDashboard';
 import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
-import { useProgress } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 import { ArrowLeft, Heart, Brain, Target, TrendingUp, Award, BarChart3 } from 'lucide-react';
 
 export default function HealthAssessmentPage() {
-  const { state } = useProgress();
+  const userProgress = useProgressStore(state => state.userProgress);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
@@ -96,7 +96,7 @@ export default function HealthAssessmentPage() {
         </div>
 
         {/* Spaced Repetition Dashboard - Show if user has completed lessons */}
-        {state.userProgress.completedLessons.length > 0 && (
+        {userProgress.completedLessons.length > 0 && (
           <div className="mb-12">
             <div className="text-center mb-8">
               <h3 className="text-3xl font-bold text-gray-900 mb-4 flex items-center justify-center gap-3">

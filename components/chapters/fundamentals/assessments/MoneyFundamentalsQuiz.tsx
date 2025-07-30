@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useProgressActions } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
 import { CheckCircle, XCircle, Sparkles } from 'lucide-react';
 
@@ -77,7 +77,7 @@ const quizQuestions: QuizQuestion[] = [
 ];
 
 export default function MoneyFundamentalsQuiz() {
-  const { recordQuizScore, addStrugglingTopic, removeStrugglingTopic } = useProgressActions();
+  const { recordQuizScore } = useProgressStore();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(quizQuestions.length).fill(-1));
   const [showResults, setShowResults] = useState(false);
@@ -134,32 +134,12 @@ export default function MoneyFundamentalsQuiz() {
     const passed = percentage >= 80;
 
     // Record the quiz score
-    recordQuizScore('money-fundamentals-quiz', percentage);
+    recordQuizScore('money-fundamentals-quiz', percentage, quizQuestions.length);
 
     // Show celebration for passing
     if (passed) {
       setShowCelebration(true);
     }
-
-    // Track struggling topics
-    selectedAnswers.forEach((answer, index) => {
-      const question = quizQuestions[index];
-      if (answer !== question.correctAnswer) {
-        // Add struggling topics based on wrong answers
-        if (index === 0) addStrugglingTopic('gross-vs-net-pay');
-        if (index === 1) addStrugglingTopic('fica-taxes');
-        if (index === 2) addStrugglingTopic('banking-basics');
-        if (index === 3) addStrugglingTopic('paycheck-calculations');
-        if (index === 4) addStrugglingTopic('fdic-insurance');
-      } else {
-        // Remove from struggling topics if they got it right
-        if (index === 0) removeStrugglingTopic('gross-vs-net-pay');
-        if (index === 1) removeStrugglingTopic('fica-taxes');
-        if (index === 2) removeStrugglingTopic('banking-basics');
-        if (index === 3) removeStrugglingTopic('paycheck-calculations');
-        if (index === 4) removeStrugglingTopic('fdic-insurance');
-      }
-    });
 
     return (
       <>
@@ -255,12 +235,12 @@ export default function MoneyFundamentalsQuiz() {
               key={index}
               onClick={() => handleAnswerSelect(index)}
               className={`w-full p-4 text-left rounded-lg border-2 transition-colors ${selectedAnswer === index
-                  ? showExplanation
-                    ? index === question.correctAnswer
-                      ? 'border-green-500 bg-green-50 text-green-900'
-                      : 'border-red-500 bg-red-50 text-red-900'
-                    : 'border-purple-500 bg-purple-50 text-purple-900'
-                  : 'border-gray-200 hover:border-gray-300 text-gray-700 hover:text-gray-900'
+                ? showExplanation
+                  ? index === question.correctAnswer
+                    ? 'border-green-500 bg-green-50 text-green-900'
+                    : 'border-red-500 bg-red-50 text-red-900'
+                  : 'border-purple-500 bg-purple-50 text-purple-900'
+                : 'border-gray-200 hover:border-gray-300 text-gray-700 hover:text-gray-900'
                 }`}
             >
               <div className="flex items-center">

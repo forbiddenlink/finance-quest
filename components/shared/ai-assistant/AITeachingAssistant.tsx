@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useProgress } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 import { Bot, Lightbulb } from 'lucide-react';
 
 interface Message {
@@ -26,7 +26,7 @@ const quickHelpTopics: QuickHelp[] = [
 ];
 
 export default function AITeachingAssistant() {
-  const { state } = useProgress();
+  const userProgress = useProgressStore(state => state.userProgress);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -65,7 +65,7 @@ export default function AITeachingAssistant() {
         },
         body: JSON.stringify({
           message: userInput,
-          userProgress: state.userProgress
+          userProgress: userProgress
         }),
       });
 
@@ -123,10 +123,10 @@ export default function AITeachingAssistant() {
 
   // Get progress summary for display
   const getProgressSummary = () => {
-    const progress = state.userProgress;
+    const progress = userProgress;
     const completionPercentage = Math.round((progress.completedLessons.length / 3) * 100);
     const hasQuizScores = Object.keys(progress.quizScores).length > 0;
-    const recentQuizScore = hasQuizScores ? Math.max(...Object.values(progress.quizScores)) : 0;
+    const recentQuizScore = hasQuizScores ? Math.max(...Object.values(progress.quizScores).map(score => Number(score))) : 0;
 
     return { completionPercentage, recentQuizScore, hasQuizScores };
   };

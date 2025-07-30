@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { Lightbulb, Sparkles } from 'lucide-react';
-import * as Financial from 'financial';
 import { useProgressStore } from '@/lib/store/progressStore';
 
 interface CompoundData {
@@ -25,7 +24,7 @@ export default function CompoundInterestCalculator() {
 
   // Track calculator usage for analytics
   const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
-  
+
   useEffect(() => {
     recordCalculatorUsage('compound-interest');
   }, [recordCalculatorUsage]);
@@ -43,7 +42,7 @@ export default function CompoundInterestCalculator() {
 
     for (let year = 0; year <= t; year++) {
       let yearEndValue: number;
-      
+
       if (year === 0) {
         // Initial year - just the principal
         yearEndValue = P;
@@ -52,10 +51,10 @@ export default function CompoundInterestCalculator() {
         // Calculate using financial library for professional accuracy
         const monthsElapsed = year * 12;
         const monthlyRate = r / 12;
-        
+
         // Future value of initial principal after compounding
         const futureValuePrincipal = P * Math.pow(1 + r, year);
-        
+
         // Future value of monthly contributions (annuity)
         let futureValueContributions = 0;
         if (monthlyAdd > 0 && monthlyRate > 0) {
@@ -65,7 +64,7 @@ export default function CompoundInterestCalculator() {
           // If no interest, just sum the contributions
           futureValueContributions = monthlyAdd * monthsElapsed;
         }
-        
+
         yearEndValue = futureValuePrincipal + futureValueContributions;
         totalContributions = P + (monthlyAdd * monthsElapsed);
       }

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { Shield, Target, Calendar, DollarSign, TrendingUp, AlertCircle, CheckCircle } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
 
@@ -44,13 +44,12 @@ export default function EmergencyFundCalculator() {
 
   // Track calculator usage
   const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
-  
+
   useEffect(() => {
     recordCalculatorUsage('emergency-fund');
   }, [recordCalculatorUsage]);
 
   const calculateEmergencyFund = useCallback(() => {
-    const income = parseFloat(monthlyIncome) || 0;
     const rentAmount = parseFloat(rent) || 0;
     const utilitiesAmount = parseFloat(utilities) || 0;
     const groceriesAmount = parseFloat(groceries) || 0;
@@ -62,9 +61,9 @@ export default function EmergencyFundCalculator() {
     const savings = parseFloat(monthlySavings) || 0;
     const current = parseFloat(currentSavings) || 0;
 
-    const expenses = rentAmount + utilitiesAmount + groceriesAmount + 
-                    transportationAmount + insuranceAmount + debtAmount + otherAmount;
-    
+    const expenses = rentAmount + utilitiesAmount + groceriesAmount +
+      transportationAmount + insuranceAmount + debtAmount + otherAmount;
+
     const target = expenses * months;
     const remaining = Math.max(0, target - current);
     const timeMonths = savings > 0 ? Math.ceil(remaining / savings) : 0;
@@ -101,7 +100,7 @@ export default function EmergencyFundCalculator() {
     });
 
     setSavingsMilestones(milestones);
-  }, [monthlyIncome, rent, utilities, groceries, transportation, insurance, minimumDebt, other, monthsOfExpenses, monthlySavings, currentSavings]);
+  }, [rent, utilities, groceries, transportation, insurance, minimumDebt, other, monthsOfExpenses, monthlySavings, currentSavings]);
 
   useEffect(() => {
     calculateEmergencyFund();
@@ -267,7 +266,7 @@ export default function EmergencyFundCalculator() {
           {/* Emergency Fund Settings */}
           <div className="bg-blue-50 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-blue-900 mb-4">Emergency Fund Goals</h3>
-            
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Target (Months of Expenses)</label>
@@ -328,14 +327,14 @@ export default function EmergencyFundCalculator() {
               <p className="text-2xl font-bold text-red-700">{formatCurrency(totalExpenses)}</p>
               <p className="text-sm text-red-600">Essential costs to cover</p>
             </div>
-            
+
             <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6 text-center">
               <Target className="w-8 h-8 mx-auto mb-3 text-blue-600" />
               <h3 className="text-lg font-semibold text-blue-900">Emergency Fund Target</h3>
               <p className="text-2xl font-bold text-blue-700">{formatCurrency(emergencyFundTarget)}</p>
               <p className="text-sm text-blue-600">{monthsOfExpenses} months of expenses</p>
             </div>
-            
+
             <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-6 text-center">
               <Calendar className="w-8 h-8 mx-auto mb-3 text-green-600" />
               <h3 className="text-lg font-semibold text-green-900">Time to Goal</h3>
@@ -349,7 +348,7 @@ export default function EmergencyFundCalculator() {
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Current Progress</h3>
             <div className="relative">
               <div className="w-full bg-gray-200 rounded-full h-6">
-                <div 
+                <div
                   className="bg-gradient-to-r from-blue-500 to-green-500 h-6 rounded-full transition-all duration-500"
                   style={{ width: `${Math.min(currentProgress, 100)}%` }}
                 ></div>
@@ -393,11 +392,10 @@ export default function EmergencyFundCalculator() {
             <div className="space-y-3">
               {savingsMilestones.map((milestone, index) => {
                 const achieved = parseFloat(currentSavings) >= milestone.amount;
-                
+
                 return (
-                  <div key={index} className={`flex items-center justify-between p-4 rounded-lg border-2 ${
-                    achieved ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'
-                  }`}>
+                  <div key={index} className={`flex items-center justify-between p-4 rounded-lg border-2 ${achieved ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'
+                    }`}>
                     <div className="flex items-center gap-3">
                       {achieved ? (
                         <CheckCircle className="w-5 h-5 text-green-600" />
@@ -426,9 +424,8 @@ export default function EmergencyFundCalculator() {
 
       {/* Financial Health Assessment */}
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className={`rounded-lg p-6 border-2 ${
-          incomeAfterExpenses > 0 ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
-        }`}>
+        <div className={`rounded-lg p-6 border-2 ${incomeAfterExpenses > 0 ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
+          }`}>
           <div className="flex items-center gap-3 mb-3">
             {incomeAfterExpenses > 0 ? (
               <CheckCircle className="w-6 h-6 text-green-600" />
@@ -440,34 +437,30 @@ export default function EmergencyFundCalculator() {
             </h4>
           </div>
           <p className={`text-sm ${incomeAfterExpenses > 0 ? 'text-green-700' : 'text-red-700'}`}>
-            {incomeAfterExpenses > 0 
+            {incomeAfterExpenses > 0
               ? `Great! You have ${formatCurrency(incomeAfterExpenses)} left after essential expenses.`
               : `Warning: You're spending ${formatCurrency(Math.abs(incomeAfterExpenses))} more than you earn.`
             }
           </p>
         </div>
 
-        <div className={`rounded-lg p-6 border-2 ${
-          savingsRate >= 20 ? 'bg-green-50 border-green-200' : 
-          savingsRate >= 10 ? 'bg-yellow-50 border-yellow-200' : 'bg-red-50 border-red-200'
-        }`}>
+        <div className={`rounded-lg p-6 border-2 ${savingsRate >= 20 ? 'bg-green-50 border-green-200' :
+            savingsRate >= 10 ? 'bg-yellow-50 border-yellow-200' : 'bg-red-50 border-red-200'
+          }`}>
           <div className="flex items-center gap-3 mb-3">
-            <TrendingUp className={`w-6 h-6 ${
-              savingsRate >= 20 ? 'text-green-600' : 
-              savingsRate >= 10 ? 'text-yellow-600' : 'text-red-600'
-            }`} />
-            <h4 className={`font-semibold ${
-              savingsRate >= 20 ? 'text-green-900' : 
-              savingsRate >= 10 ? 'text-yellow-900' : 'text-red-900'
-            }`}>
+            <TrendingUp className={`w-6 h-6 ${savingsRate >= 20 ? 'text-green-600' :
+                savingsRate >= 10 ? 'text-yellow-600' : 'text-red-600'
+              }`} />
+            <h4 className={`font-semibold ${savingsRate >= 20 ? 'text-green-900' :
+                savingsRate >= 10 ? 'text-yellow-900' : 'text-red-900'
+              }`}>
               Savings Rate
             </h4>
           </div>
-          <p className={`text-sm ${
-            savingsRate >= 20 ? 'text-green-700' : 
-            savingsRate >= 10 ? 'text-yellow-700' : 'text-red-700'
-          }`}>
-            You're saving {savingsRate.toFixed(1)}% of income. 
+          <p className={`text-sm ${savingsRate >= 20 ? 'text-green-700' :
+              savingsRate >= 10 ? 'text-yellow-700' : 'text-red-700'
+            }`}>
+            You&apos;re saving {savingsRate.toFixed(1)}% of income.
             {savingsRate >= 20 ? ' Excellent!' : savingsRate >= 10 ? ' Good, but could be higher.' : ' Try to reach at least 10%.'}
           </p>
         </div>

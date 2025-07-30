@@ -17,7 +17,7 @@ import {
   Heart,
   Calculator
 } from 'lucide-react';
-import { useProgress } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 import EconomicDashboard from './EconomicDashboard';
 
 interface FeatureStatus {
@@ -30,7 +30,7 @@ interface FeatureStatus {
 }
 
 export default function EnhancedProgressDashboard() {
-  const { state } = useProgress();
+  const userProgress = useProgressStore(state => state.userProgress);
 
   const implementedFeatures: FeatureStatus[] = [
     {
@@ -186,7 +186,7 @@ export default function EnhancedProgressDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Chapters Available</p>
-                <p className="text-3xl font-bold text-blue-600">{state.userProgress.currentChapter}</p>
+                <p className="text-3xl font-bold text-blue-600">{userProgress.currentChapter}</p>
               </div>
               <Brain className="w-12 h-12 text-blue-500" />
             </div>

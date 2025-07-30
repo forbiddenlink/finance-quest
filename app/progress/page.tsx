@@ -2,28 +2,28 @@
 
 import { motion } from 'framer-motion';
 import { useEnhancedProgress } from '@/lib/store/progressHooks';
-import { 
-  TrendingUp, 
-  Target, 
-  Clock, 
-  Award, 
-  BookOpen, 
-  Calculator, 
-  BarChart3, 
+import {
+  TrendingUp,
+  Target,
+  Clock,
+  Award,
+  BookOpen,
+  Calculator,
+  BarChart3,
   Brain,
   CheckCircle,
   AlertTriangle,
   Zap,
   Star
 } from 'lucide-react';
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import React from 'react';
 import AnimatedCounter from '@/components/shared/ui/AnimatedCounter';
 
 export default function ProgressPage() {
   const progress = useEnhancedProgress();
 
   // Calculate learning velocity (lessons per week)
-  const learningVelocity = progress.totalLessonsCompleted > 0 
+  const learningVelocity = progress.totalLessonsCompleted > 0
     ? Math.round((progress.totalLessonsCompleted / Math.max(progress.currentStreak, 1)) * 7 * 10) / 10
     : 0;
 
@@ -37,41 +37,41 @@ export default function ProgressPage() {
   ];
 
   const achievements = [
-    { 
-      id: 'first-lesson', 
-      title: 'First Steps', 
+    {
+      id: 'first-lesson',
+      title: 'First Steps',
       description: 'Completed your first lesson',
       unlocked: progress.totalLessonsCompleted >= 1,
       icon: BookOpen,
       color: 'text-blue-600'
     },
-    { 
-      id: 'quiz-master', 
-      title: 'Quiz Master', 
+    {
+      id: 'quiz-master',
+      title: 'Quiz Master',
       description: 'Passed 3 quizzes with 80%+',
       unlocked: progress.totalQuizzesTaken >= 3 && progress.averageQuizScore >= 80,
       icon: Brain,
       color: 'text-purple-600'
     },
-    { 
-      id: 'calculator-pro', 
-      title: 'Calculator Pro', 
+    {
+      id: 'calculator-pro',
+      title: 'Calculator Pro',
       description: 'Used all 6 financial calculators',
       unlocked: Object.keys(progress.userProgress.calculatorUsage).length >= 6,
       icon: Calculator,
       color: 'text-green-600'
     },
-    { 
-      id: 'streak-master', 
-      title: 'Streak Master', 
+    {
+      id: 'streak-master',
+      title: 'Streak Master',
       description: '7-day learning streak',
       unlocked: progress.currentStreak >= 7,
       icon: Zap,
       color: 'text-yellow-600'
     },
-    { 
-      id: 'financial-literacy', 
-      title: 'Financially Literate', 
+    {
+      id: 'financial-literacy',
+      title: 'Financially Literate',
       description: 'Financial Literacy Score over 500',
       unlocked: progress.userProgress.financialLiteracyScore >= 500,
       icon: Star,
@@ -271,28 +271,23 @@ export default function ProgressPage() {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 + index * 0.1 }}
-                      className={`flex items-center gap-3 p-3 rounded-lg ${
-                        achievement.unlocked 
-                          ? 'bg-green-50 border border-green-200' 
+                      className={`flex items-center gap-3 p-3 rounded-lg ${achievement.unlocked
+                          ? 'bg-green-50 border border-green-200'
                           : 'bg-gray-50 border border-gray-200'
-                      }`}
+                        }`}
                     >
-                      <div className={`p-2 rounded-lg ${
-                        achievement.unlocked ? 'bg-green-100' : 'bg-gray-100'
-                      }`}>
-                        <Icon className={`w-5 h-5 ${
-                          achievement.unlocked ? achievement.color : 'text-gray-400'
-                        }`} />
+                      <div className={`p-2 rounded-lg ${achievement.unlocked ? 'bg-green-100' : 'bg-gray-100'
+                        }`}>
+                        <Icon className={`w-5 h-5 ${achievement.unlocked ? achievement.color : 'text-gray-400'
+                          }`} />
                       </div>
                       <div className="flex-1">
-                        <p className={`font-medium ${
-                          achievement.unlocked ? 'text-gray-900' : 'text-gray-500'
-                        }`}>
+                        <p className={`font-medium ${achievement.unlocked ? 'text-gray-900' : 'text-gray-500'
+                          }`}>
                           {achievement.title}
                         </p>
-                        <p className={`text-xs ${
-                          achievement.unlocked ? 'text-gray-600' : 'text-gray-400'
-                        }`}>
+                        <p className={`text-xs ${achievement.unlocked ? 'text-gray-600' : 'text-gray-400'
+                          }`}>
                           {achievement.description}
                         </p>
                       </div>

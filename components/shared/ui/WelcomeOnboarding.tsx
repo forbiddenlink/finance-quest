@@ -3,13 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
-import { 
-  Rocket, 
-  Target, 
-  BookOpen, 
-  Calculator, 
-  Brain, 
-  CheckCircle, 
+import {
+  Rocket,
+  Target,
+  BookOpen,
+  Calculator,
+  CheckCircle,
   ArrowRight,
   Star,
   Zap,
@@ -48,7 +47,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
           <div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Ready to Transform Your Financial Future?</h3>
             <p className="text-gray-600">
-              Join thousands of learners who've gone from financial confusion to confidence. 
+              Join thousands of learners who&apos;ve gone from financial confusion to confidence.
               Our proven system will teach you everything you need to know about money.
             </p>
           </div>
@@ -100,7 +99,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
             <p className="text-sm text-yellow-800">
               <Zap className="w-4 h-4 inline mr-1" />
-              <strong>Pro Tip:</strong> Complete lessons in order for the best learning experience. 
+              <strong>Pro Tip:</strong> Complete lessons in order for the best learning experience.
               Each chapter builds on the previous one!
             </p>
           </div>
@@ -123,7 +122,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
               { icon: Star, title: "Invest & Build Wealth", subtitle: "Start investing and plan for financial independence" },
               { icon: Award, title: "Prepare for Retirement", subtitle: "Maximize 401k, IRA, and retirement planning" }
             ].map((goal, index) => (
-              <div 
+              <div
                 key={index}
                 className="flex items-center gap-4 p-4 bg-gray-50 hover:bg-blue-50 rounded-lg border border-gray-200 hover:border-blue-300 cursor-pointer transition-all"
                 onClick={() => {
@@ -155,7 +154,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
           <div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Welcome to Your Financial Future!</h3>
             <p className="text-gray-600">
-              Your progress will be automatically saved as you complete lessons and use calculators. 
+              Your progress will be automatically saved as you complete lessons and use calculators.
               Start with Chapter 1 to build a strong foundation.
             </p>
           </div>
@@ -164,7 +163,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
               <strong>Quick Start Recommendation:</strong>
             </p>
             <p className="text-sm text-blue-700">
-              Begin with "Money Fundamentals" to understand your relationship with money, 
+              Begin with &quot;Money Fundamentals&quot; to understand your relationship with money,
               then try the Paycheck Calculator to see how taxes affect your income.
             </p>
           </div>
@@ -225,7 +224,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
               <div className="text-sm opacity-90">
                 Step {currentStep + 1} of {steps.length}
               </div>
-              <button 
+              <button
                 onClick={handleSkip}
                 className="text-sm opacity-75 hover:opacity-100 transition-opacity"
               >

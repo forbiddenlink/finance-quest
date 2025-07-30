@@ -41,7 +41,7 @@ export default function Chapter5Page() {
       color: 'from-red-400 to-red-600'
     },
     {
-      id: 'chapter5-lesson2', 
+      id: 'chapter5-lesson2',
       title: 'Sizing Your Emergency Fund',
       description: '3 months vs 6 months vs 12 months - what\'s right for you?',
       icon: Target,
@@ -103,10 +103,10 @@ export default function Chapter5Page() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
-      <SuccessCelebration 
-        show={showCelebration} 
+      <SuccessCelebration
+        show={showCelebration}
         title="Lesson Complete!"
-        message="You're building financial security!" 
+        message="You&apos;re building financial security!"
         onComplete={() => setShowCelebration(false)}
         type="lesson"
       />
@@ -119,7 +119,7 @@ export default function Chapter5Page() {
               <Shield className="w-8 h-8 text-red-600" />
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">Chapter 5: Emergency Funds & Financial Safety</h1>
-                <p className="text-sm text-gray-600">Building your financial fortress against life's uncertainties</p>
+                <p className="text-sm text-gray-600">Building your financial fortress against life&apos;s uncertainties</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -140,7 +140,7 @@ export default function Chapter5Page() {
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Your Financial Safety Net</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Emergency funds aren't just savings—they're peace of mind, freedom from debt cycles, and the foundation 
+              Emergency funds aren&apos;t just savings—they&apos;re peace of mind, freedom from debt cycles, and the foundation
               of every successful financial plan. Learn how to build and maintain the safety net that protects your dreams.
             </p>
           </div>
@@ -150,7 +150,7 @@ export default function Chapter5Page() {
             <div className="bg-red-50 rounded-lg p-6 text-center">
               <AlertTriangle className="w-8 h-8 mx-auto mb-3 text-red-600" />
               <div className="text-2xl font-bold text-red-700">40%</div>
-              <div className="text-sm text-red-600">of Americans can't cover a $400 emergency</div>
+              <div className="text-sm text-red-600">of Americans can&apos;t cover a $400 emergency</div>
             </div>
             <div className="bg-orange-50 rounded-lg p-6 text-center">
               <Clock className="w-8 h-8 mx-auto mb-3 text-orange-600" />
@@ -166,7 +166,7 @@ export default function Chapter5Page() {
 
           {/* What You'll Learn */}
           <div className="bg-blue-50 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-blue-900 mb-4">What You'll Master in This Chapter</h3>
+            <h3 className="text-lg font-semibold text-blue-900 mb-4">What You&apos;ll Master in This Chapter</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
@@ -241,7 +241,7 @@ export default function Chapter5Page() {
                       {index === 0 && (
                         <>
                           <div className="font-medium text-red-700">🧠 The Scarcity Trap</div>
-                          <p>Learn why your brain sees emergency funds as "wasted" money and how to reframe this thinking.</p>
+                          <p>Learn why your brain sees emergency funds as &quot;wasted&quot; money and how to reframe this thinking.</p>
                           <div className="font-medium text-red-700">💰 Real Cost of No Safety Net</div>
                           <p>Calculate how much debt cycles and financial stress actually cost you annually.</p>
                         </>
@@ -251,7 +251,7 @@ export default function Chapter5Page() {
                           <div className="font-medium text-blue-700">📊 Personal Risk Assessment</div>
                           <p>Evaluate your job security, health, dependents, and income stability.</p>
                           <div className="font-medium text-blue-700">🎯 The Right Amount Formula</div>
-                          <p>3-12 months of expenses: here's how to calculate your optimal target.</p>
+                          <p>3-12 months of expenses: here&apos;s how to calculate your optimal target.</p>
                         </>
                       )}
                       {index === 2 && (
@@ -265,7 +265,7 @@ export default function Chapter5Page() {
                       {index === 3 && (
                         <>
                           <div className="font-medium text-purple-700">🤖 Automation Strategies</div>
-                          <p>Set up automatic transfers and use "pay yourself first" principles.</p>
+                          <p>Set up automatic transfers and use &quot;pay yourself first&quot; principles.</p>
                           <div className="font-medium text-purple-700">🏆 Milestone Motivation</div>
                           <p>Stay motivated with micro-goals and celebration strategies.</p>
                         </>
@@ -301,25 +301,25 @@ export default function Chapter5Page() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-green-50 rounded-lg p-6">
               <Briefcase className="w-8 h-8 text-green-600 mb-4" />
-              <h4 className="font-semibold text-green-900 mb-2">Sarah's Job Loss Recovery</h4>
+              <h4 className="font-semibold text-green-900 mb-2">Sarah&apos;s Job Loss Recovery</h4>
               <p className="text-sm text-green-700">
-                With 6 months of expenses saved, Sarah took time to find the right job instead of accepting the first offer. 
+                With 6 months of expenses saved, Sarah took time to find the right job instead of accepting the first offer.
                 Result: 30% salary increase and better benefits.
               </p>
             </div>
             <div className="bg-blue-50 rounded-lg p-6">
               <Heart className="w-8 h-8 text-blue-600 mb-4" />
-              <h4 className="font-semibold text-blue-900 mb-2">Mike's Medical Emergency</h4>
+              <h4 className="font-semibold text-blue-900 mb-2">Mike&apos;s Medical Emergency</h4>
               <p className="text-sm text-blue-700">
-                Unexpected surgery cost $15,000. His emergency fund covered the deductible and lost income during recovery, 
+                Unexpected surgery cost $15,000. His emergency fund covered the deductible and lost income during recovery,
                 avoiding bankruptcy and debt.
               </p>
             </div>
             <div className="bg-purple-50 rounded-lg p-6">
               <Home className="w-8 h-8 text-purple-600 mb-4" />
-              <h4 className="font-semibold text-purple-900 mb-2">Lisa's Home Opportunity</h4>
+              <h4 className="font-semibold text-purple-900 mb-2">Lisa&apos;s Home Opportunity</h4>
               <p className="text-sm text-purple-700">
-                When her dream home appeared, Lisa used part of her emergency fund for a down payment, 
+                When her dream home appeared, Lisa used part of her emergency fund for a down payment,
                 then quickly rebuilt it. No regrets—emergency funds provide options.
               </p>
             </div>

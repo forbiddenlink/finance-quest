@@ -3,23 +3,17 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  CreditCard, 
-  AlertTriangle, 
-  TrendingDown, 
+import {
+  CreditCard,
+  AlertTriangle,
+  TrendingDown,
   Calculator,
   CheckCircle,
   Lock,
-  Unlock,
-  BookOpen,
   Target,
-  Brain,
-  DollarSign,
-  PieChart,
-  Shield
+  Brain
 } from 'lucide-react';
 import { useEnhancedProgress } from '@/lib/store/progressHooks';
-import LoadingSpinner from '@/components/shared/ui/LoadingSpinner';
 import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
 
 interface Lesson {
@@ -117,10 +111,10 @@ export default function Chapter4Page() {
       {/* Success Celebration */}
       <AnimatePresence>
         {showCelebration && (
-          <SuccessCelebration 
+          <SuccessCelebration
             show={showCelebration}
             title="Lesson Complete!"
-            message="Great job learning about credit and debt! 🎉" 
+            message="Great job learning about credit and debt! 🎉"
           />
         )}
       </AnimatePresence>
@@ -142,11 +136,11 @@ export default function Chapter4Page() {
             <CreditCard className="w-8 h-8 text-red-600" />
             <span className="text-lg font-semibold text-gray-700">Chapter 4</span>
           </div>
-          
+
           <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 bg-clip-text text-transparent mb-4">
             Credit & Debt Management
           </h1>
-          
+
           <p className="text-xl text-gray-700 max-w-3xl mx-auto mb-8">
             Master the critical skills of managing credit and eliminating debt to build a strong financial foundation.
           </p>
@@ -193,7 +187,7 @@ export default function Chapter4Page() {
                   Complete Lesson
                 </button>
               </div>
-              
+
               {lessons.find(l => l.id === currentLesson)?.content}
             </motion.div>
           ) : (
@@ -211,9 +205,8 @@ export default function Chapter4Page() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ scale: 1.02 }}
-                  className={`bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg cursor-pointer transition-all duration-300 ${
-                    lesson.completed ? 'ring-2 ring-green-500' : 'hover:shadow-xl'
-                  }`}
+                  className={`bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg cursor-pointer transition-all duration-300 ${lesson.completed ? 'ring-2 ring-green-500' : 'hover:shadow-xl'
+                    }`}
                   onClick={() => setCurrentLesson(lesson.id)}
                 >
                   <div className="flex items-start justify-between mb-4">
@@ -227,15 +220,14 @@ export default function Chapter4Page() {
                       </div>
                     </div>
                   </div>
-                  
+
                   <p className="text-gray-700 mb-4">{lesson.description}</p>
-                  
+
                   <div className="flex items-center justify-between">
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      lesson.completed 
-                        ? 'bg-green-100 text-green-800' 
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${lesson.completed
+                        ? 'bg-green-100 text-green-800'
                         : 'bg-blue-100 text-blue-800'
-                    }`}>
+                      }`}>
                       {lesson.completed ? 'Completed' : 'Start Lesson'}
                     </span>
                   </div>
@@ -275,9 +267,9 @@ function CreditBasicsLesson() {
   return (
     <div className="prose prose-lg max-w-none">
       <h2 className="text-3xl font-bold text-gray-800 mb-6">Understanding Credit Scores</h2>
-      
+
       <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
-        <h3 className="text-xl font-semibold text-blue-800 mb-2">What You'll Learn</h3>
+        <h3 className="text-xl font-semibold text-blue-800 mb-2">What You&apos;ll Learn</h3>
         <ul className="list-disc list-inside text-blue-700 space-y-1">
           <li>How credit scores are calculated</li>
           <li>The 5 factors that affect your score</li>
@@ -288,8 +280,8 @@ function CreditBasicsLesson() {
 
       <h3 className="text-2xl font-semibold text-gray-800 mb-4">What is a Credit Score?</h3>
       <p className="text-gray-700 mb-6">
-        A credit score is a three-digit number (typically 300-850) that represents your creditworthiness. 
-        Think of it as your financial report card that lenders use to decide whether to approve you for 
+        A credit score is a three-digit number (typically 300-850) that represents your creditworthiness.
+        Think of it as your financial report card that lenders use to decide whether to approve you for
         loans and at what interest rate.
       </p>
 
@@ -303,7 +295,7 @@ function CreditBasicsLesson() {
             <li>• Lower insurance premiums</li>
           </ul>
         </div>
-        
+
         <div className="bg-red-50 rounded-xl p-6">
           <h4 className="text-lg font-semibold text-red-800 mb-3">Poor Credit (580 or below)</h4>
           <ul className="text-red-700 space-y-2">
@@ -316,7 +308,7 @@ function CreditBasicsLesson() {
       </div>
 
       <h3 className="text-2xl font-semibold text-gray-800 mb-4">The 5 Credit Score Factors</h3>
-      
+
       <div className="space-y-6">
         <div className="bg-white border-l-4 border-blue-500 p-4">
           <div className="flex items-center justify-between mb-2">
@@ -331,7 +323,7 @@ function CreditBasicsLesson() {
             <h4 className="text-lg font-semibold text-gray-800">Credit Utilization</h4>
             <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">30%</span>
           </div>
-          <p className="text-gray-700">How much of your available credit you're using. Keep this below 30%, ideally under 10%.</p>
+          <p className="text-gray-700">How much of your available credit you&apos;re using. Keep this below 30%, ideally under 10%.</p>
         </div>
 
         <div className="bg-white border-l-4 border-yellow-500 p-4">
@@ -339,7 +331,7 @@ function CreditBasicsLesson() {
             <h4 className="text-lg font-semibold text-gray-800">Length of Credit History</h4>
             <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">15%</span>
           </div>
-          <p className="text-gray-700">How long you've had credit accounts. Older accounts generally help your score.</p>
+          <p className="text-gray-700">How long you&apos;ve had credit accounts. Older accounts generally help your score.</p>
         </div>
 
         <div className="bg-white border-l-4 border-purple-500 p-4">
@@ -362,7 +354,7 @@ function CreditBasicsLesson() {
       <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mt-8">
         <h3 className="text-xl font-semibold text-yellow-800 mb-3">💡 Pro Tip</h3>
         <p className="text-yellow-700">
-          You can check your credit score for free through services like Credit Karma, your bank's app, 
+          You can check your credit score for free through services like Credit Karma, your bank&apos;s app,
           or annualcreditreport.com for your full credit reports from all three bureaus.
         </p>
       </div>
@@ -374,7 +366,7 @@ function DebtTypesLesson() {
   return (
     <div className="prose prose-lg max-w-none">
       <h2 className="text-3xl font-bold text-gray-800 mb-6">Types of Debt: Good vs Bad</h2>
-      
+
       <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
         <h3 className="text-xl font-semibold text-blue-800 mb-2">Key Concepts</h3>
         <ul className="list-disc list-inside text-blue-700 space-y-1">
@@ -391,24 +383,24 @@ function DebtTypesLesson() {
             <TrendingDown className="w-8 h-8 text-green-600" />
             <h3 className="text-2xl font-semibold text-green-800">Good Debt</h3>
           </div>
-          
+
           <p className="text-green-700 mb-4">
             Debt that helps you build wealth or increase income over time.
           </p>
-          
+
           <div className="space-y-4">
             <div className="bg-white rounded-lg p-4">
               <h4 className="font-semibold text-gray-800 mb-2">🏠 Mortgages</h4>
               <p className="text-gray-700 text-sm">Real estate typically appreciates over time and provides tax benefits.</p>
               <p className="text-green-600 text-sm font-medium">Typical Rate: 3-7%</p>
             </div>
-            
+
             <div className="bg-white rounded-lg p-4">
               <h4 className="font-semibold text-gray-800 mb-2">🎓 Student Loans</h4>
               <p className="text-gray-700 text-sm">Education increases earning potential over your lifetime.</p>
               <p className="text-green-600 text-sm font-medium">Typical Rate: 3-8%</p>
             </div>
-            
+
             <div className="bg-white rounded-lg p-4">
               <h4 className="font-semibold text-gray-800 mb-2">💼 Business Loans</h4>
               <p className="text-gray-700 text-sm">Investing in income-generating business opportunities.</p>
@@ -422,24 +414,24 @@ function DebtTypesLesson() {
             <AlertTriangle className="w-8 h-8 text-red-600" />
             <h3 className="text-2xl font-semibold text-red-800">Bad Debt</h3>
           </div>
-          
+
           <p className="text-red-700 mb-4">
-            Debt for purchases that lose value and don't generate income.
+            Debt for purchases that lose value and don&apos;t generate income.
           </p>
-          
+
           <div className="space-y-4">
             <div className="bg-white rounded-lg p-4">
               <h4 className="font-semibold text-gray-800 mb-2">💳 Credit Cards</h4>
               <p className="text-gray-700 text-sm">High interest on consumer purchases that depreciate quickly.</p>
               <p className="text-red-600 text-sm font-medium">Typical Rate: 15-25%</p>
             </div>
-            
+
             <div className="bg-white rounded-lg p-4">
               <h4 className="font-semibold text-gray-800 mb-2">🚗 Car Loans</h4>
               <p className="text-gray-700 text-sm">Vehicles depreciate rapidly, especially new cars.</p>
               <p className="text-red-600 text-sm font-medium">Typical Rate: 4-12%</p>
             </div>
-            
+
             <div className="bg-white rounded-lg p-4">
               <h4 className="font-semibold text-gray-800 mb-2">💸 Payday Loans</h4>
               <p className="text-gray-700 text-sm">Extremely high-cost short-term loans that trap borrowers.</p>
@@ -471,7 +463,7 @@ function DebtTypesLesson() {
         <h3 className="text-xl font-semibold text-blue-800 mb-3">🎯 Action Steps</h3>
         <ol className="list-decimal list-inside text-blue-700 space-y-2">
           <li>List all your current debts with interest rates</li>
-          <li>Categorize each debt as "good" or "bad"</li>
+          <li>Categorize each debt as &quot;good&quot; or &quot;bad&quot;</li>
           <li>Prioritize paying off bad debt with highest interest rates first</li>
           <li>Consider if any good debt could be refinanced at lower rates</li>
           <li>Avoid taking on new bad debt unless absolutely necessary</li>
@@ -485,7 +477,7 @@ function DebtStrategyLesson() {
   return (
     <div className="prose prose-lg max-w-none">
       <h2 className="text-3xl font-bold text-gray-800 mb-6">Debt Elimination Strategies</h2>
-      
+
       <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
         <h3 className="text-xl font-semibold text-blue-800 mb-2">Strategic Approaches</h3>
         <ul className="list-disc list-inside text-blue-700 space-y-1">
@@ -502,11 +494,11 @@ function DebtStrategyLesson() {
             <Brain className="w-8 h-8 text-purple-600" />
             <h3 className="text-2xl font-semibold text-purple-800">Debt Snowball</h3>
           </div>
-          
+
           <p className="text-purple-700 mb-4 font-medium">
             Pay minimums on all debts, then attack the SMALLEST balance first.
           </p>
-          
+
           <div className="space-y-3">
             <div className="bg-white rounded-lg p-4">
               <h4 className="font-semibold text-gray-800 mb-2">✅ Pros</h4>
@@ -517,7 +509,7 @@ function DebtStrategyLesson() {
                 <li>• Great for behavior change</li>
               </ul>
             </div>
-            
+
             <div className="bg-white rounded-lg p-4">
               <h4 className="font-semibold text-gray-800 mb-2">❌ Cons</h4>
               <ul className="text-gray-700 text-sm space-y-1">
@@ -527,7 +519,7 @@ function DebtStrategyLesson() {
               </ul>
             </div>
           </div>
-          
+
           <div className="bg-purple-100 rounded-lg p-3 mt-4">
             <p className="text-purple-800 text-sm font-medium">
               Best for: People who need motivation and quick wins to stay on track.
@@ -540,11 +532,11 @@ function DebtStrategyLesson() {
             <Calculator className="w-8 h-8 text-green-600" />
             <h3 className="text-2xl font-semibold text-green-800">Debt Avalanche</h3>
           </div>
-          
+
           <p className="text-green-700 mb-4 font-medium">
             Pay minimums on all debts, then attack the HIGHEST interest rate first.
           </p>
-          
+
           <div className="space-y-3">
             <div className="bg-white rounded-lg p-4">
               <h4 className="font-semibold text-gray-800 mb-2">✅ Pros</h4>
@@ -555,7 +547,7 @@ function DebtStrategyLesson() {
                 <li>• Faster debt elimination</li>
               </ul>
             </div>
-            
+
             <div className="bg-white rounded-lg p-4">
               <h4 className="font-semibold text-gray-800 mb-2">❌ Cons</h4>
               <ul className="text-gray-700 text-sm space-y-1">
@@ -565,7 +557,7 @@ function DebtStrategyLesson() {
               </ul>
             </div>
           </div>
-          
+
           <div className="bg-green-100 rounded-lg p-3 mt-4">
             <p className="text-green-800 text-sm font-medium">
               Best for: Disciplined people focused on saving money and math-based approaches.
@@ -576,8 +568,8 @@ function DebtStrategyLesson() {
 
       <div className="bg-gray-50 rounded-xl p-6 mb-8">
         <h3 className="text-xl font-semibold text-gray-800 mb-4">Example Comparison</h3>
-        <p className="text-gray-700 mb-4">Let's say you have these debts and $500 extra per month to pay them off:</p>
-        
+        <p className="text-gray-700 mb-4">Let&apos;s say you have these debts and $500 extra per month to pay them off:</p>
+
         <div className="grid md:grid-cols-3 gap-4 mb-6">
           <div className="bg-white rounded-lg p-4 text-center">
             <h4 className="font-semibold text-gray-800">Credit Card A</h4>
@@ -608,7 +600,7 @@ function DebtStrategyLesson() {
               Total interest paid: ~$2,850
             </p>
           </div>
-          
+
           <div className="bg-green-100 rounded-lg p-4">
             <h4 className="font-semibold text-green-800 mb-2">Avalanche Order</h4>
             <ol className="text-green-700 text-sm space-y-1">
@@ -630,7 +622,7 @@ function DebtStrategyLesson() {
           <li>Choose your strategy based on your personality (motivation vs. math)</li>
           <li>Calculate how much extra you can pay toward debt each month</li>
           <li>Make minimum payments on all debts except your target debt</li>
-          <li>Throw every extra dollar at your target debt until it's gone</li>
+          <li>Throw every extra dollar at your target debt until it&apos;s gone</li>
           <li>When one debt is paid off, roll that payment to the next target</li>
           <li>Celebrate each victory to maintain motivation!</li>
         </ol>
@@ -643,7 +635,7 @@ function CreditBuildingLesson() {
   return (
     <div className="prose prose-lg max-w-none">
       <h2 className="text-3xl font-bold text-gray-800 mb-6">Building and Maintaining Credit</h2>
-      
+
       <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
         <h3 className="text-xl font-semibold text-blue-800 mb-2">Credit Building Mastery</h3>
         <ul className="list-disc list-inside text-blue-700 space-y-1">
@@ -664,7 +656,7 @@ function CreditBuildingLesson() {
             <li>• Credit-builder loans</li>
           </ul>
         </div>
-        
+
         <div className="bg-yellow-50 rounded-xl p-6 text-center">
           <div className="text-3xl font-bold text-yellow-600 mb-2">Fair Credit</div>
           <p className="text-yellow-700 text-sm mb-4">580-669 score range</p>
@@ -674,7 +666,7 @@ function CreditBuildingLesson() {
             <li>• Never miss payments</li>
           </ul>
         </div>
-        
+
         <div className="bg-green-50 rounded-xl p-6 text-center">
           <div className="text-3xl font-bold text-green-600 mb-2">Excellent</div>
           <p className="text-green-700 text-sm mb-4">740+ score range</p>
@@ -687,7 +679,7 @@ function CreditBuildingLesson() {
       </div>
 
       <h3 className="text-2xl font-semibold text-gray-800 mb-4">The Credit Building Timeline</h3>
-      
+
       <div className="space-y-6 mb-8">
         <div className="bg-white border-l-4 border-blue-500 p-4">
           <div className="flex items-center justify-between mb-2">
@@ -728,7 +720,7 @@ function CreditBuildingLesson() {
 
       <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 mb-8">
         <h3 className="text-xl font-semibold text-gray-800 mb-4">Advanced Credit Strategies</h3>
-        
+
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <h4 className="font-semibold text-gray-800 mb-2">🎯 Utilization Optimization</h4>
@@ -739,7 +731,7 @@ function CreditBuildingLesson() {
               <li>• Request credit limit increases every 6 months</li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="font-semibold text-gray-800 mb-2">📊 Score Monitoring</h4>
             <ul className="text-gray-700 text-sm space-y-1">

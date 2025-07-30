@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useProgress } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import { Heart, TrendingUp, AlertTriangle, CheckCircle, Target, Shield, PiggyBank, CreditCard, Brain } from 'lucide-react';
 
@@ -23,7 +23,7 @@ interface HealthAssessmentProps {
 }
 
 export default function FinancialHealthAssessment({ onScoreCalculated }: HealthAssessmentProps) {
-  const { state } = useProgress();
+  const userProgress = useProgressStore(state => state.userProgress);
   const [responses, setResponses] = useState({
     monthlyIncome: '',
     monthlyExpenses: '',
@@ -137,8 +137,8 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
 
     // Knowledge Score based on completed lessons/quizzes
     const knowledgeScore = Math.min(100,
-      (state.userProgress.completedLessons.length * 15) +
-      (Object.values(state.userProgress.quizScores).filter(s => s >= 80).length * 20)
+      (userProgress.completedLessons.length * 15) +
+      (Object.values(userProgress.quizScores).filter(s => Number(s) >= 80).length * 20)
     );
 
     // Overall Score (weighted average)

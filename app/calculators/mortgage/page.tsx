@@ -73,13 +73,13 @@ export default function MortgageCalculatorPage() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-800">Market Timing</h4>
-                  <p className="text-gray-600">Don't try to time the market perfectly. Buy when you're financially ready.</p>
+                  <p className="text-gray-600">Don&apos;t try to time the market perfectly. Buy when you&apos;re financially ready.</p>
                 </div>
               </div>
             </div>
 
             {/* Q&A System */}
-            <QASystem 
+            <QASystem
               isQuizMode={false}
             />
           </div>

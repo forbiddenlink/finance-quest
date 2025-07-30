@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useProgress, useProgressActions } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
 import { CheckCircle, Star, ChevronRight, ChevronLeft, Lightbulb, Brain } from 'lucide-react';
@@ -57,22 +57,21 @@ const lessons: LessonContent[] = [
 ];
 
 export default function MoneyFundamentalsLesson() {
-  const { state } = useProgress();
-  const { completeLesson } = useProgressActions();
+  const { userProgress, completeLesson } = useProgressStore();
   const [currentLesson, setCurrentLesson] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<boolean[]>(new Array(lessons.length).fill(false));
 
   // Load completed lessons from global state
   useEffect(() => {
     const newCompleted = lessons.map((lesson, index) =>
-      state.userProgress.completedLessons.includes(`money-fundamentals-${index}`)
+      userProgress.completedLessons.includes(`money-fundamentals-${index}`)
     );
     setCompletedLessons(newCompleted);
-  }, [state.userProgress.completedLessons]);
+  }, [userProgress.completedLessons]);
 
   const markComplete = () => {
     const lessonId = `money-fundamentals-${currentLesson}`;
-    completeLesson(lessonId);
+    completeLesson(lessonId, 10);
 
     const newCompleted = [...completedLessons];
     newCompleted[currentLesson] = true;

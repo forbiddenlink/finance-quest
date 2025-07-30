@@ -2,19 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Target, 
-  TrendingUp, 
-  Shield, 
-  PiggyBank, 
-  CreditCard, 
+import {
+  Target,
+  TrendingUp,
+  Shield,
+  PiggyBank,
+  CreditCard,
   CheckCircle,
   AlertTriangle,
   XCircle,
   Sparkles,
   Brain
 } from 'lucide-react';
-import { useProgress } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 
 interface HealthScoreData {
   emergencyFund: number; // 0-25 points
@@ -94,7 +94,7 @@ export default function FinancialHealthScoreCalculator() {
   const [healthScore, setHealthScore] = useState<HealthScoreData | null>(null);
   const [showResults, setShowResults] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { state } = useProgress();
+  const userProgress = useProgressStore(state => state.userProgress);
 
   useEffect(() => {
     setMounted(true);
@@ -130,7 +130,7 @@ export default function FinancialHealthScoreCalculator() {
     });
 
     // Add bonus points for completed lessons
-    const completedChapters = state.userProgress.currentChapter - 1;
+    const completedChapters = userProgress.currentChapter - 1;
     const knowledgeBonus = Math.min(completedChapters * 3, 15);
     financialKnowledge = Math.min(financialKnowledge + knowledgeBonus, 25);
 
@@ -325,12 +325,11 @@ export default function FinancialHealthScoreCalculator() {
                 <div className="text-2xl font-semibold text-gray-700 mb-2">
                   Grade: {healthScore!.grade}
                 </div>
-                <div className={`text-lg font-medium px-6 py-2 rounded-full inline-block ${
-                  healthScore!.category === 'Excellent' ? 'bg-green-100 text-green-800' :
-                  healthScore!.category === 'Good' ? 'bg-blue-100 text-blue-800' :
-                  healthScore!.category === 'Fair' ? 'bg-yellow-100 text-yellow-800' :
-                  'bg-red-100 text-red-800'
-                }`}>
+                <div className={`text-lg font-medium px-6 py-2 rounded-full inline-block ${healthScore!.category === 'Excellent' ? 'bg-green-100 text-green-800' :
+                    healthScore!.category === 'Good' ? 'bg-blue-100 text-blue-800' :
+                      healthScore!.category === 'Fair' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-red-100 text-red-800'
+                  }`}>
                   {healthScore!.category}
                 </div>
               </motion.div>
@@ -339,34 +338,34 @@ export default function FinancialHealthScoreCalculator() {
             {/* Score Breakdown */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               {[
-                { 
-                  title: 'Emergency Fund', 
-                  score: healthScore!.emergencyFund, 
+                {
+                  title: 'Emergency Fund',
+                  score: healthScore!.emergencyFund,
                   icon: Shield,
                   color: 'blue'
                 },
-                { 
-                  title: 'Debt Management', 
-                  score: healthScore!.debtToIncome, 
+                {
+                  title: 'Debt Management',
+                  score: healthScore!.debtToIncome,
                   icon: CreditCard,
                   color: 'purple'
                 },
-                { 
-                  title: 'Savings Rate', 
-                  score: healthScore!.savingsRate, 
+                {
+                  title: 'Savings Rate',
+                  score: healthScore!.savingsRate,
                   icon: PiggyBank,
                   color: 'green'
                 },
-                { 
-                  title: 'Financial Knowledge', 
-                  score: healthScore!.financialKnowledge, 
+                {
+                  title: 'Financial Knowledge',
+                  score: healthScore!.financialKnowledge,
                   icon: Brain,
                   color: 'orange'
                 }
               ].map((category, index) => {
                 const Icon = category.icon;
                 const ScoreIcon = getScoreIcon(category.score);
-                
+
                 return (
                   <motion.div
                     key={category.title}
@@ -410,7 +409,7 @@ export default function FinancialHealthScoreCalculator() {
                 <Sparkles className="w-6 h-6 mr-2 text-purple-600" />
                 Your Personalized Action Plan
               </h3>
-              
+
               <div className="space-y-4">
                 {healthScore!.emergencyFund < 20 && (
                   <div className="flex items-start space-x-3 bg-white p-4 rounded-lg border border-blue-200">
@@ -472,7 +471,7 @@ export default function FinancialHealthScoreCalculator() {
               >
                 Retake Assessment
               </motion.button>
-              
+
               <motion.button
                 onClick={() => window.location.href = '/calculators'}
                 className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-600 hover:to-blue-700 transition-colors"
