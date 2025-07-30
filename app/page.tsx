@@ -11,6 +11,7 @@ import ParticleSystem from "@/components/shared/ui/ParticleSystem";
 import TypingText from "@/components/shared/ui/TypingText";
 import GuidedTour from "@/components/demo/GuidedTour";
 import JudgeMode from "@/components/demo/JudgeMode";
+import WelcomeOnboarding from "@/components/shared/ui/WelcomeOnboarding";
 import { useEnhancedProgress } from "@/lib/store/progressHooks";
 import {
   BookOpen,
@@ -42,6 +43,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 relative overflow-hidden">
+    {/* Welcome Onboarding for New Users */}
+    <WelcomeOnboarding />
+
     {/* Judge Mode Overlay */}
     <JudgeMode
       isActive={judgeModeActive}
