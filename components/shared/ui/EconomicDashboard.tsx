@@ -173,7 +173,7 @@ export default function EconomicDashboard() {
         ].map((tab) => (
           <button
             key={tab.key}
-            onClick={() => setActiveTab(tab.key as any)}
+            onClick={() => setActiveTab(tab.key as 'interest' | 'inflation' | 'markets')}
             className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md font-medium transition-all ${
               activeTab === tab.key
                 ? 'bg-white text-blue-600 shadow-sm'

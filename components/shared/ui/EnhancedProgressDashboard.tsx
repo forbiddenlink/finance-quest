@@ -25,7 +25,7 @@ interface FeatureStatus {
   name: string;
   status: 'completed' | 'in-progress' | 'planned';
   description: string;
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   color: string;
   link?: string;
 }

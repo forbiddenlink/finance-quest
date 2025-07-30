@@ -50,7 +50,7 @@ export default function MarketTicker() {
         const result: MarketDataResponse = await response.json();
         
         if (result.success && result.data) {
-          let stockArray: any[] = [];
+          let stockArray: Array<{symbol: string; latestPrice: number; change: number; changePercent: number}> = [];
           
           // Handle different response formats
           if (Array.isArray(result.data)) {
@@ -60,7 +60,7 @@ export default function MarketTicker() {
           }
           
           if (stockArray.length > 0) {
-            const formattedData: StockTicker[] = stockArray.map((stock: any) => ({
+            const formattedData: StockTicker[] = stockArray.map((stock) => ({
               symbol: stock.symbol || 'N/A',
               price: stock.latestPrice || 0,
               change: stock.change || 0,

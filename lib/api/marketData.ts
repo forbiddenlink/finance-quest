@@ -142,7 +142,7 @@ class MarketDataService {
 
       const data = await response.json();
       
-      return data.observations.map((obs: any) => ({
+      return data.observations.map((obs: {date: string; value: string}) => ({
         date: obs.date,
         value: parseFloat(obs.value)
       })).reverse();
@@ -168,7 +168,7 @@ class MarketDataService {
 
       const data = await response.json();
       
-      return data.observations.map((obs: any) => ({
+      return data.observations.map((obs: {date: string; value: string}) => ({
         date: obs.date,
         value: parseFloat(obs.value)
       })).reverse();

@@ -47,18 +47,20 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
-  const [recognition, setRecognition] = useState<any>(null);
+  // Speech Recognition API has inconsistent TypeScript support across browsers
+  const [recognition, setRecognition] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const [speechSynthesis, setSpeechSynthesis] = useState<SpeechSynthesis | null>(null);
 
   useEffect(() => {
-    // Check if speech recognition is supported
-    const SpeechRecognition = 
-      (window as any).SpeechRecognition || 
-      (window as any).webkitSpeechRecognition;
+    // Check if speech recognition is supported  
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const windowWithSpeech = window as any;
+    const SpeechRecognition = windowWithSpeech.SpeechRecognition || windowWithSpeech.webkitSpeechRecognition;
 
     if (SpeechRecognition) {
       setIsSupported(true);
-      const recognitionInstance = new SpeechRecognition();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const recognitionInstance = new SpeechRecognition() as any;
       
       recognitionInstance.continuous = false;
       recognitionInstance.interimResults = false;
@@ -79,7 +81,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
         setIsListening(false);
       };
 
-      recognitionInstance.onerror = (event: any) => {
+      recognitionInstance.onerror = (event: { error: string }) => {
         console.error('Speech recognition error:', event.error);
         setIsListening(false);
       };

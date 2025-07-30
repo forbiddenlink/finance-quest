@@ -76,7 +76,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
       highlight: '🎤 Accessibility Innovation: Voice-first financial education',
       demoContent: (
         <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-          <p className="text-sm text-green-800 mb-2">Try asking: "How does compound interest work?"</p>
+          <p className="text-sm text-green-800 mb-2">Try asking: &ldquo;How does compound interest work?&rdquo;</p>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
             <span className="text-xs text-green-600">Voice recognition active in Chrome/Edge</span>
