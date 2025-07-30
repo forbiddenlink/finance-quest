@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Play, 
   ArrowRight, 
   ArrowLeft, 
   X, 
@@ -36,8 +35,14 @@ interface GuidedTourProps {
 
 export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true); // Start active immediately
   const [completedSteps, setCompletedSteps] = useState<string[]>([]);
+
+  // Start the tour automatically when component mounts
+  useEffect(() => {
+    setIsActive(true);
+    setCurrentStep(0);
+  }, []);
 
   const demoSteps: DemoStep[] = [
     {
@@ -104,11 +109,6 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
     }
   ];
 
-  const startTour = () => {
-    setIsActive(true);
-    setCurrentStep(0);
-  };
-
   const nextStep = () => {
     if (currentStep < demoSteps.length - 1) {
       setCompletedSteps(prev => [...prev, demoSteps[currentStep].id]);
@@ -146,22 +146,8 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
     }
   };
 
-  if (!isActive) {
-    return (
-      <div className="fixed bottom-6 right-6 z-50">
-        <motion.button
-          onClick={startTour}
-          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2 hover:from-blue-700 hover:to-purple-700 transition-all"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <Play className="w-5 h-5" />
-          <span className="font-semibold">Contest Demo Tour</span>
-        </motion.button>
-      </div>
-    );
-  }
-
+  // Since the tour starts automatically, we don't need the floating button
+  // Just return the tour modal directly
   const currentStepData = demoSteps[currentStep];
   const progress = ((currentStep + 1) / demoSteps.length) * 100;
 
@@ -171,29 +157,29 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-2 sm:p-4"
       >
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+          className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] flex flex-col overflow-hidden"
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 sm:p-6 flex-shrink-0">
             <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                {currentStepData.icon}
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="hidden sm:block">{currentStepData.icon}</div>
                 <div>
-                  <h2 className="text-2xl font-bold">{currentStepData.title}</h2>
-                  <p className="text-blue-100">Step {currentStep + 1} of {demoSteps.length}</p>
+                  <h2 className="text-xl sm:text-2xl font-bold">{currentStepData.title}</h2>
+                  <p className="text-blue-100 text-sm">Step {currentStep + 1} of {demoSteps.length}</p>
                 </div>
               </div>
               <button
                 onClick={skipTour}
-                className="text-white hover:text-gray-200 transition-colors"
+                className="text-white hover:text-gray-200 transition-colors p-1"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
             </div>
 
@@ -208,12 +194,12 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
             </div>
           </div>
 
-          {/* Content */}
-          <div className="p-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Content - Scrollable */}
+          <div className="p-4 sm:p-6 lg:p-8 flex-1 overflow-y-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-0">
               {/* Description */}
-              <div>
-                <GradientCard variant="glass" gradient="blue" className="p-6 mb-6">
+              <div className="flex flex-col">
+                <GradientCard variant="glass" gradient="blue" className="p-6 mb-6 flex-shrink-0">
                   <div className="flex items-start gap-3 mb-4">
                     <div className="bg-yellow-100 p-2 rounded-lg">
                       <Star className="w-5 h-5 text-yellow-600" />
@@ -225,12 +211,12 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
                   </div>
                 </GradientCard>
 
-                <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                <p className="text-gray-700 text-lg leading-relaxed mb-6 flex-shrink-0">
                   {currentStepData.description}
                 </p>
 
                 {currentStepData.demoContent && (
-                  <div className="mb-6">
+                  <div className="mb-6 flex-shrink-0">
                     {currentStepData.demoContent}
                   </div>
                 )}
@@ -238,7 +224,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
                 {currentStepData.targetUrl && (
                   <button
                     onClick={navigateToTarget}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 mb-4"
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 mb-4 flex-shrink-0 w-fit"
                   >
                     <ArrowRight className="w-4 h-4" />
                     View Live Feature
@@ -247,9 +233,9 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
               </div>
 
               {/* Step Navigator */}
-              <div>
-                <h4 className="font-semibold text-gray-900 mb-4">Demo Overview</h4>
-                <div className="space-y-2">
+              <div className="flex flex-col min-h-0">
+                <h4 className="font-semibold text-gray-900 mb-4 flex-shrink-0">Demo Overview</h4>
+                <div className="space-y-2 overflow-y-auto pr-2" style={{ maxHeight: '400px' }}>
                   {demoSteps.map((step, index) => (
                     <button
                       key={step.id}
@@ -285,29 +271,35 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
           </div>
 
           {/* Footer */}
-          <div className="bg-gray-50 px-8 py-4 flex items-center justify-between">
+          <div className="bg-gray-50 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0 flex-shrink-0">
             <button
               onClick={prevStep}
               disabled={currentStep === 0}
-              className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm sm:text-base"
             >
               <ArrowLeft className="w-4 h-4" />
-              Previous
+              <span className="hidden sm:inline">Previous</span>
+              <span className="sm:hidden">Prev</span>
             </button>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <button
                 onClick={skipTour}
-                className="text-gray-600 hover:text-gray-800 transition-colors"
+                className="text-gray-600 hover:text-gray-800 transition-colors text-sm sm:text-base"
               >
                 Skip Tour
               </button>
               
               <button
                 onClick={nextStep}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all flex items-center gap-2"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 sm:px-6 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all flex items-center gap-2 text-sm sm:text-base"
               >
-                {currentStep === demoSteps.length - 1 ? 'Complete Tour' : 'Next Step'}
+                <span className="hidden sm:inline">
+                  {currentStep === demoSteps.length - 1 ? 'Complete Tour' : 'Next Step'}
+                </span>
+                <span className="sm:hidden">
+                  {currentStep === demoSteps.length - 1 ? 'Complete' : 'Next'}
+                </span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
