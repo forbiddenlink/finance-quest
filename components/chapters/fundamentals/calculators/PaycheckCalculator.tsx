@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Lightbulb } from 'lucide-react';
+import { useProgressActions } from '@/lib/context/ProgressContext';
 
 interface PaycheckBreakdown {
   grossPay: number;
@@ -15,6 +16,12 @@ interface PaycheckBreakdown {
 export default function PaycheckCalculator() {
   const [grossPay, setGrossPay] = useState<string>('');
   const [breakdown, setBreakdown] = useState<PaycheckBreakdown | null>(null);
+  const progressActions = useProgressActions();
+
+  useEffect(() => {
+    // Track calculator usage when component mounts
+    progressActions.useCalculator('paycheck-calculator');
+  }, [progressActions]);
 
   const calculatePaycheck = () => {
     const gross = parseFloat(grossPay);

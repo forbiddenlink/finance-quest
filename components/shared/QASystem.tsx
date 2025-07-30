@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, HelpCircle, Loader2, Sparkles } from 'lucide-react';
+import { Send, HelpCircle, Sparkles } from 'lucide-react';
 import { useProgress } from '@/lib/context/ProgressContext';
 import LoadingSpinner from './ui/LoadingSpinner';
-import toast from 'react-hot-toast';
 
 interface QAMessage {
   id: string;
@@ -66,7 +65,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
       if (!response.ok) throw new Error('Failed to get AI response');
 
       const data = await response.json();
-      
+
       const aiMessage: QAMessage = {
         id: (Date.now() + 1).toString(),
         type: 'ai',
@@ -77,7 +76,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
       console.error('Error getting AI response:', error);
-      
+
       const errorMessage: QAMessage = {
         id: (Date.now() + 1).toString(),
         type: 'ai',
@@ -116,7 +115,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
   return (
     <div className={`bg-white border border-gray-200 rounded-lg shadow-sm ${className}`}>
       {/* Header */}
-      <div 
+      <div
         className="flex items-center justify-between p-4 border-b border-gray-200 cursor-pointer"
         onClick={() => setIsExpanded(!isExpanded)}
       >
@@ -148,32 +147,30 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
                   className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                      message.type === 'user'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-900'
-                    }`}
+                    className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.type === 'user'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-100 text-gray-900'
+                      }`}
                   >
                     <p className="text-sm">{message.content}</p>
-                    <p className={`text-xs mt-1 ${
-                      message.type === 'user' ? 'text-blue-100' : 'text-gray-500'
-                    }`}>
-                      {message.timestamp.toLocaleTimeString([], { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
+                    <p className={`text-xs mt-1 ${message.type === 'user' ? 'text-blue-100' : 'text-gray-500'
+                      }`}>
+                      {message.timestamp.toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit'
                       })}
                     </p>
                   </div>
                 </div>
               ))
             )}
-            
+
             {isLoading && (
               <div className="flex justify-start">
                 <div className="bg-gradient-to-r from-blue-100 to-purple-100 text-gray-900 px-4 py-3 rounded-lg border border-blue-200">
-                  <LoadingSpinner 
-                    size="sm" 
-                    text="AI is thinking..." 
+                  <LoadingSpinner
+                    size="sm"
+                    text="AI is thinking..."
                     className="text-blue-600"
                   />
                 </div>

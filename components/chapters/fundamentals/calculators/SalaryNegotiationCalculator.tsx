@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TrendingUp, Target } from 'lucide-react';
+import { useProgressActions } from '@/lib/context/ProgressContext';
 
 interface NegotiationAnalysis {
     currentSalary: number;
@@ -18,6 +19,12 @@ export default function SalaryNegotiationCalculator() {
     const [yearsOfService, setYearsOfService] = useState<string>('');
     const [marketResearch, setMarketResearch] = useState<boolean>(false);
     const [analysis, setAnalysis] = useState<NegotiationAnalysis | null>(null);
+    const progressActions = useProgressActions();
+
+    useEffect(() => {
+        // Track calculator usage when component mounts
+        progressActions.useCalculator('salary-negotiation-calculator');
+    }, [progressActions]);
 
     const calculateNegotiation = () => {
         const current = parseFloat(currentSalary);
@@ -164,10 +171,10 @@ export default function SalaryNegotiationCalculator() {
                             <div className="flex-1 bg-gray-200 rounded-full h-3">
                                 <div
                                     className={`h-3 rounded-full ${analysis.confidenceScore >= 70
-                                            ? 'bg-green-500'
-                                            : analysis.confidenceScore >= 50
-                                                ? 'bg-yellow-500'
-                                                : 'bg-red-500'
+                                        ? 'bg-green-500'
+                                        : analysis.confidenceScore >= 50
+                                            ? 'bg-yellow-500'
+                                            : 'bg-red-500'
                                         }`}
                                     style={{ width: `${analysis.confidenceScore}%` }}
                                 ></div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface TypingEffectProps {
     text: string;
@@ -20,18 +20,7 @@ export default function TypingEffect({
     const [displayText, setDisplayText] = useState('');
     const [isComplete, setIsComplete] = useState(false);
 
-    useEffect(() => {
-        if (delay > 0) {
-            const delayTimer = setTimeout(() => {
-                startTyping();
-            }, delay);
-            return () => clearTimeout(delayTimer);
-        } else {
-            startTyping();
-        }
-    }, [text, speed, delay]);
-
-    const startTyping = () => {
+    const startTyping = useCallback(() => {
         let currentIndex = 0;
         setDisplayText('');
         setIsComplete(false);
@@ -48,7 +37,18 @@ export default function TypingEffect({
         }, speed);
 
         return () => clearInterval(timer);
-    };
+    }, [text, speed, onComplete]);
+
+    useEffect(() => {
+        if (delay > 0) {
+            const delayTimer = setTimeout(() => {
+                startTyping();
+            }, delay);
+            return () => clearTimeout(delayTimer);
+        } else {
+            startTyping();
+        }
+    }, [text, speed, delay, startTyping]);
 
     return (
         <span className={className}>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { Lightbulb, Sparkles } from 'lucide-react';
 
@@ -21,7 +21,7 @@ export default function CompoundInterestCalculator() {
   const [totalInterest, setTotalInterest] = useState(0);
   const [finalAmount, setFinalAmount] = useState(0);
 
-  const calculateCompoundInterest = () => {
+  const calculateCompoundInterest = useCallback(() => {
     const P = parseFloat(principal) || 0;
     const r = (parseFloat(rate) || 0) / 100;
     const t = parseInt(time) || 0;
@@ -58,11 +58,11 @@ export default function CompoundInterestCalculator() {
     setTotalContributed(totalContributions);
     setTotalInterest(compoundData[t]?.interest || 0);
     setFinalAmount(compoundData[t]?.total || 0);
-  };
+  }, [principal, rate, time, monthlyContribution]);
 
   useEffect(() => {
     calculateCompoundInterest();
-  }, [principal, rate, time, monthlyContribution]);
+  }, [calculateCompoundInterest]);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -73,7 +73,7 @@ export default function CompoundInterestCalculator() {
     }).format(value);
   };
 
-  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{color: string; value: number; dataKey: string; payload: {principal: number; interest: number; total: number}}>; label?: string }) => {
+  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ color: string; value: number; dataKey: string; payload: { principal: number; interest: number; total: number } }>; label?: string }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-4 border border-gray-300 rounded-lg shadow-lg">

@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useProgress } from '@/lib/context/ProgressContext';
 import GradientCard from '@/components/shared/ui/GradientCard';
-import { Heart, TrendingUp, AlertTriangle, CheckCircle, Target, DollarSign, Shield, PiggyBank, CreditCard, Brain } from 'lucide-react';
+import { Heart, TrendingUp, AlertTriangle, CheckCircle, Target, Shield, PiggyBank, CreditCard, Brain } from 'lucide-react';
 
 interface FinancialHealthMetrics {
   budgetingScore: number;
@@ -38,7 +38,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
     hasRetirementAccount: false,
     reviewsFinancesRegularly: false
   });
-  
+
   const [healthScore, setHealthScore] = useState<FinancialHealthMetrics | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [isAssessing, setIsAssessing] = useState(false);
@@ -90,7 +90,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
     let budgetingScore = 0;
     const savingsRate = income > 0 ? (savings / income) * 100 : 0;
     const expenseRatio = income > 0 ? (expenses / income) * 100 : 100;
-    
+
     if (responses.hasWrittenBudget) budgetingScore += 25;
     if (responses.trackExpenses) budgetingScore += 25;
     if (savingsRate >= 20) budgetingScore += 30;
@@ -136,18 +136,18 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
     else if (investments > 0) investmentScore += 10;
 
     // Knowledge Score based on completed lessons/quizzes
-    const knowledgeScore = Math.min(100, 
-      (state.userProgress.completedLessons.length * 15) + 
+    const knowledgeScore = Math.min(100,
+      (state.userProgress.completedLessons.length * 15) +
       (Object.values(state.userProgress.quizScores).filter(s => s >= 80).length * 20)
     );
 
     // Overall Score (weighted average)
     const overallScore = Math.round(
-      (budgetingScore * 0.25) + 
-      (emergencyFundScore * 0.20) + 
-      (debtScore * 0.20) + 
-      (savingsScore * 0.15) + 
-      (investmentScore * 0.15) + 
+      (budgetingScore * 0.25) +
+      (emergencyFundScore * 0.20) +
+      (debtScore * 0.20) +
+      (savingsScore * 0.15) +
+      (investmentScore * 0.15) +
       (knowledgeScore * 0.05)
     );
 
@@ -268,7 +268,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
             <span className="text-sm text-gray-600">Step {currentStep + 1} of {questions.length}</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
-            <div 
+            <div
               className="bg-blue-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${((currentStep + 1) / questions.length) * 100}%` }}
             ></div>
@@ -276,7 +276,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
         </div>
 
         <div className="space-y-6">
-          {currentCategory.questions.map((q, idx) => (
+          {currentCategory.questions.map((q) => (
             <div key={q.key} className="space-y-3">
               <label className="block text-lg font-medium text-gray-900">{q.question}</label>
               {q.type === 'number' ? (
@@ -291,21 +291,19 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                 <div className="flex space-x-4">
                   <button
                     onClick={() => handleInputChange(q.key, true)}
-                    className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                      responses[q.key as keyof typeof responses] === true
-                        ? 'bg-green-500 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                    }`}
+                    className={`px-6 py-3 rounded-lg font-medium transition-all ${responses[q.key as keyof typeof responses] === true
+                      ? 'bg-green-500 text-white'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      }`}
                   >
                     Yes
                   </button>
                   <button
                     onClick={() => handleInputChange(q.key, false)}
-                    className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                      responses[q.key as keyof typeof responses] === false
-                        ? 'bg-red-500 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                    }`}
+                    className={`px-6 py-3 rounded-lg font-medium transition-all ${responses[q.key as keyof typeof responses] === false
+                      ? 'bg-red-500 text-white'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      }`}
                   >
                     No
                   </button>
@@ -346,10 +344,10 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
           <div className="text-6xl font-bold text-purple-600 mb-4">{healthScore.overallScore}</div>
           <p className="text-lg text-gray-600">
             {healthScore.overallScore >= 90 ? 'Excellent financial health!' :
-             healthScore.overallScore >= 80 ? 'Good financial health with room for improvement' :
-             healthScore.overallScore >= 70 ? 'Fair financial health - focus on key areas' :
-             healthScore.overallScore >= 60 ? 'Poor financial health - immediate action needed' :
-             'Critical financial health - urgent improvements required'}
+              healthScore.overallScore >= 80 ? 'Good financial health with room for improvement' :
+                healthScore.overallScore >= 70 ? 'Fair financial health - focus on key areas' :
+                  healthScore.overallScore >= 60 ? 'Poor financial health - immediate action needed' :
+                    'Critical financial health - urgent improvements required'}
           </p>
         </GradientCard>
 
@@ -374,10 +372,9 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                   <span className={`font-bold ${getScoreColor(score)}`}>{score}</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div 
-                    className={`h-2 rounded-full transition-all duration-500 ${
-                      score >= 80 ? 'bg-green-500' : score >= 60 ? 'bg-yellow-500' : 'bg-red-500'
-                    }`}
+                  <div
+                    className={`h-2 rounded-full transition-all duration-500 ${score >= 80 ? 'bg-green-500' : score >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                      }`}
                     style={{ width: `${score}%` }}
                   ></div>
                 </div>

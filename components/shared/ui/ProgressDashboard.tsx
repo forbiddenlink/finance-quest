@@ -15,7 +15,6 @@ import {
   CreditCard,
   CheckCircle,
   Clock,
-  TrendingDown,
   Bot,
   Zap,
   Trophy,
@@ -37,9 +36,6 @@ export default function ProgressDashboard() {
     : 0;
   const timeSpentHours = Math.round(userProgress.totalTimeSpent / 60 * 10) / 10;
   const achievementsCount = userProgress.achievementsUnlocked.length;
-  const daysSinceStart = userProgress.lastActiveDate
-    ? Math.ceil((new Date().getTime() - new Date(userProgress.lastActiveDate).getTime()) / (1000 * 3600 * 24))
-    : 0;
 
   // Progress breakdown data for pie chart
   const progressData = [
@@ -49,7 +45,7 @@ export default function ProgressDashboard() {
   ];
 
   // Quiz performance data
-  const quizData = Object.entries(userProgress.quizScores).map(([quiz, score], index) => ({
+  const quizData = Object.entries(userProgress.quizScores).map(([, score], index) => ({
     quiz: `Quiz ${index + 1}`,
     score: score,
     masteryThreshold: 80

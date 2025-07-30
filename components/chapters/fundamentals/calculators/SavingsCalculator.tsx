@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { PiggyBank, TrendingUp, DollarSign, Calendar, Target } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -27,23 +27,7 @@ const SavingsCalculator = () => {
   const [results, setResults] = useState<SavingsResults | null>(null);
   const [chartData, setChartData] = useState<ChartDataPoint[]>([]);
 
-  useEffect(() => {
-    calculateSavings();
-  }, [initialDeposit, monthlyDeposit, interestRate, timeYears]);
-
-  // Financial calculation functions
-  const futureValue = (rate: number, periods: number, payment: number, presentValue: number = 0) => {
-    if (rate === 0) {
-      return presentValue + (payment * periods);
-    }
-
-    const fvPresentValue = presentValue * Math.pow(1 + rate, periods);
-    const fvAnnuity = payment * (Math.pow(1 + rate, periods) - 1) / rate;
-
-    return fvPresentValue + fvAnnuity;
-  };
-
-  const calculateSavings = () => {
+  const calculateSavings = useCallback(() => {
     try {
       const monthlyRate = (interestRate / 100) / 12;
       const totalMonths = timeYears * 12;
@@ -102,7 +86,11 @@ const SavingsCalculator = () => {
     } catch (error) {
       console.error('Calculation error:', error);
     }
-  };
+  }, [initialDeposit, monthlyDeposit, interestRate, timeYears]);
+
+  useEffect(() => {
+    calculateSavings();
+  }, [calculateSavings]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {

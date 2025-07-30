@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from 'recharts';
+import React, { useState, useEffect, useCallback } from 'react';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from 'recharts';
 import { useProgress } from '@/lib/context/ProgressContext';
 import {
   CreditCard,
   GraduationCap,
   Car,
-  User,
-  Home,
   LucideIcon,
   DollarSign,
   Lightbulb,
@@ -78,7 +76,7 @@ export default function DebtPayoffCalculator() {
     setDebts(prev => prev.filter(debt => debt.id !== id));
   };
 
-  const calculatePayoffStrategy = () => {
+  const calculatePayoffStrategy = useCallback(() => {
     if (debts.length === 0) return [];
 
     // Clone debts for calculation
@@ -121,9 +119,7 @@ export default function DebtPayoffCalculator() {
       }
 
       // Remove paid-off debts
-      const debtsBefore = remainingDebts.length;
       remainingDebts = remainingDebts.filter(debt => debt.balance > 0.01);
-      const debtsFreed = debtsBefore - remainingDebts.length;
 
       const totalBalance = remainingDebts.reduce((sum, debt) => sum + debt.balance, 0);
 
@@ -139,12 +135,12 @@ export default function DebtPayoffCalculator() {
     }
 
     return projections;
-  };
+  }, [debts, extraPayment, strategy]);
 
   useEffect(() => {
     const projections = calculatePayoffStrategy();
     setProjectionData(projections);
-  }, [debts, extraPayment, strategy]);
+  }, [calculatePayoffStrategy]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {

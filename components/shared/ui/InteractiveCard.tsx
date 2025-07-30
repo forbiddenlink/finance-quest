@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef, ReactNode } from 'react';
-import { useEffect } from 'react';
 
 interface InteractiveCardProps {
   children: ReactNode;
@@ -10,9 +9,9 @@ interface InteractiveCardProps {
   glowColor?: string;
 }
 
-export default function InteractiveCard({ 
-  children, 
-  className = '', 
+export default function InteractiveCard({
+  children,
+  className = '',
   intensity = 0.1,
   glowColor = 'rgba(59, 130, 246, 0.5)'
 }: InteractiveCardProps) {
@@ -26,7 +25,7 @@ export default function InteractiveCard({
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     setMousePosition({ x, y });
   };
 
@@ -41,24 +40,24 @@ export default function InteractiveCard({
 
   const getTransform = () => {
     if (!isHovered || !cardRef.current) return '';
-    
+
     const rect = cardRef.current.getBoundingClientRect();
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    
+
     const rotateX = (mousePosition.y - centerY) * intensity * -1;
     const rotateY = (mousePosition.x - centerX) * intensity;
-    
+
     return `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(${isHovered ? '10px' : '0px'})`;
   };
 
   const getGlowPosition = () => {
     if (!isHovered || !cardRef.current) return { x: '50%', y: '50%' };
-    
+
     const rect = cardRef.current.getBoundingClientRect();
     const x = (mousePosition.x / rect.width) * 100;
     const y = (mousePosition.y / rect.height) * 100;
-    
+
     return { x: `${x}%`, y: `${y}%` };
   };
 
@@ -86,7 +85,7 @@ export default function InteractiveCard({
           }}
         />
       )}
-      
+
       {/* Shine Effect */}
       {isHovered && (
         <div
@@ -96,9 +95,9 @@ export default function InteractiveCard({
           }}
         />
       )}
-      
+
       {/* Card Content */}
-      <div 
+      <div
         className="relative z-10 h-full w-full"
         style={{
           transform: 'translateZ(20px)'
@@ -106,10 +105,10 @@ export default function InteractiveCard({
       >
         {children}
       </div>
-      
+
       {/* Border Highlight */}
       {isHovered && (
-        <div 
+        <div
           className="absolute inset-0 rounded-lg border-2 border-white/20 pointer-events-none transition-all duration-300"
           style={{
             boxShadow: `0 0 20px ${glowColor}`

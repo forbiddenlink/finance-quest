@@ -5,15 +5,6 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Interface for user progress context (used in contextPrompt building)
-interface UserProgress {
-  currentChapter: number;
-  completedLessons: string[];
-  quizScores: { [key: string]: number };
-  calculatorUsage: string[];
-  strugglingTopics: string[];
-}
-
 const FINANCIAL_COACH_SYSTEM_PROMPT = `You are an expert financial literacy coach for Finance Quest, an educational platform teaching money management from zero to advanced levels.
 
 CONTEXT: You're helping users learn through:

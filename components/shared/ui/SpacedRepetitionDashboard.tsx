@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useProgress } from '@/lib/context/ProgressContext';
 import { spacedRepetitionSystem, ReviewItem, ReviewResponse } from '@/lib/algorithms/spacedRepetition';
 import GradientCard from '@/components/shared/ui/GradientCard';
-import { Brain, Clock, Target, TrendingUp, CheckCircle, AlertTriangle, Star, RefreshCw } from 'lucide-react';
+import { Brain, Clock, CheckCircle, AlertTriangle, Star, RefreshCw } from 'lucide-react';
 
 interface SpacedRepetitionDashboardProps {
   className?: string;
@@ -33,7 +33,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
   // Initialize review items from completed lessons and quizzes
   useEffect(() => {
     const items: ReviewItem[] = [];
-    
+
     // Add completed lessons
     state.userProgress.completedLessons.forEach(lessonId => {
       const chapterNumber = parseInt(lessonId.split('-')[2]) || 1;
@@ -69,12 +69,12 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
     });
 
     setReviewItems(items);
-    
+
     // Calculate due items and stats
     const due = spacedRepetitionSystem.getDueForReview(items);
     const statistics = spacedRepetitionSystem.getRetentionStats(items);
     const rec = spacedRepetitionSystem.getReviewRecommendations(items);
-    
+
     setDueItems(due);
     setStats(statistics);
     setRecommendation(rec);
@@ -91,7 +91,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
     };
 
     const updatedItem = spacedRepetitionSystem.calculateNextReview(currentItem, response);
-    
+
     // Update the review items
     const updatedItems = reviewItems.map(item =>
       item.conceptId === updatedItem.conceptId ? updatedItem : item
@@ -153,7 +153,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
           <Brain className="w-6 h-6 text-purple-600 mr-3" />
           <h3 className="text-xl font-bold text-gray-900">Learning Retention Dashboard</h3>
         </div>
-        
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">{stats.total}</div>
@@ -181,13 +181,13 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
               <span className="font-medium">{stats.masteryRate.toFixed(1)}%</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
-              <div 
+              <div
                 className="bg-green-500 h-2 rounded-full transition-all duration-500"
                 style={{ width: `${stats.masteryRate}%` }}
               ></div>
             </div>
           </div>
-          
+
           {stats.strugglingRate > 0 && (
             <div>
               <div className="flex justify-between text-sm mb-1">
@@ -195,7 +195,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
                 <span className="font-medium">{stats.strugglingRate.toFixed(1)}%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
-                <div 
+                <div
                   className="bg-red-500 h-2 rounded-full transition-all duration-500"
                   style={{ width: `${stats.strugglingRate}%` }}
                 ></div>
@@ -212,7 +212,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
           <div className="flex-1">
             <h4 className="font-semibold mb-2">Today&apos;s Recommendation</h4>
             <p className="text-sm">{recommendation.recommendation}</p>
-            
+
             {recommendation.concepts.length > 0 && (
               <div className="mt-3">
                 <p className="text-sm font-medium mb-2">Focus on these concepts:</p>
@@ -253,7 +253,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
               </span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
-              <div 
+              <div
                 className="bg-blue-500 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${((currentReviewIndex + 1) / dueItems.length) * 100}%` }}
               ></div>
@@ -272,20 +272,19 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
               <button
                 key={quality}
                 onClick={() => handleReviewResponse(quality, quality)}
-                className={`p-3 rounded-lg font-semibold transition-all hover:scale-105 ${
-                  quality <= 2 
-                    ? 'bg-red-100 text-red-700 hover:bg-red-200' 
-                    : quality <= 3
+                className={`p-3 rounded-lg font-semibold transition-all hover:scale-105 ${quality <= 2
+                  ? 'bg-red-100 text-red-700 hover:bg-red-200'
+                  : quality <= 3
                     ? 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200'
                     : 'bg-green-100 text-green-700 hover:bg-green-200'
-                }`}
+                  }`}
               >
                 <Star className="w-5 h-5 mx-auto mb-1" />
                 <div className="text-xs">
-                  {quality === 1 ? 'Forgot' : 
-                   quality === 2 ? 'Vague' :
-                   quality === 3 ? 'OK' :
-                   quality === 4 ? 'Good' : 'Perfect'}
+                  {quality === 1 ? 'Forgot' :
+                    quality === 2 ? 'Vague' :
+                      quality === 3 ? 'OK' :
+                        quality === 4 ? 'Good' : 'Perfect'}
                 </div>
               </button>
             ))}

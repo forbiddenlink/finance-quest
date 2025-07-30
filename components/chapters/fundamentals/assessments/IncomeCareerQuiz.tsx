@@ -206,7 +206,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
             >
-                {score >= 85 && <CelebrationConfetti isActive={true} />}
+                {score >= 85 && quizCompleted && <CelebrationConfetti isActive={true} />}
 
                 <div className="text-center mb-8">
                     <motion.div
@@ -309,8 +309,15 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
             <div className="bg-gradient-to-r from-green-600 to-blue-700 text-white p-6">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-bold">Income & Career Finance Quiz</h2>
-                    <div className="text-sm bg-white/20 px-3 py-1 rounded-full">
-                        Question {currentQuestion + 1} of {questions.length}
+                    <div className="flex items-center space-x-4">
+                        <div className="text-sm bg-white/20 px-3 py-1 rounded-full">
+                            Question {currentQuestion + 1} of {questions.length}
+                        </div>
+                        {state.userProgress.currentChapter > 2 && (
+                            <div className="text-xs bg-white/10 px-2 py-1 rounded">
+                                Chapter {state.userProgress.currentChapter}
+                            </div>
+                        )}
                     </div>
                 </div>
 

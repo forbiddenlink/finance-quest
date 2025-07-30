@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useProgress, useProgressActions } from '@/lib/context/ProgressContext';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
-import { CheckCircle, Star, DollarSign, TrendingUp, BookOpen, ChevronRight, ChevronLeft, Lightbulb, Brain, Target, Heart } from 'lucide-react';
+import { CheckCircle, Star, ChevronRight, ChevronLeft, Lightbulb, Brain } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface LessonContent {

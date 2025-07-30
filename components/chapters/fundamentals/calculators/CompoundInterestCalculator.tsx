@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useProgress } from '@/lib/context/ProgressContext';
-import { Lightbulb, DollarSign, Rocket, Brain, TrendingUp, Sparkles } from 'lucide-react';
+import { Lightbulb, DollarSign, Rocket, Brain, Sparkles } from 'lucide-react';
 
 interface CompoundData {
   year: number;
@@ -27,9 +27,9 @@ export default function CompoundInterestCalculator() {
   const { dispatch } = useProgress();
 
   // Calculate compound interest with monthly contributions
-  const calculateCompoundInterest = () => {
+  const calculateCompoundInterest = useCallback(() => {
     const data: CompoundData[] = [];
-    const monthlyRate = interestRate / 100 / 12;
+    const periodicRate = interestRate / 100 / compoundFrequency;
     let balance = principal;
     let cumulativePrincipal = principal;
 
@@ -41,10 +41,14 @@ export default function CompoundInterestCalculator() {
 
     for (let year = 0; year <= years; year++) {
       if (year > 0) {
-        // Calculate monthly compounding for this year
-        for (let month = 0; month < 12; month++) {
-          balance = balance * (1 + monthlyRate) + monthlyContribution;
-          cumulativePrincipal += monthlyContribution;
+        // Calculate periodic compounding for this year
+        for (let period = 0; period < compoundFrequency; period++) {
+          balance = balance * (1 + periodicRate);
+          // Add monthly contribution (assuming monthly regardless of compound frequency)
+          if (period % Math.max(1, Math.round(compoundFrequency / 12)) === 0) {
+            balance += monthlyContribution;
+            cumulativePrincipal += monthlyContribution;
+          }
         }
       }
 
@@ -62,11 +66,11 @@ export default function CompoundInterestCalculator() {
     setFinalBalance(Math.round(balance));
     setTotalPrincipal(Math.round(cumulativePrincipal));
     setTotalInterest(Math.round(balance - cumulativePrincipal));
-  };
+  }, [principal, monthlyContribution, interestRate, years, compoundFrequency, dispatch]);
 
   useEffect(() => {
     calculateCompoundInterest();
-  }, [principal, monthlyContribution, interestRate, years, compoundFrequency]);
+  }, [calculateCompoundInterest]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -197,6 +201,26 @@ export default function CompoundInterestCalculator() {
               <span className="font-medium text-blue-600">{years} years</span>
               <span>50 years</span>
             </div>
+          </div>
+
+          {/* Compound Frequency */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Compounding Frequency
+            </label>
+            <select
+              value={compoundFrequency}
+              onChange={(e) => setCompoundFrequency(Number(e.target.value))}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value={1}>Annually</option>
+              <option value={4}>Quarterly</option>
+              <option value={12}>Monthly</option>
+              <option value={365}>Daily</option>
+            </select>
+            <p className="text-xs text-gray-500 mt-1">
+              How often interest is calculated and added
+            </p>
           </div>
 
           {/* Quick Presets */}

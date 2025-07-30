@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 interface CelebrationConfettiProps {
   isActive: boolean;
@@ -33,25 +33,10 @@ const CelebrationConfetti: React.FC<CelebrationConfettiProps> = ({
   const [particles, setParticles] = useState<Particle[]>([]);
   const [animationId, setAnimationId] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (isActive) {
-      startConfetti();
-      const timer = setTimeout(() => {
-        stopConfetti();
-        onComplete?.();
-      }, duration);
-
-      return () => {
-        clearTimeout(timer);
-        stopConfetti();
-      };
-    }
-  }, [isActive, duration, onComplete]);
-
-  const createParticle = (index: number): Particle => {
+  const createParticle = useCallback((index: number): Particle => {
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
-    
+
     return {
       id: index,
       x: centerX + (Math.random() - 0.5) * 100,
@@ -64,15 +49,17 @@ const CelebrationConfetti: React.FC<CelebrationConfettiProps> = ({
       life: 1,
       maxLife: Math.random() * 100 + 50
     };
-  };
+  }, [colors]);
 
-  const startConfetti = () => {
-    const newParticles = Array.from({ length: particleCount }, (_, i) => createParticle(i));
-    setParticles(newParticles);
-    animate(newParticles);
-  };
+  const stopConfetti = useCallback(() => {
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      setAnimationId(null);
+    }
+    setParticles([]);
+  }, [animationId]);
 
-  const animate = (currentParticles: Particle[]) => {
+  const animate = useCallback(() => {
     const updateParticles = () => {
       setParticles(prevParticles => {
         const updated = prevParticles.map(particle => ({
@@ -81,10 +68,10 @@ const CelebrationConfetti: React.FC<CelebrationConfettiProps> = ({
           y: particle.y + particle.vy,
           vy: particle.vy + particle.gravity,
           life: particle.life - 1 / particle.maxLife
-        })).filter(particle => 
-          particle.life > 0 && 
+        })).filter(particle =>
+          particle.life > 0 &&
           particle.y < window.innerHeight + 50 &&
-          particle.x > -50 && 
+          particle.x > -50 &&
           particle.x < window.innerWidth + 50
         );
 
@@ -101,15 +88,28 @@ const CelebrationConfetti: React.FC<CelebrationConfettiProps> = ({
     };
 
     updateParticles();
-  };
+  }, [stopConfetti]);
 
-  const stopConfetti = () => {
-    if (animationId) {
-      cancelAnimationFrame(animationId);
-      setAnimationId(null);
+  const startConfetti = useCallback(() => {
+    const newParticles = Array.from({ length: particleCount }, (_, i) => createParticle(i));
+    setParticles(newParticles);
+    animate();
+  }, [particleCount, animate, createParticle]);
+
+  useEffect(() => {
+    if (isActive) {
+      startConfetti();
+      const timer = setTimeout(() => {
+        stopConfetti();
+        onComplete?.();
+      }, duration);
+
+      return () => {
+        clearTimeout(timer);
+        stopConfetti();
+      };
     }
-    setParticles([]);
-  };
+  }, [isActive, duration, onComplete, startConfetti, stopConfetti]);
 
   if (!isActive && particles.length === 0) return null;
 

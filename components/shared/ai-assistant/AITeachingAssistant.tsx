@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useProgress } from '@/lib/context/ProgressContext';
-import { Bot, Lightbulb, Zap } from 'lucide-react';
+import { Bot, Lightbulb } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -51,7 +51,7 @@ export default function AITeachingAssistant() {
   };
 
   const updateMessage = (id: number, text: string) => {
-    setMessages(prev => prev.map(msg => 
+    setMessages(prev => prev.map(msg =>
       msg.id === id ? { ...msg, text, isLoading: false } : msg
     ));
   };
@@ -87,7 +87,7 @@ export default function AITeachingAssistant() {
     if (!inputText.trim() || isTyping) return;
 
     const userMessage = inputText.trim();
-    
+
     // Add user message
     addMessage(userMessage, true);
     setInputText('');
@@ -98,7 +98,7 @@ export default function AITeachingAssistant() {
 
     // Get AI response
     const aiResponse = await callAI(userMessage);
-    
+
     // Update loading message with actual response
     updateMessage(loadingId, aiResponse);
     setIsTyping(false);
@@ -106,7 +106,7 @@ export default function AITeachingAssistant() {
 
   const handleQuickHelp = async (help: QuickHelp) => {
     if (isTyping) return;
-    
+
     addMessage(help.question, true);
     setIsTyping(true);
 
@@ -115,7 +115,7 @@ export default function AITeachingAssistant() {
 
     // Get AI response
     const aiResponse = await callAI(help.question);
-    
+
     // Update loading message with actual response
     updateMessage(loadingId, aiResponse);
     setIsTyping(false);
@@ -127,7 +127,7 @@ export default function AITeachingAssistant() {
     const completionPercentage = Math.round((progress.completedLessons.length / 3) * 100);
     const hasQuizScores = Object.keys(progress.quizScores).length > 0;
     const recentQuizScore = hasQuizScores ? Math.max(...Object.values(progress.quizScores)) : 0;
-    
+
     return { completionPercentage, recentQuizScore, hasQuizScores };
   };
 
@@ -173,11 +173,10 @@ export default function AITeachingAssistant() {
             className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                message.isUser
+              className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.isUser
                   ? 'bg-blue-500 text-white'
                   : 'bg-gray-200 text-gray-800'
-              }`}
+                }`}
             >
               {message.isLoading ? (
                 <div className="flex items-center space-x-2">
@@ -191,9 +190,8 @@ export default function AITeachingAssistant() {
               ) : (
                 <>
                   <p className="text-sm whitespace-pre-wrap">{message.text}</p>
-                  <p className={`text-xs mt-1 ${
-                    message.isUser ? 'text-blue-100' : 'text-gray-500'
-                  }`}>
+                  <p className={`text-xs mt-1 ${message.isUser ? 'text-blue-100' : 'text-gray-500'
+                    }`}>
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </>

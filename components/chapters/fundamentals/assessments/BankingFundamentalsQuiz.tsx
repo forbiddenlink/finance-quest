@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, XCircle, ArrowRight, RotateCcw, Trophy } from 'lucide-react';
+import { useProgressActions } from '@/lib/context/ProgressContext';
 
 interface Question {
   id: string;
@@ -22,6 +23,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
   const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [quizComplete, setQuizComplete] = useState(false);
+  const { recordQuizScore, addStrugglingTopic } = useProgressActions();
 
   const questions: Question[] = [
     {
@@ -109,6 +111,21 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
     setShowResults(true);
     setQuizComplete(true);
     const score = calculateScore();
+    const scorePercentage = Math.round(score * 100);
+
+    // Record quiz score in progress tracking
+    recordQuizScore('banking-fundamentals', scorePercentage);
+
+    // Track struggling topics for scores below 80%
+    if (scorePercentage < 80) {
+      const incorrectQuestions = questions.filter((question, index) =>
+        selectedAnswers[index] !== question.correctAnswer
+      );
+      incorrectQuestions.forEach(question => {
+        addStrugglingTopic(question.category);
+      });
+    }
+
     onComplete(score);
   };
 
@@ -156,7 +173,9 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
         <div className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white p-6">
           <div className="flex items-center space-x-3">
             <Trophy className="w-8 h-8" />
-            <h2 className="text-3xl font-bold">Quiz Complete!</h2>
+            <h2 className="text-3xl font-bold">
+              {quizComplete ? 'Quiz Complete!' : 'Banking Fundamentals Quiz'}
+            </h2>
           </div>
         </div>
 
@@ -179,13 +198,12 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
             {questions.map((question, index) => {
               const isCorrect = selectedAnswers[index] === question.correctAnswer;
               const userAnswer = selectedAnswers[index];
-              
+
               return (
                 <motion.div
                   key={question.id}
-                  className={`border rounded-lg p-4 ${
-                    isCorrect ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'
-                  }`}
+                  className={`border rounded-lg p-4 ${isCorrect ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'
+                    }`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
@@ -229,7 +247,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
               <RotateCcw className="w-5 h-5 mr-2" />
               Retake Quiz
             </motion.button>
-            
+
             {score >= 0.85 && (
               <motion.button
                 onClick={() => window.location.href = '/chapter3'}
@@ -246,7 +264,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
           {score < 0.85 && (
             <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
               <p className="text-yellow-800 text-center">
-                <strong>Almost there!</strong> You need 85% or higher to unlock the next chapter. 
+                <strong>Almost there!</strong> You need 85% or higher to unlock the next chapter.
                 Review the explanations above and try again!
               </p>
             </div>
@@ -273,7 +291,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
             Question {currentQuestion + 1} of {questions.length}
           </div>
         </div>
-        
+
         <div className="w-full bg-white/20 rounded-full h-2">
           <motion.div
             className="bg-white h-2 rounded-full"
@@ -304,20 +322,18 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
                 <motion.button
                   key={index}
                   onClick={() => handleAnswerSelect(index)}
-                  className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                    selectedAnswers[currentQuestion] === index
-                      ? 'border-blue-500 bg-blue-50 text-blue-800'
-                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                  }`}
+                  className={`w-full text-left p-4 rounded-lg border-2 transition-all ${selectedAnswers[currentQuestion] === index
+                    ? 'border-blue-500 bg-blue-50 text-blue-800'
+                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                    }`}
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                 >
                   <div className="flex items-center">
-                    <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${
-                      selectedAnswers[currentQuestion] === index
-                        ? 'border-blue-500 bg-blue-500'
-                        : 'border-gray-300'
-                    }`}>
+                    <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${selectedAnswers[currentQuestion] === index
+                      ? 'border-blue-500 bg-blue-500'
+                      : 'border-gray-300'
+                      }`}>
                       {selectedAnswers[currentQuestion] === index && (
                         <div className="w-2 h-2 rounded-full bg-white"></div>
                       )}

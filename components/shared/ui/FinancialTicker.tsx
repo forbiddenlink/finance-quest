@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
 
 interface TickerItem {
@@ -30,9 +30,8 @@ export default function FinancialTicker() {
             <DollarSign className="w-4 h-4 text-green-400" />
             <span className="font-semibold">{item.symbol}</span>
             <span className="text-gray-300">${item.price.toLocaleString()}</span>
-            <div className={`flex items-center space-x-1 ${
-              item.change >= 0 ? 'text-green-400' : 'text-red-400'
-            }`}>
+            <div className={`flex items-center space-x-1 ${item.change >= 0 ? 'text-green-400' : 'text-red-400'
+              }`}>
               {item.change >= 0 ? (
                 <TrendingUp className="w-3 h-3" />
               ) : (
@@ -45,7 +44,7 @@ export default function FinancialTicker() {
           </div>
         ))}
       </div>
-      
+
       <style jsx>{`
         @keyframes marquee {
           0% { transform: translate3d(100%, 0, 0); }
