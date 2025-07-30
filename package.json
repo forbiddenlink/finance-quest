@@ -4,7 +4,7 @@
   "description": "AI-powered financial literacy platform solving the 64% financial illiteracy crisis through interactive education and real AI coaching",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack --port 3001",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

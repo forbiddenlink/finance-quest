@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { 
   Home, 
@@ -17,6 +18,13 @@ import {
 } from 'lucide-react';
 
 export default function ProgressNavigation() {
+  const pathname = usePathname();
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const userProgress = useProgressStore(state => state.userProgress);
   const getChapterProgress = useProgressStore(state => state.getChapterProgress);
   const isChapterUnlocked = useProgressStore(state => state.isChapterUnlocked);
@@ -111,7 +119,7 @@ export default function ProgressNavigation() {
                 indigo: 'text-indigo-600 bg-indigo-50 border-indigo-200'
               };
 
-              const isActive = typeof window !== 'undefined' && window.location.pathname === item.href;
+              const isActive = isClient && pathname === item.href;
 
               return (
                 <Link key={item.name} href={item.href}>
