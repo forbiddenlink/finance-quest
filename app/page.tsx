@@ -223,23 +223,29 @@ export default function Home() {
               </div>
             </InteractiveCard>
 
-            {/* Chapter 2 - Locked */}
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
+            {/* Chapter 2 - Available */}
+            <InteractiveCard
+              className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-green-500 transform transition-all"
+              glowColor="rgba(34, 197, 94, 0.3)"
+            >
               <div className="flex items-center mb-3">
-                <BarChart3 className="w-8 h-8 mr-3 text-gray-400" />
-                <h4 className="text-lg font-bold text-gray-500">Banking & Account Fundamentals</h4>
+                <BarChart3 className="w-8 h-8 mr-3 text-green-600" />
+                <h4 className="text-lg font-bold text-gray-900 font-space">Banking & Account Fundamentals</h4>
               </div>
-              <p className="text-gray-500 mb-4">Account optimization, fees, credit unions, direct deposits, transfers</p>
+              <p className="text-gray-600 mb-4 font-inter">Account optimization, fees, credit unions, direct deposits, transfers</p>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
-                  <Lock className="w-3 h-3" />
-                  Complete Chapter 1
+                <span className="text-sm text-green-600 font-medium bg-green-100 px-2 py-1 rounded animate-pulse-glow font-poppins flex items-center gap-1">
+                  <Target className="w-3 h-3" />
+                  Available Now
                 </span>
-                <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
-                  Locked
-                </button>
+                <Link href="/chapter2">
+                  <button className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition-all hover:shadow-lg transform hover:scale-105 font-poppins relative overflow-hidden group">
+                    <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <span className="relative z-10">Start Learning</span>
+                  </button>
+                </Link>
               </div>
-            </div>
+            </InteractiveCard>
 
             {/* Chapter 3 - Locked */}
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
