@@ -8,7 +8,7 @@ import InteractiveCard from "@/components/shared/ui/InteractiveCard";
 import ParticleSystem from "@/components/shared/ui/ParticleSystem";
 import TypingText from "@/components/shared/ui/TypingText";
 import CelebrationConfetti from "@/components/shared/ui/CelebrationConfetti";
-import { TrendingUp, Users, Award, Brain, Calculator, BookOpen, Sparkles, Target, Zap, DollarSign, BarChart3, CreditCard, PieChart, ShieldCheck, FileText, Building, Lightbulb, Briefcase, Umbrella, Lock } from "lucide-react";
+import { TrendingUp, Users, Award, Brain, Calculator, BookOpen, Sparkles, Target, Zap, DollarSign, BarChart3, CreditCard, PieChart, ShieldCheck, FileText, Building, Lightbulb, Briefcase, Umbrella, Lock, Heart, CheckCircle } from "lucide-react";
 
 export default function Home() {
   return (
@@ -131,9 +131,9 @@ export default function Home() {
             glowColor="rgba(139, 92, 246, 0.3)"
           >
             <div className="text-4xl font-bold text-purple-600 mb-2">
-              <AnimatedCounter end={10} className="text-4xl font-bold text-purple-600" />
+              <AnimatedCounter end={30} className="text-4xl font-bold text-purple-600" />
             </div>
-            <p className="text-gray-600 text-sm">comprehensive chapters covering all financial basics</p>
+            <p className="text-gray-600 text-sm">comprehensive chapters covering complete financial mastery</p>
             <p className="text-xs text-purple-500 mt-2 font-medium flex items-center justify-center">
               <BookOpen className="w-3 h-3 mr-1" />
               Complete curriculum
@@ -156,7 +156,40 @@ export default function Home() {
           </InteractiveCard>
         </div>
 
-        {/* Comprehensive Chapter Overview - 10 Modules */}
+        {/* Featured: Financial Health Assessment */}
+        <div className="mb-16">
+          <InteractiveCard
+            className="premium-card rounded-xl shadow-lg p-8 border border-green-200 bg-gradient-to-r from-green-50 to-emerald-50"
+            glowColor="rgba(34, 197, 94, 0.2)"
+          >
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Heart className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3 font-space">Get Your Financial Health Score</h3>
+              <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto font-inter">
+                Take our 2-minute assessment to get your personalized Financial Health Score with actionable recommendations
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link href="/health-assessment">
+                  <button className="group bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-green-600 hover:to-emerald-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 font-poppins relative overflow-hidden">
+                    <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <span className="flex items-center relative z-10">
+                      <Heart className="mr-2 w-5 h-5 group-hover:pulse" />
+                      Check Your Financial Health
+                    </span>
+                  </button>
+                </Link>
+                <div className="flex items-center text-sm text-gray-600">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  Instant results • No signup required
+                </div>
+              </div>
+            </div>
+          </InteractiveCard>
+        </div>
+
+        {/* Comprehensive Chapter Overview - 30 Modules */}
         <div className="mb-16">
           <div className="text-center mb-8">
             <h3 className="text-3xl font-bold text-gray-900 mb-4 font-space gradient-text-premium">Complete Financial Education Curriculum</h3>
