@@ -1,6 +1,7 @@
 {
   "name": "finance-quest",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "AI-powered financial literacy platform solving the 64% financial illiteracy crisis through interactive education and real AI coaching",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
