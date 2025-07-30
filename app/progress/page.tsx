@@ -1,11 +1,26 @@
 'use client';
 
+import { useProgress } from '@/lib/context/ProgressContext';
 import ProgressDashboard from '@/components/shared/ui/ProgressDashboard';
-import { BarChart3, ArrowLeft, Target, TrendingUp, Trophy, CheckCircle } from 'lucide-react';
+import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
+import GradientCard from '@/components/shared/ui/GradientCard';
+import { Brain, TrendingUp, Target, Clock, BookOpen, Calculator, Award, ArrowLeft, BarChart3 } from 'lucide-react';
 
 export default function ProgressPage() {
+  const { state } = useProgress();
+
+  const completionStats = {
+    lessonsCompleted: state.userProgress.completedLessons.length,
+    quizzesPassed: Object.values(state.userProgress.quizScores).filter(score => score >= 80).length,
+    calculatorsUsed: Object.keys(state.userProgress.calculatorUsage).length,
+    totalTimeSpent: Math.round(state.userProgress.totalTimeSpent / 60), // Convert to minutes
+    averageQuizScore: Object.values(state.userProgress.quizScores).length > 0 
+      ? Math.round(Object.values(state.userProgress.quizScores).reduce((a, b) => a + b, 0) / Object.values(state.userProgress.quizScores).length)
+      : 0
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50">
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -18,86 +33,155 @@ export default function ProgressPage() {
                 <ArrowLeft className="w-4 h-4" />
                 Back to Home
               </button>
-              <h1 className="text-2xl font-bold text-gray-900">Progress Dashboard</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Enhanced Progress Dashboard</h1>
             </div>
             <div className="bg-indigo-100 px-3 py-1 rounded-full flex items-center gap-2">
-              <BarChart3 className="w-4 h-4 text-indigo-600" />
-              <span className="text-sm font-medium text-indigo-800">Analytics</span>
+              <Brain className="w-4 h-4 text-indigo-600" />
+              <span className="text-sm font-medium text-indigo-800">AI-Powered Analytics</span>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="mb-6 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-lg p-6">
-          <h2 className="text-xl font-bold text-indigo-900 mb-2 flex items-center gap-2">
-            <BarChart3 className="w-6 h-6" />
-            Your Financial Education Journey
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Hero Section */}
+        <div className="text-center mb-8">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4 font-space">
+            Your Learning Journey
           </h2>
-          <p className="text-indigo-800 mb-4">
-            Track your progress, celebrate achievements, and see the measurable impact of your financial education
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto font-inter">
+            Track your progress, review key concepts, and optimize your financial education with AI-powered insights
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            <div className="bg-white bg-opacity-50 rounded-lg p-3">
-              <h3 className="font-semibold text-indigo-900 flex items-center gap-2">
-                <Target className="w-4 h-4" />
-                Goal-Oriented Learning
-              </h3>
-              <p className="text-indigo-700">Clear progression through mastery-based chapters</p>
-            </div>
-            <div className="bg-white bg-opacity-50 rounded-lg p-3">
-              <h3 className="font-semibold text-indigo-900 flex items-center gap-2">
-                <TrendingUp className="w-4 h-4" />
-                Measurable Impact
-              </h3>
-              <p className="text-indigo-700">Real data showing your knowledge growth over time</p>
-            </div>
-            <div className="bg-white bg-opacity-50 rounded-lg p-3">
-              <h3 className="font-semibold text-indigo-900 flex items-center gap-2">
-                <Trophy className="w-4 h-4" />
-                Achievement System
-              </h3>
-              <p className="text-indigo-700">Unlock badges and milestones as you advance</p>
-            </div>
+        </div>
+
+        {/* Quick Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <GradientCard variant="glass" gradient="blue" className="p-6 text-center">
+            <BookOpen className="w-8 h-8 text-blue-600 mx-auto mb-3" />
+            <div className="text-2xl font-bold text-gray-900 mb-1">{completionStats.lessonsCompleted}</div>
+            <div className="text-sm text-gray-600">Lessons Completed</div>
+          </GradientCard>
+
+          <GradientCard variant="glass" gradient="green" className="p-6 text-center">
+            <Target className="w-8 h-8 text-green-600 mx-auto mb-3" />
+            <div className="text-2xl font-bold text-gray-900 mb-1">{completionStats.quizzesPassed}</div>
+            <div className="text-sm text-gray-600">Quizzes Passed</div>
+          </GradientCard>
+
+          <GradientCard variant="glass" gradient="purple" className="p-6 text-center">
+            <Calculator className="w-8 h-8 text-purple-600 mx-auto mb-3" />
+            <div className="text-2xl font-bold text-gray-900 mb-1">{completionStats.calculatorsUsed}</div>
+            <div className="text-sm text-gray-600">Tools Mastered</div>
+          </GradientCard>
+
+          <GradientCard variant="glass" gradient="yellow" className="p-6 text-center">
+            <Clock className="w-8 h-8 text-yellow-600 mx-auto mb-3" />
+            <div className="text-2xl font-bold text-gray-900 mb-1">{completionStats.totalTimeSpent}</div>
+            <div className="text-sm text-gray-600">Minutes Learned</div>
+          </GradientCard>
+        </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          {/* Traditional Progress Dashboard */}
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <TrendingUp className="w-6 h-6 text-blue-600" />
+              Learning Progress
+            </h3>
+            <ProgressDashboard />
+          </div>
+
+          {/* Spaced Repetition Dashboard */}
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <Brain className="w-6 h-6 text-purple-600" />
+              Memory & Retention
+            </h3>
+            <SpacedRepetitionDashboard />
           </div>
         </div>
 
-        <ProgressDashboard />
+        {/* Achievement Section */}
+        {completionStats.lessonsCompleted > 0 && (
+          <div className="mb-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <Award className="w-6 h-6 text-yellow-600" />
+              Your Achievements
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {completionStats.lessonsCompleted >= 1 && (
+                <GradientCard variant="glass" gradient="green" className="p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                      <BookOpen className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">First Steps</h4>
+                      <p className="text-sm text-gray-600">Completed your first lesson!</p>
+                    </div>
+                  </div>
+                </GradientCard>
+              )}
 
-        {/* Additional Context for Demo */}
-        <div className="mt-8 bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
-            <Trophy className="w-5 h-5" />
-            Demo Highlights for Judges
+              {completionStats.averageQuizScore >= 80 && (
+                <GradientCard variant="glass" gradient="blue" className="p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+                      <Target className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">Quiz Master</h4>
+                      <p className="text-sm text-gray-600">Maintaining 80%+ quiz scores!</p>
+                    </div>
+                  </div>
+                </GradientCard>
+              )}
+
+              {completionStats.calculatorsUsed >= 2 && (
+                <GradientCard variant="glass" gradient="purple" className="p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center">
+                      <Calculator className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">Tool Expert</h4>
+                      <p className="text-sm text-gray-600">Used multiple financial calculators!</p>
+                    </div>
+                  </div>
+                </GradientCard>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Demo Highlights for Judges */}
+        <GradientCard variant="glass" gradient="blue" className="p-6">
+          <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <BarChart3 className="w-5 h-5 text-blue-600" />
+            Contest Demo Highlights
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 className="font-semibold text-blue-800 mb-3 flex items-center gap-2">
-                <CheckCircle className="w-4 h-4" />
-                Technical Excellence
-              </h4>
-              <ul className="text-blue-700 space-y-2 text-sm">
-                <li>• <strong>Persistent Data:</strong> All progress saved in localStorage across browser sessions</li>
-                <li>• <strong>Real AI Integration:</strong> OpenAI GPT-4o-mini provides contextual responses based on user data</li>
-                <li>• <strong>Interactive Visualizations:</strong> Recharts library for dynamic progress charts</li>
-                <li>• <strong>Global State Management:</strong> React Context handles all user interactions</li>
+              <h4 className="font-semibold text-blue-900 mb-3">🧠 Spaced Repetition Innovation</h4>
+              <ul className="text-gray-700 space-y-2 text-sm">
+                <li>• <strong>SM-2 Algorithm:</strong> Science-based memory optimization for financial concepts</li>
+                <li>• <strong>Importance Weighting:</strong> Critical concepts (budgeting, credit) reviewed more frequently</li>
+                <li>• <strong>Confidence Integration:</strong> Self-reported confidence affects review scheduling</li>
+                <li>• <strong>Retention Analytics:</strong> Real-time mastery and struggling concept identification</li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-blue-800 mb-3 flex items-center gap-2">
-                <Target className="w-4 h-4" />
-                Educational Impact
-              </h4>
-              <ul className="text-blue-700 space-y-2 text-sm">
-                <li>• <strong>Mastery-Based:</strong> 80% quiz scores required to advance chapters</li>
-                <li>• <strong>Practical Application:</strong> Interactive calculators for hands-on learning</li>
-                <li>• <strong>Progress Tracking:</strong> Visual metrics show knowledge retention and growth</li>
-                <li>• <strong>Measurable Outcomes:</strong> Clear before/after assessment capabilities</li>
+              <h4 className="font-semibold text-blue-900 mb-3">📊 Enhanced Progress Tracking</h4>
+              <ul className="text-gray-700 space-y-2 text-sm">
+                <li>• <strong>30-Chapter Curriculum:</strong> Comprehensive financial education from psychology to planning</li>
+                <li>• <strong>Multi-Modal Learning:</strong> Visual, auditory, kinesthetic, and reading/writing styles</li>
+                <li>• <strong>Achievement System:</strong> Milestone tracking with personalized recommendations</li>
+                <li>• <strong>AI Integration:</strong> Contextual coaching based on learning patterns</li>
               </ul>
             </div>
           </div>
-        </div>
+        </GradientCard>
       </div>
     </div>
   );

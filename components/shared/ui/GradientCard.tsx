@@ -52,7 +52,7 @@ export default function GradientCard({
 }: GradientCardProps) {
   const baseClasses = 'rounded-xl shadow-lg transition-all duration-300';
   const hoverClasses = hover ? 'card-hover' : '';
-  
+
   if (variant === 'border') {
     return (
       <div className={`relative ${baseClasses} ${hoverClasses} ${className}`}>
@@ -64,7 +64,7 @@ export default function GradientCard({
       </div>
     );
   }
-  
+
   if (variant === 'glass') {
     return (
       <div className={`${baseClasses} ${gradients[gradient].glass} backdrop-blur-sm border ${hoverClasses} ${className}`}>
@@ -72,7 +72,7 @@ export default function GradientCard({
       </div>
     );
   }
-  
+
   // Solid variant
   return (
     <div className={`${baseClasses} ${gradients[gradient].solid} text-white ${hoverClasses} ${className}`}>

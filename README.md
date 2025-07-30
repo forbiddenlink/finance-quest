@@ -40,24 +40,49 @@ Finance Quest is a comprehensive financial literacy platform that transforms use
 - **Budget Builders**: 50/30/20 rule with immediate feedback
 - **Debt Management**: Snowball/avalanche strategies with amortization
 
-### 📚 **Comprehensive Curriculum**
-1. **Money Fundamentals**: Banking, paychecks, direct deposits
-2. **Budgeting Mastery**: Emergency funds, expense tracking, cash flow
-3. **Debt & Credit**: Credit scores, loan strategies, credit cards
-4. **Investment Basics**: Stocks, bonds, 401k matching, diversification
-5. **Advanced Investing**: ETFs, mutual funds, risk tolerance
-6. **Taxes & Planning**: Brackets, deductions, tax-advantaged accounts
-7. **Insurance**: Health, auto, life, disability coverage optimization
-8. **Real Estate**: Mortgages, down payments, rent vs buy analysis
-9. **Economic Concepts**: Inflation, interest rates, market cycles
-10. **Retirement Planning**: FIRE, Social Security, withdrawal strategies
-11. **Crisis Management**: Job loss, medical bills, debt crisis workflows
-12. **Life Stage Finance**: College, family, divorce financial planning
-13. **Business Finance**: Small business, freelancer taxes, startup funding
-14. **Behavioral Finance**: Psychology of money, cognitive biases
-15. **Global Finance**: International investing, currency, economics
+### 📚 **Comprehensive Curriculum (30+ Specialized Modules)**
 
-*Expandable to 25+ specialized tracks including healthcare finance, gig economy, military finance, and more.*
+#### **Foundation Track (Chapters 1-6)**
+1. **Money Psychology & Mindset**: Emotional relationship with money, scarcity vs abundance, cognitive biases
+2. **Banking & Account Fundamentals**: Account optimization, fees, credit unions, direct deposits, transfers
+3. **Income & Career Finance**: Salary negotiation, pay stubs, benefits, side hustles, skill monetization
+4. **Budgeting Mastery & Cash Flow**: Zero-based budgeting, 50/30/20 rule, expense tracking, automation
+5. **Emergency Funds & Financial Safety**: Fund sizing, high-yield savings, rebuilding strategies
+6. **Debt Fundamentals**: Good vs bad debt, avalanche vs snowball, consolidation, negotiations
+
+#### **Credit & Lending Track (Chapters 7-10)**
+7. **Credit Scores & Reports**: FICO vs VantageScore, dispute processes, building strategies
+8. **Credit Cards Mastery**: Rewards optimization, balance transfers, utilization strategies
+9. **Personal Loans & Lines of Credit**: Shopping strategies, HELOC, payday alternatives
+10. **Student Loans & Education Finance**: Federal vs private, forgiveness programs, refinancing
+
+#### **Investment Track (Chapters 11-16)**
+11. **Investment Fundamentals**: Risk vs return, diversification, dollar-cost averaging
+12. **Stocks & Equity Investing**: Analysis basics, dividend investing, international exposure
+13. **Bonds & Fixed Income**: Government vs corporate, ladders, municipal bonds, TIPS
+14. **Mutual Funds & ETFs**: Expense ratios, active vs passive, index fund benefits
+15. **Retirement Accounts**: 401k optimization, IRA types, rollover strategies
+16. **Advanced Investment Strategies**: Options basics, commodities, tax-loss harvesting
+
+#### **Protection & Planning Track (Chapters 17-20)**
+17. **Insurance Fundamentals**: Risk assessment, coverage optimization, claims processes
+18. **Health Insurance & Healthcare Finance**: Plan types, HSA optimization, medical debt
+19. **Life & Disability Insurance**: Term vs whole life, coverage calculation, beneficiaries
+20. **Property & Casualty Insurance**: Auto/home optimization, umbrella policies
+
+#### **Advanced Planning Track (Chapters 21-25)**
+21. **Tax Strategy & Optimization**: Bracket optimization, deductions, tax-advantaged accounts
+22. **Real Estate Investment**: Primary residence vs investment, mortgage strategies
+23. **Business & Entrepreneurship Finance**: Structure selection, cash flow, business credit
+24. **Estate Planning Basics**: Wills, trusts, beneficiaries, probate avoidance
+25. **Financial Independence & Early Retirement**: FIRE principles, withdrawal strategies
+
+#### **Economic Literacy Track (Chapters 26-30)**
+26. **Economic Fundamentals**: GDP, inflation, Federal Reserve, business cycles
+27. **Market Psychology & Behavioral Finance**: Bubbles, biases, contrarian thinking
+28. **Global Economics & Currency**: International investing, currency risk, diversification
+29. **Economic Policy Impact**: Fiscal vs monetary policy, election impacts on markets
+30. **Crisis Preparation & Recovery**: Recession strategies, portfolio stress testing
 
 ## 🏗️ **Technical Architecture**
 
@@ -202,7 +227,7 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 - Global progress tracking with localStorage persistence ✅
 - **Q&A Knowledge System**: Ask any financial questions with AI-powered answers ✅
 - **Compound Interest Calculator**: Interactive charts with exponential growth visualization ✅
-- **Professional Homepage**: 10-chapter curriculum display with enhanced UI/UX ✅
+- **Professional Homepage**: 30-chapter curriculum display organized in 6 learning tracks ✅
 - **Premium Visual Design**: Advanced typography, 3D cards, glass morphism, particle effects ✅
 - **Hydration-Safe Architecture**: SSR-compatible animations and state management ✅
 

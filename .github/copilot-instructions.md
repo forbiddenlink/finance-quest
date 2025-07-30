@@ -92,28 +92,131 @@ All educational components now integrated with global progress tracking:
 
 #### Enhanced Homepage Design ✅
 - **Professional Layout**: Contest-ready design with gradient hero section and compelling messaging
-- **Complete Curriculum Display**: All 10 chapters shown with progressive unlocking visual hierarchy
+- **Complete Curriculum Display**: All 30 chapters organized in 6 progressive tracks with visual hierarchy
 - **Interactive Tool Showcase**: Dedicated calculator section with real ROI examples and coming-soon previews
 - **AI Features Highlight**: Three-pillar presentation of contextual coaching, progress tracking, and Q&A system
 - **Impact Statistics**: Crisis context (64% illiteracy) with solution metrics and competitive advantages
+- **Learning Track Navigation**: Clear visual distinction between Foundation, Credit, Investment, Protection, Planning, and Economic tracks
 
 ### Core Educational Philosophy
-- **Zero-to-Hero Learning Path**: Progressive curriculum from basic budgeting to advanced investment strategies
-- **Mastery-Based Progression**: 80%+ quiz scores required to unlock next chapters
-- **Immediate Application**: Each concept learned through interactive calculators and real-world scenarios
-- **AI-Powered Personalization**: Adaptive difficulty and personalized coaching based on comprehension
+- **Comprehensive Financial Mastery**: 30-chapter curriculum covering every aspect of personal finance from psychology to advanced planning
+- **Multi-Modal Learning**: Visual, auditory, kinesthetic, and reading/writing learning styles accommodated
+- **Spaced Repetition Implementation**: Concepts revisited across multiple chapters with increasing complexity
+- **Real-World Application Focus**: Every concept immediately applied through calculators, scenarios, and decision trees
+- **Mastery-Based Progression**: 85%+ quiz scores required with explanation-based learning (not just memorization)
+- **Cognitive Load Management**: Chunked learning with 5-7 minute micro-lessons, immediate practice, and concept reinforcement
+- **Active Recall Techniques**: Self-testing, flashcards, concept mapping, and peer teaching simulations
+- **Interleaved Practice**: Mix related concepts to improve discrimination and transfer learning
+- **Elaborative Interrogation**: "Why" and "How" questions throughout lessons to deepen understanding
+- **AI-Powered Personalization**: Adaptive difficulty, personalized examples, and remediation paths based on comprehension patterns
 
-### Chapter Structure (10 Comprehensive Modules)
-1. **Money Fundamentals**: Income, banking, paycheck basics, direct deposits
-2. **Budgeting Mastery**: 50/30/20 rule, expense tracking, emergency funds, cash flow
-3. **Debt and Credit**: Credit scores, good vs bad debt, loan strategies, credit cards
-4. **Investment Fundamentals**: Compound interest, stocks/bonds, 401k matching, diversification
-5. **Advanced Investing**: ETFs, mutual funds, index funds, risk tolerance, portfolio allocation
-6. **Taxes & Planning**: Tax brackets, deductions, credits, W-4s, tax-advantaged accounts
-7. **Insurance & Protection**: Health, auto, life, disability insurance, coverage optimization
-8. **Real Estate Finance**: Mortgages, down payments, PMI, refinancing, rent vs buy
-9. **Economic Concepts**: Inflation, interest rates, market cycles, recession planning
-10. **Advanced Planning**: Retirement planning, estate basics, financial independence (FIRE)
+### Enhanced Learning Retention Framework
+```typescript
+interface RetentionOptimization {
+  spacedRepetition: {
+    initialReview: '24 hours';
+    secondReview: '3 days';
+    thirdReview: '1 week';
+    fourthReview: '2 weeks';
+    fifthReview: '1 month';
+  };
+  multiModalLearning: {
+    visual: 'Interactive charts, infographics, concept maps';
+    auditory: 'Narrated lessons, discussion prompts';
+    kinesthetic: 'Calculator interactions, drag-drop activities';
+    readingWriting: 'Note-taking, summary writing, definition creation';
+  };
+  cognitiveStrategies: {
+    elaboration: 'Connect new concepts to existing knowledge';
+    organization: 'Hierarchical concept structures';
+    metacognition: 'Self-assessment and strategy monitoring';
+    mnemonics: 'Memory aids for complex formulas and processes';
+  };
+  practiceVariations: {
+    blockedPractice: 'Master one concept before moving to next';
+    interleavedPractice: 'Mix related concepts for better transfer';
+    distributedPractice: 'Spread learning across multiple sessions';
+    testingEffect: 'Frequent low-stakes quizzing';
+  };
+}
+```
+
+### Chapter 1 Enhancement Strategy (Money Psychology & Mindset)
+#### **Deeper Content Structure**
+- **Lesson 1.1**: Your Money Story (15 min)
+  - Childhood money messages and their impact
+  - Identifying limiting beliefs about money
+  - Interactive assessment: Money personality quiz
+  - Case studies: How beliefs affect financial decisions
+  
+- **Lesson 1.2**: Scarcity vs Abundance Mindset (12 min)
+  - Neuroscience of scarcity thinking
+  - Growth mindset application to finances
+  - Interactive exercise: Reframing financial challenges
+  - Calculator: Opportunity cost of fear-based decisions
+  
+- **Lesson 1.3**: Cognitive Biases in Financial Decisions (18 min)
+  - Loss aversion, anchoring, confirmation bias
+  - Interactive scenarios: Bias identification
+  - Decision-making frameworks
+  - Real-world examples with immediate practice
+  
+- **Lesson 1.4**: Goal Setting Psychology (10 min)
+  - SMART goals vs PACT goals for finances
+  - Intrinsic vs extrinsic motivation
+  - Implementation intentions
+  - Goal tracking system setup
+
+#### **Interactive Elements for Retention**
+- **Money Personality Assessment**: 20-question quiz determining financial archetype
+- **Belief Transformation Simulator**: Interactive tool showing how changing beliefs impacts decisions
+- **Bias Detection Game**: Present financial scenarios, user identifies biases
+- **Goal Visualization Tool**: Interactive goal-setting with progress tracking
+- **Success Story Database**: Real people who overcame similar money mindset challenges
+
+### Comprehensive Curriculum Structure (20+ Detailed Modules)
+
+#### **Foundation Track (Chapters 1-6): Building Financial Literacy**
+1. **Money Psychology & Mindset**: Emotional relationship with money, scarcity vs abundance mindset, financial trauma, cognitive biases in spending, goal setting psychology, motivation techniques
+2. **Banking & Account Fundamentals**: Account types (checking, savings, money market, CDs), banking fees, online vs traditional banks, credit unions, account optimization, overdraft protection, direct deposits, automatic transfers
+3. **Income & Career Finance**: Salary negotiation, understanding pay stubs, benefits valuation, side hustles, freelancing taxes, career investment ROI, skill monetization, passive income streams
+4. **Budgeting Mastery & Cash Flow**: Zero-based budgeting, 50/30/20 rule, envelope method, cash flow forecasting, expense tracking systems, seasonal budgeting, irregular income management, budget automation
+5. **Emergency Funds & Financial Safety**: Emergency fund sizing (3-6 months), high-yield savings optimization, when to use emergency funds, rebuilding strategies, insurance as emergency protection
+6. **Debt Fundamentals**: Good vs bad debt, debt psychology, debt avalanche vs snowball, minimum payments, debt consolidation, balance transfers, negotiating with creditors
+
+#### **Credit & Lending Track (Chapters 7-10): Understanding Credit Systems**
+7. **Credit Scores & Reports**: FICO vs VantageScore, credit report analysis, dispute processes, credit monitoring, identity theft protection, credit building strategies, authorized user benefits
+8. **Credit Cards Mastery**: Rewards optimization, annual fees analysis, interest rate negotiations, balance transfer strategies, credit utilization optimization, churning basics, business credit cards
+9. **Personal Loans & Lines of Credit**: Personal loan shopping, interest rate factors, secured vs unsecured loans, home equity loans/HELOC, payday loan alternatives, peer-to-peer lending
+10. **Student Loans & Education Finance**: Federal vs private loans, repayment plans (IDR, PAYE, IBR), loan forgiveness programs (PSLF, Teacher), refinancing decisions, tax implications, education ROI analysis
+
+#### **Investment Track (Chapters 11-16): Building Wealth**
+11. **Investment Fundamentals**: Risk vs return, time horizon importance, dollar-cost averaging, market volatility psychology, diversification principles, asset allocation basics
+12. **Stocks & Equity Investing**: Stock analysis basics, dividend investing, growth vs value stocks, market cap understanding, sector diversification, international investing, REITs
+13. **Bonds & Fixed Income**: Government vs corporate bonds, bond ratings, interest rate risk, bond ladders, municipal bonds, I-bonds and TIPS, yield curve understanding
+14. **Mutual Funds & ETFs**: Expense ratios, active vs passive management, index fund benefits, sector ETFs, international funds, target-date funds, fund selection criteria
+15. **Retirement Accounts**: 401k optimization, IRA types (Traditional, Roth, SEP, SIMPLE), contribution limits, employer matching, rollover strategies, early withdrawal penalties
+16. **Advanced Investment Strategies**: Options basics, commodities, cryptocurrency fundamentals, alternative investments, tax-loss harvesting, rebalancing strategies
+
+#### **Protection & Planning Track (Chapters 17-20): Risk Management**
+17. **Insurance Fundamentals**: Risk assessment, insurance types overview, coverage optimization, deductible strategies, insurance shopping, claims processes
+18. **Health Insurance & Healthcare Finance**: Plan types (HMO, PPO, HDHP), HSA optimization, medical debt management, healthcare cost estimation, preventive care ROI
+19. **Life & Disability Insurance**: Term vs whole life, coverage calculation, beneficiary planning, disability insurance importance, long-term care insurance, insurance laddering
+20. **Property & Casualty Insurance**: Auto insurance optimization, homeowners/renters insurance, umbrella policies, coverage gaps, claim optimization, insurance bundling
+
+#### **Advanced Financial Planning Track (Chapters 21-25): Mastery Level**
+21. **Tax Strategy & Optimization**: Tax bracket optimization, deduction strategies, tax-advantaged accounts, tax-loss harvesting, estate tax basics, quarterly payments
+22. **Real Estate Investment**: Primary residence vs investment, mortgage strategies, down payment optimization, PMI removal, refinancing decisions, real estate crowdfunding
+23. **Business & Entrepreneurship Finance**: Business structure selection, business banking, cash flow management, business credit, contractor vs employee, business insurance
+24. **Estate Planning Basics**: Wills and trusts, beneficiary designations, power of attorney, healthcare directives, probate avoidance, gifting strategies
+25. **Financial Independence & Early Retirement**: FIRE movement principles, withdrawal rate strategies, geographic arbitrage, passive income optimization, retirement timing decisions
+
+#### **Economic Literacy Track (Chapters 26-30): Understanding the Bigger Picture**
+26. **Economic Fundamentals**: GDP, inflation, unemployment, interest rates, federal reserve role, economic indicators, business cycles
+27. **Market Psychology & Behavioral Finance**: Market bubbles, herd mentality, emotional investing, cognitive biases, contrarian thinking, market timing myths
+28. **Global Economics & Currency**: International investing, currency risk, emerging markets, global diversification, geopolitical risk, trade impacts
+29. **Economic Policy Impact**: Fiscal vs monetary policy, election impacts on markets, regulation effects, tax policy changes, social security future
+30. **Crisis Preparation & Recovery**: Recession strategies, market crash responses, economic uncertainty navigation, portfolio stress testing, emergency planning
 
 ### Key Component Types
 

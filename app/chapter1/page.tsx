@@ -33,7 +33,7 @@ export default function Chapter1Page() {
               >
                 ← Back to Home
               </button>
-              <h1 className="text-2xl font-bold text-gray-900">Chapter 1: Money Fundamentals</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Chapter 1: Money Psychology & Mindset</h1>
             </div>
             <div className="bg-blue-100 px-3 py-1 rounded-full">
               <span className="text-sm font-medium text-blue-800">Progress: 25%</span>

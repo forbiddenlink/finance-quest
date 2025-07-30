@@ -5,7 +5,7 @@ import { useProgress, useProgressActions } from '@/lib/context/ProgressContext';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
 import TypingEffect from '@/components/shared/ui/TypingEffect';
-import { CheckCircle, Star, DollarSign, TrendingUp, BookOpen, ChevronRight, ChevronLeft, Lightbulb } from 'lucide-react';
+import { CheckCircle, Star, DollarSign, TrendingUp, BookOpen, ChevronRight, ChevronLeft, Lightbulb, Brain, Target, Heart } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface LessonContent {
@@ -16,33 +16,43 @@ interface LessonContent {
 
 const lessons: LessonContent[] = [
   {
-    title: "What is Income?",
-    content: "Income is the money you receive regularly, usually from work. There are different types of income, and understanding them is crucial for managing your finances effectively.",
+    title: "Your Money Story: Understanding Your Financial Past",
+    content: "Your relationship with money was shaped before you even earned your first dollar. The messages you received about money in childhood create beliefs that drive your financial decisions today. By understanding your money story, you can identify limiting beliefs and transform them into empowering ones.",
     keyPoints: [
-      "Gross Income: Total money earned before any deductions",
-      "Net Income: Money you actually take home after taxes and deductions",
-      "Active Income: Money earned from working (salary, wages, tips)",
-      "Passive Income: Money earned without active work (investments, rental property)"
+      "Money messages from childhood shape adult financial behavior",
+      "Common limiting beliefs: 'Money is the root of all evil', 'Rich people are greedy'",
+      "Emotional triggers around money often stem from past experiences",
+      "Awareness is the first step to changing destructive money patterns"
     ]
   },
   {
-    title: "Understanding Your Paycheck",
-    content: "Your paycheck shows much more than just the money you take home. Learning to read it helps you understand where your money goes and plan better.",
+    title: "Scarcity vs Abundance: Rewiring Your Money Mindset",
+    content: "Your brain is wired to focus on scarcity - it's a survival mechanism. But in modern finances, scarcity thinking often creates the very problems it tries to avoid. An abundance mindset doesn't mean being reckless; it means making decisions from a place of possibility rather than fear.",
     keyPoints: [
-      "Gross Pay: Your total earnings before any deductions",
-      "Federal & State Taxes: Money taken for government services",
-      "FICA Taxes: Social Security (6.2%) and Medicare (1.45%)",
-      "Net Pay: What you actually receive in your bank account"
+      "Scarcity mindset: 'There's never enough money' - leads to hoarding or panic spending",
+      "Abundance mindset: 'There are always opportunities to create value' - leads to strategic thinking",
+      "Growth mindset applied to money: Skills and income can be developed over time",
+      "Shifting from 'I can't afford it' to 'How can I afford it?' opens new possibilities"
     ]
   },
   {
-    title: "Basic Banking Essentials",
-    content: "Banks are essential tools for managing your money safely. Understanding different account types helps you choose what's right for your needs.",
+    title: "Cognitive Biases: The Hidden Forces Affecting Your Money Decisions",
+    content: "Your brain uses mental shortcuts (biases) to make quick decisions, but these can sabotage your financial success. Understanding these biases helps you recognize when they're influencing your choices and make more rational financial decisions.",
     keyPoints: [
-      "Checking Account: For daily expenses and bill payments",
-      "Savings Account: For storing money and earning small interest",
-      "Interest: Money the bank pays you for keeping funds with them",
-      "FDIC Insurance: Government protection for your deposits up to $250,000"
+      "Loss aversion: We feel losses twice as strongly as gains - leads to avoiding good investments",
+      "Anchoring bias: Over-relying on first information - affects salary negotiations and purchases",
+      "Confirmation bias: Seeking info that confirms existing beliefs - prevents learning",
+      "Present bias: Overvaluing immediate rewards - makes saving and investing difficult"
+    ]
+  },
+  {
+    title: "Goal Setting Psychology: Turning Dreams into Financial Reality",
+    content: "Most financial goals fail not because of lack of money, but because of how they're set. Psychology research shows that the way you frame and structure your goals dramatically impacts your success rate. Learn the science-based approach to financial goal achievement.",
+    keyPoints: [
+      "SMART goals vs PACT goals: Process and context matter more than just outcomes",
+      "Intrinsic motivation (personal values) creates lasting change vs extrinsic (external rewards)",
+      "Implementation intentions: 'If X happens, then I will do Y' doubles success rates",
+      "Social accountability and progress tracking increase achievement by 65%"
     ]
   }
 ];
@@ -108,15 +118,15 @@ export default function MoneyFundamentalsLesson() {
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
-              <div className="bg-blue-100 p-2 rounded-lg animate-float">
-                <BookOpen className="w-6 h-6 text-blue-600" />
+              <div className="bg-purple-100 p-2 rounded-lg animate-float">
+                <Brain className="w-6 h-6 text-purple-600" />
               </div>
-              <span className="text-sm font-medium text-blue-600 animate-fade-in-up">
+              <span className="text-sm font-medium text-purple-600 animate-fade-in-up">
                 Lesson {currentLesson + 1} of {lessons.length}
               </span>
             </div>
             <span className="text-sm text-gray-500 animate-fade-in-up stagger-1">
-              Chapter 1: Money Fundamentals
+              Chapter 1: Money Psychology & Mindset
             </span>
           </div>
 
@@ -124,7 +134,7 @@ export default function MoneyFundamentalsLesson() {
             <TypingEffect
               text={lesson.title}
               speed={50}
-              className="gradient-text-blue"
+              className="gradient-text-purple"
             />
           </h1>
         </div>
@@ -156,19 +166,91 @@ export default function MoneyFundamentalsLesson() {
           </GradientCard>
         </div>
 
-        {/* Interactive Example */}
+        {/* Interactive Exercises for Better Retention */}
+        {currentLesson === 0 && (
+          <div className="mb-8 p-6 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+            <h3 className="text-lg font-semibold text-purple-900 mb-3 flex items-center gap-2">
+              <Lightbulb className="w-5 h-5" />
+              Reflect on Your Money Story
+            </h3>
+            <div className="text-purple-800 space-y-3">
+              <p className="font-medium">Think about these questions (no need to answer out loud):</p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>What did your family say about money when you were growing up?</li>
+                <li>What was your first memory involving money?</li>
+                <li>Do you tend to spend when stressed or save when stressed?</li>
+                <li>What financial decision are you most proud of? Most regretful of?</li>
+              </ul>
+              <p className="mt-4 font-medium text-purple-900">
+                💡 <strong>Key Insight:</strong> Most of our money patterns were set by age 7. Recognizing them is the first step to changing them!
+              </p>
+            </div>
+          </div>
+        )}
+
         {currentLesson === 1 && (
-          <div className="mb-8 p-6 bg-green-50 rounded-lg">
+          <div className="mb-8 p-6 bg-green-50 rounded-lg border-l-4 border-green-500">
             <h3 className="text-lg font-semibold text-green-900 mb-3 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
-              Try It Yourself
+              Mindset Reframe Exercise
             </h3>
-            <p className="text-green-800 mb-4">
-              If you earn $4,000 gross pay per month, approximately how much would your net pay be?
-            </p>
-            <div className="text-green-700">
-              <p><strong>Hint:</strong> Most people take home about 75-80% of their gross pay after taxes and deductions.</p>
-              <p className="mt-2"><strong>Answer:</strong> Around $3,000-$3,200 (You can use our Paycheck Calculator to get exact numbers!)</p>
+            <div className="text-green-800 space-y-4">
+              <div className="bg-white p-4 rounded-lg">
+                <p className="font-medium text-red-700 mb-2">❌ Scarcity Thinking:</p>
+                <p className="italic">"I can't afford that $50 course because I need to save money."</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg">
+                <p className="font-medium text-green-700 mb-2">✅ Abundance Thinking:</p>
+                <p className="italic">"How can I create an extra $50 this month to invest in learning a skill that could increase my income?"</p>
+              </div>
+              <p className="mt-4 font-medium text-green-900">
+                💡 <strong>Try This:</strong> For one week, catch yourself saying "I can't afford it" and reframe it to "How can I afford this if it's truly important?"
+              </p>
+            </div>
+          </div>
+        )}
+
+        {currentLesson === 2 && (
+          <div className="mb-8 p-6 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+            <h3 className="text-lg font-semibold text-orange-900 mb-3 flex items-center gap-2">
+              <Lightbulb className="w-5 h-5" />
+              Bias Detection Challenge
+            </h3>
+            <div className="text-orange-800 space-y-4">
+              <p className="font-medium">Scenario: You're considering buying a $200 jacket that's "50% off" from $400.</p>
+              <div className="bg-white p-4 rounded-lg">
+                <p className="font-medium mb-2">Which biases might be at play?</p>
+                <ul className="list-disc list-inside space-y-1 ml-4">
+                  <li><strong>Anchoring:</strong> The $400 "original price" makes $200 seem like a deal</li>
+                  <li><strong>Loss aversion:</strong> Fear of missing the "50% off" creates urgency</li>
+                  <li><strong>Present bias:</strong> Immediate gratification vs long-term savings goals</li>
+                </ul>
+              </div>
+              <p className="mt-4 font-medium text-orange-900">
+                💡 <strong>Better Question:</strong> "Would I buy this jacket at $200 if it was never marked higher?"
+              </p>
+            </div>
+          </div>
+        )}
+
+        {currentLesson === 3 && (
+          <div className="mb-8 p-6 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+            <h3 className="text-lg font-semibold text-blue-900 mb-3 flex items-center gap-2">
+              <Lightbulb className="w-5 h-5" />
+              Goal Setting Practice
+            </h3>
+            <div className="text-blue-800 space-y-4">
+              <div className="bg-white p-4 rounded-lg">
+                <p className="font-medium text-red-700 mb-2">❌ Weak Goal:</p>
+                <p className="italic">"I want to save more money next year."</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg">
+                <p className="font-medium text-green-700 mb-2">✅ PACT Goal:</p>
+                <p className="italic">"I will automatically transfer $100 to savings every Friday after I get paid, so I can build a $5,000 emergency fund by December. If I'm tempted to skip it, I'll remember that financial security reduces my stress and lets me sleep better."</p>
+              </div>
+              <p className="mt-4 font-medium text-blue-900">
+                💡 <strong>PACT Framework:</strong> Purposeful, Actionable, Continuous, Trackable
+              </p>
             </div>
           </div>
         )}

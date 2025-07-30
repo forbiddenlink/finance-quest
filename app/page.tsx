@@ -161,7 +161,7 @@ export default function Home() {
           <div className="text-center mb-8">
             <h3 className="text-3xl font-bold text-gray-900 mb-4 font-space gradient-text-premium">Complete Financial Education Curriculum</h3>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto font-inter">
-              10 comprehensive modules covering everything from basic budgeting to advanced wealth building
+              30 comprehensive modules covering everything from money psychology to advanced wealth building
             </p>
           </div>
 
@@ -172,10 +172,10 @@ export default function Home() {
               glowColor="rgba(59, 130, 246, 0.3)"
             >
               <div className="flex items-center mb-3">
-                <DollarSign className="w-8 h-8 mr-3 text-blue-600" />
-                <h4 className="text-lg font-bold text-gray-900 font-space">Money Fundamentals</h4>
+                <Brain className="w-8 h-8 mr-3 text-purple-600" />
+                <h4 className="text-lg font-bold text-gray-900 font-space">Money Psychology & Mindset</h4>
               </div>
-              <p className="text-gray-600 mb-4 font-inter">Income, banking, paycheck basics, direct deposits</p>
+              <p className="text-gray-600 mb-4 font-inter">Emotional relationship with money, scarcity vs abundance, cognitive biases</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-green-600 font-medium bg-green-100 px-2 py-1 rounded animate-pulse-glow font-poppins flex items-center gap-1">
                   <Target className="w-3 h-3" />
@@ -194,9 +194,9 @@ export default function Home() {
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
               <div className="flex items-center mb-3">
                 <BarChart3 className="w-8 h-8 mr-3 text-gray-400" />
-                <h4 className="text-lg font-bold text-gray-500">Budgeting Mastery</h4>
+                <h4 className="text-lg font-bold text-gray-500">Banking & Account Fundamentals</h4>
               </div>
-              <p className="text-gray-500 mb-4">50/30/20 rule, expense tracking, emergency funds, cash flow</p>
+              <p className="text-gray-500 mb-4">Account optimization, fees, credit unions, direct deposits, transfers</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
                   <Lock className="w-3 h-3" />
@@ -212,9 +212,9 @@ export default function Home() {
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
               <div className="flex items-center mb-3">
                 <CreditCard className="w-8 h-8 mr-3 text-gray-400" />
-                <h4 className="text-lg font-bold text-gray-500">Debt & Credit</h4>
+                <h4 className="text-lg font-bold text-gray-500">Income & Career Finance</h4>
               </div>
-              <p className="text-gray-500 mb-4">Credit scores, good vs bad debt, loan strategies, credit cards</p>
+              <p className="text-gray-500 mb-4">Salary negotiation, pay stubs, benefits, side hustles, skill monetization</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
                   <Lock className="w-3 h-3" />
@@ -230,9 +230,9 @@ export default function Home() {
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
               <div className="flex items-center mb-3">
                 <TrendingUp className="w-8 h-8 mr-3 text-gray-400" />
-                <h4 className="text-lg font-bold text-gray-500">Investment Fundamentals</h4>
+                <h4 className="text-lg font-bold text-gray-500">Budgeting Mastery & Cash Flow</h4>
               </div>
-              <p className="text-gray-500 mb-4">Compound interest, stocks/bonds, 401k matching, diversification</p>
+              <p className="text-gray-500 mb-4">Zero-based budgeting, 50/30/20 rule, expense tracking, automation</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
                   <Lock className="w-3 h-3" />
@@ -248,9 +248,9 @@ export default function Home() {
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
               <div className="flex items-center mb-3">
                 <PieChart className="w-8 h-8 mr-3 text-gray-400" />
-                <h4 className="text-lg font-bold text-gray-500">Advanced Investing</h4>
+                <h4 className="text-lg font-bold text-gray-500">Emergency Funds & Financial Safety</h4>
               </div>
-              <p className="text-gray-500 mb-4">ETFs, mutual funds, index funds, risk tolerance, portfolio allocation</p>
+              <p className="text-gray-500 mb-4">Fund sizing, high-yield savings, rebuilding strategies</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
                   <Lock className="w-3 h-3" />
@@ -266,9 +266,9 @@ export default function Home() {
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
               <div className="flex items-center mb-3">
                 <FileText className="w-8 h-8 mr-3 text-gray-400" />
-                <h4 className="text-lg font-bold text-gray-500">Taxes & Planning</h4>
+                <h4 className="text-lg font-bold text-gray-500">Debt Fundamentals</h4>
               </div>
-              <p className="text-gray-500 mb-4">Tax brackets, deductions, credits, W-4s, tax-advantaged accounts</p>
+              <p className="text-gray-500 mb-4">Good vs bad debt, avalanche vs snowball, consolidation, negotiations</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
                   <Lock className="w-3 h-3" />
@@ -286,7 +286,7 @@ export default function Home() {
             <details className="inline-block">
               <summary className="bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 px-6 py-3 rounded-lg cursor-pointer hover:from-purple-200 hover:to-pink-200 transition-all font-medium flex items-center justify-center gap-2">
                 <BookOpen className="w-4 h-4" />
-                View All 10 Chapters (4 More)
+                View All 30 Chapters (24 More)
               </summary>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
