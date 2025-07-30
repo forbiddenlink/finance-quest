@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import FinancialHealthAssessment from '@/components/shared/ui/FinancialHealthAssessment';
 import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
 import { useProgress } from '@/lib/context/ProgressContext';
@@ -8,7 +7,6 @@ import { ArrowLeft, Heart, Brain, Target, TrendingUp, Award } from 'lucide-react
 
 export default function HealthAssessmentPage() {
   const { state } = useProgress();
-  const [healthScore, setHealthScore] = useState<any>(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
@@ -44,7 +42,7 @@ export default function HealthAssessmentPage() {
             Assess Your Financial Wellness
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Get your personalized Financial Health Score and discover exactly which areas 
+            Get your personalized Financial Health Score and discover exactly which areas
             to focus on for maximum financial improvement. Takes just 2 minutes!
           </p>
         </div>
@@ -56,19 +54,19 @@ export default function HealthAssessmentPage() {
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Instant Scoring</h3>
             <p className="text-sm text-gray-600">Get your grade (A-F) and detailed breakdown immediately</p>
           </div>
-          
+
           <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all transform hover:scale-105">
             <Brain className="w-12 h-12 text-blue-600 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Smart Analysis</h3>
             <p className="text-sm text-gray-600">AI-powered insights based on your learning progress</p>
           </div>
-          
+
           <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all transform hover:scale-105">
             <TrendingUp className="w-12 h-12 text-purple-600 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Action Plan</h3>
             <p className="text-sm text-gray-600">Prioritized recommendations for maximum impact</p>
           </div>
-          
+
           <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all transform hover:scale-105">
             <Award className="w-12 h-12 text-yellow-600 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Track Progress</h3>
@@ -78,9 +76,7 @@ export default function HealthAssessmentPage() {
 
         {/* Main Assessment */}
         <div className="mb-12">
-          <FinancialHealthAssessment 
-            onScoreCalculated={(score) => setHealthScore(score)}
-          />
+          <FinancialHealthAssessment />
         </div>
 
         {/* Spaced Repetition Dashboard - Show if user has completed lessons */}
@@ -108,25 +104,25 @@ export default function HealthAssessmentPage() {
               <Target className="w-12 h-12 text-green-600 mx-auto mb-4" />
               <h4 className="font-semibold text-gray-900 mb-3">Targeted Learning</h4>
               <p className="text-gray-700 text-sm">
-                Focus your learning efforts on the areas that will have the biggest impact 
+                Focus your learning efforts on the areas that will have the biggest impact
                 on your financial well-being and future success.
               </p>
             </div>
-            
+
             <div className="bg-white/60 rounded-lg p-6 text-center">
               <TrendingUp className="w-12 h-12 text-blue-600 mx-auto mb-4" />
               <h4 className="font-semibold text-gray-900 mb-3">Measurable Progress</h4>
               <p className="text-gray-700 text-sm">
-                Track real improvements in your financial health as you complete 
+                Track real improvements in your financial health as you complete
                 Finance Quest modules and implement proven strategies.
               </p>
             </div>
-            
+
             <div className="bg-white/60 rounded-lg p-6 text-center">
               <Brain className="w-12 h-12 text-purple-600 mx-auto mb-4" />
               <h4 className="font-semibold text-gray-900 mb-3">Personalized Insights</h4>
               <p className="text-gray-700 text-sm">
-                Get recommendations tailored to your specific financial situation 
+                Get recommendations tailored to your specific financial situation
                 and learning progress through the platform.
               </p>
             </div>

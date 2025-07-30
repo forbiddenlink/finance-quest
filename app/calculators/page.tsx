@@ -70,7 +70,7 @@ export default function CalculatorsPage() {
             Interactive Financial Tools
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Master your money with hands-on calculators that show you exactly how financial decisions impact your future. 
+            Master your money with hands-on calculators that show you exactly how financial decisions impact your future.
             <strong> No guessing, just clear numbers and actionable insights.</strong>
           </p>
         </div>
@@ -78,7 +78,7 @@ export default function CalculatorsPage() {
         {/* Calculator Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           {calculators.map((calc) => (
-            <div 
+            <div
               key={calc.id}
               className={`group bg-gradient-to-br ${calc.bgColor} border ${calc.borderColor} rounded-xl p-6 hover:shadow-xl transition-all transform hover:scale-105`}
             >
@@ -90,7 +90,7 @@ export default function CalculatorsPage() {
                   {calc.title}
                 </h3>
               </div>
-              
+
               <p className={`${calc.textColor} mb-6 leading-relaxed`}>
                 {calc.description}
               </p>
@@ -119,7 +119,7 @@ export default function CalculatorsPage() {
               More Tools Coming Soon
             </h3>
             <p className="text-purple-700 max-w-2xl mx-auto">
-              We're building a complete suite of financial calculators to help you master every aspect of money management
+              We&apos;re building a complete suite of financial calculators to help you master every aspect of money management
             </p>
           </div>
 

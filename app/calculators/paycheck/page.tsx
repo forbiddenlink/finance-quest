@@ -12,7 +12,7 @@ export default function PaycheckCalculatorPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <button 
+              <button
                 onClick={() => window.history.back()}
                 className="text-blue-600 hover:text-blue-800 font-medium"
               >
@@ -38,7 +38,7 @@ export default function PaycheckCalculatorPage() {
             Understand Your Take-Home Pay
           </h2>
           <p className="text-blue-800 mb-4">
-            Your salary isn't what you actually receive. Learn the difference between gross and net pay.
+            Your salary isn&apos;t what you actually receive. Learn the difference between gross and net pay.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div className="bg-white bg-opacity-50 rounded-lg p-3">
@@ -68,7 +68,7 @@ export default function PaycheckCalculatorPage() {
         <PaycheckCalculator />
 
         {/* Q&A System */}
-        <QASystem 
+        <QASystem
           className="mt-8"
           isQuizMode={false}
         />
@@ -77,7 +77,7 @@ export default function PaycheckCalculatorPage() {
         <div className="mt-8 bg-cyan-50 border border-cyan-200 rounded-lg p-6">
           <h3 className="text-lg font-bold text-cyan-900 mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" />
-            What You'll Learn
+            What You&apos;ll Learn
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -117,7 +117,7 @@ export default function PaycheckCalculatorPage() {
             <div className="bg-white bg-opacity-50 rounded-lg p-4">
               <h4 className="font-semibold text-yellow-800 mb-2">Review Your W-4</h4>
               <p className="text-yellow-700 text-sm">
-                Adjust tax withholdings annually to avoid big refunds (you're lending money to the government interest-free).
+                Adjust tax withholdings annually to avoid big refunds (you&apos;re lending money to the government interest-free).
               </p>
             </div>
           </div>

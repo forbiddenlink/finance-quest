@@ -110,8 +110,8 @@ export default function CompoundInterestCalculator() {
               The Magic of Compound Interest
             </h3>
             <p className="text-blue-800 text-sm">
-              Einstein called it the "eighth wonder of the world." Those who understand it, earn it. 
-              Those who don't, pay it. Watch your money grow exponentially!
+              Einstein called it the &quot;eighth wonder of the world.&quot; Those who understand it, earn it. 
+              Those who don&apos;t, pay it. Watch your money grow exponentially!
             </p>
           </div>
 
@@ -132,7 +132,7 @@ export default function CompoundInterestCalculator() {
               />
             </div>
             <p className="text-xs text-gray-500 mt-1">
-              The amount you're starting with today
+              The amount you&apos;re starting with today
             </p>
           </div>
 
@@ -153,7 +153,7 @@ export default function CompoundInterestCalculator() {
               />
             </div>
             <p className="text-xs text-gray-500 mt-1">
-              How much you'll add each month
+              How much you&apos;ll add each month
             </p>
           </div>
 

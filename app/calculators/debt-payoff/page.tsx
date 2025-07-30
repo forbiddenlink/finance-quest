@@ -12,7 +12,7 @@ export default function DebtPayoffPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <button 
+              <button
                 onClick={() => window.history.back()}
                 className="text-blue-600 hover:text-blue-800 font-medium"
               >
@@ -38,7 +38,7 @@ export default function DebtPayoffPage() {
             Break Free From Debt Chains
           </h2>
           <p className="text-red-800 mb-4">
-            "The borrower is slave to the lender." - Proverbs 22:7. Take control with proven debt elimination strategies.
+            &quot;The borrower is slave to the lender.&quot; - Proverbs 22:7. Take control with proven debt elimination strategies.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="bg-white bg-opacity-50 rounded-lg p-3">
@@ -61,7 +61,7 @@ export default function DebtPayoffPage() {
         <DebtPayoffCalculator />
 
         {/* Q&A System */}
-        <QASystem 
+        <QASystem
           className="mt-8"
           isQuizMode={false}
         />
@@ -70,7 +70,7 @@ export default function DebtPayoffPage() {
         <div className="mt-8 bg-orange-50 border border-orange-200 rounded-lg p-6">
           <h3 className="text-lg font-bold text-orange-900 mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" />
-            What You'll Master
+            What You&apos;ll Master
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -117,7 +117,7 @@ export default function DebtPayoffPage() {
           <div className="mt-4 p-3 bg-red-100 rounded-lg">
             <p className="text-sm text-red-800 font-medium">
               <Lightbulb className="w-4 h-4 mr-1 inline" />
-              The average person pays $11,931 in interest on that $6,194 debt! Don't be average.
+              The average person pays $11,931 in interest on that $6,194 debt! Don&apos;t be average.
             </p>
           </div>
         </div>
@@ -130,15 +130,15 @@ export default function DebtPayoffPage() {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white bg-opacity-50 rounded-lg p-4">
-              <h4 className="font-semibold text-green-800 mb-2">Jessica's $47,000 Triumph</h4>
+              <h4 className="font-semibold text-green-800 mb-2">Jessica&apos;s $47,000 Triumph</h4>
               <p className="text-green-700 text-sm">
-                "I had $47,000 in student loans and credit cards. Using the avalanche method and a side hustle, I became debt-free in 3 years instead of 15!"
+                &quot;I had $47,000 in student loans and credit cards. Using the avalanche method and a side hustle, I became debt-free in 3 years instead of 15!&quot;
               </p>
             </div>
             <div className="bg-white bg-opacity-50 rounded-lg p-4">
-              <h4 className="font-semibold text-green-800 mb-2">Mark's Snowball Victory</h4>
+              <h4 className="font-semibold text-green-800 mb-2">Mark&apos;s Snowball Victory</h4>
               <p className="text-green-700 text-sm">
-                "The snowball method gave me momentum I needed. Paying off small debts first kept me motivated through the 2-year journey to eliminate $32,000."
+                &quot;The snowball method gave me momentum I needed. Paying off small debts first kept me motivated through the 2-year journey to eliminate $32,000.&quot;
               </p>
             </div>
           </div>

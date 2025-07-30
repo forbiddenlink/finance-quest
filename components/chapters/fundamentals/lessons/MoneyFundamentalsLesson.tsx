@@ -192,14 +192,14 @@ export default function MoneyFundamentalsLesson() {
             <div className="text-green-800 space-y-4">
               <div className="bg-white p-4 rounded-lg">
                 <p className="font-medium text-red-700 mb-2">❌ Scarcity Thinking:</p>
-                <p className="italic">"I can't afford that $50 course because I need to save money."</p>
+                <p className="italic">&quot;I can&apos;t afford that $50 course because I need to save money.&quot;</p>
               </div>
               <div className="bg-white p-4 rounded-lg">
                 <p className="font-medium text-green-700 mb-2">✅ Abundance Thinking:</p>
-                <p className="italic">"How can I create an extra $50 this month to invest in learning a skill that could increase my income?"</p>
+                <p className="italic">&quot;How can I create an extra $50 this month to invest in learning a skill that could increase my income?&quot;</p>
               </div>
               <p className="mt-4 font-medium text-green-900">
-                💡 <strong>Try This:</strong> For one week, catch yourself saying "I can't afford it" and reframe it to "How can I afford this if it's truly important?"
+                💡 <strong>Try This:</strong> For one week, catch yourself saying &quot;I can&apos;t afford it&quot; and reframe it to &quot;How can I afford this if it&apos;s truly important?&quot;
               </p>
             </div>
           </div>

@@ -5,13 +5,27 @@ import { motion } from 'framer-motion';
 import { PiggyBank, TrendingUp, DollarSign, Calendar, Target } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
+interface SavingsResults {
+  futureValue: number;
+  totalDeposited: number;
+  interestEarned: number;
+  effectiveRate: number;
+}
+
+interface ChartDataPoint {
+  year: number;
+  deposited: number;
+  total: number;
+  interest: number;
+}
+
 const SavingsCalculator = () => {
   const [initialDeposit, setInitialDeposit] = useState<number>(1000);
   const [monthlyDeposit, setMonthlyDeposit] = useState<number>(100);
   const [interestRate, setInterestRate] = useState<number>(4.5);
   const [timeYears, setTimeYears] = useState<number>(5);
-  const [results, setResults] = useState<any>(null);
-  const [chartData, setChartData] = useState<any[]>([]);
+  const [results, setResults] = useState<SavingsResults | null>(null);
+  const [chartData, setChartData] = useState<ChartDataPoint[]>([]);
 
   useEffect(() => {
     calculateSavings();
@@ -310,7 +324,7 @@ const SavingsCalculator = () => {
                   <h4 className="font-semibold text-blue-800 mb-2">💡 Key Insights</h4>
                   <ul className="text-sm text-blue-700 space-y-1">
                     <li>• Your money will grow by {((results.futureValue / results.totalDeposited - 1) * 100).toFixed(1)}% over {timeYears} years</li>
-                    <li>• Interest will earn you {formatCurrency(results.interestEarned)} - that's {(results.interestEarned / results.totalDeposited * 100).toFixed(1)}% of your deposits!</li>
+                    <li>• Interest will earn you {formatCurrency(results.interestEarned)} - that&apos;s {(results.interestEarned / results.totalDeposited * 100).toFixed(1)}% of your deposits!</li>
                     <li>• Monthly deposits of {formatCurrency(monthlyDeposit)} grow to {formatCurrency(results.futureValue / (timeYears * 12))} per month</li>
                   </ul>
                 </div>

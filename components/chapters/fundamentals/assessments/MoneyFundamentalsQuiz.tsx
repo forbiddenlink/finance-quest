@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useProgressActions } from '@/lib/context/ProgressContext';
 import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
-import { CheckCircle, XCircle, AlertCircle, Sparkles } from 'lucide-react';
+import { CheckCircle, XCircle, Sparkles } from 'lucide-react';
 
 interface QuizQuestion {
   id: number;
@@ -19,7 +19,7 @@ const quizQuestions: QuizQuestion[] = [
     question: "What is the difference between gross pay and net pay?",
     options: [
       "Gross pay is after taxes, net pay is before taxes",
-      "Gross pay is before taxes, net pay is after taxes", 
+      "Gross pay is before taxes, net pay is after taxes",
       "They are the same thing",
       "Gross pay is monthly, net pay is yearly"
     ],
@@ -170,50 +170,50 @@ export default function MoneyFundamentalsQuiz() {
           onComplete={() => setShowCelebration(false)}
           type="quiz"
         />
-        
+
         <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8 animate-fade-in-up">
           <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Quiz Results</h2>
-          <div className={`text-6xl font-bold mb-4 ${passed ? 'text-green-600' : 'text-red-600'}`}>
-            {percentage}%
-          </div>
-          <p className="text-xl text-gray-700 mb-6">
-            You got {score} out of {quizQuestions.length} questions correct
-          </p>
-
-          {passed ? (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
-              <h3 className="text-lg font-semibold text-green-900 mb-2 flex items-center gap-2">
-                <Sparkles className="w-5 h-5" />
-                Congratulations!
-              </h3>
-              <p className="text-green-800">
-                You've mastered the fundamentals of money! You can now proceed to Chapter 2: Budgeting Mastery.
-              </p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Quiz Results</h2>
+            <div className={`text-6xl font-bold mb-4 ${passed ? 'text-green-600' : 'text-red-600'}`}>
+              {percentage}%
             </div>
-          ) : (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
-              <h3 className="text-lg font-semibold text-red-900 mb-2">Keep Learning!</h3>
-              <p className="text-red-800">
-                You need 80% to unlock the next chapter. Review the lessons and try again when you're ready.
-              </p>
-            </div>
-          )}
+            <p className="text-xl text-gray-700 mb-6">
+              You got {score} out of {quizQuestions.length} questions correct
+            </p>
 
-          <div className="flex space-x-4 justify-center">
-            <button
-              onClick={resetQuiz}
-              className="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-            >
-              Retake Quiz
-            </button>
-            {passed && (
-              <button className="px-6 py-3 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
-                Continue to Chapter 2
-              </button>
+            {passed ? (
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
+                <h3 className="text-lg font-semibold text-green-900 mb-2 flex items-center gap-2">
+                  <Sparkles className="w-5 h-5" />
+                  Congratulations!
+                </h3>
+                <p className="text-green-800">
+                  You&apos;ve mastered the fundamentals of money! You can now proceed to Chapter 2: Budgeting Mastery.
+                </p>
+              </div>
+            ) : (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
+                <h3 className="text-lg font-semibold text-red-900 mb-2">Keep Learning!</h3>
+                <p className="text-red-800">
+                  You need 80% to unlock the next chapter. Review the lessons and try again when you&apos;re ready.
+                </p>
+              </div>
             )}
+
+            <div className="flex space-x-4 justify-center">
+              <button
+                onClick={resetQuiz}
+                className="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+              >
+                Retake Quiz
+              </button>
+              {passed && (
+                <button className="px-6 py-3 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
+                  Continue to Chapter 2
+                </button>
+              )}
+            </div>
           </div>
-        </div>
         </div>
       </>
     );
@@ -228,7 +228,7 @@ export default function MoneyFundamentalsQuiz() {
     <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg">
       {/* Progress Bar */}
       <div className="bg-gray-200 rounded-t-lg">
-        <div 
+        <div
           className="bg-purple-500 h-2 rounded-t-lg transition-all duration-300"
           style={{ width: `${progress}%` }}
         ></div>
@@ -254,15 +254,14 @@ export default function MoneyFundamentalsQuiz() {
             <button
               key={index}
               onClick={() => handleAnswerSelect(index)}
-              className={`w-full p-4 text-left rounded-lg border-2 transition-colors ${
-                selectedAnswer === index
+              className={`w-full p-4 text-left rounded-lg border-2 transition-colors ${selectedAnswer === index
                   ? showExplanation
                     ? index === question.correctAnswer
                       ? 'border-green-500 bg-green-50'
                       : 'border-red-500 bg-red-50'
                     : 'border-purple-500 bg-purple-50'
                   : 'border-gray-200 hover:border-gray-300'
-              }`}
+                }`}
             >
               <div className="flex items-center">
                 <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-current mr-3 flex items-center justify-center text-sm font-medium">

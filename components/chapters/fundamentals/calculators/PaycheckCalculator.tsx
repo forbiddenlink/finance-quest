@@ -19,6 +19,14 @@ export default function PaycheckCalculator() {
   const [breakdown, setBreakdown] = useState<PaycheckBreakdown | null>(null);
   const [hasUsedCalculator, setHasUsedCalculator] = useState(false);
 
+  // Track calculator usage when first calculation is made
+  useEffect(() => {
+    if (breakdown && !hasUsedCalculator) {
+      useCalculator('paycheck-calculator');
+      setHasUsedCalculator(true);
+    }
+  }, [breakdown, hasUsedCalculator, useCalculator]);
+
   const calculatePaycheck = () => {
     const gross = parseFloat(grossPay);
     if (isNaN(gross) || gross <= 0) return;
@@ -41,14 +49,6 @@ export default function PaycheckCalculator() {
       netPay
     });
   };
-
-  // Track calculator usage when user interacts
-  useEffect(() => {
-    if (grossPay && !hasUsedCalculator) {
-      useCalculator('paycheck-calculator');
-      setHasUsedCalculator(true);
-    }
-  }, [grossPay, hasUsedCalculator]); // useCalculator is stable, no need in deps
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 max-w-2xl mx-auto">
@@ -85,7 +85,7 @@ export default function PaycheckCalculator() {
       {breakdown && (
         <div className="bg-gray-50 rounded-lg p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Paycheck Breakdown</h3>
-          
+
           <div className="space-y-3">
             <div className="flex justify-between items-center py-2 border-b border-gray-200">
               <span className="font-medium text-gray-900">Gross Pay</span>
@@ -131,7 +131,7 @@ export default function PaycheckCalculator() {
             <ul className="text-sm text-blue-800 space-y-1">
               <li>• Your take-home pay is about {((breakdown.netPay / breakdown.grossPay) * 100).toFixed(0)}% of your gross pay</li>
               <li>• Social Security helps fund your future retirement benefits</li>
-              <li>• Medicare provides healthcare coverage when you're older</li>
+              <li>• Medicare provides healthcare coverage when you&apos;re older</li>
               <li>• Tax rates vary by income level and state</li>
             </ul>
           </div>

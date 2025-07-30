@@ -12,7 +12,7 @@ export default function CompoundInterestPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <button 
+              <button
                 onClick={() => window.history.back()}
                 className="text-blue-600 hover:text-blue-800 font-medium"
               >
@@ -38,7 +38,7 @@ export default function CompoundInterestPage() {
             The Eighth Wonder of the World
           </h2>
           <p className="text-green-800 mb-4">
-            "Compound interest is the most powerful force in the universe." - Albert Einstein
+            &quot;Compound interest is the most powerful force in the universe.&quot; - Albert Einstein
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div className="bg-white bg-opacity-50 rounded-lg p-3">
@@ -68,7 +68,7 @@ export default function CompoundInterestPage() {
         <CompoundInterestCalculator />
 
         {/* Q&A System */}
-        <QASystem 
+        <QASystem
           className="mt-8"
           isQuizMode={false}
         />
@@ -77,7 +77,7 @@ export default function CompoundInterestPage() {
         <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
           <h3 className="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" />
-            What You'll Learn
+            What You&apos;ll Learn
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>

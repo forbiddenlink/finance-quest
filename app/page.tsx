@@ -110,7 +110,7 @@ export default function Home() {
             <p className="text-gray-600 text-sm font-inter">of Americans can&apos;t pass a basic financial literacy test</p>
             <p className="text-xs text-red-500 mt-2 font-medium flex items-center justify-center font-poppins">
               <Target className="w-3 h-3 mr-1" />
-              The problem we're solving
+              The problem we&apos;re solving
             </p>
           </InteractiveCard>
 

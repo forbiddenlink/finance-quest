@@ -4,16 +4,16 @@ import React from 'react';
 import { useProgress } from '@/lib/context/ProgressContext';
 import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LineChart, Line, Legend } from 'recharts';
-import { 
-  BarChart3, 
-  FileText, 
-  Target, 
-  DollarSign, 
-  Calculator, 
-  TrendingUp, 
-  PieChart as PieChartIcon, 
-  CreditCard, 
-  CheckCircle, 
+import {
+  BarChart3,
+  FileText,
+  Target,
+  DollarSign,
+  Calculator,
+  TrendingUp,
+  PieChart as PieChartIcon,
+  CreditCard,
+  CheckCircle,
   Clock,
   TrendingDown,
   Bot,
@@ -32,12 +32,12 @@ export default function ProgressDashboard() {
   const completionPercentage = Math.round((userProgress.currentChapter / totalChapters) * 100);
   const totalLessonsCompleted = userProgress.completedLessons.length;
   const totalCalculatorsUsed = userProgress.calculatorUsage.length;
-  const averageQuizScore = Object.values(userProgress.quizScores).length > 0 
+  const averageQuizScore = Object.values(userProgress.quizScores).length > 0
     ? Math.round(Object.values(userProgress.quizScores).reduce((sum, score) => sum + score, 0) / Object.values(userProgress.quizScores).length)
     : 0;
   const timeSpentHours = Math.round(userProgress.totalTimeSpent / 60 * 10) / 10;
   const achievementsCount = userProgress.achievementsUnlocked.length;
-  const daysSinceStart = userProgress.lastActiveDate 
+  const daysSinceStart = userProgress.lastActiveDate
     ? Math.ceil((new Date().getTime() - new Date(userProgress.lastActiveDate).getTime()) / (1000 * 3600 * 24))
     : 0;
 
@@ -108,19 +108,19 @@ export default function ProgressDashboard() {
           <p className="text-sm text-blue-600 font-medium">Course Completion</p>
           <p className="text-xs text-blue-500">Chapter {userProgress.currentChapter} of {totalChapters}</p>
         </div>
-        
+
         <div className="bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-lg p-4 text-center">
           <div className="text-3xl font-bold text-green-800">{literacyScore}</div>
           <p className="text-sm text-green-600 font-medium">Literacy Score</p>
           <p className="text-xs text-green-500">Out of 1,000 points</p>
         </div>
-        
+
         <div className="bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-lg p-4 text-center">
           <div className="text-3xl font-bold text-purple-800">{averageQuizScore}%</div>
           <p className="text-sm text-purple-600 font-medium">Avg Quiz Score</p>
           <p className="text-xs text-purple-500">{Object.keys(userProgress.quizScores).length} quizzes taken</p>
         </div>
-        
+
         <div className="bg-gradient-to-br from-orange-50 to-orange-100 border border-orange-200 rounded-lg p-4 text-center">
           <div className="text-3xl font-bold text-orange-800">{timeSpentHours}h</div>
           <p className="text-sm text-orange-600 font-medium">Time Invested</p>
@@ -251,7 +251,7 @@ export default function ProgressDashboard() {
               <p className="text-2xl font-bold text-green-900">{formatCurrency(potentialSavings)}</p>
               <p className="text-sm text-green-700">Based on improved financial decisions</p>
             </div>
-            
+
             <div className="bg-white bg-opacity-60 rounded-lg p-4">
               <h4 className="font-semibold text-green-800 mb-2">Better Financial Decisions</h4>
               <p className="text-2xl font-bold text-green-900">{betterDecisions}</p>
@@ -275,9 +275,8 @@ export default function ProgressDashboard() {
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${
-              userProgress.calculatorUsage.includes('PaycheckCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
-            }`}>
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage.includes('PaycheckCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+              }`}>
               <Calculator className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Paycheck Calculator</p>
@@ -295,11 +294,10 @@ export default function ProgressDashboard() {
               )}
             </p>
           </div>
-          
+
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${
-              userProgress.calculatorUsage.includes('CompoundInterestCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
-            }`}>
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage.includes('CompoundInterestCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+              }`}>
               <TrendingUp className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Compound Interest</p>
@@ -317,11 +315,10 @@ export default function ProgressDashboard() {
               )}
             </p>
           </div>
-          
+
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${
-              userProgress.calculatorUsage.includes('BudgetBuilderCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
-            }`}>
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage.includes('BudgetBuilderCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+              }`}>
               <PieChartIcon className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Budget Builder</p>
@@ -339,11 +336,10 @@ export default function ProgressDashboard() {
               )}
             </p>
           </div>
-          
+
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${
-              userProgress.calculatorUsage.includes('DebtPayoffCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
-            }`}>
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage.includes('DebtPayoffCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+              }`}>
               <CreditCard className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Debt Destroyer</p>

@@ -64,7 +64,7 @@ export default function Chapter3Page() {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard
           </Link>
-          
+
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-4xl font-bold text-gray-800 mb-2">
@@ -74,7 +74,7 @@ export default function Chapter3Page() {
                 Maximize your earning potential and career financial strategy
               </p>
             </div>
-            
+
             {state.userProgress.completedLessons.includes('chapter3-lesson') && (
               <motion.div
                 initial={{ scale: 0 }}
@@ -97,17 +97,17 @@ export default function Chapter3Page() {
           <div className="flex justify-between items-center mb-2">
             <span className="text-sm font-medium text-gray-700">Chapter Progress</span>
             <span className="text-sm text-gray-500">
-              {currentSection === 'lesson' ? '1/3' : 
-               currentSection === 'calculator' ? '2/3' : '3/3'}
+              {currentSection === 'lesson' ? '1/3' :
+                currentSection === 'calculator' ? '2/3' : '3/3'}
             </span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
             <motion.div
               className="bg-gradient-to-r from-green-500 to-blue-600 h-2 rounded-full"
               initial={{ width: '0%' }}
-              animate={{ 
-                width: currentSection === 'lesson' ? '33%' : 
-                       currentSection === 'calculator' ? '66%' : '100%'
+              animate={{
+                width: currentSection === 'lesson' ? '33%' :
+                  currentSection === 'calculator' ? '66%' : '100%'
               }}
               transition={{ duration: 0.5 }}
             />
@@ -128,12 +128,11 @@ export default function Chapter3Page() {
           ].map((tab) => (
             <motion.button
               key={tab.key}
-              onClick={() => setCurrentSection(tab.key as any)}
-              className={`flex-1 py-3 px-4 rounded-md font-medium transition-all ${
-                currentSection === tab.key
+              onClick={() => setCurrentSection(tab.key as 'lesson' | 'calculator' | 'quiz')}
+              className={`flex-1 py-3 px-4 rounded-md font-medium transition-all ${currentSection === tab.key
                   ? 'bg-green-500 text-white shadow-md'
                   : 'text-gray-600 hover:text-green-500 hover:bg-green-50'
-              }`}
+                }`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               disabled={tab.key === 'calculator' && !lessonCompleted}
@@ -156,11 +155,11 @@ export default function Chapter3Page() {
           {currentSection === 'lesson' && (
             <IncomeCareerLesson onComplete={handleLessonComplete} />
           )}
-          
+
           {currentSection === 'calculator' && (
             <SalaryNegotiationCalculator />
           )}
-          
+
           {currentSection === 'quiz' && (
             <IncomeCareerQuiz onComplete={handleQuizComplete} />
           )}
@@ -180,7 +179,7 @@ export default function Chapter3Page() {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Previous Chapter
           </Link>
-          
+
           {state.userProgress.currentChapter > 3 && (
             <Link
               href="/chapter4"

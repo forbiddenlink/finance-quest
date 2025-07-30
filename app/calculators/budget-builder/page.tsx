@@ -12,7 +12,7 @@ export default function BudgetBuilderPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <button 
+              <button
                 onClick={() => window.history.back()}
                 className="text-blue-600 hover:text-blue-800 font-medium"
               >
@@ -68,7 +68,7 @@ export default function BudgetBuilderPage() {
         <BudgetBuilderCalculator />
 
         {/* Q&A System */}
-        <QASystem 
+        <QASystem
           className="mt-8"
           isQuizMode={false}
         />
@@ -77,7 +77,7 @@ export default function BudgetBuilderPage() {
         <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
           <h3 className="text-lg font-bold text-yellow-900 mb-4 flex items-center gap-2">
             <Target className="w-5 h-5" />
-            What You'll Learn
+            What You&apos;ll Learn
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -109,15 +109,15 @@ export default function BudgetBuilderPage() {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white bg-opacity-50 rounded-lg p-4">
-              <h4 className="font-semibold text-green-800 mb-2">Sarah's Transformation</h4>
+              <h4 className="font-semibold text-green-800 mb-2">Sarah&apos;s Transformation</h4>
               <p className="text-green-700 text-sm">
-                "I was spending 70% on wants and had no savings. Using the 50/30/20 rule, I built a $5,000 emergency fund in just 8 months while still enjoying life!"
+                &quot;I was spending 70% on wants and had no savings. Using the 50/30/20 rule, I built a $5,000 emergency fund in just 8 months while still enjoying life!&quot;
               </p>
             </div>
             <div className="bg-white bg-opacity-50 rounded-lg p-4">
-              <h4 className="font-semibold text-green-800 mb-2">Mike's Early Retirement</h4>
+              <h4 className="font-semibold text-green-800 mb-2">Mike&apos;s Early Retirement</h4>
               <p className="text-green-700 text-sm">
-                "Starting with 20% savings at age 25, I increased to 40% over time. Now I'm on track to retire at 50 thanks to disciplined budgeting and investing."
+                &quot;Starting with 20% savings at age 25, I increased to 40% over time. Now I&apos;m on track to retire at 50 thanks to disciplined budgeting and investing.&quot;
               </p>
             </div>
           </div>
