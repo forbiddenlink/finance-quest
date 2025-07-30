@@ -44,16 +44,18 @@ export default function MortgageCalculator() {
   const calculateMortgage = useCallback(() => {
     const price = parseFloat(homePrice) || 0;
     const down = parseFloat(downPayment) || 0;
-    const rate = (parseFloat(interestRate) || 0) / 100 / 12; // Monthly interest rate
+    const annualRate = (parseFloat(interestRate) || 0) / 100; // Annual interest rate
     const years = parseInt(loanTerm) || 30;
     const months = years * 12;
     const loanAmount = price - down;
     const monthlyIncome = parseFloat(grossMonthlyIncome) || 0;
 
-    if (loanAmount <= 0 || rate <= 0 || months <= 0) return;
+    if (loanAmount <= 0 || annualRate <= 0 || months <= 0) return;
 
-    // Calculate monthly mortgage payment using Finance.js
-    const payment = finance.AM(loanAmount, rate * 12 * 100, years, 1); // Annual rate as percentage
+    // Calculate monthly mortgage payment using Finance.js PMT function
+    // PMT(rate, nper, pv, fv, type) - rate as decimal per period, nper = periods, pv = present value
+    const monthlyRate = annualRate / 12;
+    const payment = Math.abs(finance.PMT(monthlyRate, months, loanAmount, 0, 0));
 
     // Additional monthly costs
     const monthlyPropertyTax = (parseFloat(propertyTax) || 0) / 12;
@@ -73,7 +75,7 @@ export default function MortgageCalculator() {
     let cumulativeInterest = 0;
 
     for (let month = 1; month <= Math.min(months, 60); month++) {
-      const interestPayment = remainingBalance * rate;
+      const interestPayment = remainingBalance * monthlyRate;
       const principalPayment = payment - interestPayment;
       remainingBalance -= principalPayment;
       cumulativeInterest += interestPayment;
