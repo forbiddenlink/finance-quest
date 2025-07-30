@@ -8,17 +8,17 @@ import InteractiveCard from "@/components/shared/ui/InteractiveCard";
 import ParticleSystem from "@/components/shared/ui/ParticleSystem";
 import TypingText from "@/components/shared/ui/TypingText";
 import CelebrationConfetti from "@/components/shared/ui/CelebrationConfetti";
-import { TrendingUp, Users, Award, Brain, Calculator, BookOpen, Sparkles, Target, Zap } from "lucide-react";
+import { TrendingUp, Users, Award, Brain, Calculator, BookOpen, Sparkles, Target, Zap, DollarSign, BarChart3, CreditCard, PieChart, ShieldCheck, FileText, Building, Lightbulb, Briefcase, Umbrella, Lock } from "lucide-react";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 relative overflow-hidden">
       {/* Particle System Background */}
       <ParticleSystem particleCount={30} />
-      
+
       {/* Floating Background Icons */}
       <FloatingBackground />
-      
+
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md shadow-sm relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -44,13 +44,14 @@ export default function Home() {
         {/* Hero Section with Animations */}
         <div className="text-center mb-16">
           <div className="mb-6 animate-fade-in-up">
-            <span className="bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full border border-red-200 animate-pulse-glow">
-              🚨 Solving the 64% Financial Illiteracy Crisis
+            <span className="bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full border border-red-200 animate-pulse-glow flex items-center justify-center gap-2 max-w-fit mx-auto">
+              <Target className="w-4 h-4" />
+              Solving the 64% Financial Illiteracy Crisis
             </span>
           </div>
-          
+
           <h2 className="text-6xl font-bold text-gray-900 mb-6 leading-tight animate-fade-in-up stagger-1 font-space">
-            <TypingText 
+            <TypingText
               texts={["Master Your Money", "Build Your Wealth", "Secure Your Future", "Take Control"]}
               className="gradient-text-premium"
             />
@@ -59,19 +60,19 @@ export default function Home() {
               Master Your Future
             </span>
           </h2>
-          
+
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8 animate-fade-in-up stagger-2 font-inter">
-            Transform from financial novice to money master through AI-powered personalized coaching, 
+            Transform from financial novice to money master through AI-powered personalized coaching,
             interactive calculators, and real-world scenarios. <strong>No prior knowledge required!</strong>
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up stagger-3">
             <Link href="/chapter1">
               <button className="group bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 transition-all shadow-lg card-lift animate-pulse-glow font-poppins relative overflow-hidden">
                 <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <span className="flex items-center relative z-10">
-                  🚀 Start Your Journey
-                  <BookOpen className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <Sparkles className="mr-2 w-5 h-5" />
+                  Start Your Journey
                 </span>
               </button>
             </Link>
@@ -79,16 +80,16 @@ export default function Home() {
               <button className="group premium-card text-blue-600 px-8 py-4 rounded-xl text-lg font-semibold border-2 border-blue-600/20 hover:border-blue-600/40 transition-all shadow-lg font-poppins relative overflow-hidden">
                 <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <span className="flex items-center relative z-10">
-                  💰 Try Calculator
-                  <Calculator className="ml-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
+                  <Calculator className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
+                  Try Calculator
                 </span>
               </button>
             </Link>
             <Link href="/progress">
               <button className="group bg-gradient-to-r from-purple-600 to-indigo-700 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-purple-700 hover:to-indigo-800 transition-all shadow-lg hover-lift">
                 <span className="flex items-center">
-                  📊 View Progress
-                  <Award className="ml-2 w-5 h-5 group-hover:scale-110 transition-transform" />
+                  <BarChart3 className="mr-2 w-5 h-5" />
+                  View Progress
                 </span>
               </button>
             </Link>
@@ -97,7 +98,7 @@ export default function Home() {
 
         {/* Animated Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center mb-16">
-          <InteractiveCard 
+          <InteractiveCard
             className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-red-500 animate-fade-in-up stagger-1"
             glowColor="rgba(239, 68, 68, 0.3)"
           >
@@ -110,8 +111,8 @@ export default function Home() {
               The problem we're solving
             </p>
           </InteractiveCard>
-          
-          <InteractiveCard 
+
+          <InteractiveCard
             className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-6 border-l-4 border-green-500 animate-fade-in-up stagger-2"
             glowColor="rgba(34, 197, 94, 0.3)"
           >
@@ -124,8 +125,8 @@ export default function Home() {
               Real learning outcomes
             </p>
           </InteractiveCard>
-          
-          <InteractiveCard 
+
+          <InteractiveCard
             className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-6 border-l-4 border-purple-500 animate-fade-in-up stagger-3"
             glowColor="rgba(139, 92, 246, 0.3)"
           >
@@ -138,8 +139,8 @@ export default function Home() {
               Complete curriculum
             </p>
           </InteractiveCard>
-          
-          <InteractiveCard 
+
+          <InteractiveCard
             className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-6 border-l-4 border-blue-500 animate-fade-in-up stagger-4"
             glowColor="rgba(59, 130, 246, 0.3)"
           >
@@ -163,20 +164,23 @@ export default function Home() {
               10 comprehensive modules covering everything from basic budgeting to advanced wealth building
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {/* Chapter 1 - Available */}
-            <InteractiveCard 
+            <InteractiveCard
               className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-blue-500 transform transition-all"
               glowColor="rgba(59, 130, 246, 0.3)"
             >
               <div className="flex items-center mb-3">
-                <span className="text-2xl mr-3">💰</span>
+                <DollarSign className="w-8 h-8 mr-3 text-blue-600" />
                 <h4 className="text-lg font-bold text-gray-900 font-space">Money Fundamentals</h4>
               </div>
               <p className="text-gray-600 mb-4 font-inter">Income, banking, paycheck basics, direct deposits</p>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-green-600 font-medium bg-green-100 px-2 py-1 rounded animate-pulse-glow font-poppins">✅ Available Now</span>
+                <span className="text-sm text-green-600 font-medium bg-green-100 px-2 py-1 rounded animate-pulse-glow font-poppins flex items-center gap-1">
+                  <Target className="w-3 h-3" />
+                  Available Now
+                </span>
                 <Link href="/chapter1">
                   <button className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-all hover:shadow-lg transform hover:scale-105 font-poppins relative overflow-hidden group">
                     <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -189,12 +193,15 @@ export default function Home() {
             {/* Chapter 2 - Locked */}
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
               <div className="flex items-center mb-3">
-                <span className="text-2xl mr-3 opacity-50">📊</span>
+                <BarChart3 className="w-8 h-8 mr-3 text-gray-400" />
                 <h4 className="text-lg font-bold text-gray-500">Budgeting Mastery</h4>
               </div>
               <p className="text-gray-500 mb-4">50/30/20 rule, expense tracking, emergency funds, cash flow</p>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded">🔒 Complete Chapter 1</span>
+                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
+                  <Lock className="w-3 h-3" />
+                  Complete Chapter 1
+                </span>
                 <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
                   Locked
                 </button>
@@ -204,12 +211,15 @@ export default function Home() {
             {/* Chapter 3 - Locked */}
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
               <div className="flex items-center mb-3">
-                <span className="text-2xl mr-3 opacity-50">💳</span>
+                <CreditCard className="w-8 h-8 mr-3 text-gray-400" />
                 <h4 className="text-lg font-bold text-gray-500">Debt & Credit</h4>
               </div>
               <p className="text-gray-500 mb-4">Credit scores, good vs bad debt, loan strategies, credit cards</p>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded">🔒 Complete Chapter 2</span>
+                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
+                  <Lock className="w-3 h-3" />
+                  Complete Chapter 2
+                </span>
                 <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
                   Locked
                 </button>
@@ -219,12 +229,15 @@ export default function Home() {
             {/* Chapter 4 - Locked */}
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
               <div className="flex items-center mb-3">
-                <span className="text-2xl mr-3 opacity-50">📈</span>
+                <TrendingUp className="w-8 h-8 mr-3 text-gray-400" />
                 <h4 className="text-lg font-bold text-gray-500">Investment Fundamentals</h4>
               </div>
               <p className="text-gray-500 mb-4">Compound interest, stocks/bonds, 401k matching, diversification</p>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded">🔒 Complete Chapter 3</span>
+                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
+                  <Lock className="w-3 h-3" />
+                  Complete Chapter 3
+                </span>
                 <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
                   Locked
                 </button>
@@ -234,12 +247,15 @@ export default function Home() {
             {/* Chapter 5 - Locked */}
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
               <div className="flex items-center mb-3">
-                <span className="text-2xl mr-3 opacity-50">🎯</span>
+                <PieChart className="w-8 h-8 mr-3 text-gray-400" />
                 <h4 className="text-lg font-bold text-gray-500">Advanced Investing</h4>
               </div>
               <p className="text-gray-500 mb-4">ETFs, mutual funds, index funds, risk tolerance, portfolio allocation</p>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded">🔒 Complete Chapter 4</span>
+                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
+                  <Lock className="w-3 h-3" />
+                  Complete Chapter 4
+                </span>
                 <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
                   Locked
                 </button>
@@ -249,12 +265,15 @@ export default function Home() {
             {/* Chapter 6 - Locked */}
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
               <div className="flex items-center mb-3">
-                <span className="text-2xl mr-3 opacity-50">🧾</span>
+                <FileText className="w-8 h-8 mr-3 text-gray-400" />
                 <h4 className="text-lg font-bold text-gray-500">Taxes & Planning</h4>
               </div>
               <p className="text-gray-500 mb-4">Tax brackets, deductions, credits, W-4s, tax-advantaged accounts</p>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded">🔒 Complete Chapter 5</span>
+                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
+                  <Lock className="w-3 h-3" />
+                  Complete Chapter 5
+                </span>
                 <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
                   Locked
                 </button>
@@ -265,27 +284,28 @@ export default function Home() {
           {/* Show More Button */}
           <div className="text-center">
             <details className="inline-block">
-              <summary className="bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 px-6 py-3 rounded-lg cursor-pointer hover:from-purple-200 hover:to-pink-200 transition-all font-medium">
-                📚 View All 10 Chapters (4 More)
+              <summary className="bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 px-6 py-3 rounded-lg cursor-pointer hover:from-purple-200 hover:to-pink-200 transition-all font-medium flex items-center justify-center gap-2">
+                <BookOpen className="w-4 h-4" />
+                View All 10 Chapters (4 More)
               </summary>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
-                  <span className="text-lg mr-2 opacity-50">🛡️</span>
+                  <ShieldCheck className="w-6 h-6 mr-2 text-gray-400 mb-2" />
                   <h5 className="font-semibold text-gray-500 text-sm">Insurance & Protection</h5>
                   <p className="text-xs text-gray-400 mt-1">Health, auto, life, disability insurance</p>
                 </div>
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
-                  <span className="text-lg mr-2 opacity-50">🏠</span>
+                  <Building className="w-6 h-6 mr-2 text-gray-400 mb-2" />
                   <h5 className="font-semibold text-gray-500 text-sm">Real Estate Finance</h5>
                   <p className="text-xs text-gray-400 mt-1">Mortgages, down payments, rent vs buy</p>
                 </div>
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
-                  <span className="text-lg mr-2 opacity-50">📊</span>
+                  <Lightbulb className="w-6 h-6 mr-2 text-gray-400 mb-2" />
                   <h5 className="font-semibold text-gray-500 text-sm">Economic Concepts</h5>
                   <p className="text-xs text-gray-400 mt-1">Inflation, interest rates, market cycles</p>
                 </div>
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
-                  <span className="text-lg mr-2 opacity-50">🏖️</span>
+                  <Umbrella className="w-6 h-6 mr-2 text-gray-400 mb-2" />
                   <h5 className="font-semibold text-gray-500 text-sm">Advanced Planning</h5>
                   <p className="text-xs text-gray-400 mt-1">Retirement, estate basics, financial independence</p>
                 </div>
@@ -297,21 +317,24 @@ export default function Home() {
         {/* Featured Interactive Tools */}
         <div className="bg-gradient-to-r from-white to-blue-50 rounded-2xl shadow-xl p-8 mb-16 border border-blue-100">
           <div className="text-center mb-8">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">🧮 Interactive Financial Tools</h3>
+            <h3 className="text-3xl font-bold text-gray-900 mb-4 flex items-center justify-center gap-3">
+              <Calculator className="w-8 h-8 text-blue-600" />
+              Interactive Financial Tools
+            </h3>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Experience the power of financial concepts through hands-on calculators with real-time feedback
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Compound Interest Calculator */}
-            <InteractiveCard 
+            <InteractiveCard
               className="group bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-6 border border-green-200"
               glowColor="rgba(34, 197, 94, 0.3)"
             >
               <div className="flex items-center mb-4">
                 <div className="bg-green-500 text-white p-3 rounded-lg mr-4 group-hover:bg-green-600 transition-colors">
-                  <span className="text-2xl">📈</span>
+                  <TrendingUp className="w-6 h-6" />
                 </div>
                 <div>
                   <h4 className="text-lg font-bold text-green-900">Compound Interest</h4>
@@ -332,12 +355,12 @@ export default function Home() {
                 </button>
               </Link>
             </InteractiveCard>
-            
+
             {/* Budget Builder Calculator */}
             <div className="group bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl p-6 border border-blue-200 hover:shadow-lg transition-all transform hover:scale-105">
               <div className="flex items-center mb-4">
                 <div className="bg-blue-500 text-white p-3 rounded-lg mr-4 group-hover:bg-blue-600 transition-colors">
-                  <span className="text-2xl">📊</span>
+                  <BarChart3 className="w-6 h-6" />
                 </div>
                 <div>
                   <h4 className="text-lg font-bold text-blue-900">Budget Builder</h4>
@@ -363,7 +386,7 @@ export default function Home() {
             <div className="group bg-gradient-to-br from-red-50 to-pink-100 rounded-xl p-6 border border-red-200 hover:shadow-lg transition-all transform hover:scale-105">
               <div className="flex items-center mb-4">
                 <div className="bg-red-500 text-white p-3 rounded-lg mr-4 group-hover:bg-red-600 transition-colors">
-                  <span className="text-2xl">�</span>
+                  <CreditCard className="w-6 h-6" />
                 </div>
                 <div>
                   <h4 className="text-lg font-bold text-red-900">Debt Destroyer</h4>
@@ -391,15 +414,15 @@ export default function Home() {
             <p className="text-center text-blue-700 font-medium mb-4">🔮 Coming Soon</p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
-                <span className="text-2xl block mb-1">🏠</span>
+                <Building className="w-8 h-8 mx-auto mb-2 text-blue-600" />
                 <p className="text-xs font-medium text-blue-800">Mortgage Calculator</p>
               </div>
               <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
-                <span className="text-2xl block mb-1">🏖️</span>
+                <Umbrella className="w-8 h-8 mx-auto mb-2 text-blue-600" />
                 <p className="text-xs font-medium text-blue-800">Retirement Planner</p>
               </div>
               <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
-                <span className="text-2xl block mb-1">�</span>
+                <CreditCard className="w-8 h-8 mx-auto mb-2 text-blue-600" />
                 <p className="text-xs font-medium text-blue-800">Auto Loan Calculator</p>
               </div>
             </div>
@@ -409,36 +432,39 @@ export default function Home() {
         {/* AI-Powered Features Section */}
         <InteractiveCard className="premium-card bg-gradient-to-r from-purple-50 to-indigo-100 rounded-2xl shadow-xl p-8 mb-16 border border-purple-200">
           <div className="text-center mb-8">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4 font-space gradient-text-premium">🤖 AI-Powered Learning Experience</h3>
+            <h3 className="text-3xl font-bold text-gray-900 mb-4 font-space gradient-text-premium flex items-center justify-center gap-3">
+              <Brain className="w-8 h-8 text-purple-600" />
+              AI-Powered Learning Experience
+            </h3>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto font-inter">
               Unlike other platforms with simulated chatbots, we use real OpenAI GPT-4o-mini for personalized financial coaching
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <InteractiveCard className="premium-card rounded-xl p-6 shadow-lg border border-purple-100" glowColor="rgba(147, 51, 234, 0.3)">
               <div className="bg-gradient-to-br from-purple-100 to-purple-200 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-2xl">🧠</span>
+                <Brain className="w-6 h-6 text-purple-600" />
               </div>
               <h4 className="text-lg font-bold text-gray-900 mb-2 font-space">Contextual AI Coaching</h4>
               <p className="text-gray-600 text-sm leading-relaxed font-inter">
                 Our AI knows your learning progress, quiz scores, and struggling topics to provide personalized guidance exactly when you need it.
               </p>
             </InteractiveCard>
-            
+
             <InteractiveCard className="premium-card rounded-xl p-6 shadow-lg border border-purple-100" glowColor="rgba(59, 130, 246, 0.3)">
               <div className="bg-gradient-to-br from-blue-100 to-blue-200 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-2xl">📊</span>
+                <BarChart3 className="w-6 h-6 text-blue-600" />
               </div>
               <h4 className="text-lg font-bold text-gray-900 mb-2 font-space">Progress Tracking</h4>
               <p className="text-gray-600 text-sm leading-relaxed font-inter">
                 Every lesson completed, calculator used, and quiz taken is tracked across sessions with persistent localStorage and analytics.
               </p>
             </InteractiveCard>
-            
+
             <InteractiveCard className="premium-card rounded-xl p-6 shadow-lg border border-purple-100" glowColor="rgba(34, 197, 94, 0.3)">
               <div className="bg-gradient-to-br from-green-100 to-green-200 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-2xl">❓</span>
+                <Sparkles className="w-6 h-6 text-green-600" />
               </div>
               <h4 className="text-lg font-bold text-gray-900 mb-2 font-space">Smart Q&A System</h4>
               <p className="text-gray-600 text-sm leading-relaxed font-inter">

@@ -20,7 +20,7 @@ const lessons: LessonContent[] = [
     content: "Income is the money you receive regularly, usually from work. There are different types of income, and understanding them is crucial for managing your finances effectively.",
     keyPoints: [
       "Gross Income: Total money earned before any deductions",
-      "Net Income: Money you actually take home after taxes and deductions", 
+      "Net Income: Money you actually take home after taxes and deductions",
       "Active Income: Money earned from working (salary, wages, tips)",
       "Passive Income: Money earned without active work (investments, rental property)"
     ]
@@ -55,7 +55,7 @@ export default function MoneyFundamentalsLesson() {
 
   // Load completed lessons from global state
   useEffect(() => {
-    const newCompleted = lessons.map((lesson, index) => 
+    const newCompleted = lessons.map((lesson, index) =>
       state.userProgress.completedLessons.includes(`money-fundamentals-${index}`)
     );
     setCompletedLessons(newCompleted);
@@ -64,7 +64,7 @@ export default function MoneyFundamentalsLesson() {
   const markComplete = () => {
     const lessonId = `money-fundamentals-${currentLesson}`;
     completeLesson(lessonId);
-    
+
     const newCompleted = [...completedLessons];
     newCompleted[currentLesson] = true;
     setCompletedLessons(newCompleted);
@@ -95,9 +95,9 @@ export default function MoneyFundamentalsLesson() {
     <div className="max-w-4xl mx-auto">
       {/* Enhanced Progress Ring */}
       <div className="flex justify-center mb-6">
-        <ProgressRing 
-          progress={progress} 
-          size={100} 
+        <ProgressRing
+          progress={progress}
+          size={100}
           color="#3B82F6"
           className="animate-bounce-in"
         />
@@ -119,9 +119,9 @@ export default function MoneyFundamentalsLesson() {
               Chapter 1: Money Fundamentals
             </span>
           </div>
-          
+
           <h1 className="text-3xl font-bold text-gray-900 mb-4 animate-fade-in-up stagger-2">
-            <TypingEffect 
+            <TypingEffect
               text={lesson.title}
               speed={50}
               className="gradient-text-blue"

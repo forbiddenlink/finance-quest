@@ -3,6 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from 'recharts';
 import { useProgress } from '@/lib/context/ProgressContext';
+import {
+  CreditCard,
+  GraduationCap,
+  Car,
+  User,
+  Home,
+  LucideIcon,
+  DollarSign,
+  Lightbulb
+} from 'lucide-react';
 
 interface Debt {
   id: string;
@@ -11,7 +21,7 @@ interface Debt {
   minimumPayment: number;
   interestRate: number;
   type: 'credit_card' | 'student_loan' | 'auto_loan' | 'personal_loan' | 'mortgage';
-  icon: string;
+  icon: LucideIcon;
 }
 
 interface PayoffProjection {
@@ -24,9 +34,9 @@ interface PayoffProjection {
 
 export default function DebtPayoffCalculator() {
   const [debts, setDebts] = useState<Debt[]>([
-    { id: '1', name: 'Credit Card 1', balance: 5000, minimumPayment: 125, interestRate: 18.99, type: 'credit_card', icon: '💳' },
-    { id: '2', name: 'Student Loan', balance: 25000, minimumPayment: 300, interestRate: 5.5, type: 'student_loan', icon: '🎓' },
-    { id: '3', name: 'Car Loan', balance: 15000, minimumPayment: 350, interestRate: 6.5, type: 'auto_loan', icon: '🚗' },
+    { id: '1', name: 'Credit Card 1', balance: 5000, minimumPayment: 125, interestRate: 18.99, type: 'credit_card', icon: CreditCard },
+    { id: '2', name: 'Student Loan', balance: 25000, minimumPayment: 300, interestRate: 5.5, type: 'student_loan', icon: GraduationCap },
+    { id: '3', name: 'Car Loan', balance: 15000, minimumPayment: 350, interestRate: 6.5, type: 'auto_loan', icon: Car },
   ]);
 
   const [extraPayment, setExtraPayment] = useState(200);
@@ -51,13 +61,13 @@ export default function DebtPayoffCalculator() {
       minimumPayment: 50,
       interestRate: 15,
       type: 'credit_card',
-      icon: '💳'
+      icon: CreditCard
     };
     setDebts([...debts, newDebt]);
   };
 
   const updateDebt = (id: string, field: keyof Debt, value: string | number) => {
-    setDebts(prev => prev.map(debt => 
+    setDebts(prev => prev.map(debt =>
       debt.id === id ? { ...debt, [field]: value } : debt
     ));
   };
@@ -94,7 +104,7 @@ export default function DebtPayoffCalculator() {
         const monthlyInterest = (debt.balance * (debt.interestRate / 100)) / 12;
         totalInterest += monthlyInterest;
         debt.balance += monthlyInterest;
-        
+
         const payment = Math.min(debt.minimumPayment, debt.balance);
         debt.balance -= payment;
         totalPaid += payment;
@@ -173,7 +183,10 @@ export default function DebtPayoffCalculator() {
       {/* Strategy Selection and Extra Payment */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h3 className="font-semibold text-blue-900 mb-3">💡 Payoff Strategy</h3>
+          <h3 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+            <Lightbulb className="w-4 h-4" />
+            Payoff Strategy
+          </h3>
           <div className="space-y-3">
             <label className="flex items-center space-x-3">
               <input
@@ -205,7 +218,10 @@ export default function DebtPayoffCalculator() {
         </div>
 
         <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-          <h3 className="font-semibold text-green-900 mb-3">💰 Extra Monthly Payment</h3>
+          <h3 className="font-semibold text-green-900 mb-3 flex items-center">
+            <DollarSign className="w-5 h-5 mr-2" />
+            Extra Monthly Payment
+          </h3>
           <div className="relative">
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
             <input
@@ -260,7 +276,7 @@ export default function DebtPayoffCalculator() {
             <div key={debt.id} className={`${getDebtTypeColor(debt.type)} border rounded-lg p-4`}>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center space-x-2">
-                  <span className="text-lg">{debt.icon}</span>
+                  <debt.icon className="w-5 h-5 text-gray-600" />
                   <input
                     type="text"
                     value={debt.name}
@@ -347,7 +363,7 @@ export default function DebtPayoffCalculator() {
                 <strong>Debt Snowball:</strong> Psychologically motivating - builds momentum with quick wins
               </div>
               <div className="mt-2 p-2 bg-white bg-opacity-50 rounded">
-                <strong>💡 Pro Tip:</strong> Choose avalanche to save money, snowball for motivation. Both beat minimum payments!
+                <strong>Pro Tip:</strong> Choose avalanche to save money, snowball for motivation. Both beat minimum payments!
               </div>
             </div>
           </div>
@@ -364,31 +380,31 @@ export default function DebtPayoffCalculator() {
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={projectionData.slice(0, Math.min(projectionData.length, 120))}> {/* Show max 10 years */}
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="month" 
+                  <XAxis
+                    dataKey="month"
                     label={{ value: 'Months', position: 'insideBottom', offset: -5 }}
                   />
-                  <YAxis 
+                  <YAxis
                     tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                     label={{ value: 'Amount', angle: -90, position: 'insideLeft' }}
                   />
-                  <Tooltip 
+                  <Tooltip
                     formatter={(value: number, name: string) => [formatCurrency(value), name]}
                     labelFormatter={(month) => `Month ${month}`}
                   />
                   <Legend />
-                  <Line 
-                    type="monotone" 
-                    dataKey="totalBalance" 
-                    stroke="#EF4444" 
+                  <Line
+                    type="monotone"
+                    dataKey="totalBalance"
+                    stroke="#EF4444"
                     strokeWidth={3}
                     name="Remaining Debt"
                     dot={false}
                   />
-                  <Line 
-                    type="monotone" 
-                    dataKey="totalInterest" 
-                    stroke="#F59E0B" 
+                  <Line
+                    type="monotone"
+                    dataKey="totalInterest"
+                    stroke="#F59E0B"
                     strokeWidth={2}
                     name="Total Interest Paid"
                     dot={false}
@@ -412,7 +428,7 @@ export default function DebtPayoffCalculator() {
                 <strong>Annual Freedom:</strong> {formatCurrency((totalMinimumPayments + extraPayment) * 12)} per year
               </div>
               <div className="mt-3 p-3 bg-white bg-opacity-50 rounded">
-                <strong>💭 Imagine:</strong> What could you do with an extra {formatCurrency((totalMinimumPayments + extraPayment) * 12)} per year? 
+                <strong>💭 Imagine:</strong> What could you do with an extra {formatCurrency((totalMinimumPayments + extraPayment) * 12)} per year?
                 Vacation? Investment? Dream purchase? Your debt-free life is closer than you think!
               </div>
             </div>
@@ -420,7 +436,10 @@ export default function DebtPayoffCalculator() {
 
           {/* Tips */}
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <h4 className="font-semibold text-yellow-900 mb-3">💡 Debt Payoff Tips</h4>
+            <h4 className="font-semibold text-yellow-900 mb-3 flex items-center gap-2">
+              <Lightbulb className="w-4 h-4" />
+              Debt Payoff Tips
+            </h4>
             <ul className="text-sm text-yellow-800 space-y-1">
               <li>• <strong>Stop creating new debt:</strong> Cut up credit cards if needed</li>
               <li>• <strong>Find extra money:</strong> Sell unused items, pick up side work</li>

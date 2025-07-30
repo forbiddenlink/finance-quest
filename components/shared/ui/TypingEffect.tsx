@@ -3,55 +3,59 @@
 import { useState, useEffect } from 'react';
 
 interface TypingEffectProps {
-  text: string;
-  speed?: number;
-  delay?: number;
-  className?: string;
-  showCursor?: boolean;
-  onComplete?: () => void;
+    text: string;
+    speed?: number;
+    delay?: number;
+    className?: string;
+    onComplete?: () => void;
 }
 
 export default function TypingEffect({
-  text,
-  speed = 50,
-  delay = 0,
-  className = '',
-  showCursor = true,
-  onComplete
+    text,
+    speed = 50,
+    delay = 0,
+    className = '',
+    onComplete
 }: TypingEffectProps) {
-  const [displayText, setDisplayText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTyping, setIsTyping] = useState(false);
+    const [displayText, setDisplayText] = useState('');
+    const [isComplete, setIsComplete] = useState(false);
 
-  useEffect(() => {
-    const startTimer = setTimeout(() => {
-      setIsTyping(true);
-    }, delay);
+    useEffect(() => {
+        if (delay > 0) {
+            const delayTimer = setTimeout(() => {
+                startTyping();
+            }, delay);
+            return () => clearTimeout(delayTimer);
+        } else {
+            startTyping();
+        }
+    }, [text, speed, delay]);
 
-    return () => clearTimeout(startTimer);
-  }, [delay]);
+    const startTyping = () => {
+        let currentIndex = 0;
+        setDisplayText('');
+        setIsComplete(false);
 
-  useEffect(() => {
-    if (!isTyping) return;
+        const timer = setInterval(() => {
+            if (currentIndex < text.length) {
+                setDisplayText(prev => prev + text[currentIndex]);
+                currentIndex++;
+            } else {
+                clearInterval(timer);
+                setIsComplete(true);
+                onComplete?.();
+            }
+        }, speed);
 
-    if (currentIndex < text.length) {
-      const timer = setTimeout(() => {
-        setDisplayText((prev) => prev + text[currentIndex]);
-        setCurrentIndex((prev) => prev + 1);
-      }, speed);
+        return () => clearInterval(timer);
+    };
 
-      return () => clearTimeout(timer);
-    } else {
-      onComplete?.();
-    }
-  }, [currentIndex, text, speed, isTyping, onComplete]);
-
-  return (
-    <span className={`${className} ${showCursor ? 'animate-typing' : ''}`}>
-      {displayText}
-      {showCursor && isTyping && currentIndex < text.length && (
-        <span className="animate-pulse">|</span>
-      )}
-    </span>
-  );
+    return (
+        <span className={className}>
+            {displayText}
+            {!isComplete && (
+                <span className="animate-pulse text-blue-500">|</span>
+            )}
+        </span>
+    );
 }

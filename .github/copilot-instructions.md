@@ -3,10 +3,10 @@
 ## Executive Summary
 **Finance Quest** is an AI-powered financial literacy platform addressing the 64% financial illiteracy crisis. Built with Next.js 15.4.4 + OpenAI GPT-4o-mini, it provides personalized learning paths through interactive calculators, real-time progress tracking, and contextual AI coaching. Unlike competitors using simulated chatbots, we deliver genuine AI-powered education with measurable learning outcomes.
 
-**Current Status**: Production-ready MVP with real AI integration, comprehensive progress tracking, Chapter 1 fully functional, premium visual architecture with advanced animations, and Q&A system. Ready for hackathon demonstration with spectacular visual design.
+**Current Status**: MVP complete with real AI integration, global progress tracking, and Chapter 1 fully functional. Ready for Phase 3 enhancements.
 
 ## Project Vision
-A comprehensive financial literacy game that teaches users from zero knowledge to advanced financial concepts through interactive storytelling, hands-on simulations, immediate feedback loops, and **premium visual experiences** with advanced animations and modern design patterns.
+A comprehensive financial literacy game that teaches users from zero knowledge to advanced financial concepts through interactive storytelling, hands-on simulations, and immediate feedback loops.
 
 ## Hackathon Context & Timeline
 
@@ -26,149 +26,75 @@ Given the hackathon timeline, focus on building a **demonstrable MVP** that show
 
 ### Judging-Focused Features
 - **Impact**: Addresses the 64% financial illiteracy problem with measurable learning ✅
-- **Creativity**: Real AI-powered personalized learning paths, interactive visualizations, and **premium visual design** ✅
-- **Usability**: Zero-knowledge-assumed design with immediate feedback loops and **spectacular user interface** ✅
-- **Technical Quality**: React/Next.js with real OpenAI API integration, persistent state management, and **advanced visual components** ✅
+- **Creativity**: Real AI-powered personalized learning paths and interactive visualizations ✅
+- **Usability**: Zero-knowledge-assumed design with immediate feedback loops ✅
+- **Technical Quality**: React/Next.js with real OpenAI API integration and persistent state management ✅
 
 ## Architecture Overview
 
-### Current Tech Stack & Dependencies ✅
+### Current System Architecture ✅
 
-#### Core Framework & Runtime
-- **Next.js 15.4.4**: Modern React framework with App Router, TypeScript, and Turbopack dev server
-- **React 19.1.0**: Latest React version with advanced hooks and concurrent features  
-- **TypeScript 5**: Full type safety across components, contexts, and API routes
-- **TailwindCSS 4**: Latest utility-first CSS framework with PostCSS integration
+#### Core Infrastructure
+- **Next.js 15.4.4** with App Router and TypeScript
+- **Real AI Integration**: OpenAI GPT-4o-mini API with contextual financial coaching
+- **Global State Management**: React Context with localStorage persistence  
+- **Progress Tracking**: Comprehensive user journey analytics and achievement system
+- **Interactive Visualizations**: Recharts library for financial data display
 
-#### Key Dependencies
-```json
-{
-  "lucide-react": "^0.534.0",        // Icon system
-  "openai": "^5.10.2",               // Real AI integration
-  "react-confetti-explosion": "^3.0.3", // Celebration animations
-  "react-hot-toast": "^2.5.2",       // Toast notifications
-  "recharts": "^3.1.0"               // Interactive financial charts
+#### API Routes & Services
+- `/api/ai-chat` - OpenAI integration with user progress context and fallback responses
+- Environment variables secured in `.env.local` with proper error handling
+
+#### OpenAI Usage Controls & Cost Management
+```typescript
+interface OpenAIUsageControls {
+  dailyTokenLimit: number;
+  userRateLimit: number;
+  fallbackResponses: string[];
+  costTracking: UsageMetrics;
+  contextOptimization: PromptEfficiency;
 }
 ```
 
-#### Development Environment
-- **Build Scripts**: `npm run dev` (Turbopack), `npm run build`, `npm run start`, `npm run lint`
-- **PowerShell Commands**: Use `;` not `&&` for chaining (e.g., `git add . ; git commit -m "message"`)
-- **ESLint**: Configured with Next.js rules for code quality
+#### Data Architecture & Security
+```typescript
+interface UserDataSchema {
+  progressData: ProgressState;
+  aiConversations: ChatHistory[];
+  calculatorInputs: SavedCalculations;
+  assessmentScores: TestResults[];
+  learningAnalytics: PerformanceMetrics;
+}
 
-### Core System Architecture ✅
-
-#### State Management & Data Flow
-- **Global Context**: `lib/context/ProgressContext.tsx` - Centralized user progress with localStorage persistence
-- **React Context Pattern**: `useReducer` + `useContext` for complex state management
-- **Local Storage Sync**: Automatic save/load with error handling and fallback states
-- **Progress Tracking**: Comprehensive analytics including time spent, quiz scores, struggling topics
-
-#### API Integration & Services
-- **OpenAI Route**: `/api/ai-chat/route.ts` - Real GPT-4o-mini integration with context awareness
-- **Fallback System**: Rule-based responses when AI API unavailable
-- **Context-Aware Prompts**: AI knows user progress, completed lessons, quiz scores
-- **Cost Controls**: Token limits, usage tracking, optimized prompts
-
-#### Component Architecture
-```
-components/
-├── chapters/fundamentals/         # Chapter-specific content
-│   ├── lessons/                   # Interactive lesson components
-│   ├── calculators/              # Financial calculation tools
-│   ├── assessments/              # Quiz and mastery checks
-│   └── scenarios/                # Real-world application stories
-├── shared/                       # Reusable components
-│   ├── QASystem.tsx             # AI-powered Q&A with chat interface
-│   ├── ai-assistant/            # AI teaching assistant
-│   ├── calculators/             # Base calculator components
-│   └── ui/                      # Premium UI component library
+// Security Considerations
+- PII data handling compliance (GDPR/CCPA)
+- AI conversation privacy protection
+- Progress data encryption in localStorage
+- Session security and CSRF protection
 ```
 
-#### Premium Visual Architecture ✅
-**Typography System**: 
-- Inter: Body text and descriptions for optimal readability (via Geist)
-- Space Grotesk: Headlines and titles for modern, professional look
-- Poppins: Buttons and call-to-action elements for friendly appeal  
+#### State Management System
+- `lib/context/ProgressContext.tsx` - Centralized progress tracking with:
+  - Learning module completion tracking
+  - Time spent analytics  
+  - Struggling topics identification
+  - Achievement and milestone unlocking
+  - Persistent storage with automatic sync
 
-**Advanced Component Library** (`components/shared/ui/`):
-- `InteractiveCard` - 3D hover effects with perspective transforms and glow borders ✅
-- `ParticleSystem` - Dynamic floating background animations with canvas rendering ✅
-- `TypingText` - Animated text cycling with smooth transitions ✅
-- `AnimatedCounter` - Number animation effects for statistics ✅
-- `MarketTicker` - Financial data stream simulation ✅
-- `FloatingBackground` - Subtle animated financial icons ✅
-- `CelebrationConfetti` - Success animations for achievements ✅
-- `CircularProgress` - Animated progress rings for tracking
-- `LoadingSpinner` - Branded loading states
-- `ToastProvider` - Notification system integration
-
-**Premium Styling Framework** (`app/globals.css`):
-- Glass morphism cards with backdrop blur effects
-- Gradient text animations with color cycling
-- Shimmer effects on interactive elements
-- Card lift animations with 3D transforms
-- Advanced CSS keyframe animations for smooth interactions
-- Hydration-safe component mounting to prevent SSR/client mismatches
+#### Component Integration Status ✅
+All educational components now integrated with global progress tracking:
+- `MoneyFundamentalsLesson` - Tracks lesson progression and completion
+- `MoneyFundamentalsQuiz` - Records quiz attempts, scores, and struggling topics  
+- `PaycheckCalculator` - Monitors calculator usage and comprehension
+- `CompoundInterestCalculator` - Interactive charts with wealth-building visualization ✅
+- `QASystem` - Contextual financial Q&A integrated throughout learning journey ✅
 
 #### Enhanced Homepage Design ✅
-- **Professional Layout**: Contest-ready design with gradient hero section, compelling messaging, and **premium typography** ✅
-- **Complete Curriculum Display**: All 10 chapters shown with progressive unlocking visual hierarchy ✅
-- **Interactive Tool Showcase**: Dedicated calculator section with real ROI examples and coming-soon previews ✅
-- **AI Features Highlight**: Three-pillar presentation of contextual coaching, progress tracking, and Q&A system ✅
-- **Impact Statistics**: Crisis context (64% illiteracy) with solution metrics and competitive advantages ✅
-- **Premium Visual Components**: Advanced card animations, glass morphism effects, and interactive hover states ✅
-
-### Progress Tracking System Details
-
-#### ProgressContext Architecture
-```typescript
-interface UserProgress {
-  currentChapter: number;                  // Current learning chapter (1-10)
-  completedLessons: string[];             // Array of completed lesson IDs
-  quizScores: { [key: string]: number };  // Quiz ID to score mapping
-  calculatorUsage: string[];              // Used calculator IDs
-  strugglingTopics: string[];             // Topics needing reinforcement
-  totalTimeSpent: number;                 // Minutes spent learning
-  achievementsUnlocked: string[];         // Achievement badge IDs
-  lastActiveDate: string;                 // ISO date string
-}
-```
-
-#### Key Progress Actions
-- `completeLesson(lessonId)` - Mark lesson as completed
-- `recordQuizScore(quizId, score)` - Save quiz results with mastery checking
-- `useCalculator(calculatorId)` - Track tool engagement
-- `addStrugglingTopic(topic)` - Identify areas needing help
-- `updateTimeSpent(minutes)` - Track learning session duration
-
-#### Integration Patterns
-All educational components use progress hooks:
-```typescript
-const { state } = useProgress();
-const { completeLesson, recordQuizScore } = useProgressActions();
-```
-
-### AI Teaching Assistant Integration ✅
-
-#### OpenAI API Route (`/api/ai-chat/route.ts`)
-- **Real GPT-4o-mini Integration**: Not simulated responses
-- **Context-Aware Prompts**: Includes user progress in system prompt
-- **Fallback Response System**: Rule-based responses when API unavailable
-- **Usage Optimization**: max_tokens: 400, temperature: 0.7
-
-#### Q&A System Features (`components/shared/QASystem.tsx`)
-- **Chat Interface**: Real-time messaging with AI coach
-- **Progress Integration**: AI knows completed lessons, quiz scores, struggling topics
-- **Quiz Mode Handling**: Disabled during assessments to maintain integrity
-- **Suggested Questions**: Contextual prompts to encourage exploration
-- **Error Handling**: Graceful fallbacks with educational content
-
-#### AI Coach Capabilities
-- Personalized explanations based on learning history
-- References to specific Finance Quest tools and lessons
-- Encouragement and milestone celebration
-- Actionable advice users can implement immediately
+- **Professional Layout**: Contest-ready design with gradient hero section and compelling messaging
+- **Complete Curriculum Display**: All 10 chapters shown with progressive unlocking visual hierarchy
+- **Interactive Tool Showcase**: Dedicated calculator section with real ROI examples and coming-soon previews
+- **AI Features Highlight**: Three-pillar presentation of contextual coaching, progress tracking, and Q&A system
+- **Impact Statistics**: Crisis context (64% illiteracy) with solution metrics and competitive advantages
 
 ### Core Educational Philosophy
 - **Zero-to-Hero Learning Path**: Progressive curriculum from basic budgeting to advanced investment strategies
@@ -176,7 +102,7 @@ const { completeLesson, recordQuizScore } = useProgressActions();
 - **Immediate Application**: Each concept learned through interactive calculators and real-world scenarios
 - **AI-Powered Personalization**: Adaptive difficulty and personalized coaching based on comprehension
 
-### Chapter Structure (15+ Comprehensive Modules)
+### Chapter Structure (10 Comprehensive Modules)
 1. **Money Fundamentals**: Income, banking, paycheck basics, direct deposits
 2. **Budgeting Mastery**: 50/30/20 rule, expense tracking, emergency funds, cash flow
 3. **Debt and Credit**: Credit scores, good vs bad debt, loan strategies, credit cards
@@ -187,11 +113,6 @@ const { completeLesson, recordQuizScore } = useProgressActions();
 8. **Real Estate Finance**: Mortgages, down payments, PMI, refinancing, rent vs buy
 9. **Economic Concepts**: Inflation, interest rates, market cycles, recession planning
 10. **Advanced Planning**: Retirement planning, estate basics, financial independence (FIRE)
-11. **Crisis Management**: Emergency financial planning, job loss scenarios, debt crisis workflows
-12. **Life Stage Finance**: College planning, family budgeting, divorce financial planning
-13. **Business & Entrepreneurship**: Small business finance, freelancer taxes, startup funding
-14. **Behavioral Finance**: Psychology of money, cognitive biases, habit formation
-15. **Global Finance**: International investing, currency, economic indicators
 
 ### Key Component Types
 
@@ -217,27 +138,6 @@ const { completeLesson, recordQuizScore } = useProgressActions();
 - Real-world application challenges
 
 ## Development Patterns
-
-### Visual Development Standards ✅
-```typescript
-interface VisualArchitecture {
-  typography: {
-    headings: 'Space Grotesk';
-    body: 'Inter';
-    buttons: 'Poppins';
-  };
-  components: {
-    cards: 'InteractiveCard with 3D transforms';
-    animations: 'CSS keyframes + React state';
-    effects: 'Glass morphism + shimmer + glow';
-  };
-  principles: {
-    hydrationSafe: boolean; // Always true for SSR compatibility
-    performanceOptimized: boolean; // Lazy loading + efficient animations  
-    accessibilityCompliant: boolean; // ARIA labels + keyboard navigation
-  };
-}
-```
 
 ### Educational Content Structure
 ```
@@ -267,114 +167,12 @@ components/
 - Personalized AI coaching recommendations
 - Calculator input persistence between sessions
 
-## Development Patterns & Best Practices
-
-### File Structure & Naming Conventions
-```
-app/
-├── layout.tsx              # Root layout with ProgressProvider and ToastProvider
-├── page.tsx                # Homepage with premium visual components
-├── globals.css             # Global styles with advanced animations
-├── api/ai-chat/route.ts    # OpenAI GPT-4o-mini integration
-├── [feature]/page.tsx      # Feature-specific pages (chapter1, calculators, etc.)
-
-components/
-├── chapters/fundamentals/   # Chapter 1 components
-│   ├── lessons/            # MoneyFundamentalsLesson.tsx
-│   ├── calculators/        # PaycheckCalculator.tsx, CompoundInterestCalculator.tsx
-│   └── assessments/        # MoneyFundamentalsQuiz.tsx
-├── shared/
-│   ├── QASystem.tsx        # AI-powered Q&A system
-│   ├── ai-assistant/       # AI teaching components
-│   ├── calculators/        # Reusable calculator base components
-│   └── ui/                 # Premium visual component library
-
-lib/
-└── context/
-    └── ProgressContext.tsx  # Global state management with localStorage
-```
-
-### Component Naming Conventions
-- `*Calculator`: Interactive financial tools (e.g., `PaycheckCalculator`)
-- `*Lesson`: Educational content components (e.g., `MoneyFundamentalsLesson`)
-- `*Quiz`: Assessment components (e.g., `MoneyFundamentalsQuiz`)
-- `*System`: Complex feature components (e.g., `QASystem`)
-
-### State Management Patterns
-All components should integrate with the global progress system:
-```typescript
-// Reading progress
-const { state } = useProgress();
-const { userProgress, isLoading } = state;
-
-// Updating progress
-const { completeLesson, recordQuizScore, useCalculator } = useProgressActions();
-
-// Usage in components
-useEffect(() => {
-  if (lessonCompleted) {
-    completeLesson('money-fundamentals-basics');
-  }
-}, [lessonCompleted, completeLesson]);
-```
-
-### Visual Development Standards ✅
-```typescript
-interface VisualArchitecture {
-  typography: {
-    headings: 'Space Grotesk';
-    body: 'Inter (via Geist)';
-    buttons: 'Poppins';
-  };
-  components: {
-    cards: 'InteractiveCard with 3D transforms';
-    animations: 'CSS keyframes + React state';
-    effects: 'Glass morphism + shimmer + glow';
-  };
-  principles: {
-    hydrationSafe: boolean; // Always true for SSR compatibility
-    performanceOptimized: boolean; // Lazy loading + efficient animations  
-    accessibilityCompliant: boolean; // ARIA labels + keyboard navigation
-  };
-}
-```
-
-### API Integration Patterns
-
-#### OpenAI Integration
-```typescript
-// Standard AI chat request
-const response = await fetch('/api/ai-chat', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    message: userMessage,
-    context: {
-      type: 'qa_system', // or 'lesson_coaching'
-      userProgress: state.userProgress
-    }
-  })
-});
-```
-
-#### Error Handling
-- Always implement fallback responses for AI API failures
-- Use toast notifications for user feedback
-- Graceful degradation when services unavailable
-
-### CSS Architecture
-
-#### Global Styles (`app/globals.css`)
-- **Premium animations**: Shimmer, glow, card-lift, gradient-text
-- **Utility classes**: `.premium-card`, `.glass-card`, `.interactive-hover`
-- **Keyframe animations**: Smooth transitions and micro-interactions
-- **Responsive design**: Mobile-first with desktop enhancements
-
-#### Component-Specific Styling
-- Use Tailwind classes for layout and spacing
-- Custom CSS classes for complex animations and effects
-- Consistent spacing scale (4px increments)
-- Professional color palette with gradients
+### AI Teaching Assistant Integration ✅
+- **Real OpenAI GPT-4o-mini Integration**: Contextual financial coaching with user progress awareness
+- **Personalized Explanations**: Dynamic responses based on user's learning history and struggling topics
+- **Progress-Aware Coaching**: AI knows completed lessons, quiz scores, and areas needing reinforcement  
+- **Fallback Response System**: Graceful handling when API is unavailable with educational prompts
+- **Usage Analytics**: Token tracking and conversation history for optimization
 
 ### Learning Science Framework
 ```typescript
@@ -393,95 +191,6 @@ interface LearningTheory {
 - **Legal Compliance**: Proper disclaimers for financial education vs. advice
 - **Cultural Sensitivity**: Inclusive examples and scenarios
 - **Age Appropriateness**: Content suitable for 16+ audience
-
-## Current Codebase Analysis
-
-### Critical Components Status ✅
-
-#### Core Infrastructure Components
-1. **ProgressContext** (`lib/context/ProgressContext.tsx`) ✅
-   - Comprehensive state management with 8 action types
-   - localStorage persistence with error handling
-   - Reducer pattern for complex state updates
-   - Helper hooks for common actions
-
-2. **OpenAI Integration** (`app/api/ai-chat/route.ts`) ✅
-   - Real GPT-4o-mini API integration (not simulated)
-   - Context-aware prompts with user progress
-   - Fallback system with rule-based responses
-   - Token optimization and usage tracking
-
-3. **Q&A System** (`components/shared/QASystem.tsx`) ✅
-   - Chat interface with message history
-   - Suggested questions for engagement
-   - Quiz mode restrictions for integrity
-   - Progress-aware AI responses
-
-#### Premium UI Components ✅
-Located in `components/shared/ui/`:
-- `InteractiveCard.tsx` - 3D hover effects with glow
-- `ParticleSystem.tsx` - Canvas-based floating animations
-- `TypingText.tsx` - Animated text cycling effects
-- `AnimatedCounter.tsx` - Number counting animations
-- `MarketTicker.tsx` - Financial data stream simulation
-- `LoadingSpinner.tsx` - Branded loading states
-- `ToastProvider.tsx` - Notification system integration
-
-#### Educational Components ✅
-1. **MoneyFundamentalsLesson** - Interactive Chapter 1 content
-2. **PaycheckCalculator** - Real-time gross/net pay calculations
-3. **CompoundInterestCalculator** - Investment growth visualization
-4. **MoneyFundamentalsQuiz** - Assessment with detailed feedback
-
-### Development Workflow
-
-#### Required Setup Steps
-1. **Environment Variables**: Create `.env.local` with `OPENAI_API_KEY`
-2. **Dependencies**: `npm install` for all required packages
-3. **Development Server**: `npm run dev` (uses Turbopack)
-4. **Build Process**: `npm run build` for production
-
-#### Git Workflow & Commit Strategy
-```bash
-# PowerShell commands (use ; not &&)
-git add . ; git commit -m "feat: add CompoundInterestCalculator"
-git add . ; git commit -m "fix: quiz progression bug"
-git add . ; git commit -m "style: mobile calculator layout"
-```
-
-#### Component Development Pattern
-1. Create component with TypeScript interfaces
-2. Integrate with ProgressContext for tracking
-3. Add premium visual styling with Tailwind + custom CSS
-4. Include accessibility features (ARIA labels, keyboard nav)
-5. Test with different user progress states
-6. Commit with descriptive message
-
-### Performance Considerations
-- **React.memo**: Use for expensive calculator components
-- **Lazy Loading**: Implement for chapter content
-- **Image Optimization**: Next.js automatic optimization
-- **Bundle Analysis**: Monitor build size regularly
-
-### Mobile Responsiveness
-- **Design First**: Mobile-first responsive approach
-- **Touch Interactions**: Optimized for finger navigation
-- **Performance**: Lightweight animations on mobile
-- **Accessibility**: Screen reader compatibility
-
-## Technical Debt & Improvement Areas
-
-### Immediate Priorities
-1. **Tailwind Configuration**: Create `tailwind.config.ts` for custom theme
-2. **Type Safety**: Add stricter TypeScript configurations
-3. **Error Boundaries**: Implement React error boundaries
-4. **Testing Suite**: Add unit tests for critical components
-
-### Scalability Enhancements
-1. **Component Library**: Systematize UI component exports
-2. **Internationalization**: Prepare for multi-language support
-3. **Analytics Integration**: Add learning outcome tracking
-4. **Performance Monitoring**: Implement real-time metrics
 
 ## Key Technical Considerations
 
@@ -550,23 +259,13 @@ interface TestingStrategy {
 1. **Assessment System** - Complete quiz framework with immediate feedback and explanations ✅
 2. **Real AI Assistant** - OpenAI GPT-4o-mini integration with contextual user progress awareness ✅
 3. **Global State Management** - Comprehensive ProgressContext system tracking all user interactions ✅
-4. **Premium Visual Architecture** - Advanced typography, card components, and animation system ✅
 
 ### Phase 3: Demo Enhancement (Current Focus - Weeks 5-6)
-1. **Additional Calculators** - Compound interest and budget builders ✅
+1. **Additional Calculators** - Compound interest and budget builders
 2. **Q&A Knowledge System** - AI-powered financial Q&A system implemented ✅
 3. **Scenario Engine** - Story-driven learning experiences with decision trees
 4. **Progress Dashboard** - Visual metrics display for judges and user engagement
 5. **Mobile Responsiveness** - Ensure accessibility across all devices
-6. **Visual Polish** - Final UI/UX refinements for contest presentation ✅
-
-### Phase 4: Advanced Educational Features (Long-term)
-1. **Spaced Repetition System** - SM-2 algorithm for optimal knowledge retention
-2. **Microlearning Architecture** - 2-3 minute lesson chunks with daily finance facts
-3. **Adaptive Learning Paths** - AI-powered difficulty adjustment and branching scenarios
-4. **Document Analysis** - Upload pay stubs, bank statements for personalized recommendations
-5. **Crisis Simulation Mode** - Practice handling job loss, medical bills, market crashes
-6. **Real-World Integration** - Connect to actual bank accounts for personalized analysis
 
 ### Production Deployment Strategy
 ```typescript
@@ -706,8 +405,6 @@ interface AdminDashboard {
 - **Contextual AI Responses**: AI assistant knows user's learning history, quiz scores, and struggling topics
 - **Interactive Learning**: Hands-on calculators with immediate feedback loops
 - **Zero-Knowledge Design**: Assumes no prior financial literacy, making it truly accessible
-- **Premium Visual Experience**: Advanced animations, typography, and 3D effects create professional-grade UI
-- **Hydration-Safe Architecture**: All animations and effects work seamlessly in Next.js SSR environment
 
 ### Hackathon Demo Points
 - User comprehension scores (target: 80%+ mastery rate)
@@ -733,15 +430,6 @@ interface AdminDashboard {
 - **Measurable Learning Outcomes**: Before/after assessment comparisons with statistical significance
 - **Engagement Analytics**: Session duration, completion rates, knowledge retention metrics
 - **Practical Application Success**: Users making better financial decisions after lessons
-
-### Q&A Knowledge System Features ✅ IMPLEMENTED
-- **Ask Anything Financial**: Users can ask questions like "How does compound interest work?", "What's a good credit score?", "Should I invest in stocks?"
-- **Content-Aware Responses**: AI draws from all educational content in the app to provide comprehensive answers
-- **Progressive Difficulty**: Answers adapt based on user's current learning progress and completed chapters
-- **Follow-up Questions**: Encourages deeper exploration with suggested related questions
-- **Real-World Application**: Provides practical examples and actionable advice for each question
-- **Integration with Learning Path**: Questions can unlock related lessons or calculators for hands-on practice
-- **Quiz Restrictions**: Q&A system is disabled during quizzes to maintain assessment integrity
 
 When building components, prioritize educational effectiveness and **demo readiness** over visual polish. Each feature should teach a specific financial concept, provide immediate actionable value, and demonstrate measurable learning impact to judges.
 
