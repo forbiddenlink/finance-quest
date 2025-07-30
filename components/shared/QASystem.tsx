@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, HelpCircle, Sparkles, Mic } from 'lucide-react';
-import { useProgress } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 import LoadingSpinner from './ui/LoadingSpinner';
 import VoiceQA from './ui/VoiceQA';
 
@@ -25,7 +25,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState<'text' | 'voice'>('text');
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { state } = useProgress();
+  const userProgress = useProgressStore((state) => state.userProgress);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -58,7 +58,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
           message: inputValue.trim(),
           context: {
             type: 'qa_system',
-            userProgress: state,
+            userProgress: userProgress,
             isGeneralQuestion: true
           }
         })

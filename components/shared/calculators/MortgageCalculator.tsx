@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Home, Calculator, DollarSign, TrendingUp, AlertCircle, CheckCircle } from 'lucide-react';
 import * as FinanceJS from 'financejs';
+import { useProgressStore } from '@/lib/store/progressStore';
 
 interface PaymentBreakdown {
   month: number;
@@ -40,6 +41,13 @@ export default function MortgageCalculator() {
   const [isAffordable, setIsAffordable] = useState(true);
 
   const finance = useMemo(() => new (FinanceJS as any)(), []); // eslint-disable-line @typescript-eslint/no-explicit-any
+  
+  // Track calculator usage for analytics
+  const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
+  
+  useEffect(() => {
+    recordCalculatorUsage('mortgage-calculator');
+  }, [recordCalculatorUsage]);
 
   const calculateMortgage = useCallback(() => {
     const price = parseFloat(homePrice) || 0;

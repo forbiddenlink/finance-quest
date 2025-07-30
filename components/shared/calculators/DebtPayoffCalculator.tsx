@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from 'recharts';
-import { useProgress } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 import {
   CreditCard,
   GraduationCap,
@@ -43,15 +43,13 @@ export default function DebtPayoffCalculator() {
   const [strategy, setStrategy] = useState<'avalanche' | 'snowball'>('avalanche');
   const [projectionData, setProjectionData] = useState<PayoffProjection[]>([]);
 
-  const { dispatch } = useProgress();
+  // Track calculator usage for analytics
+  const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
 
   useEffect(() => {
     // Track calculator usage
-    dispatch({
-      type: 'USE_CALCULATOR',
-      payload: 'DebtPayoffCalculator'
-    });
-  }, [dispatch]);
+    recordCalculatorUsage('debt-payoff-calculator');
+  }, [recordCalculatorUsage]);
 
   const addDebt = () => {
     const newDebt: Debt = {
