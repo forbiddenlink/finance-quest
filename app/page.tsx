@@ -515,12 +515,19 @@ export default function HomePage() {
 
         {/* Available & Coming Soon Calculators */}
         <div className="mt-8 pt-6 border-t border-blue-200">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <Link href="/calculators/mortgage">
               <div className="text-center bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-3 border border-green-200 hover:shadow-lg transition-all transform hover:scale-105 cursor-pointer">
                 <Building className="w-8 h-8 mx-auto mb-2 text-green-600" />
                 <p className="text-xs font-medium text-green-800">Mortgage Calculator</p>
                 <p className="text-xs text-green-600">✨ Now Available!</p>
+              </div>
+            </Link>
+            <Link href="/market">
+              <div className="text-center bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-3 border border-blue-200 hover:shadow-lg transition-all transform hover:scale-105 cursor-pointer">
+                <BarChart3 className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                <p className="text-xs font-medium text-blue-800">Market Dashboard</p>
+                <p className="text-xs text-blue-600">🔥 Real-Time Data!</p>
               </div>
             </Link>
             <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">

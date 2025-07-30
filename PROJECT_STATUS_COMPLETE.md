@@ -46,6 +46,8 @@
 - **CompoundInterestCalculator**: Visual wealth-building with exponential growth charts
 - **BudgetBuilderCalculator**: 50/30/20 rule implementation with spending analysis
 - **DebtPayoffCalculator**: Avalanche vs snowball strategies with amortization schedules
+- **MortgageCalculator** ✨NEW: Professional Finance.js integration with affordability analysis
+- **MarketDashboard** ✨NEW: Real-time stock quotes, economic indicators, and market insights
 
 ### **Contest Demo Features** ✅ COMPLETE
 - **Before/After Assessment**: 8-question financial literacy evaluation
