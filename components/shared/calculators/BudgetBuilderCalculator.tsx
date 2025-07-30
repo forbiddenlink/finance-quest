@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { useProgress } from '@/lib/context/ProgressContext';
+import { useProgress } from '@/lib/store/progressHooks';
 import {
     Home,
     ShoppingCart,
@@ -66,15 +66,12 @@ export default function BudgetBuilderCalculator() {
         { id: 'goals', name: 'Financial Goals', budgeted: 200, actual: 180, color: '#065F46', type: 'savings', icon: Target },
     ]);
 
-    const { dispatch } = useProgress();
+    const progress = useProgress();
 
     useEffect(() => {
         // Track calculator usage
-        dispatch({
-            type: 'USE_CALCULATOR',
-            payload: 'BudgetBuilderCalculator'
-        });
-    }, [dispatch]);
+        progress.recordCalculatorUsage('budget-builder');
+    }, [progress]);
 
     const updateCategory = (id: string, field: 'budgeted' | 'actual', value: number) => {
         setCategories(prev => prev.map(cat =>
