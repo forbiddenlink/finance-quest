@@ -513,24 +513,25 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Coming Soon Calculators */}
+        {/* Available & Coming Soon Calculators */}
         <div className="mt-8 pt-6 border-t border-blue-200">
-          <p className="text-center text-blue-700 font-medium mb-4 flex items-center justify-center gap-1">
-            <Sparkles className="w-4 h-4" />
-            Coming Soon
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+            <Link href="/calculators/mortgage">
+              <div className="text-center bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-3 border border-green-200 hover:shadow-lg transition-all transform hover:scale-105 cursor-pointer">
+                <Building className="w-8 h-8 mx-auto mb-2 text-green-600" />
+                <p className="text-xs font-medium text-green-800">Mortgage Calculator</p>
+                <p className="text-xs text-green-600">✨ Now Available!</p>
+              </div>
+            </Link>
             <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
-              <Building className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-              <p className="text-xs font-medium text-blue-800">Mortgage Calculator</p>
+              <Umbrella className="w-8 h-8 mx-auto mb-2 text-gray-400" />
+              <p className="text-xs font-medium text-gray-600">Retirement Planner</p>
+              <p className="text-xs text-gray-500">Coming Soon</p>
             </div>
             <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
-              <Umbrella className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-              <p className="text-xs font-medium text-blue-800">Retirement Planner</p>
-            </div>
-            <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
-              <CreditCard className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-              <p className="text-xs font-medium text-blue-800">Auto Loan Calculator</p>
+              <CreditCard className="w-8 h-8 mx-auto mb-2 text-gray-400" />
+              <p className="text-xs font-medium text-gray-600">Auto Loan Calculator</p>
+              <p className="text-xs text-gray-500">Coming Soon</p>
             </div>
           </div>
         </div>
