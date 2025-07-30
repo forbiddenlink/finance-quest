@@ -9,9 +9,11 @@ import LearningAnalyticsDashboard from '@/components/shared/ui/LearningAnalytics
 import GradientCard from '@/components/shared/ui/GradientCard';
 import { Brain, TrendingUp, Target, Clock, BookOpen, Calculator, Award, ArrowLeft, BarChart3, Code, User } from 'lucide-react';
 
+type ViewMode = 'user' | 'dev' | 'analytics';
+
 export default function ProgressPage() {
   const { state } = useProgress();
-  const [viewMode, setViewMode] = useState<'user' | 'dev' | 'analytics'>('user');
+  const [viewMode, setViewMode] = useState('user' as ViewMode);
 
   const completionStats = {
     lessonsCompleted: state.userProgress.completedLessons.length,

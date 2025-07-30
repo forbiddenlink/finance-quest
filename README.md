@@ -14,11 +14,11 @@ Finance Quest is a comprehensive financial literacy platform that transforms use
 ## ✨ **Latest Phase 2 Features**
 
 ### 📈 **Real Market Data Integration** ✅ NEW
-- **Live Stock Quotes**: Real-time data from Yahoo Finance API (no key required)
-- **Economic Indicators**: Federal Reserve data (FRED API) for educational context
-- **Fallback System**: Reliable demo data when APIs are unavailable
+- **Alpha Vantage API**: Real-time stock quotes with 500 free calls/day (API key configured)
+- **FRED API**: Federal Reserve economic data for educational context (API key configured)
+- **Fallback System**: Reliable demo data when APIs are unavailable or rate limits hit
 - **30-Second Updates**: Automatic refresh with live/demo status indicators
-- **Educational Focus**: Curated stocks (AAPL, MSFT, SPY, etc.) for learning
+- **Educational Focus**: Curated stocks (AAPL, MSFT, GOOGL, AMZN, TSLA, SPY) for learning
 
 ### 🏥 **AI Financial Health Assessment** ✅ NEW
 - **4-Question Assessment**: Comprehensive financial situation evaluation

@@ -64,7 +64,7 @@ export default function MarketTicker() {
               symbol: stock.symbol || 'N/A',
               price: stock.latestPrice || 0,
               change: stock.change || 0,
-              changePercent: (stock.changePercent || 0) * 100 // Convert to percentage
+              changePercent: (stock.changePercent || 0) * 100 // Convert decimal to percentage
             })).filter(stock => stock.symbol !== 'N/A' && stock.price > 0);
             
             if (formattedData.length > 0) {
@@ -75,7 +75,10 @@ export default function MarketTicker() {
               setStockData([
                 { symbol: 'SPY', price: 485.25, change: 4.15, changePercent: 0.86 },
                 { symbol: 'AAPL', price: 195.50, change: 2.35, changePercent: 1.22 },
-                { symbol: 'MSFT', price: 420.85, change: -1.25, changePercent: -0.30 }
+                { symbol: 'MSFT', price: 420.85, change: -1.25, changePercent: -0.30 },
+                { symbol: 'GOOGL', price: 142.30, change: 1.85, changePercent: 1.32 },
+                { symbol: 'TSLA', price: 248.50, change: -3.20, changePercent: -1.27 },
+                { symbol: 'AMZN', price: 186.90, change: 2.10, changePercent: 1.14 }
               ]);
               setIsLive(false);
             }
@@ -95,7 +98,10 @@ export default function MarketTicker() {
         setStockData([
           { symbol: 'SPY', price: 485.25, change: 4.15, changePercent: 0.86 },
           { symbol: 'AAPL', price: 195.50, change: 2.35, changePercent: 1.22 },
-          { symbol: 'MSFT', price: 420.85, change: -1.25, changePercent: -0.30 }
+          { symbol: 'MSFT', price: 420.85, change: -1.25, changePercent: -0.30 },
+          { symbol: 'GOOGL', price: 142.30, change: 1.85, changePercent: 1.32 },
+          { symbol: 'TSLA', price: 248.50, change: -3.20, changePercent: -1.27 },
+          { symbol: 'AMZN', price: 186.90, change: 2.10, changePercent: 1.14 }
         ]);
         setIsLive(false);
       } finally {

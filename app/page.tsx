@@ -18,12 +18,12 @@ export default function Home() {
   const { state } = useProgress();
   const [showGuidedTour, setShowGuidedTour] = useState(false);
   const [judgeModeActive, setJudgeModeActive] = useState(false);
-  
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 relative overflow-hidden">
       {/* Judge Mode Overlay */}
-      <JudgeMode 
-        isActive={judgeModeActive} 
+      <JudgeMode
+        isActive={judgeModeActive}
         onToggle={setJudgeModeActive}
       />
 
@@ -90,8 +90,8 @@ export default function Home() {
                 </span>
               </button>
             </Link>
-            
-            <button 
+
+            <button
               onClick={() => setShowGuidedTour(true)}
               className="group bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-yellow-600 hover:via-orange-600 hover:to-red-600 transition-all shadow-lg card-lift animate-pulse-glow font-poppins relative overflow-hidden"
             >
@@ -101,7 +101,7 @@ export default function Home() {
                 Contest Demo Tour
               </span>
             </button>
-            
+
             <Link href="/health-assessment">
               <button className="group bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-green-600 hover:to-emerald-700 transition-all shadow-lg card-lift animate-pulse-glow font-poppins relative overflow-hidden">
                 <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -587,7 +587,7 @@ export default function Home() {
 
       {/* Guided Tour Component */}
       {showGuidedTour && (
-        <GuidedTour 
+        <GuidedTour
           onComplete={() => setShowGuidedTour(false)}
           onSkip={() => setShowGuidedTour(false)}
         />
