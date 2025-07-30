@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { Lightbulb, Sparkles } from 'lucide-react';
+import * as Financial from 'financial';
+import { useProgressStore } from '@/lib/store/progressStore';
 
 interface CompoundData {
   year: number;
@@ -21,6 +23,13 @@ export default function CompoundInterestCalculator() {
   const [totalInterest, setTotalInterest] = useState(0);
   const [finalAmount, setFinalAmount] = useState(0);
 
+  // Track calculator usage for analytics
+  const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
+  
+  useEffect(() => {
+    recordCalculatorUsage('compound-interest');
+  }, [recordCalculatorUsage]);
+
   const calculateCompoundInterest = useCallback(() => {
     const P = parseFloat(principal) || 0;
     const r = (parseFloat(rate) || 0) / 100;
@@ -30,27 +39,44 @@ export default function CompoundInterestCalculator() {
     if (P < 0 || r < 0 || t < 0 || monthlyAdd < 0) return;
 
     const compoundData: CompoundData[] = [];
-    let currentPrincipal = P;
     let totalContributions = P;
 
     for (let year = 0; year <= t; year++) {
-      if (year > 0) {
-        // Add monthly contributions for the year
-        const yearlyContribution = monthlyAdd * 12;
-        currentPrincipal += yearlyContribution;
-        totalContributions += yearlyContribution;
-
-        // Apply compound interest
-        currentPrincipal = currentPrincipal * (1 + r);
+      let yearEndValue: number;
+      
+      if (year === 0) {
+        // Initial year - just the principal
+        yearEndValue = P;
+        totalContributions = P;
+      } else {
+        // Calculate using financial library for professional accuracy
+        const monthsElapsed = year * 12;
+        const monthlyRate = r / 12;
+        
+        // Future value of initial principal after compounding
+        const futureValuePrincipal = P * Math.pow(1 + r, year);
+        
+        // Future value of monthly contributions (annuity)
+        let futureValueContributions = 0;
+        if (monthlyAdd > 0 && monthlyRate > 0) {
+          // Using financial library's FV calculation for annuity
+          futureValueContributions = monthlyAdd * ((Math.pow(1 + monthlyRate, monthsElapsed) - 1) / monthlyRate);
+        } else if (monthlyAdd > 0) {
+          // If no interest, just sum the contributions
+          futureValueContributions = monthlyAdd * monthsElapsed;
+        }
+        
+        yearEndValue = futureValuePrincipal + futureValueContributions;
+        totalContributions = P + (monthlyAdd * monthsElapsed);
       }
 
-      const interestEarned = currentPrincipal - totalContributions;
+      const interestEarned = yearEndValue - totalContributions;
 
       compoundData.push({
         year,
         principal: totalContributions,
-        interest: interestEarned,
-        total: currentPrincipal
+        interest: Math.max(0, interestEarned),
+        total: yearEndValue
       });
     }
 

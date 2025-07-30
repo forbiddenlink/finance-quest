@@ -11,7 +11,7 @@ import ParticleSystem from "@/components/shared/ui/ParticleSystem";
 import TypingText from "@/components/shared/ui/TypingText";
 import GuidedTour from "@/components/demo/GuidedTour";
 import JudgeMode from "@/components/demo/JudgeMode";
-import { useProgress } from "@/lib/context/ProgressContext";
+import { useEnhancedProgress } from "@/lib/store/progressHooks";
 import {
   BookOpen,
   Calculator,
@@ -36,7 +36,7 @@ import {
 } from "lucide-react";
 
 export default function HomePage() {
-  const { state } = useProgress();
+  const progress = useEnhancedProgress();
   const [showGuidedTour, setShowGuidedTour] = useState(false);
   const [judgeModeActive, setJudgeModeActive] = useState(false);
 
@@ -247,7 +247,7 @@ export default function HomePage() {
           </InteractiveCard>
 
           {/* Chapter 2 - Conditionally Available */}
-          {state.userProgress.currentChapter >= 2 ? (
+          {progress.userProgress.currentChapter >= 2 ? (
             <InteractiveCard
               className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-green-500 transform transition-all"
               glowColor="rgba(34, 197, 94, 0.3)"
@@ -289,7 +289,7 @@ export default function HomePage() {
           )}
 
           {/* Chapter 3 - Conditionally Available */}
-          {state.userProgress.currentChapter >= 3 ? (
+          {progress.userProgress.currentChapter >= 3 ? (
             <InteractiveCard
               className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-purple-500 transform transition-all"
               glowColor="rgba(139, 92, 246, 0.3)"
