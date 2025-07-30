@@ -31,7 +31,7 @@ export default function MarketTicker() {
 
   useEffect(() => {
     if (!mounted) return;
-    
+
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % mockStockData.length);
     }, 3000);
@@ -48,7 +48,7 @@ export default function MarketTicker() {
       <div className="absolute inset-0 opacity-10">
         <div className="w-full h-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 animate-gradient"></div>
       </div>
-      
+
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center space-x-2">
@@ -59,7 +59,7 @@ export default function MarketTicker() {
             Live • {mounted ? new Date().toLocaleTimeString() : '--:--:--'}
           </div>
         </div>
-        
+
         <div className="flex items-center justify-between animate-fade-in-up">
           <div>
             <div className="text-2xl font-bold text-white mb-1">
@@ -69,12 +69,11 @@ export default function MarketTicker() {
               ${currentStock.price.toLocaleString()}
             </div>
           </div>
-          
-          <div className={`flex items-center space-x-2 px-3 py-2 rounded-lg ${
-            isPositive 
-              ? 'bg-green-500/20 text-green-400' 
+
+          <div className={`flex items-center space-x-2 px-3 py-2 rounded-lg ${isPositive
+              ? 'bg-green-500/20 text-green-400'
               : 'bg-red-500/20 text-red-400'
-          }`}>
+            }`}>
             {isPositive ? (
               <TrendingUp className="w-4 h-4" />
             ) : (
@@ -88,22 +87,21 @@ export default function MarketTicker() {
             </span>
           </div>
         </div>
-        
+
         {/* Progress Dots */}
         <div className="flex space-x-1 mt-3 justify-center">
           {mockStockData.map((_, index) => (
             <div
               key={index}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === currentIndex 
-                  ? 'bg-blue-400 w-6' 
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentIndex
+                  ? 'bg-blue-400 w-6'
                   : 'bg-gray-600'
-              }`}
+                }`}
             />
           ))}
         </div>
       </div>
-      
+
       {/* Animated Border */}
       <div className="absolute inset-0 rounded-lg border-2 border-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 animate-gradient opacity-50"></div>
     </div>

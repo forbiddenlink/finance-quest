@@ -99,7 +99,7 @@ export default function DebtPayoffCalculator() {
 
     while (remainingDebts.length > 0 && month < 360) { // Cap at 30 years
       month++;
-      let monthlyExtraPayment = extraPayment;
+      const monthlyExtraPayment = extraPayment;
 
       // Apply minimum payments and interest to all debts
       remainingDebts.forEach(debt => {

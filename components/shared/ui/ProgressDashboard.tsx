@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useProgress } from '@/lib/context/ProgressContext';
+import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LineChart, Line, Legend } from 'recharts';
 import { 
   BarChart3, 
@@ -18,7 +19,8 @@ import {
   Bot,
   Zap,
   Trophy,
-  Medal
+  Medal,
+  Brain
 } from 'lucide-react';
 
 export default function ProgressDashboard() {
@@ -361,6 +363,17 @@ export default function ProgressDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Spaced Repetition Learning System */}
+      {totalLessonsCompleted > 0 && (
+        <div className="mt-8">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <Brain className="w-5 h-5 text-purple-600" />
+            Learning Retention System
+          </h3>
+          <SpacedRepetitionDashboard />
+        </div>
+      )}
 
       {/* Contest Demo Section */}
       <div className="mt-8 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-6">

@@ -11,13 +11,13 @@ interface AnimatedCounterProps {
   decimals?: number;
 }
 
-export default function AnimatedCounter({ 
-  end, 
-  duration = 2000, 
-  prefix = '', 
-  suffix = '', 
+export default function AnimatedCounter({
+  end,
+  duration = 2000,
+  prefix = '',
+  suffix = '',
   className = '',
-  decimals = 0 
+  decimals = 0
 }: AnimatedCounterProps) {
   const [mounted, setMounted] = useState(false);
   const [count, setCount] = useState(0);
@@ -30,7 +30,7 @@ export default function AnimatedCounter({
 
   useEffect(() => {
     if (!mounted) return;
-    
+
     // Intersection Observer for triggering animation when visible
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -58,11 +58,11 @@ export default function AnimatedCounter({
     const animate = (currentTime: number) => {
       if (!startTime) startTime = currentTime;
       const progress = Math.min((currentTime - startTime) / duration, 1);
-      
+
       // Easing function for smooth animation
       const easeOutCubic = 1 - Math.pow(1 - progress, 3);
       const currentCount = Math.floor(easeOutCubic * end);
-      
+
       setCount(currentCount);
 
       if (progress < 1) {
@@ -89,7 +89,7 @@ export default function AnimatedCounter({
   // Show final number immediately on server, animate on client
   if (!mounted) {
     return (
-      <span 
+      <span
         id={`counter-${end}`}
         className={`inline-block ${className}`}
       >
@@ -99,7 +99,7 @@ export default function AnimatedCounter({
   }
 
   return (
-    <span 
+    <span
       id={`counter-${end}`}
       className={`inline-block ${className} ${isVisible ? 'animate-number-count' : 'opacity-0'}`}
     >

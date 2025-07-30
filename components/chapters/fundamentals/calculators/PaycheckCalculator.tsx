@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProgressActions } from '@/lib/context/ProgressContext';
 import { Lightbulb } from 'lucide-react';
 
@@ -23,12 +23,6 @@ export default function PaycheckCalculator() {
     const gross = parseFloat(grossPay);
     if (isNaN(gross) || gross <= 0) return;
 
-    // Track calculator usage (only once per session)
-    if (!hasUsedCalculator) {
-      useCalculator('paycheck-calculator');
-      setHasUsedCalculator(true);
-    }
-
     // Simplified tax calculations (rough estimates)
     const federalTax = gross * 0.12; // 12% federal tax bracket
     const stateTax = gross * 0.05; // 5% state tax (varies by state)
@@ -47,6 +41,14 @@ export default function PaycheckCalculator() {
       netPay
     });
   };
+
+  // Track calculator usage when user interacts
+  useEffect(() => {
+    if (grossPay && !hasUsedCalculator) {
+      useCalculator('paycheck-calculator');
+      setHasUsedCalculator(true);
+    }
+  }, [grossPay, hasUsedCalculator]); // useCalculator is stable, no need in deps
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 max-w-2xl mx-auto">

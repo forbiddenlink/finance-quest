@@ -9,6 +9,7 @@ import {
     Zap,
     Car,
     Shield,
+    Lightbulb,
     Film,
     Pizza,
     ShoppingBag,

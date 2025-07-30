@@ -18,10 +18,10 @@ interface ParticleSystemProps {
   speed?: number;
 }
 
-export default function ParticleSystem({ 
-  particleCount = 50, 
+export default function ParticleSystem({
+  particleCount = 50,
   colors = ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B'],
-  speed = 0.5 
+  speed = 0.5
 }: ParticleSystemProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
@@ -35,7 +35,7 @@ export default function ParticleSystem({
 
   useEffect(() => {
     if (!mounted) return;
-    
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 

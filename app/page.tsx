@@ -1,4 +1,5 @@
-import Image from "next/image";
+'use client';
+
 import Link from "next/link";
 import { ProgressDisplay } from "@/components/shared/ui/ProgressDisplay";
 import FloatingBackground from "@/components/shared/ui/FloatingBackground";
@@ -7,10 +8,11 @@ import MarketTicker from "@/components/shared/ui/MarketTicker";
 import InteractiveCard from "@/components/shared/ui/InteractiveCard";
 import ParticleSystem from "@/components/shared/ui/ParticleSystem";
 import TypingText from "@/components/shared/ui/TypingText";
-import CelebrationConfetti from "@/components/shared/ui/CelebrationConfetti";
-import { TrendingUp, Users, Award, Brain, Calculator, BookOpen, Sparkles, Target, Zap, DollarSign, BarChart3, CreditCard, PieChart, ShieldCheck, FileText, Building, Lightbulb, Briefcase, Umbrella, Lock, Heart, CheckCircle } from "lucide-react";
+import { useProgress } from "@/lib/context/ProgressContext";
+import { TrendingUp, Award, Brain, Calculator, BookOpen, Sparkles, Target, Zap, BarChart3, CreditCard, PieChart, ShieldCheck, FileText, Building, Lightbulb, Briefcase, Umbrella, Lock, CheckCircle } from "lucide-react";
 
 export default function Home() {
+  const { state } = useProgress();
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 relative overflow-hidden">
       {/* Particle System Background */}
@@ -105,7 +107,7 @@ export default function Home() {
             <div className="text-4xl font-bold text-red-600 mb-2 font-space">
               <AnimatedCounter end={64} suffix="%" className="text-4xl font-bold text-red-600" />
             </div>
-            <p className="text-gray-600 text-sm font-inter">of Americans can't pass a basic financial literacy test</p>
+            <p className="text-gray-600 text-sm font-inter">of Americans can&apos;t pass a basic financial literacy test</p>
             <p className="text-xs text-red-500 mt-2 font-medium flex items-center justify-center font-poppins">
               <Target className="w-3 h-3 mr-1" />
               The problem we're solving
@@ -156,45 +158,12 @@ export default function Home() {
           </InteractiveCard>
         </div>
 
-        {/* Featured: Financial Health Assessment */}
-        <div className="mb-16">
-          <InteractiveCard
-            className="premium-card rounded-xl shadow-lg p-8 border border-green-200 bg-gradient-to-r from-green-50 to-emerald-50"
-            glowColor="rgba(34, 197, 94, 0.2)"
-          >
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3 font-space">Get Your Financial Health Score</h3>
-              <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto font-inter">
-                Take our 2-minute assessment to get your personalized Financial Health Score with actionable recommendations
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Link href="/health-assessment">
-                  <button className="group bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-green-600 hover:to-emerald-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 font-poppins relative overflow-hidden">
-                    <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <span className="flex items-center relative z-10">
-                      <Heart className="mr-2 w-5 h-5 group-hover:pulse" />
-                      Check Your Financial Health
-                    </span>
-                  </button>
-                </Link>
-                <div className="flex items-center text-sm text-gray-600">
-                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                  Instant results • No signup required
-                </div>
-              </div>
-            </div>
-          </InteractiveCard>
-        </div>
-
-        {/* Comprehensive Chapter Overview - 30 Modules */}
+        {/* Comprehensive Chapter Overview - Foundation Track */}
         <div className="mb-16">
           <div className="text-center mb-8">
             <h3 className="text-3xl font-bold text-gray-900 mb-4 font-space gradient-text-premium">Complete Financial Education Curriculum</h3>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto font-inter">
-              30 comprehensive modules covering everything from money psychology to advanced wealth building
+              30 comprehensive chapters organized in 6 learning tracks - Master every aspect of personal finance
             </p>
           </div>
 
@@ -206,7 +175,7 @@ export default function Home() {
             >
               <div className="flex items-center mb-3">
                 <Brain className="w-8 h-8 mr-3 text-purple-600" />
-                <h4 className="text-lg font-bold text-gray-900 font-space">Money Psychology & Mindset</h4>
+                <h4 className="text-lg font-bold text-gray-900 font-space">Chapter 1: Money Psychology</h4>
               </div>
               <p className="text-gray-600 mb-4 font-inter">Emotional relationship with money, scarcity vs abundance, cognitive biases</p>
               <div className="flex items-center justify-between">
@@ -223,53 +192,95 @@ export default function Home() {
               </div>
             </InteractiveCard>
 
-            {/* Chapter 2 - Available */}
-            <InteractiveCard
-              className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-green-500 transform transition-all"
-              glowColor="rgba(34, 197, 94, 0.3)"
-            >
-              <div className="flex items-center mb-3">
-                <BarChart3 className="w-8 h-8 mr-3 text-green-600" />
-                <h4 className="text-lg font-bold text-gray-900 font-space">Banking & Account Fundamentals</h4>
-              </div>
-              <p className="text-gray-600 mb-4 font-inter">Account optimization, fees, credit unions, direct deposits, transfers</p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-green-600 font-medium bg-green-100 px-2 py-1 rounded animate-pulse-glow font-poppins flex items-center gap-1">
-                  <Target className="w-3 h-3" />
-                  Available Now
-                </span>
-                <Link href="/chapter2">
-                  <button className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition-all hover:shadow-lg transform hover:scale-105 font-poppins relative overflow-hidden group">
-                    <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <span className="relative z-10">Start Learning</span>
+            {/* Chapter 2 - Conditionally Available */}
+            {state.userProgress.currentChapter >= 2 ? (
+              <InteractiveCard
+                className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-green-500 transform transition-all"
+                glowColor="rgba(34, 197, 94, 0.3)"
+              >
+                <div className="flex items-center mb-3">
+                  <Building className="w-8 h-8 mr-3 text-green-600" />
+                  <h4 className="text-lg font-bold text-gray-900 font-space">Chapter 2: Banking Fundamentals</h4>
+                </div>
+                <p className="text-gray-600 mb-4 font-inter">Account optimization, fees, credit unions, direct deposits, transfers</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-blue-600 font-medium bg-blue-100 px-2 py-1 rounded font-poppins flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" />
+                    Unlocked!
+                  </span>
+                  <Link href="/chapter2">
+                    <button className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition-all hover:shadow-lg transform hover:scale-105 font-poppins">
+                      Continue Learning
+                    </button>
+                  </Link>
+                </div>
+              </InteractiveCard>
+            ) : (
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
+                <div className="flex items-center mb-3">
+                  <Building className="w-8 h-8 mr-3 text-gray-400" />
+                  <h4 className="text-lg font-bold text-gray-500">Chapter 2: Banking Fundamentals</h4>
+                </div>
+                <p className="text-gray-500 mb-4">Account optimization, fees, credit unions, direct deposits, transfers</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
+                    <Lock className="w-3 h-3" />
+                    Complete Chapter 1
+                  </span>
+                  <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
+                    Locked
                   </button>
-                </Link>
+                </div>
               </div>
-            </InteractiveCard>
+            )}
 
-            {/* Chapter 3 - Locked */}
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
-              <div className="flex items-center mb-3">
-                <CreditCard className="w-8 h-8 mr-3 text-gray-400" />
-                <h4 className="text-lg font-bold text-gray-500">Income & Career Finance</h4>
+            {/* Chapter 3 - Conditionally Available */}
+            {state.userProgress.currentChapter >= 3 ? (
+              <InteractiveCard
+                className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-purple-500 transform transition-all"
+                glowColor="rgba(139, 92, 246, 0.3)"
+              >
+                <div className="flex items-center mb-3">
+                  <Briefcase className="w-8 h-8 mr-3 text-purple-600" />
+                  <h4 className="text-lg font-bold text-gray-900 font-space">Chapter 3: Income & Career</h4>
+                </div>
+                <p className="text-gray-600 mb-4 font-inter">Salary negotiation, pay stubs, benefits, side hustles, skill monetization</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-blue-600 font-medium bg-blue-100 px-2 py-1 rounded font-poppins flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" />
+                    Unlocked!
+                  </span>
+                  <Link href="/chapter3">
+                    <button className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-purple-600 hover:to-purple-700 transition-all hover:shadow-lg transform hover:scale-105 font-poppins">
+                      Continue Learning
+                    </button>
+                  </Link>
+                </div>
+              </InteractiveCard>
+            ) : (
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
+                <div className="flex items-center mb-3">
+                  <Briefcase className="w-8 h-8 mr-3 text-gray-400" />
+                  <h4 className="text-lg font-bold text-gray-500">Chapter 3: Income & Career Finance</h4>
+                </div>
+                <p className="text-gray-500 mb-4">Salary negotiation, pay stubs, benefits, side hustles, skill monetization</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
+                    <Lock className="w-3 h-3" />
+                    Complete Chapter 2
+                  </span>
+                  <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
+                    Locked
+                  </button>
+                </div>
               </div>
-              <p className="text-gray-500 mb-4">Salary negotiation, pay stubs, benefits, side hustles, skill monetization</p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
-                  <Lock className="w-3 h-3" />
-                  Complete Chapter 2
-                </span>
-                <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
-                  Locked
-                </button>
-              </div>
-            </div>
+            )}
 
             {/* Chapter 4 - Locked */}
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
               <div className="flex items-center mb-3">
                 <TrendingUp className="w-8 h-8 mr-3 text-gray-400" />
-                <h4 className="text-lg font-bold text-gray-500">Budgeting Mastery & Cash Flow</h4>
+                <h4 className="text-lg font-bold text-gray-500">Chapter 4: Budgeting Mastery</h4>
               </div>
               <p className="text-gray-500 mb-4">Zero-based budgeting, 50/30/20 rule, expense tracking, automation</p>
               <div className="flex items-center justify-between">
@@ -287,7 +298,7 @@ export default function Home() {
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
               <div className="flex items-center mb-3">
                 <PieChart className="w-8 h-8 mr-3 text-gray-400" />
-                <h4 className="text-lg font-bold text-gray-500">Emergency Funds & Financial Safety</h4>
+                <h4 className="text-lg font-bold text-gray-500">Chapter 5: Emergency Funds</h4>
               </div>
               <p className="text-gray-500 mb-4">Fund sizing, high-yield savings, rebuilding strategies</p>
               <div className="flex items-center justify-between">
@@ -305,7 +316,7 @@ export default function Home() {
             <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
               <div className="flex items-center mb-3">
                 <FileText className="w-8 h-8 mr-3 text-gray-400" />
-                <h4 className="text-lg font-bold text-gray-500">Debt Fundamentals</h4>
+                <h4 className="text-lg font-bold text-gray-500">Chapter 6: Debt Fundamentals</h4>
               </div>
               <p className="text-gray-500 mb-4">Good vs bad debt, avalanche vs snowball, consolidation, negotiations</p>
               <div className="flex items-center justify-between">
@@ -330,23 +341,23 @@ export default function Home() {
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
                   <ShieldCheck className="w-6 h-6 mr-2 text-gray-400 mb-2" />
-                  <h5 className="font-semibold text-gray-500 text-sm">Insurance & Protection</h5>
-                  <p className="text-xs text-gray-400 mt-1">Health, auto, life, disability insurance</p>
+                  <h5 className="font-semibold text-gray-500 text-sm">Credit Track (Chapters 7-10)</h5>
+                  <p className="text-xs text-gray-400 mt-1">Credit scores, cards, loans, student debt</p>
                 </div>
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
-                  <Building className="w-6 h-6 mr-2 text-gray-400 mb-2" />
-                  <h5 className="font-semibold text-gray-500 text-sm">Real Estate Finance</h5>
-                  <p className="text-xs text-gray-400 mt-1">Mortgages, down payments, rent vs buy</p>
-                </div>
-                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
-                  <Lightbulb className="w-6 h-6 mr-2 text-gray-400 mb-2" />
-                  <h5 className="font-semibold text-gray-500 text-sm">Economic Concepts</h5>
-                  <p className="text-xs text-gray-400 mt-1">Inflation, interest rates, market cycles</p>
+                  <TrendingUp className="w-6 h-6 mr-2 text-gray-400 mb-2" />
+                  <h5 className="font-semibold text-gray-500 text-sm">Investment Track (Chapters 11-16)</h5>
+                  <p className="text-xs text-gray-400 mt-1">Stocks, bonds, funds, retirement accounts</p>
                 </div>
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
                   <Umbrella className="w-6 h-6 mr-2 text-gray-400 mb-2" />
-                  <h5 className="font-semibold text-gray-500 text-sm">Advanced Planning</h5>
-                  <p className="text-xs text-gray-400 mt-1">Retirement, estate basics, financial independence</p>
+                  <h5 className="font-semibold text-gray-500 text-sm">Protection Track (Chapters 17-20)</h5>
+                  <p className="text-xs text-gray-400 mt-1">Insurance fundamentals and risk management</p>
+                </div>
+                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
+                  <Lightbulb className="w-6 h-6 mr-2 text-gray-400 mb-2" />
+                  <h5 className="font-semibold text-gray-500 text-sm">Advanced Planning (Chapters 21-30)</h5>
+                  <p className="text-xs text-gray-400 mt-1">Tax strategy, real estate, business, economics</p>
                 </div>
               </div>
             </details>
@@ -520,8 +531,8 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center mb-16">
           <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500">
             <div className="text-4xl font-bold text-red-600 mb-2">64%</div>
-            <p className="text-gray-600 text-sm">of Americans can't pass a basic financial literacy test</p>
-            <p className="text-xs text-red-500 mt-2 font-medium">The problem we're solving</p>
+            <p className="text-gray-600 text-sm">of Americans can&apos;t pass a basic financial literacy test</p>
+            <p className="text-xs text-red-500 mt-2 font-medium">The problem we&apos;re solving</p>
           </div>
           <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
             <div className="text-4xl font-bold text-green-600 mb-2">80%+</div>
@@ -529,8 +540,8 @@ export default function Home() {
             <p className="text-xs text-green-500 mt-2 font-medium">Real learning outcomes</p>
           </div>
           <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
-            <div className="text-4xl font-bold text-purple-600 mb-2">10</div>
-            <p className="text-gray-600 text-sm">comprehensive chapters covering all financial basics</p>
+            <div className="text-4xl font-bold text-purple-600 mb-2">30</div>
+            <p className="text-gray-600 text-sm">comprehensive chapters covering complete financial mastery</p>
             <p className="text-xs text-purple-500 mt-2 font-medium">Complete curriculum</p>
           </div>
           <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500">
