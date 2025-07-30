@@ -257,10 +257,10 @@ export default function MoneyFundamentalsQuiz() {
               className={`w-full p-4 text-left rounded-lg border-2 transition-colors ${selectedAnswer === index
                   ? showExplanation
                     ? index === question.correctAnswer
-                      ? 'border-green-500 bg-green-50'
-                      : 'border-red-500 bg-red-50'
-                    : 'border-purple-500 bg-purple-50'
-                  : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-green-500 bg-green-50 text-green-900'
+                      : 'border-red-500 bg-red-50 text-red-900'
+                    : 'border-purple-500 bg-purple-50 text-purple-900'
+                  : 'border-gray-200 hover:border-gray-300 text-gray-700 hover:text-gray-900'
                 }`}
             >
               <div className="flex items-center">

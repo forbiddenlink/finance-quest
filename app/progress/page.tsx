@@ -5,12 +5,13 @@ import { useProgress } from '@/lib/context/ProgressContext';
 import ProgressDashboard from '@/components/shared/ui/ProgressDashboard';
 import EnhancedProgressDashboard from '@/components/shared/ui/EnhancedProgressDashboard';
 import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
+import LearningAnalyticsDashboard from '@/components/shared/ui/LearningAnalyticsDashboard';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import { Brain, TrendingUp, Target, Clock, BookOpen, Calculator, Award, ArrowLeft, BarChart3, Code, User } from 'lucide-react';
 
 export default function ProgressPage() {
   const { state } = useProgress();
-  const [viewMode, setViewMode] = useState<'user' | 'dev'>('user' as 'user' | 'dev');
+  const [viewMode, setViewMode] = useState<'user' | 'dev' | 'analytics'>('user');
 
   const completionStats = {
     lessonsCompleted: state.userProgress.completedLessons.length,
@@ -24,6 +25,36 @@ export default function ProgressPage() {
 
   if (viewMode === 'dev') {
     return <EnhancedProgressDashboard />;
+  }
+
+  if (viewMode === 'analytics') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50">
+        <header className="bg-white shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={() => setViewMode('user')}
+                  className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back to Progress
+                </button>
+                <h1 className="text-2xl font-bold text-gray-900">Learning Analytics</h1>
+              </div>
+              <div className="bg-indigo-100 px-3 py-1 rounded-full flex items-center gap-2">
+                <Brain className="w-4 h-4 text-indigo-600" />
+                <span className="text-sm font-medium text-indigo-800">Advanced Analytics</span>
+              </div>
+            </div>
+          </div>
+        </header>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <LearningAnalyticsDashboard />
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -54,6 +85,17 @@ export default function ProgressPage() {
                 >
                   <User className="w-4 h-4" />
                   User View
+                </button>
+                <button
+                  onClick={() => setViewMode('analytics')}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    viewMode === 'analytics'
+                      ? 'bg-white text-green-600 shadow-sm'
+                      : 'text-gray-600 hover:text-green-600'
+                  }`}
+                >
+                  <BarChart3 className="w-4 h-4" />
+                  Analytics
                 </button>
                 <button
                   onClick={() => setViewMode('dev')}

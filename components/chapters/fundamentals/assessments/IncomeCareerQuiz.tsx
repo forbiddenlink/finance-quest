@@ -351,8 +351,8 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                                         key={index}
                                         onClick={() => handleAnswerSelect(index)}
                                         className={`w-full text-left p-4 rounded-lg border-2 transition-all ${selectedAnswers[currentQuestion] === index
-                                            ? 'border-green-500 bg-green-50'
-                                            : 'border-gray-200 hover:border-green-300 hover:bg-gray-50'
+                                            ? 'border-green-500 bg-green-50 text-green-900'
+                                            : 'border-gray-200 hover:border-green-300 hover:bg-gray-50 text-gray-700 hover:text-gray-900'
                                             }`}
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
@@ -366,7 +366,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                                                     <div className="w-2 h-2 bg-white rounded-full" />
                                                 )}
                                             </div>
-                                            <span className="text-gray-700">{option}</span>
+                                            <span>{option}</span>
                                         </div>
                                     </motion.button>
                                 ))}
@@ -416,7 +416,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                 <motion.button
                     onClick={handleNext}
                     disabled={!showExplanation && selectedAnswers[currentQuestion] === undefined}
-                    className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors flex items-center"
+                    className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed transition-colors flex items-center"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                 >
