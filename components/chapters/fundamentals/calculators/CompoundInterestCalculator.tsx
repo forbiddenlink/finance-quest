@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useProgress } from '@/lib/context/ProgressContext';
+import { Lightbulb, DollarSign, Rocket, Brain, TrendingUp, Sparkles } from 'lucide-react';
 
 interface CompoundData {
   year: number;
@@ -81,11 +82,11 @@ export default function CompoundInterestCalculator() {
     const yearsToMillionaire = Math.ceil(monthsToMillionaire / 12);
     
     if (finalBalance >= 1000000) {
-      return `🎉 Congratulations! You'll be a millionaire in ${years} years!`;
+      return `Congratulations! You'll be a millionaire in ${years} years!`;
     } else if (yearsToMillionaire <= 50) {
-      return `💪 Keep going! At this rate, you'll reach $1M in about ${yearsToMillionaire} years.`;
+      return `Keep going! At this rate, you'll reach $1M in about ${yearsToMillionaire} years.`;
     } else {
-      return `🌱 Every dollar counts! Consider increasing your monthly contribution to reach your goals faster.`;
+      return `Every dollar counts! Consider increasing your monthly contribution to reach your goals faster.`;
     }
   };
 
@@ -104,7 +105,10 @@ export default function CompoundInterestCalculator() {
         {/* Input Controls */}
         <div className="space-y-6">
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h3 className="font-semibold text-blue-900 mb-3">💡 The Magic of Compound Interest</h3>
+            <h3 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+              <Lightbulb className="w-5 h-5" />
+              The Magic of Compound Interest
+            </h3>
             <p className="text-blue-800 text-sm">
               Einstein called it the "eighth wonder of the world." Those who understand it, earn it. 
               Those who don't, pay it. Watch your money grow exponentially!
@@ -206,9 +210,10 @@ export default function CompoundInterestCalculator() {
                   setInterestRate(7);
                   setYears(30);
                 }}
-                className="p-2 text-xs bg-green-100 hover:bg-green-200 rounded transition-colors"
+                className="p-2 text-xs bg-green-100 hover:bg-green-200 rounded transition-colors flex items-center gap-1"
               >
-                💰 Conservative Saver
+                <DollarSign className="w-3 h-3" />
+                Conservative Saver
               </button>
               <button
                 onClick={() => {
@@ -217,9 +222,10 @@ export default function CompoundInterestCalculator() {
                   setInterestRate(8);
                   setYears(25);
                 }}
-                className="p-2 text-xs bg-blue-100 hover:bg-blue-200 rounded transition-colors"
+                className="p-2 text-xs bg-blue-100 hover:bg-blue-200 rounded transition-colors flex items-center gap-1"
               >
-                🚀 Aggressive Investor
+                <Rocket className="w-3 h-3" />
+                Aggressive Investor
               </button>
             </div>
           </div>
@@ -245,7 +251,8 @@ export default function CompoundInterestCalculator() {
 
           {/* Motivational Message */}
           <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg p-4">
-            <p className="text-sm font-medium text-orange-800">
+            <p className="text-sm font-medium text-orange-800 flex items-center gap-2">
+              <Sparkles className="w-4 h-4" />
               {getMotivationalMessage()}
             </p>
           </div>
@@ -301,7 +308,10 @@ export default function CompoundInterestCalculator() {
 
           {/* Key Insights */}
           <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
-            <h4 className="font-semibold text-indigo-900 mb-2">🧠 Key Insights:</h4>
+            <h4 className="font-semibold text-indigo-900 mb-2 flex items-center gap-2">
+              <Brain className="w-4 h-4" />
+              Key Insights:
+            </h4>
             <ul className="text-sm text-indigo-800 space-y-1">
               <li>• <strong>Time is your best friend:</strong> Starting early beats starting with more money</li>
               <li>• <strong>Consistency matters:</strong> Regular contributions create steady growth</li>

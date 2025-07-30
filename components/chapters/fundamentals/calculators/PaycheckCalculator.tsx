@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useProgressActions } from '@/lib/context/ProgressContext';
+import { Lightbulb } from 'lucide-react';
 
 interface PaycheckBreakdown {
   grossPay: number;
@@ -121,7 +122,10 @@ export default function PaycheckCalculator() {
 
           {/* Educational Insights */}
           <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-            <h4 className="font-semibold text-blue-900 mb-2">💡 Key Insights</h4>
+            <h4 className="font-semibold text-blue-900 mb-2 flex items-center gap-2">
+              <Lightbulb className="w-4 h-4" />
+              Key Insights
+            </h4>
             <ul className="text-sm text-blue-800 space-y-1">
               <li>• Your take-home pay is about {((breakdown.netPay / breakdown.grossPay) * 100).toFixed(0)}% of your gross pay</li>
               <li>• Social Security helps fund your future retirement benefits</li>

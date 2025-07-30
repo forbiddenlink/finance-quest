@@ -3,6 +3,23 @@
 import React from 'react';
 import { useProgress } from '@/lib/context/ProgressContext';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LineChart, Line, Legend } from 'recharts';
+import { 
+  BarChart3, 
+  FileText, 
+  Target, 
+  DollarSign, 
+  Calculator, 
+  TrendingUp, 
+  PieChart as PieChartIcon, 
+  CreditCard, 
+  CheckCircle, 
+  Clock,
+  TrendingDown,
+  Bot,
+  Zap,
+  Trophy,
+  Medal
+} from 'lucide-react';
 
 export default function ProgressDashboard() {
   const { state } = useProgress();
@@ -73,8 +90,9 @@ export default function ProgressDashboard() {
   return (
     <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-6">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">
-          📊 Your Financial Literacy Journey
+        <h2 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+          <BarChart3 className="w-8 h-8" />
+          Your Financial Literacy Journey
         </h2>
         <p className="text-gray-600">
           Track your progress, celebrate achievements, and see the measurable impact of financial education
@@ -160,7 +178,7 @@ export default function ProgressDashboard() {
           ) : (
             <div className="h-64 flex items-center justify-center text-gray-500">
               <div className="text-center">
-                <div className="text-4xl mb-2">📝</div>
+                <FileText className="w-12 h-12 mx-auto mb-2 text-gray-400" />
                 <p>No quizzes taken yet</p>
                 <p className="text-sm">Complete lessons to unlock quizzes</p>
               </div>
@@ -192,13 +210,16 @@ export default function ProgressDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Achievements */}
         <div className="bg-gradient-to-br from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-yellow-900 mb-4">🏆 Achievements Unlocked</h3>
+          <h3 className="text-lg font-semibold text-yellow-900 mb-4 flex items-center gap-2">
+            <Trophy className="w-5 h-5" />
+            Achievements Unlocked
+          </h3>
           <div className="space-y-3">
             {userProgress.achievementsUnlocked.length > 0 ? (
               userProgress.achievementsUnlocked.map((achievement, index) => (
                 <div key={index} className="bg-white bg-opacity-60 rounded-lg p-3 flex items-center">
                   <div className="bg-yellow-500 text-white p-2 rounded-full mr-3">
-                    <span className="text-sm">🏅</span>
+                    <Medal className="w-4 h-4" />
                   </div>
                   <div>
                     <p className="font-medium text-yellow-900">{achievement.replace('-', ' ').replace('_', ' ')}</p>
@@ -208,7 +229,7 @@ export default function ProgressDashboard() {
               ))
             ) : (
               <div className="text-center text-yellow-700 py-8">
-                <div className="text-4xl mb-2">🎯</div>
+                <Target className="w-12 h-12 mx-auto mb-2 text-yellow-500" />
                 <p>No achievements yet</p>
                 <p className="text-sm">Complete lessons and quizzes to earn badges!</p>
               </div>
@@ -218,7 +239,10 @@ export default function ProgressDashboard() {
 
         {/* Projected Impact */}
         <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-green-900 mb-4">💰 Projected Financial Impact</h3>
+          <h3 className="text-lg font-semibold text-green-900 mb-4 flex items-center gap-2">
+            <DollarSign className="w-5 h-5" />
+            Projected Financial Impact
+          </h3>
           <div className="space-y-4">
             <div className="bg-white bg-opacity-60 rounded-lg p-4">
               <h4 className="font-semibold text-green-800 mb-2">Potential Lifetime Savings</h4>
@@ -243,17 +267,30 @@ export default function ProgressDashboard() {
 
       {/* Tools Usage Summary */}
       <div className="mt-8 bg-indigo-50 border border-indigo-200 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-indigo-900 mb-4">🧮 Interactive Tools Mastered</h3>
+        <h3 className="text-lg font-semibold text-indigo-900 mb-4 flex items-center gap-2">
+          <Calculator className="w-5 h-5" />
+          Interactive Tools Mastered
+        </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
             <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${
               userProgress.calculatorUsage.includes('PaycheckCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
             }`}>
-              <span className="text-2xl">🧮</span>
+              <Calculator className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Paycheck Calculator</p>
-            <p className="text-xs text-indigo-600">
-              {userProgress.calculatorUsage.includes('PaycheckCalculator') ? '✅ Mastered' : '⏳ Pending'}
+            <p className="text-xs text-indigo-600 flex items-center justify-center gap-1">
+              {userProgress.calculatorUsage.includes('PaycheckCalculator') ? (
+                <>
+                  <CheckCircle className="w-3 h-3" />
+                  Mastered
+                </>
+              ) : (
+                <>
+                  <Clock className="w-3 h-3" />
+                  Pending
+                </>
+              )}
             </p>
           </div>
           
@@ -261,11 +298,21 @@ export default function ProgressDashboard() {
             <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${
               userProgress.calculatorUsage.includes('CompoundInterestCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
             }`}>
-              <span className="text-2xl">📈</span>
+              <TrendingUp className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Compound Interest</p>
-            <p className="text-xs text-indigo-600">
-              {userProgress.calculatorUsage.includes('CompoundInterestCalculator') ? '✅ Mastered' : '⏳ Pending'}
+            <p className="text-xs text-indigo-600 flex items-center justify-center gap-1">
+              {userProgress.calculatorUsage.includes('CompoundInterestCalculator') ? (
+                <>
+                  <CheckCircle className="w-3 h-3" />
+                  Mastered
+                </>
+              ) : (
+                <>
+                  <Clock className="w-3 h-3" />
+                  Pending
+                </>
+              )}
             </p>
           </div>
           
@@ -273,11 +320,21 @@ export default function ProgressDashboard() {
             <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${
               userProgress.calculatorUsage.includes('BudgetBuilderCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
             }`}>
-              <span className="text-2xl">📊</span>
+              <PieChartIcon className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Budget Builder</p>
-            <p className="text-xs text-indigo-600">
-              {userProgress.calculatorUsage.includes('BudgetBuilderCalculator') ? '✅ Mastered' : '⏳ Pending'}
+            <p className="text-xs text-indigo-600 flex items-center justify-center gap-1">
+              {userProgress.calculatorUsage.includes('BudgetBuilderCalculator') ? (
+                <>
+                  <CheckCircle className="w-3 h-3" />
+                  Mastered
+                </>
+              ) : (
+                <>
+                  <Clock className="w-3 h-3" />
+                  Pending
+                </>
+              )}
             </p>
           </div>
           
@@ -285,11 +342,21 @@ export default function ProgressDashboard() {
             <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${
               userProgress.calculatorUsage.includes('DebtPayoffCalculator') ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
             }`}>
-              <span className="text-2xl">💳</span>
+              <CreditCard className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Debt Destroyer</p>
-            <p className="text-xs text-indigo-600">
-              {userProgress.calculatorUsage.includes('DebtPayoffCalculator') ? '✅ Mastered' : '⏳ Pending'}
+            <p className="text-xs text-indigo-600 flex items-center justify-center gap-1">
+              {userProgress.calculatorUsage.includes('DebtPayoffCalculator') ? (
+                <>
+                  <CheckCircle className="w-3 h-3" />
+                  Mastered
+                </>
+              ) : (
+                <>
+                  <Clock className="w-3 h-3" />
+                  Pending
+                </>
+              )}
             </p>
           </div>
         </div>
@@ -297,22 +364,34 @@ export default function ProgressDashboard() {
 
       {/* Contest Demo Section */}
       <div className="mt-8 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-purple-900 mb-4">🏆 Contest Judge Highlights</h3>
+        <h3 className="text-lg font-semibold text-purple-900 mb-4 flex items-center gap-2">
+          <Target className="w-5 h-5" />
+          Contest Judge Highlights
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white bg-opacity-60 rounded-lg p-4">
-            <h4 className="font-semibold text-purple-800 mb-2">📈 Measurable Impact</h4>
+            <h4 className="font-semibold text-purple-800 mb-2 flex items-center gap-2">
+              <TrendingUp className="w-4 h-4" />
+              Measurable Impact
+            </h4>
             <p className="text-sm text-purple-700">
               Real progress tracking with persistent data across sessions. Every interaction measured and analyzed.
             </p>
           </div>
           <div className="bg-white bg-opacity-60 rounded-lg p-4">
-            <h4 className="font-semibold text-purple-800 mb-2">🤖 AI Integration</h4>
+            <h4 className="font-semibold text-purple-800 mb-2 flex items-center gap-2">
+              <Bot className="w-4 h-4" />
+              AI Integration
+            </h4>
             <p className="text-sm text-purple-700">
               OpenAI GPT-4o-mini provides contextual coaching based on actual user progress and struggling topics.
             </p>
           </div>
           <div className="bg-white bg-opacity-60 rounded-lg p-4">
-            <h4 className="font-semibold text-purple-800 mb-2">💪 Educational Effectiveness</h4>
+            <h4 className="font-semibold text-purple-800 mb-2 flex items-center gap-2">
+              <Zap className="w-4 h-4" />
+              Educational Effectiveness
+            </h4>
             <p className="text-sm text-purple-700">
               Interactive learning with immediate feedback, practical application, and mastery-based progression.
             </p>

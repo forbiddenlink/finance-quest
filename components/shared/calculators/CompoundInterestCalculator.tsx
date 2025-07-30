@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { Lightbulb, Sparkles } from 'lucide-react';
 
 interface CompoundData {
   year: number;
@@ -188,8 +189,9 @@ export default function CompoundInterestCalculator() {
             
             {totalInterest > totalContributed && (
               <div className="bg-yellow-100 border border-yellow-300 rounded-lg p-3">
-                <p className="text-sm text-yellow-800">
-                  🎉 Your money more than doubled through compound interest!
+                <p className="text-sm text-yellow-800 flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  Your money more than doubled through compound interest!
                 </p>
               </div>
             )}
@@ -242,7 +244,10 @@ export default function CompoundInterestCalculator() {
 
       {/* Educational Insights */}
       <div className="mt-8 bg-blue-50 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-blue-900 mb-4">💡 Key Lessons About Compound Interest</h3>
+        <h3 className="text-lg font-semibold text-blue-900 mb-4 flex items-center gap-2">
+          <Lightbulb className="w-5 h-5" />
+          Key Lessons About Compound Interest
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-800">
           <div>
             <h4 className="font-semibold mb-2">Time is Your Best Friend</h4>

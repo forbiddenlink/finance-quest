@@ -2,6 +2,7 @@
 
 import PaycheckCalculator from '@/components/chapters/fundamentals/calculators/PaycheckCalculator';
 import QASystem from '@/components/shared/QASystem';
+import { Calculator, DollarSign, BarChart3, Target, Lightbulb, Rocket, TrendingDown } from 'lucide-react';
 
 export default function PaycheckCalculatorPage() {
   return (
@@ -20,7 +21,10 @@ export default function PaycheckCalculatorPage() {
               <h1 className="text-2xl font-bold text-gray-900">Paycheck Calculator</h1>
             </div>
             <div className="bg-blue-100 px-3 py-1 rounded-full">
-              <span className="text-sm font-medium text-blue-800">🧮 Take-Home Pay</span>
+              <span className="text-sm font-medium text-blue-800 flex items-center gap-1">
+                <Calculator className="w-4 h-4" />
+                Take-Home Pay
+              </span>
             </div>
           </div>
         </div>
@@ -29,21 +33,33 @@ export default function PaycheckCalculatorPage() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="mb-6 bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-lg p-6">
-          <h2 className="text-xl font-bold text-blue-900 mb-2">💰 Understand Your Take-Home Pay</h2>
+          <h2 className="text-xl font-bold text-blue-900 mb-2 flex items-center gap-2">
+            <DollarSign className="w-5 h-5" />
+            Understand Your Take-Home Pay
+          </h2>
           <p className="text-blue-800 mb-4">
             Your salary isn't what you actually receive. Learn the difference between gross and net pay.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div className="bg-white bg-opacity-50 rounded-lg p-3">
-              <h3 className="font-semibold text-blue-900">💵 Gross Pay</h3>
+              <h3 className="font-semibold text-blue-900 flex items-center gap-2">
+                <DollarSign className="w-4 h-4" />
+                Gross Pay
+              </h3>
               <p className="text-blue-700">Your total salary before any deductions</p>
             </div>
             <div className="bg-white bg-opacity-50 rounded-lg p-3">
-              <h3 className="font-semibold text-blue-900">📊 Deductions</h3>
+              <h3 className="font-semibold text-blue-900 flex items-center gap-2">
+                <BarChart3 className="w-4 h-4" />
+                Deductions
+              </h3>
               <p className="text-blue-700">Taxes, insurance, retirement contributions</p>
             </div>
             <div className="bg-white bg-opacity-50 rounded-lg p-3">
-              <h3 className="font-semibold text-blue-900">💸 Net Pay</h3>
+              <h3 className="font-semibold text-blue-900 flex items-center gap-2">
+                <TrendingDown className="w-4 h-4" />
+                Net Pay
+              </h3>
               <p className="text-blue-700">What actually hits your bank account</p>
             </div>
           </div>
@@ -59,7 +75,10 @@ export default function PaycheckCalculatorPage() {
 
         {/* Learning Objectives */}
         <div className="mt-8 bg-cyan-50 border border-cyan-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-cyan-900 mb-4">🎯 What You'll Learn</h3>
+          <h3 className="text-lg font-bold text-cyan-900 mb-4 flex items-center gap-2">
+            <Target className="w-5 h-5" />
+            What You'll Learn
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h4 className="font-semibold text-cyan-800 mb-2">Paycheck Basics:</h4>
@@ -84,7 +103,10 @@ export default function PaycheckCalculatorPage() {
 
         {/* Paycheck Tips */}
         <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-yellow-900 mb-4">💡 Paycheck Optimization Tips</h3>
+          <h3 className="text-lg font-bold text-yellow-900 mb-4 flex items-center gap-2">
+            <Lightbulb className="w-5 h-5" />
+            Paycheck Optimization Tips
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white bg-opacity-50 rounded-lg p-4">
               <h4 className="font-semibold text-yellow-800 mb-2">Max Out Pre-Tax Benefits</h4>
@@ -103,7 +125,10 @@ export default function PaycheckCalculatorPage() {
 
         {/* Action Steps */}
         <div className="mt-6 bg-green-50 border border-green-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-green-900 mb-4">🚀 Your Next Steps</h3>
+          <h3 className="text-lg font-bold text-green-900 mb-4 flex items-center gap-2">
+            <Rocket className="w-5 h-5" />
+            Your Next Steps
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-white bg-opacity-50 rounded-lg p-4">
               <h4 className="font-semibold text-green-800 mb-2">1. Calculate Your Real Hourly Rate</h4>

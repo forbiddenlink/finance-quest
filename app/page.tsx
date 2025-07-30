@@ -411,7 +411,10 @@ export default function Home() {
 
           {/* Coming Soon Calculators */}
           <div className="mt-8 pt-6 border-t border-blue-200">
-            <p className="text-center text-blue-700 font-medium mb-4">🔮 Coming Soon</p>
+            <p className="text-center text-blue-700 font-medium mb-4 flex items-center justify-center gap-1">
+              <Sparkles className="w-4 h-4" />
+              Coming Soon
+            </p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
                 <Building className="w-8 h-8 mx-auto mb-2 text-blue-600" />

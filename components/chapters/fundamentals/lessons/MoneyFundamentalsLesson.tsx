@@ -5,7 +5,7 @@ import { useProgress, useProgressActions } from '@/lib/context/ProgressContext';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
 import TypingEffect from '@/components/shared/ui/TypingEffect';
-import { CheckCircle, Star, DollarSign, TrendingUp, BookOpen, ChevronRight, ChevronLeft } from 'lucide-react';
+import { CheckCircle, Star, DollarSign, TrendingUp, BookOpen, ChevronRight, ChevronLeft, Lightbulb } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface LessonContent {
@@ -70,7 +70,7 @@ export default function MoneyFundamentalsLesson() {
     setCompletedLessons(newCompleted);
 
     // Show success toast
-    toast.success(`✅ "${lesson.title}" completed!`, {
+    toast.success(`"${lesson.title}" completed!`, {
       duration: 3000,
       position: 'top-center',
     });
@@ -159,7 +159,10 @@ export default function MoneyFundamentalsLesson() {
         {/* Interactive Example */}
         {currentLesson === 1 && (
           <div className="mb-8 p-6 bg-green-50 rounded-lg">
-            <h3 className="text-lg font-semibold text-green-900 mb-3">💡 Try It Yourself</h3>
+            <h3 className="text-lg font-semibold text-green-900 mb-3 flex items-center gap-2">
+              <Lightbulb className="w-5 h-5" />
+              Try It Yourself
+            </h3>
             <p className="text-green-800 mb-4">
               If you earn $4,000 gross pay per month, approximately how much would your net pay be?
             </p>

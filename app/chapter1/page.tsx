@@ -6,6 +6,7 @@ import PaycheckCalculator from '@/components/chapters/fundamentals/calculators/P
 import MoneyFundamentalsQuiz from '@/components/chapters/fundamentals/assessments/MoneyFundamentalsQuiz';
 import AITeachingAssistant from '@/components/shared/ai-assistant/AITeachingAssistant';
 import QASystem from '@/components/shared/QASystem';
+import { BookOpen, Calculator, FileText, Bot, Lightbulb, Target } from 'lucide-react';
 
 type TabType = 'lesson' | 'calculator' | 'quiz' | 'assistant';
 
@@ -13,10 +14,10 @@ export default function Chapter1Page() {
   const [activeTab, setActiveTab] = useState<TabType>('lesson');
 
   const tabs = [
-    { id: 'lesson' as TabType, label: 'Lessons', icon: '📚' },
-    { id: 'calculator' as TabType, label: 'Calculator', icon: '🧮' },
-    { id: 'quiz' as TabType, label: 'Quiz', icon: '📝' },
-    { id: 'assistant' as TabType, label: 'AI Coach', icon: '🤖' }
+    { id: 'lesson' as TabType, label: 'Lessons', icon: BookOpen },
+    { id: 'calculator' as TabType, label: 'Calculator', icon: Calculator },
+    { id: 'quiz' as TabType, label: 'Quiz', icon: FileText },
+    { id: 'assistant' as TabType, label: 'AI Coach', icon: Bot }
   ];
 
   return (
@@ -55,7 +56,7 @@ export default function Chapter1Page() {
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                 }`}
               >
-                <span>{tab.icon}</span>
+                <tab.icon className="w-4 h-4" />
                 <span>{tab.label}</span>
               </button>
             ))}
@@ -67,7 +68,10 @@ export default function Chapter1Page() {
           {activeTab === 'lesson' && (
             <div>
               <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <h3 className="font-semibold text-blue-900 mb-2">💡 Learning Path</h3>
+                <h3 className="font-semibold text-blue-900 mb-2 flex items-center gap-2">
+                  <Lightbulb className="w-4 h-4" />
+                  Learning Path
+                </h3>
                 <p className="text-blue-800">
                   Complete all lessons, try the calculator, then take the quiz to unlock Chapter 2!
                 </p>
@@ -85,7 +89,10 @@ export default function Chapter1Page() {
           {activeTab === 'calculator' && (
             <div>
               <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
-                <h3 className="font-semibold text-green-900 mb-2">🧮 Practice Tool</h3>
+                <h3 className="font-semibold text-green-900 mb-2 flex items-center gap-2">
+                  <Calculator className="w-4 h-4" />
+                  Practice Tool
+                </h3>
                 <p className="text-green-800">
                   Use this calculator to understand how taxes affect your paycheck. Try different amounts!
                 </p>
@@ -103,7 +110,10 @@ export default function Chapter1Page() {
           {activeTab === 'quiz' && (
             <div>
               <div className="mb-6 bg-purple-50 border border-purple-200 rounded-lg p-4">
-                <h3 className="font-semibold text-purple-900 mb-2">📝 Knowledge Check</h3>
+                <h3 className="font-semibold text-purple-900 mb-2 flex items-center gap-2">
+                  <Target className="w-4 h-4" />
+                  Knowledge Check
+                </h3>
                 <p className="text-purple-800">
                   Test your understanding! You need 80% to unlock the next chapter.
                 </p>
@@ -121,7 +131,10 @@ export default function Chapter1Page() {
           {activeTab === 'assistant' && (
             <div>
               <div className="mb-6 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
-                <h3 className="font-semibold text-blue-900 mb-2">🤖 AI Financial Coach</h3>
+                <h3 className="font-semibold text-blue-900 mb-2 flex items-center gap-2">
+                  <Bot className="w-4 h-4" />
+                  AI Financial Coach
+                </h3>
                 <p className="text-blue-800">
                   Ask questions, get personalized help, and receive encouragement on your learning journey!
                 </p>

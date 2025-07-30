@@ -1,7 +1,8 @@
 'use client';
 
-import CompoundInterestCalculator from '@/components/chapters/fundamentals/calculators/CompoundInterestCalculator';
+import CompoundInterestCalculator from '@/components/shared/calculators/CompoundInterestCalculator';
 import QASystem from '@/components/shared/QASystem';
+import { DollarSign, Sprout, TrendingUp, Target, Rocket, Clock, RotateCcw } from 'lucide-react';
 
 export default function CompoundInterestPage() {
   return (
@@ -20,7 +21,10 @@ export default function CompoundInterestPage() {
               <h1 className="text-2xl font-bold text-gray-900">Compound Interest Calculator</h1>
             </div>
             <div className="bg-green-100 px-3 py-1 rounded-full">
-              <span className="text-sm font-medium text-green-800">💰 Wealth Builder</span>
+              <span className="text-sm font-medium text-green-800 flex items-center gap-1">
+                <DollarSign className="w-4 h-4" />
+                Wealth Builder
+              </span>
             </div>
           </div>
         </div>
@@ -29,21 +33,33 @@ export default function CompoundInterestPage() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-6">
-          <h2 className="text-xl font-bold text-green-900 mb-2">🌱 The Eighth Wonder of the World</h2>
+          <h2 className="text-xl font-bold text-green-900 mb-2 flex items-center gap-2">
+            <Sprout className="w-5 h-5" />
+            The Eighth Wonder of the World
+          </h2>
           <p className="text-green-800 mb-4">
             "Compound interest is the most powerful force in the universe." - Albert Einstein
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div className="bg-white bg-opacity-50 rounded-lg p-3">
-              <h3 className="font-semibold text-green-900">⏰ Time Advantage</h3>
+              <h3 className="font-semibold text-green-900 flex items-center gap-2">
+                <Clock className="w-4 h-4" />
+                Time Advantage
+              </h3>
               <p className="text-green-700">Starting 10 years earlier can double your final balance</p>
             </div>
             <div className="bg-white bg-opacity-50 rounded-lg p-3">
-              <h3 className="font-semibold text-green-900">🔄 Compounding Effect</h3>
+              <h3 className="font-semibold text-green-900 flex items-center gap-2">
+                <RotateCcw className="w-4 h-4" />
+                Compounding Effect
+              </h3>
               <p className="text-green-700">Your money earns money, which earns more money</p>
             </div>
             <div className="bg-white bg-opacity-50 rounded-lg p-3">
-              <h3 className="font-semibold text-green-900">📈 Exponential Growth</h3>
+              <h3 className="font-semibold text-green-900 flex items-center gap-2">
+                <TrendingUp className="w-4 h-4" />
+                Exponential Growth
+              </h3>
               <p className="text-green-700">Small amounts become large sums over time</p>
             </div>
           </div>
@@ -59,7 +75,10 @@ export default function CompoundInterestPage() {
 
         {/* Learning Objectives */}
         <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-blue-900 mb-4">🎯 What You'll Learn</h3>
+          <h3 className="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
+            <Target className="w-5 h-5" />
+            What You'll Learn
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h4 className="font-semibold text-blue-800 mb-2">Core Concepts:</h4>
@@ -84,7 +103,10 @@ export default function CompoundInterestPage() {
 
         {/* Action Steps */}
         <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-yellow-900 mb-4">🚀 Next Steps</h3>
+          <h3 className="text-lg font-bold text-yellow-900 mb-4 flex items-center gap-2">
+            <Rocket className="w-5 h-5" />
+            Next Steps
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-white bg-opacity-50 rounded-lg p-4">
               <h4 className="font-semibold text-yellow-800 mb-2">1. Start Now</h4>

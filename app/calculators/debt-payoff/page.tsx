@@ -2,6 +2,7 @@
 
 import DebtPayoffCalculator from '@/components/shared/calculators/DebtPayoffCalculator';
 import QASystem from '@/components/shared/QASystem';
+import { CreditCard, Zap, Target, BarChart3, Lightbulb, Rocket, Trophy, Mountain, Snowflake } from 'lucide-react';
 
 export default function DebtPayoffPage() {
   return (
@@ -20,7 +21,10 @@ export default function DebtPayoffPage() {
               <h1 className="text-2xl font-bold text-gray-900">Debt Payoff Calculator</h1>
             </div>
             <div className="bg-red-100 px-3 py-1 rounded-full">
-              <span className="text-sm font-medium text-red-800">💳 Debt Destroyer</span>
+              <span className="text-sm font-medium text-red-800 flex items-center gap-1">
+                <CreditCard className="w-4 h-4" />
+                Debt Destroyer
+              </span>
             </div>
           </div>
         </div>
@@ -29,17 +33,26 @@ export default function DebtPayoffPage() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="mb-6 bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-lg p-6">
-          <h2 className="text-xl font-bold text-red-900 mb-2">⚡ Break Free From Debt Chains</h2>
+          <h2 className="text-xl font-bold text-red-900 mb-2 flex items-center gap-2">
+            <Zap className="w-5 h-5" />
+            Break Free From Debt Chains
+          </h2>
           <p className="text-red-800 mb-4">
             "The borrower is slave to the lender." - Proverbs 22:7. Take control with proven debt elimination strategies.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="bg-white bg-opacity-50 rounded-lg p-3">
-              <h3 className="font-semibold text-red-900">🏔️ Debt Avalanche</h3>
+              <h3 className="font-semibold text-red-900 flex items-center gap-2">
+                <Mountain className="w-4 h-4" />
+                Debt Avalanche
+              </h3>
               <p className="text-red-700">Target highest interest rates first - saves the most money mathematically</p>
             </div>
             <div className="bg-white bg-opacity-50 rounded-lg p-3">
-              <h3 className="font-semibold text-red-900">❄️ Debt Snowball</h3>
+              <h3 className="font-semibold text-red-900 flex items-center gap-2">
+                <Snowflake className="w-4 h-4" />
+                Debt Snowball
+              </h3>
               <p className="text-red-700">Target smallest balances first - builds psychological momentum</p>
             </div>
           </div>
@@ -55,7 +68,10 @@ export default function DebtPayoffPage() {
 
         {/* Learning Objectives */}
         <div className="mt-8 bg-orange-50 border border-orange-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-orange-900 mb-4">🎯 What You'll Master</h3>
+          <h3 className="text-lg font-bold text-orange-900 mb-4 flex items-center gap-2">
+            <Target className="w-5 h-5" />
+            What You'll Master
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h4 className="font-semibold text-orange-800 mb-2">Debt Strategy Skills:</h4>
@@ -80,7 +96,10 @@ export default function DebtPayoffPage() {
 
         {/* Debt Facts */}
         <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-yellow-900 mb-4">📊 Eye-Opening Debt Statistics</h3>
+          <h3 className="text-lg font-bold text-yellow-900 mb-4 flex items-center gap-2">
+            <BarChart3 className="w-5 h-5" />
+            Eye-Opening Debt Statistics
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
               <p className="text-2xl font-bold text-yellow-800">$6,194</p>
@@ -97,14 +116,18 @@ export default function DebtPayoffPage() {
           </div>
           <div className="mt-4 p-3 bg-red-100 rounded-lg">
             <p className="text-sm text-red-800 font-medium">
-              💡 The average person pays $11,931 in interest on that $6,194 debt! Don't be average.
+              <Lightbulb className="w-4 h-4 mr-1 inline" />
+              The average person pays $11,931 in interest on that $6,194 debt! Don't be average.
             </p>
           </div>
         </div>
 
         {/* Success Stories */}
         <div className="mt-6 bg-green-50 border border-green-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-green-900 mb-4">🏆 Debt Freedom Success Stories</h3>
+          <h3 className="text-lg font-bold text-green-900 mb-4 flex items-center gap-2">
+            <Trophy className="w-5 h-5" />
+            Debt Freedom Success Stories
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white bg-opacity-50 rounded-lg p-4">
               <h4 className="font-semibold text-green-800 mb-2">Jessica's $47,000 Triumph</h4>
@@ -123,7 +146,10 @@ export default function DebtPayoffPage() {
 
         {/* Action Plan */}
         <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-blue-900 mb-4">🚀 Your Debt Freedom Action Plan</h3>
+          <h3 className="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
+            <Rocket className="w-5 h-5" />
+            Your Debt Freedom Action Plan
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="bg-white bg-opacity-50 rounded-lg p-4">
               <h4 className="font-semibold text-blue-800 mb-2">Week 1: List Everything</h4>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useProgress } from '@/lib/context/ProgressContext';
+import { Bot, Lightbulb, Zap } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -29,7 +30,7 @@ export default function AITeachingAssistant() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Hi! I'm your AI Financial Coach powered by real AI! 🤖 I'm here to give you personalized guidance based on your progress in Finance Quest. What would you like to learn about?",
+      text: "Hi! I'm your AI Financial Coach powered by real AI! I'm here to give you personalized guidance based on your progress in Finance Quest. What would you like to learn about?",
       isUser: false,
       timestamp: new Date()
     }
@@ -136,8 +137,9 @@ export default function AITeachingAssistant() {
     <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
       {/* Header with Progress Context */}
       <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4">
-        <h3 className="text-lg font-semibold flex items-center">
-          🤖 AI Financial Coach
+        <h3 className="text-lg font-semibold flex items-center gap-2">
+          <Bot className="w-5 h-5" />
+          AI Financial Coach
           <span className="ml-2 text-sm opacity-90">Powered by Real AI!</span>
         </h3>
         <div className="text-sm opacity-90 mt-1">
@@ -220,8 +222,9 @@ export default function AITeachingAssistant() {
             {isTyping ? '...' : 'Send'}
           </button>
         </div>
-        <p className="text-xs text-gray-500 mt-2">
-          💡 This AI knows your current progress and can give personalized advice!
+        <p className="text-xs text-gray-500 mt-2 flex items-center gap-1">
+          <Lightbulb className="w-3 h-3" />
+          This AI knows your current progress and can give personalized advice!
         </p>
       </form>
     </div>

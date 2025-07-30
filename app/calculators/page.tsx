@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { TrendingUp, PieChart, CreditCard, Home, Umbrella, Car, Target, Zap, Gamepad2, Calculator, Brain } from 'lucide-react';
 
 export default function CalculatorsPage() {
   const calculators = [
@@ -6,7 +7,7 @@ export default function CalculatorsPage() {
       id: 'compound-interest',
       title: 'Compound Interest Calculator',
       description: 'See how your money grows exponentially over time with the power of compound interest',
-      icon: '📈',
+      icon: TrendingUp,
       bgColor: 'from-green-50 to-emerald-100',
       borderColor: 'border-green-200',
       textColor: 'text-green-900',
@@ -18,7 +19,7 @@ export default function CalculatorsPage() {
       id: 'budget-builder',
       title: 'Budget Builder Calculator',
       description: 'Create your personal budget using the proven 50/30/20 rule for needs, wants, and savings',
-      icon: '📊',
+      icon: PieChart,
       bgColor: 'from-blue-50 to-indigo-100',
       borderColor: 'border-blue-200',
       textColor: 'text-blue-900',
@@ -30,7 +31,7 @@ export default function CalculatorsPage() {
       id: 'debt-payoff',
       title: 'Debt Payoff Calculator',
       description: 'Compare avalanche vs snowball strategies and see how extra payments accelerate freedom',
-      icon: '💳',
+      icon: CreditCard,
       bgColor: 'from-red-50 to-pink-100',
       borderColor: 'border-red-200',
       textColor: 'text-red-900',
@@ -53,7 +54,10 @@ export default function CalculatorsPage() {
               <h1 className="text-2xl font-bold text-gray-900">Financial Calculators</h1>
             </div>
             <div className="bg-purple-100 px-3 py-1 rounded-full">
-              <span className="text-sm font-medium text-purple-800">🧮 Interactive Tools</span>
+              <span className="text-sm font-medium text-purple-800 flex items-center gap-1">
+                <Calculator className="w-4 h-4" />
+                Interactive Tools
+              </span>
             </div>
           </div>
         </div>
@@ -80,7 +84,7 @@ export default function CalculatorsPage() {
             >
               <div className="flex items-center mb-4">
                 <div className="bg-white bg-opacity-80 p-3 rounded-lg mr-4 group-hover:bg-opacity-100 transition-all">
-                  <span className="text-3xl">{calc.icon}</span>
+                  <calc.icon className="w-8 h-8" />
                 </div>
                 <h3 className={`text-xl font-bold ${calc.textColor}`}>
                   {calc.title}
@@ -110,7 +114,10 @@ export default function CalculatorsPage() {
         {/* Coming Soon Section */}
         <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-2xl p-8">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-purple-900 mb-4">🚀 More Tools Coming Soon</h3>
+            <h3 className="text-2xl font-bold text-purple-900 mb-4 flex items-center justify-center gap-2">
+              <Zap className="w-6 h-6" />
+              More Tools Coming Soon
+            </h3>
             <p className="text-purple-700 max-w-2xl mx-auto">
               We're building a complete suite of financial calculators to help you master every aspect of money management
             </p>
@@ -118,22 +125,22 @@ export default function CalculatorsPage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <span className="text-2xl block mb-2">🏠</span>
+              <Home className="w-8 h-8 mx-auto mb-2 text-purple-600" />
               <h4 className="font-semibold text-purple-800 text-sm">Mortgage Calculator</h4>
               <p className="text-xs text-purple-600 mt-1">Monthly payments & amortization</p>
             </div>
             <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <span className="text-2xl block mb-2">🏖️</span>
+              <Umbrella className="w-8 h-8 mx-auto mb-2 text-purple-600" />
               <h4 className="font-semibold text-purple-800 text-sm">Retirement Planner</h4>
               <p className="text-xs text-purple-600 mt-1">How much you need to retire</p>
             </div>
             <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <span className="text-2xl block mb-2">🚗</span>
+              <Car className="w-8 h-8 mx-auto mb-2 text-purple-600" />
               <h4 className="font-semibold text-purple-800 text-sm">Auto Loan Calculator</h4>
               <p className="text-xs text-purple-600 mt-1">Car payments & total costs</p>
             </div>
             <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <span className="text-2xl block mb-2">🎯</span>
+              <Target className="w-8 h-8 mx-auto mb-2 text-purple-600" />
               <h4 className="font-semibold text-purple-800 text-sm">Savings Goal Tracker</h4>
               <p className="text-xs text-purple-600 mt-1">Timeline to reach your goals</p>
             </div>
@@ -142,11 +149,14 @@ export default function CalculatorsPage() {
 
         {/* Educational Value */}
         <div className="mt-12 bg-blue-50 border border-blue-200 rounded-2xl p-8">
-          <h3 className="text-2xl font-bold text-blue-900 text-center mb-6">💡 Why Interactive Calculators Work</h3>
+          <h3 className="text-2xl font-bold text-blue-900 text-center mb-6 flex items-center justify-center gap-2">
+            <Brain className="w-6 h-6" />
+            Why Interactive Calculators Work
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🎯</span>
+                <Target className="w-8 h-8 text-blue-600" />
               </div>
               <h4 className="font-semibold text-blue-900 mb-2">Visual Learning</h4>
               <p className="text-blue-700 text-sm">
@@ -155,7 +165,7 @@ export default function CalculatorsPage() {
             </div>
             <div className="text-center">
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">⚡</span>
+                <Zap className="w-8 h-8 text-blue-600" />
               </div>
               <h4 className="font-semibold text-blue-900 mb-2">Immediate Feedback</h4>
               <p className="text-blue-700 text-sm">
@@ -164,7 +174,7 @@ export default function CalculatorsPage() {
             </div>
             <div className="text-center">
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🎮</span>
+                <Gamepad2 className="w-8 h-8 text-blue-600" />
               </div>
               <h4 className="font-semibold text-blue-900 mb-2">Hands-On Practice</h4>
               <p className="text-blue-700 text-sm">

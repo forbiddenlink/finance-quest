@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useProgressActions } from '@/lib/context/ProgressContext';
 import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
-import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { CheckCircle, XCircle, AlertCircle, Sparkles } from 'lucide-react';
 
 interface QuizQuestion {
   id: number;
@@ -165,7 +165,7 @@ export default function MoneyFundamentalsQuiz() {
       <>
         <SuccessCelebration
           show={showCelebration}
-          title="🎉 Quiz Mastered!"
+          title="Quiz Mastered!"
           message={`Amazing! You scored ${percentage}% and unlocked Chapter 2!`}
           onComplete={() => setShowCelebration(false)}
           type="quiz"
@@ -183,7 +183,10 @@ export default function MoneyFundamentalsQuiz() {
 
           {passed ? (
             <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
-              <h3 className="text-lg font-semibold text-green-900 mb-2">🎉 Congratulations!</h3>
+              <h3 className="text-lg font-semibold text-green-900 mb-2 flex items-center gap-2">
+                <Sparkles className="w-5 h-5" />
+                Congratulations!
+              </h3>
               <p className="text-green-800">
                 You've mastered the fundamentals of money! You can now proceed to Chapter 2: Budgeting Mastery.
               </p>
@@ -274,8 +277,18 @@ export default function MoneyFundamentalsQuiz() {
         {/* Explanation */}
         {showExplanation && (
           <div className={`mb-6 p-4 rounded-lg ${isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
-            <h3 className={`font-semibold mb-2 ${isCorrect ? 'text-green-900' : 'text-red-900'}`}>
-              {isCorrect ? '✅ Correct!' : '❌ Incorrect'}
+            <h3 className={`font-semibold mb-2 flex items-center gap-2 ${isCorrect ? 'text-green-900' : 'text-red-900'}`}>
+              {isCorrect ? (
+                <>
+                  <CheckCircle className="w-4 h-4" />
+                  Correct!
+                </>
+              ) : (
+                <>
+                  <XCircle className="w-4 h-4" />
+                  Incorrect
+                </>
+              )}
             </h3>
             <p className={isCorrect ? 'text-green-800' : 'text-red-800'}>
               {question.explanation}

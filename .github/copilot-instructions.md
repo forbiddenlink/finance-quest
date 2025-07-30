@@ -40,6 +40,7 @@ Given the hackathon timeline, focus on building a **demonstrable MVP** that show
 - **Global State Management**: React Context with localStorage persistence  
 - **Progress Tracking**: Comprehensive user journey analytics and achievement system
 - **Interactive Visualizations**: Recharts library for financial data display
+- **Professional Icon System**: Lucide React icons for consistent, modern UI design ✅
 
 #### API Routes & Services
 - `/api/ai-chat` - OpenAI integration with user progress context and fallback responses
@@ -160,6 +161,15 @@ components/
 - `Lesson*`: Educational content components (e.g., `BudgetingLesson`)
 - `Quiz*`: Assessment components (e.g., `CreditScoreQuiz`)
 - `Scenario*`: Story-driven simulations (e.g., `FirstJobScenario`)
+
+### Icon System Standards ✅
+- **Library**: Lucide React v0.534.0 - Professional SVG icon library
+- **Import Pattern**: `import { IconName } from 'lucide-react'`
+- **Usage**: `<IconName className="w-4 h-4" />` - Always as JSX components
+- **Sizing**: Use consistent Tailwind classes (w-3 h-3, w-4 h-4, w-5 h-5)
+- **Semantic Mapping**: Icons match contextual meaning (Target for goals, Bot for AI, etc.)
+- **No Emoji**: Use professional SVG icons instead of emoji characters
+- **Accessibility**: Icons provide semantic meaning for screen readers
 
 ### State Management Patterns
 - User progress tracking across chapters

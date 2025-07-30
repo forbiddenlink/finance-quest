@@ -11,7 +11,9 @@ import {
   Home,
   LucideIcon,
   DollarSign,
-  Lightbulb
+  Lightbulb,
+  Search,
+  MessageCircle
 } from 'lucide-react';
 
 interface Debt {
@@ -354,7 +356,10 @@ export default function DebtPayoffCalculator() {
 
           {/* Strategy Comparison */}
           <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
-            <h4 className="font-semibold text-indigo-900 mb-3">🔍 Strategy Comparison</h4>
+            <h4 className="font-semibold text-indigo-900 mb-3 flex items-center gap-2">
+              <Search className="w-4 h-4" />
+              Strategy Comparison
+            </h4>
             <div className="text-sm text-indigo-800 space-y-2">
               <div>
                 <strong>Debt Avalanche:</strong> Mathematically optimal - saves the most money in interest
@@ -416,7 +421,10 @@ export default function DebtPayoffCalculator() {
 
           {/* Motivation Section */}
           <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4">
-            <h4 className="font-semibold text-green-900 mb-3">🎉 Your Debt-Free Future</h4>
+            <h4 className="font-semibold text-green-900 mb-3 flex items-center gap-2">
+              <Lightbulb className="w-4 h-4" />
+              Your Debt-Free Future
+            </h4>
             <div className="space-y-2 text-sm text-green-800">
               <div>
                 <strong>Freedom Date:</strong> {payoffTime > 0 ? `${Math.floor(payoffTime / 12)} years, ${payoffTime % 12} months` : 'Add debts to calculate'}
@@ -428,8 +436,13 @@ export default function DebtPayoffCalculator() {
                 <strong>Annual Freedom:</strong> {formatCurrency((totalMinimumPayments + extraPayment) * 12)} per year
               </div>
               <div className="mt-3 p-3 bg-white bg-opacity-50 rounded">
-                <strong>💭 Imagine:</strong> What could you do with an extra {formatCurrency((totalMinimumPayments + extraPayment) * 12)} per year?
-                Vacation? Investment? Dream purchase? Your debt-free life is closer than you think!
+                <div className="flex items-start gap-2">
+                  <MessageCircle className="w-4 h-4 mt-0.5 text-blue-600" />
+                  <div>
+                    <strong>Imagine:</strong> What could you do with an extra {formatCurrency((totalMinimumPayments + extraPayment) * 12)} per year?
+                    Vacation? Investment? Dream purchase? Your debt-free life is closer than you think!
+                  </div>
+                </div>
               </div>
             </div>
           </div>

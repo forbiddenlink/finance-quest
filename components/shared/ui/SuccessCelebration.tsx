@@ -87,7 +87,10 @@ export default function SuccessCelebration({
                 />
               ))}
             </div>
-            <p className="text-sm opacity-75">Keep up the great work! 🚀</p>
+            <p className="text-sm opacity-75 flex items-center gap-1 justify-center">
+              Keep up the great work!
+              <Star className="w-4 h-4" />
+            </p>
           </div>
         </div>
       </div>
