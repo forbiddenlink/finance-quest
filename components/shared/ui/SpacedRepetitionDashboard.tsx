@@ -210,7 +210,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
         <div className={`flex items-start space-x-3 p-4 rounded-lg ${getPriorityColor(recommendation.priority)}`}>
           {getPriorityIcon(recommendation.priority)}
           <div className="flex-1">
-            <h4 className="font-semibold mb-2">Today's Recommendation</h4>
+            <h4 className="font-semibold mb-2">Today&apos;s Recommendation</h4>
             <p className="text-sm">{recommendation.recommendation}</p>
             
             {recommendation.concepts.length > 0 && (

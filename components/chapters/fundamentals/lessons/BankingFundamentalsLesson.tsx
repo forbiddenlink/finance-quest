@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Building2, 
-  CreditCard, 
-  PiggyBank, 
-  Shield, 
+import {
+  Building2,
+  CreditCard,
+  PiggyBank,
+  Shield,
   DollarSign,
   ArrowRight,
   CheckCircle,
@@ -28,7 +28,7 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
       title: 'Understanding Account Types',
       icon: <Building2 className="w-6 h-6" />,
       content: (
-        <motion.div 
+        <motion.div
           className="space-y-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -36,7 +36,7 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
           <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-lg">
             <h3 className="text-2xl font-bold mb-4">Your Banking Foundation</h3>
             <p className="text-lg">
-              Understanding different account types is like knowing the different tools in a toolbox - 
+              Understanding different account types is like knowing the different tools in a toolbox -
               each one serves a specific purpose in your financial life.
             </p>
           </div>
@@ -102,7 +102,7 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
               <h4 className="font-semibold text-yellow-800">Pro Tip</h4>
             </div>
             <p className="text-yellow-700 mt-2">
-              Most successful savers use a "banking trifecta": one checking account for daily expenses, 
+              Most successful savers use a &quot;banking trifecta&quot;: one checking account for daily expenses,
               one high-yield savings for emergencies, and one money market or CD for longer-term goals.
             </p>
           </div>
@@ -114,7 +114,7 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
       title: 'Avoiding Banking Fees',
       icon: <Shield className="w-6 h-6" />,
       content: (
-        <motion.div 
+        <motion.div
           className="space-y-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -122,7 +122,7 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
           <div className="bg-gradient-to-r from-red-500 to-pink-600 text-white p-6 rounded-lg">
             <h3 className="text-2xl font-bold mb-4">The Hidden Fee Trap</h3>
             <p className="text-lg">
-              Banking fees can cost the average American $329 per year. Learning to avoid them 
+              Banking fees can cost the average American $329 per year. Learning to avoid them
               is like giving yourself an instant pay raise!
             </p>
           </div>
@@ -179,7 +179,7 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
               <h4 className="font-semibold text-green-800">Smart Banking Strategy</h4>
             </div>
             <p className="text-green-700 mt-2">
-              Choose online banks or credit unions for higher interest rates and lower fees. 
+              Choose online banks or credit unions for higher interest rates and lower fees.
               Many offer fee-free accounts with better customer service than traditional banks.
             </p>
           </div>
@@ -191,7 +191,7 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
       title: 'Optimizing Your Banking Setup',
       icon: <DollarSign className="w-6 h-6" />,
       content: (
-        <motion.div 
+        <motion.div
           className="space-y-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -199,15 +199,15 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
           <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-6 rounded-lg">
             <h3 className="text-2xl font-bold mb-4">Maximize Your Banking Power</h3>
             <p className="text-lg">
-              With the right setup, your bank accounts work harder for you, earning more while 
-              costing less. Let's build your optimized banking foundation.
+              With the right setup, your bank accounts work harder for you, earning more while
+              costing less. Let&apos;s build your optimized banking foundation.
             </p>
           </div>
 
           <div className="space-y-4">
             <div className="bg-white border border-gray-200 rounded-lg p-6">
               <h4 className="text-xl font-semibold mb-4 text-gray-800">The Optimal Banking Setup</h4>
-              
+
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
@@ -243,7 +243,7 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
 
             <div className="bg-white border border-gray-200 rounded-lg p-6">
               <h4 className="text-xl font-semibold mb-4 text-gray-800">Automation Setup</h4>
-              
+
               <div className="space-y-3">
                 {[
                   'Direct deposit: 70% checking, 20% savings, 10% investment',
@@ -266,7 +266,7 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
               <h4 className="font-semibold text-blue-800">Real Impact</h4>
             </div>
             <p className="text-blue-700 mt-2">
-              Moving a $10,000 emergency fund from a 0.01% traditional savings to a 4.5% high-yield 
+              Moving a $10,000 emergency fund from a 0.01% traditional savings to a 4.5% high-yield
               savings account earns you an extra $449 per year - just for making one smart choice!
             </p>
           </div>
@@ -279,7 +279,7 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
     if (!lessonProgress.includes(lessonIndex)) {
       setLessonProgress([...lessonProgress, lessonIndex]);
     }
-    
+
     if (lessonIndex === lessons.length - 1) {
       // Mark entire lesson as complete
       setTimeout(() => onComplete(), 1000);
@@ -313,7 +313,7 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
             {currentLesson + 1} of {lessons.length}
           </div>
         </div>
-        
+
         <div className="w-full bg-white/20 rounded-full h-2">
           <motion.div
             className="bg-white h-2 rounded-full"
@@ -353,13 +353,12 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
           {lessons.map((_, index) => (
             <div
               key={index}
-              className={`w-3 h-3 rounded-full transition-colors ${
-                index === currentLesson
+              className={`w-3 h-3 rounded-full transition-colors ${index === currentLesson
                   ? 'bg-blue-500'
                   : index < currentLesson
-                  ? 'bg-green-500'
-                  : 'bg-gray-300'
-              }`}
+                    ? 'bg-green-500'
+                    : 'bg-gray-300'
+                }`}
             />
           ))}
         </div>

@@ -36,10 +36,10 @@ const SavingsCalculator = () => {
     if (rate === 0) {
       return presentValue + (payment * periods);
     }
-    
+
     const fvPresentValue = presentValue * Math.pow(1 + rate, periods);
     const fvAnnuity = payment * (Math.pow(1 + rate, periods) - 1) / rate;
-    
+
     return fvPresentValue + fvAnnuity;
   };
 
@@ -47,10 +47,10 @@ const SavingsCalculator = () => {
     try {
       const monthlyRate = (interestRate / 100) / 12;
       const totalMonths = timeYears * 12;
-      
+
       // Calculate future value of initial deposit (lump sum)
       const initialDepositFV = initialDeposit * Math.pow(1 + monthlyRate, totalMonths);
-      
+
       // Calculate future value of monthly deposits (annuity)
       let monthlyDepositsFV = 0;
       if (monthlyRate === 0) {
@@ -58,11 +58,11 @@ const SavingsCalculator = () => {
       } else {
         monthlyDepositsFV = monthlyDeposit * (Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate;
       }
-      
+
       const totalFutureValue = initialDepositFV + monthlyDepositsFV;
       const totalDeposited = initialDeposit + (monthlyDeposit * totalMonths);
       const totalInterestEarned = totalFutureValue - totalDeposited;
-      
+
       setResults({
         futureValue: totalFutureValue,
         totalDeposited: totalDeposited,
@@ -74,11 +74,11 @@ const SavingsCalculator = () => {
       const data = [];
       for (let year = 0; year <= timeYears; year++) {
         const yearMonths = year * 12;
-        
+
         // Calculate values for this year
-        const yearInitialFV = year === 0 ? initialDeposit : 
+        const yearInitialFV = year === 0 ? initialDeposit :
           initialDeposit * Math.pow(1 + monthlyRate, yearMonths);
-        
+
         let yearMonthlyFV = 0;
         if (year > 0) {
           if (monthlyRate === 0) {
@@ -87,10 +87,10 @@ const SavingsCalculator = () => {
             yearMonthlyFV = monthlyDeposit * (Math.pow(1 + monthlyRate, yearMonths) - 1) / monthlyRate;
           }
         }
-        
+
         const yearTotalDeposited = initialDeposit + (monthlyDeposit * yearMonths);
         const yearTotalValue = yearInitialFV + yearMonthlyFV;
-        
+
         data.push({
           year,
           deposited: yearTotalDeposited,
@@ -138,7 +138,7 @@ const SavingsCalculator = () => {
       animate="visible"
     >
       {/* Header */}
-      <motion.div 
+      <motion.div
         className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-6"
         variants={itemVariants}
       >
@@ -156,7 +156,7 @@ const SavingsCalculator = () => {
           {/* Input Section */}
           <motion.div variants={itemVariants} className="space-y-6">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">Your Savings Plan</h3>
-            
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -264,9 +264,9 @@ const SavingsCalculator = () => {
             {results && (
               <>
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">Your Results</h3>
-                
+
                 <div className="grid grid-cols-2 gap-4">
-                  <motion.div 
+                  <motion.div
                     className="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border border-green-200"
                     whileHover={{ scale: 1.02 }}
                   >
@@ -279,7 +279,7 @@ const SavingsCalculator = () => {
                     </div>
                   </motion.div>
 
-                  <motion.div 
+                  <motion.div
                     className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200"
                     whileHover={{ scale: 1.02 }}
                   >
@@ -292,7 +292,7 @@ const SavingsCalculator = () => {
                     </div>
                   </motion.div>
 
-                  <motion.div 
+                  <motion.div
                     className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-lg border border-purple-200"
                     whileHover={{ scale: 1.02 }}
                   >
@@ -305,7 +305,7 @@ const SavingsCalculator = () => {
                     </div>
                   </motion.div>
 
-                  <motion.div 
+                  <motion.div
                     className="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200"
                     whileHover={{ scale: 1.02 }}
                   >
@@ -335,7 +335,7 @@ const SavingsCalculator = () => {
 
         {/* Chart Section */}
         {chartData.length > 0 && (
-          <motion.div 
+          <motion.div
             variants={itemVariants}
             className="mt-8 bg-gray-50 p-6 rounded-lg"
           >
@@ -344,43 +344,43 @@ const SavingsCalculator = () => {
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="year" 
+                  <XAxis
+                    dataKey="year"
                     label={{ value: 'Years', position: 'insideBottom', offset: -10 }}
                   />
-                  <YAxis 
+                  <YAxis
                     tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                     label={{ value: 'Amount ($)', angle: -90, position: 'insideLeft' }}
                   />
-                  <Tooltip 
+                  <Tooltip
                     formatter={(value: number, name: string) => [formatCurrency(value), name]}
                     labelFormatter={(label) => `Year ${label}`}
                   />
-                  <Line 
-                    type="monotone" 
-                    dataKey="deposited" 
-                    stroke="#8884d8" 
+                  <Line
+                    type="monotone"
+                    dataKey="deposited"
+                    stroke="#8884d8"
                     strokeWidth={2}
                     name="Total Deposited"
                   />
-                  <Line 
-                    type="monotone" 
-                    dataKey="total" 
-                    stroke="#82ca9d" 
+                  <Line
+                    type="monotone"
+                    dataKey="total"
+                    stroke="#82ca9d"
                     strokeWidth={3}
                     name="Total Value"
                   />
-                  <Line 
-                    type="monotone" 
-                    dataKey="interest" 
-                    stroke="#ffc658" 
+                  <Line
+                    type="monotone"
+                    dataKey="interest"
+                    stroke="#ffc658"
                     strokeWidth={2}
                     name="Interest Earned"
                   />
                 </LineChart>
               </ResponsiveContainer>
             </div>
-            
+
             <div className="flex justify-center space-x-6 mt-4 text-sm">
               <div className="flex items-center">
                 <div className="w-4 h-1 bg-blue-500 mr-2"></div>

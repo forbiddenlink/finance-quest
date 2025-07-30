@@ -39,13 +39,13 @@ export default function CompoundInterestCalculator() {
         const yearlyContribution = monthlyAdd * 12;
         currentPrincipal += yearlyContribution;
         totalContributions += yearlyContribution;
-        
+
         // Apply compound interest
         currentPrincipal = currentPrincipal * (1 + r);
       }
 
       const interestEarned = currentPrincipal - totalContributions;
-      
+
       compoundData.push({
         year,
         principal: totalContributions,
@@ -73,7 +73,7 @@ export default function CompoundInterestCalculator() {
     }).format(value);
   };
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{color: string; value: number; dataKey: string; payload: {principal: number; interest: number; total: number}}>; label?: string }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-4 border border-gray-300 rounded-lg shadow-lg">
@@ -186,7 +186,7 @@ export default function CompoundInterestCalculator() {
                 <span className="text-xl font-bold text-purple-600">{formatCurrency(finalAmount)}</span>
               </div>
             </div>
-            
+
             {totalInterest > totalContributed && (
               <div className="bg-yellow-100 border border-yellow-300 rounded-lg p-3">
                 <p className="text-sm text-yellow-800 flex items-center gap-2">
@@ -205,35 +205,35 @@ export default function CompoundInterestCalculator() {
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                <XAxis 
-                  dataKey="year" 
+                <XAxis
+                  dataKey="year"
                   label={{ value: 'Years', position: 'insideBottom', offset: -5 }}
                 />
-                <YAxis 
+                <YAxis
                   tickFormatter={(value: number) => `$${(value / 1000).toFixed(0)}k`}
                   label={{ value: 'Amount ($)', angle: -90, position: 'insideLeft' }}
                 />
                 <Tooltip content={<CustomTooltip />} />
-                <Line 
-                  type="monotone" 
-                  dataKey="principal" 
-                  stroke="#3B82F6" 
+                <Line
+                  type="monotone"
+                  dataKey="principal"
+                  stroke="#3B82F6"
                   strokeWidth={2}
                   name="Contributions"
                   dot={false}
                 />
-                <Line 
-                  type="monotone" 
-                  dataKey="total" 
-                  stroke="#8B5CF6" 
+                <Line
+                  type="monotone"
+                  dataKey="total"
+                  stroke="#8B5CF6"
                   strokeWidth={3}
                   name="Total Value"
                   dot={false}
                 />
-                <ReferenceLine 
-                  y={totalContributed} 
-                  stroke="#EF4444" 
-                  strokeDasharray="5 5" 
+                <ReferenceLine
+                  y={totalContributed}
+                  stroke="#EF4444"
+                  strokeDasharray="5 5"
                   label="Total Contributions"
                 />
               </LineChart>
@@ -262,8 +262,8 @@ export default function CompoundInterestCalculator() {
             <p>Small differences in interest rates compound into huge differences over time.</p>
           </div>
           <div>
-            <h4 className="font-semibold mb-2">Einstein's "8th Wonder"</h4>
-            <p>Einstein allegedly called compound interest "the eighth wonder of the world."</p>
+            <h4 className="font-semibold mb-2">Einstein&apos;s &quot;8th Wonder&quot;</h4>
+            <p>Einstein allegedly called compound interest &quot;the eighth wonder of the world.&quot;</p>
           </div>
         </div>
       </div>

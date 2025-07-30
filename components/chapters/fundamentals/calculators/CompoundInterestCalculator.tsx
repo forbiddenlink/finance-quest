@@ -18,7 +18,7 @@ export default function CompoundInterestCalculator() {
   const [interestRate, setInterestRate] = useState(7);
   const [years, setYears] = useState(30);
   const [compoundFrequency, setCompoundFrequency] = useState(12); // Monthly
-  
+
   const [chartData, setChartData] = useState<CompoundData[]>([]);
   const [finalBalance, setFinalBalance] = useState(0);
   const [totalPrincipal, setTotalPrincipal] = useState(0);
@@ -32,7 +32,7 @@ export default function CompoundInterestCalculator() {
     const monthlyRate = interestRate / 100 / 12;
     let balance = principal;
     let cumulativePrincipal = principal;
-    
+
     // Track calculator usage
     dispatch({
       type: 'USE_CALCULATOR',
@@ -47,9 +47,9 @@ export default function CompoundInterestCalculator() {
           cumulativePrincipal += monthlyContribution;
         }
       }
-      
+
       const interest = balance - cumulativePrincipal;
-      
+
       data.push({
         year,
         balance: Math.round(balance),
@@ -80,7 +80,7 @@ export default function CompoundInterestCalculator() {
   const getMotivationalMessage = () => {
     const monthsToMillionaire = Math.log(1000000 / principal) / Math.log(1 + (interestRate / 100 / 12));
     const yearsToMillionaire = Math.ceil(monthsToMillionaire / 12);
-    
+
     if (finalBalance >= 1000000) {
       return `Congratulations! You'll be a millionaire in ${years} years!`;
     } else if (yearsToMillionaire <= 50) {
@@ -110,7 +110,7 @@ export default function CompoundInterestCalculator() {
               The Magic of Compound Interest
             </h3>
             <p className="text-blue-800 text-sm">
-              Einstein called it the &quot;eighth wonder of the world.&quot; Those who understand it, earn it. 
+              Einstein called it the &quot;eighth wonder of the world.&quot; Those who understand it, earn it.
               Those who don&apos;t, pay it. Watch your money grow exponentially!
             </p>
           </div>
@@ -264,39 +264,39 @@ export default function CompoundInterestCalculator() {
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="year" 
+                  <XAxis
+                    dataKey="year"
                     label={{ value: 'Years', position: 'insideBottom', offset: -5 }}
                   />
-                  <YAxis 
+                  <YAxis
                     tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                     label={{ value: 'Amount', angle: -90, position: 'insideLeft' }}
                   />
-                  <Tooltip 
+                  <Tooltip
                     formatter={(value: number, name: string) => [formatCurrency(value), name]}
                     labelFormatter={(year) => `Year ${year}`}
                   />
                   <Legend />
-                  <Line 
-                    type="monotone" 
-                    dataKey="balance" 
-                    stroke="#10B981" 
+                  <Line
+                    type="monotone"
+                    dataKey="balance"
+                    stroke="#10B981"
                     strokeWidth={3}
                     name="Total Balance"
                     dot={false}
                   />
-                  <Line 
-                    type="monotone" 
-                    dataKey="principal" 
-                    stroke="#3B82F6" 
+                  <Line
+                    type="monotone"
+                    dataKey="principal"
+                    stroke="#3B82F6"
                     strokeWidth={2}
                     name="Total Invested"
                     dot={false}
                   />
-                  <Line 
-                    type="monotone" 
-                    dataKey="interest" 
-                    stroke="#8B5CF6" 
+                  <Line
+                    type="monotone"
+                    dataKey="interest"
+                    stroke="#8B5CF6"
                     strokeWidth={2}
                     name="Interest Earned"
                     dot={false}

@@ -212,17 +212,17 @@ export default function MoneyFundamentalsLesson() {
               Bias Detection Challenge
             </h3>
             <div className="text-orange-800 space-y-4">
-              <p className="font-medium">Scenario: You're considering buying a $200 jacket that's "50% off" from $400.</p>
+              <p className="font-medium">Scenario: You&apos;re considering buying a $200 jacket that&apos;s &quot;50% off&quot; from $400.</p>
               <div className="bg-white p-4 rounded-lg">
                 <p className="font-medium mb-2">Which biases might be at play?</p>
                 <ul className="list-disc list-inside space-y-1 ml-4">
-                  <li><strong>Anchoring:</strong> The $400 "original price" makes $200 seem like a deal</li>
-                  <li><strong>Loss aversion:</strong> Fear of missing the "50% off" creates urgency</li>
+                  <li><strong>Anchoring:</strong> The $400 &quot;original price&quot; makes $200 seem like a deal</li>
+                  <li><strong>Loss aversion:</strong> Fear of missing the &quot;50% off&quot; creates urgency</li>
                   <li><strong>Present bias:</strong> Immediate gratification vs long-term savings goals</li>
                 </ul>
               </div>
               <p className="mt-4 font-medium text-orange-900">
-                💡 <strong>Better Question:</strong> "Would I buy this jacket at $200 if it was never marked higher?"
+                💡 <strong>Better Question:</strong> &quot;Would I buy this jacket at $200 if it was never marked higher?&quot;
               </p>
             </div>
           </div>
@@ -237,11 +237,11 @@ export default function MoneyFundamentalsLesson() {
             <div className="text-blue-800 space-y-4">
               <div className="bg-white p-4 rounded-lg">
                 <p className="font-medium text-red-700 mb-2">❌ Weak Goal:</p>
-                <p className="italic">"I want to save more money next year."</p>
+                <p className="italic">&quot;I want to save more money next year.&quot;</p>
               </div>
               <div className="bg-white p-4 rounded-lg">
                 <p className="font-medium text-green-700 mb-2">✅ PACT Goal:</p>
-                <p className="italic">"I will automatically transfer $100 to savings every Friday after I get paid, so I can build a $5,000 emergency fund by December. If I'm tempted to skip it, I'll remember that financial security reduces my stress and lets me sleep better."</p>
+                <p className="italic">&quot;I will automatically transfer $100 to savings every Friday after I get paid, so I can build a $5,000 emergency fund by December. If I&apos;m tempted to skip it, I&apos;ll remember that financial security reduces my stress and lets me sleep better.&quot;</p>
               </div>
               <p className="mt-4 font-medium text-blue-900">
                 💡 <strong>PACT Framework:</strong> Purposeful, Actionable, Continuous, Trackable

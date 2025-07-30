@@ -139,7 +139,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
               <div className="text-center text-gray-500 py-8">
                 <HelpCircle className="w-12 h-12 mx-auto mb-4 text-gray-300" />
                 <p className="text-sm">Ask me anything about personal finance!</p>
-                <p className="text-xs mt-1">I know about everything you're learning in Finance Quest.</p>
+                <p className="text-xs mt-1">I know about everything you&apos;re learning in Finance Quest.</p>
               </div>
             ) : (
               messages.map((message) => (

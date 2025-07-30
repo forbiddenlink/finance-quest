@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Briefcase, 
-  TrendingUp, 
-  DollarSign, 
-  Users, 
+import {
+  Briefcase,
+  TrendingUp,
+  DollarSign,
+  Users,
   Target,
   ArrowRight,
   CheckCircle,
@@ -31,7 +31,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
       title: 'Understanding Your Total Compensation',
       icon: <FileText className="w-6 h-6" />,
       content: (
-        <motion.div 
+        <motion.div
           className="space-y-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -39,7 +39,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
           <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-6 rounded-lg">
             <h3 className="text-2xl font-bold mb-4">Beyond Your Paycheck</h3>
             <p className="text-lg">
-              Your salary is just the beginning. Understanding your total compensation 
+              Your salary is just the beginning. Understanding your total compensation
               package can reveal hidden value worth thousands of dollars annually.
             </p>
           </div>
@@ -117,7 +117,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
               <h4 className="font-semibold text-yellow-800">Total Compensation Calculator</h4>
             </div>
             <p className="text-yellow-700 mt-2">
-              A $60,000 salary with full benefits, 401k match, and PTO can have a total value 
+              A $60,000 salary with full benefits, 401k match, and PTO can have a total value
               of $75,000-85,000. Always evaluate job offers on total compensation, not just salary!
             </p>
           </div>
@@ -129,7 +129,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
       title: 'Mastering Salary Negotiation',
       icon: <TrendingUp className="w-6 h-6" />,
       content: (
-        <motion.div 
+        <motion.div
           className="space-y-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -137,8 +137,8 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
           <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 rounded-lg">
             <h3 className="text-2xl font-bold mb-4">The $1 Million Conversation</h3>
             <p className="text-lg">
-              A successful salary negotiation can increase your lifetime earnings by over 
-              $1 million. Yet 68% of people never negotiate their salary. Don't be one of them.
+              A successful salary negotiation can increase your lifetime earnings by over
+              $1 million. Yet 68% of people never negotiate their salary. Don&apos;t be one of them.
             </p>
           </div>
 
@@ -148,7 +148,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
                 <Target className="w-5 h-5 mr-2 text-blue-500" />
                 The Negotiation Framework
               </h4>
-              
+
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
@@ -167,7 +167,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
                   </div>
                   <div>
                     <h5 className="font-semibold text-gray-800">Document Your Value</h5>
-                    <p className="text-gray-600 text-sm">Quantify achievements: "Increased sales by 23%" not "good at sales"</p>
+                    <p className="text-gray-600 text-sm">Quantify achievements: &quot;Increased sales by 23%&quot; not &quot;good at sales&quot;</p>
                     <div className="text-xs text-green-600 mt-1">📈 Specific metrics justify higher compensation</div>
                   </div>
                 </div>
@@ -204,8 +204,8 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
                 </h5>
                 <ul className="text-sm text-green-700 space-y-1">
                   <li>• Practice your pitch out loud</li>
-                  <li>• Schedule when boss isn't stressed</li>
-                  <li>• Focus on future value you'll bring</li>
+                  <li>• Schedule when boss isn&apos;t stressed</li>
+                  <li>• Focus on future value you&apos;ll bring</li>
                   <li>• Be specific about dollar amounts</li>
                   <li>• Express enthusiasm for the role</li>
                 </ul>
@@ -221,7 +221,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
                   <li>• Mentioning personal financial needs</li>
                   <li>• Negotiating over email initially</li>
                   <li>• Being demanding or threatening</li>
-                  <li>• Accepting the first "no" as final</li>
+                  <li>• Accepting the first &quot;no&quot; as final</li>
                 </ul>
               </div>
             </div>
@@ -233,9 +233,9 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
               <h4 className="font-semibold text-blue-800">Success Story</h4>
             </div>
             <p className="text-blue-700 mt-2">
-              "I researched my role and found I was 18% below market rate. I prepared a one-page 
-              document showing my achievements and asked for a 25% increase during my review. 
-              I got 20% immediately and a promise for the remaining 5% in six months." - Sarah, Marketing Manager
+              &quot;I researched my role and found I was 18% below market rate. I prepared a one-page
+              document showing my achievements and asked for a 25% increase during my review.
+              I got 20% immediately and a promise for the remaining 5% in six months.&quot; - Sarah, Marketing Manager
             </p>
           </div>
         </motion.div>
@@ -246,7 +246,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
       title: 'Building Multiple Income Streams',
       icon: <DollarSign className="w-6 h-6" />,
       content: (
-        <motion.div 
+        <motion.div
           className="space-y-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -254,7 +254,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
           <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-6 rounded-lg">
             <h3 className="text-2xl font-bold mb-4">Financial Security Through Diversification</h3>
             <p className="text-lg">
-              The average millionaire has 7 income streams. Building multiple income sources 
+              The average millionaire has 7 income streams. Building multiple income sources
               creates financial security and accelerates wealth building.
             </p>
           </div>
@@ -321,7 +321,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
                       </span>
                     </div>
                     <p className="text-gray-600 mb-3">{stream.description}</p>
-                    
+
                     <div className="grid md:grid-cols-3 gap-4 mb-3">
                       <div>
                         <span className="text-xs font-medium text-gray-500">TIME COMMITMENT</span>
@@ -374,7 +374,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
     if (!lessonProgress.includes(lessonIndex)) {
       setLessonProgress([...lessonProgress, lessonIndex]);
     }
-    
+
     if (lessonIndex === lessons.length - 1) {
       setTimeout(() => onComplete(), 1000);
     }
@@ -407,7 +407,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
             {currentLesson + 1} of {lessons.length}
           </div>
         </div>
-        
+
         <div className="w-full bg-white/20 rounded-full h-2">
           <motion.div
             className="bg-white h-2 rounded-full"
@@ -447,13 +447,12 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
           {lessons.map((_, index) => (
             <div
               key={index}
-              className={`w-3 h-3 rounded-full transition-colors ${
-                index === currentLesson
+              className={`w-3 h-3 rounded-full transition-colors ${index === currentLesson
                   ? 'bg-green-500'
                   : index < currentLesson
-                  ? 'bg-blue-500'
-                  : 'bg-gray-300'
-              }`}
+                    ? 'bg-blue-500'
+                    : 'bg-gray-300'
+                }`}
             />
           ))}
         </div>

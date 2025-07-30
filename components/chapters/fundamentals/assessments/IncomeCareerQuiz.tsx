@@ -344,16 +344,16 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                                         key={index}
                                         onClick={() => handleAnswerSelect(index)}
                                         className={`w-full text-left p-4 rounded-lg border-2 transition-all ${selectedAnswers[currentQuestion] === index
-                                                ? 'border-green-500 bg-green-50'
-                                                : 'border-gray-200 hover:border-green-300 hover:bg-gray-50'
+                                            ? 'border-green-500 bg-green-50'
+                                            : 'border-gray-200 hover:border-green-300 hover:bg-gray-50'
                                             }`}
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
                                     >
                                         <div className="flex items-center">
                                             <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${selectedAnswers[currentQuestion] === index
-                                                    ? 'border-green-500 bg-green-500'
-                                                    : 'border-gray-300'
+                                                ? 'border-green-500 bg-green-500'
+                                                : 'border-gray-300'
                                                 }`}>
                                                 {selectedAnswers[currentQuestion] === index && (
                                                     <div className="w-2 h-2 bg-white rounded-full" />
@@ -375,8 +375,8 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                         >
                             <div className="mb-6">
                                 <div className={`flex items-center mb-4 ${selectedAnswers[currentQuestion] === currentQ.correctAnswer
-                                        ? 'text-green-600'
-                                        : 'text-red-600'
+                                    ? 'text-green-600'
+                                    : 'text-red-600'
                                     }`}>
                                     {selectedAnswers[currentQuestion] === currentQ.correctAnswer ? (
                                         <CheckCircle className="w-6 h-6 mr-2" />

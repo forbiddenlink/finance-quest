@@ -156,7 +156,7 @@ export default function ProgressDashboard() {
           </div>
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-600">
-              You've mastered <strong>{userProgress.currentChapter - 1}</strong> out of <strong>{totalChapters}</strong> chapters
+              You&apos;ve mastered <strong>{userProgress.currentChapter - 1}</strong> out of <strong>{totalChapters}</strong> chapters
             </p>
           </div>
         </div>
