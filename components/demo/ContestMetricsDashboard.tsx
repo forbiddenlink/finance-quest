@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  BarChart3, 
-  TrendingUp, 
-  Users, 
-  Target, 
+import {
+  BarChart3,
+  TrendingUp,
+  Users,
+  Target,
   Award,
   Brain,
   Mic,
@@ -17,7 +17,6 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import GradientCard from '@/components/shared/ui/GradientCard';
-import { useProgress } from '@/lib/context/ProgressContext';
 
 interface ImpactMetric {
   label: string;
@@ -38,7 +37,6 @@ interface LearningOutcome {
 }
 
 export default function ContestMetricsDashboard() {
-  const { state } = useProgress();
   const [mounted, setMounted] = useState(false);
   const [activeMetric, setActiveMetric] = useState<string | null>(null);
 
@@ -173,7 +171,7 @@ export default function ContestMetricsDashboard() {
               <p className="text-lg text-gray-600">Measurable Outcomes for Hack the Economy Judges</p>
             </div>
           </div>
-          
+
           <div className="bg-gradient-to-r from-green-100 to-blue-100 border border-green-200 rounded-lg p-4 inline-block">
             <p className="text-green-800 font-semibold flex items-center gap-2">
               <Target className="w-5 h-5" />
@@ -200,11 +198,10 @@ export default function ContestMetricsDashboard() {
                     {metric.trend === 'stable' && <CheckCircle className="w-5 h-5 text-blue-500" />}
                     <h3 className="font-semibold text-gray-900">{metric.label}</h3>
                   </div>
-                  <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    metric.value >= metric.target 
-                      ? 'bg-green-100 text-green-800' 
+                  <div className={`px-2 py-1 rounded-full text-xs font-medium ${metric.value >= metric.target
+                      ? 'bg-green-100 text-green-800'
                       : 'bg-yellow-100 text-yellow-800'
-                  }`}>
+                    }`}>
                     {metric.value >= metric.target ? 'Target Met' : 'In Progress'}
                   </div>
                 </div>
@@ -230,9 +227,8 @@ export default function ContestMetricsDashboard() {
                 {/* Progress Bar */}
                 <div className="w-full bg-gray-200 rounded-full h-2 mt-3">
                   <motion.div
-                    className={`h-2 rounded-full ${
-                      metric.value >= metric.target ? 'bg-green-500' : 'bg-blue-500'
-                    }`}
+                    className={`h-2 rounded-full ${metric.value >= metric.target ? 'bg-green-500' : 'bg-blue-500'
+                      }`}
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.min((metric.value / metric.target) * 100, 100)}%` }}
                     transition={{ duration: 1, delay: index * 0.1 }}

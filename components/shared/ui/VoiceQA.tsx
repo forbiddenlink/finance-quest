@@ -1,18 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Mic, 
-  MicOff, 
-  Volume2, 
-  VolumeX, 
-  MessageCircle, 
-  Brain, 
+import {
+  Mic,
+  MicOff,
+  Volume2,
+  VolumeX,
+  MessageCircle,
+  Brain,
   Sparkles,
   Play,
   Pause,
-  RefreshCw 
+  RefreshCw
 } from 'lucide-react';
 
 // Define types for the speech recognition
@@ -51,6 +51,41 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
   const [recognition, setRecognition] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const [speechSynthesis, setSpeechSynthesis] = useState<SpeechSynthesis | null>(null);
 
+  const handleVoiceQuestion = useCallback(async (question: string) => {
+    if (isQuizMode) {
+      setResponse("Voice questions are disabled during quizzes to maintain assessment integrity. Please complete the quiz first!");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const res = await fetch('/api/ai-chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: `Voice Question: ${question}`,
+          context: 'voice-qa',
+          requestId: Date.now().toString()
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to get response');
+      }
+
+      const data = await res.json();
+      setResponse(data.message);
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      setResponse("I'm having trouble processing your question right now. Please try typing your question instead, or check your connection and try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [isQuizMode]);
+
   useEffect(() => {
     // Check if speech recognition is supported  
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,7 +96,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
       setIsSupported(true);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const recognitionInstance = new SpeechRecognition() as any;
-      
+
       recognitionInstance.continuous = false;
       recognitionInstance.interimResults = false;
       recognitionInstance.lang = 'en-US';
@@ -93,42 +128,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
     if (typeof window !== 'undefined' && window.speechSynthesis) {
       setSpeechSynthesis(window.speechSynthesis);
     }
-  }, []);
-
-  const handleVoiceQuestion = async (question: string) => {
-    if (isQuizMode) {
-      setResponse("Voice questions are disabled during quizzes to maintain assessment integrity. Please complete the quiz first!");
-      return;
-    }
-
-    setIsLoading(true);
-    
-    try {
-      const res = await fetch('/api/ai-chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: `Voice Question: ${question}`,
-          context: 'voice-qa',
-          requestId: Date.now().toString()
-        }),
-      });
-
-      if (!res.ok) {
-        throw new Error('Failed to get response');
-      }
-
-      const data = await res.json();
-      setResponse(data.message);
-    } catch (error) {
-      console.error('Error getting AI response:', error);
-      setResponse("I'm having trouble processing your question right now. Please try typing your question instead, or check your connection and try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }, [handleVoiceQuestion]);
 
   const startListening = () => {
     if (recognition && !isListening) {
@@ -148,16 +148,16 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
     if (speechSynthesis && response && !isSpeaking) {
       // Cancel any ongoing speech
       speechSynthesis.cancel();
-      
+
       const utterance = new SpeechSynthesisUtterance(response);
       utterance.rate = 0.8;
       utterance.pitch = 1;
       utterance.volume = 0.8;
-      
+
       utterance.onstart = () => setIsSpeaking(true);
       utterance.onend = () => setIsSpeaking(false);
       utterance.onerror = () => setIsSpeaking(false);
-      
+
       speechSynthesis.speak(utterance);
     }
   };
@@ -214,7 +214,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
             <p className="text-sm text-gray-600">Ask any financial question with your voice</p>
           </div>
         </div>
-        
+
         {(transcript || response) && (
           <button
             onClick={clearConversation}
@@ -229,7 +229,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
       {isQuizMode && (
         <div className="bg-yellow-100 border border-yellow-300 rounded-lg p-4 mb-6">
           <p className="text-yellow-800 text-sm font-medium">
-            🔒 Voice Q&A is disabled during quizzes to maintain assessment integrity. 
+            🔒 Voice Q&A is disabled during quizzes to maintain assessment integrity.
             Complete the quiz to unlock voice assistance!
           </p>
         </div>
@@ -240,13 +240,12 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
         <motion.button
           onClick={isListening ? stopListening : startListening}
           disabled={isQuizMode || isLoading}
-          className={`relative p-6 rounded-full transition-all ${
-            isListening
+          className={`relative p-6 rounded-full transition-all ${isListening
               ? 'bg-red-500 text-white shadow-lg'
               : isQuizMode
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'bg-purple-500 text-white hover:bg-purple-600 shadow-lg'
-          }`}
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-purple-500 text-white hover:bg-purple-600 shadow-lg'
+            }`}
           whileHover={!isQuizMode && !isLoading ? { scale: 1.05 } : {}}
           whileTap={!isQuizMode && !isLoading ? { scale: 0.95 } : {}}
         >
@@ -267,11 +266,10 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
         {response && (
           <motion.button
             onClick={isSpeaking ? stopSpeaking : speakResponse}
-            className={`p-4 rounded-full transition-all ${
-              isSpeaking
+            className={`p-4 rounded-full transition-all ${isSpeaking
                 ? 'bg-green-500 text-white shadow-lg'
                 : 'bg-blue-500 text-white hover:bg-blue-600 shadow-lg'
-            }`}
+              }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, scale: 0 }}
@@ -394,11 +392,10 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
                       )}
                       <button
                         onClick={isSpeaking ? stopSpeaking : speakResponse}
-                        className={`p-1 rounded transition-colors ${
-                          isSpeaking
+                        className={`p-1 rounded transition-colors ${isSpeaking
                             ? 'text-red-600 hover:text-red-700'
                             : 'text-blue-600 hover:text-blue-700'
-                        }`}
+                          }`}
                       >
                         {isSpeaking ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                       </button>

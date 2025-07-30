@@ -2,19 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  BarChart3, 
-  TrendingUp, 
-  Clock, 
-  Target, 
+import {
+  BarChart3,
+  TrendingUp,
+  Clock,
+  Target,
   Brain,
   Award,
-  Zap,
-  Users,
-  BookOpen,
-  Calculator
+  Zap
 } from 'lucide-react';
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import GradientCard from './GradientCard';
 import { useProgress } from '@/lib/context/ProgressContext';
 
@@ -40,8 +37,6 @@ interface TimeDistribution {
   color: string;
 }
 
-const COLORS = ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444'];
-
 export default function LearningAnalyticsDashboard() {
   const { state } = useProgress();
   const [metrics, setMetrics] = useState<LearningMetrics>({
@@ -61,27 +56,27 @@ export default function LearningAnalyticsDashboard() {
     // Calculate learning metrics from user progress
     const calculateMetrics = () => {
       const progress = state.userProgress;
-      
+
       // Calculate session time (simulated)
       const avgSessionTime = progress.totalTimeSpent || 45;
-      
+
       // Calculate concepts mastered
-      const conceptsMastered = progress.completedLessons.length + 
+      const conceptsMastered = progress.completedLessons.length +
         Object.keys(progress.quizScores).filter(quiz => progress.quizScores[quiz] >= 80).length;
-      
+
       // Calculate retention rate based on quiz performance
       const quizScores = Object.values(progress.quizScores);
-      const retentionRate = quizScores.length > 0 
-        ? quizScores.reduce((acc, score) => acc + score, 0) / quizScores.length 
+      const retentionRate = quizScores.length > 0
+        ? quizScores.reduce((acc, score) => acc + score, 0) / quizScores.length
         : 0;
-      
+
       // Calculate engagement score
-      const engagementScore = Math.min(100, 
-        (progress.completedLessons.length * 20) + 
-        (progress.calculatorUsage.length * 15) + 
+      const engagementScore = Math.min(100,
+        (progress.completedLessons.length * 20) +
+        (progress.calculatorUsage.length * 15) +
         (progress.achievementsUnlocked.length * 10)
       );
-      
+
       // Calculate streak (simulated)
       const lastActive = new Date(progress.lastActiveDate);
       const today = new Date();
@@ -247,21 +242,21 @@ export default function LearningAnalyticsDashboard() {
                 <XAxis dataKey="week" />
                 <YAxis />
                 <Tooltip />
-                <Area 
-                  type="monotone" 
-                  dataKey="progress" 
+                <Area
+                  type="monotone"
+                  dataKey="progress"
                   stackId="1"
-                  stroke="#3B82F6" 
-                  fill="#3B82F6" 
+                  stroke="#3B82F6"
+                  fill="#3B82F6"
                   fillOpacity={0.6}
                   name="Progress %"
                 />
-                <Area 
-                  type="monotone" 
-                  dataKey="engagement" 
+                <Area
+                  type="monotone"
+                  dataKey="engagement"
                   stackId="2"
-                  stroke="#8B5CF6" 
-                  fill="#8B5CF6" 
+                  stroke="#8B5CF6"
+                  fill="#8B5CF6"
                   fillOpacity={0.6}
                   name="Engagement %"
                 />
@@ -314,7 +309,7 @@ export default function LearningAnalyticsDashboard() {
             <Brain className="w-5 h-5 mr-2 text-green-600" />
             Cognitive Load & Learning Efficiency
           </h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Spaced Repetition Effectiveness */}
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
@@ -386,7 +381,7 @@ export default function LearningAnalyticsDashboard() {
             <Brain className="w-5 h-5 mr-2 text-purple-600" />
             AI-Powered Learning Insights
           </h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white bg-opacity-50 rounded-lg p-4">
               <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
@@ -399,7 +394,7 @@ export default function LearningAnalyticsDashboard() {
                 <li>• Consistent engagement with practice tools</li>
               </ul>
             </div>
-            
+
             <div className="bg-white bg-opacity-50 rounded-lg p-4">
               <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
                 <Target className="w-4 h-4 mr-2 text-blue-500" />

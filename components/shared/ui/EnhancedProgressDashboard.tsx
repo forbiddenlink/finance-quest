@@ -2,13 +2,13 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { 
-  CheckCircle, 
-  Clock, 
-  TrendingUp, 
-  Award, 
-  Brain, 
-  Target, 
+import {
+  CheckCircle,
+  Clock,
+  TrendingUp,
+  Award,
+  Brain,
+  Target,
   Sparkles,
   BarChart3,
   Mic,
@@ -19,7 +19,6 @@ import {
 } from 'lucide-react';
 import { useProgress } from '@/lib/context/ProgressContext';
 import EconomicDashboard from './EconomicDashboard';
-import FinancialHealthScoreCalculator from './FinancialHealthScoreCalculator';
 
 interface FeatureStatus {
   name: string;
@@ -156,7 +155,7 @@ export default function EnhancedProgressDashboard() {
             Finance Quest: Development Achievements
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Advanced educational platform with real market data, AI-powered assessments, 
+            Advanced educational platform with real market data, AI-powered assessments,
             and voice interaction capabilities. Professional-grade implementation complete.
           </p>
         </motion.div>
@@ -240,7 +239,7 @@ export default function EnhancedProgressDashboard() {
             {implementedFeatures.map((feature, index) => {
               const StatusIcon = getStatusIcon(feature.status);
               const FeatureIcon = feature.icon;
-              
+
               return (
                 <motion.div
                   key={feature.name}
@@ -259,14 +258,14 @@ export default function EnhancedProgressDashboard() {
                       {feature.status.replace('-', ' ')}
                     </span>
                   </div>
-                  
+
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">
                     {feature.name}
                   </h4>
                   <p className="text-gray-600 text-sm mb-4">
                     {feature.description}
                   </p>
-                  
+
                   {feature.link && (
                     <Link href={feature.link}>
                       <button className={`w-full bg-${feature.color}-500 hover:bg-${feature.color}-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors`}>
@@ -296,7 +295,7 @@ export default function EnhancedProgressDashboard() {
             {nextPhaseFeatures.map((feature, index) => {
               const StatusIcon = getStatusIcon(feature.status);
               const FeatureIcon = feature.icon;
-              
+
               return (
                 <motion.div
                   key={feature.name}
@@ -314,7 +313,7 @@ export default function EnhancedProgressDashboard() {
                       {feature.status.replace('-', ' ')}
                     </span>
                   </div>
-                  
+
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">
                     {feature.name}
                   </h4>
