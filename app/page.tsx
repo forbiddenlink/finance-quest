@@ -78,6 +78,15 @@ export default function Home() {
                 </span>
               </button>
             </Link>
+            <Link href="/health-assessment">
+              <button className="group bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-green-600 hover:to-emerald-700 transition-all shadow-lg card-lift animate-pulse-glow font-poppins relative overflow-hidden">
+                <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <span className="flex items-center relative z-10">
+                  <Target className="mr-2 w-5 h-5" />
+                  Health Assessment
+                </span>
+              </button>
+            </Link>
             <Link href="/calculators/compound-interest">
               <button className="group premium-card text-blue-600 px-8 py-4 rounded-xl text-lg font-semibold border-2 border-blue-600/20 hover:border-blue-600/40 transition-all shadow-lg font-poppins relative overflow-hidden">
                 <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>

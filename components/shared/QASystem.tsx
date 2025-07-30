@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, HelpCircle, Sparkles } from 'lucide-react';
+import { Send, HelpCircle, Sparkles, Mic } from 'lucide-react';
 import { useProgress } from '@/lib/context/ProgressContext';
 import LoadingSpinner from './ui/LoadingSpinner';
+import VoiceQA from './ui/VoiceQA';
 
 interface QAMessage {
   id: string;
@@ -22,6 +23,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [activeTab, setActiveTab] = useState<'text' | 'voice'>('text');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { state } = useProgress();
 
@@ -123,7 +125,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
           <div className="bg-blue-100 p-1 rounded-full">
             <Sparkles className="w-4 h-4 text-blue-600" />
           </div>
-          <h3 className="font-semibold text-gray-900">Ask Any Financial Question</h3>
+          <h3 className="font-semibold text-gray-900">AI Financial Q&A Assistant</h3>
         </div>
         <button className="text-sm text-blue-600 hover:text-blue-700">
           {isExpanded ? 'Minimize' : 'Expand'}
@@ -132,91 +134,125 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
 
       {isExpanded && (
         <>
-          {/* Messages Area */}
-          <div className="h-64 overflow-y-auto p-4 space-y-4">
-            {messages.length === 0 ? (
-              <div className="text-center text-gray-500 py-8">
-                <HelpCircle className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                <p className="text-sm">Ask me anything about personal finance!</p>
-                <p className="text-xs mt-1">I know about everything you&apos;re learning in Finance Quest.</p>
-              </div>
-            ) : (
-              messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.type === 'user'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-900'
-                      }`}
-                  >
-                    <p className="text-sm">{message.content}</p>
-                    <p className={`text-xs mt-1 ${message.type === 'user' ? 'text-blue-100' : 'text-gray-500'
-                      }`}>
-                      {message.timestamp.toLocaleTimeString([], {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
-                    </p>
-                  </div>
-                </div>
-              ))
-            )}
-
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-gradient-to-r from-blue-100 to-purple-100 text-gray-900 px-4 py-3 rounded-lg border border-blue-200">
-                  <LoadingSpinner
-                    size="sm"
-                    text="AI is thinking..."
-                    className="text-blue-600"
-                  />
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
+          {/* Tab Navigation */}
+          <div className="flex border-b border-gray-200">
+            <button
+              onClick={() => setActiveTab('text')}
+              className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 text-sm font-medium transition-colors ${
+                activeTab === 'text'
+                  ? 'bg-blue-50 text-blue-600 border-b-2 border-blue-600'
+                  : 'text-gray-600 hover:text-blue-600'
+              }`}
+            >
+              <Sparkles className="w-4 h-4" />
+              Text Chat
+            </button>
+            <button
+              onClick={() => setActiveTab('voice')}
+              className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 text-sm font-medium transition-colors ${
+                activeTab === 'voice'
+                  ? 'bg-purple-50 text-purple-600 border-b-2 border-purple-600'
+                  : 'text-gray-600 hover:text-purple-600'
+              }`}
+            >
+              <Mic className="w-4 h-4" />
+              Voice Q&A
+            </button>
           </div>
 
-          {/* Suggested Questions */}
-          {messages.length === 0 && (
-            <div className="px-4 py-2 border-t border-gray-200">
-              <p className="text-xs text-gray-600 mb-2">Try asking:</p>
-              <div className="flex flex-wrap gap-2">
-                {suggestedQuestions.slice(0, 3).map((question, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setInputValue(question)}
-                    className="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded transition-colors"
-                  >
-                    {question}
-                  </button>
-                ))}
-              </div>
+          {activeTab === 'voice' ? (
+            <div className="p-4">
+              <VoiceQA isQuizMode={isQuizMode} />
             </div>
-          )}
+          ) : (
+            <>
+              {/* Messages Area */}
+              <div className="h-64 overflow-y-auto p-4 space-y-4">
+                {messages.length === 0 ? (
+                  <div className="text-center text-gray-500 py-8">
+                    <HelpCircle className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                    <p className="text-sm">Ask me anything about personal finance!</p>
+                    <p className="text-xs mt-1">I know about everything you&apos;re learning in Finance Quest.</p>
+                  </div>
+                ) : (
+                  messages.map((message) => (
+                    <div
+                      key={message.id}
+                      className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div
+                        className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.type === 'user'
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-gray-100 text-gray-900'
+                          }`}
+                      >
+                        <p className="text-sm">{message.content}</p>
+                        <p className={`text-xs mt-1 ${message.type === 'user' ? 'text-blue-100' : 'text-gray-500'
+                          }`}>
+                          {message.timestamp.toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                )}
 
-          {/* Input Form */}
-          <form onSubmit={handleSubmit} className="p-4 border-t border-gray-200">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Ask about budgeting, investing, credit scores..."
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                disabled={isLoading}
-              />
-              <button
-                type="submit"
-                disabled={!inputValue.trim() || isLoading}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-            </div>
-          </form>
+                {isLoading && (
+                  <div className="flex justify-start">
+                    <div className="bg-gradient-to-r from-blue-100 to-purple-100 text-gray-900 px-4 py-3 rounded-lg border border-blue-200">
+                      <LoadingSpinner
+                        size="sm"
+                        text="AI is thinking..."
+                        className="text-blue-600"
+                      />
+                    </div>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+
+              {/* Suggested Questions */}
+              {messages.length === 0 && (
+                <div className="px-4 py-2 border-t border-gray-200">
+                  <p className="text-xs text-gray-600 mb-2">Try asking:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {suggestedQuestions.slice(0, 3).map((question, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setInputValue(question)}
+                        className="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded transition-colors"
+                      >
+                        {question}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Input Form */}
+              <form onSubmit={handleSubmit} className="p-4 border-t border-gray-200">
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder="Ask about budgeting, investing, credit scores..."
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    disabled={isLoading}
+                  />
+                  <button
+                    type="submit"
+                    disabled={!inputValue.trim() || isLoading}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <Send className="w-4 h-4" />
+                  </button>
+                </div>
+              </form>
+            </>
+          )}
         </>
       )}
     </div>

@@ -1,9 +1,10 @@
 'use client';
 
-import FinancialHealthAssessment from '@/components/shared/ui/FinancialHealthAssessment';
+import FinancialHealthScoreCalculator from '@/components/shared/ui/FinancialHealthScoreCalculator';
+import EconomicDashboard from '@/components/shared/ui/EconomicDashboard';
 import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
 import { useProgress } from '@/lib/context/ProgressContext';
-import { ArrowLeft, Heart, Brain, Target, TrendingUp, Award } from 'lucide-react';
+import { ArrowLeft, Heart, Brain, Target, TrendingUp, Award, BarChart3 } from 'lucide-react';
 
 export default function HealthAssessmentPage() {
   const { state } = useProgress();
@@ -76,7 +77,22 @@ export default function HealthAssessmentPage() {
 
         {/* Main Assessment */}
         <div className="mb-12">
-          <FinancialHealthAssessment />
+          <FinancialHealthScoreCalculator />
+        </div>
+
+        {/* Economic Dashboard - Real Market Data Integration */}
+        <div className="mb-12">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4 flex items-center justify-center gap-3">
+              <BarChart3 className="w-8 h-8 text-blue-600" />
+              Real Economic Context
+            </h3>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Understand how current economic conditions affect your financial decisions.
+              Real data from Federal Reserve and financial markets.
+            </p>
+          </div>
+          <EconomicDashboard />
         </div>
 
         {/* Spaced Repetition Dashboard - Show if user has completed lessons */}

@@ -1,13 +1,16 @@
 'use client';
 
+import { useState } from 'react';
 import { useProgress } from '@/lib/context/ProgressContext';
 import ProgressDashboard from '@/components/shared/ui/ProgressDashboard';
+import EnhancedProgressDashboard from '@/components/shared/ui/EnhancedProgressDashboard';
 import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
 import GradientCard from '@/components/shared/ui/GradientCard';
-import { Brain, TrendingUp, Target, Clock, BookOpen, Calculator, Award, ArrowLeft, BarChart3 } from 'lucide-react';
+import { Brain, TrendingUp, Target, Clock, BookOpen, Calculator, Award, ArrowLeft, BarChart3, Code, User } from 'lucide-react';
 
 export default function ProgressPage() {
   const { state } = useProgress();
+  const [viewMode, setViewMode] = useState<'user' | 'dev'>('user' as 'user' | 'dev');
 
   const completionStats = {
     lessonsCompleted: state.userProgress.completedLessons.length,
@@ -18,6 +21,10 @@ export default function ProgressPage() {
       ? Math.round(Object.values(state.userProgress.quizScores).reduce((a, b) => a + b, 0) / Object.values(state.userProgress.quizScores).length)
       : 0
   };
+
+  if (viewMode === 'dev') {
+    return <EnhancedProgressDashboard />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50">
@@ -33,11 +40,37 @@ export default function ProgressPage() {
                 <ArrowLeft className="w-4 h-4" />
                 Back to Home
               </button>
-              <h1 className="text-2xl font-bold text-gray-900">Enhanced Progress Dashboard</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Progress Dashboard</h1>
             </div>
-            <div className="bg-indigo-100 px-3 py-1 rounded-full flex items-center gap-2">
-              <Brain className="w-4 h-4 text-indigo-600" />
-              <span className="text-sm font-medium text-indigo-800">AI-Powered Analytics</span>
+            <div className="flex items-center gap-4">
+              <div className="flex bg-gray-100 rounded-lg p-1">
+                <button
+                  onClick={() => setViewMode('user')}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    viewMode === 'user'
+                      ? 'bg-white text-blue-600 shadow-sm'
+                      : 'text-gray-600 hover:text-blue-600'
+                  }`}
+                >
+                  <User className="w-4 h-4" />
+                  User View
+                </button>
+                <button
+                  onClick={() => setViewMode('dev')}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    viewMode === 'dev'
+                      ? 'bg-white text-purple-600 shadow-sm'
+                      : 'text-gray-600 hover:text-purple-600'
+                  }`}
+                >
+                  <Code className="w-4 h-4" />
+                  Dev Progress
+                </button>
+              </div>
+              <div className="bg-indigo-100 px-3 py-1 rounded-full flex items-center gap-2">
+                <Brain className="w-4 h-4 text-indigo-600" />
+                <span className="text-sm font-medium text-indigo-800">AI-Powered Analytics</span>
+              </div>
             </div>
           </div>
         </div>
@@ -145,7 +178,7 @@ export default function ProgressPage() {
                       <Calculator className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900">Tool Expert</h4>
+                      <h4 className="font-semibent text-gray-900">Tool Expert</h4>
                       <p className="text-sm text-gray-600">Used multiple financial calculators!</p>
                     </div>
                   </div>
