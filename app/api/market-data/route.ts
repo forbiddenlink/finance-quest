@@ -19,12 +19,15 @@ export async function GET(request: NextRequest) {
   const type = searchParams.get('type') || 'full';
   const forceRefresh = searchParams.get('refresh') === 'true';
 
+  console.log(`Market data API called with type: ${type}`);
+
   try {
     // Check cache first (unless force refresh)
     if (!forceRefresh && cache[type]) {
       const cached = cache[type];
       const now = Date.now();
       if (now - cached.timestamp < cached.ttl) {
+        console.log(`Serving cached data for type: ${type}`);
         return NextResponse.json({
           success: true,
           data: cached.data,
@@ -35,6 +38,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    console.log(`Fetching fresh data for type: ${type}`);
     let data;
     let cacheTtl = CACHE_DURATION.full;
 
@@ -62,6 +66,8 @@ export async function GET(request: NextRequest) {
         break;
     }
 
+    console.log(`Successfully fetched data for type: ${type}`, data ? 'with data' : 'no data');
+
     // Cache the successful response
     cache[type] = {
       data: type === 'stocks' ? data : { [type]: data },
@@ -82,10 +88,13 @@ export async function GET(request: NextRequest) {
 
   } catch (error) {
     console.error('Market data API error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    console.error('Error details:', errorMessage);
 
     // Try to return cached data if available
     if (cache[type]) {
       const cached = cache[type];
+      console.log(`Serving cached fallback data for type: ${type}`);
       return NextResponse.json({
         success: true,
         data: cached.data,
@@ -95,15 +104,16 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-
+    // Return structured error response instead of throwing
+    console.log(`No cached data available, returning error response for type: ${type}`);
     return NextResponse.json({
       success: false,
       error: 'Failed to fetch market data',
       timestamp: new Date().toISOString(),
-      details: process.env.NODE_ENV === 'development' ? errorMessage : 'Service temporarily unavailable'
+      details: process.env.NODE_ENV === 'development' ? errorMessage : 'Service temporarily unavailable',
+      fallbackAvailable: false
     }, {
-      status: 500
+      status: 200 // Change from 500 to 200 to prevent JSON parsing errors
     });
   }
 }

@@ -16,7 +16,6 @@ import {
   CheckCircle,
   Lock,
   Star,
-  Zap,
   AlertTriangle
 } from 'lucide-react';
 

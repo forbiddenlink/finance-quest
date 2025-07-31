@@ -372,6 +372,8 @@ interface YahooFinanceResponse {
   }
 
   async getStockQuotes(): Promise<StockQuote[]> {
+    console.log('Getting stock quotes...');
+    
     // Check cache first
     const cacheKey = 'stock-quotes';
     const cached = this.cache.get(cacheKey);
@@ -413,7 +415,16 @@ interface YahooFinanceResponse {
 
     // All APIs failed, use fallback data
     console.log('All APIs failed, using fallback data');
-    return this.getFallbackStockData();
+    const fallbackData = this.getFallbackStockData();
+    
+    // Cache fallback data for a shorter time
+    this.cache.set(cacheKey, {
+      data: fallbackData,
+      timestamp: Date.now(),
+      ttl: 30000
+    });
+    
+    return fallbackData;
   }
 
   async getMarketIndices() {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { TrendingUp, TrendingDown, DollarSign, Wifi, WifiOff } from 'lucide-react';
+import { TrendingUp, TrendingDown, Wifi, WifiOff } from 'lucide-react';
 
 interface StockTicker {
   symbol: string;

@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProgressDisplay } from "@/components/shared/ui/ProgressDisplay";
-import FloatingBackground from "@/components/shared/ui/FloatingBackground";
 import AnimatedCounter from "@/components/shared/ui/AnimatedCounter";
 import MarketTicker from "@/components/shared/ui/MarketTicker";
 import InteractiveCard from "@/components/shared/ui/InteractiveCard";
@@ -20,7 +19,6 @@ import {
   Calculator,
   Target,
   TrendingUp,
-  Shield,
   Brain,
   CheckCircle,
   BarChart3,
@@ -32,8 +30,6 @@ import {
   Building,
   Lock,
   Briefcase,
-  PieChart,
-  FileText,
   Umbrella,
   CreditCard,
   ArrowRight,
@@ -240,9 +236,9 @@ export default function HomePage() {
               <div className="text-4xl font-bold text-red-400 mb-2">
                 <AnimatedCounter end={64} suffix="%" className="text-4xl font-bold text-red-400" />
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed">of Americans can't pass a basic financial literacy test</p>
+              <p className="text-gray-400 text-sm leading-relaxed">of Americans can&apos;t pass a basic financial literacy test</p>
               <div className="mt-3 px-3 py-1 bg-red-500/20 rounded-full">
-                <p className="text-xs text-red-300 font-medium">The Crisis We're Solving</p>
+                <p className="text-xs text-red-300 font-medium">The Crisis We&apos;re Solving</p>
               </div>
             </div>
           </InteractiveCard>
@@ -860,7 +856,7 @@ export default function HomePage() {
             transition={{ delay: 1.3, duration: 0.6 }}
             className="text-lg text-gray-400 max-w-2xl mx-auto mb-10"
           >
-            Join thousands of learners who've gone from financial confusion to confidence.
+            Join thousands of learners who&apos;ve gone from financial confusion to confidence.
             Start your journey today and see measurable results in just weeks.
           </motion.p>
           <motion.div
