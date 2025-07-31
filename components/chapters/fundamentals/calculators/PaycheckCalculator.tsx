@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { Lightbulb, DollarSign, TrendingDown, Calculator, AlertCircle } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
 
@@ -38,7 +38,7 @@ export default function PaycheckCalculator() {
   }, [recordCalculatorUsage]);
 
   // Federal tax brackets for 2024 (simplified)
-  const federalBrackets: Record<string, TaxBracket[]> = {
+  const federalBrackets: Record<string, TaxBracket[]> = useMemo(() => ({
     single: [
       { min: 0, max: 11000, rate: 0.10 },
       { min: 11000, max: 44725, rate: 0.12 },
@@ -57,10 +57,10 @@ export default function PaycheckCalculator() {
       { min: 462500, max: 693750, rate: 0.35 },
       { min: 693750, max: Infinity, rate: 0.37 }
     ]
-  };
+  }), []);
 
   // State tax rates (simplified - using flat rates for demo)
-  const stateTaxRates: Record<string, number> = {
+  const stateTaxRates: Record<string, number> = useMemo(() => ({
     'CA': 0.08,  // California
     'NY': 0.07,  // New York
     'TX': 0.00,  // Texas (no state income tax)
@@ -71,51 +71,48 @@ export default function PaycheckCalculator() {
     'IL': 0.05,  // Illinois
     'PA': 0.03,  // Pennsylvania
     'OH': 0.04   // Ohio
-  };
+  }), []);
 
-  const calculateFederalTax = (annualIncome: number, status: 'single' | 'married'): number => {
+  const calculateFederalTax = useCallback((annualIncome: number, status: 'single' | 'married'): number => {
     const brackets = federalBrackets[status];
     let tax = 0;
     let remainingIncome = annualIncome;
 
     for (const bracket of brackets) {
       if (remainingIncome <= 0) break;
-      
+
       const taxableInThisBracket = Math.min(remainingIncome, bracket.max - bracket.min);
       tax += taxableInThisBracket * bracket.rate;
       remainingIncome -= taxableInThisBracket;
     }
 
     return tax / 12; // Monthly tax
-  };
+  }, [federalBrackets]);
 
-  const calculatePaycheck = () => {
+  const calculatePaycheck = useCallback(() => {
     const gross = parseFloat(grossPay);
     const healthIns = parseFloat(healthInsurance) || 0;
     const retirement401kPercent = parseFloat(retirement401k) || 0;
-    
+
     if (isNaN(gross) || gross <= 0) return;
 
-    // Calculate annual income for tax brackets
-    const annualGross = gross * 12;
-    
     // Pre-tax deductions
     const retirement401kAmount = gross * (retirement401kPercent / 100);
     const taxableIncome = gross - retirement401kAmount - healthIns;
 
     // Federal tax calculation using brackets
     const federalTax = calculateFederalTax(taxableIncome * 12, filingStatus);
-    
+
     // State tax
     const stateTax = taxableIncome * (stateTaxRates[state] || 0);
-    
+
     // Payroll taxes (on gross pay)
     const socialSecurity = Math.min(gross * 0.062, 160200 * 0.062 / 12); // 2024 SS wage base
     const medicare = gross * 0.0145;
     const stateDisability = gross * 0.001; // Approximate SDI rate
-    
-    const totalDeductions = federalTax + stateTax + socialSecurity + medicare + 
-                           stateDisability + healthIns + retirement401kAmount;
+
+    const totalDeductions = federalTax + stateTax + socialSecurity + medicare +
+      stateDisability + healthIns + retirement401kAmount;
     const netPay = gross - totalDeductions;
 
     const calculationResults = {
@@ -131,14 +128,14 @@ export default function PaycheckCalculator() {
     };
 
     setBreakdown(calculationResults);
-  };
+  }, [grossPay, filingStatus, state, healthInsurance, retirement401k, calculateFederalTax, stateTaxRates]);
 
   // Auto-calculate when inputs change
   useEffect(() => {
     if (grossPay) {
       calculatePaycheck();
     }
-  }, [grossPay, filingStatus, state, healthInsurance, retirement401k]);
+  }, [calculatePaycheck, grossPay]);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -158,11 +155,6 @@ export default function PaycheckCalculator() {
     { name: 'Medicare', value: breakdown.medicare, color: '#EC4899' },
     { name: 'Health Insurance', value: breakdown.healthInsurance || 0, color: '#06B6D4' },
     { name: '401k Contribution', value: breakdown.retirement401k || 0, color: '#84CC16' }
-  ] : [];
-
-  const barData = breakdown ? [
-    { category: 'Gross Pay', amount: breakdown.grossPay },
-    { category: 'Net Pay', amount: breakdown.netPay }
   ] : [];
 
   return (
@@ -185,7 +177,7 @@ export default function PaycheckCalculator() {
               <DollarSign className="w-5 h-5" />
               Income & Tax Information
             </h3>
-            
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -246,7 +238,7 @@ export default function PaycheckCalculator() {
               <TrendingDown className="w-5 h-5" />
               Pre-Tax Deductions
             </h3>
-            
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -292,7 +284,7 @@ export default function PaycheckCalculator() {
               {/* Summary Card */}
               <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6 border border-green-200">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Paycheck Summary</h3>
-                
+
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="text-center">
                     <p className="text-sm text-gray-600">Gross Pay</p>
@@ -347,7 +339,7 @@ export default function PaycheckCalculator() {
               {/* Detailed Breakdown */}
               <div className="bg-gray-50 rounded-lg p-6">
                 <h4 className="text-lg font-semibold text-gray-900 mb-4">Detailed Breakdown</h4>
-                
+
                 <div className="space-y-3">
                   <div className="flex justify-between items-center py-2 border-b border-gray-200">
                     <span className="font-medium text-gray-900">Gross Pay</span>
@@ -426,29 +418,29 @@ export default function PaycheckCalculator() {
                 <AlertCircle className="w-4 h-4" />
                 Tax Efficiency
               </h4>
-              <p>Your effective tax rate is {(((breakdown.federalTax + breakdown.stateTax) / breakdown.grossPay) * 100).toFixed(1)}%. 
-                 Consider maximizing pre-tax deductions to reduce your taxable income.</p>
+              <p>Your effective tax rate is {(((breakdown.federalTax + breakdown.stateTax) / breakdown.grossPay) * 100).toFixed(1)}%.
+                Consider maximizing pre-tax deductions to reduce your taxable income.</p>
             </div>
             <div>
               <h4 className="font-semibold mb-2">Social Security & Medicare</h4>
-              <p>These payroll taxes fund your future benefits. Social Security provides retirement income, 
-                 while Medicare covers healthcare after age 65.</p>
+              <p>These payroll taxes fund your future benefits. Social Security provides retirement income,
+                while Medicare covers healthcare after age 65.</p>
             </div>
             <div>
               <h4 className="font-semibold mb-2">401(k) Benefits</h4>
-              <p>{breakdown.retirement401k && breakdown.retirement401k > 0 
+              <p>{breakdown.retirement401k && breakdown.retirement401k > 0
                 ? `Great job! You're saving ${formatCurrency(breakdown.retirement401k * 12)} annually for retirement.`
                 : 'Consider contributing to your 401(k) to reduce taxes and build retirement savings.'}</p>
             </div>
             <div>
               <h4 className="font-semibold mb-2">Take-Home Optimization</h4>
               <p>Your take-home rate of {((breakdown.netPay / breakdown.grossPay) * 100).toFixed(1)}% is {
-                (breakdown.netPay / breakdown.grossPay) > 0.75 ? 'excellent' : 
-                (breakdown.netPay / breakdown.grossPay) > 0.70 ? 'good' : 'typical'
+                (breakdown.netPay / breakdown.grossPay) > 0.75 ? 'excellent' :
+                  (breakdown.netPay / breakdown.grossPay) > 0.70 ? 'good' : 'typical'
               } for your income level.</p>
             </div>
           </div>
-          
+
           {stateTaxRates[state] === 0 && (
             <div className="mt-4 p-3 bg-green-100 border border-green-300 rounded-lg">
               <p className="text-sm text-green-800 flex items-center gap-1">

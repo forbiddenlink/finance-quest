@@ -2,13 +2,12 @@
 
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { 
-  TrendingUp, 
-  Users, 
-  BookOpen, 
+import {
+  TrendingUp,
+  Users,
+  BookOpen,
   Award,
   Zap,
   ArrowRight,
@@ -55,7 +54,7 @@ export default function InteractiveDashboardCards() {
       mainStat: "25",
       description: "Interactive lessons across 5 chapters",
       icon: BookOpen,
-      color: "from-purple-500 to-purple-600", 
+      color: "from-purple-500 to-purple-600",
       bgColor: "from-purple-50 to-purple-100",
       details: [
         "5 core chapters",
@@ -87,9 +86,9 @@ export default function InteractiveDashboardCards() {
       {cards.map((card, index) => {
         const Icon = card.icon;
         const isExpanded = expandedCard === index;
-        
+
         return (
-          <Card 
+          <Card
             key={index}
             className={`
               relative overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer
@@ -99,7 +98,7 @@ export default function InteractiveDashboardCards() {
           >
             {/* Background Gradient */}
             <div className={`absolute inset-0 bg-gradient-to-br ${card.bgColor} opacity-50`} />
-            
+
             <CardHeader className="relative pb-2">
               <div className="flex items-center justify-between">
                 <div className={`p-3 rounded-lg bg-gradient-to-r ${card.color} text-white`}>
@@ -130,10 +129,10 @@ export default function InteractiveDashboardCards() {
                       <Zap className="w-4 h-4 mr-2 text-yellow-500" />
                       Detailed Breakdown
                     </div>
-                    
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {card.details.map((detail, detailIndex) => (
-                        <div 
+                        <div
                           key={detailIndex}
                           className="flex items-center p-3 bg-white/70 rounded-lg border border-gray-100"
                         >
@@ -143,9 +142,9 @@ export default function InteractiveDashboardCards() {
                       ))}
                     </div>
 
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       className="w-full mt-3 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
                     >
                       View Full Analytics

@@ -4,15 +4,14 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useProgressStore } from '@/lib/store/progressStore';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { 
-  Home, 
-  BookOpen, 
-  Calculator, 
-  BarChart3, 
-  Trophy, 
+import {
+  Home,
+  BookOpen,
+  Calculator,
+  BarChart3,
+  Trophy,
   Target,
   CheckCircle,
   Lock,
@@ -24,7 +23,7 @@ import {
 export default function ProgressNavigation() {
   const pathname = usePathname();
   const [isClient, setIsClient] = useState(false);
-  
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -123,7 +122,7 @@ export default function ProgressNavigation() {
             {navigationItems.map((item) => {
               const Icon = item.icon;
               const isActive = isClient && pathname === item.href;
-              
+
               const getButtonStyle = () => {
                 if (!item.isAvailable) {
                   return "bg-gray-100 text-gray-400 cursor-not-allowed";
@@ -162,7 +161,7 @@ export default function ProgressNavigation() {
                         <Lock className="w-4 h-4" />
                       )}
                       <span>{item.name}</span>
-                      
+
                       {/* Progress indicator */}
                       {item.progress !== undefined && item.progress > 0 && (
                         <div className="flex items-center space-x-1">
@@ -175,7 +174,7 @@ export default function ProgressNavigation() {
                           )}
                         </div>
                       )}
-                      
+
                       {/* Badge for counters */}
                       {item.badge !== undefined && item.badge > 0 && (
                         <Badge variant="secondary" className="ml-1 text-xs">
@@ -238,7 +237,7 @@ export default function ProgressNavigation() {
           {navigationItems.slice(0, 4).map((item) => {
             const Icon = item.icon;
             const isActive = isClient && pathname === item.href;
-            
+
             const getMobileButtonStyle = () => {
               if (!item.isAvailable) {
                 return "bg-gray-100 text-gray-400";
@@ -254,7 +253,7 @@ export default function ProgressNavigation() {
               }
               return "text-gray-700 hover:bg-gray-100";
             };
-            
+
             return (
               <Link key={item.name} href={item.href}>
                 <button

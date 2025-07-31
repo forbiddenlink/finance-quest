@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { marketDataService } from '@/lib/api/marketData';
 
 // Simple in-memory cache for demo optimization
-let cache: { [key: string]: { data: any; timestamp: number; ttl: number } } = {};
+const cache: { [key: string]: { data: unknown; timestamp: number; ttl: number } } = {};
 
 const CACHE_DURATION = {
   stocks: 30 * 1000,     // 30 seconds for stock data
@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
     };
 
     const hasApiKeys = Boolean(process.env.FRED_API_KEY || process.env.ALPHA_VANTAGE_API_KEY);
-    
+
     return NextResponse.json({
       success: true,
       data: type === 'stocks' ? data : { [type]: data },
@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
 
   } catch (error) {
     console.error('Market data API error:', error);
-    
+
     // Try to return cached data if available
     if (cache[type]) {
       const cached = cache[type];
@@ -94,16 +94,16 @@ export async function GET(request: NextRequest) {
         error: 'Live data unavailable, serving cached data'
       });
     }
-    
+
     const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    
+
     return NextResponse.json({
       success: false,
       error: 'Failed to fetch market data',
       timestamp: new Date().toISOString(),
       details: process.env.NODE_ENV === 'development' ? errorMessage : 'Service temporarily unavailable'
-    }, { 
-      status: 500 
+    }, {
+      status: 500
     });
   }
 }

@@ -6,10 +6,10 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { 
-  TrendingUp, 
-  Users, 
-  BookOpen, 
+import {
+  TrendingUp,
+  Users,
+  BookOpen,
   Award,
   Info
 } from 'lucide-react';
@@ -88,7 +88,7 @@ export default function ShadcnStatsCard() {
       <CardHeader className="pb-4">
         <CardTitle className="text-2xl font-bold text-center">Platform Impact</CardTitle>
         <CardDescription className="text-center text-muted-foreground">
-          Real results from Finance Quest's educational platform
+          Real results from Finance Quest&apos;s educational platform
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -96,7 +96,7 @@ export default function ShadcnStatsCard() {
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             const colors = getColorClasses(stat.color);
-            
+
             return (
               <TooltipProvider key={index}>
                 <Tooltip>
@@ -108,12 +108,12 @@ export default function ShadcnStatsCard() {
                         </div>
                         <Info className="w-4 h-4 text-muted-foreground" />
                       </div>
-                      
+
                       <div className="space-y-1">
                         <p className="text-2xl font-bold">{stat.value}</p>
                         <p className="text-sm text-muted-foreground">{stat.label}</p>
                       </div>
-                      
+
                       {stat.progress !== undefined && (
                         <div className="space-y-2">
                           <Progress value={stat.progress} className="h-2" />
@@ -132,9 +132,9 @@ export default function ShadcnStatsCard() {
             );
           })}
         </div>
-        
+
         <Separator className="my-6" />
-        
+
         <div className="text-center space-y-2">
           <p className="text-sm text-muted-foreground">
             Powered by AI-driven personalization and real-time market data

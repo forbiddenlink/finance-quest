@@ -30,39 +30,40 @@ interface MarketData {
   };
 }
 
-interface YahooFinanceResponse {
-  chart: {
-    result: Array<{
-      meta: {
-        symbol: string;
-        regularMarketPrice: number;
-        previousClose: number;
-        regularMarketDayHigh: number;
-        regularMarketDayLow: number;
-      };
-      timestamp: number[];
-      indicators: {
-        quote: Array<{
-          close: number[];
-          high: number[];
-          low: number[];
-          open: number[];
-          volume: number[];
-        }>;
-      };
+// Yahoo Finance API data structure for type safety
+interface YahooChartResult {
+  meta: {
+    symbol: string;
+    regularMarketPrice: number;
+    previousClose: number;
+    regularMarketDayHigh: number;
+    regularMarketDayLow: number;
+  };
+  timestamp: number[];
+  indicators: {
+    quote: Array<{
+      close: number[];
+      high: number[];
+      low: number[];
+      open: number[];
+      volume: number[];
     }>;
-    error?: any;
   };
 }
 
-class MarketDataService {
+interface YahooFinanceResponse {
+  chart: {
+    result: YahooChartResult[];
+    error?: string;
+  };
+}class MarketDataService {
   private fredApiKey: string | undefined;
   private baseFredUrl = 'https://api.stlouisfed.org/fred';
   private alphaVantageKey: string | undefined;
   private polygonApiKey: string | undefined;
   private rateLimitReached = false;
   private lastRateLimitCheck = 0;
-  private cache = new Map<string, { data: any; timestamp: number; ttl: number }>();
+  private cache = new Map<string, { data: unknown; timestamp: number; ttl: number }>();
 
   constructor() {
     this.fredApiKey = process.env.FRED_API_KEY;
@@ -87,7 +88,7 @@ class MarketDataService {
   // Yahoo Finance API - Free, unlimited, no API key required
   private async getYahooFinanceData(): Promise<StockQuote[]> {
     console.log('Attempting Yahoo Finance API...');
-    
+
     try {
       const symbols = this.educationalStocks;
       const stocks: StockQuote[] = [];
@@ -98,7 +99,7 @@ class MarketDataService {
         try {
           // Alternative Yahoo Finance endpoint that might work better
           const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1d`;
-          
+
           const response = await fetch(url, {
             headers: {
               'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -110,22 +111,22 @@ class MarketDataService {
             continue;
           }
 
-          const data: any = await response.json();
-          
+          const data: YahooFinanceResponse = await response.json();
+
           if (data.chart?.error) {
             console.log(`Yahoo Finance error for ${symbol}: ${data.chart.error}`);
             continue;
           }
 
           const results = data.chart?.result || [];
-          
+
           for (const result of results) {
             if (!result.meta) continue;
-            
+
             const meta = result.meta;
             const currentPrice = meta.regularMarketPrice || meta.previousClose;
             const previousClose = meta.previousClose;
-            
+
             if (!currentPrice || !previousClose) continue;
 
             const change = currentPrice - previousClose;
@@ -140,7 +141,7 @@ class MarketDataService {
               marketCap: 0,
               peRatio: 0
             };
-            
+
             stocks.push(stock);
           }
         } catch (error) {
@@ -168,22 +169,22 @@ class MarketDataService {
     }
 
     console.log('Attempting Polygon.io API...');
-    
+
     try {
       const stocks: StockQuote[] = [];
-      
+
       for (const symbol of this.educationalStocks) {
         try {
           const url = `https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apikey=${this.polygonApiKey}`;
-          
+
           const response = await fetch(url);
-          
+
           if (!response.ok) {
             throw new Error(`Polygon API error for ${symbol}: ${response.status}`);
           }
 
           const data = await response.json();
-          
+
           if (data.status !== 'OK' || !data.results || data.results.length === 0) {
             console.warn(`No Polygon data for ${symbol}`);
             continue;
@@ -232,13 +233,13 @@ class MarketDataService {
     }
 
     console.log('Attempting Alpha Vantage API...');
-    
+
     try {
       const stocks: StockQuote[] = [];
-      
+
       // Only try first 3 symbols to preserve API calls
       const limitedSymbols = this.educationalStocks.slice(0, 3);
-      
+
       for (const symbol of limitedSymbols) {
         try {
           const response = await fetch(
@@ -250,7 +251,7 @@ class MarketDataService {
           }
 
           const data = await response.json();
-          
+
           // Check for rate limit or error messages
           if (data['Information'] && data['Information'].includes('rate limit')) {
             console.warn('Alpha Vantage rate limit reached');
@@ -310,7 +311,7 @@ class MarketDataService {
   // Finnhub API - Free tier available
   private async getFinnhubData(): Promise<StockQuote[]> {
     console.log('Attempting Finnhub API...');
-    
+
     try {
       const symbols = this.educationalStocks;
       const stocks: StockQuote[] = [];
@@ -319,7 +320,7 @@ class MarketDataService {
         try {
           // Using demo token for Finnhub (free but rate limited)
           const url = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=demo`;
-          
+
           const response = await fetch(url);
 
           if (!response.ok) {
@@ -327,8 +328,8 @@ class MarketDataService {
             continue;
           }
 
-          const data: any = await response.json();
-          
+          const data: { c: number; h: number; l: number; o: number; pc: number; d: number; dp: number; error?: string } = await response.json();
+
           if (data.error) {
             console.log(`Finnhub error for ${symbol}: ${data.error}`);
             continue;
@@ -350,7 +351,7 @@ class MarketDataService {
             marketCap: 0,
             peRatio: 0
           };
-          
+
           stocks.push(stock);
         } catch (error) {
           console.log(`Error fetching ${symbol} from Finnhub:`, error);
@@ -376,7 +377,7 @@ class MarketDataService {
     const cached = this.cache.get(cacheKey);
     if (cached && Date.now() - cached.timestamp < cached.ttl) {
       console.log('Returning cached stock data');
-      return cached.data;
+      return cached.data as StockQuote[];
     }
 
     // Try APIs in order of preference: Yahoo Finance -> Finnhub -> Polygon -> Alpha Vantage -> Fallback
@@ -391,7 +392,7 @@ class MarketDataService {
       try {
         console.log(`Trying ${api.name}...`);
         const data = await api.method();
-        
+
         if (data && data.length > 0) {
           // Cache successful result for 30 seconds
           this.cache.set(cacheKey, {
@@ -399,7 +400,7 @@ class MarketDataService {
             timestamp: Date.now(),
             ttl: 30000
           });
-          
+
           console.log(`✅ ${api.name} successful: ${data.length} stocks`);
           return data;
         }
@@ -419,7 +420,7 @@ class MarketDataService {
     // For demo purposes, return static data with slight variations
     const baseValues = { sp500: 4850.25, nasdaq: 15200.80, dow: 38500.15 };
     const variation = () => (Math.random() - 0.5) * 50; // +/- 25 points
-    
+
     return {
       sp500: baseValues.sp500 + variation(),
       nasdaq: baseValues.nasdaq + variation(),
@@ -442,8 +443,8 @@ class MarketDataService {
       }
 
       const data = await response.json();
-      
-      return data.observations.map((obs: {date: string; value: string}) => ({
+
+      return data.observations.map((obs: { date: string; value: string }) => ({
         date: obs.date,
         value: parseFloat(obs.value)
       })).reverse();
@@ -468,8 +469,8 @@ class MarketDataService {
       }
 
       const data = await response.json();
-      
-      return data.observations.map((obs: {date: string; value: string}) => ({
+
+      return data.observations.map((obs: { date: string; value: string }) => ({
         date: obs.date,
         value: parseFloat(obs.value)
       })).reverse();
@@ -569,7 +570,7 @@ class MarketDataService {
         peRatio: 24.8
       }
     };
-    
+
     return fallbackData[symbol] || {
       symbol: symbol,
       companyName: this.getCompanyName(symbol),
@@ -596,7 +597,7 @@ class MarketDataService {
       // Add slight random variation to simulate market movement
       const priceVariation = (Math.random() - 0.5) * 10; // +/- $5
       const changeVariation = (Math.random() - 0.5) * 2; // +/- $1
-      
+
       const adjustedPrice = stock.price + priceVariation;
       const adjustedChange = stock.change + changeVariation;
       const changePercent = adjustedChange / (adjustedPrice - adjustedChange);

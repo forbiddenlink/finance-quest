@@ -6,10 +6,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
-import { 
-  TrendingUp, 
-  Shield, 
-  Brain, 
+import {
+  TrendingUp,
+  Shield,
+  Brain,
   Target,
   Play,
   ChevronRight,
@@ -51,7 +51,7 @@ export default function EnhancedHeroSection() {
           <div className="space-y-8">
             {/* Problem Badge */}
             <Badge variant="destructive" className="w-fit">
-              🚨 64% of Americans can't pass a basic financial literacy test
+              🚨 64% of Americans can&apos;t pass a basic financial literacy test
             </Badge>
 
             {/* Main Headline */}
@@ -63,7 +63,7 @@ export default function EnhancedHeroSection() {
                 </span>
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed">
-                Transform from financial novice to money master through AI-powered personalized coaching, 
+                Transform from financial novice to money master through AI-powered personalized coaching,
                 interactive calculators, and real-world crisis scenarios.
               </p>
             </div>
@@ -93,7 +93,7 @@ export default function EnhancedHeroSection() {
                   <ChevronRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
-              
+
               <Link href="/demo">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto">
                   <Target className="w-5 h-5 mr-2" />
@@ -150,7 +150,7 @@ export default function EnhancedHeroSection() {
                           <span className="text-gray-500">{chapter.progress}%</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div 
+                          <div
                             className={`h-2 rounded-full transition-all duration-500 ${chapter.color}`}
                             style={{ width: `${chapter.progress}%` }}
                           />

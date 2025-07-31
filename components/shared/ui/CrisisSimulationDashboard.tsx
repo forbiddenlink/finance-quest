@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   AlertTriangle,
   Heart,
@@ -9,7 +9,6 @@ import {
   TrendingDown,
   DollarSign,
   Shield,
-  Calendar,
   Target,
   CheckCircle,
   XCircle,
@@ -21,11 +20,13 @@ import {
 import { useProgressStore } from '@/lib/store/progressStore';
 import GradientCard from '@/components/shared/ui/GradientCard';
 
+import { LucideIcon } from 'lucide-react';
+
 interface CrisisScenario {
   id: string;
   title: string;
   description: string;
-  icon: any;
+  icon: LucideIcon;
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   estimatedTime: number; // minutes
   urgency: 'low' | 'medium' | 'high' | 'critical';
@@ -73,7 +74,7 @@ interface CrisisSimulationDashboardProps {
 export default function CrisisSimulationDashboard({ className = '' }: CrisisSimulationDashboardProps) {
   const userProgress = useProgressStore(state => state.userProgress);
   const recordSimulationResult = useProgressStore(state => state.recordSimulationResult);
-  
+
   const [scenarios, setScenarios] = useState<CrisisScenario[]>([]);
   const [activeScenario, setActiveScenario] = useState<CrisisScenario | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
@@ -150,7 +151,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
     ];
 
     setScenarios(availableScenarios);
-    
+
     // Load completed scenarios from progress store
     const completed = Object.keys(userProgress.simulationResults || {});
     setCompletedScenarios(completed);
@@ -556,7 +557,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
 
   const handleAnswer = (stepId: string, answerIndex: number) => {
     setUserAnswers(prev => ({ ...prev, [stepId]: answerIndex }));
-    
+
     // Auto-advance after 2 seconds to show explanation
     setTimeout(() => {
       if (currentStep < simulationSteps.length - 1) {
@@ -578,13 +579,13 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
     let correctAnswers = 0;
     let totalFinancialImpact = 0;
 
-    simulationSteps.forEach((step, index) => {
+    simulationSteps.forEach((step) => {
       const userAnswer = userAnswers[step.id];
       if (userAnswer !== undefined) {
         const option = step.options[userAnswer];
         totalScore += option.score;
         totalFinancialImpact += step.financialImpact;
-        
+
         if (userAnswer === step.correctAnswer) {
           correctAnswers++;
         }
@@ -631,7 +632,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
 
     setSimulationResult(result);
     setShowResults(true);
-    
+
     // Record in progress store
     recordSimulationResult(result);
     setCompletedScenarios([...completedScenarios, activeScenario.id]);
@@ -650,7 +651,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
   const getScenarioStatusColor = (scenario: CrisisScenario) => {
     if (!scenario.unlocked) return 'bg-gray-100 border-gray-200';
     if (completedScenarios.includes(scenario.id)) return 'bg-green-50 border-green-200';
-    
+
     switch (scenario.urgency) {
       case 'critical': return 'bg-red-50 border-red-200';
       case 'high': return 'bg-orange-50 border-orange-200';
@@ -677,12 +678,11 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
       >
         <GradientCard variant="glass" gradient="purple" className="p-8">
           <div className="text-center mb-8">
-            <div className={`w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center ${
-              simulationResult.grade === 'A' ? 'bg-green-500' :
-              simulationResult.grade === 'B' ? 'bg-blue-500' :
-              simulationResult.grade === 'C' ? 'bg-yellow-500' :
-              simulationResult.grade === 'D' ? 'bg-orange-500' : 'bg-red-500'
-            }`}>
+            <div className={`w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center ${simulationResult.grade === 'A' ? 'bg-green-500' :
+                simulationResult.grade === 'B' ? 'bg-blue-500' :
+                  simulationResult.grade === 'C' ? 'bg-yellow-500' :
+                    simulationResult.grade === 'D' ? 'bg-orange-500' : 'bg-red-500'
+              }`}>
               <span className="text-3xl font-bold text-white">{simulationResult.grade}</span>
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Crisis Simulation Complete!</h2>
@@ -703,12 +703,10 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
               <div className="text-sm text-gray-600">Correct Decisions</div>
             </div>
             <div className="text-center p-4 bg-white bg-opacity-50 rounded-lg">
-              <DollarSign className={`w-8 h-8 mx-auto mb-2 ${
-                simulationResult.financialOutcome >= 0 ? 'text-green-600' : 'text-red-600'
-              }`} />
-              <div className={`text-2xl font-bold ${
-                simulationResult.financialOutcome >= 0 ? 'text-green-600' : 'text-red-600'
-              }`}>
+              <DollarSign className={`w-8 h-8 mx-auto mb-2 ${simulationResult.financialOutcome >= 0 ? 'text-green-600' : 'text-red-600'
+                }`} />
+              <div className={`text-2xl font-bold ${simulationResult.financialOutcome >= 0 ? 'text-green-600' : 'text-red-600'
+                }`}>
                 {simulationResult.financialOutcome >= 0 ? '+' : ''}
                 ${Math.abs(simulationResult.financialOutcome).toLocaleString()}
               </div>
@@ -825,17 +823,16 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
                 key={index}
                 onClick={() => !hasAnswered && handleAnswer(currentSimulationStep.id, index)}
                 disabled={hasAnswered}
-                className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                  hasAnswered && index === userAnswer
+                className={`w-full text-left p-4 rounded-lg border-2 transition-all ${hasAnswered && index === userAnswer
                     ? index === currentSimulationStep.correctAnswer
                       ? 'border-green-500 bg-green-50'
                       : 'border-red-500 bg-red-50'
                     : hasAnswered && index === currentSimulationStep.correctAnswer
-                    ? 'border-green-500 bg-green-50'
-                    : hasAnswered
-                    ? 'border-gray-200 bg-gray-50 opacity-60'
-                    : 'border-gray-200 hover:border-red-300 hover:bg-red-50'
-                } ${hasAnswered ? 'cursor-default' : 'cursor-pointer'}`}
+                      ? 'border-green-500 bg-green-50'
+                      : hasAnswered
+                        ? 'border-gray-200 bg-gray-50 opacity-60'
+                        : 'border-gray-200 hover:border-red-300 hover:bg-red-50'
+                  } ${hasAnswered ? 'cursor-default' : 'cursor-pointer'}`}
                 whileHover={!hasAnswered ? { scale: 1.02 } : {}}
                 whileTap={!hasAnswered ? { scale: 0.98 } : {}}
               >
@@ -869,7 +866,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
             >
               <h4 className="font-bold text-blue-900 mb-3">Explanation</h4>
               <p className="text-blue-800 mb-4">{currentSimulationStep.explanation}</p>
-              
+
               <div className="bg-white bg-opacity-60 rounded p-4">
                 <h5 className="font-semibold text-blue-900 mb-2">Consequences:</h5>
                 <ul className="text-sm text-blue-800 space-y-1">
@@ -895,7 +892,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
         <AlertTriangle className="w-16 h-16 text-red-600 mx-auto mb-4" />
         <h2 className="text-3xl font-bold text-gray-900 mb-4">Crisis Simulation Training</h2>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          Practice handling financial emergencies in a safe environment. Learn to make sound decisions under pressure 
+          Practice handling financial emergencies in a safe environment. Learn to make sound decisions under pressure
           and build confidence for real-world crisis situations.
         </p>
       </GradientCard>
@@ -904,23 +901,21 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
         {scenarios.map((scenario) => {
           const Icon = scenario.icon;
           const isCompleted = completedScenarios.includes(scenario.id);
-          
+
           return (
             <motion.div
               key={scenario.id}
               whileHover={{ scale: scenario.unlocked ? 1.02 : 1 }}
-              className={`${getScenarioStatusColor(scenario)} border-2 rounded-lg p-6 transition-all ${
-                scenario.unlocked ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'
-              }`}
+              className={`${getScenarioStatusColor(scenario)} border-2 rounded-lg p-6 transition-all ${scenario.unlocked ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'
+                }`}
               onClick={() => scenario.unlocked && startSimulation(scenario)}
             >
               <div className="flex items-start justify-between mb-4">
-                <Icon className={`w-8 h-8 ${
-                  !scenario.unlocked ? 'text-gray-400' :
-                  scenario.urgency === 'critical' ? 'text-red-600' :
-                  scenario.urgency === 'high' ? 'text-orange-600' :
-                  scenario.urgency === 'medium' ? 'text-yellow-600' : 'text-blue-600'
-                }`} />
+                <Icon className={`w-8 h-8 ${!scenario.unlocked ? 'text-gray-400' :
+                    scenario.urgency === 'critical' ? 'text-red-600' :
+                      scenario.urgency === 'high' ? 'text-orange-600' :
+                        scenario.urgency === 'medium' ? 'text-yellow-600' : 'text-blue-600'
+                  }`} />
                 {isCompleted && (
                   <Award className="w-6 h-6 text-green-600" />
                 )}
@@ -939,7 +934,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
                     {scenario.estimatedTime} min
                   </span>
                 </div>
-                
+
                 {!scenario.unlocked && (
                   <div className="text-gray-500 text-center pt-2">
                     Complete Chapter {scenario.requiredChapter} to unlock

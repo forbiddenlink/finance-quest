@@ -23,7 +23,7 @@ export default function CrisisSimulationPage() {
           >
             <AlertTriangle className="w-10 h-10 text-white" />
           </motion.div>
-          
+
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -32,15 +32,15 @@ export default function CrisisSimulationPage() {
           >
             Crisis Simulation Training
           </motion.h1>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
             className="text-xl text-gray-600 max-w-3xl mx-auto mb-8"
           >
-            Practice handling financial emergencies in a safe environment. Build confidence and learn proven strategies 
-            for navigating life's unexpected financial challenges.
+            Practice handling financial emergencies in a safe environment. Build confidence and learn proven strategies
+            for navigating life&apos;s unexpected financial challenges.
           </motion.p>
 
           {/* Key Benefits */}
@@ -57,7 +57,7 @@ export default function CrisisSimulationPage() {
                 Learn from mistakes without real financial consequences
               </p>
             </div>
-            
+
             <div className="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg p-6 border border-orange-200">
               <Brain className="w-8 h-8 text-orange-600 mx-auto mb-3" />
               <h3 className="font-bold text-gray-900 mb-2">Build Confidence</h3>
@@ -65,7 +65,7 @@ export default function CrisisSimulationPage() {
                 Develop decision-making skills for high-pressure situations
               </p>
             </div>
-            
+
             <div className="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg p-6 border border-yellow-200">
               <AlertTriangle className="w-8 h-8 text-yellow-600 mx-auto mb-3" />
               <h3 className="font-bold text-gray-900 mb-2">Real Scenarios</h3>
