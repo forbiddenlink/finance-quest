@@ -13,6 +13,7 @@ import {
   Target,
   Brain
 } from 'lucide-react';
+import { theme } from '@/lib/theme';
 import { useEnhancedProgress } from '@/lib/store/progressHooks';
 import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
 
@@ -211,7 +212,7 @@ export default function Chapter4Page() {
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className={`p-3 rounded-xl ${lesson.completed ? 'bg-amber-500/20 text-amber-400' : 'bg-blue-500/20 text-blue-400'}`}>
+                      <div className={`p-3 rounded-xl ${lesson.completed ? 'bg-amber-500/20 text-amber-400' : `bg-amber-500/10 ${theme.textColors.accent}`}`}>
                         {lesson.completed ? <CheckCircle className="w-6 h-6" /> : lesson.icon}
                       </div>
                       <div>
@@ -226,7 +227,7 @@ export default function Chapter4Page() {
                   <div className="flex items-center justify-between">
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${lesson.completed
                       ? 'bg-amber-500/20 text-amber-300'
-                      : 'bg-blue-500/20 text-blue-300'
+                      : `bg-amber-500/10 ${theme.textColors.accent}`
                       }`}>
                       {lesson.completed ? 'Completed' : 'Start Lesson'}
                     </span>

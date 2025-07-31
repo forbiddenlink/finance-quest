@@ -139,22 +139,20 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
           <div className="flex border-b border-gray-200">
             <button
               onClick={() => setActiveTab('text')}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 text-sm font-medium transition-colors ${
-                activeTab === 'text'
+              className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 text-sm font-medium transition-colors ${activeTab === 'text'
                   ? 'bg-blue-50 text-blue-600 border-b-2 border-blue-600'
                   : 'text-gray-600 hover:text-blue-600'
-              }`}
+                }`}
             >
               <Sparkles className="w-4 h-4" />
               Text Chat
             </button>
             <button
               onClick={() => setActiveTab('voice')}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 text-sm font-medium transition-colors ${
-                activeTab === 'voice'
+              className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 text-sm font-medium transition-colors ${activeTab === 'voice'
                   ? 'bg-purple-50 text-purple-600 border-b-2 border-purple-600'
                   : 'text-gray-600 hover:text-purple-600'
-              }`}
+                }`}
             >
               <Mic className="w-4 h-4" />
               Voice Q&A

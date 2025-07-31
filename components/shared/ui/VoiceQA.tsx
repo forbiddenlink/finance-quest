@@ -14,6 +14,7 @@ import {
   Pause,
   RefreshCw
 } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 // Define types for the speech recognition
 interface SpeechRecognitionEvent {
@@ -207,7 +208,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
           <div className="bg-purple-100 p-2 rounded-lg">
-            <Mic className="w-6 h-6 text-blue-600" />
+            <Mic className={`w-6 h-6 ${theme.textColors.accent}`} />
           </div>
           <div>
             <h3 className="text-xl font-bold text-gray-900">Voice Financial Q&A</h3>
@@ -300,7 +301,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-blue-600 font-medium flex items-center justify-center space-x-2"
+              className={`${theme.textColors.accent} font-medium flex items-center justify-center space-x-2`}
             >
               <Brain className="w-5 h-5 animate-spin" />
               <span>AI is thinking...</span>
@@ -312,7 +313,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-blue-600 font-medium flex items-center justify-center space-x-2"
+              className={`${theme.textColors.accent} font-medium flex items-center justify-center space-x-2`}
             >
               <Volume2 className="w-5 h-5" />
               <span>AI is speaking...</span>

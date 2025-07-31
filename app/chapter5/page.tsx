@@ -8,6 +8,7 @@ import { Shield, Target, AlertTriangle, CheckCircle, ArrowRight, Clock, DollarSi
 import InteractiveCard from '@/components/shared/ui/InteractiveCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
 import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
+import { theme } from '@/lib/theme';
 
 export default function Chapter5Page() {
   const progress = useProgress();
@@ -169,28 +170,28 @@ export default function Chapter5Page() {
             <h3 className="text-lg font-semibold text-white mb-4">What You&apos;ll Master in This Chapter</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle className={`w-5 h-5 ${theme.textColors.accent} mt-0.5 flex-shrink-0`} />
                 <div>
                   <div className="font-medium text-white">Emergency Fund Psychology</div>
                   <div className="text-sm text-gray-300">Why your brain fights saving and how to overcome it</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle className={`w-5 h-5 ${theme.textColors.accent} mt-0.5 flex-shrink-0`} />
                 <div>
                   <div className="font-medium text-white">Optimal Fund Sizing</div>
                   <div className="text-sm text-gray-300">Calculate the perfect amount for your situation</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle className={`w-5 h-5 ${theme.textColors.accent} mt-0.5 flex-shrink-0`} />
                 <div>
                   <div className="font-medium text-white">High-Yield Storage Strategies</div>
                   <div className="text-sm text-gray-300">Where to keep emergency money for growth and access</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle className={`w-5 h-5 ${theme.textColors.accent} mt-0.5 flex-shrink-0`} />
                 <div>
                   <div className="font-medium text-white">Automated Building Systems</div>
                   <div className="text-sm text-gray-300">Set it and forget it approaches to steady growth</div>
@@ -233,7 +234,7 @@ export default function Chapter5Page() {
                         <h3 className="font-semibold text-white">{lesson.title}</h3>
                         <p className="text-sm text-gray-300 mt-1">{lesson.description}</p>
                       </div>
-                      {completed && <CheckCircle className="w-6 h-6 text-blue-400 flex-shrink-0" />}
+                      {completed && <CheckCircle className={`w-6 h-6 ${theme.textColors.accent} flex-shrink-0`} />}
                     </div>
 
                     {/* Lesson Content Preview */}
@@ -278,7 +279,7 @@ export default function Chapter5Page() {
                         animate={{ opacity: 1 }}
                         className="mt-4 p-3 bg-blue-500/20 border border-blue-500/30 backdrop-blur-xl rounded-lg"
                       >
-                        <div className="flex items-center gap-2 text-blue-300">
+                        <div className={`flex items-center gap-2 ${theme.textColors.accent}`}>
                           <Clock className="w-4 h-4" />
                           <span className="text-sm font-medium">Reading... (+2 minutes)</span>
                         </div>
@@ -300,8 +301,8 @@ export default function Chapter5Page() {
           <h3 className="text-xl font-bold text-white mb-6">Emergency Fund Success Stories</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-blue-500/20 border border-blue-500/30 backdrop-blur-sm rounded-lg p-6">
-              <Briefcase className="w-8 h-8 text-blue-400 mb-4" />
-              <h4 className="font-semibold text-blue-300 mb-2">Sarah&apos;s Job Loss Recovery</h4>
+              <Briefcase className={`w-8 h-8 ${theme.textColors.accent} mb-4`} />
+              <h4 className={`font-semibold ${theme.textColors.accent} mb-2`}>Sarah&apos;s Job Loss Recovery</h4>
               <p className="text-sm text-gray-300">
                 With 6 months of expenses saved, Sarah took time to find the right job instead of accepting the first offer.
                 Result: 30% salary increase and better benefits.

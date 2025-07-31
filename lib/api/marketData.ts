@@ -41,11 +41,11 @@ class MarketDataService {
 
   // Timeout settings for better UX
   private readonly TIMEOUT_MS = 3000; // 3 seconds max per API
-  
+
   private async fetchWithTimeout(url: string, options: RequestInit = {}): Promise<Response> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.TIMEOUT_MS);
-    
+
     try {
       const response = await fetch(url, {
         ...options,

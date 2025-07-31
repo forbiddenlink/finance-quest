@@ -50,7 +50,7 @@ export default function Chapter6Page() {
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`flex items-center px-6 py-3 rounded-md font-medium transition-all duration-200 ${activeTab === tab.id
                                     ? 'bg-amber-500 text-slate-900 shadow-lg'
-                                    : 'text-gray-300 hover:text-white hover:bg-slate-700/50'
+                                    : `${theme.tabs.inactive}`
                                     }`}
                             >
                                 <tab.icon className="w-4 h-4 mr-2" />
@@ -69,7 +69,7 @@ export default function Chapter6Page() {
                                     <PiggyBank className="w-8 h-8 text-amber-400" />
                                     <h2 className="text-2xl font-bold text-white">Budgeting Mastery & Cash Flow Management</h2>
                                 </div>
-                                <p className="text-gray-300 text-lg">
+                                <p className={`${theme.textColors.secondary} text-lg`}>
                                     Master zero-based budgeting, cash flow optimization, and automated savings systems to take complete control of your financial future.
                                 </p>
                             </div>
@@ -78,7 +78,7 @@ export default function Chapter6Page() {
                             <div className="space-y-6">
                                 <div className="bg-slate-800/50 rounded-xl p-6">
                                     <h3 className="text-xl font-semibold text-white mb-4">🎯 Learning Objectives</h3>
-                                    <ul className="space-y-2 text-gray-300">
+                                    <ul className={`space-y-2 ${theme.textColors.secondary}`}>
                                         <li>• Master zero-based budgeting methodology</li>
                                         <li>• Optimize cash flow timing and management</li>
                                         <li>• Implement automated savings systems</li>

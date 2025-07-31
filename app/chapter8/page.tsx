@@ -4,6 +4,7 @@ import { useState } from 'react';
 import RewardsOptimizerCalculator from '@/components/shared/calculators/RewardsOptimizerCalculator';
 import QASystem from '@/components/shared/QASystem';
 import { BookOpen, Calculator, FileText, Bot, CreditCard, Star, Zap, Award } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 type TabType = 'lesson' | 'calculator' | 'quiz' | 'assistant';
 
@@ -124,9 +125,9 @@ export default function Chapter8Page() {
                                     </div>
 
                                     <div className="bg-slate-800/50 rounded-xl p-6">
-                                        <Zap className="w-8 h-8 text-blue-400 mb-3" />
+                                        <Zap className={`w-8 h-8 ${theme.textColors.accent} mb-3`} />
                                         <h4 className="text-lg font-semibold text-white mb-2">Credit Building</h4>
-                                        <p className="text-gray-300 text-sm">
+                                        <p className={`${theme.textColors.secondary} text-sm`}>
                                             Use credit cards as powerful tools for building excellent credit scores while
                                             earning rewards and protecting your finances.
                                         </p>

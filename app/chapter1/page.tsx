@@ -52,8 +52,8 @@ export default function Chapter1Page() {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-md font-medium transition-colors ${activeTab === tab.id
-                    ? theme.tabs.active + ' shadow-lg shadow-amber-600/25'
-                    : theme.tabs.inactive
+                  ? theme.tabs.active + ' shadow-lg shadow-amber-600/25'
+                  : theme.tabs.inactive
                   }`}
               >
                 <tab.icon className="w-4 h-4" />
@@ -131,11 +131,11 @@ export default function Chapter1Page() {
           {activeTab === 'assistant' && (
             <div>
               <div className="mb-6 bg-gradient-to-r from-blue-900/20 to-slate-800/20 border border-blue-700/30 backdrop-blur-sm rounded-lg p-4">
-                <h3 className="font-semibold text-blue-300 mb-2 flex items-center gap-2">
+                <h3 className={`font-semibold ${theme.textColors.accent} mb-2 flex items-center gap-2`}>
                   <Bot className="w-4 h-4" />
                   AI Financial Coach
                 </h3>
-                <p className="text-blue-200">
+                <p className={theme.textColors.secondary}>
                   Ask questions, get personalized help, and receive encouragement on your learning journey!
                 </p>
               </div>

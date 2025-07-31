@@ -40,33 +40,33 @@ export interface UserProgress {
 
 export interface ProgressStore {
   userProgress: UserProgress;
-  
+
   // Lesson management
   completeLesson: (lessonId: string, timeSpent: number) => void;
   markChapterComplete: (chapterId: number) => void;
-  
+
   // Quiz management  
   recordQuizScore: (quizId: string, score: number, totalQuestions: number) => void;
   canTakeQuiz: (quizId: string) => boolean;
-  
+
   // Calculator tracking
   recordCalculatorUsage: (calculatorId: string) => void;
-  
+
   // Simulation tracking
   recordSimulationResult: (result: SimulationResult) => void;
-  
+
   // Onboarding
   completeOnboarding: () => void;
-  
+
   // Analytics
   updateLearningAnalytics: () => void;
   calculateFinancialLiteracyScore: () => number;
-  
+
   // Progress utilities
   getChapterProgress: (chapterId: number) => number;
   isChapterUnlocked: (chapterId: number) => boolean;
   resetProgress: () => void;
-  
+
   // Time tracking
   updateTimeSpent: (seconds: number) => void;
   updateStreak: () => void;
@@ -108,12 +108,12 @@ export const useProgressStore = create<ProgressStore>()(
             totalTimeSpent: state.userProgress.totalTimeSpent + timeSpent,
             lastActiveDate: new Date().toISOString()
           };
-          
+
           // Update analytics
           const chapterId = lessonId.split('-')[0];
-          newProgress.learningAnalytics.timeSpentByChapter[chapterId] = 
+          newProgress.learningAnalytics.timeSpentByChapter[chapterId] =
             (newProgress.learningAnalytics.timeSpentByChapter[chapterId] || 0) + timeSpent;
-          
+
           return { userProgress: newProgress };
         });
         get().updateLearningAnalytics();
@@ -133,13 +133,13 @@ export const useProgressStore = create<ProgressStore>()(
 
       recordQuizScore: (quizId: string, score: number, totalQuestions: number) => {
         const percentage = Math.round((score / totalQuestions) * 100);
-        
+
         set((state) => {
           const newQuizScores = { ...state.userProgress.quizScores, [quizId]: percentage };
-          const newCompletedQuizzes = percentage >= 80 
+          const newCompletedQuizzes = percentage >= 80
             ? [...new Set([...state.userProgress.completedQuizzes, quizId])]
             : state.userProgress.completedQuizzes;
-          
+
           const newProgress = {
             ...state.userProgress,
             quizScores: newQuizScores,
@@ -160,14 +160,14 @@ export const useProgressStore = create<ProgressStore>()(
 
           return { userProgress: newProgress };
         });
-        
+
         get().updateLearningAnalytics();
         get().updateStreak();
       },
 
       canTakeQuiz: (quizId: string) => {
         const { userProgress } = get();
-        const chapterLessons = userProgress.completedLessons.filter(lesson => 
+        const chapterLessons = userProgress.completedLessons.filter(lesson =>
           lesson.startsWith(quizId.replace('-quiz', ''))
         );
         // Require completing at least 50% of chapter lessons to take quiz
@@ -196,7 +196,7 @@ export const useProgressStore = create<ProgressStore>()(
               ...state.userProgress.simulationResults,
               [result.scenarioId]: result
             },
-            achievements: result.grade === 'A' 
+            achievements: result.grade === 'A'
               ? [...new Set([...state.userProgress.achievements, `simulation-${result.scenarioId}-master`])]
               : state.userProgress.achievements,
             lastActiveDate: new Date().toISOString()
@@ -209,15 +209,15 @@ export const useProgressStore = create<ProgressStore>()(
       updateLearningAnalytics: () => {
         set((state) => {
           const quizScores = Object.values(state.userProgress.quizScores);
-          const averageQuizScore = quizScores.length > 0 
-            ? quizScores.reduce((sum, score) => sum + score, 0) / quizScores.length 
+          const averageQuizScore = quizScores.length > 0
+            ? quizScores.reduce((sum, score) => sum + score, 0) / quizScores.length
             : 0;
 
           const totalPossibleLessons = 12; // 4 lessons per chapter × 3 chapters
           const lessonCompletionRate = (state.userProgress.completedLessons.length / totalPossibleLessons) * 100;
 
-          const areasNeedingWork = state.userProgress.strugglingTopics.length > 0 
-            ? state.userProgress.strugglingTopics 
+          const areasNeedingWork = state.userProgress.strugglingTopics.length > 0
+            ? state.userProgress.strugglingTopics
             : [];
 
           return {
@@ -264,11 +264,11 @@ export const useProgressStore = create<ProgressStore>()(
 
       getChapterProgress: (chapterId: number) => {
         const { userProgress } = get();
-        const chapterLessons = userProgress.completedLessons.filter(lesson => 
+        const chapterLessons = userProgress.completedLessons.filter(lesson =>
           lesson.startsWith(`chapter${chapterId}`)
         );
         const quizPassed = userProgress.completedQuizzes.includes(`chapter${chapterId}-quiz`);
-        
+
         // 4 lessons + 1 quiz = 5 total items per chapter
         const completedItems = chapterLessons.length + (quizPassed ? 1 : 0);
         return Math.round((completedItems / 5) * 100);
@@ -277,7 +277,7 @@ export const useProgressStore = create<ProgressStore>()(
       isChapterUnlocked: (chapterId: number) => {
         const { userProgress } = get();
         if (chapterId === 1) return true;
-        
+
         // Unlock next chapter when previous chapter quiz is passed with 80%+
         const previousChapterQuiz = `chapter${chapterId - 1}-quiz`;
         const previousQuizScore = userProgress.quizScores[previousChapterQuiz];
@@ -303,9 +303,9 @@ export const useProgressStore = create<ProgressStore>()(
           const today = new Date().toDateString();
           const lastActive = new Date(state.userProgress.lastActiveDate).toDateString();
           const yesterday = new Date(Date.now() - 86400000).toDateString();
-          
+
           let newStreakDays = state.userProgress.streakDays;
-          
+
           if (lastActive === today) {
             // Already updated today, no change
             return { userProgress: state.userProgress };
