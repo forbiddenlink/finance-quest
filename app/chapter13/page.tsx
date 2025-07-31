@@ -46,7 +46,7 @@ export default function Chapter13() {
           </div>
           
           <div className="mt-6">
-            <div className="flex justify-between text-sm text-gray-600 mb-2">
+            <div className={`flex justify-between text-sm ${theme.textColors.secondary} mb-2`}>
               <span>Chapter Progress</span>
               <span>75% Complete</span>
             </div>
@@ -88,9 +88,9 @@ export default function Chapter13() {
               <CardContent className="space-y-6">
                 {/* What Are Bonds? */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">What Are Bonds?</h3>
+                  <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>What Are Bonds?</h3>
                   <div className="bg-blue-50 p-4 rounded-lg mb-4">
-                    <p className="text-gray-700">
+                    <p className={theme.textColors.secondary}>
                       Bonds are essentially IOUs - when you buy a bond, you&apos;re lending money to a government, 
                       municipality, or corporation. In return, they promise to pay you back the principal 
                       (face value) plus regular interest payments.
@@ -99,26 +99,26 @@ export default function Chapter13() {
                   
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="p-4 border border-gray-200 rounded-lg">
-                      <h4 className="font-medium text-gray-900 mb-2">Government Bonds</h4>
-                      <p className="text-sm text-gray-600">
+                      <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Government Bonds</h4>
+                      <p className={`text-sm ${theme.textColors.secondary}`}>
                         Safest option. U.S. Treasury bonds are backed by the full faith and credit of the government.
                       </p>
                     </div>
                     <div className="p-4 border border-gray-200 rounded-lg">
-                      <h4 className="font-medium text-gray-900 mb-2">Corporate Bonds</h4>
-                      <p className="text-sm text-gray-600">
+                      <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Corporate Bonds</h4>
+                      <p className={`text-sm ${theme.textColors.secondary}`}>
                         Higher yields but more risk. Quality depends on the financial health of the issuing company.
                       </p>
                     </div>
                     <div className="p-4 border border-gray-200 rounded-lg">
-                      <h4 className="font-medium text-gray-900 mb-2">Municipal Bonds</h4>
-                      <p className="text-sm text-gray-600">
+                      <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Municipal Bonds</h4>
+                      <p className={`text-sm ${theme.textColors.secondary}`}>
                         Issued by local governments. Often tax-free, making them attractive for high earners.
                       </p>
                     </div>
                     <div className="p-4 border border-gray-200 rounded-lg">
-                      <h4 className="font-medium text-gray-900 mb-2">TIPS</h4>
-                      <p className="text-sm text-gray-600">
+                      <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>TIPS</h4>
+                      <p className={`text-sm ${theme.textColors.secondary}`}>
                         Treasury Inflation-Protected Securities adjust with inflation to preserve purchasing power.
                       </p>
                     </div>
@@ -129,7 +129,7 @@ export default function Chapter13() {
 
                 {/* Bond Fundamentals */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Key Bond Concepts</h3>
+                  <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>Key Bond Concepts</h3>
                   
                   <div className="space-y-4">
                     <div className="flex items-start space-x-3">
@@ -137,8 +137,8 @@ export default function Chapter13() {
                         <span className="text-blue-600 font-medium text-sm">1</span>
                       </div>
                       <div>
-                        <h4 className="font-medium text-gray-900">Face Value (Par)</h4>
-                        <p className="text-gray-600 text-sm">
+                        <h4 className={`font-medium ${theme.textColors.primary}`}>Face Value (Par)</h4>
+                        <p className={`${theme.textColors.secondary} text-sm`}>
                           The amount you&apos;ll receive when the bond matures. Most bonds have a $1,000 face value.
                         </p>
                       </div>
@@ -149,8 +149,8 @@ export default function Chapter13() {
                         <span className="text-blue-600 font-medium text-sm">2</span>
                       </div>
                       <div>
-                        <h4 className="font-medium text-gray-900">Coupon Rate</h4>
-                        <p className="text-gray-600 text-sm">
+                        <h4 className={`font-medium ${theme.textColors.primary}`}>Coupon Rate</h4>
+                        <p className={`${theme.textColors.secondary} text-sm`}>
                           The annual interest rate paid on the bond&apos;s face value. A 5% coupon on a $1,000 bond pays $50/year.
                         </p>
                       </div>
@@ -161,8 +161,8 @@ export default function Chapter13() {
                         <span className="text-blue-600 font-medium text-sm">3</span>
                       </div>
                       <div>
-                        <h4 className="font-medium text-gray-900">Yield to Maturity (YTM)</h4>
-                        <p className="text-gray-600 text-sm">
+                        <h4 className={`font-medium ${theme.textColors.primary}`}>Yield to Maturity (YTM)</h4>
+                        <p className={`${theme.textColors.secondary} text-sm`}>
                           Total return if held to maturity, considering current price, coupon payments, and face value.
                         </p>
                       </div>
@@ -173,8 +173,8 @@ export default function Chapter13() {
                         <span className="text-blue-600 font-medium text-sm">4</span>
                       </div>
                       <div>
-                        <h4 className="font-medium text-gray-900">Duration</h4>
-                        <p className="text-gray-600 text-sm">
+                        <h4 className={`font-medium ${theme.textColors.primary}`}>Duration</h4>
+                        <p className={`${theme.textColors.secondary} text-sm`}>
                           Measures sensitivity to interest rate changes. Higher duration = greater price volatility.
                         </p>
                       </div>
@@ -186,7 +186,7 @@ export default function Chapter13() {
 
                 {/* Interest Rate Risk */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Understanding Interest Rate Risk</h3>
+                  <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>Understanding Interest Rate Risk</h3>
                   <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
                     <div className="flex items-start space-x-3">
                       <TrendingUp className="w-5 h-5 text-yellow-600 mt-0.5" />

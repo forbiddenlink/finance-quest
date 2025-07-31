@@ -111,7 +111,7 @@ export default function Chapter10() {
                 <Card className="max-w-md mx-auto text-center">
                     <CardHeader>
                         <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Building className="w-8 h-8 text-gray-400" />
+                            <Building className={`w-8 h-8 ${theme.textColors.secondary}`} />
                         </div>
                         <CardTitle>Chapter 10 Locked</CardTitle>
                         <CardDescription>
@@ -135,7 +135,7 @@ export default function Chapter10() {
                 <div className="max-w-6xl mx-auto px-4 py-6">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
-                            <Link href="/" className="text-gray-600 hover:text-gray-900 flex items-center">
+                            <Link href="/" className={`${theme.textColors.secondary} hover:${theme.textColors.primary} flex items-center`}>
                                 <ArrowLeft className="w-5 h-5 mr-2" />
                                 Back to Home
                             </Link>
@@ -206,7 +206,7 @@ export default function Chapter10() {
                                 <CardContent className="space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-4">
-                                            <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
+                                            <h3 className={`text-lg font-semibold ${theme.textColors.primary} flex items-center space-x-2`}>
                                                 <Briefcase className="w-5 h-5 text-blue-600" />
                                                 <span>Business Structure Options</span>
                                             </h3>
@@ -227,7 +227,7 @@ export default function Chapter10() {
                                         </div>
 
                                         <div className="space-y-4">
-                                            <h3 className="text-lg font-semibold text-gray-900">Key Financial Statements</h3>
+                                            <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Key Financial Statements</h3>
                                             <div className="space-y-3">
                                                 <div className="bg-orange-50 p-4 rounded-lg">
                                                     <h4 className="font-medium text-orange-900">Income Statement (P&L)</h4>
@@ -248,30 +248,30 @@ export default function Chapter10() {
                                     <Separator />
 
                                     <div className="space-y-4">
-                                        <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
+                                        <h3 className={`text-lg font-semibold ${theme.textColors.primary} flex items-center space-x-2`}>
                                             <TrendingUp className="w-5 h-5 text-blue-600" />
                                             <span>Critical Business Metrics</span>
                                         </h3>
                                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                                             <div className="text-center p-4 bg-gray-50 rounded-lg">
                                                 <Clock className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-                                                <div className="text-lg font-bold text-gray-900">Working Capital</div>
-                                                <div className="text-sm text-gray-600">Current Assets - Current Liabilities</div>
+                                                <div className={`text-lg font-bold ${theme.textColors.primary}`}>Working Capital</div>
+                                                <div className={`text-sm ${theme.textColors.secondary}`}>Current Assets - Current Liabilities</div>
                                             </div>
                                             <div className="text-center p-4 bg-gray-50 rounded-lg">
                                                 <TrendingUp className="w-6 h-6 text-green-600 mx-auto mb-2" />
-                                                <div className="text-lg font-bold text-gray-900">Gross Margin</div>
-                                                <div className="text-sm text-gray-600">(Revenue - COGS) / Revenue</div>
+                                                <div className={`text-lg font-bold ${theme.textColors.primary}`}>Gross Margin</div>
+                                                <div className={`text-sm ${theme.textColors.secondary}`}>(Revenue - COGS) / Revenue</div>
                                             </div>
                                             <div className="text-center p-4 bg-gray-50 rounded-lg">
                                                 <Target className="w-6 h-6 text-orange-600 mx-auto mb-2" />
-                                                <div className="text-lg font-bold text-gray-900">Break-Even Point</div>
-                                                <div className="text-sm text-gray-600">Fixed Costs / (Price - Variable Cost)</div>
+                                                <div className={`text-lg font-bold ${theme.textColors.primary}`}>Break-Even Point</div>
+                                                <div className={`text-sm ${theme.textColors.secondary}`}>Fixed Costs / (Price - Variable Cost)</div>
                                             </div>
                                             <div className="text-center p-4 bg-gray-50 rounded-lg">
                                                 <Shield className="w-6 h-6 text-purple-600 mx-auto mb-2" />
-                                                <div className="text-lg font-bold text-gray-900">Debt-to-Equity</div>
-                                                <div className="text-sm text-gray-600">Total Debt / Total Equity</div>
+                                                <div className={`text-lg font-bold ${theme.textColors.primary}`}>Debt-to-Equity</div>
+                                                <div className={`text-sm ${theme.textColors.secondary}`}>Total Debt / Total Equity</div>
                                             </div>
                                         </div>
                                     </div>
@@ -280,7 +280,7 @@ export default function Chapter10() {
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-4">
-                                            <h3 className="text-lg font-semibold text-gray-900">Funding Sources</h3>
+                                            <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Funding Sources</h3>
                                             <div className="space-y-3">
                                                 <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
                                                     <span className="font-medium text-green-900">Retained Earnings</span>
@@ -298,7 +298,7 @@ export default function Chapter10() {
                                         </div>
 
                                         <div className="space-y-4">
-                                            <h3 className="text-lg font-semibold text-gray-900">Tax Considerations</h3>
+                                            <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Tax Considerations</h3>
                                             <div className="space-y-3">
                                                 <div className="bg-yellow-50 p-3 rounded-lg">
                                                     <h4 className="font-medium text-yellow-900">Business Deductions</h4>
@@ -377,7 +377,7 @@ export default function Chapter10() {
                                     {!quizCompleted ? (
                                         <div className="space-y-6">
                                             <div className="mb-4">
-                                                <div className="flex justify-between text-sm text-gray-600 mb-2">
+                                                <div className={`flex justify-between text-sm ${theme.textColors.secondary} mb-2`}>
                                                     <span>Progress</span>
                                                     <span>{Object.keys(quizAnswers).length} / {quizQuestions.length}</span>
                                                 </div>
@@ -386,7 +386,7 @@ export default function Chapter10() {
 
                                             {quizQuestions.map((question, index) => (
                                                 <div key={index} className="space-y-3">
-                                                    <h3 className="font-medium text-gray-900">
+                                                    <h3 className={`font-medium ${theme.textColors.primary}`}>
                                                         {index + 1}. {question.question}
                                                     </h3>
                                                     <div className="space-y-2">
@@ -399,7 +399,7 @@ export default function Chapter10() {
                                                                     onChange={() => handleQuizAnswer(index, option)}
                                                                     className="text-navy-600"
                                                                 />
-                                                                <span className="text-gray-700">{option}</span>
+                                                                <span className={theme.textColors.secondary}>{option}</span>
                                                             </label>
                                                         ))}
                                                     </div>
@@ -419,8 +419,8 @@ export default function Chapter10() {
                                     ) : (
                                         <div className="text-center space-y-4">
                                             <CheckCircle className="w-16 h-16 text-green-600 mx-auto" />
-                                            <h3 className="text-xl font-bold text-gray-900">Quiz Completed!</h3>
-                                            <p className="text-gray-600">
+                                            <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>Quiz Completed!</h3>
+                                            <p className={theme.textColors.secondary}>
                                                 You scored {Math.round((Object.values(quizAnswers).filter((answer, index) =>
                                                     answer === quizQuestions[index]?.correct).length / quizQuestions.length) * 100)}%
                                             </p>

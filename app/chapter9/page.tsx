@@ -252,16 +252,16 @@ export default function Chapter9() {
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                             <div className="text-center p-4 bg-gray-50 rounded-lg">
                                                 <Clock className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-                                                <div className="text-2xl font-bold text-gray-900">Apr 15</div>
-                                                <div className="text-sm text-gray-600">Tax Filing Deadline</div>
+                                                <div className={`text-2xl font-bold ${theme.textColors.primary}`}>Apr 15</div>
+                                                <div className={`text-sm ${theme.textColors.secondary}`}>Tax Filing Deadline</div>
                                             </div>
                                             <div className="text-center p-4 bg-gray-50 rounded-lg">
-                                                <div className="text-2xl font-bold text-gray-900">$23,000</div>
-                                                <div className="text-sm text-gray-600">401(k) Limit 2024 (Under 50)</div>
+                                                <div className={`text-2xl font-bold ${theme.textColors.primary}`}>$23,000</div>
+                                                <div className={`text-sm ${theme.textColors.secondary}`}>401(k) Limit 2024 (Under 50)</div>
                                             </div>
                                             <div className="text-center p-4 bg-gray-50 rounded-lg">
-                                                <div className="text-2xl font-bold text-gray-900">20%</div>
-                                                <div className="text-sm text-gray-600">Max Long-term Capital Gains Rate</div>
+                                                <div className={`text-2xl font-bold ${theme.textColors.primary}`}>20%</div>
+                                                <div className={`text-sm ${theme.textColors.secondary}`}>Max Long-term Capital Gains Rate</div>
                                             </div>
                                         </div>
                                     </div>
@@ -324,7 +324,7 @@ export default function Chapter9() {
                                     {!quizCompleted ? (
                                         <div className="space-y-6">
                                             <div className="mb-4">
-                                                <div className="flex justify-between text-sm text-gray-600 mb-2">
+                                                <div className={`flex justify-between text-sm ${theme.textColors.secondary} mb-2`}>
                                                     <span>Progress</span>
                                                     <span>{Object.keys(quizAnswers).length} / {quizQuestions.length}</span>
                                                 </div>
@@ -333,7 +333,7 @@ export default function Chapter9() {
 
                                             {quizQuestions.map((question, index) => (
                                                 <div key={index} className="space-y-3">
-                                                    <h3 className="font-medium text-gray-900">
+                                                    <h3 className={`font-medium ${theme.textColors.primary}`}>
                                                         {index + 1}. {question.question}
                                                     </h3>
                                                     <div className="space-y-2">
@@ -346,7 +346,7 @@ export default function Chapter9() {
                                                                     onChange={() => handleQuizAnswer(index, option)}
                                                                     className="text-red-600"
                                                                 />
-                                                                <span className="text-gray-700">{option}</span>
+                                                                <span className={theme.textColors.secondary}>{option}</span>
                                                             </label>
                                                         ))}
                                                     </div>
@@ -366,8 +366,8 @@ export default function Chapter9() {
                                     ) : (
                                         <div className="text-center space-y-4">
                                             <CheckCircle className="w-16 h-16 text-green-600 mx-auto" />
-                                            <h3 className="text-xl font-bold text-gray-900">Quiz Completed!</h3>
-                                            <p className="text-gray-600">
+                                            <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>Quiz Completed!</h3>
+                                            <p className={theme.textColors.secondary}>
                                                 You scored {Math.round((Object.values(quizAnswers).filter((answer, index) =>
                                                     answer === quizQuestions[index]?.correct).length / quizQuestions.length) * 100)}%
                                             </p>

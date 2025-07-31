@@ -46,7 +46,7 @@ export default function Chapter14() {
           </div>
           
           <div className="mt-6">
-            <div className="flex justify-between text-sm text-gray-600 mb-2">
+            <div className={`flex justify-between text-sm ${theme.textColors.secondary} mb-2`}>
               <span>Chapter Progress</span>
               <span>80% Complete</span>
             </div>
@@ -88,9 +88,9 @@ export default function Chapter14() {
               <CardContent className="space-y-6">
                 {/* Core Principles */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Core Principles</h3>
+                  <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>Core Principles</h3>
                   <div className="bg-indigo-50 p-4 rounded-lg mb-4">
-                    <p className="text-gray-700">
+                    <p className={theme.textColors.secondary}>
                       Modern Portfolio Theory (MPT), developed by Harry Markowitz, revolutionized investing 
                       by showing how to maximize returns for a given level of risk through optimal diversification. 
                       The key insight: it&apos;s not just what you own, but how those investments work together.
@@ -99,11 +99,11 @@ export default function Chapter14() {
                   
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="p-4 border border-gray-200 rounded-lg">
-                      <h4 className="font-medium text-gray-900 mb-2 flex items-center">
+                      <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center`}>
                         <Target className="w-5 h-5 text-indigo-600 mr-2" />
                         Risk vs Return
                       </h4>
-                      <p className="text-sm text-gray-600">
+                      <p className={`text-sm ${theme.textColors.secondary}`}>
                         Higher returns typically come with higher risk. The goal is to find the optimal 
                         balance for your risk tolerance and time horizon.
                       </p>
@@ -125,7 +125,7 @@ export default function Chapter14() {
 
                 {/* Efficient Frontier */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">The Efficient Frontier</h3>
+                  <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>The Efficient Frontier</h3>
                   
                   <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-lg border border-indigo-200">
                     <div className="flex items-start space-x-4">
@@ -161,7 +161,7 @@ export default function Chapter14() {
 
                 {/* Asset Allocation Strategies */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Strategic Asset Allocation</h3>
+                  <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>Strategic Asset Allocation</h3>
                   
                   <div className="grid md:grid-cols-3 gap-4">
                     <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
@@ -233,7 +233,7 @@ export default function Chapter14() {
 
                 {/* Risk Management */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Risk Management Techniques</h3>
+                  <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>Risk Management Techniques</h3>
                   
                   <div className="space-y-4">
                     <div className="flex items-start space-x-3">
