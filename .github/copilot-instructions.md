@@ -3,7 +3,7 @@
 ## Executive Summary
 **Finance Quest** is an AI-powered financial literacy platform addressing the 64% financial illiteracy crisis. Built with Next.js 15.4.4 + OpenAI GPT-4o-mini, it provides personalized learning paths through interactive calculators, real-time progress tracking, and contextual AI coaching. Unlike competitors using simulated chatbots, we deliver genuine AI-powered education with measurable learning outcomes.
 
-**Current Status**: Production-ready with 5 complete chapters, 6 professional calculators, real AI integration, and advanced Zustand state management.
+**Current Status**: Production-ready with 14+ complete chapters, 13+ professional calculators, real AI integration, advanced Zustand state management, and multi-API market data integration.
 
 ## Quick Start for AI Agents
 
@@ -38,22 +38,23 @@ const isUnlocked = useProgressStore(state => state.isChapterUnlocked(4));
 ```
 
 #### Component Architecture Patterns
-- **Chapter Pages**: `app/chapter{1-5}/page.tsx` - Tab-based navigation (Lesson → Calculator → Quiz)
+- **Chapter Pages**: `app/chapter{1-14}/page.tsx` - Tab-based navigation (Lesson → Calculator → Quiz → AI Coach)
 - **Educational Components**: Always accept `onComplete` callback to trigger progress updates
-- **Calculator Components**: Located in `components/shared/calculators/` with Finance.js integration
+- **Calculator Components**: Located in `components/shared/calculators/` with Finance.js integration + `components/chapters/fundamentals/calculators/`
 - **Assessment Components**: Require 80%+ scores to unlock next chapter
+- **Expanded Calculator Suite**: 13+ professional calculators including Bond Calculator, Stock Analysis, Portfolio Analyzer, Retirement Planner
 
 #### API Routes & External Integrations
 - `/api/ai-chat` - OpenAI GPT-4o-mini with contextual user progress
-- `/api/market-data` - Alpha Vantage + FRED APIs with fallback data
-- Environment variables: `OPENAI_API_KEY`, `ALPHA_VANTAGE_API_KEY`, `FRED_API_KEY`
+- `/api/market-data` - Multi-API integration: Yahoo Finance (primary), Finnhub (free), Polygon.io, Alpha Vantage + FRED APIs with intelligent fallbacks
+- Environment variables: `OPENAI_API_KEY`, `ALPHA_VANTAGE_API_KEY`, `FRED_API_KEY`, `POLYGON_API_KEY` (all optional with fallbacks)
 
 ### Essential Component Patterns
 
 #### Education Flow Pattern
 Every chapter follows this exact structure:
 ```tsx
-// Chapter page with tab navigation
+// Chapter page with tab navigation (newer chapters use Radix UI Tabs)
 const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
 
 // Lesson completion triggers progress
@@ -67,6 +68,10 @@ const handleQuizComplete = (score: number) => {
   recordQuizScore('chapter3-quiz', score, totalQuestions);
   if (score >= 80) advanceChapter();
 };
+
+// Two chapter patterns exist:
+// Pattern 1: Legacy chapters (1-8) use custom tab implementation
+// Pattern 2: Advanced chapters (11-14) use Radix UI Tabs component
 ```
 
 #### Calculator Integration Pattern
@@ -77,10 +82,21 @@ useEffect(() => {
   recordCalculatorUsage('compound-interest-calculator');
 }, []);
 
-// Finance.js for accurate calculations
+// Finance.js for accurate calculations (financial formulas)
 import { Finance } from 'financejs';
 const finance = new Finance();
 const payment = finance.PMT(rate, periods, present, future, type);
+
+// Alternative: Manual financial calculations with proper formulas
+const monthlyPayment = loanAmount * 
+  (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) /
+  (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+
+// Standard calculator layout pattern
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+  <div className="inputs-section">{/* Controls */}</div>
+  <div className="results-section">{/* Results + Educational context */}</div>
+</div>
 ```
 
 #### Icon System Standards
@@ -151,6 +167,9 @@ recordQuizScore(quizId: string, score: number, totalQuestions: number)
 // Calculator usage
 recordCalculatorUsage(calculatorId: string)
 
+// Simulation results (new feature)
+recordSimulationResult(result: SimulationResult)
+
 // Check prerequisites
 isChapterUnlocked(chapterId: number): boolean
 ```
@@ -165,6 +184,14 @@ const context = {
 
 // Fallback responses when API unavailable
 function generateFallbackResponse(message: string): string
+
+// Market data service with intelligent fallbacks
+try {
+  const data = await marketDataService.getStockQuotes();
+  // Priority: Yahoo Finance → Finnhub → Polygon → Alpha Vantage → Fallback
+} catch {
+  return generateFallbackData();
+}
 ```
 
 This architecture ensures consistent user experience, accurate progress tracking, and reliable AI coaching throughout the learning journey.
@@ -185,21 +212,21 @@ This architecture ensures consistent user experience, accurate progress tracking
 app/
 ├── api/
 │   ├── ai-chat/route.ts        # OpenAI GPT-4o-mini integration
-│   └── market-data/route.ts    # Alpha Vantage + FRED API
-├── chapter[1-5]/page.tsx       # Educational chapters with tab navigation
+│   └── market-data/route.ts    # Multi-API market data with fallbacks
+├── chapter[1-14]/page.tsx      # Educational chapters with tab navigation
 ├── calculators/                # Standalone calculator pages
 └── assessment/                 # Learning measurement tools
 
 components/
 ├── chapters/fundamentals/      # Educational content components
 ├── shared/
-│   ├── calculators/           # Reusable calculator components
+│   ├── calculators/           # Reusable calculator components (13+ tools)
 │   ├── ai-assistant/          # AI teaching assistant
 │   └── ui/                    # Premium visual components
 
 lib/
 ├── store/progressStore.ts      # Zustand state management
-├── api/marketData.ts          # External API integrations
+├── api/marketData.ts          # Multi-source API integrations
 └── context/ProgressContext.tsx # Legacy (migrated to Zustand)
 ```
 
