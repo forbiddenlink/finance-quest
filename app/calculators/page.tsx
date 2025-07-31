@@ -1,8 +1,20 @@
 import Link from 'next/link';
-import { TrendingUp, PieChart, CreditCard, Home, Umbrella, Car, Target, Zap, Gamepad2, Calculator, Brain } from 'lucide-react';
+import { TrendingUp, PieChart, CreditCard, Home, Umbrella, Car, Target, Zap, Gamepad2, Calculator, Brain, BarChart3 } from 'lucide-react';
 
 export default function CalculatorsPage() {
   const calculators = [
+    {
+      id: 'paycheck',
+      title: 'Paycheck Calculator',
+      description: 'Calculate your take-home pay and understand exactly where your money goes',
+      icon: Calculator,
+      bgColor: 'from-green-900/20 to-green-800/30',
+      borderColor: 'border-green-600/30',
+      textColor: 'text-green-200',
+      buttonColor: 'bg-green-600 hover:bg-green-700',
+      example: '$70,000 salary = $4,374 monthly take-home (varies by state)',
+      href: '/calculators/paycheck'
+    },
     {
       id: 'compound-interest',
       title: 'Compound Interest Calculator',
@@ -38,6 +50,66 @@ export default function CalculatorsPage() {
       buttonColor: 'bg-slate-600 hover:bg-slate-700',
       example: '$25,000 debt paid off 5 years faster with $200 extra monthly',
       href: '/calculators/debt-payoff'
+    },
+    {
+      id: 'mortgage',
+      title: 'Mortgage Calculator',
+      description: 'Calculate mortgage payments, affordability, and compare loan scenarios',
+      icon: Home,
+      bgColor: 'from-purple-900/20 to-purple-800/30',
+      borderColor: 'border-purple-600/30',
+      textColor: 'text-purple-200',
+      buttonColor: 'bg-purple-600 hover:bg-purple-700',
+      example: '$400,000 home at 7% = $2,661/month payment',
+      href: '/calculators/mortgage'
+    },
+    {
+      id: 'emergency-fund',
+      title: 'Emergency Fund Calculator',
+      description: 'Plan your financial safety net with personalized emergency fund targets and timelines',
+      icon: Umbrella,
+      bgColor: 'from-teal-900/20 to-teal-800/30',
+      borderColor: 'border-teal-600/30',
+      textColor: 'text-teal-200',
+      buttonColor: 'bg-teal-600 hover:bg-teal-700',
+      example: '6 months expenses ($18,000) saved in 3 years at $500/month',
+      href: '/calculators/emergency-fund'
+    },
+    {
+      id: 'credit-score',
+      title: 'Credit Score Simulator',
+      description: 'Model credit score improvements and optimize your credit profile strategically',
+      icon: Target,
+      bgColor: 'from-indigo-900/20 to-indigo-800/30',
+      borderColor: 'border-indigo-600/30',
+      textColor: 'text-indigo-200',
+      buttonColor: 'bg-indigo-600 hover:bg-indigo-700',
+      example: 'Improve score from 650 to 750 in 12 months with strategic changes',
+      href: '/calculators/credit-score'
+    },
+    {
+      id: 'rewards-optimizer',
+      title: 'Rewards Optimizer',
+      description: 'Maximize credit card rewards with personalized recommendations based on your spending',
+      icon: Zap,
+      bgColor: 'from-rose-900/20 to-rose-800/30',
+      borderColor: 'border-rose-600/30',
+      textColor: 'text-rose-200',
+      buttonColor: 'bg-rose-600 hover:bg-rose-700',
+      example: 'Earn $800+ annually with optimized card selection and spending strategy',
+      href: '/calculators/rewards-optimizer'
+    },
+    {
+      id: 'portfolio-analyzer',
+      title: 'Portfolio Analyzer',
+      description: 'Analyze your investment portfolio allocation, diversification, and get optimization recommendations',
+      icon: BarChart3,
+      bgColor: 'from-emerald-900/20 to-emerald-800/30',
+      borderColor: 'border-emerald-600/30',
+      textColor: 'text-emerald-200',
+      buttonColor: 'bg-emerald-600 hover:bg-emerald-700',
+      example: 'Optimize $100,000 portfolio for 85% diversification score and balanced risk',
+      href: '/calculators/portfolio-analyzer'
     }
   ];
 

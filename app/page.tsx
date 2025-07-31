@@ -1144,7 +1144,7 @@ export default function HomePage() {
                 <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Link href="/progress">
+            <Link href="/advanced-progress">
               <Button
                 size="lg"
                 className="group bg-white/10 hover:bg-white/20 text-white px-10 py-6 text-xl font-semibold border border-white/20 hover:border-white/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
