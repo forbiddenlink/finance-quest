@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useEnhancedProgress } from '@/lib/store/progressHooks';
+import { theme } from '@/lib/theme';
 import {
   TrendingUp,
   Target,
@@ -43,7 +44,7 @@ export default function ProgressPage() {
       description: 'Completed your first lesson',
       unlocked: progress.totalLessonsCompleted >= 1,
       icon: BookOpen,
-      color: 'text-blue-600'
+      color: theme.textColors.accent
     },
     {
       id: 'quiz-master',
@@ -82,7 +83,7 @@ export default function ProgressPage() {
   const nextAction = progress.getRecommendedNextAction();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4">
+    <div className={`${theme.backgrounds.primary} p-4`}>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -90,7 +91,7 @@ export default function ProgressPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-4xl font-bold text-white mb-2">Your Financial Learning Journey</h1>
+          <h1 className={`text-4xl font-bold ${theme.textColors.primary} mb-2`}>Your Financial Learning Journey</h1>
           <p className="text-xl text-gray-300">Track your progress toward financial mastery</p>
         </motion.div>
 
@@ -120,13 +121,13 @@ export default function ProgressPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-300">Lessons Completed</p>
-                <p className="text-3xl font-bold text-blue-400">
+                <p className={`text-3xl font-bold ${theme.textColors.accent}`}>
                   <AnimatedCounter end={progress.totalLessonsCompleted} />
                 </p>
                 <p className="text-xs text-gray-400">out of 20 available</p>
               </div>
-              <div className="p-3 bg-blue-500/20 rounded-lg">
-                <BookOpen className="w-8 h-8 text-blue-400" />
+              <div className="p-3 bg-amber-500/20 rounded-lg">
+                <BookOpen className={`w-8 h-8 ${theme.textColors.accent}`} />
               </div>
             </div>
           </div>
@@ -172,7 +173,7 @@ export default function ProgressPage() {
               transition={{ delay: 0.2 }}
               className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6"
             >
-              <h3 className="text-xl font-bold text-white mb-6">Chapter Progress</h3>
+              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-6`}>Chapter Progress</h3>
               <div className="space-y-4">
                 {chapterProgressData.map((chapter, index) => (
                   <div key={chapter.chapter} className="flex items-center gap-4">
@@ -181,7 +182,7 @@ export default function ProgressPage() {
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-medium text-white">{chapter.name}</span>
+                        <span className={`text-sm font-medium ${theme.textColors.primary}`}>{chapter.name}</span>
                         <span className="text-sm text-gray-300">{chapter.progress}%</span>
                       </div>
                       <div className="w-full bg-slate-700/50 rounded-full h-2">

@@ -14,6 +14,7 @@ import JudgeMode from "@/components/demo/JudgeMode";
 import WelcomeOnboarding from "@/components/shared/ui/WelcomeOnboarding";
 import { Button } from "@/components/ui/button";
 import { useEnhancedProgress } from "@/lib/store/progressHooks";
+import { theme } from "@/lib/theme";
 import {
   BookOpen,
   Calculator,
@@ -49,7 +50,7 @@ export default function HomePage() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden">
+    <div className={theme.backgrounds.primary}>
       {/* Advanced Background Elements */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(30,58,138,0.4),rgba(255,255,255,0))]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_80%_50%,rgba(30,64,175,0.2),rgba(255,255,255,0))]"></div>
@@ -81,13 +82,13 @@ export default function HomePage() {
       <ParticleSystem particleCount={30} />
 
       {/* Enhanced Header */}
-      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20 relative z-10">
+      <header className={`${theme.backgrounds.header} ${theme.borderColors.accent} border-b relative z-10`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
-                <span className="text-sm text-amber-300 font-medium">Financial Literacy Platform</span>
+                <span className={`text-sm ${theme.textColors.accentSecondary} font-medium`}>Financial Literacy Platform</span>
               </div>
               <div className="hidden md:flex items-center space-x-4 text-xs text-slate-400">
                 <span>Real-time Market Data</span>
@@ -149,7 +150,7 @@ export default function HomePage() {
           >
             Transform from financial novice to money master through{' '}
             <span className="text-amber-400 font-medium">AI-powered coaching</span>,{' '}
-            <span className="text-blue-300 font-medium">interactive tools</span>, and{' '}
+            <span className={`${theme.textColors.accentSecondary} font-medium`}>interactive tools</span>, and{' '}
             <span className="text-amber-300 font-medium">real-world scenarios</span>.
             <br />
             <span className="text-lg text-gray-400 mt-2 block">No prior knowledge required!</span>
@@ -185,7 +186,7 @@ export default function HomePage() {
             <Link href="/health-assessment">
               <Button
                 size="lg"
-                className="group bg-gradient-to-r from-blue-700/20 to-blue-600/20 hover:from-blue-700/30 hover:to-blue-600/30 text-white px-8 py-6 text-lg font-semibold border border-blue-600/30 hover:border-blue-500/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
+                className="group bg-gradient-to-r from-amber-700/20 to-blue-600/20 hover:from-amber-700/30 hover:to-blue-600/30 text-white px-8 py-6 text-lg font-semibold border border-amber-600/30 hover:border-amber-500/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
               >
                 <Target className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
                 Health Check
@@ -211,12 +212,12 @@ export default function HomePage() {
             </div>
             <div className="w-px h-4 bg-gray-600"></div>
             <div className="flex items-center gap-2">
-              <Brain className="w-4 h-4 text-blue-400" />
+              <Brain className={`w-4 h-4 ${theme.textColors.accent}`} />
               <span>Real AI Coaching</span>
             </div>
             <div className="w-px h-4 bg-gray-600"></div>
             <div className="flex items-center gap-2">
-              <Globe className="w-4 h-4 text-blue-400" />
+              <Globe className={`w-4 h-4 ${theme.textColors.accent}`} />
               <span>47 Countries</span>
             </div>
           </motion.div>
@@ -259,17 +260,17 @@ export default function HomePage() {
             </div>
           </InteractiveCard>
 
-          <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-blue-500/20 rounded-2xl p-6 hover:border-blue-400/40 transition-all duration-300">
+          <InteractiveCard className={`${theme.backgrounds.card} border border-white/10 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300`}>
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/25">
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
-              <div className="text-4xl font-bold text-blue-400 mb-2">
-                <AnimatedCounter end={180} suffix="+" className="text-4xl font-bold text-blue-400" />
+              <div className={`text-4xl font-bold ${theme.textColors.accent} mb-2`}>
+                <AnimatedCounter end={180} suffix="+" className={`text-4xl font-bold ${theme.textColors.accent}`} />
               </div>
               <p className="text-gray-400 text-sm leading-relaxed">specialized lessons across 30 comprehensive chapters</p>
-              <div className="mt-3 px-3 py-1 bg-blue-500/20 rounded-full">
-                <p className="text-xs text-blue-300 font-medium">6 Learning Tracks</p>
+              <div className="mt-3 px-3 py-1 bg-amber-500/20 rounded-full">
+                <p className={`text-xs ${theme.textColors.accentSecondary} font-medium`}>6 Learning Tracks</p>
               </div>
             </div>
           </InteractiveCard>
@@ -362,25 +363,25 @@ export default function HomePage() {
               transition={{ delay: 0.9, duration: 0.6 }}
             >
               {progress.userProgress.currentChapter >= 2 ? (
-                <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-blue-500/30 rounded-2xl p-6 hover:border-blue-400/50 transition-all duration-300">
+                <InteractiveCard className={`${theme.backgrounds.card} border border-white/10 rounded-2xl p-6 hover:border-amber-400/50 transition-all duration-300`}>
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-blue-500/25">
                       <Building className="w-6 h-6 text-white" />
                     </div>
                     <div>
                       <h4 className="text-lg font-bold text-white">Chapter 2</h4>
-                      <p className="text-blue-400 text-sm">Banking Fundamentals</p>
+                      <p className={`${theme.textColors.accent} text-sm`}>Banking Fundamentals</p>
                     </div>
                   </div>
                   <p className="text-gray-300 mb-4 text-sm leading-relaxed">
                     Optimize your banking, understand fees, and set up automated financial systems.
                   </p>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2 px-3 py-1 bg-blue-500/20 rounded-full">
-                      <CheckCircle className="w-3 h-3 text-blue-400" />
-                      <span className="text-blue-300 text-xs font-medium">Unlocked!</span>
+                    <div className="flex items-center gap-2 px-3 py-1 bg-amber-500/20 rounded-full">
+                      <CheckCircle className={`w-3 h-3 ${theme.textColors.accent}`} />
+                      <span className={`${theme.textColors.accentSecondary} text-xs font-medium`}>Unlocked!</span>
                     </div>
-                    <div className="text-blue-400 text-xs">6 Lessons</div>
+                    <div className={`${theme.textColors.accent} text-xs`}>6 Lessons</div>
                   </div>
                   <Link href="/chapter2">
                     <Button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25">

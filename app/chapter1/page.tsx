@@ -6,6 +6,7 @@ import PaycheckCalculator from '@/components/chapters/fundamentals/calculators/P
 import MoneyFundamentalsQuiz from '@/components/chapters/fundamentals/assessments/MoneyFundamentalsQuiz';
 import AITeachingAssistant from '@/components/shared/ai-assistant/AITeachingAssistant';
 import QASystem from '@/components/shared/QASystem';
+import { theme } from '@/lib/theme';
 import { BookOpen, Calculator, FileText, Bot, Lightbulb, Target } from 'lucide-react';
 
 type TabType = 'lesson' | 'calculator' | 'quiz' | 'assistant';
@@ -21,22 +22,22 @@ export default function Chapter1Page() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+    <div className={theme.backgrounds.primary}>
       {/* Header */}
-      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
+      <header className={`${theme.backgrounds.header} ${theme.borderColors.accent} border-b`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => window.history.back()}
-                className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
+                className={`${theme.textColors.accent} hover:${theme.textColors.accentSecondary} font-medium transition-colors`}
               >
                 ← Back to Home
               </button>
-              <h1 className="text-2xl font-bold text-white">Chapter 1: Money Psychology & Mindset</h1>
+              <h1 className={`text-2xl font-bold ${theme.textColors.primary}`}>Chapter 1: Money Psychology & Mindset</h1>
             </div>
             <div className="bg-amber-500/20 border border-amber-500/30 px-3 py-1 rounded-full backdrop-blur-sm">
-              <span className="text-sm font-medium text-amber-300">Progress: 25%</span>
+              <span className={`text-sm font-medium ${theme.textColors.accentSecondary}`}>Progress: 25%</span>
             </div>
           </div>
         </div>
@@ -44,15 +45,15 @@ export default function Chapter1Page() {
 
       {/* Tab Navigation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-lg p-1 mb-6">
+        <div className={`${theme.tabs.container} rounded-lg p-1 mb-6`}>
           <nav className="flex space-x-1">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-md font-medium transition-colors ${activeTab === tab.id
-                    ? 'bg-amber-600 text-slate-900 shadow-lg shadow-amber-600/25'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                    ? theme.tabs.active + ' shadow-lg shadow-amber-600/25'
+                    : theme.tabs.inactive
                   }`}
               >
                 <tab.icon className="w-4 h-4" />
@@ -67,11 +68,11 @@ export default function Chapter1Page() {
           {activeTab === 'lesson' && (
             <div>
               <div className="mb-6 bg-amber-500/10 border border-amber-500/20 backdrop-blur-sm rounded-lg p-4">
-                <h3 className="font-semibold text-amber-300 mb-2 flex items-center gap-2">
+                <h3 className={`font-semibold ${theme.textColors.accentSecondary} mb-2 flex items-center gap-2`}>
                   <Lightbulb className="w-4 h-4" />
                   Learning Path
                 </h3>
-                <p className="text-amber-200">
+                <p className={theme.textColors.accentSecondary}>
                   Complete all lessons, try the calculator, then take the quiz to unlock Chapter 2!
                 </p>
               </div>

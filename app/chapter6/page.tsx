@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import BudgetBuilderCalculator from '@/components/shared/calculators/BudgetBuilderCalculator';
 import QASystem from '@/components/shared/QASystem';
-import { BookOpen, Calculator, FileText, Bot, PiggyBank, Target } from 'lucide-react';
+import { theme } from '@/lib/theme';
+import { BookOpen, Calculator, FileText, Bot, Target, PiggyBank } from 'lucide-react';
 
 type TabType = 'lesson' | 'calculator' | 'quiz' | 'assistant';
 
@@ -18,9 +19,9 @@ export default function Chapter6Page() {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+        <div className={theme.backgrounds.primary}>
             {/* Header */}
-            <header className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
+            <header className={`${theme.backgrounds.header} ${theme.borderColors.accent} border-b`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
@@ -87,8 +88,8 @@ export default function Chapter6Page() {
                                     </ul>
                                 </div>
 
-                                <div className="bg-blue-500/20 border border-blue-500/30 rounded-xl p-6">
-                                    <h3 className="text-xl font-semibold text-blue-300 mb-4">💡 Chapter Preview</h3>
+                                <div className="bg-amber-500/20 border border-amber-500/30 rounded-xl p-6">
+                                    <h3 className={`text-xl font-semibold ${theme.textColors.accentSecondary} mb-4`}>💡 Chapter Preview</h3>
                                     <p className="text-gray-300">
                                         This advanced budgeting chapter completes your Foundation Track education. You&apos;ll learn professional-grade
                                         cash flow management techniques used by financial planners and successful investors. Master these skills
@@ -107,7 +108,7 @@ export default function Chapter6Page() {
                                     </div>
 
                                     <div className="bg-slate-800/50 rounded-xl p-6">
-                                        <Calculator className="w-8 h-8 text-blue-400 mb-3" />
+                                        <Calculator className={`w-8 h-8 ${theme.textColors.accent} mb-3`} />
                                         <h4 className="text-lg font-semibold text-white mb-2">Cash Flow Optimization</h4>
                                         <p className="text-gray-300 text-sm">
                                             Master timing strategies, automated systems, and advanced techniques to maximize your financial

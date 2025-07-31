@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, HelpCircle, Sparkles, Mic } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 import LoadingSpinner from './ui/LoadingSpinner';
 import VoiceQA from './ui/VoiceQA';
 
@@ -122,12 +123,12 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center gap-2">
-          <div className="bg-blue-100 p-1 rounded-full">
-            <Sparkles className="w-4 h-4 text-blue-600" />
+          <div className="bg-amber-100 p-1 rounded-full">
+            <Sparkles className={`w-4 h-4 ${theme.textColors.accent}`} />
           </div>
           <h3 className="font-semibold text-gray-900">AI Financial Q&A Assistant</h3>
         </div>
-        <button className="text-sm text-blue-600 hover:text-blue-700">
+        <button className={`text-sm ${theme.textColors.accent} hover:text-amber-700`}>
           {isExpanded ? 'Minimize' : 'Expand'}
         </button>
       </div>

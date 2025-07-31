@@ -28,6 +28,7 @@ export interface UserProgress {
   achievements: string[];
   strugglingTopics: string[];
   financialLiteracyScore: number;
+  onboardingCompleted: boolean;
   learningAnalytics: {
     averageQuizScore: number;
     lessonCompletionRate: number;
@@ -53,6 +54,9 @@ export interface ProgressStore {
   
   // Simulation tracking
   recordSimulationResult: (result: SimulationResult) => void;
+  
+  // Onboarding
+  completeOnboarding: () => void;
   
   // Analytics
   updateLearningAnalytics: () => void;
@@ -81,6 +85,7 @@ const initialProgress: UserProgress = {
   achievements: [],
   strugglingTopics: [],
   financialLiteracyScore: 0,
+  onboardingCompleted: false,
   learningAnalytics: {
     averageQuizScore: 0,
     lessonCompletionRate: 0,
@@ -320,6 +325,16 @@ export const useProgressStore = create<ProgressStore>()(
             }
           };
         });
+      },
+
+      completeOnboarding: () => {
+        set((state) => ({
+          userProgress: {
+            ...state.userProgress,
+            onboardingCompleted: true,
+            lastActiveDate: new Date().toISOString()
+          }
+        }));
       }
     }),
     {
