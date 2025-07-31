@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { TrendingUp, TrendingDown, Wifi, WifiOff } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface StockTicker {
   symbol: string;
@@ -129,8 +130,8 @@ export default function MarketTicker() {
 
   if (!mounted || isLoading || stockData.length === 0) {
     return (
-      <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-4 rounded-lg shadow-lg animate-pulse">
-        <div className="h-16 bg-slate-700 rounded"></div>
+      <div className={`${theme.backgrounds.primary} ${theme.textColors.primary} p-4 rounded-lg shadow-lg animate-pulse`}>
+        <div className={`h-16 ${theme.backgrounds.card} rounded`}></div>
       </div>
     );
   }
@@ -138,10 +139,10 @@ export default function MarketTicker() {
   const currentStock = stockData[currentIndex];
   if (!currentStock) {
     return (
-      <div className="bg-gradient-to-r from-slate-800 via-blue-900 to-slate-800 text-white rounded-xl shadow-lg border border-amber-500/20 min-w-[280px] max-w-[320px] animate-pulse">
+      <div className={`${theme.backgrounds.primary} ${theme.textColors.primary} rounded-xl shadow-lg border ${theme.borderColors.accent} min-w-[280px] max-w-[320px] animate-pulse`}>
         <div className="p-3">
-          <div className="h-4 bg-slate-700 rounded mb-2"></div>
-          <div className="h-6 bg-slate-700 rounded"></div>
+          <div className={`h-4 ${theme.backgrounds.card} rounded mb-2`}></div>
+          <div className={`h-6 ${theme.backgrounds.card} rounded`}></div>
         </div>
       </div>
     );
@@ -150,7 +151,7 @@ export default function MarketTicker() {
   const isPositive = (currentStock.change || 0) >= 0;
 
   return (
-    <div className="bg-gradient-to-r from-slate-800 via-blue-900 to-slate-800 text-white rounded-xl shadow-lg overflow-hidden relative border border-amber-500/20 min-w-[280px] max-w-[320px]">
+    <div className={`${theme.backgrounds.primary} ${theme.textColors.primary} rounded-xl shadow-lg overflow-hidden relative border ${theme.borderColors.accent} min-w-[280px] max-w-[320px]`}>
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="w-full h-full bg-gradient-to-r from-amber-500/30 to-blue-500/30"></div>
@@ -160,15 +161,15 @@ export default function MarketTicker() {
         {/* Header Row */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
-            <span className="text-xs text-amber-300 font-semibold">Market Pulse</span>
+            <div className={`w-2 h-2 ${theme.textColors.accent} rounded-full animate-pulse`}></div>
+            <span className={`${theme.typography.tiny} ${theme.textColors.accentSecondary} font-semibold`}>Market Pulse</span>
             {isLive ? (
-              <Wifi className="w-3 h-3 text-amber-400" />
+              <Wifi className={`w-3 h-3 ${theme.textColors.accent}`} />
             ) : (
-              <WifiOff className="w-3 h-3 text-amber-400/60" />
+              <WifiOff className={`w-3 h-3 ${theme.textColors.accent}/60`} />
             )}
           </div>
-          <div className="text-xs text-slate-400">
+          <div className={`${theme.typography.tiny} ${theme.textColors.muted}`}>
             {isLive ? 'Live' : 'Demo'}
           </div>
         </div>
@@ -176,17 +177,17 @@ export default function MarketTicker() {
         {/* Main Content Row */}
         <div className="flex items-center justify-between">
           <div className="flex-1">
-            <div className="text-lg font-bold text-white tracking-wider">
+            <div className={`text-lg font-bold ${theme.textColors.primary} tracking-wider`}>
               {currentStock.symbol}
             </div>
-            <div className="text-sm font-semibold text-slate-300">
+            <div className={`${theme.typography.small} font-semibold ${theme.textColors.secondary}`}>
               ${(currentStock.price || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
             </div>
           </div>
 
-          <div className={`flex items-center space-x-1 px-2 py-1 rounded-lg text-xs font-medium ${isPositive
-            ? 'bg-blue-500/15 text-blue-400 border border-blue-500/20'
-            : 'bg-red-500/15 text-red-400 border border-red-500/20'
+          <div className={`flex items-center space-x-1 px-2 py-1 rounded-lg ${theme.typography.tiny} font-medium ${isPositive
+            ? `${theme.status.info.bg} ${theme.status.info.text} border ${theme.status.info.border}`
+            : `${theme.status.error.bg} ${theme.status.error.text} border ${theme.status.error.border}`
             }`}>
             {isPositive ? (
               <TrendingUp className="w-3 h-3" />

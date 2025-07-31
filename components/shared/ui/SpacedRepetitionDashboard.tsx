@@ -157,20 +157,20 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">{stats.total}</div>
-            <div className="text-sm text-gray-600">Total Concepts</div>
+            <div className={`text-2xl font-bold ${theme.status.info.text}`}>{stats.total}</div>
+            <div className={`text-sm ${theme.textColors.secondary}`}>Total Concepts</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-green-600">{stats.mastered}</div>
-            <div className="text-sm text-gray-600">Mastered</div>
+            <div className={`text-2xl font-bold ${theme.status.success.text}`}>{stats.mastered}</div>
+            <div className={`text-sm ${theme.textColors.secondary}`}>Mastered</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-red-600">{stats.struggling}</div>
-            <div className="text-sm text-gray-600">Struggling</div>
+            <div className={`text-2xl font-bold ${theme.status.error.text}`}>{stats.struggling}</div>
+            <div className={`text-sm ${theme.textColors.secondary}`}>Struggling</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-yellow-600">{stats.dueToday}</div>
-            <div className="text-sm text-gray-600">Due Today</div>
+            <div className={`text-2xl font-bold ${theme.status.warning.text}`}>{stats.dueToday}</div>
+            <div className={`text-sm ${theme.textColors.secondary}`}>Due Today</div>
           </div>
         </div>
 

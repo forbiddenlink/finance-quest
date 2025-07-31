@@ -87,13 +87,13 @@ export default function ProgressDashboard() {
   const betterDecisions = Math.floor(literacyScore / 100);
 
   return (
-    <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-6">
+    <div className={`max-w-7xl mx-auto ${theme.backgrounds.card} rounded-lg ${theme.shadows.lg} p-6`}>
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+        <h2 className={`${theme.typography.heading1} ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
           <BarChart3 className="w-8 h-8" />
           Your Financial Literacy Journey
         </h2>
-        <p className="text-gray-600">
+        <p className={theme.textColors.secondary}>
           Track your progress, celebrate achievements, and see the measurable impact of financial education
         </p>
       </div>
@@ -128,8 +128,8 @@ export default function ProgressDashboard() {
       {/* Detailed Analytics */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Chapter Progress Visualization */}
-        <div className="bg-gray-50 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Course Progress Breakdown</h3>
+        <div className={`${theme.backgrounds.cardHover} rounded-lg p-6`}>
+          <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Course Progress Breakdown</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -152,15 +152,15 @@ export default function ProgressDashboard() {
             </ResponsiveContainer>
           </div>
           <div className="mt-4 text-center">
-            <p className="text-sm text-gray-600">
+            <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>
               You&apos;ve mastered <strong>{userProgress.currentChapter - 1}</strong> out of <strong>{totalChapters}</strong> chapters
             </p>
           </div>
         </div>
 
         {/* Quiz Performance */}
-        <div className="bg-gray-50 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Quiz Performance</h3>
+        <div className={`${theme.backgrounds.cardHover} rounded-lg p-6`}>
+          <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Quiz Performance</h3>
           {quizData.length > 0 ? (
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -175,11 +175,11 @@ export default function ProgressDashboard() {
               </ResponsiveContainer>
             </div>
           ) : (
-            <div className="h-64 flex items-center justify-center text-gray-500">
+            <div className={`h-64 flex items-center justify-center ${theme.textColors.muted}`}>
               <div className="text-center">
-                <FileText className="w-12 h-12 mx-auto mb-2 text-gray-400" />
+                <FileText className={`w-12 h-12 mx-auto mb-2 ${theme.textColors.muted}`} />
                 <p>No quizzes taken yet</p>
-                <p className="text-sm">Complete lessons to unlock quizzes</p>
+                <p className={theme.typography.small}>Complete lessons to unlock quizzes</p>
               </div>
             </div>
           )}
@@ -187,7 +187,7 @@ export default function ProgressDashboard() {
       </div>
 
       {/* Learning Activity Timeline */}
-      <div className="bg-gray-50 rounded-lg p-6 mb-8">
+      <div className={`${theme.backgrounds.cardHover} rounded-lg p-6 mb-8`}>
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Learning Activity Timeline</h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">

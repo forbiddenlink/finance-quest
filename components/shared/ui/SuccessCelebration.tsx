@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { CheckCircle, Trophy, Star } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface SuccessCelebrationProps {
   show: boolean;
@@ -36,9 +37,9 @@ export default function SuccessCelebration({
 
   const getIcon = () => {
     switch (type) {
-      case 'quiz': return <CheckCircle className="w-16 h-16 text-blue-500" />;
-      case 'lesson': return <Star className="w-16 h-16 text-blue-500" />;
-      default: return <Trophy className="w-16 h-16 text-yellow-500" />;
+      case 'quiz': return <CheckCircle className={`w-16 h-16 ${theme.status.info.text}`} />;
+      case 'lesson': return <Star className={`w-16 h-16 ${theme.status.info.text}`} />;
+      default: return <Trophy className={`w-16 h-16 ${theme.textColors.warning}`} />;
     }
   };
 
@@ -81,7 +82,7 @@ export default function SuccessCelebration({
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className="w-6 h-6 text-yellow-300 animate-pulse"
+                  className={`w-6 h-6 ${theme.textColors.accentSecondary} animate-pulse`}
                   style={{ animationDelay: `${i * 0.2}s` }}
                   fill="currentColor"
                 />

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { theme } from '@/lib/theme';
 import {
   Home,
   BookOpen,
@@ -114,7 +115,7 @@ export default function ProgressNavigation() {
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 to-transparent"></div>
 
                 {/* Logo icon - Dollar sign with growth chart */}
-                <svg viewBox="0 0 24 24" className="w-6 h-6 text-slate-900 relative z-10" fill="none">
+                <svg viewBox="0 0 24 24" className={`w-6 h-6 ${theme.textColors.primary} relative z-10`} fill="none">
                   {/* Dollar sign base */}
                   <path d="M12 2v20M8 6h8a4 4 0 0 1 0 8H8M8 10h8a4 4 0 0 1 0 8h-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
 
@@ -125,8 +126,8 @@ export default function ProgressNavigation() {
               </div>
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-lg font-bold text-white whitespace-nowrap">Finance Quest</h1>
-              <p className="text-xs text-amber-300 whitespace-nowrap">Master Your Future</p>
+              <h1 className={`text-lg font-bold ${theme.textColors.primary} whitespace-nowrap`}>Finance Quest</h1>
+              <p className={`${theme.typography.tiny} ${theme.textColors.accentSecondary} whitespace-nowrap`}>Master Your Future</p>
             </div>
           </div>
 
@@ -179,7 +180,7 @@ export default function ProgressNavigation() {
                       {item.progress !== undefined && item.progress > 0 && (
                         <div className="flex items-center space-x-1">
                           {item.progress === 100 ? (
-                            <CheckCircle className="w-3 h-3 text-blue-500" />
+                            <CheckCircle className={`w-3 h-3 ${theme.status.info.text}`} />
                           ) : (
                             <div className="w-8 h-1">
                               <Progress value={item.progress} className="h-1" />
@@ -232,11 +233,11 @@ export default function ProgressNavigation() {
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
                 {overallProgress >= 80 ? (
-                  <Star className="w-5 h-5 text-yellow-500" />
+                  <Star className={`w-5 h-5 ${theme.textColors.warning}`} />
                 ) : overallProgress >= 50 ? (
-                  <Trophy className="w-4 h-4 text-blue-500" />
+                  <Trophy className={`w-4 h-4 ${theme.status.info.text}`} />
                 ) : (
-                  <span className="text-xs font-bold text-gray-600">{overallProgress}%</span>
+                  <span className={`${theme.typography.tiny} font-bold ${theme.textColors.secondary}`}>{overallProgress}%</span>
                 )}
               </div>
             </div>

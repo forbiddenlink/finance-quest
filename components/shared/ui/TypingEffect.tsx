@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { theme } from '@/lib/theme';
 
 interface TypingEffectProps {
     text: string;
@@ -54,7 +55,7 @@ export default function TypingEffect({
         <span className={className}>
             {displayText}
             {!isComplete && (
-                <span className="animate-pulse text-blue-500">|</span>
+                <span className={`animate-pulse ${theme.textColors.accent}`}>|</span>
             )}
         </span>
     );
