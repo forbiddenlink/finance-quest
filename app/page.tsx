@@ -286,7 +286,7 @@ export default function HomePage() {
               </div>
               <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>OpenAI GPT-4o-mini integration, not simulated chatbots</p>
               <div className="mt-3 px-3 py-1 bg-slate-500/20 rounded-full">
-                <p className={`${theme.typography.tiny} text-slate-300 font-medium`}>Genuine AI</p>
+                <p className={`${theme.typography.tiny} ${theme.textColors.secondary} font-medium`}>Genuine AI</p>
               </div>
             </div>
           </InteractiveCard>
@@ -428,14 +428,14 @@ export default function HomePage() {
                 <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-slate-500/30 rounded-2xl p-6 hover:border-slate-400/50 transition-all duration-300">
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-slate-600 to-slate-700 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-slate-500/25">
-                      <Briefcase className="w-6 h-6 text-white" />
+                      <Briefcase className={`w-6 h-6 ${theme.textColors.primary}`} />
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold text-white">Chapter 3</h4>
-                      <p className="text-slate-400 text-sm">Income & Career</p>
+                      <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Chapter 3</h4>
+                      <p className={`${theme.textColors.secondary} text-sm`}>Income & Career</p>
                     </div>
                   </div>
-                  <p className="text-gray-300 mb-4 text-sm leading-relaxed">
+                  <p className={`${theme.textColors.secondary} mb-4 text-sm leading-relaxed`}>
                     Maximize your earning potential through salary negotiation and career strategy.
                   </p>
                   <div className="flex items-center justify-between mb-4">
@@ -530,10 +530,10 @@ export default function HomePage() {
                     <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-2xl p-6 hover:border-blue-400/40 transition-all duration-300">
                       <div className="flex items-center mb-4">
                         <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-blue-500/25">
-                          <BookOpen className="w-6 h-6 text-white" />
+                          <BookOpen className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
-                          <h4 className="text-lg font-bold text-white">Foundation Track</h4>
+                          <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Foundation Track</h4>
                           <p className="text-blue-400 text-sm">Chapters 1-6</p>
                         </div>
                       </div>
@@ -550,10 +550,10 @@ export default function HomePage() {
                     <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300">
                       <div className="flex items-center mb-4">
                         <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-amber-500/25">
-                          <CreditCard className="w-6 h-6 text-white" />
+                          <CreditCard className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
-                          <h4 className="text-lg font-bold text-white">Credit & Lending</h4>
+                          <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Credit & Lending</h4>
                           <p className="text-amber-400 text-sm">Chapters 7-10</p>
                         </div>
                       </div>
@@ -570,10 +570,10 @@ export default function HomePage() {
                     <div className="bg-gradient-to-br from-green-500/10 to-green-600/10 border border-green-500/20 rounded-2xl p-6 hover:border-green-400/40 transition-all duration-300">
                       <div className="flex items-center mb-4">
                         <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-green-500/25">
-                          <TrendingUp className="w-6 h-6 text-white" />
+                          <TrendingUp className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
-                          <h4 className="text-lg font-bold text-white">Investment Track</h4>
+                          <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Investment Track</h4>
                           <p className="text-amber-400 text-sm">Chapters 11-16</p>
                         </div>
                       </div>
@@ -590,10 +590,10 @@ export default function HomePage() {
                     <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-purple-500/20 rounded-2xl p-6 hover:border-purple-400/40 transition-all duration-300">
                       <div className="flex items-center mb-4">
                         <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-purple-500/25">
-                          <Shield className="w-6 h-6 text-white" />
+                          <Shield className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
-                          <h4 className="text-lg font-bold text-white">Protection & Planning</h4>
+                          <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Protection & Planning</h4>
                           <p className="text-navy-400 text-sm">Chapters 17-20</p>
                         </div>
                       </div>
@@ -610,10 +610,10 @@ export default function HomePage() {
                     <div className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/10 border border-indigo-500/20 rounded-2xl p-6 hover:border-indigo-400/40 transition-all duration-300">
                       <div className="flex items-center mb-4">
                         <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-indigo-500/25">
-                          <Building className="w-6 h-6 text-white" />
+                          <Building className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
-                          <h4 className="text-lg font-bold text-white">Advanced Planning</h4>
+                          <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Advanced Planning</h4>
                           <p className="text-indigo-400 text-sm">Chapters 21-25</p>
                         </div>
                       </div>
