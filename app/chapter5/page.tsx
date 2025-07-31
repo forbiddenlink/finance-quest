@@ -82,10 +82,10 @@ export default function Chapter5Page() {
   if (!isChapterUnlocked) {
     return (
       <div className={`min-h-screen ${theme.backgrounds.primary} flex items-center justify-center p-4`}>
-        <div className="max-w-md w-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-8 text-center">
+        <div className={`max-w-md w-full ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl shadow-lg p-8 text-center`}>
           <Shield className="w-16 h-16 mx-auto mb-4 text-amber-400" />
-          <h2 className="text-2xl font-bold text-white mb-4">Chapter 5 Locked</h2>
-          <p className="text-gray-300 mb-6">
+          <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-4`}>Chapter 5 Locked</h2>
+          <p className={`${theme.textColors.secondary} mb-6`}>
             Complete Chapter 4 with 80%+ quiz score to unlock Emergency Funds & Financial Safety
           </p>
           <Link href="/chapter4">

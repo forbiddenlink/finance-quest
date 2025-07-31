@@ -135,24 +135,24 @@ export default function Chapter4Page() {
         >
           <div className="inline-flex items-center gap-3 bg-white/10 border border-white/20 backdrop-blur-sm rounded-full px-6 py-3 mb-6">
             <CreditCard className="w-8 h-8 text-amber-400" />
-            <span className="text-lg font-semibold text-white">Chapter 4</span>
+            <span className={`text-lg font-semibold ${theme.textColors.primary}`}>Chapter 4</span>
           </div>
 
           <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-400 via-blue-400 to-slate-400 bg-clip-text text-transparent mb-4">
             Credit & Debt Management
           </h1>
 
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+          <p className={`text-xl ${theme.textColors.secondary} max-w-3xl mx-auto mb-8`}>
             Master the critical skills of managing credit and eliminating debt to build a strong financial foundation.
           </p>
 
           {/* Progress Bar */}
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 max-w-md mx-auto">
+          <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.md} max-w-md mx-auto`}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-white">Chapter Progress</span>
+              <span className={`${theme.typography.small} font-medium ${theme.textColors.primary}`}>Chapter Progress</span>
               <span className="text-sm font-bold text-amber-400">{chapterProgress}%</span>
             </div>
-            <div className="w-full bg-slate-700 rounded-full h-3">
+            <div className={`w-full ${theme.progress.background} rounded-full h-3`}>
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${chapterProgress}%` }}

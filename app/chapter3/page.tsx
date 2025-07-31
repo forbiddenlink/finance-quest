@@ -86,21 +86,21 @@ export default function Chapter3Page() {
 
         {/* Progress Bar */}
         <motion.div
-          className="mb-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-4 shadow-lg"
+          className={`mb-8 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl ${theme.spacing.sm} shadow-lg`}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3 }}
         >
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium text-white">Chapter Progress</span>
-            <span className="text-sm text-gray-300">
+            <span className={`${theme.typography.small} font-medium ${theme.textColors.primary}`}>Chapter Progress</span>
+            <span className={`${theme.typography.small} ${theme.textColors.secondary}`}>
               {currentSection === 'lesson' ? '1/3' :
                 currentSection === 'calculator' ? '2/3' : '3/3'}
             </span>
           </div>
-          <div className="w-full bg-slate-700 rounded-full h-2">
+          <div className={`w-full ${theme.progress.background} rounded-full h-2`}>
             <motion.div
-              className="bg-gradient-to-r from-amber-500 to-blue-500 h-2 rounded-full"
+              className={theme.progress.bar}
               initial={{ width: '0%' }}
               animate={{
                 width: currentSection === 'lesson' ? '33%' :
@@ -113,7 +113,7 @@ export default function Chapter3Page() {
 
         {/* Navigation Tabs */}
         <motion.div
-          className="flex space-x-1 bg-white/5 backdrop-blur-xl border border-white/10 p-1 rounded-xl shadow-lg mb-8"
+          className={`flex space-x-1 ${theme.backgrounds.card} border ${theme.borderColors.primary} p-1 rounded-xl shadow-lg mb-8`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -127,8 +127,8 @@ export default function Chapter3Page() {
               key={tab.key}
               onClick={() => setCurrentSection(tab.key as 'lesson' | 'calculator' | 'quiz')}
               className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${currentSection === tab.key
-                ? 'bg-amber-500 text-white shadow-md'
-                : 'text-gray-300 hover:text-amber-300 hover:bg-white/10'
+                ? `${theme.buttons.primary}`
+                : `${theme.textColors.muted} hover:${theme.textColors.primary} hover:${theme.backgrounds.cardHover}`
                 }`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -171,7 +171,7 @@ export default function Chapter3Page() {
         >
           <Link
             href="/chapter2"
-            className="inline-flex items-center px-6 py-3 bg-white/10 border border-white/20 text-gray-300 rounded-lg hover:bg-white/20 hover:text-white transition-colors backdrop-blur-sm"
+            className={`inline-flex items-center px-6 py-3 ${theme.buttons.secondary} rounded-lg transition-colors`}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Previous Chapter
@@ -180,7 +180,7 @@ export default function Chapter3Page() {
           {userProgress.currentChapter > 3 && (
             <Link
               href="/chapter4"
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-500 to-blue-500 text-white rounded-lg hover:from-amber-600 hover:to-blue-600 transition-colors shadow-lg"
+              className={`inline-flex items-center px-6 py-3 ${theme.buttons.primary} rounded-lg transition-colors shadow-lg`}
             >
               Next Chapter
               <ArrowRight className="w-4 h-4 ml-2" />

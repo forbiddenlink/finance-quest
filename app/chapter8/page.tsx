@@ -21,7 +21,7 @@ export default function Chapter8Page() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
             {/* Header */}
-            <header className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
+            <header className={`${theme.backgrounds.header} border-b border-amber-500/20`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
@@ -31,7 +31,7 @@ export default function Chapter8Page() {
                             >
                                 ← Back to Home
                             </button>
-                            <h1 className="text-2xl font-bold text-white">Chapter 8: Credit Cards Mastery</h1>
+                            <h1 className={`${theme.typography.heading2} ${theme.textColors.primary}`}>Chapter 8: Credit Cards Mastery</h1>
                         </div>
                         <div className="bg-purple-500/20 border border-purple-500/30 px-3 py-1 rounded-full backdrop-blur-sm">
                             <span className="text-sm font-medium text-purple-300">Credit & Lending Track</span>
@@ -42,7 +42,7 @@ export default function Chapter8Page() {
 
             {/* Tab Navigation */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-lg p-1 mb-6">
+                <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.muted} rounded-lg p-1 mb-6`}>
                     <nav className="flex space-x-1">
                         {tabs.map((tab) => (
                             <button

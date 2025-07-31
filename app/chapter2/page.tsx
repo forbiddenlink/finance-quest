@@ -64,10 +64,10 @@ export default function Chapter2Page() {
 
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-white mb-2">
+              <h1 className={`${theme.typography.heading1} ${theme.textColors.primary} mb-2`}>
                 Chapter 2: Banking & Account Fundamentals
               </h1>
-              <p className="text-xl text-gray-300">
+              <p className={`text-xl ${theme.textColors.secondary}`}>
                 Master the foundation of personal banking and account optimization
               </p>
             </div>
@@ -86,21 +86,21 @@ export default function Chapter2Page() {
 
         {/* Progress Bar */}
         <motion.div
-          className="mb-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 shadow-lg"
+          className={`mb-8 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg ${theme.spacing.sm} shadow-lg`}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3 }}
         >
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium text-gray-300">Chapter Progress</span>
-            <span className="text-sm text-gray-400">
+            <span className={`${theme.typography.small} font-medium ${theme.textColors.secondary}`}>Chapter Progress</span>
+            <span className={`${theme.typography.small} ${theme.textColors.muted}`}>
               {currentSection === 'lesson' ? '1/3' :
                 currentSection === 'calculator' ? '2/3' : '3/3'}
             </span>
           </div>
-          <div className="w-full bg-slate-700/50 rounded-full h-2">
+          <div className={`w-full ${theme.progress.background} rounded-full h-2`}>
             <motion.div
-              className="bg-gradient-to-r from-amber-500 to-blue-500 h-2 rounded-full"
+              className={theme.progress.bar}
               initial={{ width: '0%' }}
               animate={{
                 width: currentSection === 'lesson' ? '33%' :
@@ -113,7 +113,7 @@ export default function Chapter2Page() {
 
         {/* Navigation Tabs */}
         <motion.div
-          className="flex space-x-1 bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 p-1 rounded-lg shadow-lg mb-8"
+          className={`flex space-x-1 ${theme.backgrounds.cardHover} border ${theme.borderColors.muted} p-1 rounded-lg shadow-lg mb-8`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -127,8 +127,8 @@ export default function Chapter2Page() {
               key={tab.key}
               onClick={() => setCurrentSection(tab.key as 'lesson' | 'calculator' | 'quiz')}
               className={`flex-1 py-3 px-4 rounded-md font-medium transition-all ${currentSection === tab.key
-                ? 'bg-amber-600 text-slate-900 shadow-md'
-                : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                ? `${theme.buttons.primary}`
+                : `${theme.textColors.muted} hover:${theme.textColors.primary} hover:${theme.backgrounds.cardHover}`
                 }`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -171,7 +171,7 @@ export default function Chapter2Page() {
         >
           <Link
             href="/chapter1"
-            className="inline-flex items-center px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+            className={`inline-flex items-center px-6 py-3 ${theme.buttons.secondary} rounded-lg transition-colors`}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Previous Chapter
@@ -180,7 +180,7 @@ export default function Chapter2Page() {
           {userProgress.currentChapter > 2 && (
             <Link
               href="/chapter3"
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-colors"
+              className={`inline-flex items-center px-6 py-3 ${theme.buttons.primary} rounded-lg transition-colors`}
             >
               Next Chapter
               <ArrowRight className="w-4 h-4 ml-2" />

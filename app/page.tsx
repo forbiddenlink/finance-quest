@@ -92,7 +92,7 @@ export default function HomePage() {
               </div>
               <div className="hidden md:flex items-center space-x-4 text-xs text-slate-400">
                 <span>Real-time Market Data</span>
-                <div className="w-px h-4 bg-slate-600"></div>
+                <div className={`w-px h-4 ${theme.borderColors.muted}`}></div>
                 <span>AI-Powered Learning</span>
               </div>
             </div>
@@ -146,14 +146,14 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.8 }}
-            className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-12 font-light"
+            className={`text-xl md:text-2xl ${theme.textColors.secondary} max-w-4xl mx-auto leading-relaxed mb-12 font-light`}
           >
             Transform from financial novice to money master through{' '}
-            <span className="text-amber-400 font-medium">AI-powered coaching</span>,{' '}
+            <span className={`${theme.textColors.accent} font-medium`}>AI-powered coaching</span>,{' '}
             <span className={`${theme.textColors.accentSecondary} font-medium`}>interactive tools</span>, and{' '}
-            <span className="text-amber-300 font-medium">real-world scenarios</span>.
+            <span className={`${theme.textColors.accentSecondary} font-medium`}>real-world scenarios</span>.
             <br />
-            <span className="text-lg text-gray-400 mt-2 block">No prior knowledge required!</span>
+            <span className={`text-lg ${theme.textColors.muted} mt-2 block`}>No prior knowledge required!</span>
           </motion.p>
 
           {/* CTA Buttons - Redesigned */}
@@ -177,7 +177,7 @@ export default function HomePage() {
             <Button
               onClick={() => setShowGuidedTour(true)}
               size="lg"
-              className="group bg-white/10 hover:bg-white/20 text-white px-8 py-6 text-lg font-semibold border border-white/20 hover:border-white/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
+              className={`group ${theme.buttons.primary} px-8 py-6 text-lg font-semibold border ${theme.borderColors.primary} hover:border-white/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1`}
             >
               <Play className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
               Demo Tour
@@ -186,7 +186,7 @@ export default function HomePage() {
             <Link href="/health-assessment">
               <Button
                 size="lg"
-                className="group bg-gradient-to-r from-amber-700/20 to-blue-600/20 hover:from-amber-700/30 hover:to-blue-600/30 text-white px-8 py-6 text-lg font-semibold border border-amber-600/30 hover:border-amber-500/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
+                className={`group bg-gradient-to-r from-amber-700/20 to-blue-600/20 hover:from-amber-700/30 hover:to-blue-600/30 ${theme.textColors.primary} px-8 py-6 text-lg font-semibold border border-amber-600/30 hover:border-amber-500/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1`}
               >
                 <Target className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
                 Health Check
@@ -199,23 +199,23 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.1, duration: 0.8 }}
-            className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-400"
+            className={`flex flex-wrap items-center justify-center gap-8 ${theme.typography.small} ${theme.textColors.muted}`}
           >
             <div className="flex items-center gap-2">
-              <Users className="w-4 h-4 text-amber-400" />
+              <Users className={`w-4 h-4 ${theme.textColors.accent}`} />
               <span>10,000+ Learners</span>
             </div>
-            <div className="w-px h-4 bg-gray-600"></div>
+            <div className={`w-px h-4 ${theme.borderColors.muted}`}></div>
             <div className="flex items-center gap-2">
-              <Award className="w-4 h-4 text-amber-400" />
+              <Award className={`w-4 h-4 ${theme.textColors.accent}`} />
               <span>89% Success Rate</span>
             </div>
-            <div className="w-px h-4 bg-gray-600"></div>
+            <div className={`w-px h-4 ${theme.borderColors.muted}`}></div>
             <div className="flex items-center gap-2">
               <Brain className={`w-4 h-4 ${theme.textColors.accent}`} />
               <span>Real AI Coaching</span>
             </div>
-            <div className="w-px h-4 bg-gray-600"></div>
+            <div className={`w-px h-4 ${theme.borderColors.muted}`}></div>
             <div className="flex items-center gap-2">
               <Globe className={`w-4 h-4 ${theme.textColors.accent}`} />
               <span>47 Countries</span>
@@ -230,63 +230,63 @@ export default function HomePage() {
           transition={{ delay: 0.3, duration: 0.8 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20"
         >
-          <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-red-500/20 rounded-2xl p-6 hover:border-red-400/40 transition-all duration-300">
+          <InteractiveCard className={`${theme.backgrounds.card} border border-red-500/20 rounded-2xl ${theme.spacing.md} hover:border-red-400/40 transition-all duration-300`}>
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-red-500/25">
-                <Target className="w-8 h-8 text-white" />
+                <Target className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
-              <div className="text-4xl font-bold text-navy-400 mb-2">
-                <AnimatedCounter end={64} suffix="%" className="text-4xl font-bold text-navy-400" />
+              <div className={`${theme.typography.heading1} text-navy-400 mb-2`}>
+                <AnimatedCounter end={64} suffix="%" className={`${theme.typography.heading1} text-navy-400`} />
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed">of Americans can&apos;t pass a basic financial literacy test</p>
+              <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>of Americans can&apos;t pass a basic financial literacy test</p>
               <div className="mt-3 px-3 py-1 bg-navy-500/20 rounded-full">
-                <p className="text-xs text-navy-300 font-medium">The Crisis We&apos;re Solving</p>
+                <p className={`${theme.typography.tiny} text-navy-300 font-medium`}>The Crisis We&apos;re Solving</p>
               </div>
             </div>
           </InteractiveCard>
 
-          <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-amber-500/20 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300">
+          <InteractiveCard className={`${theme.backgrounds.card} border border-amber-500/20 rounded-2xl ${theme.spacing.md} hover:border-amber-400/40 transition-all duration-300`}>
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-500/25">
-                <Award className="w-8 h-8 text-white" />
+                <Award className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
-              <div className="text-4xl font-bold text-amber-400 mb-2">
-                <AnimatedCounter end={89} suffix="%" className="text-4xl font-bold text-amber-400" />
+              <div className={`${theme.typography.heading1} ${theme.textColors.accent} mb-2`}>
+                <AnimatedCounter end={89} suffix="%" className={`${theme.typography.heading1} ${theme.textColors.accent}`} />
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed">completion rate with measurable learning outcomes</p>
-              <div className="mt-3 px-3 py-1 bg-amber-500/20 rounded-full">
-                <p className="text-xs text-amber-300 font-medium">Proven Results</p>
+              <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>completion rate with measurable learning outcomes</p>
+              <div className={`mt-3 px-3 py-1 ${theme.status.warning.bg} rounded-full`}>
+                <p className={`${theme.typography.tiny} ${theme.status.warning.text} font-medium`}>Proven Results</p>
               </div>
             </div>
           </InteractiveCard>
 
-          <InteractiveCard className={`${theme.backgrounds.card} border border-white/10 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300`}>
+          <InteractiveCard className={`${theme.backgrounds.card} border border-blue-500/20 rounded-2xl ${theme.spacing.md} hover:border-blue-400/40 transition-all duration-300`}>
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/25">
-                <BookOpen className="w-8 h-8 text-white" />
+                <BookOpen className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
-              <div className={`text-4xl font-bold ${theme.textColors.accent} mb-2`}>
-                <AnimatedCounter end={180} suffix="+" className={`text-4xl font-bold ${theme.textColors.accent}`} />
+              <div className={`${theme.typography.heading1} ${theme.textColors.accent} mb-2`}>
+                <AnimatedCounter end={180} suffix="+" className={`${theme.typography.heading1} ${theme.textColors.accent}`} />
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed">specialized lessons across 30 comprehensive chapters</p>
-              <div className="mt-3 px-3 py-1 bg-amber-500/20 rounded-full">
-                <p className={`text-xs ${theme.textColors.accentSecondary} font-medium`}>6 Learning Tracks</p>
+              <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>specialized lessons across 30 comprehensive chapters</p>
+              <div className={`mt-3 px-3 py-1 ${theme.status.warning.bg} rounded-full`}>
+                <p className={`${theme.typography.tiny} ${theme.textColors.accentSecondary} font-medium`}>6 Learning Tracks</p>
               </div>
             </div>
           </InteractiveCard>
 
-          <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-slate-500/20 rounded-2xl p-6 hover:border-slate-400/40 transition-all duration-300">
+          <InteractiveCard className={`${theme.backgrounds.card} border border-slate-500/20 rounded-2xl ${theme.spacing.md} hover:border-slate-400/40 transition-all duration-300`}>
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center shadow-lg shadow-slate-500/25">
-                <Brain className="w-8 h-8 text-white" />
+                <Brain className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
-              <div className="text-4xl font-bold text-slate-400 mb-2 flex items-center justify-center gap-2">
+              <div className={`${theme.typography.heading1} text-slate-400 mb-2 flex items-center justify-center gap-2`}>
                 <Zap className="w-8 h-8" />
                 <span>Real</span>
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed">OpenAI GPT-4o-mini integration, not simulated chatbots</p>
+              <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>OpenAI GPT-4o-mini integration, not simulated chatbots</p>
               <div className="mt-3 px-3 py-1 bg-slate-500/20 rounded-full">
-                <p className="text-xs text-slate-300 font-medium">Genuine AI</p>
+                <p className={`${theme.typography.tiny} text-slate-300 font-medium`}>Genuine AI</p>
               </div>
             </div>
           </InteractiveCard>
@@ -314,7 +314,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.6 }}
-              className="text-lg text-gray-400 max-w-2xl mx-auto"
+              className={`text-lg ${theme.textColors.muted} max-w-2xl mx-auto`}
             >
               Five comprehensive chapters designed by financial experts for measurable results
             </motion.p>
@@ -327,17 +327,17 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
-              <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-amber-500/30 rounded-2xl p-6 hover:border-amber-400/50 transition-all duration-300">
+              <InteractiveCard className={`${theme.backgrounds.card} border border-amber-500/30 rounded-2xl ${theme.spacing.md} hover:border-amber-400/50 transition-all duration-300`}>
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-amber-500/25">
-                    <Brain className="w-6 h-6 text-white" />
+                    <Brain className={`w-6 h-6 ${theme.textColors.primary}`} />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-white">Chapter 1</h4>
-                    <p className="text-amber-400 text-sm">Money Psychology</p>
+                    <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Chapter 1</h4>
+                    <p className={`${theme.textColors.accent} ${theme.typography.small}`}>Money Psychology</p>
                   </div>
                 </div>
-                <p className="text-gray-300 mb-4 text-sm leading-relaxed">
+                <p className={`${theme.textColors.secondary} mb-4 ${theme.typography.small} leading-relaxed`}>
                   Master your emotional relationship with money, overcome limiting beliefs, and build a wealth mindset.
                 </p>
                 <div className="flex items-center justify-between mb-4">
@@ -363,17 +363,17 @@ export default function HomePage() {
               transition={{ delay: 0.9, duration: 0.6 }}
             >
               {progress.userProgress.currentChapter >= 2 ? (
-                <InteractiveCard className={`${theme.backgrounds.card} border border-white/10 rounded-2xl p-6 hover:border-amber-400/50 transition-all duration-300`}>
+                <InteractiveCard className={`${theme.backgrounds.card} border border-blue-500/20 rounded-2xl ${theme.spacing.md} hover:border-blue-400/50 transition-all duration-300`}>
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-blue-500/25">
-                      <Building className="w-6 h-6 text-white" />
+                      <Building className={`w-6 h-6 ${theme.textColors.primary}`} />
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold text-white">Chapter 2</h4>
-                      <p className={`${theme.textColors.accent} text-sm`}>Banking Fundamentals</p>
+                      <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Chapter 2</h4>
+                      <p className={`${theme.textColors.accent} ${theme.typography.small}`}>Banking Fundamentals</p>
                     </div>
                   </div>
-                  <p className="text-gray-300 mb-4 text-sm leading-relaxed">
+                  <p className={`${theme.textColors.secondary} mb-4 ${theme.typography.small} leading-relaxed`}>
                     Optimize your banking, understand fees, and set up automated financial systems.
                   </p>
                   <div className="flex items-center justify-between mb-4">
@@ -384,34 +384,34 @@ export default function HomePage() {
                     <div className={`${theme.textColors.accent} text-xs`}>6 Lessons</div>
                   </div>
                   <Link href="/chapter2">
-                    <Button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25">
+                    <Button className={`w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25`}>
                       Continue Learning
                       <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
                   </Link>
                 </InteractiveCard>
               ) : (
-                <div className="bg-white/5 backdrop-blur-xl border border-gray-600/30 rounded-2xl p-6 opacity-60">
+                <div className={`${theme.backgrounds.card} border ${theme.borderColors.muted} rounded-2xl ${theme.spacing.md} opacity-60`}>
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 bg-gray-600 rounded-xl flex items-center justify-center mr-4">
-                      <Building className="w-6 h-6 text-gray-400" />
+                      <Building className={`w-6 h-6 ${theme.textColors.muted}`} />
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold text-gray-300">Chapter 2</h4>
-                      <p className="text-gray-500 text-sm">Banking Fundamentals</p>
+                      <h4 className={`text-lg font-bold ${theme.textColors.muted}`}>Chapter 2</h4>
+                      <p className={`${theme.textColors.muted} ${theme.typography.small}`}>Banking Fundamentals</p>
                     </div>
                   </div>
-                  <p className="text-gray-500 mb-4 text-sm leading-relaxed">
+                  <p className={`${theme.textColors.muted} mb-4 ${theme.typography.small} leading-relaxed`}>
                     Optimize your banking, understand fees, and set up automated financial systems.
                   </p>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2 px-3 py-1 bg-gray-600/20 rounded-full">
-                      <Lock className="w-3 h-3 text-gray-500" />
-                      <span className="text-gray-500 text-xs font-medium">Complete Chapter 1</span>
+                      <Lock className={`w-3 h-3 ${theme.textColors.muted}`} />
+                      <span className={`${theme.textColors.muted} ${theme.typography.tiny} font-medium`}>Complete Chapter 1</span>
                     </div>
-                    <div className="text-gray-500 text-xs">6 Lessons</div>
+                    <div className={`${theme.textColors.muted} ${theme.typography.tiny}`}>6 Lessons</div>
                   </div>
-                  <Button disabled className="w-full bg-gray-600 text-gray-400 font-semibold rounded-xl cursor-not-allowed">
+                  <Button disabled className={`w-full bg-gray-600 ${theme.textColors.muted} font-semibold rounded-xl cursor-not-allowed`}>
                     Locked
                   </Button>
                 </div>
