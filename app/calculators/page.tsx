@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { TrendingUp, PieChart, CreditCard, Home, Umbrella, Car, Target, Zap, Gamepad2, Calculator, Brain, BarChart3 } from 'lucide-react';
+import { TrendingUp, PieChart, CreditCard, Home, Umbrella, Car, Target, Zap, Gamepad2, Calculator, Brain, BarChart3, Calendar, FileText } from 'lucide-react';
 
 export default function CalculatorsPage() {
   const calculators = [
@@ -110,6 +110,30 @@ export default function CalculatorsPage() {
       buttonColor: 'bg-emerald-600 hover:bg-emerald-700',
       example: 'Optimize $100,000 portfolio for 85% diversification score and balanced risk',
       href: '/calculators/portfolio-analyzer'
+    },
+    {
+      id: 'retirement-planner',
+      title: 'Retirement Planner',
+      description: 'Plan your retirement with confidence - calculate savings needed and project future income',
+      icon: Calendar,
+      bgColor: 'from-violet-900/20 to-violet-800/30',
+      borderColor: 'border-violet-600/30',
+      textColor: 'text-violet-200',
+      buttonColor: 'bg-violet-600 hover:bg-violet-700',
+      example: 'Save $500/month for 35 years = $1.2M retirement balance at 7% return',
+      href: '/calculators/retirement-planner'
+    },
+    {
+      id: 'tax-optimizer',
+      title: 'Tax Optimizer',
+      description: 'Minimize your tax burden with personalized strategies and legal optimization techniques',
+      icon: FileText,
+      bgColor: 'from-orange-900/20 to-orange-800/30',
+      borderColor: 'border-orange-600/30',
+      textColor: 'text-orange-200',
+      buttonColor: 'bg-orange-600 hover:bg-orange-700',
+      example: 'Reduce $15,000 tax bill by $3,500 with 401(k), IRA, and HSA optimization',
+      href: '/calculators/tax-optimizer'
     }
   ];
 
