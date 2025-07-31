@@ -12,6 +12,8 @@ import TypingText from "@/components/shared/ui/TypingText";
 import GuidedTour from "@/components/demo/GuidedTour";
 import JudgeMode from "@/components/demo/JudgeMode";
 import WelcomeOnboarding from "@/components/shared/ui/WelcomeOnboarding";
+import InteractiveDashboardCards from "@/components/shared/ui/InteractiveDashboardCards";
+import { Button } from "@/components/ui/button";
 import { useEnhancedProgress } from "@/lib/store/progressHooks";
 import {
   BookOpen,
@@ -107,34 +109,32 @@ export default function HomePage() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up stagger-3">
           <Link href="/chapter1">
-            <button className="group bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 transition-all shadow-lg card-lift animate-pulse-glow font-poppins relative overflow-hidden">
-              <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <span className="flex items-center relative z-10">
-                <Sparkles className="mr-2 w-5 h-5" />
-                Start Your Journey
-              </span>
-            </button>
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
+              <Sparkles className="mr-2 w-5 h-5" />
+              Start Your Journey
+            </Button>
           </Link>
 
-          <button
+          <Button
             onClick={() => setShowGuidedTour(true)}
-            className="group bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-yellow-600 hover:via-orange-600 hover:to-red-600 transition-all shadow-lg card-lift animate-pulse-glow font-poppins relative overflow-hidden"
+            size="lg"
+            className="bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 hover:from-yellow-600 hover:via-orange-600 hover:to-red-600 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
           >
-            <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <span className="flex items-center relative z-10">
-              <Play className="mr-2 w-5 h-5" />
-              Contest Demo Tour
-            </span>
-          </button>
+            <Play className="mr-2 w-5 h-5" />
+            Contest Demo Tour
+          </Button>
 
           <Link href="/health-assessment">
-            <button className="group bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-green-600 hover:to-emerald-700 transition-all shadow-lg card-lift animate-pulse-glow font-poppins relative overflow-hidden">
-              <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <span className="flex items-center relative z-10">
-                <Target className="mr-2 w-5 h-5" />
-                Health Assessment
-              </span>
-            </button>
+            <Button 
+              size="lg"
+              className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
+              <Target className="mr-2 w-5 h-5" />
+              Health Assessment
+            </Button>
           </Link>
           <Link href="/calculators/compound-interest">
             <button className="group premium-card text-blue-600 px-8 py-4 rounded-xl text-lg font-semibold border-2 border-blue-600/20 hover:border-blue-600/40 transition-all shadow-lg font-poppins relative overflow-hidden">
@@ -593,28 +593,9 @@ export default function HomePage() {
         </div>
       </InteractiveCard>
 
-      {/* Impact Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center mb-16">
-        <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500">
-          <div className="text-4xl font-bold text-red-600 mb-2">64%</div>
-          <p className="text-gray-600 text-sm">of Americans can&apos;t pass a basic financial literacy test</p>
-          <p className="text-xs text-red-500 mt-2 font-medium">The problem we&apos;re solving</p>
-        </div>
-        <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
-          <div className="text-4xl font-bold text-green-600 mb-2">80%+</div>
-          <p className="text-gray-600 text-sm">mastery rate required to unlock next chapter</p>
-          <p className="text-xs text-green-500 mt-2 font-medium">Real learning outcomes</p>
-        </div>
-        <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
-          <div className="text-4xl font-bold text-purple-600 mb-2">30</div>
-          <p className="text-gray-600 text-sm">comprehensive chapters covering complete financial mastery</p>
-          <p className="text-xs text-purple-500 mt-2 font-medium">Complete curriculum</p>
-        </div>
-        <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500">
-          <div className="text-4xl font-bold text-blue-600 mb-2">Real</div>
-          <p className="text-gray-600 text-sm">OpenAI GPT-4o-mini integration, not simulated chatbots</p>
-          <p className="text-xs text-blue-500 mt-2 font-medium">Genuine AI coaching</p>
-        </div>
+      {/* Enhanced Interactive Dashboard */}
+      <div className="mb-16">
+        <InteractiveDashboardCards />
       </div>
     </main>
 

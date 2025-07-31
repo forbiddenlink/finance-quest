@@ -2,12 +2,26 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 // Enhanced types for better progress tracking
+export interface SimulationResult {
+  scenarioId: string;
+  totalScore: number;
+  timeSpent: number;
+  correctAnswers: number;
+  totalQuestions: number;
+  financialOutcome: number;
+  grade: 'A' | 'B' | 'C' | 'D' | 'F';
+  strengths: string[];
+  improvements: string[];
+  completedAt: Date;
+}
+
 export interface UserProgress {
   currentChapter: number;
   completedLessons: string[];
   completedQuizzes: string[];
   quizScores: Record<string, number>;
   calculatorUsage: Record<string, number>;
+  simulationResults: Record<string, SimulationResult>;
   totalTimeSpent: number;
   lastActiveDate: string;
   streakDays: number;
@@ -37,6 +51,9 @@ export interface ProgressStore {
   // Calculator tracking
   recordCalculatorUsage: (calculatorId: string) => void;
   
+  // Simulation tracking
+  recordSimulationResult: (result: SimulationResult) => void;
+  
   // Analytics
   updateLearningAnalytics: () => void;
   calculateFinancialLiteracyScore: () => number;
@@ -57,6 +74,7 @@ const initialProgress: UserProgress = {
   completedQuizzes: [],
   quizScores: {},
   calculatorUsage: {},
+  simulationResults: {},
   totalTimeSpent: 0,
   lastActiveDate: new Date().toISOString(),
   streakDays: 0,
@@ -162,6 +180,24 @@ export const useProgressStore = create<ProgressStore>()(
             lastActiveDate: new Date().toISOString()
           }
         }));
+        get().updateStreak();
+      },
+
+      recordSimulationResult: (result: SimulationResult) => {
+        set((state) => ({
+          userProgress: {
+            ...state.userProgress,
+            simulationResults: {
+              ...state.userProgress.simulationResults,
+              [result.scenarioId]: result
+            },
+            achievements: result.grade === 'A' 
+              ? [...new Set([...state.userProgress.achievements, `simulation-${result.scenarioId}-master`])]
+              : state.userProgress.achievements,
+            lastActiveDate: new Date().toISOString()
+          }
+        }));
+        get().updateLearningAnalytics();
         get().updateStreak();
       },
 

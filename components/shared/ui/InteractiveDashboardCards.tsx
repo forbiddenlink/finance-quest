@@ -1,0 +1,172 @@
+'use client';
+
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { 
+  TrendingUp, 
+  Users, 
+  BookOpen, 
+  Award,
+  Zap,
+  ArrowRight,
+  ChevronDown,
+  ChevronUp
+} from 'lucide-react';
+
+export default function InteractiveDashboardCards() {
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+
+  const cards = [
+    {
+      title: "Learning Impact",
+      mainStat: "42%",
+      description: "Average improvement in financial literacy scores",
+      icon: TrendingUp,
+      color: "from-blue-500 to-blue-600",
+      bgColor: "from-blue-50 to-blue-100",
+      details: [
+        "Pre-test average: 58%",
+        "Post-test average: 82%",
+        "Completion rate: 89%",
+        "Retention after 30 days: 94%"
+      ],
+      progress: 82
+    },
+    {
+      title: "Active Community",
+      mainStat: "10,000+",
+      description: "Students actively using Finance Quest",
+      icon: Users,
+      color: "from-green-500 to-green-600",
+      bgColor: "from-green-50 to-green-100",
+      details: [
+        "New users this month: 1,847",
+        "Daily active users: 3,200",
+        "Countries represented: 47",
+        "Average session: 23 minutes"
+      ],
+      progress: 78
+    },
+    {
+      title: "Comprehensive Curriculum",
+      mainStat: "25",
+      description: "Interactive lessons across 5 chapters",
+      icon: BookOpen,
+      color: "from-purple-500 to-purple-600", 
+      bgColor: "from-purple-50 to-purple-100",
+      details: [
+        "5 core chapters",
+        "25 interactive lessons",
+        "6 professional calculators",
+        "5 crisis simulations"
+      ],
+      progress: 100
+    },
+    {
+      title: "Success Rate",
+      mainStat: "80%",
+      description: "Students who complete the full curriculum",
+      icon: Award,
+      color: "from-orange-500 to-orange-600",
+      bgColor: "from-orange-50 to-orange-100",
+      details: [
+        "Chapter 1 completion: 94%",
+        "Chapter 2 completion: 87%",
+        "Chapter 3 completion: 83%",
+        "Full curriculum: 80%"
+      ],
+      progress: 80
+    }
+  ];
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
+      {cards.map((card, index) => {
+        const Icon = card.icon;
+        const isExpanded = expandedCard === index;
+        
+        return (
+          <Card 
+            key={index}
+            className={`
+              relative overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer
+              ${isExpanded ? 'md:col-span-2 lg:col-span-2 shadow-lg' : 'hover:shadow-lg'}
+            `}
+            onClick={() => setExpandedCard(isExpanded ? null : index)}
+          >
+            {/* Background Gradient */}
+            <div className={`absolute inset-0 bg-gradient-to-br ${card.bgColor} opacity-50`} />
+            
+            <CardHeader className="relative pb-2">
+              <div className="flex items-center justify-between">
+                <div className={`p-3 rounded-lg bg-gradient-to-r ${card.color} text-white`}>
+                  <Icon className="w-6 h-6" />
+                </div>
+                <div className="text-right">
+                  <div className="text-3xl font-bold text-gray-900">{card.mainStat}</div>
+                  <Progress value={card.progress} className="w-16 h-2 mt-1" />
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="relative">
+              <div className="space-y-3">
+                <div>
+                  <CardTitle className="text-lg font-semibold text-gray-900 mb-1">
+                    {card.title}
+                  </CardTitle>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {card.description}
+                  </p>
+                </div>
+
+                {/* Expanded Details */}
+                {isExpanded && (
+                  <div className="mt-4 space-y-3 animate-in slide-in-from-top-2 duration-300">
+                    <div className="flex items-center text-sm font-medium text-gray-700">
+                      <Zap className="w-4 h-4 mr-2 text-yellow-500" />
+                      Detailed Breakdown
+                    </div>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {card.details.map((detail, detailIndex) => (
+                        <div 
+                          key={detailIndex}
+                          className="flex items-center p-3 bg-white/70 rounded-lg border border-gray-100"
+                        >
+                          <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mr-3 flex-shrink-0" />
+                          <span className="text-sm text-gray-700">{detail}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="w-full mt-3 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                    >
+                      View Full Analytics
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </div>
+                )}
+
+                {/* Expand/Collapse Indicator */}
+                <div className="flex justify-center pt-2">
+                  {isExpanded ? (
+                    <ChevronUp className="w-5 h-5 text-gray-400" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-gray-400" />
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      })}
+    </div>
+  );
+}
