@@ -56,7 +56,9 @@ export const backgrounds = {
     header: 'bg-slate-900/80 backdrop-blur-xl',
     card: 'bg-white/5 backdrop-blur-xl',
     cardHover: 'bg-white/10 backdrop-blur-xl',
+    cardDisabled: 'bg-white/5 backdrop-blur-xl',
     glass: 'bg-white/5 backdrop-blur-xl border border-white/10',
+    disabled: 'bg-slate-700/50',
 } as const;
 
 // Text Colors

@@ -90,7 +90,7 @@ export default function HomePage() {
                 <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
                 <span className={`text-sm ${theme.textColors.accentSecondary} font-medium`}>Financial Literacy Platform</span>
               </div>
-              <div className="hidden md:flex items-center space-x-4 text-xs text-slate-400">
+              <div className={`hidden md:flex items-center space-x-4 text-xs ${theme.textColors.muted}`}>
                 <span>Real-time Market Data</span>
                 <div className={`w-px h-4 ${theme.borderColors.muted}`}></div>
                 <span>AI-Powered Learning</span>
@@ -166,7 +166,7 @@ export default function HomePage() {
             <Link href="/chapter1">
               <Button
                 size="lg"
-                className="group bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-700 text-slate-900 px-8 py-6 text-lg font-semibold shadow-2xl shadow-amber-500/25 hover:shadow-amber-500/40 transition-all duration-300 hover:-translate-y-1 border-0"
+                className={`group bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-700 ${theme.textColors.primary} px-8 py-6 text-lg font-semibold shadow-2xl shadow-amber-500/25 hover:shadow-amber-500/40 transition-all duration-300 hover:-translate-y-1 border-0`}
               >
                 <Sparkles className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
                 Start Your Journey
@@ -280,12 +280,12 @@ export default function HomePage() {
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center shadow-lg shadow-slate-500/25">
                 <Brain className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
-              <div className={`${theme.typography.heading1} text-slate-400 mb-2 flex items-center justify-center gap-2`}>
+              <div className={`${theme.typography.heading1} ${theme.textColors.muted} mb-2 flex items-center justify-center gap-2`}>
                 <Zap className="w-8 h-8" />
                 <span>Real</span>
               </div>
               <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>OpenAI GPT-4o-mini integration, not simulated chatbots</p>
-              <div className="mt-3 px-3 py-1 bg-slate-500/20 rounded-full">
+              <div className={`mt-3 px-3 py-1 ${theme.status.info.bg} rounded-full`}>
                 <p className={`${theme.typography.tiny} ${theme.textColors.secondary} font-medium`}>Genuine AI</p>
               </div>
             </div>
@@ -348,7 +348,7 @@ export default function HomePage() {
                   <div className="text-amber-400 text-xs">6 Lessons</div>
                 </div>
                 <Link href="/chapter1">
-                  <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25">
+                  <Button className={`w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25`}>
                     Start Learning
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
@@ -393,7 +393,7 @@ export default function HomePage() {
               ) : (
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.muted} rounded-2xl ${theme.spacing.md} opacity-60`}>
                   <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-gray-600 rounded-xl flex items-center justify-center mr-4">
+                    <div className={`w-12 h-12 ${theme.backgrounds.cardHover} rounded-xl flex items-center justify-center mr-4`}>
                       <Building className={`w-6 h-6 ${theme.textColors.muted}`} />
                     </div>
                     <div>
@@ -405,13 +405,13 @@ export default function HomePage() {
                     Optimize your banking, understand fees, and set up automated financial systems.
                   </p>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2 px-3 py-1 bg-gray-600/20 rounded-full">
+                    <div className={`flex items-center gap-2 px-3 py-1 ${theme.status.warning.bg} rounded-full`}>
                       <Lock className={`w-3 h-3 ${theme.textColors.muted}`} />
                       <span className={`${theme.textColors.muted} ${theme.typography.tiny} font-medium`}>Complete Chapter 1</span>
                     </div>
                     <div className={`${theme.textColors.muted} ${theme.typography.tiny}`}>6 Lessons</div>
                   </div>
-                  <Button disabled className={`w-full bg-gray-600 ${theme.textColors.muted} font-semibold rounded-xl cursor-not-allowed`}>
+                  <Button disabled className={`w-full ${theme.backgrounds.disabled} ${theme.textColors.muted} font-semibold rounded-xl cursor-not-allowed`}>
                     Locked
                   </Button>
                 </div>
@@ -439,41 +439,41 @@ export default function HomePage() {
                     Maximize your earning potential through salary negotiation and career strategy.
                   </p>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2 px-3 py-1 bg-slate-500/20 rounded-full">
-                      <CheckCircle className="w-3 h-3 text-slate-400" />
-                      <span className="text-slate-300 text-xs font-medium">Unlocked!</span>
+                    <div className={`flex items-center gap-2 px-3 py-1 ${theme.status.success.bg} rounded-full`}>
+                      <CheckCircle className={`w-3 h-3 ${theme.status.success.text}`} />
+                      <span className={`${theme.textColors.secondary} text-xs font-medium`}>Unlocked!</span>
                     </div>
-                    <div className="text-slate-400 text-xs">4 Lessons</div>
+                    <div className={`${theme.textColors.muted} text-xs`}>4 Lessons</div>
                   </div>
                   <Link href="/chapter3">
-                    <Button className="w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/25">
+                    <Button className={`w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/25`}>
                       Continue Learning
                       <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
                   </Link>
                 </InteractiveCard>
               ) : (
-                <div className="bg-white/5 backdrop-blur-xl border border-gray-600/30 rounded-2xl p-6 opacity-60">
+                <div className={`${theme.backgrounds.cardDisabled} backdrop-blur-xl border ${theme.borderColors.muted} rounded-2xl p-6 opacity-60`}>
                   <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-gray-600 rounded-xl flex items-center justify-center mr-4">
-                      <Briefcase className="w-6 h-6 text-gray-400" />
+                    <div className={`w-12 h-12 ${theme.backgrounds.cardHover} rounded-xl flex items-center justify-center mr-4`}>
+                      <Briefcase className={`w-6 h-6 ${theme.textColors.muted}`} />
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold text-gray-300">Chapter 3</h4>
-                      <p className="text-gray-500 text-sm">Income & Career</p>
+                      <h4 className={`text-lg font-bold ${theme.textColors.secondary}`}>Chapter 3</h4>
+                      <p className={`${theme.textColors.muted} text-sm`}>Income & Career</p>
                     </div>
                   </div>
-                  <p className="text-gray-500 mb-4 text-sm leading-relaxed">
+                  <p className={`${theme.textColors.muted} mb-4 text-sm leading-relaxed`}>
                     Maximize your earning potential through salary negotiation and career strategy.
                   </p>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2 px-3 py-1 bg-gray-600/20 rounded-full">
-                      <Lock className="w-3 h-3 text-gray-500" />
-                      <span className="text-gray-500 text-xs font-medium">Complete Chapter 2</span>
+                    <div className={`flex items-center gap-2 px-3 py-1 ${theme.status.warning.bg} rounded-full`}>
+                      <Lock className={`w-3 h-3 ${theme.textColors.muted}`} />
+                      <span className={`${theme.textColors.muted} text-xs font-medium`}>Complete Chapter 2</span>
                     </div>
-                    <div className="text-gray-500 text-xs">4 Lessons</div>
+                    <div className={`${theme.textColors.muted} text-xs`}>4 Lessons</div>
                   </div>
-                  <Button disabled className="w-full bg-gray-600 text-gray-400 font-semibold rounded-xl cursor-not-allowed">
+                  <Button disabled className={`w-full ${theme.backgrounds.disabled} ${theme.textColors.muted} font-semibold rounded-xl cursor-not-allowed`}>
                     Locked
                   </Button>
                 </div>
@@ -489,7 +489,7 @@ export default function HomePage() {
             className="text-center mt-8"
           >
             <Link href="/curriculum">
-              <Button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 backdrop-blur-sm transition-all duration-300 px-8 py-3 text-lg">
+              <Button className={`${theme.buttons.ghost} border ${theme.borderColors.primary} backdrop-blur-sm transition-all duration-300 px-8 py-3 text-lg`}>
                 <BookOpen className="mr-2 w-5 h-5" />
                 View Complete 30-Chapter Curriculum
                 <ChevronDown className="ml-2 w-5 h-5" />
@@ -506,7 +506,7 @@ export default function HomePage() {
           >
             <Button
               onClick={() => setExpandedSection(expandedSection === 'chapters' ? null : 'chapters')}
-              className="bg-transparent hover:bg-white/5 text-gray-400 border-none text-sm transition-all duration-300"
+              className={`bg-transparent hover:bg-white/5 ${theme.textColors.muted} border-none text-sm transition-all duration-300`}
             >
               {expandedSection === 'chapters' ? 'Hide Foundation Preview' : 'Quick Foundation Preview'}
               {expandedSection === 'chapters' ?
@@ -534,15 +534,15 @@ export default function HomePage() {
                         </div>
                         <div>
                           <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Foundation Track</h4>
-                          <p className="text-blue-400 text-sm">Chapters 1-6</p>
+                          <p className={`${theme.textColors.accent} text-sm`}>Chapters 1-6</p>
                         </div>
                       </div>
-                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                      <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>
                         Master the psychological and practical foundations of personal finance.
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className="text-blue-400 text-xs font-medium">✅ Available Now</span>
-                        <span className="text-gray-400 text-xs">36 Lessons</span>
+                        <span className={`${theme.textColors.accent} text-xs font-medium`}>✅ Available Now</span>
+                        <span className={`${theme.textColors.muted} text-xs`}>36 Lessons</span>
                       </div>
                     </div>
 
@@ -554,15 +554,15 @@ export default function HomePage() {
                         </div>
                         <div>
                           <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Credit & Lending</h4>
-                          <p className="text-amber-400 text-sm">Chapters 7-10</p>
+                          <p className={`${theme.textColors.accentSecondary} text-sm`}>Chapters 7-10</p>
                         </div>
                       </div>
-                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                      <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>
                         Master credit optimization, strategic borrowing, and debt management.
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className="text-orange-400 text-xs font-medium">🚧 Coming Soon</span>
-                        <span className="text-gray-400 text-xs">24 Lessons</span>
+                        <span className={`${theme.textColors.warning} text-xs font-medium`}>🚧 Coming Soon</span>
+                        <span className={`${theme.textColors.muted} text-xs`}>24 Lessons</span>
                       </div>
                     </div>
 
@@ -574,15 +574,15 @@ export default function HomePage() {
                         </div>
                         <div>
                           <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Investment Track</h4>
-                          <p className="text-amber-400 text-sm">Chapters 11-16</p>
+                          <p className={`${theme.textColors.accentSecondary} text-sm`}>Chapters 11-16</p>
                         </div>
                       </div>
-                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                      <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>
                         Build wealth through stocks, bonds, retirement accounts, and advanced strategies.
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className="text-navy-400 text-xs font-medium">🚧 Coming Soon</span>
-                        <span className="text-gray-400 text-xs">36 Lessons</span>
+                        <span className={`${theme.textColors.accent} text-xs font-medium`}>🚧 Coming Soon</span>
+                        <span className={`${theme.textColors.muted} text-xs`}>36 Lessons</span>
                       </div>
                     </div>
 
@@ -630,38 +630,38 @@ export default function HomePage() {
                     <div className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/10 border border-cyan-500/20 rounded-2xl p-6 hover:border-cyan-400/40 transition-all duration-300">
                       <div className="flex items-center mb-4">
                         <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-cyan-500/25">
-                          <Globe className="w-6 h-6 text-white" />
+                          <Globe className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
-                          <h4 className="text-lg font-bold text-white">Economic Literacy</h4>
-                          <p className="text-cyan-400 text-sm">Chapters 26-30</p>
+                          <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Economic Literacy</h4>
+                          <p className={`${theme.textColors.accent} text-sm`}>Chapters 26-30</p>
                         </div>
                       </div>
-                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                      <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>
                         Understand markets, economic policy, global finance, and crisis preparation.
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className="text-orange-400 text-xs font-medium">🚧 Coming Soon</span>
-                        <span className="text-gray-400 text-xs">30 Lessons</span>
+                        <span className={`${theme.textColors.warning} text-xs font-medium`}>🚧 Coming Soon</span>
+                        <span className={`${theme.textColors.muted} text-xs`}>30 Lessons</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Track Summary */}
-                  <div className="mt-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+                  <div className={`mt-8 ${theme.backgrounds.card} backdrop-blur-xl border ${theme.borderColors.primary} rounded-2xl p-6`}>
                     <div className="text-center">
-                      <h4 className="text-xl font-bold text-white mb-4">Complete Financial Mastery Path</h4>
-                      <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-400">
+                      <h4 className={`text-xl font-bold ${theme.textColors.primary} mb-4`}>Complete Financial Mastery Path</h4>
+                      <div className={`flex flex-wrap items-center justify-center gap-8 text-sm ${theme.textColors.muted}`}>
                         <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                          <div className={`w-3 h-3 ${theme.textColors.accent} rounded-full`}></div>
                           <span>30 Comprehensive Chapters</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 bg-amber-500 rounded-full"></div>
+                          <div className={`w-3 h-3 ${theme.textColors.accentSecondary} rounded-full`}></div>
                           <span>180+ Interactive Lessons</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 bg-amber-500 rounded-full"></div>
+                          <div className={`w-3 h-3 ${theme.textColors.accentSecondary} rounded-full`}></div>
                           <span>20+ Specialized Calculators</span>
                         </div>
                         <div className="flex items-center gap-2">
@@ -669,7 +669,7 @@ export default function HomePage() {
                           <span>Real AI Coaching</span>
                         </div>
                       </div>
-                      <p className="text-gray-400 text-sm mt-4">
+                      <p className={`${theme.textColors.muted} text-sm mt-4`}>
                         From financial novice to expert: Complete curriculum covering every aspect of personal and business finance
                       </p>
                     </div>
