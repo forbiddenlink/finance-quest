@@ -157,16 +157,16 @@ export default function Chapter5Page() {
               <div className="text-2xl font-bold text-orange-700">78%</div>
               <div className="text-sm text-orange-600">live paycheck to paycheck</div>
             </div>
-            <div className="bg-blue-50 rounded-lg p-6 text-center">
-              <Shield className="w-8 h-8 mx-auto mb-3 text-green-600" />
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 text-center">
+              <Shield className="w-8 h-8 mx-auto mb-3 text-green-400" />
               <div className="text-2xl font-bold text-green-700">$1,000</div>
               <div className="text-sm text-green-600">minimum emergency fund recommended</div>
             </div>
           </div>
 
           {/* What You'll Learn */}
-          <div className="bg-blue-50 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-blue-900 mb-4">What You&apos;ll Master in This Chapter</h3>
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-white mb-4">What You&apos;ll Master in This Chapter</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
@@ -276,9 +276,9 @@ export default function Chapter5Page() {
                       <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="mt-4 p-3 bg-blue-50 rounded-lg"
+                        className="mt-4 p-3 bg-blue-500/20 border border-blue-500/30 backdrop-blur-xl rounded-lg"
                       >
-                        <div className="flex items-center gap-2 text-blue-700">
+                        <div className="flex items-center gap-2 text-blue-300">
                           <Clock className="w-4 h-4" />
                           <span className="text-sm font-medium">Reading... (+2 minutes)</span>
                         </div>

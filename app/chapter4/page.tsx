@@ -365,11 +365,11 @@ function CreditBasicsLesson() {
 function DebtTypesLesson() {
   return (
     <div className="prose prose-lg max-w-none">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6">Types of Debt: Good vs Bad</h2>
+      <h2 className="text-3xl font-bold text-white mb-6">Types of Debt: Good vs Bad</h2>
 
-      <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
-        <h3 className="text-xl font-semibold text-blue-800 mb-2">Key Concepts</h3>
-        <ul className="list-disc list-inside text-blue-700 space-y-1">
+      <div className="bg-blue-500/20 border border-blue-500/30 backdrop-blur-xl p-6 mb-8 rounded-lg">
+        <h3 className="text-xl font-semibold text-blue-300 mb-2">Key Concepts</h3>
+        <ul className="list-disc list-inside text-blue-200 space-y-1">
           <li>Understanding productive vs. destructive debt</li>
           <li>How interest rates affect your financial future</li>
           <li>Smart borrowing strategies</li>
@@ -378,10 +378,10 @@ function DebtTypesLesson() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <div className="bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
+        <div className="bg-green-500/20 border border-green-500/30 backdrop-blur-xl rounded-xl p-6">
           <div className="flex items-center gap-3 mb-4">
-            <TrendingDown className="w-8 h-8 text-blue-600" />
-            <h3 className="text-2xl font-semibold text-blue-800">Good Debt</h3>
+            <TrendingDown className="w-8 h-8 text-green-400" />
+            <h3 className="text-2xl font-semibold text-green-300">Good Debt</h3>
           </div>
 
           <p className="text-blue-700 mb-4">
@@ -476,10 +476,10 @@ function DebtTypesLesson() {
 function DebtStrategyLesson() {
   return (
     <div className="prose prose-lg max-w-none">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6">Debt Elimination Strategies</h2>
+      <h2 className="text-3xl font-bold text-white mb-6">Debt Elimination Strategies</h2>
 
-      <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
-        <h3 className="text-xl font-semibold text-blue-800 mb-2">Strategic Approaches</h3>
+      <div className="bg-blue-500/20 border border-blue-500/30 backdrop-blur-xl p-6 mb-8 rounded-lg">
+        <h3 className="text-xl font-semibold text-blue-300 mb-2">Strategic Approaches</h3>
         <ul className="list-disc list-inside text-blue-700 space-y-1">
           <li>Debt Snowball vs. Debt Avalanche methods</li>
           <li>Calculating which strategy saves more money</li>
@@ -489,7 +489,7 @@ function DebtStrategyLesson() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <div className="bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
+        <div className="bg-green-500/20 border border-green-500/30 backdrop-blur-xl rounded-xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <Brain className="w-8 h-8 text-blue-600" />
             <h3 className="text-2xl font-semibold text-blue-800">Debt Snowball</h3>
@@ -634,10 +634,10 @@ function DebtStrategyLesson() {
 function CreditBuildingLesson() {
   return (
     <div className="prose prose-lg max-w-none">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6">Building and Maintaining Credit</h2>
+      <h2 className="text-3xl font-bold text-white mb-6">Building and Maintaining Credit</h2>
 
-      <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
-        <h3 className="text-xl font-semibold text-blue-800 mb-2">Credit Building Mastery</h3>
+      <div className="bg-blue-500/20 border border-blue-500/30 backdrop-blur-xl p-6 mb-8 rounded-lg">
+        <h3 className="text-xl font-semibold text-blue-300 mb-2">Credit Building Mastery</h3>
         <ul className="list-disc list-inside text-blue-700 space-y-1">
           <li>How to establish credit from scratch</li>
           <li>Advanced strategies for improving your score</li>
@@ -667,8 +667,8 @@ function CreditBuildingLesson() {
           </ul>
         </div>
 
-        <div className="bg-blue-50 rounded-xl p-6 text-center">
-          <div className="text-3xl font-bold text-green-600 mb-2">Excellent</div>
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 text-center">
+          <div className="text-3xl font-bold text-green-400 mb-2">Excellent</div>
           <p className="text-green-700 text-sm mb-4">740+ score range</p>
           <ul className="text-left text-green-700 text-sm space-y-1">
             <li>• Maintain low utilization</li>
@@ -678,7 +678,7 @@ function CreditBuildingLesson() {
         </div>
       </div>
 
-      <h3 className="text-2xl font-semibold text-gray-800 mb-4">The Credit Building Timeline</h3>
+      <h3 className="text-2xl font-semibold text-white mb-4">The Credit Building Timeline</h3>
 
       <div className="space-y-6 mb-8">
         <div className="bg-blue-500/20 border border-blue-500/30 backdrop-blur-xl rounded-lg p-4">
@@ -719,11 +719,11 @@ function CreditBuildingLesson() {
       </div>
 
       <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 mb-8">
-        <h3 className="text-xl font-semibold text-gray-800 mb-4">Advanced Credit Strategies</h3>
+        <h3 className="text-xl font-semibold text-white mb-4">Advanced Credit Strategies</h3>
 
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <h4 className="font-semibold text-gray-800 mb-2">🎯 Utilization Optimization</h4>
+            <h4 className="font-semibold text-white mb-2">🎯 Utilization Optimization</h4>
             <ul className="text-gray-700 text-sm space-y-1">
               <li>• Keep total utilization under 10%</li>
               <li>• Consider multiple small payments</li>
@@ -733,7 +733,7 @@ function CreditBuildingLesson() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-gray-800 mb-2">📊 Score Monitoring</h4>
+            <h4 className="font-semibold text-white mb-2">📊 Score Monitoring</h4>
             <ul className="text-gray-700 text-sm space-y-1">
               <li>• Check credit reports quarterly</li>
               <li>• Dispute any errors immediately</li>
@@ -762,8 +762,8 @@ function CreditBuildingLesson() {
         </div>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
-        <h3 className="text-xl font-semibold text-green-800 mb-3">🏆 Your Credit Action Plan</h3>
+      <div className="bg-green-500/20 border border-green-500/30 backdrop-blur-xl rounded-xl p-6">
+        <h3 className="text-xl font-semibold text-green-300 mb-3">🏆 Your Credit Action Plan</h3>
         <ol className="list-decimal list-inside text-green-700 space-y-2">
           <li>Check your current credit score and report</li>
           <li>Set up automatic payments for all credit accounts</li>
