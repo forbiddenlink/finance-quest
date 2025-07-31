@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { spacedRepetitionSystem, ReviewItem, ReviewResponse } from '@/lib/algorithms/spacedRepetition';
 import GradientCard from '@/components/shared/ui/GradientCard';
+import { theme } from '@/lib/theme';
 import { Brain, Clock, CheckCircle, AlertTriangle, Star, RefreshCw } from 'lucide-react';
 
 interface SpacedRepetitionDashboardProps {
@@ -137,9 +138,9 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
     return (
       <GradientCard variant="glass" gradient="blue" className={`p-6 ${className}`}>
         <div className="text-center">
-          <Brain className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Spaced Repetition Learning</h3>
-          <p className="text-gray-600">Complete some lessons to start building your review queue!</p>
+          <Brain className={`w-12 h-12 ${theme.textColors.accent} mx-auto mb-4`} />
+          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Spaced Repetition Learning</h3>
+          <p className={theme.textColors.secondary}>Complete some lessons to start building your review queue!</p>
         </div>
       </GradientCard>
     );
@@ -150,8 +151,8 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
       {/* Stats Overview */}
       <GradientCard variant="glass" gradient="purple" className="p-6">
         <div className="flex items-center mb-4">
-          <Brain className="w-6 h-6 text-purple-600 mr-3" />
-          <h3 className="text-xl font-bold text-gray-900">Learning Retention Dashboard</h3>
+          <Brain className={`w-6 h-6 ${theme.textColors.accent} mr-3`} />
+          <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>Learning Retention Dashboard</h3>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">

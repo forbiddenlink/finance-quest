@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode } from 'react';
 import { CheckCircle, AlertCircle, Info, X } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface Toast {
   id: string;
@@ -45,10 +46,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
   const getColors = (type: string) => {
     switch (type) {
-      case 'success': return 'bg-blue-50 border-blue-200 text-blue-800';
-      case 'error': return 'bg-red-50 border-red-200 text-red-800';
-      case 'info': return 'bg-blue-50 border-blue-200 text-blue-800';
-      default: return 'bg-blue-50 border-blue-200 text-blue-800';
+      case 'success': return `${theme.status.success.bg} border ${theme.status.success.border} ${theme.status.success.text}`;
+      case 'error': return `${theme.status.error.bg} border ${theme.status.error.border} ${theme.status.error.text}`;
+      case 'info': return `${theme.status.info.bg} border ${theme.status.info.border} ${theme.status.info.text}`;
+      default: return `${theme.status.info.bg} border ${theme.status.info.border} ${theme.status.info.text}`;
     }
   };
 
@@ -75,7 +76,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             </div>
             <button
               onClick={() => removeToast(toast.id)}
-              className="ml-2 text-gray-400 hover:text-gray-600 transition-colors"
+              className={`ml-2 ${theme.textColors.muted} hover:${theme.textColors.secondary} transition-colors`}
             >
               <X className="w-4 h-4" />
             </button>

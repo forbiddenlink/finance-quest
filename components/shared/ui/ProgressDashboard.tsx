@@ -3,6 +3,7 @@
 import React from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
+import { theme } from '@/lib/theme';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LineChart, Line, Legend } from 'recharts';
 import {
   BarChart3,
@@ -99,28 +100,28 @@ export default function ProgressDashboard() {
 
       {/* Key Metrics Overview */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4 text-center">
-          <div className="text-3xl font-bold text-blue-800">{completionPercentage}%</div>
-          <p className="text-sm text-blue-600 font-medium">Course Completion</p>
-          <p className="text-xs text-blue-500">Chapter {userProgress.currentChapter} of {totalChapters}</p>
+        <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4 text-center`}>
+          <div className={`text-3xl font-bold ${theme.textColors.accent}`}>{completionPercentage}%</div>
+          <p className={`text-sm ${theme.textColors.secondary} font-medium`}>Course Completion</p>
+          <p className={`text-xs ${theme.textColors.muted}`}>Chapter {userProgress.currentChapter} of {totalChapters}</p>
         </div>
 
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4 text-center">
-          <div className="text-3xl font-bold text-green-800">{literacyScore}</div>
-          <p className="text-sm text-green-600 font-medium">Literacy Score</p>
-          <p className="text-xs text-blue-500">Out of 1,000 points</p>
+        <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4 text-center`}>
+          <div className={`text-3xl font-bold ${theme.textColors.success}`}>{literacyScore}</div>
+          <p className={`text-sm ${theme.textColors.secondary} font-medium`}>Literacy Score</p>
+          <p className={`text-xs ${theme.textColors.muted}`}>Out of 1,000 points</p>
         </div>
 
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4 text-center">
-          <div className="text-3xl font-bold text-purple-800">{averageQuizScore}%</div>
-          <p className="text-sm text-purple-600 font-medium">Avg Quiz Score</p>
-          <p className="text-xs text-purple-500">{Object.keys(userProgress.quizScores).length} quizzes taken</p>
+        <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4 text-center`}>
+          <div className={`text-3xl font-bold ${theme.textColors.accent}`}>{averageQuizScore}%</div>
+          <p className={`text-sm ${theme.textColors.secondary} font-medium`}>Avg Quiz Score</p>
+          <p className={`text-xs ${theme.textColors.muted}`}>{Object.keys(userProgress.quizScores).length} quizzes taken</p>
         </div>
 
-        <div className="bg-gradient-to-br from-orange-50 to-orange-100 border border-orange-200 rounded-lg p-4 text-center">
-          <div className="text-3xl font-bold text-orange-800">{timeSpentHours}h</div>
-          <p className="text-sm text-orange-600 font-medium">Time Invested</p>
-          <p className="text-xs text-orange-500">Learning sessions</p>
+        <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4 text-center`}>
+          <div className={`text-3xl font-bold ${theme.textColors.warning}`}>{timeSpentHours}h</div>
+          <p className={`text-sm ${theme.textColors.secondary} font-medium`}>Time Invested</p>
+          <p className={`text-xs ${theme.textColors.muted}`}>Learning sessions</p>
         </div>
       </div>
 
@@ -207,27 +208,27 @@ export default function ProgressDashboard() {
       {/* Achievements and Impact */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Achievements */}
-        <div className="bg-gradient-to-br from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-yellow-900 mb-4 flex items-center gap-2">
+        <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-6`}>
+          <h3 className={`text-lg font-semibold ${theme.status.warning.text} mb-4 flex items-center gap-2`}>
             <Trophy className="w-5 h-5" />
             Achievements Unlocked
           </h3>
           <div className="space-y-3">
             {userProgress.achievements.length > 0 ? (
               userProgress.achievements.map((achievement: string, index: number) => (
-                <div key={index} className="bg-white bg-opacity-60 rounded-lg p-3 flex items-center">
-                  <div className="bg-yellow-500 text-white p-2 rounded-full mr-3">
+                <div key={index} className={`${theme.backgrounds.card} rounded-lg p-3 flex items-center`}>
+                  <div className={`${theme.buttons.accent} text-white p-2 rounded-full mr-3`}>
                     <Medal className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="font-medium text-yellow-900">{achievement.replace('-', ' ').replace('_', ' ')}</p>
-                    <p className="text-xs text-yellow-700">Well done!</p>
+                    <p className={`font-medium ${theme.textColors.primary}`}>{achievement.replace('-', ' ').replace('_', ' ')}</p>
+                    <p className={`text-xs ${theme.textColors.secondary}`}>Well done!</p>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="text-center text-yellow-700 py-8">
-                <Target className="w-12 h-12 mx-auto mb-2 text-yellow-500" />
+              <div className={`text-center ${theme.textColors.secondary} py-8`}>
+                <Target className={`w-12 h-12 mx-auto mb-2 ${theme.textColors.accent}`} />
                 <p>No achievements yet</p>
                 <p className="text-sm">Complete lessons and quizzes to earn badges!</p>
               </div>
@@ -236,27 +237,27 @@ export default function ProgressDashboard() {
         </div>
 
         {/* Projected Impact */}
-        <div className="bg-gradient-to-br from-blue-50 to-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-green-900 mb-4 flex items-center gap-2">
+        <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-6`}>
+          <h3 className={`text-lg font-semibold ${theme.textColors.success} mb-4 flex items-center gap-2`}>
             <DollarSign className="w-5 h-5" />
             Projected Financial Impact
           </h3>
           <div className="space-y-4">
-            <div className="bg-white bg-opacity-60 rounded-lg p-4">
-              <h4 className="font-semibold text-green-800 mb-2">Potential Lifetime Savings</h4>
-              <p className="text-2xl font-bold text-green-900">{formatCurrency(potentialSavings)}</p>
-              <p className="text-sm text-green-700">Based on improved financial decisions</p>
+            <div className={`${theme.backgrounds.card} rounded-lg p-4`}>
+              <h4 className={`font-semibold ${theme.textColors.success} mb-2`}>Potential Lifetime Savings</h4>
+              <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{formatCurrency(potentialSavings)}</p>
+              <p className={`text-sm ${theme.textColors.secondary}`}>Based on improved financial decisions</p>
             </div>
 
-            <div className="bg-white bg-opacity-60 rounded-lg p-4">
-              <h4 className="font-semibold text-green-800 mb-2">Better Financial Decisions</h4>
-              <p className="text-2xl font-bold text-green-900">{betterDecisions}</p>
-              <p className="text-sm text-green-700">Expected improved choices per year</p>
+            <div className={`${theme.backgrounds.card} rounded-lg p-4`}>
+              <h4 className={`font-semibold ${theme.textColors.success} mb-2`}>Better Financial Decisions</h4>
+              <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{betterDecisions}</p>
+              <p className={`text-sm ${theme.textColors.secondary}`}>Expected improved choices per year</p>
             </div>
 
-            <div className="bg-white bg-opacity-60 rounded-lg p-4">
-              <h4 className="font-semibold text-green-800 mb-2">Knowledge Retention</h4>
-              <p className="text-2xl font-bold text-green-900">{averageQuizScore > 0 ? averageQuizScore : 0}%</p>
+            <div className={`${theme.backgrounds.card} rounded-lg p-4`}>
+              <h4 className={`font-semibold ${theme.textColors.success} mb-2`}>Knowledge Retention</h4>
+              <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{averageQuizScore > 0 ? averageQuizScore : 0}%</p>
               <p className="text-sm text-green-700">Information successfully retained</p>
             </div>
           </div>

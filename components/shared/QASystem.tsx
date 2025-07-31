@@ -104,8 +104,8 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
 
   if (isQuizMode) {
     return (
-      <div className={`bg-yellow-50 border border-yellow-200 rounded-lg p-4 ${className}`}>
-        <div className="flex items-center gap-2 text-yellow-800">
+      <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4 ${className}`}>
+        <div className={`flex items-center gap-2 ${theme.status.warning.text}`}>
           <HelpCircle className="w-5 h-5" />
           <span className="text-sm font-medium">
             Q&A System is disabled during quizzes to maintain assessment integrity.
@@ -140,8 +140,8 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
             <button
               onClick={() => setActiveTab('text')}
               className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 text-sm font-medium transition-colors ${activeTab === 'text'
-                  ? `${theme.status.info.bg} ${theme.status.info.text} border-b-2 ${theme.status.info.border}`
-                  : `${theme.textColors.secondary} hover:${theme.textColors.accent}`
+                ? `${theme.status.info.bg} ${theme.status.info.text} border-b-2 ${theme.status.info.border}`
+                : `${theme.textColors.secondary} hover:${theme.textColors.accent}`
                 }`}
             >
               <Sparkles className="w-4 h-4" />
@@ -150,8 +150,8 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
             <button
               onClick={() => setActiveTab('voice')}
               className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 text-sm font-medium transition-colors ${activeTab === 'voice'
-                  ? `${theme.status.info.bg} ${theme.status.info.text} border-b-2 ${theme.status.info.border}`
-                  : `${theme.textColors.secondary} hover:${theme.textColors.accent}`
+                ? `${theme.status.info.bg} ${theme.status.info.text} border-b-2 ${theme.status.info.border}`
+                : `${theme.textColors.secondary} hover:${theme.textColors.accent}`
                 }`}
             >
               <Mic className="w-4 h-4" />
@@ -170,8 +170,8 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
                 {messages.length === 0 ? (
                   <div className={`text-center ${theme.textColors.muted} py-8`}>
                     <HelpCircle className={`w-12 h-12 mx-auto mb-4 ${theme.textColors.muted}`} />
-                    <p className="text-sm">Ask me anything about personal finance!</p>
-                    <p className="text-xs mt-1">I know about everything you&apos;re learning in Finance Quest.</p>
+                    <p className={`text-sm ${theme.textColors.secondary}`}>Ask me anything about personal finance!</p>
+                    <p className={`text-xs mt-1 ${theme.textColors.muted}`}>I know about everything you&apos;re learning in Finance Quest.</p>
                   </div>
                 ) : (
                   messages.map((message) => (
@@ -185,8 +185,8 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
                           : `${theme.backgrounds.card} ${theme.textColors.primary} border ${theme.borderColors.primary}`
                           }`}
                       >
-                        <p className="text-sm">{message.content}</p>
-                        <p className={`text-xs mt-1 ${message.type === 'user' ? 'text-blue-100' : theme.textColors.muted
+                        <p className={`text-sm ${message.type === 'user' ? theme.textColors.primary : theme.textColors.primary}`}>{message.content}</p>
+                        <p className={`text-xs mt-1 ${message.type === 'user' ? theme.textColors.muted : theme.textColors.muted
                           }`}>
                           {message.timestamp.toLocaleTimeString([], {
                             hour: '2-digit',

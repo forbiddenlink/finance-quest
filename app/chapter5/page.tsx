@@ -81,7 +81,7 @@ export default function Chapter5Page() {
 
   if (!isChapterUnlocked) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center p-4">
+      <div className={`min-h-screen ${theme.backgrounds.primary} flex items-center justify-center p-4`}>
         <div className="max-w-md w-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-8 text-center">
           <Shield className="w-16 h-16 mx-auto mb-4 text-amber-400" />
           <h2 className="text-2xl font-bold text-white mb-4">Chapter 5 Locked</h2>
@@ -103,7 +103,7 @@ export default function Chapter5Page() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+    <div className={`min-h-screen ${theme.backgrounds.primary}`}>
       <SuccessCelebration
         show={showCelebration}
         title="Lesson Complete!"

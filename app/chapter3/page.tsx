@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 import IncomeCareerLesson from '@/components/chapters/fundamentals/lessons/IncomeCareerLesson';
 import IncomeCareerQuiz from '@/components/chapters/fundamentals/assessments/IncomeCareerQuiz';
 import SalaryNegotiationCalculator from '@/components/chapters/fundamentals/calculators/SalaryNegotiationCalculator';
@@ -38,7 +39,7 @@ export default function Chapter3Page() {
 
   return (
     <motion.div
-      className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800"
+      className={theme.backgrounds.primary}
       variants={pageVariants}
       initial="initial"
       animate="animate"
@@ -55,7 +56,7 @@ export default function Chapter3Page() {
         >
           <Link
             href="/"
-            className="inline-flex items-center text-amber-400 hover:text-amber-300 mb-4 transition-colors"
+            className={`inline-flex items-center ${theme.textColors.accent} hover:${theme.textColors.accentSecondary} mb-4 transition-colors`}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard
@@ -63,10 +64,10 @@ export default function Chapter3Page() {
 
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-white mb-2">
+              <h1 className={`text-4xl font-bold ${theme.textColors.primary} mb-2`}>
                 Chapter 3: Income & Career Finance
               </h1>
-              <p className="text-xl text-gray-300">
+              <p className={`text-xl ${theme.textColors.secondary}`}>
                 Maximize your earning potential and career financial strategy
               </p>
             </div>

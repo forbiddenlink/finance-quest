@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { theme } from '@/lib/theme';
 import {
   Mic,
   MicOff,
@@ -14,7 +15,6 @@ import {
   Pause,
   RefreshCw
 } from 'lucide-react';
-import { theme } from '@/lib/theme';
 
 // Define types for the speech recognition
 interface SpeechRecognitionEvent {
@@ -179,18 +179,18 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
   if (!isSupported) {
     return (
       <motion.div
-        className="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-xl p-6"
+        className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-xl p-6`}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="flex items-center space-x-3 mb-4">
-          <MicOff className="w-6 h-6 text-yellow-600" />
-          <h3 className="text-lg font-semibold text-yellow-800">Voice Q&A Not Available</h3>
+          <MicOff className={`w-6 h-6 ${theme.status.warning.text}`} />
+          <h3 className={`text-lg font-semibold ${theme.status.warning.text}`}>Voice Q&A Not Available</h3>
         </div>
-        <p className="text-yellow-700 mb-4">
+        <p className={`${theme.status.warning.text} mb-4`}>
           Your browser doesn&apos;t support speech recognition. Try using Chrome, Edge, or Safari for the best voice experience.
         </p>
-        <p className="text-sm text-yellow-600">
+        <p className={`text-sm ${theme.textColors.muted}`}>
           You can still ask questions using our text-based Q&A system below!
         </p>
       </motion.div>
@@ -199,7 +199,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
 
   return (
     <motion.div
-      className="bg-gradient-to-br from-blue-50 to-blue-50 border border-blue-200 rounded-xl p-6"
+      className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -207,19 +207,19 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <div className="bg-purple-100 p-2 rounded-lg">
+          <div className={`${theme.status.info.bg} p-2 rounded-lg`}>
             <Mic className={`w-6 h-6 ${theme.textColors.accent}`} />
           </div>
           <div>
-            <h3 className="text-xl font-bold text-gray-900">Voice Financial Q&A</h3>
-            <p className="text-sm text-gray-600">Ask any financial question with your voice</p>
+            <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>Voice Financial Q&A</h3>
+            <p className={`text-sm ${theme.textColors.secondary}`}>Ask any financial question with your voice</p>
           </div>
         </div>
 
         {(transcript || response) && (
           <button
             onClick={clearConversation}
-            className="flex items-center space-x-2 px-3 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
+            className={`flex items-center space-x-2 px-3 py-2 ${theme.backgrounds.cardHover} ${theme.textColors.secondary} rounded-lg hover:${theme.backgrounds.card} transition-colors`}
           >
             <RefreshCw className="w-4 h-4" />
             <span className="text-sm">Clear</span>
@@ -228,8 +228,8 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
       </div>
 
       {isQuizMode && (
-        <div className="bg-yellow-100 border border-yellow-300 rounded-lg p-4 mb-6">
-          <p className="text-yellow-800 text-sm font-medium">
+        <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4 mb-6`}>
+          <p className={`${theme.status.warning.text} text-sm font-medium`}>
             🔒 Voice Q&A is disabled during quizzes to maintain assessment integrity.
             Complete the quiz to unlock voice assistance!
           </p>
@@ -242,10 +242,10 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
           onClick={isListening ? stopListening : startListening}
           disabled={isQuizMode || isLoading}
           className={`relative p-6 rounded-full transition-all ${isListening
-            ? 'bg-red-500 text-white shadow-lg'
+            ? `${theme.buttons.secondary} ${theme.textColors.primary} shadow-lg`
             : isQuizMode
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'bg-blue-500 text-white hover:bg-blue-600 shadow-lg'
+              ? `${theme.backgrounds.cardHover} ${theme.textColors.muted} cursor-not-allowed`
+              : `${theme.buttons.primary} shadow-lg`
             }`}
           whileHover={!isQuizMode && !isLoading ? { scale: 1.05 } : {}}
           whileTap={!isQuizMode && !isLoading ? { scale: 0.95 } : {}}
@@ -268,8 +268,8 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
           <motion.button
             onClick={isSpeaking ? stopSpeaking : speakResponse}
             className={`p-4 rounded-full transition-all ${isSpeaking
-              ? 'bg-blue-500 text-white shadow-lg'
-              : 'bg-blue-500 text-white hover:bg-blue-600 shadow-lg'
+              ? `${theme.buttons.primary} shadow-lg`
+              : `${theme.buttons.primary} shadow-lg`
               }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -325,7 +325,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-gray-600"
+              className={theme.textColors.secondary}
             >
               Click the microphone to ask a question with your voice
             </motion.div>
@@ -342,14 +342,14 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
             exit={{ opacity: 0, y: -20 }}
             className="mb-4"
           >
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
+            <div className={`${theme.backgrounds.card} rounded-lg p-4 border ${theme.borderColors.primary}`}>
               <div className="flex items-start space-x-3">
-                <div className="bg-purple-100 p-2 rounded-full">
-                  <MessageCircle className="w-4 h-4 text-purple-600" />
+                <div className={`${theme.status.info.bg} p-2 rounded-full`}>
+                  <MessageCircle className={`w-4 h-4 ${theme.textColors.accent}`} />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-700 mb-1">You asked:</p>
-                  <p className="text-gray-900">&quot;{transcript}&quot;</p>
+                  <p className={`text-sm font-medium ${theme.textColors.secondary} mb-1`}>You asked:</p>
+                  <p className={theme.textColors.primary}>&quot;{transcript}&quot;</p>
                 </div>
               </div>
             </div>
@@ -362,14 +362,14 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
           >
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 border border-blue-200">
+            <div className={`${theme.backgrounds.cardHover} rounded-lg p-4 border ${theme.borderColors.accent}`}>
               <div className="flex items-start space-x-3">
-                <div className="bg-blue-100 p-2 rounded-full">
-                  <Brain className="w-4 h-4 text-blue-600" />
+                <div className={`${theme.status.info.bg} p-2 rounded-full`}>
+                  <Brain className={`w-4 h-4 ${theme.textColors.accent}`} />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-gray-700">AI Financial Coach:</p>
+                    <p className={`text-sm font-medium ${theme.textColors.secondary}`}>AI Financial Coach:</p>
                     <div className="flex items-center space-x-2">
                       {isSpeaking && (
                         <motion.div
@@ -380,7 +380,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
                           {[1, 2, 3].map((i) => (
                             <motion.div
                               key={i}
-                              className="w-1 h-4 bg-blue-500 rounded-full"
+                              className={`w-1 h-4 ${theme.textColors.accent} rounded-full`}
                               animate={{ scaleY: [1, 2, 1] }}
                               transition={{
                                 repeat: Infinity,
@@ -394,15 +394,15 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
                       <button
                         onClick={isSpeaking ? stopSpeaking : speakResponse}
                         className={`p-1 rounded transition-colors ${isSpeaking
-                          ? 'text-red-600 hover:text-red-700'
-                          : 'text-blue-600 hover:text-blue-700'
+                          ? `${theme.textColors.error} hover:${theme.textColors.error}`
+                          : `${theme.textColors.accent} hover:${theme.textColors.accentSecondary}`
                           }`}
                       >
                         {isSpeaking ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                       </button>
                     </div>
                   </div>
-                  <p className="text-gray-900 leading-relaxed">{response}</p>
+                  <p className={`${theme.textColors.primary} leading-relaxed`}>{response}</p>
                 </div>
               </div>
             </div>
@@ -412,12 +412,12 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
 
       {/* Tips */}
       {!transcript && !response && !isQuizMode && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
-          <h4 className="font-semibold text-blue-900 mb-2 flex items-center">
+        <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4 mt-6`}>
+          <h4 className={`font-semibold ${theme.status.info.text} mb-2 flex items-center`}>
             <Sparkles className="w-4 h-4 mr-2" />
             Voice Q&A Tips
           </h4>
-          <ul className="text-sm text-blue-800 space-y-1">
+          <ul className={`text-sm ${theme.status.info.text} space-y-1`}>
             <li>• Speak clearly and ask specific financial questions</li>
             <li>• Try: &quot;How does compound interest work?&quot;</li>
             <li>• Try: &quot;What&apos;s a good credit score?&quot;</li>

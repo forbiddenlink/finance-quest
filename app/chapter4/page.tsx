@@ -85,7 +85,7 @@ export default function Chapter4Page() {
 
   if (!isUnlocked) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center">
+      <div className={`min-h-screen ${theme.backgrounds.primary} flex items-center justify-center`}>
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -108,7 +108,7 @@ export default function Chapter4Page() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden">
+    <div className={`min-h-screen ${theme.backgrounds.primary} relative overflow-hidden`}>
       {/* Success Celebration */}
       <AnimatePresence>
         {showCelebration && (
