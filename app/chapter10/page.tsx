@@ -143,20 +143,20 @@ export default function Chapter10() {
                     </div>
 
                     <div className="mt-4 flex items-center space-x-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
-                            <Building className="w-6 h-6 text-white" />
+                        <div className={`w-12 h-12 ${theme.buttons.primary} rounded-lg flex items-center justify-center`}>
+                            <Building className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold text-gray-900">Chapter 10: Business Finance Basics</h1>
-                            <p className="text-gray-600">Essential financial concepts for entrepreneurs and business owners</p>
+                            <h1 className={`${theme.typography.heading2} ${theme.textColors.primary}`}>Chapter 10: Business Finance Basics</h1>
+                            <p className={theme.textColors.secondary}>Essential financial concepts for entrepreneurs and business owners</p>
                         </div>
-                        <Badge variant="outline" className="bg-slate-50 text-slate-700 border-slate-200">
+                        <Badge variant="outline" className={`${theme.backgrounds.card} ${theme.textColors.secondary} ${theme.borderColors.muted}`}>
                             Business Track
                         </Badge>
                     </div>
 
                     <div className="mt-6">
-                        <div className="flex justify-between text-sm text-gray-600 mb-2">
+                        <div className={`flex justify-between text-sm ${theme.textColors.secondary} mb-2`}>
                             <span>Chapter Progress</span>
                             <span>{lessonCompleted ? (quizCompleted ? '100' : '75') : '0'}% Complete</span>
                         </div>

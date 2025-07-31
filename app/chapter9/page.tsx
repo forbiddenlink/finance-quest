@@ -224,7 +224,7 @@ export default function Chapter9() {
                                         </div>
 
                                         <div className="space-y-4">
-                                            <h3 className="text-lg font-semibold text-gray-900">Advanced Strategies</h3>
+                                            <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Advanced Strategies</h3>
                                             <div className="space-y-3">
                                                 <div className="bg-orange-50 p-4 rounded-lg">
                                                     <h4 className="font-medium text-orange-900">Tax Loss Harvesting</h4>
@@ -245,7 +245,7 @@ export default function Chapter9() {
                                     <Separator />
 
                                     <div className="space-y-4">
-                                        <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
+                                        <h3 className={`text-lg font-semibold ${theme.textColors.primary} flex items-center space-x-2`}>
                                             <Clock className="w-5 h-5 text-blue-600" />
                                             <span>Key Tax Concepts & Deadlines</span>
                                         </h3>
