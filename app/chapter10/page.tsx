@@ -9,6 +9,7 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { CheckCircle, Clock, Calculator, Award, FileText, Building, Shield, Target, ArrowLeft, Briefcase, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { theme } from '@/lib/theme';
 import { useProgressStore } from '@/lib/store/progressStore';
 import BusinessCalculator from '@/components/shared/calculators/BusinessCalculator';
 import QASystem from '@/components/shared/QASystem';

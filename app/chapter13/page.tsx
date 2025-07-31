@@ -9,6 +9,7 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { CheckCircle, Clock, Calculator, Award, TrendingUp, Shield, Target } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 import BondCalculator from '@/components/shared/calculators/BondCalculator';
 
 type TabType = 'lesson' | 'calculator' | 'quiz';
@@ -32,11 +33,11 @@ export default function Chapter13() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
-                <Shield className="w-6 h-6 text-white" />
+                <Shield className={`w-6 h-6 ${theme.textColors.primary}`} />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Chapter 13: Bond & Fixed Income</h1>
-                <p className="text-gray-600">Master conservative investing and income generation</p>
+                <h1 className={`${theme.typography.heading2} ${theme.textColors.primary}`}>Chapter 13: Bond & Fixed Income</h1>
+                <p className={theme.textColors.secondary}>Master conservative investing and income generation</p>
               </div>
             </div>
             <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">

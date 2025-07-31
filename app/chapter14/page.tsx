@@ -9,6 +9,7 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { CheckCircle, Clock, Calculator, Award, BarChart3, TrendingUp, Target, Zap } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 import StockAnalysisCalculator from '@/components/shared/calculators/StockAnalysisCalculator';
 
 type TabType = 'lesson' | 'calculator' | 'quiz';
@@ -32,11 +33,11 @@ export default function Chapter14() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <BarChart3 className="w-6 h-6 text-white" />
+                <BarChart3 className={`w-6 h-6 ${theme.textColors.primary}`} />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Chapter 14: Advanced Portfolio Theory</h1>
-                <p className="text-gray-600">Master diversification, risk management, and optimal allocation</p>
+                <h1 className={`${theme.typography.heading2} ${theme.textColors.primary}`}>Chapter 14: Advanced Portfolio Theory</h1>
+                <p className={theme.textColors.secondary}>Master diversification, risk management, and optimal allocation</p>
               </div>
             </div>
             <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">
