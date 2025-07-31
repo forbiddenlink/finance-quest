@@ -494,7 +494,6 @@ export default function EmergencyFundCalculator() {
           </div>
         </div>
       </div>
-        </div>
       </div>
     </div>
   );
