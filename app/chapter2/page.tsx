@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 import BankingFundamentalsLesson from '@/components/chapters/fundamentals/lessons/BankingFundamentalsLesson';
 import BankingFundamentalsQuiz from '@/components/chapters/fundamentals/assessments/BankingFundamentalsQuiz';
 import SavingsCalculator from '@/components/chapters/fundamentals/calculators/SavingsCalculator';
@@ -38,7 +39,7 @@ export default function Chapter2Page() {
 
   return (
     <motion.div
-      className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800"
+      className={theme.backgrounds.primary}
       variants={pageVariants}
       initial="initial"
       animate="animate"

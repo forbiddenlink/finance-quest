@@ -36,7 +36,7 @@ export default function Chapter1Page() {
               </button>
               <h1 className={`text-2xl font-bold ${theme.textColors.primary}`}>Chapter 1: Money Psychology & Mindset</h1>
             </div>
-            <div className="bg-amber-500/20 border border-amber-500/30 px-3 py-1 rounded-full backdrop-blur-sm">
+            <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} px-3 py-1 rounded-full backdrop-blur-sm`}>
               <span className={`text-sm font-medium ${theme.textColors.accentSecondary}`}>Progress: 25%</span>
             </div>
           </div>
@@ -67,7 +67,7 @@ export default function Chapter1Page() {
         <div className="mb-8">
           {activeTab === 'lesson' && (
             <div>
-              <div className="mb-6 bg-amber-500/10 border border-amber-500/20 backdrop-blur-sm rounded-lg p-4">
+              <div className={`mb-6 ${theme.status.info.bg} border ${theme.status.info.border} backdrop-blur-sm rounded-lg p-4`}>
                 <h3 className={`font-semibold ${theme.textColors.accentSecondary} mb-2 flex items-center gap-2`}>
                   <Lightbulb className="w-4 h-4" />
                   Learning Path
@@ -88,12 +88,12 @@ export default function Chapter1Page() {
 
           {activeTab === 'calculator' && (
             <div>
-              <div className="mb-6 bg-amber-900/20 border border-amber-700/30 backdrop-blur-sm rounded-lg p-4">
-                <h3 className="font-semibold text-amber-300 mb-2 flex items-center gap-2">
+              <div className={`mb-6 ${theme.status.warning.bg} border ${theme.status.warning.border} backdrop-blur-sm rounded-lg p-4`}>
+                <h3 className={`font-semibold ${theme.status.warning.text} mb-2 flex items-center gap-2`}>
                   <Calculator className="w-4 h-4" />
                   Practice Tool
                 </h3>
-                <p className="text-amber-200">
+                <p className={theme.textColors.accentSecondary}>
                   Use this calculator to understand how taxes affect your paycheck. Try different amounts!
                 </p>
               </div>
@@ -109,12 +109,12 @@ export default function Chapter1Page() {
 
           {activeTab === 'quiz' && (
             <div>
-              <div className="mb-6 bg-slate-800/30 border border-slate-600/30 backdrop-blur-sm rounded-lg p-4">
-                <h3 className="font-semibold text-slate-300 mb-2 flex items-center gap-2">
+              <div className={`mb-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
+                <h3 className={`font-semibold ${theme.textColors.secondary} mb-2 flex items-center gap-2`}>
                   <Target className="w-4 h-4" />
                   Knowledge Check
                 </h3>
-                <p className="text-slate-400">
+                <p className={theme.textColors.muted}>
                   Test your understanding! You need 80% to unlock the next chapter.
                 </p>
               </div>
@@ -130,7 +130,7 @@ export default function Chapter1Page() {
 
           {activeTab === 'assistant' && (
             <div>
-              <div className="mb-6 bg-gradient-to-r from-blue-900/20 to-slate-800/20 border border-blue-700/30 backdrop-blur-sm rounded-lg p-4">
+              <div className={`mb-6 ${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-lg p-4`}>
                 <h3 className={`font-semibold ${theme.textColors.accent} mb-2 flex items-center gap-2`}>
                   <Bot className="w-4 h-4" />
                   AI Financial Coach

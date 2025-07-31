@@ -20,7 +20,6 @@ export default function Chapter9() {
     const [currentSection, setCurrentSection] = useState<TabType>('lesson');
     const [lessonCompleted, setLessonCompleted] = useState(false);
     const [quizCompleted, setQuizCompleted] = useState(false);
-    const [currentQuiz, setCurrentQuiz] = useState(0);
     const [quizAnswers, setQuizAnswers] = useState<Record<number, string>>({});
 
     const { completeLesson, recordQuizScore, isChapterUnlocked } = useProgressStore();
@@ -245,11 +244,15 @@ export default function Chapter9() {
                                     <Separator />
 
                                     <div className="space-y-4">
-                                        <h3 className="text-lg font-semibold text-gray-900">Key Tax Concepts</h3>
+                                        <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
+                                            <Clock className="w-5 h-5 text-blue-600" />
+                                            <span>Key Tax Concepts & Deadlines</span>
+                                        </h3>
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                             <div className="text-center p-4 bg-gray-50 rounded-lg">
-                                                <div className="text-2xl font-bold text-gray-900">$14,600</div>
-                                                <div className="text-sm text-gray-600">Standard Deduction 2024 (Single)</div>
+                                                <Clock className="w-6 h-6 text-blue-600 mx-auto mb-2" />
+                                                <div className="text-2xl font-bold text-gray-900">Apr 15</div>
+                                                <div className="text-sm text-gray-600">Tax Filing Deadline</div>
                                             </div>
                                             <div className="text-center p-4 bg-gray-50 rounded-lg">
                                                 <div className="text-2xl font-bold text-gray-900">$23,000</div>

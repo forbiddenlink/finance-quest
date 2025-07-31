@@ -116,19 +116,19 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
   }
 
   return (
-    <div className={`bg-white border border-gray-200 rounded-lg shadow-sm ${className}`}>
+    <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg shadow-sm ${className}`}>
       {/* Header */}
       <div
-        className="flex items-center justify-between p-4 border-b border-gray-200 cursor-pointer"
+        className={`flex items-center justify-between p-4 border-b ${theme.borderColors.primary} cursor-pointer`}
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center gap-2">
-          <div className="bg-amber-100 p-1 rounded-full">
+          <div className={`${theme.status.warning.bg} p-1 rounded-full`}>
             <Sparkles className={`w-4 h-4 ${theme.textColors.accent}`} />
           </div>
-          <h3 className="font-semibold text-gray-900">AI Financial Q&A Assistant</h3>
+          <h3 className={`font-semibold ${theme.textColors.primary}`}>AI Financial Q&A Assistant</h3>
         </div>
-        <button className={`text-sm ${theme.textColors.accent} hover:text-amber-700`}>
+        <button className={`text-sm ${theme.textColors.accent} hover:${theme.textColors.accentSecondary}`}>
           {isExpanded ? 'Minimize' : 'Expand'}
         </button>
       </div>
@@ -136,12 +136,12 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
       {isExpanded && (
         <>
           {/* Tab Navigation */}
-          <div className="flex border-b border-gray-200">
+          <div className={`flex border-b ${theme.borderColors.primary}`}>
             <button
               onClick={() => setActiveTab('text')}
               className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 text-sm font-medium transition-colors ${activeTab === 'text'
-                  ? 'bg-blue-50 text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-600 hover:text-blue-600'
+                  ? `${theme.status.info.bg} ${theme.status.info.text} border-b-2 ${theme.status.info.border}`
+                  : `${theme.textColors.secondary} hover:${theme.textColors.accent}`
                 }`}
             >
               <Sparkles className="w-4 h-4" />
@@ -150,8 +150,8 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
             <button
               onClick={() => setActiveTab('voice')}
               className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 text-sm font-medium transition-colors ${activeTab === 'voice'
-                  ? 'bg-purple-50 text-purple-600 border-b-2 border-purple-600'
-                  : 'text-gray-600 hover:text-purple-600'
+                  ? `${theme.status.info.bg} ${theme.status.info.text} border-b-2 ${theme.status.info.border}`
+                  : `${theme.textColors.secondary} hover:${theme.textColors.accent}`
                 }`}
             >
               <Mic className="w-4 h-4" />
@@ -168,8 +168,8 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
               {/* Messages Area */}
               <div className="h-64 overflow-y-auto p-4 space-y-4">
                 {messages.length === 0 ? (
-                  <div className="text-center text-gray-500 py-8">
-                    <HelpCircle className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                  <div className={`text-center ${theme.textColors.muted} py-8`}>
+                    <HelpCircle className={`w-12 h-12 mx-auto mb-4 ${theme.textColors.muted}`} />
                     <p className="text-sm">Ask me anything about personal finance!</p>
                     <p className="text-xs mt-1">I know about everything you&apos;re learning in Finance Quest.</p>
                   </div>
@@ -181,12 +181,12 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
                     >
                       <div
                         className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.type === 'user'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-100 text-gray-900'
+                          ? `${theme.buttons.primary}`
+                          : `${theme.backgrounds.card} ${theme.textColors.primary} border ${theme.borderColors.primary}`
                           }`}
                       >
                         <p className="text-sm">{message.content}</p>
-                        <p className={`text-xs mt-1 ${message.type === 'user' ? 'text-blue-100' : 'text-gray-500'
+                        <p className={`text-xs mt-1 ${message.type === 'user' ? 'text-blue-100' : theme.textColors.muted
                           }`}>
                           {message.timestamp.toLocaleTimeString([], {
                             hour: '2-digit',
@@ -200,11 +200,11 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
 
                 {isLoading && (
                   <div className="flex justify-start">
-                    <div className="bg-gradient-to-r from-blue-100 to-purple-100 text-gray-900 px-4 py-3 rounded-lg border border-blue-200">
+                    <div className={`${theme.backgrounds.card} ${theme.textColors.primary} px-4 py-3 rounded-lg border ${theme.borderColors.accent}`}>
                       <LoadingSpinner
                         size="sm"
                         text="AI is thinking..."
-                        className="text-blue-600"
+                        className={theme.textColors.accent}
                       />
                     </div>
                   </div>
@@ -214,14 +214,14 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
 
               {/* Suggested Questions */}
               {messages.length === 0 && (
-                <div className="px-4 py-2 border-t border-gray-200">
-                  <p className="text-xs text-gray-600 mb-2">Try asking:</p>
+                <div className={`px-4 py-2 border-t ${theme.borderColors.primary}`}>
+                  <p className={`text-xs ${theme.textColors.secondary} mb-2`}>Try asking:</p>
                   <div className="flex flex-wrap gap-2">
                     {suggestedQuestions.slice(0, 3).map((question, index) => (
                       <button
                         key={index}
                         onClick={() => setInputValue(question)}
-                        className="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded transition-colors"
+                        className={`text-xs ${theme.backgrounds.card} hover:${theme.backgrounds.cardHover} ${theme.textColors.secondary} px-2 py-1 rounded transition-colors border ${theme.borderColors.primary}`}
                       >
                         {question}
                       </button>
@@ -231,20 +231,20 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
               )}
 
               {/* Input Form */}
-              <form onSubmit={handleSubmit} className="p-4 border-t border-gray-200">
+              <form onSubmit={handleSubmit} className={`p-4 border-t ${theme.borderColors.primary}`}>
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Ask about budgeting, investing, credit scores..."
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className={`flex-1 px-3 py-2 border ${theme.borderColors.muted} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm ${theme.backgrounds.card} ${theme.textColors.primary}`}
                     disabled={isLoading}
                   />
                   <button
                     type="submit"
                     disabled={!inputValue.trim() || isLoading}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className={`px-4 py-2 ${theme.buttons.primary} rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
                   >
                     <Send className="w-4 h-4" />
                   </button>

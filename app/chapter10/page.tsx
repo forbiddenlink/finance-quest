@@ -20,7 +20,6 @@ export default function Chapter10() {
     const [currentSection, setCurrentSection] = useState<TabType>('lesson');
     const [lessonCompleted, setLessonCompleted] = useState(false);
     const [quizCompleted, setQuizCompleted] = useState(false);
-    const [currentQuiz, setCurrentQuiz] = useState(0);
     const [quizAnswers, setQuizAnswers] = useState<Record<number, string>>({});
 
     const { completeLesson, recordQuizScore, isChapterUnlocked } = useProgressStore();
@@ -206,7 +205,10 @@ export default function Chapter10() {
                                 <CardContent className="space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-4">
-                                            <h3 className="text-lg font-semibold text-gray-900">Business Structure Options</h3>
+                                            <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
+                                                <Briefcase className="w-5 h-5 text-blue-600" />
+                                                <span>Business Structure Options</span>
+                                            </h3>
                                             <div className="space-y-3">
                                                 <div className="bg-slate-50 p-4 rounded-lg">
                                                     <h4 className="font-medium text-slate-900">Sole Proprietorship</h4>
@@ -245,21 +247,28 @@ export default function Chapter10() {
                                     <Separator />
 
                                     <div className="space-y-4">
-                                        <h3 className="text-lg font-semibold text-gray-900">Critical Business Metrics</h3>
+                                        <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
+                                            <TrendingUp className="w-5 h-5 text-blue-600" />
+                                            <span>Critical Business Metrics</span>
+                                        </h3>
                                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                                             <div className="text-center p-4 bg-gray-50 rounded-lg">
+                                                <Clock className="w-6 h-6 text-blue-600 mx-auto mb-2" />
                                                 <div className="text-lg font-bold text-gray-900">Working Capital</div>
                                                 <div className="text-sm text-gray-600">Current Assets - Current Liabilities</div>
                                             </div>
                                             <div className="text-center p-4 bg-gray-50 rounded-lg">
+                                                <TrendingUp className="w-6 h-6 text-green-600 mx-auto mb-2" />
                                                 <div className="text-lg font-bold text-gray-900">Gross Margin</div>
                                                 <div className="text-sm text-gray-600">(Revenue - COGS) / Revenue</div>
                                             </div>
                                             <div className="text-center p-4 bg-gray-50 rounded-lg">
+                                                <Target className="w-6 h-6 text-orange-600 mx-auto mb-2" />
                                                 <div className="text-lg font-bold text-gray-900">Break-Even Point</div>
                                                 <div className="text-sm text-gray-600">Fixed Costs / (Price - Variable Cost)</div>
                                             </div>
                                             <div className="text-center p-4 bg-gray-50 rounded-lg">
+                                                <Shield className="w-6 h-6 text-purple-600 mx-auto mb-2" />
                                                 <div className="text-lg font-bold text-gray-900">Debt-to-Equity</div>
                                                 <div className="text-sm text-gray-600">Total Debt / Total Equity</div>
                                             </div>

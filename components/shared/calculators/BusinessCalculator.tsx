@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Building, Calculator, DollarSign, TrendingUp, Target, BarChart3, PieChart } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Pie, Cell } from 'recharts';
 
 export default function BusinessCalculator() {
     // Break-even Analysis
@@ -119,11 +119,42 @@ export default function BusinessCalculator() {
 
     const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
 
+    // Asset allocation data for pie chart
+    const assetAllocationData = [
+        { name: 'Current Assets', value: currentAssets, color: COLORS[0] },
+        { name: 'Fixed Assets', value: totalEquity - currentAssets + totalDebt, color: COLORS[1] },
+        { name: 'Other Assets', value: Math.max(0, totalEquity * 0.2), color: COLORS[2] }
+    ].filter(item => item.value > 0);
+
+    // Reset functions
+    const resetBreakeven = () => {
+        setFixedCosts(10000);
+        setVariableCostPerUnit(15);
+        setPricePerUnit(25);
+    };
+
+    const resetRatios = () => {
+        setCurrentAssets(50000);
+        setCurrentLiabilities(30000);
+        setTotalDebt(40000);
+        setTotalEquity(60000);
+        setRevenue(120000);
+        setGrossProfit(80000);
+        setNetIncome(25000);
+    };
+
+    const resetCashflow = () => {
+        setMonthlyRevenue(10000);
+        setMonthlyExpenses(8000);
+        setInitialCash(15000);
+    };
+
     return (
         <div className="space-y-6">
             <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center space-x-2">
+                        <Calculator className="w-5 h-5 text-navy-600" />
                         <Building className="w-5 h-5 text-navy-600" />
                         <span>Business Finance Calculator</span>
                     </CardTitle>
@@ -196,6 +227,15 @@ export default function BusinessCalculator() {
                                     <p className="text-xs text-gray-600">Materials, labor, shipping, etc.</p>
                                 </div>
 
+                                <Button 
+                                    onClick={resetBreakeven}
+                                    variant="outline"
+                                    size="sm"
+                                    className="w-full"
+                                >
+                                    Reset Values
+                                </Button>
+
                                 <Separator />
 
                                 <div className="space-y-3">
@@ -214,7 +254,10 @@ export default function BusinessCalculator() {
                         {/* Break-even Results */}
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-lg">Break-even Results</CardTitle>
+                                <CardTitle className="text-lg flex items-center space-x-2">
+                                    <Target className="w-4 h-4" />
+                                    <span>Break-even Results</span>
+                                </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
@@ -371,6 +414,15 @@ export default function BusinessCalculator() {
                                             />
                                         </div>
                                     </div>
+
+                                    <Button 
+                                        onClick={resetRatios}
+                                        variant="outline"
+                                        size="sm"
+                                        className="w-full"
+                                    >
+                                        Reset Values
+                                    </Button>
                                 </CardContent>
                             </Card>
                         </div>
@@ -422,7 +474,10 @@ export default function BusinessCalculator() {
 
                             <Card>
                                 <CardHeader>
-                                    <CardTitle className="text-lg">Financial Health Score</CardTitle>
+                                    <CardTitle className="text-lg flex items-center space-x-2">
+                                        <TrendingUp className="w-4 h-4" />
+                                        <span>Financial Health Score</span>
+                                    </CardTitle>
                                 </CardHeader>
                                 <CardContent className="space-y-4">
                                     {healthIndicators.map((indicator, index) => (
@@ -449,6 +504,49 @@ export default function BusinessCalculator() {
                                     ))}
                                 </CardContent>
                             </Card>
+
+                            {/* Asset Allocation Pie Chart */}
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle className="text-lg">Asset Allocation Breakdown</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="h-64">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <RechartsPieChart>
+                                                <Pie
+                                                    data={assetAllocationData}
+                                                    cx="50%"
+                                                    cy="50%"
+                                                    outerRadius={80}
+                                                    dataKey="value"
+                                                >
+                                                    {assetAllocationData.map((entry, index) => (
+                                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                                    ))}
+                                                </Pie>
+                                                <Tooltip
+                                                    formatter={(value: number) => [`$${value.toLocaleString()}`, 'Value']}
+                                                />
+                                            </RechartsPieChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                    <div className="mt-4 space-y-2">
+                                        {assetAllocationData.map((item, index) => (
+                                            <div key={index} className="flex items-center justify-between">
+                                                <div className="flex items-center space-x-2">
+                                                    <div 
+                                                        className="w-3 h-3 rounded-full" 
+                                                        style={{ backgroundColor: item.color }}
+                                                    />
+                                                    <span className="text-sm">{item.name}</span>
+                                                </div>
+                                                <span className="text-sm font-medium">${item.value.toLocaleString()}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </CardContent>
+                            </Card>
                         </div>
                     </div>
                 </TabsContent>
@@ -458,7 +556,10 @@ export default function BusinessCalculator() {
                         {/* Cash Flow Inputs */}
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-lg">Cash Flow Projection</CardTitle>
+                                <CardTitle className="text-lg flex items-center space-x-2">
+                                    <BarChart3 className="w-4 h-4" />
+                                    <span>Cash Flow Projection</span>
+                                </CardTitle>
                                 <CardDescription>Project your cash flow for the next 12 months</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
@@ -504,6 +605,15 @@ export default function BusinessCalculator() {
                                     </div>
                                 </div>
 
+                                <Button 
+                                    onClick={resetCashflow}
+                                    variant="outline"
+                                    size="sm"
+                                    className="w-full"
+                                >
+                                    Reset Values
+                                </Button>
+
                                 <Separator />
 
                                 <div className="space-y-3">
@@ -542,7 +652,10 @@ export default function BusinessCalculator() {
                         {/* Cash Flow Chart */}
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-lg">12-Month Cash Flow Projection</CardTitle>
+                                <CardTitle className="text-lg flex items-center space-x-2">
+                                    <PieChart className="w-4 h-4" />
+                                    <span>12-Month Cash Flow Projection</span>
+                                </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <div className="h-80">

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { Lightbulb, DollarSign, TrendingDown, Calculator, AlertCircle } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 
 interface PaycheckBreakdown {
   grossPay: number;
@@ -158,13 +159,13 @@ export default function PaycheckCalculator() {
   ] : [];
 
   return (
-    <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-8">
+    <div className={`max-w-7xl mx-auto ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg shadow-lg p-8`}>
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-          <Calculator className="w-8 h-8 text-blue-600" />
+        <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2 flex items-center gap-3`}>
+          <Calculator className={`w-8 h-8 ${theme.textColors.accent}`} />
           Enhanced Paycheck Calculator
         </h2>
-        <p className="text-gray-600">
+        <p className={theme.textColors.secondary}>
           Get a detailed breakdown of your paycheck with federal tax brackets, state taxes, and deductions
         </p>
       </div>
