@@ -196,7 +196,7 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-6 rounded-lg">
+          <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg">
             <h3 className="text-2xl font-bold mb-4">Maximize Your Banking Power</h3>
             <p className="text-lg">
               With the right setup, your bank accounts work harder for you, earning more while

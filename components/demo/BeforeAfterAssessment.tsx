@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Target, 
-  TrendingUp, 
-  Award, 
+import {
+  Target,
+  TrendingUp,
+  Award,
   Brain,
   ArrowRight,
   BarChart3,
@@ -153,7 +153,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
       const correctAnswers = categoryQuestions.filter(q => answerSet[q.id] === q.correctAnswer).length;
       const totalQuestions = categoryQuestions.length;
       const score = Math.round((correctAnswers / totalQuestions) * 100);
-      
+
       return {
         category: category.charAt(0).toUpperCase() + category.slice(1),
         beforeScore: 0, // Will be set later
@@ -167,14 +167,14 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
   const handleAnswer = (answerIndex: number) => {
     const questionId = assessmentQuestions[currentQuestion].id;
     setAnswers(prev => ({ ...prev, [questionId]: answerIndex }));
-    
+
     setTimeout(() => {
       if (currentQuestion < assessmentQuestions.length - 1) {
         setCurrentQuestion(prev => prev + 1);
       } else {
         // Assessment complete
         const scores = calculateScores(answers);
-        
+
         if (phase === 'before') {
           setBeforeScores(scores);
           setPhase('learning');
@@ -189,7 +189,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
           setPhase('results');
           onComplete?.(finalScores);
         }
-        
+
         setCurrentQuestion(0);
         setAnswers({});
         setTimeSpent(0);
@@ -204,12 +204,12 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
       afterScore: Math.min(100, score.afterScore + Math.floor(Math.random() * 30) + 20),
       improvement: 0 // Will be calculated
     }));
-    
+
     const finalScores = simulatedAfterScores.map(score => ({
       ...score,
       improvement: score.afterScore - score.beforeScore
     }));
-    
+
     setAfterScores(finalScores);
     setPhase('results');
     onComplete?.(finalScores);
@@ -224,9 +224,9 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
       { category: 'Emergency', beforeScore: 0, afterScore: 41, improvement: 0, maxScore: 100 },
       { category: 'Debt', beforeScore: 0, afterScore: 49, improvement: 0, maxScore: 100 }
     ];
-    
+
     setBeforeScores(demoBeforeScores);
-    
+
     // Simulate "after" scores showing improvement
     setTimeout(() => {
       const demoAfterScores: UserScore[] = [
@@ -236,14 +236,14 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
         { category: 'Emergency', beforeScore: 41, afterScore: 79, improvement: 38, maxScore: 100 },
         { category: 'Debt', beforeScore: 49, afterScore: 86, improvement: 37, maxScore: 100 }
       ];
-      
+
       setAfterScores(demoAfterScores);
       setPhase('results');
       onComplete?.(demoAfterScores);
     }, 2000);
   };
 
-  const averageImprovement = afterScores.length > 0 
+  const averageImprovement = afterScores.length > 0
     ? Math.round(afterScores.reduce((sum, score) => sum + score.improvement, 0) / afterScores.length)
     : 0;
 
@@ -277,7 +277,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                 </div>
 
                 <p className="text-lg text-gray-700 mb-8">
-                  This assessment demonstrates measurable learning improvements that address the 64% financial illiteracy crisis. 
+                  This assessment demonstrates measurable learning improvements that address the 64% financial illiteracy crisis.
                   Take the same test before and after using Finance Quest to see your knowledge growth.
                 </p>
 
@@ -307,7 +307,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                     <Star className="w-5 h-5" />
                     Start Assessment
                   </button>
-                  
+
                   {isDemo && (
                     <button
                       onClick={startDemo}
@@ -341,7 +341,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   <div className="text-right">
                     <div className="text-sm text-gray-500">Time: {Math.floor(timeSpent / 60)}:{(timeSpent % 60).toString().padStart(2, '0')}</div>
                     <div className="w-32 bg-gray-200 rounded-full h-2 mt-1">
-                      <div 
+                      <div
                         className="bg-purple-500 h-2 rounded-full transition-all duration-300"
                         style={{ width: `${((currentQuestion) / assessmentQuestions.length) * 100}%` }}
                       />
@@ -353,7 +353,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   <h3 className="text-xl font-semibold text-gray-900 mb-6">
                     {assessmentQuestions[currentQuestion].question}
                   </h3>
-                  
+
                   <div className="space-y-3">
                     {assessmentQuestions[currentQuestion].options.map((option, index) => (
                       <motion.button
@@ -386,7 +386,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
             >
               <GradientCard variant="glass" gradient="green" className="p-8">
                 <div className="flex items-center justify-center gap-3 mb-6">
-                  <div className="bg-gradient-to-r from-green-600 to-blue-600 p-3 rounded-2xl">
+                  <div className="bg-gradient-to-r from-blue-600 to-blue-600 p-3 rounded-2xl">
                     <Brain className="w-8 h-8 text-white" />
                   </div>
                   <div>
@@ -405,19 +405,19 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                 </div>
 
                 <p className="text-lg text-gray-700 mb-8">
-                  Now experience Finance Quest&apos;s interactive lessons, AI coaching, and hands-on calculators. 
+                  Now experience Finance Quest&apos;s interactive lessons, AI coaching, and hands-on calculators.
                   When ready, take the same assessment to measure your improvement!
                 </p>
 
                 <div className="flex items-center justify-center gap-4">
                   <button
                     onClick={() => setPhase('after')}
-                    className="bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-3 rounded-full font-semibold flex items-center gap-2 hover:from-green-700 hover:to-blue-700 transition-all shadow-lg"
+                    className="bg-gradient-to-r from-blue-600 to-blue-600 text-white px-8 py-3 rounded-full font-semibold flex items-center gap-2 hover:from-blue-700 hover:to-blue-700 transition-all shadow-lg"
                   >
                     <ArrowRight className="w-5 h-5" />
                     Take After Assessment
                   </button>
-                  
+
                   <button
                     onClick={simulateAfterScores}
                     className="bg-white text-gray-700 px-6 py-3 rounded-full font-semibold border border-gray-300 hover:bg-gray-50 transition-all"
@@ -446,7 +446,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-r from-green-100 to-blue-100 border border-green-200 rounded-lg p-4 inline-block mb-8">
+                <div className="bg-gradient-to-r from-blue-100 to-blue-100 border border-blue-200 rounded-lg p-4 inline-block mb-8">
                   <p className="text-green-800 font-semibold flex items-center gap-2">
                     <TrendingUp className="w-5 h-5" />
                     Average Improvement: +{averageImprovement} percentage points
@@ -505,7 +505,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   </div>
                 </div>
                 <p className="text-gray-700 mt-6">
-                  This quantifiable improvement demonstrates Finance Quest&apos;s effectiveness in addressing 
+                  This quantifiable improvement demonstrates Finance Quest&apos;s effectiveness in addressing
                   the financial literacy crisis through personalized AI coaching and interactive learning.
                 </p>
               </GradientCard>

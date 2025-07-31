@@ -328,7 +328,7 @@ export default function LearningAnalyticsDashboard() {
             </div>
 
             {/* Learning Velocity */}
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
               <h4 className="font-semibold text-purple-900 mb-3">Learning Velocity</h4>
               <div className="space-y-2">
                 <div className="flex justify-between">
@@ -347,7 +347,7 @@ export default function LearningAnalyticsDashboard() {
             </div>
 
             {/* Engagement Patterns */}
-            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
               <h4 className="font-semibold text-green-900 mb-3">Peak Performance</h4>
               <div className="space-y-2">
                 <div className="flex justify-between">

@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Trophy, 
-  Target, 
-  Zap, 
-  TrendingUp, 
+import {
+  Trophy,
+  Target,
+  Zap,
+  TrendingUp,
   Award,
   Brain,
   Mic,
@@ -106,11 +106,10 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
       <div className="fixed top-4 right-4 z-40">
         <motion.button
           onClick={() => onToggle?.(!isActive)}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg transition-all ${
-            isActive 
-              ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white' 
+          className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg transition-all ${isActive
+              ? 'bg-gradient-to-r from-blue-600 to-slate-600 text-white'
               : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
-          }`}
+            }`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -128,7 +127,7 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="fixed top-0 left-0 right-0 z-30 bg-gradient-to-r from-purple-900 via-blue-900 to-purple-900 text-white p-4 shadow-2xl"
+          className="fixed top-0 left-0 right-0 z-30 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 text-white p-4 shadow-2xl"
         >
           <div className="max-w-7xl mx-auto">
             {/* Contest Header */}
@@ -180,7 +179,7 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
                   <span className="text-xs text-green-300">All Systems Operational</span>
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                 {technicalAchievements.map((achievement, index) => (
                   <div key={index} className="text-xs">

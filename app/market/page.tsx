@@ -13,7 +13,7 @@ export default function MarketDashboardPage() {
   }, [recordCalculatorUsage]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 py-8">
       <div className="container mx-auto px-4">
         <MarketDashboard />
       </div>

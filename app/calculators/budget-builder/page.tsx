@@ -6,7 +6,7 @@ import { BarChart3, Home, Gamepad2, DollarSign, Target, Rocket, Sparkles } from 
 
 export default function BudgetBuilderPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -32,7 +32,7 @@ export default function BudgetBuilderPage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
+        <div className="mb-6 bg-gradient-to-r from-blue-900/20 to-blue-800/30 border border-blue-600/30 backdrop-blur-sm rounded-lg p-6">
           <h2 className="text-xl font-bold text-blue-900 mb-2 flex items-center gap-2">
             <BarChart3 className="w-5 h-5" />
             Master the 50/30/20 Budgeting Rule
@@ -102,7 +102,7 @@ export default function BudgetBuilderPage() {
         </div>
 
         {/* Success Stories */}
-        <div className="mt-6 bg-green-50 border border-green-200 rounded-lg p-6">
+        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-6">
           <h3 className="text-lg font-bold text-green-900 mb-4 flex items-center gap-2">
             <Sparkles className="w-5 h-5" />
             Success Stories
@@ -124,7 +124,7 @@ export default function BudgetBuilderPage() {
         </div>
 
         {/* Action Steps */}
-        <div className="mt-6 bg-purple-50 border border-purple-200 rounded-lg p-6">
+        <div className="mt-6 bg-slate-50 border border-slate-200 rounded-lg p-6">
           <h3 className="text-lg font-bold text-purple-900 mb-4 flex items-center gap-2">
             <Rocket className="w-5 h-5" />
             Your Next Steps

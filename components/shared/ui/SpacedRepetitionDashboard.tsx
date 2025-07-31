@@ -182,7 +182,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div
-                className="bg-green-500 h-2 rounded-full transition-all duration-500"
+                className="bg-blue-500 h-2 rounded-full transition-all duration-500"
                 style={{ width: `${stats.masteryRate}%` }}
               ></div>
             </div>
@@ -233,7 +233,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
           <div className="mt-4 text-center">
             <button
               onClick={startReviewSession}
-              className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-purple-600 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-2 mx-auto"
+              className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-2 mx-auto"
             >
               <RefreshCw className="w-5 h-5" />
               Start Review Session ({dueItems.length} concepts)

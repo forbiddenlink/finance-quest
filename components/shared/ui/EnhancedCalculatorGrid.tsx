@@ -5,10 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { 
-  Calculator, 
-  PieChart, 
-  TrendingUp, 
+import {
+  Calculator,
+  PieChart,
+  TrendingUp,
   CreditCard,
   Umbrella,
   Building,
@@ -24,8 +24,8 @@ export default function EnhancedCalculatorGrid() {
       title: "Compound Interest",
       description: "See your money grow exponentially over time with the power of compound interest",
       icon: TrendingUp,
-      color: "from-green-500 to-emerald-600",
-      bgGradient: "from-green-50 to-emerald-50",
+      color: "from-blue-500 to-blue-600",
+      bgGradient: "from-blue-50 to-blue-50",
       href: "/calculators/compound-interest",
       features: ["Investment Growth", "Monthly Contributions", "Time Value of Money"],
       popularity: "Most Popular",
@@ -33,11 +33,11 @@ export default function EnhancedCalculatorGrid() {
       estimatedTime: "3 min"
     },
     {
-      title: "Budget Builder", 
+      title: "Budget Builder",
       description: "Create a personalized budget using the proven 50/30/20 rule for financial success",
       icon: PieChart,
       color: "from-blue-500 to-cyan-600",
-      bgGradient: "from-blue-50 to-cyan-50", 
+      bgGradient: "from-blue-50 to-cyan-50",
       href: "/calculators/budget-builder",
       features: ["50/30/20 Rule", "Income Analysis", "Spending Breakdown"],
       popularity: "Essential Tool",
@@ -50,7 +50,7 @@ export default function EnhancedCalculatorGrid() {
       icon: CreditCard,
       color: "from-red-500 to-pink-600",
       bgGradient: "from-red-50 to-pink-50",
-      href: "/calculators/debt-payoff", 
+      href: "/calculators/debt-payoff",
       features: ["Avalanche Method", "Snowball Method", "Interest Savings"],
       popularity: "Life Changer",
       usage: "1,654 uses this week",
@@ -60,12 +60,12 @@ export default function EnhancedCalculatorGrid() {
       title: "Emergency Fund",
       description: "Calculate your ideal emergency fund size based on your unique situation",
       icon: Umbrella,
-      color: "from-purple-500 to-violet-600",
-      bgGradient: "from-purple-50 to-violet-50",
+      color: "from-blue-500 to-slate-600",
+      bgGradient: "from-blue-50 to-slate-50",
       href: "/calculators/emergency-fund",
       features: ["Risk Assessment", "Monthly Expenses", "Savings Goals"],
       popularity: "Safety First",
-      usage: "1,432 uses this week", 
+      usage: "1,432 uses this week",
       estimatedTime: "3 min"
     },
     {
@@ -84,7 +84,7 @@ export default function EnhancedCalculatorGrid() {
       title: "Mortgage Calculator",
       description: "Determine your home affordability and monthly payment breakdown",
       icon: Building,
-      color: "from-indigo-500 to-blue-600", 
+      color: "from-indigo-500 to-blue-600",
       bgGradient: "from-indigo-50 to-blue-50",
       href: "/calculators/mortgage",
       features: ["Monthly Payments", "Affordability", "Interest Analysis"],
@@ -114,15 +114,15 @@ export default function EnhancedCalculatorGrid() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {calculators.map((calc, index) => {
           const Icon = calc.icon;
-          
+
           return (
-            <Card 
+            <Card
               key={index}
               className="group relative overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2 hover:border-blue-200"
             >
               {/* Background Gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${calc.bgGradient} opacity-40 group-hover:opacity-60 transition-opacity`} />
-              
+
               <CardHeader className="relative">
                 <div className="flex items-start justify-between">
                   <div className={`p-3 rounded-xl bg-gradient-to-r ${calc.color} text-white shadow-lg`}>
@@ -134,7 +134,7 @@ export default function EnhancedCalculatorGrid() {
                     </Badge>
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-blue-700 transition-colors">
                     {calc.title}
@@ -175,7 +175,7 @@ export default function EnhancedCalculatorGrid() {
 
                 {/* CTA Button */}
                 <Link href={calc.href}>
-                  <Button 
+                  <Button
                     className={`w-full bg-gradient-to-r ${calc.color} hover:opacity-90 transition-opacity group-hover:shadow-lg`}
                   >
                     Try Calculator

@@ -22,9 +22,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const showToast = (message: string, type: 'success' | 'error' | 'info', duration = 4000) => {
     const id = Math.random().toString(36).substr(2, 9);
     const newToast: Toast = { id, message, type, duration };
-    
+
     setToasts(prev => [...prev, newToast]);
-    
+
     setTimeout(() => {
       setToasts(prev => prev.filter(toast => toast.id !== id));
     }, duration);
@@ -45,7 +45,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
   const getColors = (type: string) => {
     switch (type) {
-      case 'success': return 'bg-green-50 border-green-200 text-green-800';
+      case 'success': return 'bg-blue-50 border-blue-200 text-blue-800';
       case 'error': return 'bg-red-50 border-red-200 text-red-800';
       case 'info': return 'bg-blue-50 border-blue-200 text-blue-800';
       default: return 'bg-blue-50 border-blue-200 text-blue-800';
@@ -55,7 +55,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      
+
       {/* Toast Container */}
       <div className="fixed top-4 right-4 z-50 space-y-2">
         {toasts.map((toast, index) => (

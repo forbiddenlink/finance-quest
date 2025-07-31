@@ -282,7 +282,7 @@ export default function PaycheckCalculator() {
           {breakdown && (
             <>
               {/* Summary Card */}
-              <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6 border border-green-200">
+              <div className="bg-gradient-to-r from-blue-50 to-blue-50 rounded-lg p-6 border border-blue-200">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Paycheck Summary</h3>
 
                 <div className="grid grid-cols-2 gap-4 mb-4">

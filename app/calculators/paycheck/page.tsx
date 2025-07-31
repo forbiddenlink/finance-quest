@@ -6,7 +6,7 @@ import { Calculator, DollarSign, BarChart3, Target, Lightbulb, Rocket, TrendingD
 
 export default function PaycheckCalculatorPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -32,7 +32,7 @@ export default function PaycheckCalculatorPage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="mb-6 bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-lg p-6">
+        <div className="mb-6 bg-gradient-to-r from-blue-900/20 to-slate-800/30 border border-blue-600/30 backdrop-blur-sm rounded-lg p-6">
           <h2 className="text-xl font-bold text-blue-900 mb-2 flex items-center gap-2">
             <DollarSign className="w-5 h-5" />
             Understand Your Take-Home Pay

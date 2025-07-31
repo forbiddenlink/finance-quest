@@ -21,22 +21,22 @@ export default function Chapter1Page() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <button 
+              <button
                 onClick={() => window.history.back()}
-                className="text-blue-600 hover:text-blue-800 font-medium"
+                className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
               >
                 ← Back to Home
               </button>
-              <h1 className="text-2xl font-bold text-gray-900">Chapter 1: Money Psychology & Mindset</h1>
+              <h1 className="text-2xl font-bold text-white">Chapter 1: Money Psychology & Mindset</h1>
             </div>
-            <div className="bg-blue-100 px-3 py-1 rounded-full">
-              <span className="text-sm font-medium text-blue-800">Progress: 25%</span>
+            <div className="bg-blue-600/20 border border-blue-500/30 px-3 py-1 rounded-full backdrop-blur-sm">
+              <span className="text-sm font-medium text-blue-300">Progress: 25%</span>
             </div>
           </div>
         </div>
@@ -44,17 +44,16 @@ export default function Chapter1Page() {
 
       {/* Tab Navigation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="bg-white rounded-lg shadow-sm p-1 mb-6">
+        <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-lg p-1 mb-6">
           <nav className="flex space-x-1">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-md font-medium transition-colors ${
-                  activeTab === tab.id
-                    ? 'bg-blue-500 text-white'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                }`}
+                className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-md font-medium transition-colors ${activeTab === tab.id
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                  }`}
               >
                 <tab.icon className="w-4 h-4" />
                 <span>{tab.label}</span>
@@ -67,19 +66,19 @@ export default function Chapter1Page() {
         <div className="mb-8">
           {activeTab === 'lesson' && (
             <div>
-              <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <h3 className="font-semibold text-blue-900 mb-2 flex items-center gap-2">
+              <div className="mb-6 bg-blue-900/20 border border-blue-700/30 backdrop-blur-sm rounded-lg p-4">
+                <h3 className="font-semibold text-blue-300 mb-2 flex items-center gap-2">
                   <Lightbulb className="w-4 h-4" />
                   Learning Path
                 </h3>
-                <p className="text-blue-800">
+                <p className="text-blue-200">
                   Complete all lessons, try the calculator, then take the quiz to unlock Chapter 2!
                 </p>
               </div>
               <MoneyFundamentalsLesson />
-              
+
               {/* Q&A System for Lesson Tab */}
-              <QASystem 
+              <QASystem
                 className="mt-6"
                 isQuizMode={false}
               />
@@ -88,19 +87,19 @@ export default function Chapter1Page() {
 
           {activeTab === 'calculator' && (
             <div>
-              <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
-                <h3 className="font-semibold text-green-900 mb-2 flex items-center gap-2">
+              <div className="mb-6 bg-amber-900/20 border border-amber-700/30 backdrop-blur-sm rounded-lg p-4">
+                <h3 className="font-semibold text-amber-300 mb-2 flex items-center gap-2">
                   <Calculator className="w-4 h-4" />
                   Practice Tool
                 </h3>
-                <p className="text-green-800">
+                <p className="text-amber-200">
                   Use this calculator to understand how taxes affect your paycheck. Try different amounts!
                 </p>
               </div>
               <PaycheckCalculator />
-              
+
               {/* Q&A System for Calculator Tab */}
-              <QASystem 
+              <QASystem
                 className="mt-6"
                 isQuizMode={false}
               />
@@ -109,19 +108,19 @@ export default function Chapter1Page() {
 
           {activeTab === 'quiz' && (
             <div>
-              <div className="mb-6 bg-purple-50 border border-purple-200 rounded-lg p-4">
-                <h3 className="font-semibold text-purple-900 mb-2 flex items-center gap-2">
+              <div className="mb-6 bg-slate-800/30 border border-slate-600/30 backdrop-blur-sm rounded-lg p-4">
+                <h3 className="font-semibold text-slate-300 mb-2 flex items-center gap-2">
                   <Target className="w-4 h-4" />
                   Knowledge Check
                 </h3>
-                <p className="text-purple-800">
+                <p className="text-slate-400">
                   Test your understanding! You need 80% to unlock the next chapter.
                 </p>
               </div>
               <MoneyFundamentalsQuiz />
-              
+
               {/* Q&A System DISABLED during quiz */}
-              <QASystem 
+              <QASystem
                 className="mt-6"
                 isQuizMode={true}
               />
@@ -130,12 +129,12 @@ export default function Chapter1Page() {
 
           {activeTab === 'assistant' && (
             <div>
-              <div className="mb-6 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
-                <h3 className="font-semibold text-blue-900 mb-2 flex items-center gap-2">
+              <div className="mb-6 bg-gradient-to-r from-blue-900/20 to-slate-800/20 border border-blue-700/30 backdrop-blur-sm rounded-lg p-4">
+                <h3 className="font-semibold text-blue-300 mb-2 flex items-center gap-2">
                   <Bot className="w-4 h-4" />
                   AI Financial Coach
                 </h3>
-                <p className="text-blue-800">
+                <p className="text-blue-200">
                   Ask questions, get personalized help, and receive encouragement on your learning journey!
                 </p>
               </div>

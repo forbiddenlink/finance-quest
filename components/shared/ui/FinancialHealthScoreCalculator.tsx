@@ -231,7 +231,7 @@ export default function FinancialHealthScoreCalculator() {
     >
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="bg-gradient-to-r from-purple-100 to-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="bg-gradient-to-r from-blue-100 to-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
           <Brain className="w-8 h-8 text-purple-600" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900 mb-2">
@@ -263,7 +263,7 @@ export default function FinancialHealthScoreCalculator() {
               </div>
               <div className="w-full bg-gray-200 rounded-full h-3">
                 <motion.div
-                  className="bg-gradient-to-r from-purple-500 to-blue-600 h-3 rounded-full"
+                  className="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full"
                   initial={{ width: 0 }}
                   animate={{ width: `${((currentQuestion + 1) / assessmentQuestions.length) * 100}%` }}
                   transition={{ duration: 0.5 }}
@@ -326,9 +326,9 @@ export default function FinancialHealthScoreCalculator() {
                   Grade: {healthScore!.grade}
                 </div>
                 <div className={`text-lg font-medium px-6 py-2 rounded-full inline-block ${healthScore!.category === 'Excellent' ? 'bg-green-100 text-green-800' :
-                    healthScore!.category === 'Good' ? 'bg-blue-100 text-blue-800' :
-                      healthScore!.category === 'Fair' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-red-100 text-red-800'
+                  healthScore!.category === 'Good' ? 'bg-blue-100 text-blue-800' :
+                    healthScore!.category === 'Fair' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-red-100 text-red-800'
                   }`}>
                   {healthScore!.category}
                 </div>
@@ -474,7 +474,7 @@ export default function FinancialHealthScoreCalculator() {
 
               <motion.button
                 onClick={() => window.location.href = '/calculators'}
-                className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-600 hover:to-blue-700 transition-colors"
+                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

@@ -84,7 +84,7 @@ export default function Chapter4Page() {
 
   if (!isUnlocked) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -107,7 +107,7 @@ export default function Chapter4Page() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden">
       {/* Success Celebration */}
       <AnimatePresence>
         {showCelebration && (
@@ -225,8 +225,8 @@ export default function Chapter4Page() {
 
                   <div className="flex items-center justify-between">
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${lesson.completed
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-blue-100 text-blue-800'
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-blue-100 text-blue-800'
                       }`}>
                       {lesson.completed ? 'Completed' : 'Start Lesson'}
                     </span>
@@ -286,7 +286,7 @@ function CreditBasicsLesson() {
       </p>
 
       <div className="grid md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-green-50 rounded-xl p-6">
+        <div className="bg-blue-50 rounded-xl p-6">
           <h4 className="text-lg font-semibold text-green-800 mb-3">Excellent Credit (740+)</h4>
           <ul className="text-green-700 space-y-2">
             <li>• Best interest rates available</li>
@@ -318,10 +318,10 @@ function CreditBasicsLesson() {
           <p className="text-gray-700">Your track record of making payments on time. Late payments hurt your score significantly.</p>
         </div>
 
-        <div className="bg-white border-l-4 border-green-500 p-4">
+        <div className="bg-white border-l-4 border-blue-500 p-4">
           <div className="flex items-center justify-between mb-2">
             <h4 className="text-lg font-semibold text-gray-800">Credit Utilization</h4>
-            <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">30%</span>
+            <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">30%</span>
           </div>
           <p className="text-gray-700">How much of your available credit you&apos;re using. Keep this below 30%, ideally under 10%.</p>
         </div>
@@ -334,10 +334,10 @@ function CreditBasicsLesson() {
           <p className="text-gray-700">How long you&apos;ve had credit accounts. Older accounts generally help your score.</p>
         </div>
 
-        <div className="bg-white border-l-4 border-purple-500 p-4">
+        <div className="bg-white border-l-4 border-blue-500 p-4">
           <div className="flex items-center justify-between mb-2">
             <h4 className="text-lg font-semibold text-gray-800">Credit Mix</h4>
-            <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">10%</span>
+            <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">10%</span>
           </div>
           <p className="text-gray-700">The variety of credit types you have (credit cards, car loans, mortgages, etc.).</p>
         </div>
@@ -378,13 +378,13 @@ function DebtTypesLesson() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <div className="bg-green-50 rounded-xl p-6 border-2 border-green-200">
+        <div className="bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
           <div className="flex items-center gap-3 mb-4">
-            <TrendingDown className="w-8 h-8 text-green-600" />
-            <h3 className="text-2xl font-semibold text-green-800">Good Debt</h3>
+            <TrendingDown className="w-8 h-8 text-blue-600" />
+            <h3 className="text-2xl font-semibold text-blue-800">Good Debt</h3>
           </div>
 
-          <p className="text-green-700 mb-4">
+          <p className="text-blue-700 mb-4">
             Debt that helps you build wealth or increase income over time.
           </p>
 
@@ -392,7 +392,7 @@ function DebtTypesLesson() {
             <div className="bg-white rounded-lg p-4">
               <h4 className="font-semibold text-gray-800 mb-2">🏠 Mortgages</h4>
               <p className="text-gray-700 text-sm">Real estate typically appreciates over time and provides tax benefits.</p>
-              <p className="text-green-600 text-sm font-medium">Typical Rate: 3-7%</p>
+              <p className="text-blue-600 text-sm font-medium">Typical Rate: 3-7%</p>
             </div>
 
             <div className="bg-white rounded-lg p-4">
@@ -489,13 +489,13 @@ function DebtStrategyLesson() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <div className="bg-purple-50 rounded-xl p-6 border-2 border-purple-200">
+        <div className="bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
           <div className="flex items-center gap-3 mb-4">
-            <Brain className="w-8 h-8 text-purple-600" />
-            <h3 className="text-2xl font-semibold text-purple-800">Debt Snowball</h3>
+            <Brain className="w-8 h-8 text-blue-600" />
+            <h3 className="text-2xl font-semibold text-blue-800">Debt Snowball</h3>
           </div>
 
-          <p className="text-purple-700 mb-4 font-medium">
+          <p className="text-blue-700 mb-4 font-medium">
             Pay minimums on all debts, then attack the SMALLEST balance first.
           </p>
 
@@ -527,13 +527,13 @@ function DebtStrategyLesson() {
           </div>
         </div>
 
-        <div className="bg-green-50 rounded-xl p-6 border-2 border-green-200">
+        <div className="bg-slate-50 rounded-xl p-6 border-2 border-slate-200">
           <div className="flex items-center gap-3 mb-4">
-            <Calculator className="w-8 h-8 text-green-600" />
-            <h3 className="text-2xl font-semibold text-green-800">Debt Avalanche</h3>
+            <Calculator className="w-8 h-8 text-slate-600" />
+            <h3 className="text-2xl font-semibold text-slate-800">Debt Avalanche</h3>
           </div>
 
-          <p className="text-green-700 mb-4 font-medium">
+          <p className="text-slate-700 mb-4 font-medium">
             Pay minimums on all debts, then attack the HIGHEST interest rate first.
           </p>
 
@@ -667,7 +667,7 @@ function CreditBuildingLesson() {
           </ul>
         </div>
 
-        <div className="bg-green-50 rounded-xl p-6 text-center">
+        <div className="bg-blue-50 rounded-xl p-6 text-center">
           <div className="text-3xl font-bold text-green-600 mb-2">Excellent</div>
           <p className="text-green-700 text-sm mb-4">740+ score range</p>
           <ul className="text-left text-green-700 text-sm space-y-1">
@@ -693,7 +693,7 @@ function CreditBuildingLesson() {
           </ul>
         </div>
 
-        <div className="bg-white border-l-4 border-green-500 p-4">
+        <div className="bg-white border-l-4 border-blue-500 p-4">
           <div className="flex items-center justify-between mb-2">
             <h4 className="text-lg font-semibold text-gray-800">Month 6-12: Building</h4>
             <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Growth</span>
@@ -705,7 +705,7 @@ function CreditBuildingLesson() {
           </ul>
         </div>
 
-        <div className="bg-white border-l-4 border-purple-500 p-4">
+        <div className="bg-white border-l-4 border-blue-500 p-4">
           <div className="flex items-center justify-between mb-2">
             <h4 className="text-lg font-semibold text-gray-800">Year 2+: Optimization</h4>
             <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">Mastery</span>
@@ -762,7 +762,7 @@ function CreditBuildingLesson() {
         </div>
       </div>
 
-      <div className="bg-green-50 border border-green-200 rounded-xl p-6">
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
         <h3 className="text-xl font-semibold text-green-800 mb-3">🏆 Your Credit Action Plan</h3>
         <ol className="list-decimal list-inside text-green-700 space-y-2">
           <li>Check your current credit score and report</li>

@@ -6,7 +6,7 @@ import { Home, DollarSign, Calculator, TrendingUp, Target, AlertTriangle } from 
 
 export default function MortgageCalculatorPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 py-6">

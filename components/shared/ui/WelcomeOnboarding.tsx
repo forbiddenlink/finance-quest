@@ -41,7 +41,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
       subtitle: "Your journey to financial mastery starts here",
       content: (
         <div className="text-center space-y-6">
-          <div className="w-24 h-24 mx-auto bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+          <div className="w-24 h-24 mx-auto bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center">
             <Rocket className="w-12 h-12 text-white" />
           </div>
           <div>
@@ -57,11 +57,11 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
               <div className="text-gray-600">Interactive Lessons</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">6</div>
+              <div className="text-2xl font-bold text-blue-600">6</div>
               <div className="text-gray-600">Financial Calculators</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">100%</div>
+              <div className="text-2xl font-bold text-blue-600">100%</div>
               <div className="text-gray-600">Free Forever</div>
             </div>
           </div>
@@ -81,18 +81,18 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
                 <p className="text-sm text-blue-700">Money psychology, banking, budgeting basics</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 p-3 bg-green-50 rounded-lg border border-green-200">
-              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
+            <div className="flex items-center gap-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
               <div>
-                <p className="font-semibold text-green-900">Interactive Tools</p>
-                <p className="text-sm text-green-700">Hands-on calculators for real scenarios</p>
+                <p className="font-semibold text-blue-900">Interactive Tools</p>
+                <p className="text-sm text-blue-700">Hands-on calculators for real scenarios</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 p-3 bg-purple-50 rounded-lg border border-purple-200">
-              <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
+            <div className="flex items-center gap-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
               <div>
-                <p className="font-semibold text-purple-900">Advanced Topics</p>
-                <p className="text-sm text-purple-700">Investing, retirement, wealth building</p>
+                <p className="font-semibold text-blue-900">Advanced Topics</p>
+                <p className="text-sm text-blue-700">Investing, retirement, wealth building</p>
               </div>
             </div>
           </div>
@@ -148,7 +148,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
       subtitle: "Ready to start your financial transformation",
       content: (
         <div className="text-center space-y-6">
-          <div className="w-24 h-24 mx-auto bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center">
+          <div className="w-24 h-24 mx-auto bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
             <CheckCircle className="w-12 h-12 text-white" />
           </div>
           <div>
@@ -175,7 +175,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
               </button>
             </Link>
             <Link href="/calculators">
-              <button className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors flex items-center gap-2">
+              <button className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors flex items-center gap-2">
                 <Calculator className="w-4 h-4" />
                 Try Calculators
               </button>
@@ -219,7 +219,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
           className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-hidden"
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="text-sm opacity-90">
                 Step {currentStep + 1} of {steps.length}
@@ -241,7 +241,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
               initial={{ width: 0 }}
               animate={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
               transition={{ duration: 0.3 }}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 h-1"
+              className="bg-gradient-to-r from-blue-600 to-blue-700 h-1"
             />
           </div>
 

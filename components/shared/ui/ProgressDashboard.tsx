@@ -105,13 +105,13 @@ export default function ProgressDashboard() {
           <p className="text-xs text-blue-500">Chapter {userProgress.currentChapter} of {totalChapters}</p>
         </div>
 
-        <div className="bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-lg p-4 text-center">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4 text-center">
           <div className="text-3xl font-bold text-green-800">{literacyScore}</div>
           <p className="text-sm text-green-600 font-medium">Literacy Score</p>
-          <p className="text-xs text-green-500">Out of 1,000 points</p>
+          <p className="text-xs text-blue-500">Out of 1,000 points</p>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-lg p-4 text-center">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4 text-center">
           <div className="text-3xl font-bold text-purple-800">{averageQuizScore}%</div>
           <p className="text-sm text-purple-600 font-medium">Avg Quiz Score</p>
           <p className="text-xs text-purple-500">{Object.keys(userProgress.quizScores).length} quizzes taken</p>
@@ -236,7 +236,7 @@ export default function ProgressDashboard() {
         </div>
 
         {/* Projected Impact */}
-        <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-lg p-6">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-50 border border-blue-200 rounded-lg p-6">
           <h3 className="text-lg font-semibold text-green-900 mb-4 flex items-center gap-2">
             <DollarSign className="w-5 h-5" />
             Projected Financial Impact
@@ -368,7 +368,7 @@ export default function ProgressDashboard() {
       )}
 
       {/* Contest Demo Section */}
-      <div className="mt-8 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-6">
+      <div className="mt-8 bg-gradient-to-r from-blue-50 to-slate-50 border border-blue-200 rounded-lg p-6">
         <h3 className="text-lg font-semibold text-purple-900 mb-4 flex items-center gap-2">
           <Target className="w-5 h-5" />
           Contest Judge Highlights

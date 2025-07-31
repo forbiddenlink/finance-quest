@@ -414,7 +414,7 @@ export default function DebtPayoffCalculator() {
           </div>
 
           {/* Motivation Section */}
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4">
+          <div className="bg-gradient-to-r from-blue-50 to-blue-50 border border-blue-200 rounded-lg p-4">
             <h4 className="font-semibold text-green-900 mb-3 flex items-center gap-2">
               <Lightbulb className="w-4 h-4" />
               Your Debt-Free Future

@@ -6,7 +6,7 @@ import { CreditCard, Zap, Target, BarChart3, Lightbulb, Rocket, Trophy, Mountain
 
 export default function DebtPayoffPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -32,7 +32,7 @@ export default function DebtPayoffPage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="mb-6 bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-lg p-6">
+        <div className="mb-6 bg-gradient-to-r from-orange-900/20 to-red-900/30 border border-orange-600/30 backdrop-blur-sm rounded-lg p-6">
           <h2 className="text-xl font-bold text-red-900 mb-2 flex items-center gap-2">
             <Zap className="w-5 h-5" />
             Break Free From Debt Chains

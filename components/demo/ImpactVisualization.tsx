@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  TrendingUp, 
-  Users, 
-  Target, 
+import {
+  TrendingUp,
+  Users,
+  Target,
   Brain,
   Award,
   BarChart3,
@@ -97,7 +97,7 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="bg-gradient-to-r from-green-500 to-blue-500 p-3 rounded-2xl">
+            <div className="bg-gradient-to-r from-blue-500 to-blue-500 p-3 rounded-2xl">
               <TrendingUp className="w-8 h-8 text-white" />
             </div>
             <div>
@@ -105,8 +105,8 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
               <p className="text-lg text-gray-600">Real-time financial literacy improvement metrics</p>
             </div>
           </div>
-          
-          <div className="bg-gradient-to-r from-green-100 to-blue-100 border border-green-200 rounded-lg p-4 inline-block">
+
+          <div className="bg-gradient-to-r from-blue-100 to-blue-100 border border-blue-200 rounded-lg p-4 inline-block">
             <p className="text-green-800 font-semibold flex items-center gap-2">
               <Zap className="w-5 h-5" />
               Live updates every 3 seconds - Demonstrating real-world impact
@@ -255,7 +255,7 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
                     </div>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
+                    <div
                       className="bg-purple-500 h-2 rounded-full transition-all duration-1000"
                       style={{ width: `${category.after}%` }}
                     />
@@ -273,7 +273,7 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
             <Star className="w-6 h-6 text-green-600" />
             Real User Success Stories
           </h3>
-          
+
           <motion.div
             key={currentStoryIndex}
             initial={{ opacity: 0, x: 100 }}
@@ -302,9 +302,8 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
               <button
                 key={index}
                 onClick={() => setCurrentStoryIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  index === currentStoryIndex ? 'bg-green-500' : 'bg-green-200'
-                }`}
+                className={`w-2 h-2 rounded-full transition-all ${index === currentStoryIndex ? 'bg-green-500' : 'bg-green-200'
+                  }`}
               />
             ))}
           </div>
@@ -335,10 +334,10 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
               <div className="text-xs text-gray-500">Financial illiteracy</div>
             </div>
           </div>
-          
+
           <p className="text-gray-700 mt-6 max-w-3xl mx-auto">
-            Finance Quest demonstrates measurable impact on the 64% financial illiteracy crisis through 
-            real AI integration, live market data, and personalized learning experiences that deliver 
+            Finance Quest demonstrates measurable impact on the 64% financial illiteracy crisis through
+            real AI integration, live market data, and personalized learning experiences that deliver
             quantifiable improvements in financial knowledge and decision-making confidence.
           </p>
         </GradientCard>

@@ -170,7 +170,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
       >
-        <div className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white p-6">
+        <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6">
           <div className="flex items-center space-x-3">
             <Trophy className="w-8 h-8" />
             <h2 className="text-3xl font-bold">

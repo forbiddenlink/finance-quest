@@ -52,7 +52,7 @@ export default function MarketDashboard() {
     try {
       setError(null);
       const response = await fetch('/api/market-data');
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch market data: ${response.status}`);
       }
@@ -60,11 +60,11 @@ export default function MarketDashboard() {
       const data: MarketData = await response.json();
       setMarketData(data);
       setLastUpdated(new Date());
-      
+
       // Calculate market summary
       const summary = calculateMarketSummary(data);
       setMarketSummary(summary);
-      
+
       if (!selectedStock && data.stocks.length > 0) {
         setSelectedStock(data.stocks[0]);
       }
@@ -85,11 +85,11 @@ export default function MarketDashboard() {
   const calculateMarketSummary = (data: MarketData): MarketSummary => {
     const totalMarketCap = data.stocks.reduce((sum, stock) => sum + stock.marketCap, 0);
     const averageChange = data.stocks.reduce((sum, stock) => sum + stock.changePercent, 0) / data.stocks.length;
-    
+
     let marketTrend: 'bullish' | 'bearish' | 'neutral' = 'neutral';
     if (averageChange > 0.01) marketTrend = 'bullish';
     else if (averageChange < -0.01) marketTrend = 'bearish';
-    
+
     const volatility = Math.sqrt(
       data.stocks.reduce((sum, stock) => sum + Math.pow(stock.changePercent - averageChange, 2), 0) / data.stocks.length
     );
@@ -110,7 +110,7 @@ export default function MarketDashboard() {
     } else if (compact && value >= 1e6) {
       return `$${(value / 1e6).toFixed(1)}M`;
     }
-    
+
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
@@ -211,16 +211,15 @@ export default function MarketDashboard() {
         <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6 text-center">
           <BarChart3 className="w-8 h-8 mx-auto mb-3 text-blue-600" />
           <h3 className="text-lg font-semibold text-blue-900">Market Trend</h3>
-          <p className={`text-2xl font-bold ${
-            marketSummary.marketTrend === 'bullish' ? 'text-green-600' : 
-            marketSummary.marketTrend === 'bearish' ? 'text-red-600' : 'text-gray-600'
-          }`}>
+          <p className={`text-2xl font-bold ${marketSummary.marketTrend === 'bullish' ? 'text-green-600' :
+              marketSummary.marketTrend === 'bearish' ? 'text-red-600' : 'text-gray-600'
+            }`}>
             {marketSummary.marketTrend.charAt(0).toUpperCase() + marketSummary.marketTrend.slice(1)}
           </p>
           <p className="text-sm text-blue-600">Overall Direction</p>
         </div>
 
-        <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-6 text-center">
+        <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6 text-center">
           <TrendingUp className="w-8 h-8 mx-auto mb-3 text-green-600" />
           <h3 className="text-lg font-semibold text-green-900">Avg Change</h3>
           <p className={`text-2xl font-bold ${getChangeColor(marketSummary.averageChange)}`}>
@@ -229,7 +228,7 @@ export default function MarketDashboard() {
           <p className="text-sm text-green-600">Portfolio Average</p>
         </div>
 
-        <div className="bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg p-6 text-center">
+        <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6 text-center">
           <DollarSign className="w-8 h-8 mx-auto mb-3 text-purple-600" />
           <h3 className="text-lg font-semibold text-purple-900">Total Market Cap</h3>
           <p className="text-2xl font-bold text-purple-700">
@@ -264,11 +263,10 @@ export default function MarketDashboard() {
               </thead>
               <tbody>
                 {marketData.stocks.map((stock) => (
-                  <tr 
-                    key={stock.symbol} 
-                    className={`border-b border-gray-100 hover:bg-gray-100 cursor-pointer transition-colors ${
-                      selectedStock?.symbol === stock.symbol ? 'bg-blue-50' : ''
-                    }`}
+                  <tr
+                    key={stock.symbol}
+                    className={`border-b border-gray-100 hover:bg-gray-100 cursor-pointer transition-colors ${selectedStock?.symbol === stock.symbol ? 'bg-blue-50' : ''
+                      }`}
                     onClick={() => setSelectedStock(stock)}
                   >
                     <td className="py-3 px-2">
@@ -317,7 +315,7 @@ export default function MarketDashboard() {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip 
+                <Tooltip
                   formatter={(value: number) => formatCurrency(value, true)}
                   labelFormatter={(label) => `${label} Market Cap`}
                 />
@@ -335,7 +333,7 @@ export default function MarketDashboard() {
                 <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
                 <XAxis dataKey="date" tickFormatter={(date) => new Date(date).toLocaleDateString('en-US', { month: 'short' })} />
                 <YAxis />
-                <Tooltip 
+                <Tooltip
                   labelFormatter={(date) => new Date(date).toLocaleDateString()}
                   formatter={(value: number, name: string) => [`${value.toFixed(2)}%`, name === 'fedFunds' ? 'Fed Funds Rate' : 'Inflation Rate']}
                 />
@@ -354,7 +352,7 @@ export default function MarketDashboard() {
             <Target className="w-5 h-5 inline mr-2" />
             Focus Stock: {selectedStock.companyName} ({selectedStock.symbol})
           </h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center">
               <p className="text-sm text-gray-600">Current Price</p>

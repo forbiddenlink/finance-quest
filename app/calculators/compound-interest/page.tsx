@@ -6,7 +6,7 @@ import { DollarSign, Sprout, TrendingUp, Target, Rocket, Clock, RotateCcw } from
 
 export default function CompoundInterestPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -32,7 +32,7 @@ export default function CompoundInterestPage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-6">
+        <div className="mb-6 bg-gradient-to-r from-amber-900/20 to-amber-800/30 border border-amber-600/30 backdrop-blur-sm rounded-lg p-6">
           <h2 className="text-xl font-bold text-green-900 mb-2 flex items-center gap-2">
             <Sprout className="w-5 h-5" />
             The Eighth Wonder of the World

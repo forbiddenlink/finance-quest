@@ -335,7 +335,7 @@ export default function EmergencyFundCalculator() {
               <p className="text-sm text-blue-600">{monthsOfExpenses} months of expenses</p>
             </div>
 
-            <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-6 text-center">
+            <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6 text-center">
               <Calendar className="w-8 h-8 mx-auto mb-3 text-green-600" />
               <h3 className="text-lg font-semibold text-green-900">Time to Goal</h3>
               <p className="text-2xl font-bold text-green-700">{formatMonths(timeToGoal)}</p>
@@ -445,20 +445,20 @@ export default function EmergencyFundCalculator() {
         </div>
 
         <div className={`rounded-lg p-6 border-2 ${savingsRate >= 20 ? 'bg-green-50 border-green-200' :
-            savingsRate >= 10 ? 'bg-yellow-50 border-yellow-200' : 'bg-red-50 border-red-200'
+          savingsRate >= 10 ? 'bg-yellow-50 border-yellow-200' : 'bg-red-50 border-red-200'
           }`}>
           <div className="flex items-center gap-3 mb-3">
             <TrendingUp className={`w-6 h-6 ${savingsRate >= 20 ? 'text-green-600' :
-                savingsRate >= 10 ? 'text-yellow-600' : 'text-red-600'
+              savingsRate >= 10 ? 'text-yellow-600' : 'text-red-600'
               }`} />
             <h4 className={`font-semibold ${savingsRate >= 20 ? 'text-green-900' :
-                savingsRate >= 10 ? 'text-yellow-900' : 'text-red-900'
+              savingsRate >= 10 ? 'text-yellow-900' : 'text-red-900'
               }`}>
               Savings Rate
             </h4>
           </div>
           <p className={`text-sm ${savingsRate >= 20 ? 'text-green-700' :
-              savingsRate >= 10 ? 'text-yellow-700' : 'text-red-700'
+            savingsRate >= 10 ? 'text-yellow-700' : 'text-red-700'
             }`}>
             You&apos;re saving {savingsRate.toFixed(1)}% of income.
             {savingsRate >= 20 ? ' Excellent!' : savingsRate >= 10 ? ' Good, but could be higher.' : ' Try to reach at least 10%.'}

@@ -274,7 +274,7 @@ export default function MoneyFundamentalsLesson() {
             {!completedLessons[currentLesson] && (
               <button
                 onClick={markComplete}
-                className="group flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all shadow-lg hover-lift morph-button animate-glow-pulse"
+                className="group flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all shadow-lg hover-lift morph-button animate-glow-pulse"
               >
                 <CheckCircle className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                 Mark Complete

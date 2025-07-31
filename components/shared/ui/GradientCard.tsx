@@ -17,14 +17,14 @@ const gradients = {
     glass: 'bg-blue-500/10 border-blue-200'
   },
   green: {
-    solid: 'bg-gradient-to-br from-green-500 to-emerald-600',
-    border: 'bg-gradient-to-r from-green-500 to-emerald-600',
+    solid: 'bg-gradient-to-br from-blue-500 to-blue-600',
+    border: 'bg-gradient-to-r from-blue-500 to-blue-600',
     glass: 'bg-green-500/10 border-green-200'
   },
   purple: {
-    solid: 'bg-gradient-to-br from-purple-500 to-pink-600',
-    border: 'bg-gradient-to-r from-purple-500 to-pink-600',
-    glass: 'bg-purple-500/10 border-purple-200'
+    solid: 'bg-gradient-to-br from-blue-500 to-slate-600',
+    border: 'bg-gradient-to-r from-blue-500 to-slate-600',
+    glass: 'bg-blue-500/10 border-blue-200'
   },
   red: {
     solid: 'bg-gradient-to-br from-red-500 to-pink-600',
@@ -37,9 +37,9 @@ const gradients = {
     glass: 'bg-yellow-500/10 border-yellow-200'
   },
   pink: {
-    solid: 'bg-gradient-to-br from-pink-500 to-rose-600',
-    border: 'bg-gradient-to-r from-pink-500 to-rose-600',
-    glass: 'bg-pink-500/10 border-pink-200'
+    solid: 'bg-gradient-to-br from-yellow-500 to-orange-600',
+    border: 'bg-gradient-to-r from-yellow-500 to-orange-600',
+    glass: 'bg-yellow-500/10 border-yellow-200'
   }
 };
 

@@ -38,7 +38,7 @@ export default function Chapter3Page() {
 
   return (
     <motion.div
-      className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50"
+      className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800"
       variants={pageVariants}
       initial="initial"
       animate="animate"
@@ -75,7 +75,7 @@ export default function Chapter3Page() {
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="text-green-500"
+                className="text-blue-500"
               >
                 <CheckCircle className="w-12 h-12" />
               </motion.div>
@@ -99,7 +99,7 @@ export default function Chapter3Page() {
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
             <motion.div
-              className="bg-gradient-to-r from-green-500 to-blue-600 h-2 rounded-full"
+              className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full"
               initial={{ width: '0%' }}
               animate={{
                 width: currentSection === 'lesson' ? '33%' :
@@ -126,8 +126,8 @@ export default function Chapter3Page() {
               key={tab.key}
               onClick={() => setCurrentSection(tab.key as 'lesson' | 'calculator' | 'quiz')}
               className={`flex-1 py-3 px-4 rounded-md font-medium transition-all ${currentSection === tab.key
-                ? 'bg-green-500 text-white shadow-md'
-                : 'text-gray-600 hover:text-green-500 hover:bg-green-50'
+                ? 'bg-blue-500 text-white shadow-md'
+                : 'text-gray-600 hover:text-blue-500 hover:bg-blue-50'
                 }`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -179,7 +179,7 @@ export default function Chapter3Page() {
           {userProgress.currentChapter > 3 && (
             <Link
               href="/chapter4"
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-lg hover:from-green-600 hover:to-blue-700 transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-colors"
             >
               Next Chapter
               <ArrowRight className="w-4 h-4 ml-2" />

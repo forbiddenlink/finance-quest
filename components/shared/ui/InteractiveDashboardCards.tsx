@@ -39,8 +39,8 @@ export default function InteractiveDashboardCards() {
       mainStat: "10,000+",
       description: "Students actively using Finance Quest",
       icon: Users,
-      color: "from-green-500 to-green-600",
-      bgColor: "from-green-50 to-green-100",
+      color: "from-blue-500 to-blue-600",
+      bgColor: "from-blue-50 to-blue-100",
       details: [
         "New users this month: 1,847",
         "Daily active users: 3,200",
@@ -54,8 +54,8 @@ export default function InteractiveDashboardCards() {
       mainStat: "25",
       description: "Interactive lessons across 5 chapters",
       icon: BookOpen,
-      color: "from-purple-500 to-purple-600",
-      bgColor: "from-purple-50 to-purple-100",
+      color: "from-blue-500 to-blue-600",
+      bgColor: "from-blue-50 to-blue-100",
       details: [
         "5 core chapters",
         "25 interactive lessons",

@@ -32,7 +32,7 @@ export default function EconomicDashboard() {
       try {
         const response = await fetch('/api/market-data?type=full');
         const result: MarketDataResponse = await response.json();
-        
+
         if (result.success) {
           setEconomicData(result.data);
           setIsLive(result.source === 'live');
@@ -66,7 +66,7 @@ export default function EconomicDashboard() {
     };
 
     fetchEconomicData();
-    
+
     // Update every 5 minutes
     const interval = setInterval(fetchEconomicData, 5 * 60 * 1000);
     return () => clearInterval(interval);
@@ -84,11 +84,11 @@ export default function EconomicDashboard() {
     );
   }
 
-  const currentFedRate = economicData?.fedFunds?.length > 0 
-    ? economicData.fedFunds[economicData.fedFunds.length - 1]?.value || 0 
+  const currentFedRate = economicData?.fedFunds?.length > 0
+    ? economicData.fedFunds[economicData.fedFunds.length - 1]?.value || 0
     : 0;
-  const currentInflation = economicData?.inflation?.length > 0 
-    ? economicData.inflation[economicData.inflation.length - 1]?.value || 0 
+  const currentInflation = economicData?.inflation?.length > 0
+    ? economicData.inflation[economicData.inflation.length - 1]?.value || 0
     : 0;
 
   return (
@@ -111,10 +111,9 @@ export default function EconomicDashboard() {
             </p>
           </div>
         </div>
-        
-        <div className={`px-3 py-1 rounded-full text-xs font-medium ${
-          isLive ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
-        }`}>
+
+        <div className={`px-3 py-1 rounded-full text-xs font-medium ${isLive ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+          }`}>
           {isLive ? '🟢 Live Data' : '🟡 Demo Mode'}
         </div>
       </div>
@@ -150,7 +149,7 @@ export default function EconomicDashboard() {
         </motion.div>
 
         <motion.div
-          className="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-lg border border-green-200"
+          className="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200"
           whileHover={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
@@ -174,11 +173,10 @@ export default function EconomicDashboard() {
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key as 'interest' | 'inflation' | 'markets')}
-            className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md font-medium transition-all ${
-              activeTab === tab.key
+            className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md font-medium transition-all ${activeTab === tab.key
                 ? 'bg-white text-blue-600 shadow-sm'
                 : 'text-gray-600 hover:text-blue-600'
-            }`}
+              }`}
           >
             <tab.icon className="w-4 h-4" />
             <span className="hidden sm:inline">{tab.label}</span>
@@ -192,17 +190,17 @@ export default function EconomicDashboard() {
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={economicData?.fedFunds || []}>
               <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-              <XAxis 
-                dataKey="date" 
+              <XAxis
+                dataKey="date"
                 className="text-xs text-gray-600"
                 tick={{ fontSize: 12 }}
               />
-              <YAxis 
+              <YAxis
                 className="text-xs text-gray-600"
                 tick={{ fontSize: 12 }}
                 domain={['dataMin - 0.5', 'dataMax + 0.5']}
               />
-              <Tooltip 
+              <Tooltip
                 contentStyle={{
                   backgroundColor: 'white',
                   border: '1px solid #e5e7eb',
@@ -211,10 +209,10 @@ export default function EconomicDashboard() {
                 }}
                 formatter={(value) => [`${value}%`, 'Fed Funds Rate']}
               />
-              <Line 
-                type="monotone" 
-                dataKey="value" 
-                stroke="#2563eb" 
+              <Line
+                type="monotone"
+                dataKey="value"
+                stroke="#2563eb"
                 strokeWidth={3}
                 dot={{ fill: '#2563eb', strokeWidth: 2, r: 4 }}
                 activeDot={{ r: 6, stroke: '#2563eb', strokeWidth: 2 }}
@@ -227,17 +225,17 @@ export default function EconomicDashboard() {
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={economicData?.inflation || []}>
               <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-              <XAxis 
-                dataKey="date" 
+              <XAxis
+                dataKey="date"
                 className="text-xs text-gray-600"
                 tick={{ fontSize: 12 }}
               />
-              <YAxis 
+              <YAxis
                 className="text-xs text-gray-600"
                 tick={{ fontSize: 12 }}
                 domain={['dataMin - 0.5', 'dataMax + 0.5']}
               />
-              <Tooltip 
+              <Tooltip
                 contentStyle={{
                   backgroundColor: 'white',
                   border: '1px solid #e5e7eb',
@@ -246,10 +244,10 @@ export default function EconomicDashboard() {
                 }}
                 formatter={(value) => [`${value}%`, 'Inflation Rate']}
               />
-              <Line 
-                type="monotone" 
-                dataKey="value" 
-                stroke="#dc2626" 
+              <Line
+                type="monotone"
+                dataKey="value"
+                stroke="#dc2626"
                 strokeWidth={3}
                 dot={{ fill: '#dc2626', strokeWidth: 2, r: 4 }}
                 activeDot={{ r: 6, stroke: '#dc2626', strokeWidth: 2 }}
@@ -293,8 +291,8 @@ export default function EconomicDashboard() {
       {/* Educational Note */}
       <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
         <p className="text-sm text-yellow-800">
-          <strong>Educational Context:</strong> These economic indicators directly impact your personal finances. 
-          Higher interest rates affect loan costs and savings returns, while inflation erodes purchasing power. 
+          <strong>Educational Context:</strong> These economic indicators directly impact your personal finances.
+          Higher interest rates affect loan costs and savings returns, while inflation erodes purchasing power.
           Understanding these trends helps make better financial decisions.
         </p>
       </div>

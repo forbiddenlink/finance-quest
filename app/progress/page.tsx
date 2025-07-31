@@ -82,7 +82,7 @@ export default function ProgressPage() {
   const nextAction = progress.getRecommendedNextAction();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -272,8 +272,8 @@ export default function ProgressPage() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 + index * 0.1 }}
                       className={`flex items-center gap-3 p-3 rounded-lg ${achievement.unlocked
-                          ? 'bg-green-50 border border-green-200'
-                          : 'bg-gray-50 border border-gray-200'
+                        ? 'bg-blue-50 border border-blue-200'
+                        : 'bg-gray-50 border border-gray-200'
                         }`}
                     >
                       <div className={`p-2 rounded-lg ${achievement.unlocked ? 'bg-green-100' : 'bg-gray-100'

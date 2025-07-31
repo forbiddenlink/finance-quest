@@ -52,14 +52,14 @@ export default function Chapter5Page() {
       title: 'Where to Keep Emergency Money',
       description: 'High-yield savings, money markets, and accessibility strategies',
       icon: DollarSign,
-      color: 'from-green-400 to-green-600'
+      color: 'from-blue-400 to-blue-600'
     },
     {
       id: 'chapter5-lesson4',
       title: 'Building Your Fund Strategically',
       description: 'Automation, milestones, and staying motivated during the journey',
       icon: TrendingUp,
-      color: 'from-purple-400 to-purple-600'
+      color: 'from-blue-400 to-blue-600'
     }
   ];
 
@@ -157,7 +157,7 @@ export default function Chapter5Page() {
               <div className="text-2xl font-bold text-orange-700">78%</div>
               <div className="text-sm text-orange-600">live paycheck to paycheck</div>
             </div>
-            <div className="bg-green-50 rounded-lg p-6 text-center">
+            <div className="bg-blue-50 rounded-lg p-6 text-center">
               <Shield className="w-8 h-8 mx-auto mb-3 text-green-600" />
               <div className="text-2xl font-bold text-green-700">$1,000</div>
               <div className="text-sm text-green-600">minimum emergency fund recommended</div>
@@ -299,7 +299,7 @@ export default function Chapter5Page() {
         >
           <h3 className="text-xl font-bold text-gray-900 mb-6">Emergency Fund Success Stories</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-green-50 rounded-lg p-6">
+            <div className="bg-blue-50 rounded-lg p-6">
               <Briefcase className="w-8 h-8 text-green-600 mb-4" />
               <h4 className="font-semibold text-green-900 mb-2">Sarah&apos;s Job Loss Recovery</h4>
               <p className="text-sm text-green-700">
@@ -315,7 +315,7 @@ export default function Chapter5Page() {
                 avoiding bankruptcy and debt.
               </p>
             </div>
-            <div className="bg-purple-50 rounded-lg p-6">
+            <div className="bg-blue-50 rounded-lg p-6">
               <Home className="w-8 h-8 text-purple-600 mb-4" />
               <h4 className="font-semibold text-purple-900 mb-2">Lisa&apos;s Home Opportunity</h4>
               <p className="text-sm text-purple-700">

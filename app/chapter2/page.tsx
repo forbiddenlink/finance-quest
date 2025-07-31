@@ -38,7 +38,7 @@ export default function Chapter2Page() {
 
   return (
     <motion.div
-      className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
+      className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800"
       variants={pageVariants}
       initial="initial"
       animate="animate"
@@ -75,7 +75,7 @@ export default function Chapter2Page() {
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="text-green-500"
+                className="text-blue-500"
               >
                 <CheckCircle className="w-12 h-12" />
               </motion.div>

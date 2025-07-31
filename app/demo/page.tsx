@@ -9,12 +9,12 @@ import FinancialHealthScoreCalculator from '@/components/shared/ui/FinancialHeal
 import VoiceQA from '@/components/shared/ui/VoiceQA';
 import CompoundInterestCalculator from '@/components/shared/calculators/CompoundInterestCalculator';
 import GradientCard from '@/components/shared/ui/GradientCard';
-import { 
-  Trophy, 
-  Target, 
-  Brain, 
-  Mic, 
-  BarChart3, 
+import {
+  Trophy,
+  Target,
+  Brain,
+  Mic,
+  BarChart3,
   ArrowRight,
   CheckCircle,
   Star
@@ -59,10 +59,10 @@ export default function DemoPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       {/* Judge Mode Overlay */}
-      <JudgeMode 
-        isActive={judgeModeActive} 
+      <JudgeMode
+        isActive={judgeModeActive}
         onToggle={setJudgeModeActive}
       />
 
@@ -71,7 +71,7 @@ export default function DemoPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-3 rounded-2xl">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-3 rounded-2xl">
                 <Trophy className="w-8 h-8 text-white" />
               </div>
               <div>
@@ -79,7 +79,7 @@ export default function DemoPage() {
                 <p className="text-lg text-gray-600">Contest Demo Experience</p>
               </div>
             </div>
-            
+
             <div className="bg-gradient-to-r from-red-100 to-orange-100 border border-red-200 rounded-lg p-4 mb-6 inline-block">
               <p className="text-red-800 font-semibold flex items-center gap-2">
                 <Target className="w-5 h-5" />
@@ -90,12 +90,12 @@ export default function DemoPage() {
             <div className="flex items-center justify-center gap-4">
               <button
                 onClick={() => setShowTour(true)}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold flex items-center gap-2 hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg"
+                className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3 rounded-full font-semibold flex items-center gap-2 hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
               >
                 <Star className="w-5 h-5" />
                 Start Interactive Demo
               </button>
-              
+
               <button
                 onClick={() => setJudgeModeActive(true)}
                 className="bg-white text-gray-700 px-6 py-3 rounded-full font-semibold border border-gray-300 hover:bg-gray-50 transition-all flex items-center gap-2"
@@ -164,7 +164,7 @@ export default function DemoPage() {
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
             Live Economic Data Integration
           </h2>
-          <div className="bg-gradient-to-r from-green-100 to-blue-100 border border-green-200 rounded-lg p-4 mb-6 text-center">
+          <div className="bg-gradient-to-r from-blue-100 to-blue-100 border border-blue-200 rounded-lg p-4 mb-6 text-center">
             <p className="text-green-800 font-semibold flex items-center justify-center gap-2">
               <BarChart3 className="w-5 h-5" />
               Real Federal Reserve Data + Market Indices with Educational Context
@@ -217,7 +217,7 @@ export default function DemoPage() {
             Ready to Experience the Future of Financial Education?
           </h2>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            See how Finance Quest combines real AI, live market data, and accessibility features 
+            See how Finance Quest combines real AI, live market data, and accessibility features
             to solve the 64% financial illiteracy crisis with measurable outcomes.
           </p>
           <div className="flex items-center justify-center gap-4">
@@ -234,7 +234,7 @@ export default function DemoPage() {
 
       {/* Guided Tour Component */}
       {showTour && (
-        <GuidedTour 
+        <GuidedTour
           onComplete={() => setShowTour(false)}
           onSkip={() => setShowTour(false)}
         />

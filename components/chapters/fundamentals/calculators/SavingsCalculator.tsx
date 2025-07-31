@@ -127,7 +127,7 @@ const SavingsCalculator = () => {
     >
       {/* Header */}
       <motion.div
-        className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-6"
+        className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6"
         variants={itemVariants}
       >
         <div className="flex items-center space-x-3 mb-4">
@@ -255,7 +255,7 @@ const SavingsCalculator = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <motion.div
-                    className="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border border-green-200"
+                    className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200"
                     whileHover={{ scale: 1.02 }}
                   >
                     <div className="flex items-center justify-between mb-2">
@@ -281,7 +281,7 @@ const SavingsCalculator = () => {
                   </motion.div>
 
                   <motion.div
-                    className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-lg border border-purple-200"
+                    className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200"
                     whileHover={{ scale: 1.02 }}
                   >
                     <div className="flex items-center justify-between mb-2">

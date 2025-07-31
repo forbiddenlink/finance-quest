@@ -198,7 +198,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
 
   return (
     <motion.div
-      className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-xl p-6"
+      className="bg-gradient-to-br from-blue-50 to-blue-50 border border-blue-200 rounded-xl p-6"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -207,7 +207,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
           <div className="bg-purple-100 p-2 rounded-lg">
-            <Mic className="w-6 h-6 text-purple-600" />
+            <Mic className="w-6 h-6 text-blue-600" />
           </div>
           <div>
             <h3 className="text-xl font-bold text-gray-900">Voice Financial Q&A</h3>
@@ -241,10 +241,10 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
           onClick={isListening ? stopListening : startListening}
           disabled={isQuizMode || isLoading}
           className={`relative p-6 rounded-full transition-all ${isListening
-              ? 'bg-red-500 text-white shadow-lg'
-              : isQuizMode
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-purple-500 text-white hover:bg-purple-600 shadow-lg'
+            ? 'bg-red-500 text-white shadow-lg'
+            : isQuizMode
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : 'bg-blue-500 text-white hover:bg-blue-600 shadow-lg'
             }`}
           whileHover={!isQuizMode && !isLoading ? { scale: 1.05 } : {}}
           whileTap={!isQuizMode && !isLoading ? { scale: 0.95 } : {}}
@@ -267,8 +267,8 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
           <motion.button
             onClick={isSpeaking ? stopSpeaking : speakResponse}
             className={`p-4 rounded-full transition-all ${isSpeaking
-                ? 'bg-green-500 text-white shadow-lg'
-                : 'bg-blue-500 text-white hover:bg-blue-600 shadow-lg'
+              ? 'bg-blue-500 text-white shadow-lg'
+              : 'bg-blue-500 text-white hover:bg-blue-600 shadow-lg'
               }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -300,7 +300,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-purple-600 font-medium flex items-center justify-center space-x-2"
+              className="text-blue-600 font-medium flex items-center justify-center space-x-2"
             >
               <Brain className="w-5 h-5 animate-spin" />
               <span>AI is thinking...</span>
@@ -393,8 +393,8 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
                       <button
                         onClick={isSpeaking ? stopSpeaking : speakResponse}
                         className={`p-1 rounded transition-colors ${isSpeaking
-                            ? 'text-red-600 hover:text-red-700'
-                            : 'text-blue-600 hover:text-blue-700'
+                          ? 'text-red-600 hover:text-red-700'
+                          : 'text-blue-600 hover:text-blue-700'
                           }`}
                       >
                         {isSpeaking ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}

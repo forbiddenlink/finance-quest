@@ -112,15 +112,15 @@ export default function ProgressNavigation() {
               <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl shadow-lg flex items-center justify-center relative overflow-hidden">
                 {/* Background pattern */}
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 to-transparent"></div>
-                
+
                 {/* Logo icon - Dollar sign with growth chart */}
                 <svg viewBox="0 0 24 24" className="w-6 h-6 text-slate-900 relative z-10" fill="none">
                   {/* Dollar sign base */}
-                  <path d="M12 2v20M8 6h8a4 4 0 0 1 0 8H8M8 10h8a4 4 0 0 1 0 8h-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  
+                  <path d="M12 2v20M8 6h8a4 4 0 0 1 0 8H8M8 10h8a4 4 0 0 1 0 8h-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+
                   {/* Growth chart accent */}
-                  <path d="M3 15l3-3 2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7"/>
-                  <path d="M19 7l2 2-2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7"/>
+                  <path d="M3 15l3-3 2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
+                  <path d="M19 7l2 2-2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
                 </svg>
               </div>
             </div>
@@ -143,7 +143,7 @@ export default function ProgressNavigation() {
                 if (isActive) {
                   const colorMap = {
                     blue: "bg-blue-900 text-blue-300 border-blue-700",
-                    green: "bg-green-900 text-green-300 border-green-700",
+                    green: "bg-blue-900 text-blue-300 border-blue-700",
                     purple: "bg-amber-900 text-amber-300 border-amber-700",
                     orange: "bg-amber-900 text-amber-300 border-amber-700",
                     cyan: "bg-blue-900 text-blue-300 border-blue-700",
@@ -179,7 +179,7 @@ export default function ProgressNavigation() {
                       {item.progress !== undefined && item.progress > 0 && (
                         <div className="flex items-center space-x-1">
                           {item.progress === 100 ? (
-                            <CheckCircle className="w-3 h-3 text-green-500" />
+                            <CheckCircle className="w-3 h-3 text-blue-500" />
                           ) : (
                             <div className="w-8 h-1">
                               <Progress value={item.progress} className="h-1" />

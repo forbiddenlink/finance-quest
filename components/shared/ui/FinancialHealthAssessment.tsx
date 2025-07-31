@@ -250,7 +250,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
         </p>
         <button
           onClick={handleStartAssessment}
-          className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-green-600 hover:to-emerald-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+          className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
         >
           Start Assessment (2 minutes)
         </button>
@@ -446,7 +446,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                 reviewsFinancesRegularly: false
               });
             }}
-            className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-purple-600 hover:to-purple-700 transition-all"
+            className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-all"
           >
             Retake Assessment
           </button>

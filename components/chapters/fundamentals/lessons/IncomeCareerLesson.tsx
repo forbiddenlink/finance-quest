@@ -36,7 +36,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-6 rounded-lg">
+          <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg">
             <h3 className="text-2xl font-bold mb-4">Beyond Your Paycheck</h3>
             <p className="text-lg">
               Your salary is just the beginning. Understanding your total compensation
@@ -251,7 +251,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-6 rounded-lg">
+          <div className="bg-gradient-to-r from-blue-500 to-slate-600 text-white p-6 rounded-lg">
             <h3 className="text-2xl font-bold mb-4">Financial Security Through Diversification</h3>
             <p className="text-lg">
               The average millionaire has 7 income streams. Building multiple income sources
@@ -353,7 +353,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
             ))}
           </div>
 
-          <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-4">
+          <div className="bg-gradient-to-r from-blue-50 to-blue-50 border border-blue-200 rounded-lg p-4">
             <div className="flex items-center">
               <Briefcase className="w-5 h-5 text-green-600 mr-2" />
               <h4 className="font-semibold text-green-800">Your Income Diversification Plan</h4>
@@ -397,7 +397,7 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
       {/* Progress Header */}
-      <div className="bg-gradient-to-r from-green-600 to-blue-700 text-white p-6">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
             {currentLessonData.icon}

@@ -185,7 +185,7 @@ export default function MarketTicker() {
           </div>
 
           <div className={`flex items-center space-x-1 px-2 py-1 rounded-lg text-xs font-medium ${isPositive
-            ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20'
+            ? 'bg-blue-500/15 text-blue-400 border border-blue-500/20'
             : 'bg-red-500/15 text-red-400 border border-red-500/20'
             }`}>
             {isPositive ? (

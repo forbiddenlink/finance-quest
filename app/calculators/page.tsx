@@ -8,10 +8,10 @@ export default function CalculatorsPage() {
       title: 'Compound Interest Calculator',
       description: 'See how your money grows exponentially over time with the power of compound interest',
       icon: TrendingUp,
-      bgColor: 'from-green-50 to-emerald-100',
-      borderColor: 'border-green-200',
-      textColor: 'text-green-900',
-      buttonColor: 'bg-green-500 hover:bg-green-600',
+      bgColor: 'from-amber-900/20 to-amber-800/30',
+      borderColor: 'border-amber-600/30',
+      textColor: 'text-amber-200',
+      buttonColor: 'bg-amber-600 hover:bg-amber-700',
       example: '$100/month for 30 years = $303,219 at 7%',
       href: '/calculators/compound-interest'
     },
@@ -20,10 +20,10 @@ export default function CalculatorsPage() {
       title: 'Budget Builder Calculator',
       description: 'Create your personal budget using the proven 50/30/20 rule for needs, wants, and savings',
       icon: PieChart,
-      bgColor: 'from-blue-50 to-indigo-100',
-      borderColor: 'border-blue-200',
-      textColor: 'text-blue-900',
-      buttonColor: 'bg-blue-500 hover:bg-blue-600',
+      bgColor: 'from-blue-900/20 to-blue-800/30',
+      borderColor: 'border-blue-600/30',
+      textColor: 'text-blue-200',
+      buttonColor: 'bg-blue-600 hover:bg-blue-700',
       example: 'Balance $5,000 income: $2,500 needs, $1,500 wants, $1,000 savings',
       href: '/calculators/budget-builder'
     },
@@ -32,29 +32,29 @@ export default function CalculatorsPage() {
       title: 'Debt Payoff Calculator',
       description: 'Compare avalanche vs snowball strategies and see how extra payments accelerate freedom',
       icon: CreditCard,
-      bgColor: 'from-red-50 to-pink-100',
-      borderColor: 'border-red-200',
-      textColor: 'text-red-900',
-      buttonColor: 'bg-red-500 hover:bg-red-600',
+      bgColor: 'from-slate-800/20 to-slate-700/30',
+      borderColor: 'border-slate-600/30',
+      textColor: 'text-slate-200',
+      buttonColor: 'bg-slate-600 hover:bg-slate-700',
       example: '$25,000 debt paid off 5 years faster with $200 extra monthly',
       href: '/calculators/debt-payoff'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Link href="/" className="text-blue-600 hover:text-blue-800 font-medium">
+              <Link href="/" className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
                 ← Back to Home
               </Link>
               <h1 className="text-2xl font-bold text-gray-900">Financial Calculators</h1>
             </div>
             <div className="bg-purple-100 px-3 py-1 rounded-full">
-              <span className="text-sm font-medium text-purple-800 flex items-center gap-1">
+              <span className="text-sm font-medium text-blue-800 flex items-center gap-1">
                 <Calculator className="w-4 h-4" />
                 Interactive Tools
               </span>
@@ -112,32 +112,32 @@ export default function CalculatorsPage() {
         </div>
 
         {/* Coming Soon Section */}
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-2xl p-8">
+        <div className="bg-gradient-to-r from-blue-50 to-slate-50 border border-blue-200 rounded-2xl p-8">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-purple-900 mb-4 flex items-center justify-center gap-2">
+            <h3 className="text-2xl font-bold text-blue-900 mb-4 flex items-center justify-center gap-2">
               <Zap className="w-6 h-6" />
               More Tools Coming Soon
             </h3>
-            <p className="text-purple-700 max-w-2xl mx-auto">
+            <p className="text-blue-700 max-w-2xl mx-auto">
               We&apos;re building a complete suite of financial calculators to help you master every aspect of money management
             </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <Home className="w-8 h-8 mx-auto mb-2 text-purple-600" />
-              <h4 className="font-semibold text-purple-800 text-sm">Mortgage Calculator</h4>
-              <p className="text-xs text-purple-600 mt-1">Monthly payments & amortization</p>
+              <Home className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+              <h4 className="font-semibold text-blue-800 text-sm">Mortgage Calculator</h4>
+              <p className="text-xs text-blue-600 mt-1">Monthly payments & amortization</p>
             </div>
             <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <Umbrella className="w-8 h-8 mx-auto mb-2 text-purple-600" />
-              <h4 className="font-semibold text-purple-800 text-sm">Retirement Planner</h4>
-              <p className="text-xs text-purple-600 mt-1">How much you need to retire</p>
+              <Umbrella className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+              <h4 className="font-semibold text-blue-800 text-sm">Retirement Planner</h4>
+              <p className="text-xs text-blue-600 mt-1">How much you need to retire</p>
             </div>
             <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <Car className="w-8 h-8 mx-auto mb-2 text-purple-600" />
-              <h4 className="font-semibold text-purple-800 text-sm">Auto Loan Calculator</h4>
-              <p className="text-xs text-purple-600 mt-1">Car payments & total costs</p>
+              <Car className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+              <h4 className="font-semibold text-blue-800 text-sm">Auto Loan Calculator</h4>
+              <p className="text-xs text-blue-600 mt-1">Car payments & total costs</p>
             </div>
             <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
               <Target className="w-8 h-8 mx-auto mb-2 text-purple-600" />

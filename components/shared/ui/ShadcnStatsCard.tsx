@@ -65,12 +65,12 @@ export default function ShadcnStatsCard() {
         badge: 'bg-blue-100 text-blue-800'
       },
       green: {
-        bg: 'bg-green-500',
+        bg: 'bg-blue-500',
         text: 'text-green-600',
         badge: 'bg-green-100 text-green-800'
       },
       purple: {
-        bg: 'bg-purple-500',
+        bg: 'bg-blue-500',
         text: 'text-purple-600',
         badge: 'bg-purple-100 text-purple-800'
       },

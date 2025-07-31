@@ -38,7 +38,8 @@ import {
   ChevronDown,
   ChevronUp,
   Timer,
-  Globe
+  Globe,
+  Shield
 } from "lucide-react";
 
 export default function HomePage() {
@@ -116,10 +117,10 @@ export default function HomePage() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/30 backdrop-blur-sm mb-8"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-navy-900/20 to-navy-800/20 border border-navy-700/30 backdrop-blur-sm mb-8"
           >
-            <Target className="w-4 h-4 text-red-400" />
-            <span className="text-red-200 text-sm font-medium">Solving the 64% Financial Illiteracy Crisis</span>
+            <Target className="w-4 h-4 text-amber-400" />
+            <span className="text-amber-200 text-sm font-medium">Solving the 64% Financial Illiteracy Crisis</span>
           </motion.div>
 
           {/* Main Headline */}
@@ -233,12 +234,12 @@ export default function HomePage() {
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-red-500/25">
                 <Target className="w-8 h-8 text-white" />
               </div>
-              <div className="text-4xl font-bold text-red-400 mb-2">
-                <AnimatedCounter end={64} suffix="%" className="text-4xl font-bold text-red-400" />
+              <div className="text-4xl font-bold text-navy-400 mb-2">
+                <AnimatedCounter end={64} suffix="%" className="text-4xl font-bold text-navy-400" />
               </div>
               <p className="text-gray-400 text-sm leading-relaxed">of Americans can&apos;t pass a basic financial literacy test</p>
-              <div className="mt-3 px-3 py-1 bg-red-500/20 rounded-full">
-                <p className="text-xs text-red-300 font-medium">The Crisis We&apos;re Solving</p>
+              <div className="mt-3 px-3 py-1 bg-navy-500/20 rounded-full">
+                <p className="text-xs text-navy-300 font-medium">The Crisis We&apos;re Solving</p>
               </div>
             </div>
           </InteractiveCard>
@@ -264,11 +265,11 @@ export default function HomePage() {
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
               <div className="text-4xl font-bold text-blue-400 mb-2">
-                <AnimatedCounter end={25} className="text-4xl font-bold text-blue-400" />
+                <AnimatedCounter end={180} suffix="+" className="text-4xl font-bold text-blue-400" />
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed">interactive lessons across 5 comprehensive chapters</p>
+              <p className="text-gray-400 text-sm leading-relaxed">specialized lessons across 30 comprehensive chapters</p>
               <div className="mt-3 px-3 py-1 bg-blue-500/20 rounded-full">
-                <p className="text-xs text-blue-300 font-medium">Complete Curriculum</p>
+                <p className="text-xs text-blue-300 font-medium">6 Learning Tracks</p>
               </div>
             </div>
           </InteractiveCard>
@@ -343,7 +344,7 @@ export default function HomePage() {
                     <CheckCircle className="w-3 h-3 text-amber-400" />
                     <span className="text-amber-300 text-xs font-medium">Available Now</span>
                   </div>
-                  <div className="text-amber-400 text-xs">4 Lessons</div>
+                  <div className="text-amber-400 text-xs">6 Lessons</div>
                 </div>
                 <Link href="/chapter1">
                   <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25">
@@ -379,7 +380,7 @@ export default function HomePage() {
                       <CheckCircle className="w-3 h-3 text-blue-400" />
                       <span className="text-blue-300 text-xs font-medium">Unlocked!</span>
                     </div>
-                    <div className="text-blue-400 text-xs">4 Lessons</div>
+                    <div className="text-blue-400 text-xs">6 Lessons</div>
                   </div>
                   <Link href="/chapter2">
                     <Button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25">
@@ -407,7 +408,7 @@ export default function HomePage() {
                       <Lock className="w-3 h-3 text-gray-500" />
                       <span className="text-gray-500 text-xs font-medium">Complete Chapter 1</span>
                     </div>
-                    <div className="text-gray-500 text-xs">4 Lessons</div>
+                    <div className="text-gray-500 text-xs">6 Lessons</div>
                   </div>
                   <Button disabled className="w-full bg-gray-600 text-gray-400 font-semibold rounded-xl cursor-not-allowed">
                     Locked
@@ -479,19 +480,34 @@ export default function HomePage() {
             </motion.div>
           </div>
 
-          {/* Show More Chapters Button */}
+          {/* View All Learning Tracks Button */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.6 }}
             className="text-center mt-8"
           >
+            <Link href="/curriculum">
+              <Button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 backdrop-blur-sm transition-all duration-300 px-8 py-3 text-lg">
+                <BookOpen className="mr-2 w-5 h-5" />
+                View Complete 30-Chapter Curriculum
+                <ChevronDown className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
+          </motion.div>
+
+          {/* Legacy expandable section for current 5 chapters */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.3, duration: 0.6 }}
+            className="text-center mt-4"
+          >
             <Button
               onClick={() => setExpandedSection(expandedSection === 'chapters' ? null : 'chapters')}
-              className="bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 backdrop-blur-sm transition-all duration-300"
+              className="bg-transparent hover:bg-white/5 text-gray-400 border-none text-sm transition-all duration-300"
             >
-              <BookOpen className="mr-2 w-4 h-4" />
-              {expandedSection === 'chapters' ? 'Show Less' : 'View All 5 Chapters'}
+              {expandedSection === 'chapters' ? 'Hide Foundation Preview' : 'Quick Foundation Preview'}
               {expandedSection === 'chapters' ?
                 <ChevronUp className="ml-2 w-4 h-4" /> :
                 <ChevronDown className="ml-2 w-4 h-4" />
@@ -504,24 +520,157 @@ export default function HomePage() {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 overflow-hidden"
+                  className="mt-8 overflow-hidden"
                 >
-                  <div className="bg-white/5 backdrop-blur-xl border border-gray-600/30 rounded-xl p-4 opacity-60">
-                    <div className="flex items-center mb-2">
-                      <TrendingUp className="w-6 h-6 text-gray-400 mr-3" />
-                      <div>
-                        <h5 className="font-semibold text-gray-300">Chapter 4: Credit & Debt</h5>
-                        <p className="text-xs text-gray-500">Master credit scores and debt elimination strategies</p>
+                  {/* Comprehensive Learning Tracks */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    {/* Foundation Track */}
+                    <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-2xl p-6 hover:border-blue-400/40 transition-all duration-300">
+                      <div className="flex items-center mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-blue-500/25">
+                          <BookOpen className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-bold text-white">Foundation Track</h4>
+                          <p className="text-blue-400 text-sm">Chapters 1-6</p>
+                        </div>
+                      </div>
+                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                        Master the psychological and practical foundations of personal finance.
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-blue-400 text-xs font-medium">✅ Available Now</span>
+                        <span className="text-gray-400 text-xs">36 Lessons</span>
+                      </div>
+                    </div>
+
+                    {/* Credit & Lending Track */}
+                    <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300">
+                      <div className="flex items-center mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-amber-500/25">
+                          <CreditCard className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-bold text-white">Credit & Lending</h4>
+                          <p className="text-amber-400 text-sm">Chapters 7-10</p>
+                        </div>
+                      </div>
+                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                        Master credit optimization, strategic borrowing, and debt management.
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-orange-400 text-xs font-medium">🚧 Coming Soon</span>
+                        <span className="text-gray-400 text-xs">24 Lessons</span>
+                      </div>
+                    </div>
+
+                    {/* Investment Track */}
+                    <div className="bg-gradient-to-br from-green-500/10 to-green-600/10 border border-green-500/20 rounded-2xl p-6 hover:border-green-400/40 transition-all duration-300">
+                      <div className="flex items-center mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-green-500/25">
+                          <TrendingUp className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-bold text-white">Investment Track</h4>
+                          <p className="text-amber-400 text-sm">Chapters 11-16</p>
+                        </div>
+                      </div>
+                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                        Build wealth through stocks, bonds, retirement accounts, and advanced strategies.
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-navy-400 text-xs font-medium">🚧 Coming Soon</span>
+                        <span className="text-gray-400 text-xs">36 Lessons</span>
+                      </div>
+                    </div>
+
+                    {/* Protection & Planning Track */}
+                    <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-purple-500/20 rounded-2xl p-6 hover:border-purple-400/40 transition-all duration-300">
+                      <div className="flex items-center mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-purple-500/25">
+                          <Shield className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-bold text-white">Protection & Planning</h4>
+                          <p className="text-navy-400 text-sm">Chapters 17-20</p>
+                        </div>
+                      </div>
+                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                        Protect your wealth with insurance, healthcare planning, and risk management.
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-navy-400 text-xs font-medium">🚧 Coming Soon</span>
+                        <span className="text-gray-400 text-xs">24 Lessons</span>
+                      </div>
+                    </div>
+
+                    {/* Advanced Planning Track */}
+                    <div className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/10 border border-indigo-500/20 rounded-2xl p-6 hover:border-indigo-400/40 transition-all duration-300">
+                      <div className="flex items-center mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-indigo-500/25">
+                          <Building className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-bold text-white">Advanced Planning</h4>
+                          <p className="text-indigo-400 text-sm">Chapters 21-25</p>
+                        </div>
+                      </div>
+                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                        Master tax optimization, real estate, business finance, and estate planning.
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-orange-400 text-xs font-medium">🚧 Coming Soon</span>
+                        <span className="text-gray-400 text-xs">30 Lessons</span>
+                      </div>
+                    </div>
+
+                    {/* Economic Literacy Track */}
+                    <div className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/10 border border-cyan-500/20 rounded-2xl p-6 hover:border-cyan-400/40 transition-all duration-300">
+                      <div className="flex items-center mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-cyan-500/25">
+                          <Globe className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-bold text-white">Economic Literacy</h4>
+                          <p className="text-cyan-400 text-sm">Chapters 26-30</p>
+                        </div>
+                      </div>
+                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                        Understand markets, economic policy, global finance, and crisis preparation.
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-orange-400 text-xs font-medium">🚧 Coming Soon</span>
+                        <span className="text-gray-400 text-xs">30 Lessons</span>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white/5 backdrop-blur-xl border border-gray-600/30 rounded-xl p-4 opacity-60">
-                    <div className="flex items-center mb-2">
-                      <Umbrella className="w-6 h-6 text-gray-400 mr-3" />
-                      <div>
-                        <h5 className="font-semibold text-gray-300">Chapter 5: Emergency Funds</h5>
-                        <p className="text-xs text-gray-500">Build financial security and peace of mind</p>
+
+                  {/* Track Summary */}
+                  <div className="mt-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+                    <div className="text-center">
+                      <h4 className="text-xl font-bold text-white mb-4">Complete Financial Mastery Path</h4>
+                      <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-400">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                          <span>30 Comprehensive Chapters</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 bg-amber-500 rounded-full"></div>
+                          <span>180+ Interactive Lessons</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 bg-amber-500 rounded-full"></div>
+                          <span>20+ Specialized Calculators</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 bg-navy-500 rounded-full"></div>
+                          <span>Real AI Coaching</span>
+                        </div>
                       </div>
+                      <p className="text-gray-400 text-sm mt-4">
+                        From financial novice to expert: Complete curriculum covering every aspect of personal and business finance
+                      </p>
                     </div>
                   </div>
                 </motion.div>
@@ -702,6 +851,126 @@ export default function HomePage() {
                   <div className="mt-2 text-xs text-amber-400">🔥 Live!</div>
                 </div>
               </Link>
+            </div>
+          </motion.div>
+
+          {/* Comprehensive Calculator Roadmap */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.6 }}
+            className="mt-12 pt-8 border-t border-white/10"
+          >
+            <div className="text-center mb-8">
+              <h4 className="text-2xl font-bold text-white mb-4">Comprehensive Calculator Library</h4>
+              <p className="text-gray-400 max-w-2xl mx-auto">
+                20+ specialized financial tools covering every aspect of personal finance
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {/* Available Calculators */}
+              <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
+                <TrendingUp className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Compound Interest</h5>
+                <div className="text-xs text-amber-400 font-medium">✅ Available</div>
+              </div>
+
+              <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
+                <Calculator className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Budget Builder</h5>
+                <div className="text-xs text-amber-400 font-medium">✅ Available</div>
+              </div>
+
+              <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
+                <CreditCard className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Debt Payoff</h5>
+                <div className="text-xs text-amber-400 font-medium">✅ Available</div>
+              </div>
+
+              <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
+                <Building className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Mortgage</h5>
+                <div className="text-xs text-amber-400 font-medium">✅ Available</div>
+              </div>
+
+              <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
+                <Umbrella className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Emergency Fund</h5>
+                <div className="text-xs text-amber-400 font-medium">✅ Available</div>
+              </div>
+
+              {/* Coming Soon Calculators - Credit Track */}
+              <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
+                <Star className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Credit Score Simulator</h5>
+                <div className="text-xs text-amber-400 font-medium">🚧 Soon</div>
+              </div>
+
+              <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
+                <CreditCard className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Rewards Optimizer</h5>
+                <div className="text-xs text-amber-400 font-medium">🚧 Soon</div>
+              </div>
+
+              <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
+                <Target className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Loan Comparison</h5>
+                <div className="text-xs text-amber-400 font-medium">🚧 Soon</div>
+              </div>
+
+              {/* Coming Soon Calculators - Investment Track */}
+              <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-xl p-4 text-center hover:border-blue-400/40 transition-all duration-300">
+                <BarChart3 className="w-8 h-8 mx-auto mb-2 text-blue-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Portfolio Analyzer</h5>
+                <div className="text-xs text-blue-400 font-medium">🚧 Soon</div>
+              </div>
+
+              <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-xl p-4 text-center hover:border-blue-400/40 transition-all duration-300">
+                <Timer className="w-8 h-8 mx-auto mb-2 text-blue-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Retirement Planner</h5>
+                <div className="text-xs text-blue-400 font-medium">🚧 Soon</div>
+              </div>
+
+              {/* Coming Soon Calculators - Advanced Track */}
+              <div className="bg-gradient-to-br from-navy-500/10 to-navy-600/10 border border-navy-500/20 rounded-xl p-4 text-center hover:border-navy-400/40 transition-all duration-300">
+                <Lightbulb className="w-8 h-8 mx-auto mb-2 text-navy-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Tax Optimizer</h5>
+                <div className="text-xs text-navy-400 font-medium">🚧 Soon</div>
+              </div>
+
+              <div className="bg-gradient-to-br from-navy-500/10 to-navy-600/10 border border-navy-500/20 rounded-xl p-4 text-center hover:border-navy-400/40 transition-all duration-300">
+                <Building className="w-8 h-8 mx-auto mb-2 text-navy-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Real Estate ROI</h5>
+                <div className="text-xs text-navy-400 font-medium">🚧 Soon</div>
+              </div>
+
+              <div className="bg-gradient-to-br from-navy-500/10 to-navy-600/10 border border-navy-500/20 rounded-xl p-4 text-center hover:border-navy-400/40 transition-all duration-300">
+                <Briefcase className="w-8 h-8 mx-auto mb-2 text-navy-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Business Cashflow</h5>
+                <div className="text-xs text-navy-400 font-medium">🚧 Soon</div>
+              </div>
+
+              {/* Protection Track */}
+              <div className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/10 border border-indigo-500/20 rounded-xl p-4 text-center hover:border-indigo-400/40 transition-all duration-300">
+                <Shield className="w-8 h-8 mx-auto mb-2 text-indigo-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">Insurance Needs</h5>
+                <div className="text-xs text-indigo-400 font-medium">🚧 Soon</div>
+              </div>
+
+              <div className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/10 border border-indigo-500/20 rounded-xl p-4 text-center hover:border-indigo-400/40 transition-all duration-300">
+                <Globe className="w-8 h-8 mx-auto mb-2 text-indigo-400" />
+                <h5 className="font-semibold text-white text-sm mb-1">FIRE Calculator</h5>
+                <div className="text-xs text-indigo-400 font-medium">🚧 Soon</div>
+              </div>
+            </div>
+
+            <div className="text-center mt-8">
+              <p className="text-gray-400 text-sm">
+                <span className="text-amber-400 font-semibold">6 Available Now</span> •
+                <span className="text-navy-400 font-semibold"> 14+ Coming Soon</span> •
+                <span className="text-white font-semibold">Complete Financial Toolkit</span>
+              </p>
             </div>
           </motion.div>
         </motion.div>

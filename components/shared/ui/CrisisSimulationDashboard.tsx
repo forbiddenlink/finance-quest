@@ -650,21 +650,21 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
 
   const getScenarioStatusColor = (scenario: CrisisScenario) => {
     if (!scenario.unlocked) return 'bg-gray-100 border-gray-200';
-    if (completedScenarios.includes(scenario.id)) return 'bg-green-50 border-green-200';
+    if (completedScenarios.includes(scenario.id)) return 'bg-amber-50 border-amber-200';
 
     switch (scenario.urgency) {
-      case 'critical': return 'bg-red-50 border-red-200';
-      case 'high': return 'bg-orange-50 border-orange-200';
-      case 'medium': return 'bg-yellow-50 border-yellow-200';
-      default: return 'bg-blue-50 border-blue-200';
+      case 'critical': return 'bg-navy-50 border-navy-200';
+      case 'high': return 'bg-amber-50 border-amber-200';
+      case 'medium': return 'bg-amber-50 border-amber-200';
+      default: return 'bg-navy-50 border-navy-200';
     }
   };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'beginner': return 'text-green-600 bg-green-100';
-      case 'intermediate': return 'text-yellow-600 bg-yellow-100';
-      case 'advanced': return 'text-red-600 bg-red-100';
+      case 'beginner': return 'text-amber-600 bg-amber-100';
+      case 'intermediate': return 'text-navy-600 bg-navy-100';
+      case 'advanced': return 'text-navy-600 bg-navy-100';
       default: return 'text-gray-600 bg-gray-100';
     }
   };
@@ -679,9 +679,9 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
         <GradientCard variant="glass" gradient="purple" className="p-8">
           <div className="text-center mb-8">
             <div className={`w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center ${simulationResult.grade === 'A' ? 'bg-green-500' :
-                simulationResult.grade === 'B' ? 'bg-blue-500' :
-                  simulationResult.grade === 'C' ? 'bg-yellow-500' :
-                    simulationResult.grade === 'D' ? 'bg-orange-500' : 'bg-red-500'
+              simulationResult.grade === 'B' ? 'bg-blue-500' :
+                simulationResult.grade === 'C' ? 'bg-yellow-500' :
+                  simulationResult.grade === 'D' ? 'bg-orange-500' : 'bg-red-500'
               }`}>
               <span className="text-3xl font-bold text-white">{simulationResult.grade}</span>
             </div>
@@ -760,7 +760,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
             </button>
             <button
               onClick={() => window.location.href = '/chapter' + (userProgress.currentChapter)}
-              className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-600 hover:to-blue-700 transition-colors flex items-center gap-2"
+              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-colors flex items-center gap-2"
             >
               <Brain className="w-4 h-4" />
               Continue Learning
@@ -824,14 +824,14 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
                 onClick={() => !hasAnswered && handleAnswer(currentSimulationStep.id, index)}
                 disabled={hasAnswered}
                 className={`w-full text-left p-4 rounded-lg border-2 transition-all ${hasAnswered && index === userAnswer
-                    ? index === currentSimulationStep.correctAnswer
-                      ? 'border-green-500 bg-green-50'
-                      : 'border-red-500 bg-red-50'
-                    : hasAnswered && index === currentSimulationStep.correctAnswer
-                      ? 'border-green-500 bg-green-50'
-                      : hasAnswered
-                        ? 'border-gray-200 bg-gray-50 opacity-60'
-                        : 'border-gray-200 hover:border-red-300 hover:bg-red-50'
+                  ? index === currentSimulationStep.correctAnswer
+                    ? 'border-green-500 bg-green-50'
+                    : 'border-red-500 bg-red-50'
+                  : hasAnswered && index === currentSimulationStep.correctAnswer
+                    ? 'border-green-500 bg-green-50'
+                    : hasAnswered
+                      ? 'border-gray-200 bg-gray-50 opacity-60'
+                      : 'border-gray-200 hover:border-red-300 hover:bg-red-50'
                   } ${hasAnswered ? 'cursor-default' : 'cursor-pointer'}`}
                 whileHover={!hasAnswered ? { scale: 1.02 } : {}}
                 whileTap={!hasAnswered ? { scale: 0.98 } : {}}
@@ -912,9 +912,9 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
             >
               <div className="flex items-start justify-between mb-4">
                 <Icon className={`w-8 h-8 ${!scenario.unlocked ? 'text-gray-400' :
-                    scenario.urgency === 'critical' ? 'text-red-600' :
-                      scenario.urgency === 'high' ? 'text-orange-600' :
-                        scenario.urgency === 'medium' ? 'text-yellow-600' : 'text-blue-600'
+                  scenario.urgency === 'critical' ? 'text-red-600' :
+                    scenario.urgency === 'high' ? 'text-orange-600' :
+                      scenario.urgency === 'medium' ? 'text-yellow-600' : 'text-blue-600'
                   }`} />
                 {isCompleted && (
                   <Award className="w-6 h-6 text-green-600" />
