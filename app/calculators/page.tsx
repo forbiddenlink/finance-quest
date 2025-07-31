@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { TrendingUp, PieChart, CreditCard, Home, Umbrella, Car, Target, Zap, Gamepad2, Calculator, Brain, BarChart3, Calendar, FileText } from 'lucide-react';
+import { TrendingUp, PieChart, CreditCard, Home, Umbrella, Car, Target, Zap, Gamepad2, Calculator, Brain, BarChart3, Calendar, FileText, Shield } from 'lucide-react';
 
 export default function CalculatorsPage() {
   const calculators = [
@@ -134,6 +134,30 @@ export default function CalculatorsPage() {
       buttonColor: 'bg-orange-600 hover:bg-orange-700',
       example: 'Reduce $15,000 tax bill by $3,500 with 401(k), IRA, and HSA optimization',
       href: '/calculators/tax-optimizer'
+    },
+    {
+      id: 'bond',
+      title: 'Bond Calculator',
+      description: 'Analyze bond yields, prices, and interest rate sensitivity for fixed-income investments',
+      icon: Shield,
+      bgColor: 'from-blue-900/20 to-blue-800/30',
+      borderColor: 'border-blue-600/30',
+      textColor: 'text-blue-200',
+      buttonColor: 'bg-blue-600 hover:bg-blue-700',
+      example: '$1,000 bond with 5% coupon = 5.26% YTM when trading at $950',
+      href: '/calculators/bond'
+    },
+    {
+      id: 'stock-analysis',
+      title: 'Stock Analysis Calculator',
+      description: 'Analyze individual stocks using fundamental valuation metrics and risk assessment',
+      icon: BarChart3,
+      bgColor: 'from-indigo-900/20 to-indigo-800/30',
+      borderColor: 'border-indigo-600/30',
+      textColor: 'text-indigo-200',
+      buttonColor: 'bg-indigo-600 hover:bg-indigo-700',
+      example: 'AAPL analysis: $150 current price vs $165 intrinsic value = 10% upside',
+      href: '/calculators/stock-analysis'
     }
   ];
 
