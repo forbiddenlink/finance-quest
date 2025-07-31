@@ -80,18 +80,18 @@ export default function Chapter5Page() {
 
   if (!isChapterUnlocked) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 text-center">
-          <Shield className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Chapter 5 Locked</h2>
-          <p className="text-gray-600 mb-6">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-8 text-center">
+          <Shield className="w-16 h-16 mx-auto mb-4 text-amber-400" />
+          <h2 className="text-2xl font-bold text-white mb-4">Chapter 5 Locked</h2>
+          <p className="text-gray-300 mb-6">
             Complete Chapter 4 with 80%+ quiz score to unlock Emergency Funds & Financial Safety
           </p>
           <Link href="/chapter4">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+              className="bg-amber-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-amber-600 transition-colors"
             >
               Continue Chapter 4
             </motion.button>
@@ -102,7 +102,7 @@ export default function Chapter5Page() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       <SuccessCelebration
         show={showCelebration}
         title="Lesson Complete!"
@@ -112,19 +112,19 @@ export default function Chapter5Page() {
       />
 
       {/* Header */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-orange-200 sticky top-0 z-10">
+      <div className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20 sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Shield className="w-8 h-8 text-red-600" />
+              <Shield className="w-8 h-8 text-amber-400" />
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Chapter 5: Emergency Funds & Financial Safety</h1>
-                <p className="text-sm text-gray-600">Building your financial fortress against life&apos;s uncertainties</p>
+                <h1 className="text-2xl font-bold text-white">Chapter 5: Emergency Funds & Financial Safety</h1>
+                <p className="text-sm text-gray-300">Building your financial fortress against life&apos;s uncertainties</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <ProgressRing progress={chapterProgress} size={50} />
-              <span className="text-sm font-medium text-gray-700">{chapterProgress}% Complete</span>
+              <span className="text-sm font-medium text-gray-300">{chapterProgress}% Complete</span>
             </div>
           </div>
         </div>
@@ -135,11 +135,11 @@ export default function Chapter5Page() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-xl shadow-lg p-8 mb-8"
+          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-8 mb-8"
         >
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Your Financial Safety Net</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-4">Your Financial Safety Net</h2>
+            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
               Emergency funds aren&apos;t just savings—they&apos;re peace of mind, freedom from debt cycles, and the foundation
               of every successful financial plan. Learn how to build and maintain the safety net that protects your dreams.
             </p>
@@ -169,31 +169,31 @@ export default function Chapter5Page() {
             <h3 className="text-lg font-semibold text-blue-900 mb-4">What You&apos;ll Master in This Chapter</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-900">Emergency Fund Psychology</div>
-                  <div className="text-sm text-gray-600">Why your brain fights saving and how to overcome it</div>
+                  <div className="font-medium text-white">Emergency Fund Psychology</div>
+                  <div className="text-sm text-gray-300">Why your brain fights saving and how to overcome it</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-900">Optimal Fund Sizing</div>
-                  <div className="text-sm text-gray-600">Calculate the perfect amount for your situation</div>
+                  <div className="font-medium text-white">Optimal Fund Sizing</div>
+                  <div className="text-sm text-gray-300">Calculate the perfect amount for your situation</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-900">High-Yield Storage Strategies</div>
-                  <div className="text-sm text-gray-600">Where to keep emergency money for growth and access</div>
+                  <div className="font-medium text-white">High-Yield Storage Strategies</div>
+                  <div className="text-sm text-gray-300">Where to keep emergency money for growth and access</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-900">Automated Building Systems</div>
-                  <div className="text-sm text-gray-600">Set it and forget it approaches to steady growth</div>
+                  <div className="font-medium text-white">Automated Building Systems</div>
+                  <div className="text-sm text-gray-300">Set it and forget it approaches to steady growth</div>
                 </div>
               </div>
             </div>
@@ -230,19 +230,19 @@ export default function Chapter5Page() {
                         <Icon className="w-6 h-6 text-white" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900">{lesson.title}</h3>
-                        <p className="text-sm text-gray-600 mt-1">{lesson.description}</p>
+                        <h3 className="font-semibold text-white">{lesson.title}</h3>
+                        <p className="text-sm text-gray-300 mt-1">{lesson.description}</p>
                       </div>
-                      {completed && <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />}
+                      {completed && <CheckCircle className="w-6 h-6 text-blue-400 flex-shrink-0" />}
                     </div>
 
                     {/* Lesson Content Preview */}
-                    <div className="space-y-3 text-sm text-gray-700">
+                    <div className="space-y-3 text-sm text-gray-300">
                       {index === 0 && (
                         <>
-                          <div className="font-medium text-red-700">🧠 The Scarcity Trap</div>
+                          <div className="font-medium text-amber-400">🧠 The Scarcity Trap</div>
                           <p>Learn why your brain sees emergency funds as &quot;wasted&quot; money and how to reframe this thinking.</p>
-                          <div className="font-medium text-red-700">💰 Real Cost of No Safety Net</div>
+                          <div className="font-medium text-amber-400">💰 Real Cost of No Safety Net</div>
                           <p>Calculate how much debt cycles and financial stress actually cost you annually.</p>
                         </>
                       )}
@@ -295,30 +295,30 @@ export default function Chapter5Page() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-xl shadow-lg p-8 mb-8"
+          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-8 mb-8"
         >
-          <h3 className="text-xl font-bold text-gray-900 mb-6">Emergency Fund Success Stories</h3>
+          <h3 className="text-xl font-bold text-white mb-6">Emergency Fund Success Stories</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-blue-50 rounded-lg p-6">
-              <Briefcase className="w-8 h-8 text-green-600 mb-4" />
-              <h4 className="font-semibold text-green-900 mb-2">Sarah&apos;s Job Loss Recovery</h4>
-              <p className="text-sm text-green-700">
+            <div className="bg-blue-500/20 border border-blue-500/30 backdrop-blur-sm rounded-lg p-6">
+              <Briefcase className="w-8 h-8 text-blue-400 mb-4" />
+              <h4 className="font-semibold text-blue-300 mb-2">Sarah&apos;s Job Loss Recovery</h4>
+              <p className="text-sm text-gray-300">
                 With 6 months of expenses saved, Sarah took time to find the right job instead of accepting the first offer.
                 Result: 30% salary increase and better benefits.
               </p>
             </div>
-            <div className="bg-blue-50 rounded-lg p-6">
-              <Heart className="w-8 h-8 text-blue-600 mb-4" />
-              <h4 className="font-semibold text-blue-900 mb-2">Mike&apos;s Medical Emergency</h4>
-              <p className="text-sm text-blue-700">
+            <div className="bg-amber-500/20 border border-amber-500/30 backdrop-blur-sm rounded-lg p-6">
+              <Heart className="w-8 h-8 text-amber-400 mb-4" />
+              <h4 className="font-semibold text-amber-300 mb-2">Mike&apos;s Medical Emergency</h4>
+              <p className="text-sm text-gray-300">
                 Unexpected surgery cost $15,000. His emergency fund covered the deductible and lost income during recovery,
                 avoiding bankruptcy and debt.
               </p>
             </div>
-            <div className="bg-blue-50 rounded-lg p-6">
-              <Home className="w-8 h-8 text-purple-600 mb-4" />
-              <h4 className="font-semibold text-purple-900 mb-2">Lisa&apos;s Home Opportunity</h4>
-              <p className="text-sm text-purple-700">
+            <div className="bg-slate-500/20 border border-slate-500/30 backdrop-blur-sm rounded-lg p-6">
+              <Home className="w-8 h-8 text-slate-400 mb-4" />
+              <h4 className="font-semibold text-slate-300 mb-2">Lisa&apos;s Home Opportunity</h4>
+              <p className="text-sm text-gray-300">
                 When her dream home appeared, Lisa used part of her emergency fund for a down payment,
                 then quickly rebuilt it. No regrets—emergency funds provide options.
               </p>
@@ -330,11 +330,11 @@ export default function Chapter5Page() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-xl shadow-lg p-8 mb-8"
+          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-8 mb-8"
         >
           <div className="text-center">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">Ready to Calculate Your Emergency Fund?</h3>
-            <p className="text-gray-600 mb-6">
+            <h3 className="text-xl font-bold text-white mb-4">Ready to Calculate Your Emergency Fund?</h3>
+            <p className="text-gray-300 mb-6">
               Use our Emergency Fund Calculator to determine your optimal target and create a savings plan.
             </p>
             <Link href="/calculators/emergency-fund">
@@ -357,7 +357,7 @@ export default function Chapter5Page() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-white text-gray-700 px-6 py-3 rounded-lg font-semibold border border-gray-300 hover:bg-gray-50 transition-colors"
+              className="bg-white/10 border border-white/20 text-gray-300 px-6 py-3 rounded-lg font-semibold hover:bg-white/20 hover:text-white transition-colors backdrop-blur-sm"
             >
               ← Previous Chapter
             </motion.button>
@@ -367,7 +367,7 @@ export default function Chapter5Page() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors flex items-center gap-2"
+              className="bg-gradient-to-r from-amber-500 to-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-amber-600 hover:to-blue-600 transition-colors flex items-center gap-2"
             >
               Take Chapter 5 Quiz
               <ArrowRight className="w-5 h-5" />

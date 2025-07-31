@@ -8,35 +8,35 @@ export default function MortgageCalculatorPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 bg-blue-100 rounded-xl">
-              <Home className="w-8 h-8 text-blue-600" />
+            <div className="p-3 bg-amber-500/20 rounded-xl">
+              <Home className="w-8 h-8 text-amber-400" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Mortgage Calculator</h1>
-              <p className="text-gray-600">Make informed home buying decisions with detailed payment analysis</p>
+              <h1 className="text-3xl font-bold text-white">Mortgage Calculator</h1>
+              <p className="text-gray-300">Make informed home buying decisions with detailed payment analysis</p>
             </div>
           </div>
 
           {/* Key Features */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="flex items-center gap-3 bg-blue-50 rounded-lg p-3">
-              <Calculator className="w-5 h-5 text-blue-600" />
-              <span className="text-sm font-medium text-blue-800">Professional Calculations</span>
+            <div className="flex items-center gap-3 bg-blue-500/20 border border-blue-500/30 rounded-lg p-3 backdrop-blur-sm">
+              <Calculator className="w-5 h-5 text-blue-400" />
+              <span className="text-sm font-medium text-blue-300">Professional Calculations</span>
             </div>
-            <div className="flex items-center gap-3 bg-green-50 rounded-lg p-3">
-              <DollarSign className="w-5 h-5 text-green-600" />
-              <span className="text-sm font-medium text-green-800">Affordability Analysis</span>
+            <div className="flex items-center gap-3 bg-amber-500/20 border border-amber-500/30 rounded-lg p-3 backdrop-blur-sm">
+              <DollarSign className="w-5 h-5 text-amber-400" />
+              <span className="text-sm font-medium text-amber-300">Affordability Analysis</span>
             </div>
-            <div className="flex items-center gap-3 bg-purple-50 rounded-lg p-3">
-              <TrendingUp className="w-5 h-5 text-purple-600" />
-              <span className="text-sm font-medium text-purple-800">Payment Breakdown</span>
+            <div className="flex items-center gap-3 bg-slate-500/20 border border-slate-500/30 rounded-lg p-3 backdrop-blur-sm">
+              <TrendingUp className="w-5 h-5 text-slate-400" />
+              <span className="text-sm font-medium text-slate-300">Payment Breakdown</span>
             </div>
-            <div className="flex items-center gap-3 bg-orange-50 rounded-lg p-3">
-              <Target className="w-5 h-5 text-orange-600" />
-              <span className="text-sm font-medium text-orange-800">Educational Insights</span>
+            <div className="flex items-center gap-3 bg-blue-500/20 border border-blue-500/30 rounded-lg p-3 backdrop-blur-sm">
+              <Target className="w-5 h-5 text-blue-400" />
+              <span className="text-sm font-medium text-blue-300">Educational Insights</span>
             </div>
           </div>
         </div>
@@ -53,27 +53,27 @@ export default function MortgageCalculatorPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Educational Tips */}
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-500" />
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-400" />
                 Key Considerations
               </h3>
               <div className="space-y-4 text-sm">
                 <div>
-                  <h4 className="font-semibold text-gray-800">Pre-Approval First</h4>
-                  <p className="text-gray-600">Get pre-approved to understand your actual borrowing capacity before house hunting.</p>
+                  <h4 className="font-semibold text-amber-300">Pre-Approval First</h4>
+                  <p className="text-gray-300">Get pre-approved to understand your actual borrowing capacity before house hunting.</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-800">Total Monthly Cost</h4>
-                  <p className="text-gray-600">Remember PITI: Principal, Interest, Taxes, Insurance, plus HOA fees.</p>
+                  <h4 className="font-semibold text-amber-300">Total Monthly Cost</h4>
+                  <p className="text-gray-300">Remember PITI: Principal, Interest, Taxes, Insurance, plus HOA fees.</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-800">Emergency Fund</h4>
-                  <p className="text-gray-600">Maintain 3-6 months of expenses even after your down payment.</p>
+                  <h4 className="font-semibold text-amber-300">Emergency Fund</h4>
+                  <p className="text-gray-300">Maintain 3-6 months of expenses even after your down payment.</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-800">Market Timing</h4>
-                  <p className="text-gray-600">Don&apos;t try to time the market perfectly. Buy when you&apos;re financially ready.</p>
+                  <h4 className="font-semibold text-amber-300">Market Timing</h4>
+                  <p className="text-gray-300">Don&apos;t try to time the market perfectly. Buy when you&apos;re financially ready.</p>
                 </div>
               </div>
             </div>

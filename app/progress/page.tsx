@@ -90,8 +90,8 @@ export default function ProgressPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Your Financial Learning Journey</h1>
-          <p className="text-xl text-gray-600">Track your progress toward financial mastery</p>
+          <h1 className="text-4xl font-bold text-white mb-2">Your Financial Learning Journey</h1>
+          <p className="text-xl text-gray-300">Track your progress toward financial mastery</p>
         </motion.div>
 
         {/* Key Metrics */}
@@ -101,62 +101,62 @@ export default function ProgressPage() {
           transition={{ delay: 0.1 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
         >
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Financial Literacy Score</p>
-                <p className="text-3xl font-bold text-blue-600">
+                <p className="text-sm font-medium text-gray-300">Financial Literacy Score</p>
+                <p className="text-3xl font-bold text-amber-400">
                   <AnimatedCounter end={progress.userProgress.financialLiteracyScore} />
                 </p>
-                <p className="text-xs text-gray-500">out of 1000</p>
+                <p className="text-xs text-gray-400">out of 1000</p>
               </div>
-              <div className="p-3 bg-blue-100 rounded-lg">
-                <BarChart3 className="w-8 h-8 text-blue-600" />
+              <div className="p-3 bg-amber-500/20 rounded-lg">
+                <BarChart3 className="w-8 h-8 text-amber-400" />
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Lessons Completed</p>
-                <p className="text-3xl font-bold text-green-600">
+                <p className="text-sm font-medium text-gray-300">Lessons Completed</p>
+                <p className="text-3xl font-bold text-blue-400">
                   <AnimatedCounter end={progress.totalLessonsCompleted} />
                 </p>
-                <p className="text-xs text-gray-500">out of 20 available</p>
+                <p className="text-xs text-gray-400">out of 20 available</p>
               </div>
-              <div className="p-3 bg-green-100 rounded-lg">
-                <BookOpen className="w-8 h-8 text-green-600" />
+              <div className="p-3 bg-blue-500/20 rounded-lg">
+                <BookOpen className="w-8 h-8 text-blue-400" />
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Average Quiz Score</p>
-                <p className="text-3xl font-bold text-purple-600">
+                <p className="text-sm font-medium text-gray-300">Average Quiz Score</p>
+                <p className="text-3xl font-bold text-slate-400">
                   <AnimatedCounter end={Math.round(progress.averageQuizScore)} />%
                 </p>
-                <p className="text-xs text-gray-500">{progress.totalQuizzesTaken} quizzes taken</p>
+                <p className="text-xs text-gray-400">{progress.totalQuizzesTaken} quizzes taken</p>
               </div>
-              <div className="p-3 bg-purple-100 rounded-lg">
-                <Brain className="w-8 h-8 text-purple-600" />
+              <div className="p-3 bg-slate-500/20 rounded-lg">
+                <Brain className="w-8 h-8 text-slate-400" />
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Current Streak</p>
-                <p className="text-3xl font-bold text-orange-600">
+                <p className="text-sm font-medium text-gray-300">Current Streak</p>
+                <p className="text-3xl font-bold text-amber-400">
                   <AnimatedCounter end={progress.currentStreak} />
                 </p>
-                <p className="text-xs text-gray-500">days active</p>
+                <p className="text-xs text-gray-400">days active</p>
               </div>
-              <div className="p-3 bg-orange-100 rounded-lg">
-                <Zap className="w-8 h-8 text-orange-600" />
+              <div className="p-3 bg-amber-500/20 rounded-lg">
+                <Zap className="w-8 h-8 text-amber-400" />
               </div>
             </div>
           </div>
@@ -170,26 +170,26 @@ export default function ProgressPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-white rounded-xl shadow-lg p-6"
+              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6"
             >
-              <h3 className="text-xl font-bold text-gray-900 mb-6">Chapter Progress</h3>
+              <h3 className="text-xl font-bold text-white mb-6">Chapter Progress</h3>
               <div className="space-y-4">
                 {chapterProgressData.map((chapter, index) => (
                   <div key={chapter.chapter} className="flex items-center gap-4">
-                    <div className="w-16 text-sm font-medium text-gray-600">
+                    <div className="w-16 text-sm font-medium text-gray-300">
                       {chapter.chapter}
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-medium text-gray-900">{chapter.name}</span>
-                        <span className="text-sm text-gray-600">{chapter.progress}%</span>
+                        <span className="text-sm font-medium text-white">{chapter.name}</span>
+                        <span className="text-sm text-gray-300">{chapter.progress}%</span>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="w-full bg-slate-700/50 rounded-full h-2">
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${chapter.progress}%` }}
                           transition={{ delay: 0.3 + index * 0.1, duration: 0.8 }}
-                          className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
+                          className="bg-gradient-to-r from-amber-500 to-blue-500 h-2 rounded-full"
                         />
                       </div>
                     </div>
@@ -203,33 +203,33 @@ export default function ProgressPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="bg-white rounded-xl shadow-lg p-6"
+              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6"
             >
-              <h3 className="text-xl font-bold text-gray-900 mb-6">Learning Statistics</h3>
+              <h3 className="text-xl font-bold text-white mb-6">Learning Statistics</h3>
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
-                  <Clock className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-                  <div className="text-2xl font-bold text-gray-900">{progress.totalTimeSpentHours}h</div>
-                  <div className="text-sm text-gray-600">Total Time</div>
+                  <Clock className="w-8 h-8 mx-auto mb-2 text-blue-400" />
+                  <div className="text-2xl font-bold text-white">{progress.totalTimeSpentHours}h</div>
+                  <div className="text-sm text-gray-300">Total Time</div>
                 </div>
                 <div className="text-center">
-                  <TrendingUp className="w-8 h-8 mx-auto mb-2 text-green-600" />
-                  <div className="text-2xl font-bold text-gray-900">{learningVelocity}</div>
-                  <div className="text-sm text-gray-600">Lessons/Week</div>
+                  <TrendingUp className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                  <div className="text-2xl font-bold text-white">{learningVelocity}</div>
+                  <div className="text-sm text-gray-300">Lessons/Week</div>
                 </div>
                 <div className="text-center">
-                  <Calculator className="w-8 h-8 mx-auto mb-2 text-purple-600" />
-                  <div className="text-2xl font-bold text-gray-900">
+                  <Calculator className="w-8 h-8 mx-auto mb-2 text-slate-400" />
+                  <div className="text-2xl font-bold text-white">
                     {Object.keys(progress.userProgress.calculatorUsage).length}/6
                   </div>
-                  <div className="text-sm text-gray-600">Tools Used</div>
+                  <div className="text-sm text-gray-300">Tools Used</div>
                 </div>
                 <div className="text-center">
-                  <Award className="w-8 h-8 mx-auto mb-2 text-amber-600" />
-                  <div className="text-2xl font-bold text-gray-900">
+                  <Award className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                  <div className="text-2xl font-bold text-white">
                     {achievements.filter(a => a.unlocked).length}/{achievements.length}
                   </div>
-                  <div className="text-sm text-gray-600">Achievements</div>
+                  <div className="text-sm text-gray-300">Achievements</div>
                 </div>
               </div>
             </motion.div>
@@ -242,14 +242,14 @@ export default function ProgressPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg p-6 text-white"
+              className="bg-gradient-to-r from-amber-600/20 to-blue-600/20 border border-amber-500/30 backdrop-blur-xl rounded-xl shadow-lg p-6 text-white"
             >
               <h3 className="text-lg font-bold mb-4">Next Recommended Action</h3>
               <div className="flex items-start gap-3">
-                <Target className="w-6 h-6 mt-1 flex-shrink-0" />
+                <Target className="w-6 h-6 mt-1 flex-shrink-0 text-amber-400" />
                 <div>
-                  <p className="font-medium mb-1">{nextAction.message}</p>
-                  <p className="text-sm opacity-90">{nextAction.action}</p>
+                  <p className="font-medium mb-1 text-white">{nextAction.message}</p>
+                  <p className="text-sm text-gray-300">{nextAction.action}</p>
                 </div>
               </div>
             </motion.div>
@@ -259,9 +259,9 @@ export default function ProgressPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="bg-white rounded-xl shadow-lg p-6"
+              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6"
             >
-              <h3 className="text-xl font-bold text-gray-900 mb-6">Achievements</h3>
+              <h3 className="text-xl font-bold text-white mb-6">Achievements</h3>
               <div className="space-y-4">
                 {achievements.map((achievement, index) => {
                   const Icon = achievement.icon;
@@ -272,27 +272,27 @@ export default function ProgressPage() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 + index * 0.1 }}
                       className={`flex items-center gap-3 p-3 rounded-lg ${achievement.unlocked
-                        ? 'bg-blue-50 border border-blue-200'
-                        : 'bg-gray-50 border border-gray-200'
+                        ? 'bg-amber-500/20 border border-amber-500/30'
+                        : 'bg-slate-700/30 border border-slate-600/30'
                         }`}
                     >
-                      <div className={`p-2 rounded-lg ${achievement.unlocked ? 'bg-green-100' : 'bg-gray-100'
+                      <div className={`p-2 rounded-lg ${achievement.unlocked ? 'bg-amber-500/30' : 'bg-slate-600/30'
                         }`}>
-                        <Icon className={`w-5 h-5 ${achievement.unlocked ? achievement.color : 'text-gray-400'
+                        <Icon className={`w-5 h-5 ${achievement.unlocked ? 'text-amber-400' : 'text-gray-500'
                           }`} />
                       </div>
                       <div className="flex-1">
-                        <p className={`font-medium ${achievement.unlocked ? 'text-gray-900' : 'text-gray-500'
+                        <p className={`font-medium ${achievement.unlocked ? 'text-white' : 'text-gray-400'
                           }`}>
                           {achievement.title}
                         </p>
-                        <p className={`text-xs ${achievement.unlocked ? 'text-gray-600' : 'text-gray-400'
+                        <p className={`text-xs ${achievement.unlocked ? 'text-gray-300' : 'text-gray-500'
                           }`}>
                           {achievement.description}
                         </p>
                       </div>
                       {achievement.unlocked && (
-                        <CheckCircle className="w-5 h-5 text-green-600" />
+                        <CheckCircle className="w-5 h-5 text-amber-400" />
                       )}
                     </motion.div>
                   );
@@ -306,15 +306,15 @@ export default function ProgressPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="bg-amber-50 border border-amber-200 rounded-xl shadow-lg p-6"
+                className="bg-amber-500/10 border border-amber-500/20 backdrop-blur-xl rounded-xl shadow-lg p-6"
               >
                 <div className="flex items-center gap-2 mb-4">
-                  <AlertTriangle className="w-5 h-5 text-amber-600" />
-                  <h3 className="text-lg font-bold text-amber-900">Focus Areas</h3>
+                  <AlertTriangle className="w-5 h-5 text-amber-400" />
+                  <h3 className="text-lg font-bold text-amber-300">Focus Areas</h3>
                 </div>
                 <div className="space-y-2">
                   {progress.userProgress.strugglingTopics.map((topic, index) => (
-                    <div key={index} className="text-sm text-amber-800 bg-amber-100 rounded-lg px-3 py-2">
+                    <div key={index} className="text-sm text-amber-200 bg-amber-500/20 rounded-lg px-3 py-2">
                       Review: {topic.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                     </div>
                   ))}

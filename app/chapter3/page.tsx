@@ -55,7 +55,7 @@ export default function Chapter3Page() {
         >
           <Link
             href="/"
-            className="inline-flex items-center text-green-600 hover:text-green-800 mb-4 transition-colors"
+            className="inline-flex items-center text-amber-400 hover:text-amber-300 mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard
@@ -63,10 +63,10 @@ export default function Chapter3Page() {
 
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-gray-800 mb-2">
+              <h1 className="text-4xl font-bold text-white mb-2">
                 Chapter 3: Income & Career Finance
               </h1>
-              <p className="text-xl text-gray-600">
+              <p className="text-xl text-gray-300">
                 Maximize your earning potential and career financial strategy
               </p>
             </div>
@@ -75,7 +75,7 @@ export default function Chapter3Page() {
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="text-blue-500"
+                className="text-amber-400"
               >
                 <CheckCircle className="w-12 h-12" />
               </motion.div>
@@ -85,21 +85,21 @@ export default function Chapter3Page() {
 
         {/* Progress Bar */}
         <motion.div
-          className="mb-8 bg-white rounded-lg p-4 shadow-lg"
+          className="mb-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-4 shadow-lg"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3 }}
         >
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium text-gray-700">Chapter Progress</span>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm font-medium text-white">Chapter Progress</span>
+            <span className="text-sm text-gray-300">
               {currentSection === 'lesson' ? '1/3' :
                 currentSection === 'calculator' ? '2/3' : '3/3'}
             </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-slate-700 rounded-full h-2">
             <motion.div
-              className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full"
+              className="bg-gradient-to-r from-amber-500 to-blue-500 h-2 rounded-full"
               initial={{ width: '0%' }}
               animate={{
                 width: currentSection === 'lesson' ? '33%' :
@@ -112,7 +112,7 @@ export default function Chapter3Page() {
 
         {/* Navigation Tabs */}
         <motion.div
-          className="flex space-x-1 bg-white p-1 rounded-lg shadow-lg mb-8"
+          className="flex space-x-1 bg-white/5 backdrop-blur-xl border border-white/10 p-1 rounded-xl shadow-lg mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -125,9 +125,9 @@ export default function Chapter3Page() {
             <motion.button
               key={tab.key}
               onClick={() => setCurrentSection(tab.key as 'lesson' | 'calculator' | 'quiz')}
-              className={`flex-1 py-3 px-4 rounded-md font-medium transition-all ${currentSection === tab.key
-                ? 'bg-blue-500 text-white shadow-md'
-                : 'text-gray-600 hover:text-blue-500 hover:bg-blue-50'
+              className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${currentSection === tab.key
+                ? 'bg-amber-500 text-white shadow-md'
+                : 'text-gray-300 hover:text-amber-300 hover:bg-white/10'
                 }`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -170,7 +170,7 @@ export default function Chapter3Page() {
         >
           <Link
             href="/chapter2"
-            className="inline-flex items-center px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+            className="inline-flex items-center px-6 py-3 bg-white/10 border border-white/20 text-gray-300 rounded-lg hover:bg-white/20 hover:text-white transition-colors backdrop-blur-sm"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Previous Chapter
@@ -179,7 +179,7 @@ export default function Chapter3Page() {
           {userProgress.currentChapter > 3 && (
             <Link
               href="/chapter4"
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-500 to-blue-500 text-white rounded-lg hover:from-amber-600 hover:to-blue-600 transition-colors shadow-lg"
             >
               Next Chapter
               <ArrowRight className="w-4 h-4 ml-2" />

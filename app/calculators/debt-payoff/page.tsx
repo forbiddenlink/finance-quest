@@ -8,20 +8,20 @@ export default function DebtPayoffPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => window.history.back()}
-                className="text-blue-600 hover:text-blue-800 font-medium"
+                className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
               >
                 ← Back
               </button>
-              <h1 className="text-2xl font-bold text-gray-900">Debt Payoff Calculator</h1>
+              <h1 className="text-2xl font-bold text-white">Debt Payoff Calculator</h1>
             </div>
-            <div className="bg-red-100 px-3 py-1 rounded-full">
-              <span className="text-sm font-medium text-red-800 flex items-center gap-1">
+            <div className="bg-orange-500/20 border border-orange-500/30 px-3 py-1 rounded-full backdrop-blur-sm">
+              <span className="text-sm font-medium text-orange-300 flex items-center gap-1">
                 <CreditCard className="w-4 h-4" />
                 Debt Destroyer
               </span>
@@ -32,28 +32,28 @@ export default function DebtPayoffPage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="mb-6 bg-gradient-to-r from-orange-900/20 to-red-900/30 border border-orange-600/30 backdrop-blur-sm rounded-lg p-6">
-          <h2 className="text-xl font-bold text-red-900 mb-2 flex items-center gap-2">
+        <div className="mb-6 bg-orange-500/10 border border-orange-500/20 backdrop-blur-xl rounded-lg p-6">
+          <h2 className="text-xl font-bold text-orange-300 mb-2 flex items-center gap-2">
             <Zap className="w-5 h-5" />
             Break Free From Debt Chains
           </h2>
-          <p className="text-red-800 mb-4">
+          <p className="text-orange-200 mb-4">
             &quot;The borrower is slave to the lender.&quot; - Proverbs 22:7. Take control with proven debt elimination strategies.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div className="bg-white bg-opacity-50 rounded-lg p-3">
-              <h3 className="font-semibold text-red-900 flex items-center gap-2">
-                <Mountain className="w-4 h-4" />
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3">
+              <h3 className="font-semibold text-white flex items-center gap-2">
+                <Mountain className="w-4 h-4 text-amber-400" />
                 Debt Avalanche
               </h3>
-              <p className="text-red-700">Target highest interest rates first - saves the most money mathematically</p>
+              <p className="text-gray-300">Target highest interest rates first - saves the most money mathematically</p>
             </div>
-            <div className="bg-white bg-opacity-50 rounded-lg p-3">
-              <h3 className="font-semibold text-red-900 flex items-center gap-2">
-                <Snowflake className="w-4 h-4" />
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3">
+              <h3 className="font-semibold text-white flex items-center gap-2">
+                <Snowflake className="w-4 h-4 text-blue-400" />
                 Debt Snowball
               </h3>
-              <p className="text-red-700">Target smallest balances first - builds psychological momentum</p>
+              <p className="text-gray-300">Target smallest balances first - builds psychological momentum</p>
             </div>
           </div>
         </div>
@@ -67,15 +67,15 @@ export default function DebtPayoffPage() {
         />
 
         {/* Learning Objectives */}
-        <div className="mt-8 bg-orange-50 border border-orange-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-orange-900 mb-4 flex items-center gap-2">
-            <Target className="w-5 h-5" />
+        <div className="mt-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6">
+          <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+            <Target className="w-5 h-5 text-amber-400" />
             What You&apos;ll Master
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <h4 className="font-semibold text-orange-800 mb-2">Debt Strategy Skills:</h4>
-              <ul className="text-orange-700 space-y-1 text-sm">
+              <h4 className="font-semibold text-amber-300 mb-2">Debt Strategy Skills:</h4>
+              <ul className="text-gray-300 space-y-1 text-sm">
                 <li>• Compare avalanche vs snowball methods</li>
                 <li>• Calculate total interest costs</li>
                 <li>• Understand the power of extra payments</li>
@@ -95,27 +95,27 @@ export default function DebtPayoffPage() {
         </div>
 
         {/* Debt Facts */}
-        <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-yellow-900 mb-4 flex items-center gap-2">
+        <div className="mt-6 bg-amber-500/10 border border-amber-500/20 backdrop-blur-xl rounded-lg p-6">
+          <h3 className="text-lg font-bold text-amber-300 mb-4 flex items-center gap-2">
             <BarChart3 className="w-5 h-5" />
             Eye-Opening Debt Statistics
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <p className="text-2xl font-bold text-yellow-800">$6,194</p>
-              <p className="text-sm text-yellow-700">Average American credit card debt</p>
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center">
+              <p className="text-2xl font-bold text-amber-400">$6,194</p>
+              <p className="text-sm text-gray-300">Average American credit card debt</p>
             </div>
-            <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <p className="text-2xl font-bold text-yellow-800">18.99%</p>
-              <p className="text-sm text-yellow-700">Average credit card interest rate</p>
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center">
+              <p className="text-2xl font-bold text-amber-400">18.99%</p>
+              <p className="text-sm text-gray-300">Average credit card interest rate</p>
             </div>
-            <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <p className="text-2xl font-bold text-yellow-800">14.5 years</p>
-              <p className="text-sm text-yellow-700">Time to pay off $6,194 with minimum payments</p>
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center">
+              <p className="text-2xl font-bold text-amber-400">14.5 years</p>
+              <p className="text-sm text-gray-300">Time to pay off $6,194 with minimum payments</p>
             </div>
           </div>
-          <div className="mt-4 p-3 bg-red-100 rounded-lg">
-            <p className="text-sm text-red-800 font-medium">
+          <div className="mt-4 p-3 bg-red-500/20 border border-red-500/30 rounded-lg backdrop-blur-sm">
+            <p className="text-sm text-red-300 font-medium">
               <Lightbulb className="w-4 h-4 mr-1 inline" />
               The average person pays $11,931 in interest on that $6,194 debt! Don&apos;t be average.
             </p>
@@ -123,21 +123,21 @@ export default function DebtPayoffPage() {
         </div>
 
         {/* Success Stories */}
-        <div className="mt-6 bg-green-50 border border-green-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-green-900 mb-4 flex items-center gap-2">
+        <div className="mt-6 bg-blue-500/10 border border-blue-500/20 backdrop-blur-xl rounded-lg p-6">
+          <h3 className="text-lg font-bold text-blue-300 mb-4 flex items-center gap-2">
             <Trophy className="w-5 h-5" />
             Debt Freedom Success Stories
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white bg-opacity-50 rounded-lg p-4">
-              <h4 className="font-semibold text-green-800 mb-2">Jessica&apos;s $47,000 Triumph</h4>
-              <p className="text-green-700 text-sm">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+              <h4 className="font-semibold text-blue-400 mb-2">Jessica&apos;s $47,000 Triumph</h4>
+              <p className="text-gray-300 text-sm">
                 &quot;I had $47,000 in student loans and credit cards. Using the avalanche method and a side hustle, I became debt-free in 3 years instead of 15!&quot;
               </p>
             </div>
-            <div className="bg-white bg-opacity-50 rounded-lg p-4">
-              <h4 className="font-semibold text-green-800 mb-2">Mark&apos;s Snowball Victory</h4>
-              <p className="text-green-700 text-sm">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+              <h4 className="font-semibold text-blue-400 mb-2">Mark&apos;s Snowball Victory</h4>
+              <p className="text-gray-300 text-sm">
                 &quot;The snowball method gave me momentum I needed. Paying off small debts first kept me motivated through the 2-year journey to eliminate $32,000.&quot;
               </p>
             </div>
@@ -145,33 +145,33 @@ export default function DebtPayoffPage() {
         </div>
 
         {/* Action Plan */}
-        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
+        <div className="mt-6 bg-slate-500/10 border border-slate-500/20 backdrop-blur-xl rounded-lg p-6">
+          <h3 className="text-lg font-bold text-slate-300 mb-4 flex items-center gap-2">
             <Rocket className="w-5 h-5" />
             Your Debt Freedom Action Plan
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-white bg-opacity-50 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-800 mb-2">Week 1: List Everything</h4>
-              <p className="text-blue-700 text-sm">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+              <h4 className="font-semibold text-slate-400 mb-2">Week 1: List Everything</h4>
+              <p className="text-gray-300 text-sm">
                 Gather all statements. List every debt with balance, minimum payment, and interest rate.
               </p>
             </div>
-            <div className="bg-white bg-opacity-50 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-800 mb-2">Week 2: Choose Strategy</h4>
-              <p className="text-blue-700 text-sm">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+              <h4 className="font-semibold text-slate-400 mb-2">Week 2: Choose Strategy</h4>
+              <p className="text-gray-300 text-sm">
                 Pick avalanche (save money) or snowball (build momentum). Use this calculator to compare both.
               </p>
             </div>
-            <div className="bg-white bg-opacity-50 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-800 mb-2">Week 3: Find Extra Money</h4>
-              <p className="text-blue-700 text-sm">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+              <h4 className="font-semibold text-slate-400 mb-2">Week 3: Find Extra Money</h4>
+              <p className="text-gray-300 text-sm">
                 Review budget, sell items, consider side income. Every extra $100/month cuts years off payoff.
               </p>
             </div>
-            <div className="bg-white bg-opacity-50 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-800 mb-2">Week 4: Start Attacking</h4>
-              <p className="text-blue-700 text-sm">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+              <h4 className="font-semibold text-slate-400 mb-2">Week 4: Start Attacking</h4>
+              <p className="text-gray-300 text-sm">
                 Make first extra payment. Set up automatic payments. Track progress monthly. Celebrate wins!
               </p>
             </div>

@@ -51,10 +51,10 @@ export default function CalculatorsPage() {
               <Link href="/" className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
                 ← Back to Home
               </Link>
-              <h1 className="text-2xl font-bold text-gray-900">Financial Calculators</h1>
+              <h1 className="text-2xl font-bold text-white">Financial Calculators</h1>
             </div>
-            <div className="bg-purple-100 px-3 py-1 rounded-full">
-              <span className="text-sm font-medium text-blue-800 flex items-center gap-1">
+            <div className="bg-amber-500/20 border border-amber-500/30 px-3 py-1 rounded-full backdrop-blur-sm">
+              <span className="text-sm font-medium text-amber-300 flex items-center gap-1">
                 <Calculator className="w-4 h-4" />
                 Interactive Tools
               </span>
@@ -66,12 +66,12 @@ export default function CalculatorsPage() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold text-white mb-4">
             Interactive Financial Tools
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Master your money with hands-on calculators that show you exactly how financial decisions impact your future.
-            <strong> No guessing, just clear numbers and actionable insights.</strong>
+            <strong className="text-amber-400"> No guessing, just clear numbers and actionable insights.</strong>
           </p>
         </div>
 
@@ -80,30 +80,30 @@ export default function CalculatorsPage() {
           {calculators.map((calc) => (
             <div
               key={calc.id}
-              className={`group bg-gradient-to-br ${calc.bgColor} border ${calc.borderColor} rounded-xl p-6 hover:shadow-xl transition-all transform hover:scale-105`}
+              className={`group bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 hover:shadow-xl hover:border-amber-500/30 transition-all transform hover:scale-105`}
             >
               <div className="flex items-center mb-4">
-                <div className="bg-white bg-opacity-80 p-3 rounded-lg mr-4 group-hover:bg-opacity-100 transition-all">
-                  <calc.icon className="w-8 h-8" />
+                <div className="bg-amber-500/20 p-3 rounded-lg mr-4 group-hover:bg-amber-500/30 transition-all">
+                  <calc.icon className="w-8 h-8 text-amber-400" />
                 </div>
-                <h3 className={`text-xl font-bold ${calc.textColor}`}>
+                <h3 className="text-xl font-bold text-white">
                   {calc.title}
                 </h3>
               </div>
 
-              <p className={`${calc.textColor} mb-6 leading-relaxed`}>
+              <p className="text-gray-300 mb-6 leading-relaxed">
                 {calc.description}
               </p>
 
-              <div className="bg-white bg-opacity-60 rounded-lg p-3 mb-6">
-                <p className="text-sm font-medium text-gray-700 mb-1">Example Result:</p>
-                <p className={`text-sm ${calc.textColor} font-semibold`}>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 mb-6 border border-white/20">
+                <p className="text-sm font-medium text-gray-300 mb-1">Example Result:</p>
+                <p className="text-sm text-amber-300 font-semibold">
                   {calc.example}
                 </p>
               </div>
 
               <Link href={calc.href}>
-                <button className={`w-full ${calc.buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-md group-hover:shadow-lg`}>
+                <button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 px-6 py-3 rounded-lg font-semibold transition-all shadow-md group-hover:shadow-lg">
                   Start Calculating
                 </button>
               </Link>
@@ -112,72 +112,72 @@ export default function CalculatorsPage() {
         </div>
 
         {/* Coming Soon Section */}
-        <div className="bg-gradient-to-r from-blue-50 to-slate-50 border border-blue-200 rounded-2xl p-8">
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-blue-900 mb-4 flex items-center justify-center gap-2">
-              <Zap className="w-6 h-6" />
+            <h3 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2">
+              <Zap className="w-6 h-6 text-amber-400" />
               More Tools Coming Soon
             </h3>
-            <p className="text-blue-700 max-w-2xl mx-auto">
+            <p className="text-gray-300 max-w-2xl mx-auto">
               We&apos;re building a complete suite of financial calculators to help you master every aspect of money management
             </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <Home className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-              <h4 className="font-semibold text-blue-800 text-sm">Mortgage Calculator</h4>
-              <p className="text-xs text-blue-600 mt-1">Monthly payments & amortization</p>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 text-center hover:border-amber-500/30 transition-all">
+              <Home className="w-8 h-8 mx-auto mb-2 text-blue-400" />
+              <h4 className="font-semibold text-white text-sm">Mortgage Calculator</h4>
+              <p className="text-xs text-gray-300 mt-1">Monthly payments & amortization</p>
             </div>
-            <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <Umbrella className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-              <h4 className="font-semibold text-blue-800 text-sm">Retirement Planner</h4>
-              <p className="text-xs text-blue-600 mt-1">How much you need to retire</p>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 text-center hover:border-amber-500/30 transition-all">
+              <Umbrella className="w-8 h-8 mx-auto mb-2 text-blue-400" />
+              <h4 className="font-semibold text-white text-sm">Retirement Planner</h4>
+              <p className="text-xs text-gray-300 mt-1">How much you need to retire</p>
             </div>
-            <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <Car className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-              <h4 className="font-semibold text-blue-800 text-sm">Auto Loan Calculator</h4>
-              <p className="text-xs text-blue-600 mt-1">Car payments & total costs</p>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 text-center hover:border-amber-500/30 transition-all">
+              <Car className="w-8 h-8 mx-auto mb-2 text-blue-400" />
+              <h4 className="font-semibold text-white text-sm">Auto Loan Calculator</h4>
+              <p className="text-xs text-gray-300 mt-1">Car payments & total costs</p>
             </div>
-            <div className="bg-white bg-opacity-50 rounded-lg p-4 text-center">
-              <Target className="w-8 h-8 mx-auto mb-2 text-purple-600" />
-              <h4 className="font-semibold text-purple-800 text-sm">Savings Goal Tracker</h4>
-              <p className="text-xs text-purple-600 mt-1">Timeline to reach your goals</p>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 text-center hover:border-amber-500/30 transition-all">
+              <Target className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+              <h4 className="font-semibold text-white text-sm">Savings Goal Tracker</h4>
+              <p className="text-xs text-gray-300 mt-1">Timeline to reach your goals</p>
             </div>
           </div>
         </div>
 
         {/* Educational Value */}
-        <div className="mt-12 bg-blue-50 border border-blue-200 rounded-2xl p-8">
-          <h3 className="text-2xl font-bold text-blue-900 text-center mb-6 flex items-center justify-center gap-2">
-            <Brain className="w-6 h-6" />
+        <div className="mt-12 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+          <h3 className="text-2xl font-bold text-white text-center mb-6 flex items-center justify-center gap-2">
+            <Brain className="w-6 h-6 text-blue-400" />
             Why Interactive Calculators Work
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Target className="w-8 h-8 text-blue-600" />
+              <div className="bg-blue-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Target className="w-8 h-8 text-blue-400" />
               </div>
-              <h4 className="font-semibold text-blue-900 mb-2">Visual Learning</h4>
-              <p className="text-blue-700 text-sm">
+              <h4 className="font-semibold text-white mb-2">Visual Learning</h4>
+              <p className="text-gray-300 text-sm">
                 See your money grow or shrink in real-time. Charts and graphs make abstract concepts concrete.
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Zap className="w-8 h-8 text-blue-600" />
+              <div className="bg-amber-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Zap className="w-8 h-8 text-amber-400" />
               </div>
-              <h4 className="font-semibold text-blue-900 mb-2">Immediate Feedback</h4>
-              <p className="text-blue-700 text-sm">
+              <h4 className="font-semibold text-white mb-2">Immediate Feedback</h4>
+              <p className="text-gray-300 text-sm">
                 Change one number and instantly see the impact. No waiting, no guessing - just clear results.
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Gamepad2 className="w-8 h-8 text-blue-600" />
+              <div className="bg-slate-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Gamepad2 className="w-8 h-8 text-slate-400" />
               </div>
-              <h4 className="font-semibold text-blue-900 mb-2">Hands-On Practice</h4>
-              <p className="text-blue-700 text-sm">
+              <h4 className="font-semibold text-white mb-2">Hands-On Practice</h4>
+              <p className="text-gray-300 text-sm">
                 Try different scenarios safely. Make mistakes and learn without risking real money.
               </p>
             </div>
