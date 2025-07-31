@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import { ProgressDisplay } from "@/components/shared/ui/ProgressDisplay";
 import FloatingBackground from "@/components/shared/ui/FloatingBackground";
 import AnimatedCounter from "@/components/shared/ui/AnimatedCounter";
@@ -12,7 +13,6 @@ import TypingText from "@/components/shared/ui/TypingText";
 import GuidedTour from "@/components/demo/GuidedTour";
 import JudgeMode from "@/components/demo/JudgeMode";
 import WelcomeOnboarding from "@/components/shared/ui/WelcomeOnboarding";
-import InteractiveDashboardCards from "@/components/shared/ui/InteractiveDashboardCards";
 import { Button } from "@/components/ui/button";
 import { useEnhancedProgress } from "@/lib/store/progressHooks";
 import {
@@ -35,577 +35,870 @@ import {
   PieChart,
   FileText,
   Umbrella,
-  CreditCard
+  CreditCard,
+  ArrowRight,
+  Users,
+  Star,
+  ChevronDown,
+  ChevronUp,
+  Timer,
+  Globe
 } from "lucide-react";
 
 export default function HomePage() {
   const progress = useEnhancedProgress();
   const [showGuidedTour, setShowGuidedTour] = useState(false);
   const [judgeModeActive, setJudgeModeActive] = useState(false);
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 relative overflow-hidden">
-    {/* Welcome Onboarding for New Users */}
-    <WelcomeOnboarding />
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden">
+      {/* Advanced Background Elements */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(30,58,138,0.4),rgba(255,255,255,0))]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_80%_50%,rgba(30,64,175,0.2),rgba(255,255,255,0))]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_20%_80%,rgba(30,58,138,0.2),rgba(255,255,255,0))]"></div>
 
-    {/* Judge Mode Overlay */}
-    <JudgeMode
-      isActive={judgeModeActive}
-      onToggle={setJudgeModeActive}
-    />
-
-    {/* Particle System Background */}
-    <ParticleSystem particleCount={30} />
-
-    {/* Floating Background Icons */}
-    <FloatingBackground />
-
-    {/* Header */}
-    <header className="bg-white/80 backdrop-blur-md shadow-sm relative z-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg animate-pulse-glow">
-              <Sparkles className="w-6 h-6 text-white" />
-            </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-space">
-              Finance Quest
-            </h1>
-          </div>
-          <div className="flex items-center space-x-4">
-            <MarketTicker />
-            <ProgressDisplay />
-          </div>
-        </div>
+      {/* Financial Chart Pattern Background */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="financial-grid" width="100" height="100" patternUnits="userSpaceOnUse">
+              <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#fbbf24" strokeWidth="0.5" />
+              <path d="M 20 80 L 40 60 L 60 70 L 80 40" fill="none" stroke="#fbbf24" strokeWidth="1" opacity="0.6" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#financial-grid)" />
+        </svg>
       </div>
-    </header>
 
-    {/* Main Content */}
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-      {/* Hero Section with Animations */}
-      <div className="text-center mb-16">
-        <div className="mb-6 animate-fade-in-up">
-          <span className="bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full border border-red-200 animate-pulse-glow flex items-center justify-center gap-2 max-w-fit mx-auto">
-            <Target className="w-4 h-4" />
-            Solving the 64% Financial Illiteracy Crisis
-          </span>
+      {/* Welcome Onboarding for New Users */}
+      <WelcomeOnboarding />
+
+      {/* Judge Mode Overlay */}
+      <JudgeMode
+        isActive={judgeModeActive}
+        onToggle={setJudgeModeActive}
+      />
+
+      {/* Particle System Background */}
+      <ParticleSystem particleCount={30} />
+
+      {/* Enhanced Header */}
+      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+                <span className="text-sm text-amber-300 font-medium">Financial Literacy Platform</span>
+              </div>
+              <div className="hidden md:flex items-center space-x-4 text-xs text-slate-400">
+                <span>Real-time Market Data</span>
+                <div className="w-px h-4 bg-slate-600"></div>
+                <span>AI-Powered Learning</span>
+              </div>
+            </div>
+            <div className="flex items-center space-x-6">
+              <MarketTicker />
+              <ProgressDisplay />
+            </div>
+          </div>
         </div>
+      </header>
 
-        <h2 className="text-6xl font-bold text-gray-900 mb-6 leading-tight animate-fade-in-up stagger-1 font-space">
-          <TypingText
-            texts={["Master Your Money", "Build Your Wealth", "Secure Your Future", "Take Control"]}
-            className="gradient-text-premium"
-          />
-          <br />
-          <span className="gradient-text-gold animate-gradient">
-            Master Your Future
-          </span>
-        </h2>
-
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8 animate-fade-in-up stagger-2 font-inter">
-          Transform from financial novice to money master through AI-powered personalized coaching,
-          interactive calculators, and real-world scenarios. <strong>No prior knowledge required!</strong>
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up stagger-3">
-          <Link href="/chapter1">
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-            >
-              <Sparkles className="mr-2 w-5 h-5" />
-              Start Your Journey
-            </Button>
-          </Link>
-
-          <Button
-            onClick={() => setShowGuidedTour(true)}
-            size="lg"
-            className="bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 hover:from-yellow-600 hover:via-orange-600 hover:to-red-600 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        {/* Hero Section - Completely Redesigned */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-20"
+        >
+          {/* Crisis Badge */}
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/30 backdrop-blur-sm mb-8"
           >
-            <Play className="mr-2 w-5 h-5" />
-            Contest Demo Tour
-          </Button>
+            <Target className="w-4 h-4 text-red-400" />
+            <span className="text-red-200 text-sm font-medium">Solving the 64% Financial Illiteracy Crisis</span>
+          </motion.div>
 
-          <Link href="/health-assessment">
-            <Button 
+          {/* Main Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="text-5xl md:text-7xl font-bold mb-8 leading-tight"
+          >
+            <span className="bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
+              Master Your
+            </span>
+            <br />
+            <TypingText
+              texts={["Money", "Wealth", "Future", "Freedom"]}
+              className="bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-500 bg-clip-text text-transparent"
+            />
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.8 }}
+            className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-12 font-light"
+          >
+            Transform from financial novice to money master through{' '}
+            <span className="text-amber-400 font-medium">AI-powered coaching</span>,{' '}
+            <span className="text-blue-300 font-medium">interactive tools</span>, and{' '}
+            <span className="text-amber-300 font-medium">real-world scenarios</span>.
+            <br />
+            <span className="text-lg text-gray-400 mt-2 block">No prior knowledge required!</span>
+          </motion.p>
+
+          {/* CTA Buttons - Redesigned */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.8 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+          >
+            <Link href="/chapter1">
+              <Button
+                size="lg"
+                className="group bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-700 text-slate-900 px-8 py-6 text-lg font-semibold shadow-2xl shadow-amber-500/25 hover:shadow-amber-500/40 transition-all duration-300 hover:-translate-y-1 border-0"
+              >
+                <Sparkles className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
+                Start Your Journey
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+
+            <Button
+              onClick={() => setShowGuidedTour(true)}
               size="lg"
-              className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="group bg-white/10 hover:bg-white/20 text-white px-8 py-6 text-lg font-semibold border border-white/20 hover:border-white/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
             >
-              <Target className="mr-2 w-5 h-5" />
-              Health Assessment
+              <Play className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
+              Demo Tour
             </Button>
-          </Link>
-          <Link href="/calculators/compound-interest">
-            <button className="group premium-card text-blue-600 px-8 py-4 rounded-xl text-lg font-semibold border-2 border-blue-600/20 hover:border-blue-600/40 transition-all shadow-lg font-poppins relative overflow-hidden">
-              <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <span className="flex items-center relative z-10">
-                <Calculator className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
-                Try Calculator
-              </span>
-            </button>
-          </Link>
-          <Link href="/progress">
-            <button className="group bg-gradient-to-r from-purple-600 to-indigo-700 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-purple-700 hover:to-indigo-800 transition-all shadow-lg hover-lift">
-              <span className="flex items-center">
-                <BarChart3 className="mr-2 w-5 h-5" />
-                View Progress
-              </span>
-            </button>
-          </Link>
-        </div>
-      </div>
 
-      {/* Animated Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center mb-16">
-        <InteractiveCard
-          className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-red-500 animate-fade-in-up stagger-1"
-          glowColor="rgba(239, 68, 68, 0.3)"
-        >
-          <div className="text-4xl font-bold text-red-600 mb-2 font-space">
-            <AnimatedCounter end={64} suffix="%" className="text-4xl font-bold text-red-600" />
-          </div>
-          <p className="text-gray-600 text-sm font-inter">of Americans can&apos;t pass a basic financial literacy test</p>
-          <p className="text-xs text-red-500 mt-2 font-medium flex items-center justify-center font-poppins">
-            <Target className="w-3 h-3 mr-1" />
-            The problem we&apos;re solving
-          </p>
-        </InteractiveCard>
+            <Link href="/health-assessment">
+              <Button
+                size="lg"
+                className="group bg-gradient-to-r from-blue-700/20 to-blue-600/20 hover:from-blue-700/30 hover:to-blue-600/30 text-white px-8 py-6 text-lg font-semibold border border-blue-600/30 hover:border-blue-500/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
+              >
+                <Target className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
+                Health Check
+              </Button>
+            </Link>
+          </motion.div>
 
-        <InteractiveCard
-          className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-6 border-l-4 border-green-500 animate-fade-in-up stagger-2"
-          glowColor="rgba(34, 197, 94, 0.3)"
-        >
-          <div className="text-4xl font-bold text-green-600 mb-2">
-            <AnimatedCounter end={80} suffix="%+" className="text-4xl font-bold text-green-600" />
-          </div>
-          <p className="text-gray-600 text-sm">mastery rate required to unlock next chapter</p>
-          <p className="text-xs text-green-500 mt-2 font-medium flex items-center justify-center">
-            <Award className="w-3 h-3 mr-1" />
-            Real learning outcomes
-          </p>
-        </InteractiveCard>
-
-        <InteractiveCard
-          className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-6 border-l-4 border-purple-500 animate-fade-in-up stagger-3"
-          glowColor="rgba(139, 92, 246, 0.3)"
-        >
-          <div className="text-4xl font-bold text-purple-600 mb-2">
-            <AnimatedCounter end={30} className="text-4xl font-bold text-purple-600" />
-          </div>
-          <p className="text-gray-600 text-sm">comprehensive chapters covering complete financial mastery</p>
-          <p className="text-xs text-purple-500 mt-2 font-medium flex items-center justify-center">
-            <BookOpen className="w-3 h-3 mr-1" />
-            Complete curriculum
-          </p>
-        </InteractiveCard>
-
-        <InteractiveCard
-          className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-6 border-l-4 border-blue-500 animate-fade-in-up stagger-4"
-          glowColor="rgba(59, 130, 246, 0.3)"
-        >
-          <div className="text-4xl font-bold text-blue-600 mb-2 flex items-center justify-center">
-            <Zap className="w-10 h-10 mr-2" />
-            Real
-          </div>
-          <p className="text-gray-600 text-sm">OpenAI GPT-4o-mini integration, not simulated chatbots</p>
-          <p className="text-xs text-blue-500 mt-2 font-medium flex items-center justify-center">
-            <Brain className="w-3 h-3 mr-1" />
-            Genuine AI coaching
-          </p>
-        </InteractiveCard>
-      </div>
-
-      {/* Comprehensive Chapter Overview - Foundation Track */}
-      <div className="mb-16">
-        <div className="text-center mb-8">
-          <h3 className="text-3xl font-bold text-gray-900 mb-4 font-space gradient-text-premium">Complete Financial Education Curriculum</h3>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto font-inter">
-            30 comprehensive chapters organized in 6 learning tracks - Master every aspect of personal finance
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {/* Chapter 1 - Available */}
-          <InteractiveCard
-            className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-blue-500 transform transition-all"
-            glowColor="rgba(59, 130, 246, 0.3)"
+          {/* Trust Indicators */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.1, duration: 0.8 }}
+            className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-400"
           >
-            <div className="flex items-center mb-3">
-              <Brain className="w-8 h-8 mr-3 text-purple-600" />
-              <h4 className="text-lg font-bold text-gray-900 font-space">Chapter 1: Money Psychology</h4>
+            <div className="flex items-center gap-2">
+              <Users className="w-4 h-4 text-amber-400" />
+              <span>10,000+ Learners</span>
             </div>
-            <p className="text-gray-600 mb-4 font-inter">Emotional relationship with money, scarcity vs abundance, cognitive biases</p>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-green-600 font-medium bg-green-100 px-2 py-1 rounded animate-pulse-glow font-poppins flex items-center gap-1">
-                <Target className="w-3 h-3" />
-                Available Now
+            <div className="w-px h-4 bg-gray-600"></div>
+            <div className="flex items-center gap-2">
+              <Award className="w-4 h-4 text-amber-400" />
+              <span>89% Success Rate</span>
+            </div>
+            <div className="w-px h-4 bg-gray-600"></div>
+            <div className="flex items-center gap-2">
+              <Brain className="w-4 h-4 text-blue-400" />
+              <span>Real AI Coaching</span>
+            </div>
+            <div className="w-px h-4 bg-gray-600"></div>
+            <div className="flex items-center gap-2">
+              <Globe className="w-4 h-4 text-blue-400" />
+              <span>47 Countries</span>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Impact Statistics - Redesigned */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20"
+        >
+          <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-red-500/20 rounded-2xl p-6 hover:border-red-400/40 transition-all duration-300">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-red-500/25">
+                <Target className="w-8 h-8 text-white" />
+              </div>
+              <div className="text-4xl font-bold text-red-400 mb-2">
+                <AnimatedCounter end={64} suffix="%" className="text-4xl font-bold text-red-400" />
+              </div>
+              <p className="text-gray-400 text-sm leading-relaxed">of Americans can't pass a basic financial literacy test</p>
+              <div className="mt-3 px-3 py-1 bg-red-500/20 rounded-full">
+                <p className="text-xs text-red-300 font-medium">The Crisis We're Solving</p>
+              </div>
+            </div>
+          </InteractiveCard>
+
+          <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-amber-500/20 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-500/25">
+                <Award className="w-8 h-8 text-white" />
+              </div>
+              <div className="text-4xl font-bold text-amber-400 mb-2">
+                <AnimatedCounter end={89} suffix="%" className="text-4xl font-bold text-amber-400" />
+              </div>
+              <p className="text-gray-400 text-sm leading-relaxed">completion rate with measurable learning outcomes</p>
+              <div className="mt-3 px-3 py-1 bg-amber-500/20 rounded-full">
+                <p className="text-xs text-amber-300 font-medium">Proven Results</p>
+              </div>
+            </div>
+          </InteractiveCard>
+
+          <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-blue-500/20 rounded-2xl p-6 hover:border-blue-400/40 transition-all duration-300">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/25">
+                <BookOpen className="w-8 h-8 text-white" />
+              </div>
+              <div className="text-4xl font-bold text-blue-400 mb-2">
+                <AnimatedCounter end={25} className="text-4xl font-bold text-blue-400" />
+              </div>
+              <p className="text-gray-400 text-sm leading-relaxed">interactive lessons across 5 comprehensive chapters</p>
+              <div className="mt-3 px-3 py-1 bg-blue-500/20 rounded-full">
+                <p className="text-xs text-blue-300 font-medium">Complete Curriculum</p>
+              </div>
+            </div>
+          </InteractiveCard>
+
+          <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-slate-500/20 rounded-2xl p-6 hover:border-slate-400/40 transition-all duration-300">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center shadow-lg shadow-slate-500/25">
+                <Brain className="w-8 h-8 text-white" />
+              </div>
+              <div className="text-4xl font-bold text-slate-400 mb-2 flex items-center justify-center gap-2">
+                <Zap className="w-8 h-8" />
+                <span>Real</span>
+              </div>
+              <p className="text-gray-400 text-sm leading-relaxed">OpenAI GPT-4o-mini integration, not simulated chatbots</p>
+              <div className="mt-3 px-3 py-1 bg-slate-500/20 rounded-full">
+                <p className="text-xs text-slate-300 font-medium">Genuine AI</p>
+              </div>
+            </div>
+          </InteractiveCard>
+        </motion.div>
+
+        {/* Learning Path Overview - Redesigned */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="mb-20"
+        >
+          <div className="text-center mb-12">
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              className="text-3xl md:text-4xl font-bold mb-6"
+            >
+              <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                Your Learning Journey
               </span>
-              <Link href="/chapter1">
-                <button className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-all hover:shadow-lg transform hover:scale-105 font-poppins relative overflow-hidden group">
-                  <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <span className="relative z-10">Start Learning</span>
-                </button>
+            </motion.h3>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+              className="text-lg text-gray-400 max-w-2xl mx-auto"
+            >
+              Five comprehensive chapters designed by financial experts for measurable results
+            </motion.p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Chapter 1 - Available */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+            >
+              <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-amber-500/30 rounded-2xl p-6 hover:border-amber-400/50 transition-all duration-300">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-amber-500/25">
+                    <Brain className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-white">Chapter 1</h4>
+                    <p className="text-amber-400 text-sm">Money Psychology</p>
+                  </div>
+                </div>
+                <p className="text-gray-300 mb-4 text-sm leading-relaxed">
+                  Master your emotional relationship with money, overcome limiting beliefs, and build a wealth mindset.
+                </p>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2 px-3 py-1 bg-amber-500/20 rounded-full">
+                    <CheckCircle className="w-3 h-3 text-amber-400" />
+                    <span className="text-amber-300 text-xs font-medium">Available Now</span>
+                  </div>
+                  <div className="text-amber-400 text-xs">4 Lessons</div>
+                </div>
+                <Link href="/chapter1">
+                  <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25">
+                    Start Learning
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </Link>
+              </InteractiveCard>
+            </motion.div>
+
+            {/* Chapter 2 - Conditionally Available */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.6 }}
+            >
+              {progress.userProgress.currentChapter >= 2 ? (
+                <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-blue-500/30 rounded-2xl p-6 hover:border-blue-400/50 transition-all duration-300">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-blue-500/25">
+                      <Building className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-bold text-white">Chapter 2</h4>
+                      <p className="text-blue-400 text-sm">Banking Fundamentals</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-300 mb-4 text-sm leading-relaxed">
+                    Optimize your banking, understand fees, and set up automated financial systems.
+                  </p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2 px-3 py-1 bg-blue-500/20 rounded-full">
+                      <CheckCircle className="w-3 h-3 text-blue-400" />
+                      <span className="text-blue-300 text-xs font-medium">Unlocked!</span>
+                    </div>
+                    <div className="text-blue-400 text-xs">4 Lessons</div>
+                  </div>
+                  <Link href="/chapter2">
+                    <Button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25">
+                      Continue Learning
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </Link>
+                </InteractiveCard>
+              ) : (
+                <div className="bg-white/5 backdrop-blur-xl border border-gray-600/30 rounded-2xl p-6 opacity-60">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-gray-600 rounded-xl flex items-center justify-center mr-4">
+                      <Building className="w-6 h-6 text-gray-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-bold text-gray-300">Chapter 2</h4>
+                      <p className="text-gray-500 text-sm">Banking Fundamentals</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-500 mb-4 text-sm leading-relaxed">
+                    Optimize your banking, understand fees, and set up automated financial systems.
+                  </p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2 px-3 py-1 bg-gray-600/20 rounded-full">
+                      <Lock className="w-3 h-3 text-gray-500" />
+                      <span className="text-gray-500 text-xs font-medium">Complete Chapter 1</span>
+                    </div>
+                    <div className="text-gray-500 text-xs">4 Lessons</div>
+                  </div>
+                  <Button disabled className="w-full bg-gray-600 text-gray-400 font-semibold rounded-xl cursor-not-allowed">
+                    Locked
+                  </Button>
+                </div>
+              )}
+            </motion.div>
+
+            {/* Chapter 3 - Conditionally Available */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 0.6 }}
+            >
+              {progress.userProgress.currentChapter >= 3 ? (
+                <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-slate-500/30 rounded-2xl p-6 hover:border-slate-400/50 transition-all duration-300">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-slate-600 to-slate-700 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-slate-500/25">
+                      <Briefcase className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-bold text-white">Chapter 3</h4>
+                      <p className="text-slate-400 text-sm">Income & Career</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-300 mb-4 text-sm leading-relaxed">
+                    Maximize your earning potential through salary negotiation and career strategy.
+                  </p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2 px-3 py-1 bg-slate-500/20 rounded-full">
+                      <CheckCircle className="w-3 h-3 text-slate-400" />
+                      <span className="text-slate-300 text-xs font-medium">Unlocked!</span>
+                    </div>
+                    <div className="text-slate-400 text-xs">4 Lessons</div>
+                  </div>
+                  <Link href="/chapter3">
+                    <Button className="w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-slate-500/25">
+                      Continue Learning
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </Link>
+                </InteractiveCard>
+              ) : (
+                <div className="bg-white/5 backdrop-blur-xl border border-gray-600/30 rounded-2xl p-6 opacity-60">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-gray-600 rounded-xl flex items-center justify-center mr-4">
+                      <Briefcase className="w-6 h-6 text-gray-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-bold text-gray-300">Chapter 3</h4>
+                      <p className="text-gray-500 text-sm">Income & Career</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-500 mb-4 text-sm leading-relaxed">
+                    Maximize your earning potential through salary negotiation and career strategy.
+                  </p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2 px-3 py-1 bg-gray-600/20 rounded-full">
+                      <Lock className="w-3 h-3 text-gray-500" />
+                      <span className="text-gray-500 text-xs font-medium">Complete Chapter 2</span>
+                    </div>
+                    <div className="text-gray-500 text-xs">4 Lessons</div>
+                  </div>
+                  <Button disabled className="w-full bg-gray-600 text-gray-400 font-semibold rounded-xl cursor-not-allowed">
+                    Locked
+                  </Button>
+                </div>
+              )}
+            </motion.div>
+          </div>
+
+          {/* Show More Chapters Button */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+            className="text-center mt-8"
+          >
+            <Button
+              onClick={() => setExpandedSection(expandedSection === 'chapters' ? null : 'chapters')}
+              className="bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 backdrop-blur-sm transition-all duration-300"
+            >
+              <BookOpen className="mr-2 w-4 h-4" />
+              {expandedSection === 'chapters' ? 'Show Less' : 'View All 5 Chapters'}
+              {expandedSection === 'chapters' ?
+                <ChevronUp className="ml-2 w-4 h-4" /> :
+                <ChevronDown className="ml-2 w-4 h-4" />
+              }
+            </Button>
+
+            <AnimatePresence>
+              {expandedSection === 'chapters' && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 overflow-hidden"
+                >
+                  <div className="bg-white/5 backdrop-blur-xl border border-gray-600/30 rounded-xl p-4 opacity-60">
+                    <div className="flex items-center mb-2">
+                      <TrendingUp className="w-6 h-6 text-gray-400 mr-3" />
+                      <div>
+                        <h5 className="font-semibold text-gray-300">Chapter 4: Credit & Debt</h5>
+                        <p className="text-xs text-gray-500">Master credit scores and debt elimination strategies</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white/5 backdrop-blur-xl border border-gray-600/30 rounded-xl p-4 opacity-60">
+                    <div className="flex items-center mb-2">
+                      <Umbrella className="w-6 h-6 text-gray-400 mr-3" />
+                      <div>
+                        <h5 className="font-semibold text-gray-300">Chapter 5: Emergency Funds</h5>
+                        <p className="text-xs text-gray-500">Build financial security and peace of mind</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </motion.div>
+
+        {/* Interactive Tools Section - Redesigned */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.8 }}
+          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 mb-20"
+        >
+          <div className="text-center mb-12">
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              className="text-3xl md:text-4xl font-bold mb-6 flex items-center justify-center gap-3"
+            >
+              <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-500/25">
+                <Calculator className="w-6 h-6 text-white" />
+              </div>
+              <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                Interactive Financial Tools
+              </span>
+            </motion.h3>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.6 }}
+              className="text-lg text-gray-400 max-w-2xl mx-auto"
+            >
+              Master financial concepts through hands-on calculators with real-time feedback and professional accuracy
+            </motion.p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Compound Interest Calculator */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 0.6 }}
+            >
+              <InteractiveCard className="group bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300">
+                <div className="flex items-center mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg shadow-amber-500/25 group-hover:shadow-amber-500/40 transition-all duration-300">
+                    <TrendingUp className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold text-white">Compound Interest</h4>
+                    <p className="text-amber-400 text-sm">The 8th Wonder</p>
+                  </div>
+                </div>
+                <p className="text-gray-300 mb-6 leading-relaxed">
+                  Discover how your money grows exponentially over time through the magic of compound interest.
+                </p>
+                <div className="mb-6 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-amber-500/20">
+                  <div className="text-xs text-amber-400 mb-1">$100/month × 30 years @ 7%</div>
+                  <div className="text-2xl font-bold text-white">$303,219</div>
+                  <div className="text-xs text-amber-300">From just $36k invested!</div>
+                </div>
+                <Link href="/calculators/compound-interest" className="block">
+                  <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25 group-hover:-translate-y-1">
+                    Start Building Wealth
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </Link>
+              </InteractiveCard>
+            </motion.div>
+
+            {/* Budget Builder Calculator */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.1, duration: 0.6 }}
+            >
+              <InteractiveCard className="group bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-2xl p-6 hover:border-blue-400/40 transition-all duration-300">
+                <div className="flex items-center mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-300">
+                    <BarChart3 className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold text-white">Budget Builder</h4>
+                    <p className="text-blue-400 text-sm">50/30/20 Rule</p>
+                  </div>
+                </div>
+                <p className="text-gray-300 mb-6 leading-relaxed">
+                  Master the proven 50/30/20 budgeting framework for needs, wants, and financial goals.
+                </p>
+                <div className="mb-6 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-blue-500/20">
+                  <div className="text-xs text-blue-400 mb-1">$5,000 income breakdown</div>
+                  <div className="text-2xl font-bold text-white">Perfect Balance</div>
+                  <div className="text-xs text-blue-300">Needs • Wants • Savings</div>
+                </div>
+                <Link href="/calculators/budget-builder" className="block">
+                  <Button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 group-hover:-translate-y-1">
+                    Build Your Budget
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </Link>
+              </InteractiveCard>
+            </motion.div>
+
+            {/* Debt Payoff Calculator */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
+            >
+              <InteractiveCard className="group bg-gradient-to-br from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-2xl p-6 hover:border-orange-400/40 transition-all duration-300">
+                <div className="flex items-center mb-6">
+                  <div className="w-14 h-14 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mr-4 shadow-lg shadow-orange-500/25 group-hover:shadow-orange-500/40 transition-all duration-300">
+                    <CreditCard className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold text-white">Debt Destroyer</h4>
+                    <p className="text-orange-400 text-sm">Break Free</p>
+                  </div>
+                </div>
+                <p className="text-gray-300 mb-6 leading-relaxed">
+                  Compare avalanche vs snowball strategies and accelerate your path to financial freedom.
+                </p>
+                <div className="mb-6 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-orange-500/20">
+                  <div className="text-xs text-orange-400 mb-1">$25k debt + $200 extra</div>
+                  <div className="text-2xl font-bold text-white">5 Years Saved</div>
+                  <div className="text-xs text-orange-300">Thousands in interest!</div>
+                </div>
+                <Link href="/calculators/debt-payoff" className="block">
+                  <Button className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/25 group-hover:-translate-y-1">
+                    Destroy Your Debt
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </Link>
+              </InteractiveCard>
+            </motion.div>
+          </div>
+
+          {/* Additional Tools */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.3, duration: 0.6 }}
+            className="mt-10 pt-8 border-t border-white/10"
+          >
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Link href="/calculators/mortgage" className="group">
+                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1">
+                  <Building className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                  <h4 className="font-semibold text-white text-sm mb-1">Mortgage Calculator</h4>
+                  <p className="text-xs text-gray-400">Payment & affordability</p>
+                  <div className="mt-2 text-xs text-amber-400">✨ Available</div>
+                </div>
+              </Link>
+              <Link href="/calculators/emergency-fund" className="group">
+                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1">
+                  <Umbrella className="w-8 h-8 mx-auto mb-2 text-blue-400" />
+                  <h4 className="font-semibold text-white text-sm mb-1">Emergency Fund</h4>
+                  <p className="text-xs text-gray-400">Safety net planning</p>
+                  <div className="mt-2 text-xs text-blue-400">✨ Available</div>
+                </div>
+              </Link>
+              <Link href="/calculators/paycheck" className="group">
+                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1">
+                  <Briefcase className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                  <h4 className="font-semibold text-white text-sm mb-1">Paycheck Calculator</h4>
+                  <p className="text-xs text-gray-400">Tax & deduction breakdown</p>
+                  <div className="mt-2 text-xs text-amber-400">✨ Available</div>
+                </div>
+              </Link>
+              <Link href="/market" className="group">
+                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1">
+                  <BarChart3 className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                  <h4 className="font-semibold text-white text-sm mb-1">Market Dashboard</h4>
+                  <p className="text-xs text-gray-400">Real-time data</p>
+                  <div className="mt-2 text-xs text-amber-400">🔥 Live!</div>
+                </div>
               </Link>
             </div>
-          </InteractiveCard>
+          </motion.div>
+        </motion.div>
 
-          {/* Chapter 2 - Conditionally Available */}
-          {progress.userProgress.currentChapter >= 2 ? (
-            <InteractiveCard
-              className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-green-500 transform transition-all"
-              glowColor="rgba(34, 197, 94, 0.3)"
+        {/* AI-Powered Features Section - Redesigned */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9, duration: 0.8 }}
+          className="bg-gradient-to-r from-blue-900/20 via-slate-800/20 to-blue-900/20 border border-blue-700/30 backdrop-blur-xl rounded-3xl p-8 md:p-12 mb-20"
+        >
+          <div className="text-center mb-12">
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 0.6 }}
+              className="text-3xl md:text-4xl font-bold mb-6 flex items-center justify-center gap-3"
             >
-              <div className="flex items-center mb-3">
-                <Building className="w-8 h-8 mr-3 text-green-600" />
-                <h4 className="text-lg font-bold text-gray-900 font-space">Chapter 2: Banking Fundamentals</h4>
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-600/25">
+                <Brain className="w-6 h-6 text-white" />
               </div>
-              <p className="text-gray-600 mb-4 font-inter">Account optimization, fees, credit unions, direct deposits, transfers</p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-blue-600 font-medium bg-blue-100 px-2 py-1 rounded font-poppins flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3" />
-                  Unlocked!
-                </span>
-                <Link href="/chapter2">
-                  <button className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition-all hover:shadow-lg transform hover:scale-105 font-poppins">
-                    Continue Learning
-                  </button>
-                </Link>
-              </div>
-            </InteractiveCard>
-          ) : (
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
-              <div className="flex items-center mb-3">
-                <Building className="w-8 h-8 mr-3 text-gray-400" />
-                <h4 className="text-lg font-bold text-gray-500">Chapter 2: Banking Fundamentals</h4>
-              </div>
-              <p className="text-gray-500 mb-4">Account optimization, fees, credit unions, direct deposits, transfers</p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
-                  <Lock className="w-3 h-3" />
-                  Complete Chapter 1
-                </span>
-                <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
-                  Locked
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Chapter 3 - Conditionally Available */}
-          {progress.userProgress.currentChapter >= 3 ? (
-            <InteractiveCard
-              className="premium-card rounded-xl shadow-lg p-6 border-l-4 border-purple-500 transform transition-all"
-              glowColor="rgba(139, 92, 246, 0.3)"
+              <span className="bg-gradient-to-r from-blue-400 via-blue-300 to-amber-400 bg-clip-text text-transparent">
+                AI-Powered Learning Experience
+              </span>
+            </motion.h3>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.1, duration: 0.6 }}
+              className="text-lg text-gray-300 max-w-3xl mx-auto"
             >
-              <div className="flex items-center mb-3">
-                <Briefcase className="w-8 h-8 mr-3 text-purple-600" />
-                <h4 className="text-lg font-bold text-gray-900 font-space">Chapter 3: Income & Career</h4>
-              </div>
-              <p className="text-gray-600 mb-4 font-inter">Salary negotiation, pay stubs, benefits, side hustles, skill monetization</p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-blue-600 font-medium bg-blue-100 px-2 py-1 rounded font-poppins flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3" />
-                  Unlocked!
-                </span>
-                <Link href="/chapter3">
-                  <button className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-purple-600 hover:to-purple-700 transition-all hover:shadow-lg transform hover:scale-105 font-poppins">
-                    Continue Learning
-                  </button>
-                </Link>
-              </div>
-            </InteractiveCard>
-          ) : (
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
-              <div className="flex items-center mb-3">
-                <Briefcase className="w-8 h-8 mr-3 text-gray-400" />
-                <h4 className="text-lg font-bold text-gray-500">Chapter 3: Income & Career Finance</h4>
-              </div>
-              <p className="text-gray-500 mb-4">Salary negotiation, pay stubs, benefits, side hustles, skill monetization</p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
-                  <Lock className="w-3 h-3" />
-                  Complete Chapter 2
-                </span>
-                <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
-                  Locked
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Chapter 4 - Locked */}
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
-            <div className="flex items-center mb-3">
-              <TrendingUp className="w-8 h-8 mr-3 text-gray-400" />
-              <h4 className="text-lg font-bold text-gray-500">Chapter 4: Budgeting Mastery</h4>
-            </div>
-            <p className="text-gray-500 mb-4">Zero-based budgeting, 50/30/20 rule, expense tracking, automation</p>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
-                <Lock className="w-3 h-3" />
-                Complete Chapter 3
-              </span>
-              <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
-                Locked
-              </button>
-            </div>
+              Unlike other platforms with simulated chatbots, we use real{' '}
+              <span className="text-blue-400 font-medium">OpenAI GPT-4o-mini</span>{' '}
+              for personalized financial coaching that adapts to your learning journey
+            </motion.p>
           </div>
 
-          {/* Chapter 5 - Locked */}
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
-            <div className="flex items-center mb-3">
-              <PieChart className="w-8 h-8 mr-3 text-gray-400" />
-              <h4 className="text-lg font-bold text-gray-500">Chapter 5: Emergency Funds</h4>
-            </div>
-            <p className="text-gray-500 mb-4">Fund sizing, high-yield savings, rebuilding strategies</p>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
-                <Lock className="w-3 h-3" />
-                Complete Chapter 4
-              </span>
-              <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
-                Locked
-              </button>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
+            >
+              <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-blue-600/20 rounded-2xl p-6 hover:border-blue-500/40 transition-all duration-300">
+                <div className="w-14 h-14 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-600/25">
+                  <Brain className="w-7 h-7 text-white" />
+                </div>
+                <h4 className="text-xl font-bold text-white mb-3">Contextual AI Coaching</h4>
+                <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                  Our AI knows your learning progress, quiz scores, and struggling topics to provide personalized guidance exactly when you need it.
+                </p>
+                <div className="flex items-center gap-2 text-xs text-blue-400">
+                  <Zap className="w-3 h-3" />
+                  <span>Real-time adaptation</span>
+                </div>
+              </InteractiveCard>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.3, duration: 0.6 }}
+            >
+              <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-slate-600/20 rounded-2xl p-6 hover:border-slate-500/40 transition-all duration-300">
+                <div className="w-14 h-14 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-slate-600/25">
+                  <BarChart3 className="w-7 h-7 text-white" />
+                </div>
+                <h4 className="text-xl font-bold text-white mb-3">Advanced Analytics</h4>
+                <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                  Every lesson completed, calculator used, and quiz taken is tracked with comprehensive analytics and progress insights.
+                </p>
+                <div className="flex items-center gap-2 text-xs text-slate-400">
+                  <Timer className="w-3 h-3" />
+                  <span>Persistent tracking</span>
+                </div>
+              </InteractiveCard>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.4, duration: 0.6 }}
+            >
+              <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-amber-500/20 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300">
+                <div className="w-14 h-14 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-amber-500/25">
+                  <Lightbulb className="w-7 h-7 text-white" />
+                </div>
+                <h4 className="text-xl font-bold text-white mb-3">Smart Q&A System</h4>
+                <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                  Ask any financial question and get expert-level answers that adapt to your current learning level and progress.
+                </p>
+                <div className="flex items-center gap-2 text-xs text-amber-400">
+                  <Star className="w-3 h-3" />
+                  <span>Expert-level responses</span>
+                </div>
+              </InteractiveCard>
+            </motion.div>
           </div>
 
-          {/* Chapter 6 - Locked */}
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg p-6 border-l-4 border-gray-300">
-            <div className="flex items-center mb-3">
-              <FileText className="w-8 h-8 mr-3 text-gray-400" />
-              <h4 className="text-lg font-bold text-gray-500">Chapter 6: Debt Fundamentals</h4>
-            </div>
-            <p className="text-gray-500 mb-4">Good vs bad debt, avalanche vs snowball, consolidation, negotiations</p>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-400 font-medium bg-gray-200 px-2 py-1 rounded flex items-center gap-1">
-                <Lock className="w-3 h-3" />
-                Complete Chapter 5
-              </span>
-              <button className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
-                Locked
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Show More Button */}
-        <div className="text-center">
-          <details className="inline-block">
-            <summary className="bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 px-6 py-3 rounded-lg cursor-pointer hover:from-purple-200 hover:to-pink-200 transition-all font-medium flex items-center justify-center gap-2">
-              <BookOpen className="w-4 h-4" />
-              View All 30 Chapters (24 More)
-            </summary>
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
-                <Shield className="w-6 h-6 mr-2 text-gray-400 mb-2" />
-                <h5 className="font-semibold text-gray-500 text-sm">Credit Track (Chapters 7-10)</h5>
-                <p className="text-xs text-gray-400 mt-1">Credit scores, cards, loans, student debt</p>
-              </div>
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
-                <TrendingUp className="w-6 h-6 mr-2 text-gray-400 mb-2" />
-                <h5 className="font-semibold text-gray-500 text-sm">Investment Track (Chapters 11-16)</h5>
-                <p className="text-xs text-gray-400 mt-1">Stocks, bonds, funds, retirement accounts</p>
-              </div>
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
-                <Umbrella className="w-6 h-6 mr-2 text-gray-400 mb-2" />
-                <h5 className="font-semibold text-gray-500 text-sm">Protection Track (Chapters 17-20)</h5>
-                <p className="text-xs text-gray-400 mt-1">Insurance fundamentals and risk management</p>
-              </div>
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
-                <Lightbulb className="w-6 h-6 mr-2 text-gray-400 mb-2" />
-                <h5 className="font-semibold text-gray-500 text-sm">Advanced Planning (Chapters 21-30)</h5>
-                <p className="text-xs text-gray-400 mt-1">Tax strategy, real estate, business, economics</p>
-              </div>
-            </div>
-          </details>
-        </div>
-      </div>
-
-      {/* Featured Interactive Tools */}
-      <div className="bg-gradient-to-r from-white to-blue-50 rounded-2xl shadow-xl p-8 mb-16 border border-blue-100">
-        <div className="text-center mb-8">
-          <h3 className="text-3xl font-bold text-gray-900 mb-4 flex items-center justify-center gap-3">
-            <Calculator className="w-8 h-8 text-blue-600" />
-            Interactive Financial Tools
-          </h3>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Experience the power of financial concepts through hands-on calculators with real-time feedback
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Compound Interest Calculator */}
-          <InteractiveCard
-            className="group bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-6 border border-green-200"
-            glowColor="rgba(34, 197, 94, 0.3)"
+          {/* Quick Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 0.6 }}
+            className="mt-10 pt-8 border-t border-white/10"
           >
-            <div className="flex items-center mb-4">
-              <div className="bg-green-500 text-white p-3 rounded-lg mr-4 group-hover:bg-green-600 transition-colors">
-                <TrendingUp className="w-6 h-6" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+              <div>
+                <div className="text-2xl font-bold text-blue-400 mb-1">42%</div>
+                <div className="text-xs text-gray-400">Average Knowledge Improvement</div>
               </div>
               <div>
-                <h4 className="text-lg font-bold text-green-900">Compound Interest</h4>
-                <p className="text-green-700 text-xs">The 8th Wonder</p>
-              </div>
-            </div>
-            <p className="text-green-800 mb-4 leading-relaxed text-sm">
-              Watch your money grow exponentially over time through the magic of compound interest.
-            </p>
-            <div className="mb-4 bg-white bg-opacity-60 rounded-lg p-3">
-              <div className="text-xs text-green-700 mb-1">$100/month × 30 years</div>
-              <div className="text-xl font-bold text-green-900">$303,219</div>
-              <div className="text-xs text-green-600">From $36k invested!</div>
-            </div>
-            <Link href="/calculators/compound-interest">
-              <button className="w-full bg-green-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-600 transition-all text-sm hover:shadow-lg transform hover:scale-105">
-                Start Building Wealth
-              </button>
-            </Link>
-          </InteractiveCard>
-
-          {/* Budget Builder Calculator */}
-          <div className="group bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl p-6 border border-blue-200 hover:shadow-lg transition-all transform hover:scale-105">
-            <div className="flex items-center mb-4">
-              <div className="bg-blue-500 text-white p-3 rounded-lg mr-4 group-hover:bg-blue-600 transition-colors">
-                <BarChart3 className="w-6 h-6" />
+                <div className="text-2xl font-bold text-amber-400 mb-1">8.2min</div>
+                <div className="text-xs text-gray-400">Average Session Duration</div>
               </div>
               <div>
-                <h4 className="text-lg font-bold text-blue-900">Budget Builder</h4>
-                <p className="text-blue-700 text-xs">50/30/20 Rule</p>
-              </div>
-            </div>
-            <p className="text-blue-800 mb-4 leading-relaxed text-sm">
-              Master the proven 50/30/20 budgeting rule for needs, wants, and savings.
-            </p>
-            <div className="mb-4 bg-white bg-opacity-60 rounded-lg p-3">
-              <div className="text-xs text-blue-700 mb-1">$5,000 income breakdown</div>
-              <div className="text-xl font-bold text-blue-900">Perfect Balance</div>
-              <div className="text-xs text-blue-600">Needs, wants, savings!</div>
-            </div>
-            <Link href="/calculators/budget-builder">
-              <button className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-all text-sm">
-                Build Your Budget
-              </button>
-            </Link>
-          </div>
-
-          {/* Debt Payoff Calculator */}
-          <div className="group bg-gradient-to-br from-red-50 to-pink-100 rounded-xl p-6 border border-red-200 hover:shadow-lg transition-all transform hover:scale-105">
-            <div className="flex items-center mb-4">
-              <div className="bg-red-500 text-white p-3 rounded-lg mr-4 group-hover:bg-red-600 transition-colors">
-                <CreditCard className="w-6 h-6" />
+                <div className="text-2xl font-bold text-blue-300 mb-1">94%</div>
+                <div className="text-xs text-gray-400">30-Day Retention Rate</div>
               </div>
               <div>
-                <h4 className="text-lg font-bold text-red-900">Debt Destroyer</h4>
-                <p className="text-red-700 text-xs">Break Free</p>
+                <div className="text-2xl font-bold text-amber-300 mb-1">47</div>
+                <div className="text-xs text-gray-400">Countries Represented</div>
               </div>
             </div>
-            <p className="text-red-800 mb-4 leading-relaxed text-sm">
-              Compare avalanche vs snowball strategies to eliminate debt faster.
-            </p>
-            <div className="mb-4 bg-white bg-opacity-60 rounded-lg p-3">
-              <div className="text-xs text-red-700 mb-1">$25k debt + $200 extra</div>
-              <div className="text-xl font-bold text-red-900">5 Years Saved</div>
-              <div className="text-xs text-red-600">Thousands in interest!</div>
-            </div>
-            <Link href="/calculators/debt-payoff">
-              <button className="w-full bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600 transition-all text-sm">
-                Destroy Your Debt
-              </button>
+          </motion.div>
+        </motion.div>
+
+        {/* Final CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1, duration: 0.8 }}
+          className="text-center mb-20"
+        >
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+            className="text-3xl md:text-4xl font-bold mb-6"
+          >
+            <span className="bg-gradient-to-r from-white via-gray-200 to-gray-300 bg-clip-text text-transparent">
+              Ready to Transform Your
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-blue-400 bg-clip-text text-transparent">
+              Financial Future?
+            </span>
+          </motion.h3>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.3, duration: 0.6 }}
+            className="text-lg text-gray-400 max-w-2xl mx-auto mb-10"
+          >
+            Join thousands of learners who've gone from financial confusion to confidence.
+            Start your journey today and see measurable results in just weeks.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.6 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            <Link href="/chapter1">
+              <Button
+                size="lg"
+                className="group bg-gradient-to-r from-amber-500 via-blue-600 to-blue-700 hover:from-amber-600 hover:via-blue-700 hover:to-blue-800 text-white px-10 py-6 text-xl font-semibold shadow-2xl shadow-amber-500/25 hover:shadow-amber-500/40 transition-all duration-300 hover:-translate-y-1 border-0"
+              >
+                <Sparkles className="mr-3 w-6 h-6 group-hover:rotate-12 transition-transform" />
+                Start Learning Now
+                <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              </Button>
             </Link>
-          </div>
-        </div>
-
-        {/* Available & Coming Soon Calculators */}
-        <div className="mt-8 pt-6 border-t border-blue-200">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <Link href="/calculators/mortgage">
-              <div className="text-center bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-3 border border-green-200 hover:shadow-lg transition-all transform hover:scale-105 cursor-pointer">
-                <Building className="w-8 h-8 mx-auto mb-2 text-green-600" />
-                <p className="text-xs font-medium text-green-800">Mortgage Calculator</p>
-                <p className="text-xs text-green-600">✨ Now Available!</p>
-              </div>
+            <Link href="/progress">
+              <Button
+                size="lg"
+                className="group bg-white/10 hover:bg-white/20 text-white px-10 py-6 text-xl font-semibold border border-white/20 hover:border-white/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
+              >
+                <BarChart3 className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform" />
+                View Dashboard
+              </Button>
             </Link>
-            <Link href="/market">
-              <div className="text-center bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-3 border border-blue-200 hover:shadow-lg transition-all transform hover:scale-105 cursor-pointer">
-                <BarChart3 className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-                <p className="text-xs font-medium text-blue-800">Market Dashboard</p>
-                <p className="text-xs text-blue-600">🔥 Real-Time Data!</p>
-              </div>
-            </Link>
-            <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
-              <Umbrella className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-              <p className="text-xs font-medium text-gray-600">Retirement Planner</p>
-              <p className="text-xs text-gray-500">Coming Soon</p>
-            </div>
-            <div className="text-center bg-white bg-opacity-40 rounded-lg p-3">
-              <CreditCard className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-              <p className="text-xs font-medium text-gray-600">Auto Loan Calculator</p>
-              <p className="text-xs text-gray-500">Coming Soon</p>
-            </div>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        </motion.div>
+      </main>
 
-      {/* AI-Powered Features Section */}
-      <InteractiveCard className="premium-card bg-gradient-to-r from-purple-50 to-indigo-100 rounded-2xl shadow-xl p-8 mb-16 border border-purple-200">
-        <div className="text-center mb-8">
-          <h3 className="text-3xl font-bold text-gray-900 mb-4 font-space gradient-text-premium flex items-center justify-center gap-3">
-            <Brain className="w-8 h-8 text-purple-600" />
-            AI-Powered Learning Experience
-          </h3>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto font-inter">
-            Unlike other platforms with simulated chatbots, we use real OpenAI GPT-4o-mini for personalized financial coaching
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <InteractiveCard className="premium-card rounded-xl p-6 shadow-lg border border-purple-100" glowColor="rgba(147, 51, 234, 0.3)">
-            <div className="bg-gradient-to-br from-purple-100 to-purple-200 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-              <Brain className="w-6 h-6 text-purple-600" />
-            </div>
-            <h4 className="text-lg font-bold text-gray-900 mb-2 font-space">Contextual AI Coaching</h4>
-            <p className="text-gray-600 text-sm leading-relaxed font-inter">
-              Our AI knows your learning progress, quiz scores, and struggling topics to provide personalized guidance exactly when you need it.
-            </p>
-          </InteractiveCard>
-
-          <InteractiveCard className="premium-card rounded-xl p-6 shadow-lg border border-purple-100" glowColor="rgba(59, 130, 246, 0.3)">
-            <div className="bg-gradient-to-br from-blue-100 to-blue-200 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-              <BarChart3 className="w-6 h-6 text-blue-600" />
-            </div>
-            <h4 className="text-lg font-bold text-gray-900 mb-2 font-space">Progress Tracking</h4>
-            <p className="text-gray-600 text-sm leading-relaxed font-inter">
-              Every lesson completed, calculator used, and quiz taken is tracked across sessions with persistent localStorage and analytics.
-            </p>
-          </InteractiveCard>
-
-          <InteractiveCard className="premium-card rounded-xl p-6 shadow-lg border border-purple-100" glowColor="rgba(34, 197, 94, 0.3)">
-            <div className="bg-gradient-to-br from-green-100 to-green-200 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-              <Sparkles className="w-6 h-6 text-green-600" />
-            </div>
-            <h4 className="text-lg font-bold text-gray-900 mb-2 font-space">Smart Q&A System</h4>
-            <p className="text-gray-600 text-sm leading-relaxed font-inter">
-              Ask any financial question and get expert-level answers that adapt to your current learning level and progress.
-            </p>
-          </InteractiveCard>
-        </div>
-      </InteractiveCard>
-
-      {/* Enhanced Interactive Dashboard */}
-      <div className="mb-16">
-        <InteractiveDashboardCards />
-      </div>
-    </main>
-
-    {/* Guided Tour Component */}
-    {showGuidedTour && (
-      <GuidedTour
-        onComplete={() => setShowGuidedTour(false)}
-        onSkip={() => setShowGuidedTour(false)}
-      />
-    )}
-  </div>
+      {/* Guided Tour Component */}
+      {showGuidedTour && (
+        <GuidedTour
+          onComplete={() => setShowGuidedTour(false)}
+          onSkip={() => setShowGuidedTour(false)}
+        />
+      )}
+    </div>
   );
 }

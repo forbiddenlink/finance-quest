@@ -103,17 +103,31 @@ export default function ProgressNavigation() {
   ];
 
   return (
-    <nav className="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-slate-900 shadow-xl border-b border-slate-700 sticky top-0 z-50 backdrop-blur-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center h-16 gap-4">
-          {/* Logo and Title */}
+          {/* Enhanced Financial Logo */}
           <div className="flex items-center space-x-3 flex-shrink-0">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 rounded-lg">
-              <Zap className="w-6 h-6" />
+            <div className="relative">
+              {/* Modern Financial Logo */}
+              <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl shadow-lg flex items-center justify-center relative overflow-hidden">
+                {/* Background pattern */}
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 to-transparent"></div>
+                
+                {/* Logo icon - Dollar sign with growth chart */}
+                <svg viewBox="0 0 24 24" className="w-6 h-6 text-slate-900 relative z-10" fill="none">
+                  {/* Dollar sign base */}
+                  <path d="M12 2v20M8 6h8a4 4 0 0 1 0 8H8M8 10h8a4 4 0 0 1 0 8h-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  
+                  {/* Growth chart accent */}
+                  <path d="M3 15l3-3 2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7"/>
+                  <path d="M19 7l2 2-2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7"/>
+                </svg>
+              </div>
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-lg font-bold text-gray-900 whitespace-nowrap">Finance Quest</h1>
-              <p className="text-xs text-gray-500 whitespace-nowrap">Learning Journey</p>
+              <h1 className="text-lg font-bold text-white whitespace-nowrap">Finance Quest</h1>
+              <p className="text-xs text-amber-300 whitespace-nowrap">Master Your Future</p>
             </div>
           </div>
 
@@ -125,22 +139,22 @@ export default function ProgressNavigation() {
 
               const getButtonStyle = () => {
                 if (!item.isAvailable) {
-                  return "bg-gray-100 text-gray-400 cursor-not-allowed";
+                  return "bg-slate-800 text-slate-500 cursor-not-allowed";
                 }
                 if (isActive) {
                   const colorMap = {
-                    blue: "bg-blue-100 text-blue-700 border-blue-200",
-                    green: "bg-green-100 text-green-700 border-green-200",
-                    purple: "bg-purple-100 text-purple-700 border-purple-200",
-                    orange: "bg-orange-100 text-orange-700 border-orange-200",
-                    cyan: "bg-cyan-100 text-cyan-700 border-cyan-200",
-                    red: "bg-red-100 text-red-700 border-red-200",
-                    pink: "bg-pink-100 text-pink-700 border-pink-200",
-                    indigo: "bg-indigo-100 text-indigo-700 border-indigo-200"
+                    blue: "bg-blue-900 text-blue-300 border-blue-700",
+                    green: "bg-green-900 text-green-300 border-green-700",
+                    purple: "bg-amber-900 text-amber-300 border-amber-700",
+                    orange: "bg-amber-900 text-amber-300 border-amber-700",
+                    cyan: "bg-blue-900 text-blue-300 border-blue-700",
+                    red: "bg-red-900 text-red-300 border-red-700",
+                    pink: "bg-amber-900 text-amber-300 border-amber-700",
+                    indigo: "bg-blue-900 text-blue-300 border-blue-700"
                   };
-                  return colorMap[item.color as keyof typeof colorMap] || "bg-gray-100 text-gray-700";
+                  return colorMap[item.color as keyof typeof colorMap] || "bg-slate-800 text-slate-300";
                 }
-                return "text-gray-600 hover:bg-gray-50 hover:text-gray-900";
+                return "text-slate-300 hover:bg-slate-800 hover:text-amber-300";
               };
 
               return (
@@ -150,7 +164,7 @@ export default function ProgressNavigation() {
                       relative px-3 py-2 rounded-lg border transition-all duration-200 text-sm font-medium
                       ${getButtonStyle()}
                       ${!item.isAvailable && 'pointer-events-none opacity-60'}
-                      ${isActive ? 'shadow-sm border' : 'border-transparent hover:border-gray-200'}
+                      ${isActive ? 'shadow-sm border' : 'border-transparent hover:border-slate-600'}
                     `}
                     disabled={!item.isAvailable}
                   >

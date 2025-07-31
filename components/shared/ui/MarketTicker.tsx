@@ -48,17 +48,17 @@ export default function MarketTicker() {
       try {
         const response = await fetch('/api/market-data?type=stocks');
         const result: MarketDataResponse = await response.json();
-        
+
         if (result.success && result.data) {
-          let stockArray: Array<{symbol: string; latestPrice: number; change: number; changePercent: number}> = [];
-          
+          let stockArray: Array<{ symbol: string; latestPrice: number; change: number; changePercent: number }> = [];
+
           // Handle different response formats
           if (Array.isArray(result.data)) {
             stockArray = result.data;
           } else if (result.data.stocks) {
             stockArray = result.data.stocks;
           }
-          
+
           if (stockArray.length > 0) {
             const formattedData: StockTicker[] = stockArray.map((stock) => ({
               symbol: stock.symbol || 'N/A',
@@ -66,7 +66,7 @@ export default function MarketTicker() {
               change: stock.change || 0,
               changePercent: (stock.changePercent || 0) * 100 // Convert decimal to percentage
             })).filter(stock => stock.symbol !== 'N/A' && stock.price > 0);
-            
+
             if (formattedData.length > 0) {
               setStockData(formattedData);
               setIsLive(result.source === 'live');
@@ -110,7 +110,7 @@ export default function MarketTicker() {
     };
 
     fetchMarketData();
-    
+
     // Update every 30 seconds
     const interval = setInterval(fetchMarketData, 30000);
     return () => clearInterval(interval);
@@ -138,81 +138,83 @@ export default function MarketTicker() {
   const currentStock = stockData[currentIndex];
   if (!currentStock) {
     return (
-      <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-4 rounded-lg shadow-lg animate-pulse">
-        <div className="h-16 bg-slate-700 rounded"></div>
+      <div className="bg-gradient-to-r from-slate-800 via-blue-900 to-slate-800 text-white rounded-xl shadow-lg border border-amber-500/20 min-w-[280px] max-w-[320px] animate-pulse">
+        <div className="p-3">
+          <div className="h-4 bg-slate-700 rounded mb-2"></div>
+          <div className="h-6 bg-slate-700 rounded"></div>
+        </div>
       </div>
     );
   }
-  
+
   const isPositive = (currentStock.change || 0) >= 0;
 
   return (
-    <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-4 rounded-lg shadow-lg overflow-hidden relative">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="w-full h-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 animate-gradient"></div>
+    <div className="bg-gradient-to-r from-slate-800 via-blue-900 to-slate-800 text-white rounded-xl shadow-lg overflow-hidden relative border border-amber-500/20 min-w-[280px] max-w-[320px]">
+      {/* Subtle Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="w-full h-full bg-gradient-to-r from-amber-500/30 to-blue-500/30"></div>
       </div>
 
-      <div className="relative z-10">
-        <div className="flex items-center justify-between mb-2">
+      <div className="relative z-10 p-3">
+        {/* Header Row */}
+        <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-2">
-            <DollarSign className="w-5 h-5 text-green-400" />
-            <span className="text-sm text-gray-300 font-medium">Market Pulse</span>
+            <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+            <span className="text-xs text-amber-300 font-semibold">Market Pulse</span>
             {isLive ? (
-              <Wifi className="w-4 h-4 text-green-400" />
+              <Wifi className="w-3 h-3 text-amber-400" />
             ) : (
-              <WifiOff className="w-4 h-4 text-yellow-400" />
+              <WifiOff className="w-3 h-3 text-amber-400/60" />
             )}
           </div>
-          <div className="text-xs text-gray-400">
-            {isLive ? 'Live' : 'Demo'} • {new Date().toLocaleTimeString()}
+          <div className="text-xs text-slate-400">
+            {isLive ? 'Live' : 'Demo'}
           </div>
         </div>
 
-        <div className="flex items-center justify-between animate-fade-in-up">
-          <div>
-            <div className="text-2xl font-bold text-white mb-1">
+        {/* Main Content Row */}
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <div className="text-lg font-bold text-white tracking-wider">
               {currentStock.symbol}
             </div>
-            <div className="text-lg font-semibold">
-              ${(currentStock.price || 0).toLocaleString()}
+            <div className="text-sm font-semibold text-slate-300">
+              ${(currentStock.price || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
             </div>
           </div>
 
-          <div className={`flex items-center space-x-2 px-3 py-2 rounded-lg ${isPositive
-              ? 'bg-green-500/20 text-green-400'
-              : 'bg-red-500/20 text-red-400'
+          <div className={`flex items-center space-x-1 px-2 py-1 rounded-lg text-xs font-medium ${isPositive
+            ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20'
+            : 'bg-red-500/15 text-red-400 border border-red-500/20'
             }`}>
             {isPositive ? (
-              <TrendingUp className="w-4 h-4" />
+              <TrendingUp className="w-3 h-3" />
             ) : (
-              <TrendingDown className="w-4 h-4" />
+              <TrendingDown className="w-3 h-3" />
             )}
-            <span className="font-semibold">
+            <span>
               {isPositive ? '+' : ''}{(currentStock.change || 0).toFixed(2)}
             </span>
-            <span className="text-sm">
-              ({isPositive ? '+' : ''}{(currentStock.changePercent || 0).toFixed(2)}%)
+            <span className="text-xs opacity-80">
+              ({isPositive ? '+' : ''}{(currentStock.changePercent || 0).toFixed(1)}%)
             </span>
           </div>
         </div>
 
-        {/* Progress Dots */}
-        <div className="flex space-x-1 mt-3 justify-center">
+        {/* Progress Indicators */}
+        <div className="flex space-x-1 mt-2 justify-center">
           {stockData.map((_, index) => (
             <div
               key={index}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentIndex
-                  ? 'bg-blue-400 w-6'
-                  : 'bg-gray-600'
+              className={`h-1 rounded-full transition-all duration-300 ${index === currentIndex
+                ? 'bg-amber-400 w-4'
+                : 'bg-slate-600 w-2'
                 }`}
             />
           ))}
         </div>
       </div>
-
-      {/* Animated Border */}
-      <div className="absolute inset-0 rounded-lg border-2 border-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 animate-gradient opacity-50"></div>
     </div>
   );
 }
