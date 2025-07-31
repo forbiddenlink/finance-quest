@@ -92,7 +92,7 @@ export default function Chapter5Page() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-amber-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-amber-600 transition-colors"
+              className={`${theme.buttons.primary} px-6 py-3 rounded-lg font-semibold transition-colors`}
             >
               Continue Chapter 4
             </motion.button>
@@ -113,19 +113,19 @@ export default function Chapter5Page() {
       />
 
       {/* Header */}
-      <div className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20 sticky top-0 z-10">
+      <div className={`${theme.backgrounds.header} border-b border-amber-500/20 sticky top-0 z-10`}>
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Shield className="w-8 h-8 text-amber-400" />
               <div>
-                <h1 className="text-2xl font-bold text-white">Chapter 5: Emergency Funds & Financial Safety</h1>
-                <p className="text-sm text-gray-300">Building your financial fortress against life&apos;s uncertainties</p>
+                <h1 className={`${theme.typography.heading2} ${theme.textColors.primary}`}>Chapter 5: Emergency Funds & Financial Safety</h1>
+                <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>Building your financial fortress against life&apos;s uncertainties</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <ProgressRing progress={chapterProgress} size={50} />
-              <span className="text-sm font-medium text-gray-300">{chapterProgress}% Complete</span>
+              <span className={`${theme.typography.small} font-medium ${theme.textColors.secondary}`}>{chapterProgress}% Complete</span>
             </div>
           </div>
         </div>
@@ -136,11 +136,11 @@ export default function Chapter5Page() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-8 mb-8"
+          className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl shadow-lg ${theme.spacing.lg} mb-8`}
         >
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-white mb-4">Your Financial Safety Net</h2>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+            <h2 className={`${theme.typography.heading1} ${theme.textColors.primary} mb-4`}>Your Financial Safety Net</h2>
+            <p className={`text-lg ${theme.textColors.secondary} max-w-3xl mx-auto`}>
               Emergency funds aren&apos;t just savings—they&apos;re peace of mind, freedom from debt cycles, and the foundation
               of every successful financial plan. Learn how to build and maintain the safety net that protects your dreams.
             </p>

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useEnhancedProgress } from '@/lib/store/progressHooks';
+import { theme } from '@/lib/theme';
 import {
     Star,
     TrendingUp,
@@ -116,13 +117,13 @@ export default function Chapter7Page() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="bg-white/5 backdrop-blur-xl border border-amber-500/20 rounded-2xl p-8"
+                        className={`${theme.backgrounds.card} border border-amber-500/20 rounded-2xl ${theme.spacing.lg}`}
                     >
                         <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                            <Lock className="w-8 h-8 text-white" />
+                            <Lock className={`w-8 h-8 ${theme.textColors.primary}`} />
                         </div>
-                        <h1 className="text-3xl font-bold text-white mb-4">Chapter 7: Credit Scores & Reports</h1>
-                        <p className="text-gray-400 mb-6">
+                        <h1 className={`${theme.typography.heading1} ${theme.textColors.primary} mb-4`}>Chapter 7: Credit Scores & Reports</h1>
+                        <p className={`${theme.textColors.muted} mb-6`}>
                             This advanced chapter is part of our Credit & Lending Track. Complete the Foundation Track first to unlock.
                         </p>
                         <div className="bg-amber-500/20 border border-amber-500/30 rounded-xl p-4 mb-6">
@@ -132,13 +133,13 @@ export default function Chapter7Page() {
                         </div>
                         <div className="flex items-center justify-center gap-4">
                             <Link href="/">
-                                <Button className="bg-gray-600 hover:bg-gray-700 text-white">
+                                <Button className={theme.buttons.secondary}>
                                     <ArrowLeft className="w-4 h-4 mr-2" />
                                     Back to Home
                                 </Button>
                             </Link>
                             <Link href="/chapter5">
-                                <Button className="bg-amber-600 hover:bg-amber-700 text-white">
+                                <Button className={theme.buttons.primary}>
                                     Continue Foundation Track
                                     <CheckCircle className="w-4 h-4 ml-2" />
                                 </Button>

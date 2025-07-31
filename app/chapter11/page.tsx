@@ -4,6 +4,7 @@ import { useState } from 'react';
 import PortfolioAnalyzerCalculator from '@/components/shared/calculators/PortfolioAnalyzerCalculator';
 import QASystem from '@/components/shared/QASystem';
 import { BookOpen, Calculator, FileText, Bot, TrendingUp, PieChart, Target, Award, Shield } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 type TabType = 'lesson' | 'calculator' | 'quiz' | 'assistant';
 
@@ -20,7 +21,7 @@ export default function Chapter11Page() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-blue-900">
             {/* Header */}
-            <header className="bg-slate-900/80 backdrop-blur-xl border-b border-emerald-500/20">
+            <header className={`${theme.backgrounds.header} border-b border-emerald-500/20`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
@@ -30,7 +31,7 @@ export default function Chapter11Page() {
                             >
                                 ← Back to Home
                             </button>
-                            <h1 className="text-2xl font-bold text-white">Chapter 11: Investment Fundamentals</h1>
+                            <h1 className={`${theme.typography.heading2} ${theme.textColors.primary}`}>Chapter 11: Investment Fundamentals</h1>
                         </div>
                         <div className="bg-emerald-500/20 border border-emerald-500/30 px-3 py-1 rounded-full backdrop-blur-sm">
                             <span className="text-sm font-medium text-emerald-300">Investment Track</span>
