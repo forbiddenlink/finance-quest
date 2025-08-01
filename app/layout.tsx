@@ -17,6 +17,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Finance Quest - Master Your Money, Master Your Future",
   description: "Learn financial literacy from zero to hero through interactive lessons, hands-on calculators, and real-world scenarios.",
+  icons: {
+    icon: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({

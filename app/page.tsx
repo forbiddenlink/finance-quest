@@ -82,23 +82,85 @@ export default function HomePage() {
       <ParticleSystem particleCount={30} />
 
       {/* Enhanced Header */}
-      <header className={`${theme.backgrounds.header} ${theme.borderColors.accent} border-b relative z-10`}>
+      <header className={`${theme.backgrounds.header} ${theme.borderColors.accent} border-b relative z-10 bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
-                <span className={`text-sm ${theme.textColors.accentSecondary} font-medium`}>Financial Literacy Platform</span>
+            {/* Left side - Platform info */}
+            <div className="flex items-center space-x-4 min-w-0 flex-1">
+              <div className="flex items-center space-x-2 group">
+                <div className="w-2.5 h-2.5 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full animate-pulse shadow-sm shadow-amber-400/50"></div>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
+                  <span className={`text-sm font-semibold tracking-wide ${theme.textColors.accentSecondary}`}>
+                    Financial Literacy Platform
+                  </span>
+                  <span className="hidden sm:block text-slate-500 text-xs">•</span>
+                  <span className="text-xs text-amber-400 font-medium">Live Learning Experience</span>
+                </div>
               </div>
-              <div className={`hidden md:flex items-center space-x-4 text-xs ${theme.textColors.muted}`}>
-                <span>Real-time Market Data</span>
-                <div className={`w-px h-4 ${theme.borderColors.muted}`}></div>
-                <span>AI-Powered Learning</span>
+              
+              {/* Feature badges - more compact design */}
+              <div className={`hidden lg:flex items-center space-x-3 text-xs ${theme.textColors.muted}`}>
+                <div className="flex items-center space-x-1.5 px-2.5 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg backdrop-blur-sm">
+                  <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
+                  <span className="text-blue-300 font-medium text-xs">Real-time Data</span>
+                </div>
+                <div className="flex items-center space-x-1.5 px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 rounded-lg backdrop-blur-sm">
+                  <div className="w-1.5 h-1.5 bg-amber-400 rounded-full"></div>
+                  <span className="text-amber-300 font-medium text-xs">AI Learning</span>
+                </div>
+                <div className="flex items-center space-x-1.5 px-2.5 py-1 bg-green-500/10 border border-green-500/20 rounded-lg backdrop-blur-sm">
+                  <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                  <span className="text-green-300 font-medium text-xs">Pro Tools</span>
+                </div>
+              </div>
+              
+              {/* Compact version for medium screens */}
+              <div className={`hidden md:flex lg:hidden items-center space-x-2 text-xs ${theme.textColors.muted}`}>
+                <span className="text-blue-300 text-xs">Live Data</span>
+                <div className={`w-px h-3 ${theme.borderColors.muted}`}></div>
+                <span className="text-amber-300 text-xs">AI Coaching</span>
+                <div className={`w-px h-3 ${theme.borderColors.muted}`}></div>
+                <span className="text-green-300 text-xs">Tools</span>
               </div>
             </div>
-            <div className="flex items-center space-x-6">
-              <MarketTicker />
-              <ProgressDisplay />
+            
+            {/* Right side - Market ticker and progress */}
+            <div className="flex items-center space-x-3 flex-shrink-0">
+              {/* Market ticker wrapper with enhanced styling */}
+              <div className="relative group">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500/20 to-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative">
+                  <MarketTicker />
+                </div>
+              </div>
+              
+              {/* Progress display wrapper */}
+              <div className="relative group">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500/20 to-amber-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative">
+                  <ProgressDisplay />
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Mobile-only feature badges - more compact */}
+          <div className="md:hidden mt-2.5 pt-2.5 border-t border-slate-700/30">
+            <div className="flex items-center justify-center space-x-2 text-xs">
+              <div className="flex items-center space-x-1">
+                <div className="w-1 h-1 bg-blue-400 rounded-full"></div>
+                <span className="text-blue-300 text-xs">Live Data</span>
+              </div>
+              <span className="text-slate-600 text-xs">•</span>
+              <div className="flex items-center space-x-1">
+                <div className="w-1 h-1 bg-amber-400 rounded-full"></div>
+                <span className="text-amber-300 text-xs">AI Coaching</span>
+              </div>
+              <span className="text-slate-600 text-xs">•</span>
+              <div className="flex items-center space-x-1">
+                <div className="w-1 h-1 bg-green-400 rounded-full"></div>
+                <span className="text-green-300 text-xs">Pro Tools</span>
+              </div>
             </div>
           </div>
         </div>

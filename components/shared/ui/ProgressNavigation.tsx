@@ -103,141 +103,136 @@ export default function ProgressNavigation() {
   ];
 
   return (
-    <nav className="bg-slate-900 shadow-xl border-b border-slate-700 sticky top-0 z-50 backdrop-blur-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center h-16 gap-4">
-          {/* Enhanced Financial Logo */}
+    <nav className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 shadow-2xl border-b border-slate-700/50 sticky top-0 z-50 backdrop-blur-lg">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
+        <div className="flex items-center justify-between h-14">
+          {/* Logo - True Left Alignment */}
           <div className="flex items-center space-x-3 flex-shrink-0">
-            <div className="relative">
-              {/* Modern Financial Logo */}
-              <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl shadow-lg flex items-center justify-center relative overflow-hidden">
-                {/* Background pattern */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 to-transparent"></div>
-
-                {/* Logo icon - Dollar sign with growth chart */}
-                <svg viewBox="0 0 24 24" className={`w-6 h-6 ${theme.textColors.primary} relative z-10`} fill="none">
-                  {/* Dollar sign base */}
-                  <path d="M12 2v20M8 6h8a4 4 0 0 1 0 8H8M8 10h8a4 4 0 0 1 0 8h-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-
-                  {/* Growth chart accent */}
-                  <path d="M3 15l3-3 2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
-                  <path d="M19 7l2 2-2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
+            <div className="relative group">
+              <div className="w-9 h-9 bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 border border-amber-500/30 rounded-lg shadow-lg flex items-center justify-center relative overflow-hidden transition-all duration-300 group-hover:scale-105 group-hover:border-amber-400/50">
+                {/* Subtle background glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent"></div>
+                
+                {/* Clean financial symbol */}
+                <svg viewBox="0 0 24 24" className="w-5 h-5 text-amber-400 relative z-10" fill="none" stroke="currentColor" strokeWidth="2">
+                  {/* Dollar sign with education element */}
+                  <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                  {/* Learning progress arc */}
+                  <path d="M8 3a9 9 0 0 1 8 8" strokeWidth="1.5" opacity="0.6" strokeLinecap="round"/>
                 </svg>
               </div>
             </div>
             <div className="hidden sm:block">
-              <h1 className={`text-lg font-bold ${theme.textColors.primary} whitespace-nowrap`}>Finance Quest</h1>
-              <p className={`${theme.typography.tiny} ${theme.textColors.accentSecondary} whitespace-nowrap`}>Master Your Future</p>
+              <h1 className="text-base font-bold text-amber-300 whitespace-nowrap">
+                Finance Quest
+              </h1>
             </div>
           </div>
 
-          {/* Navigation Items */}
-          <div className="hidden md:flex items-center space-x-1 flex-1 justify-center overflow-x-auto">
-            {navigationItems.map((item) => {
+          {/* Center Navigation */}
+          <div className="flex items-center space-x-3 flex-1 justify-center mx-8">
+            {/* Always show essential navigation */}
+            <Link href="/">
+              <button className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1.5 ${
+                isClient && pathname === '/' 
+                  ? 'bg-blue-600/90 text-blue-100 shadow-sm' 
+                  : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-300'
+              }`}>
+                <Home className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Home</span>
+              </button>
+            </Link>
+
+            {/* Chapter navigation - responsive */}
+            {navigationItems.slice(1, 4).map((item) => {
               const Icon = item.icon;
               const isActive = isClient && pathname === item.href;
-
-              const getButtonStyle = () => {
-                if (!item.isAvailable) {
-                  return "bg-slate-800 text-slate-500 cursor-not-allowed";
-                }
-                if (isActive) {
-                  const colorMap = {
-                    blue: "bg-blue-900 text-blue-300 border-blue-700",
-                    green: "bg-blue-900 text-blue-300 border-blue-700",
-                    purple: "bg-amber-900 text-amber-300 border-amber-700",
-                    orange: "bg-amber-900 text-amber-300 border-amber-700",
-                    cyan: "bg-blue-900 text-blue-300 border-blue-700",
-                    red: "bg-red-900 text-red-300 border-red-700",
-                    pink: "bg-amber-900 text-amber-300 border-amber-700",
-                    indigo: "bg-blue-900 text-blue-300 border-blue-700"
-                  };
-                  return colorMap[item.color as keyof typeof colorMap] || "bg-slate-800 text-slate-300";
-                }
-                return "text-slate-300 hover:bg-slate-800 hover:text-amber-300";
-              };
+              
+              if (!item.isAvailable) return (
+                <div key={item.name} className="px-3 py-2 rounded-lg text-xs text-slate-500 flex items-center space-x-1.5 opacity-50">
+                  <Lock className="w-3.5 h-3.5" />
+                  <span className="hidden md:inline text-xs">{item.name}</span>
+                </div>
+              );
 
               return (
                 <Link key={item.name} href={item.href}>
-                  <button
-                    className={`
-                      relative px-3 py-2 rounded-lg border transition-all duration-200 text-sm font-medium
-                      ${getButtonStyle()}
-                      ${!item.isAvailable && 'pointer-events-none opacity-60'}
-                      ${isActive ? 'shadow-sm border' : 'border-transparent hover:border-slate-600'}
-                    `}
-                    disabled={!item.isAvailable}
-                  >
-                    <div className="flex items-center space-x-2">
-                      {item.isAvailable ? (
-                        <Icon className="w-4 h-4" />
-                      ) : (
-                        <Lock className="w-4 h-4" />
-                      )}
-                      <span>{item.name}</span>
-
-                      {/* Progress indicator */}
-                      {item.progress !== undefined && item.progress > 0 && (
-                        <div className="flex items-center space-x-1">
-                          {item.progress === 100 ? (
-                            <CheckCircle className={`w-3 h-3 ${theme.status.info.text}`} />
-                          ) : (
-                            <div className="w-8 h-1">
-                              <Progress value={item.progress} className="h-1" />
-                            </div>
-                          )}
-                        </div>
-                      )}
-
-                      {/* Badge for counters */}
-                      {item.badge !== undefined && item.badge > 0 && (
-                        <Badge variant="secondary" className="ml-1 text-xs">
-                          {item.badge}
-                        </Badge>
-                      )}
-                    </div>
+                  <button className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1.5 relative ${
+                    isActive 
+                      ? 'bg-amber-600/90 text-amber-100 shadow-sm' 
+                      : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-300'
+                  }`}>
+                    <Icon className="w-3.5 h-3.5" />
+                    <span className="hidden md:inline whitespace-nowrap">{item.name}</span>
+                    {item.progress === 100 && (
+                      <CheckCircle className="w-2.5 h-2.5 text-current absolute -top-0.5 -right-0.5 bg-current rounded-full" />
+                    )}
                   </button>
                 </Link>
               );
             })}
           </div>
 
-          {/* Overall Progress Display */}
-          <div className="flex items-center space-x-2 flex-shrink-0">
-            <div className="text-right hidden xl:block">
-              <p className={`text-sm font-medium ${theme.textColors.primary}`}>Progress</p>
-              <p className="text-xs text-gray-500">{overallProgress}%</p>
-            </div>
-            <div className="relative w-10 h-10 flex-shrink-0">
-              <svg className="w-10 h-10 transform -rotate-90" viewBox="0 0 36 36">
+          {/* Right: Tools */}
+          <div className="hidden lg:flex items-center space-x-3 flex-shrink-0">
+            {navigationItems.slice(4).map((item) => {
+              const Icon = item.icon;
+              const isActive = isClient && pathname === item.href;
+              
+              if (!item.isAvailable) return null;
+
+              // Don't show badge for calculators
+              const shouldShowBadge = item.name !== 'Calculators' && item.badge && item.badge > 0;
+
+              return (
+                <Link key={item.name} href={item.href}>
+                  <button className={`px-2.5 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1.5 relative ${
+                    isActive 
+                      ? 'bg-blue-600/90 text-blue-100 shadow-sm' 
+                      : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-300'
+                  }`}>
+                    <Icon className="w-3.5 h-3.5" />
+                    <span className="whitespace-nowrap">{item.name}</span>
+                    {shouldShowBadge && (
+                      <span className="absolute -top-1 -right-1 bg-amber-500 text-slate-900 text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold text-xs leading-none">
+                        {item.badge}
+                      </span>
+                    )}
+                  </button>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Compact Progress Display */}
+          <div className="flex items-center space-x-3 flex-shrink-0">
+            <div className="relative w-9 h-9 group flex-shrink-0">
+              <svg className="w-9 h-9 transform -rotate-90 transition-transform duration-300 group-hover:scale-105" viewBox="0 0 36 36">
                 <path
-                  className="text-gray-200"
+                  className="text-slate-700"
                   stroke="currentColor"
                   strokeWidth="3"
                   fill="transparent"
-                  d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
                 <path
-                  className="text-blue-500"
+                  className="text-amber-500"
                   stroke="currentColor"
                   strokeWidth="3"
                   strokeDasharray={`${overallProgress}, 100`}
                   strokeLinecap="round"
                   fill="transparent"
-                  d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  style={{
+                    transition: 'stroke-dasharray 0.5s ease-in-out'
+                  }}
                 />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
                 {overallProgress >= 80 ? (
-                  <Star className={`w-5 h-5 ${theme.textColors.warning}`} />
-                ) : overallProgress >= 50 ? (
-                  <Trophy className={`w-4 h-4 ${theme.status.info.text}`} />
+                  <Star className="w-3.5 h-3.5 text-amber-400" />
                 ) : (
-                  <span className={`${theme.typography.tiny} font-bold ${theme.textColors.secondary}`}>{overallProgress}%</span>
+                  <span className="text-xs font-bold text-amber-400">{overallProgress}%</span>
                 )}
               </div>
             </div>
@@ -245,56 +240,31 @@ export default function ProgressNavigation() {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      <div className={`md:hidden border-t ${theme.borderColors.primary}`}>
-        <div className="px-4 py-3 space-y-2">
-          {navigationItems.slice(0, 4).map((item) => {
-            const Icon = item.icon;
-            const isActive = isClient && pathname === item.href;
-
-            const getMobileButtonStyle = () => {
-              if (!item.isAvailable) {
-                return "bg-gray-100 text-gray-400";
-              }
-              if (isActive) {
-                const colorMap = {
-                  blue: "bg-blue-100 text-blue-700",
-                  green: "bg-green-100 text-green-700",
-                  purple: "bg-purple-100 text-purple-700",
-                  orange: "bg-orange-100 text-orange-700"
-                };
-                return colorMap[item.color as keyof typeof colorMap] || "bg-gray-100 ${theme.textColors.secondary}";
-              }
-              return "${theme.textColors.secondary} hover:bg-gray-100";
-            };
-
-            return (
-              <Link key={item.name} href={item.href}>
-                <button
-                  className={`
-                    w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors
-                    ${getMobileButtonStyle()}
-                    ${!item.isAvailable && 'cursor-not-allowed opacity-60'}
-                  `}
-                  disabled={!item.isAvailable}
-                >
-                  <div className="flex items-center space-x-3 w-full">
-                    {item.isAvailable ? (
-                      <Icon className="w-5 h-5" />
-                    ) : (
-                      <Lock className="w-5 h-5" />
+      {/* Mobile Navigation Drawer */}
+      <div className="xl:hidden border-t border-slate-700/50 bg-slate-800/50 backdrop-blur-sm">
+        <div className="px-3 py-2">
+          <div className="flex items-center justify-center space-x-2 overflow-x-auto">
+            {navigationItems.slice(4).filter(item => item.isAvailable).map((item) => {
+              const Icon = item.icon;
+              const isActive = isClient && pathname === item.href;
+              
+              return (
+                <Link key={item.name} href={item.href}>
+                  <button className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1 whitespace-nowrap ${
+                    isActive 
+                      ? 'bg-blue-600/80 text-blue-100' 
+                      : 'text-slate-300 hover:bg-slate-700/60'
+                  }`}>
+                    <Icon className="w-3 h-3" />
+                    <span>{item.name}</span>
+                    {item.badge && item.badge > 0 && (
+                      <span className="bg-amber-400/20 text-amber-300 text-xs px-1 rounded">{item.badge}</span>
                     )}
-                    <span className="font-medium flex-1 text-left">{item.name}</span>
-                    {item.progress !== undefined && item.progress > 0 && (
-                      <Badge variant="outline" className="text-xs">
-                        {item.progress}%
-                      </Badge>
-                    )}
-                  </div>
-                </button>
-              </Link>
-            );
-          })}
+                  </button>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
     </nav>
