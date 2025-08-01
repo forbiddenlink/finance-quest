@@ -193,7 +193,7 @@ export default function BusinessCalculator() {
                                             placeholder="10000"
                                         />
                                     </div>
-                                    <p className="text-xs text-gray-600">Rent, salaries, insurance, etc.</p>
+                                    <p className="text-xs ${theme.textColors.secondary}">Rent, salaries, insurance, etc.</p>
                                 </div>
 
                                 <div className="space-y-2">
@@ -224,7 +224,7 @@ export default function BusinessCalculator() {
                                             placeholder="15"
                                         />
                                     </div>
-                                    <p className="text-xs text-gray-600">Materials, labor, shipping, etc.</p>
+                                    <p className="text-xs ${theme.textColors.secondary}">Materials, labor, shipping, etc.</p>
                                 </div>
 
                                 <Button 
@@ -262,18 +262,18 @@ export default function BusinessCalculator() {
                             <CardContent className="space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="text-center p-4 bg-navy-50 rounded-lg">
-                                        <div className="text-2xl font-bold text-navy-900">{Math.round(breakEvenUnits).toLocaleString()}</div>
+                                        <div className="${theme.typography.heading2} text-navy-900">{Math.round(breakEvenUnits).toLocaleString()}</div>
                                         <div className="text-sm text-navy-700">Units to Break Even</div>
                                     </div>
-                                    <div className="text-center p-4 bg-green-50 rounded-lg">
-                                        <div className="text-2xl font-bold text-green-900">${breakEvenRevenue.toLocaleString()}</div>
-                                        <div className="text-sm text-green-700">Break-even Revenue</div>
+                                    <div className="text-center p-4 ${theme.status.success.bg} rounded-lg">
+                                        <div className="${theme.typography.heading2} ${theme.status.success.text}">${breakEvenRevenue.toLocaleString()}</div>
+                                        <div className="text-sm ${theme.textColors.secondary}">Break-even Revenue</div>
                                     </div>
                                 </div>
 
-                                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                                <div className="${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4">
                                     <h4 className="font-medium text-yellow-900 mb-2">💡 What This Means</h4>
-                                    <p className="text-sm text-yellow-800">
+                                    <p className="text-sm ${theme.status.warning.text}">
                                         You need to sell <strong>{Math.round(breakEvenUnits)} units</strong> per month to cover all your costs.
                                         Every unit sold beyond this point contributes <strong>${contributionMargin.toFixed(2)}</strong> to profit.
                                     </p>
@@ -282,9 +282,9 @@ export default function BusinessCalculator() {
                                 <div className="h-64">
                                     <ResponsiveContainer width="100%" height="100%">
                                         <BarChart data={breakEvenChartData.slice(0, 11)}>
-                                            <CartesianGrid strokeDasharray="3 3" />
-                                            <XAxis dataKey="units" />
-                                            <YAxis />
+                                            <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
+                                            <XAxis dataKey="units"  tick={{ fill: "#94a3b8" }} />
+                                            <YAxis  tick={{ fill: "#94a3b8" }} />
                                             <Tooltip
                                                 formatter={(value: number, name: string) => [
                                                     `$${value.toLocaleString()}`,
@@ -440,15 +440,15 @@ export default function BusinessCalculator() {
                                             <div className="text-sm text-navy-700">Current Ratio</div>
                                             <div className="text-xs text-navy-600">Should be &gt; 1.5</div>
                                         </div>
-                                        <div className="text-center p-4 bg-green-50 rounded-lg">
-                                            <div className="text-xl font-bold text-green-900">${workingCapital.toLocaleString()}</div>
-                                            <div className="text-sm text-green-700">Working Capital</div>
-                                            <div className="text-xs text-green-600">Should be positive</div>
+                                        <div className="text-center p-4 ${theme.status.success.bg} rounded-lg">
+                                            <div className="text-xl font-bold ${theme.status.success.text}">${workingCapital.toLocaleString()}</div>
+                                            <div className="text-sm ${theme.textColors.secondary}">Working Capital</div>
+                                            <div className="text-xs text-green-400">Should be positive</div>
                                         </div>
-                                        <div className="text-center p-4 bg-purple-50 rounded-lg">
-                                            <div className="text-xl font-bold text-purple-900">{debtToEquityRatio.toFixed(2)}</div>
+                                        <div className="text-center p-4 bg-purple-500/20 rounded-lg">
+                                            <div className="text-xl font-bold text-purple-400">{debtToEquityRatio.toFixed(2)}</div>
                                             <div className="text-sm text-purple-700">Debt-to-Equity</div>
-                                            <div className="text-xs text-purple-600">Lower is better</div>
+                                            <div className="text-xs text-purple-400">Lower is better</div>
                                         </div>
                                         <div className="text-center p-4 bg-orange-50 rounded-lg">
                                             <div className="text-xl font-bold text-orange-900">{grossMargin.toFixed(1)}%</div>
@@ -497,7 +497,7 @@ export default function BusinessCalculator() {
                                                     }}
                                                 />
                                             </div>
-                                            <div className="text-xs text-gray-600">
+                                            <div className="text-xs ${theme.textColors.secondary}">
                                                 Current: {indicator.name === 'Profitability' ? `${indicator.value.toFixed(1)}%` : indicator.value.toFixed(2)}
                                             </div>
                                         </div>
@@ -619,13 +619,13 @@ export default function BusinessCalculator() {
                                 <div className="space-y-3">
                                     <div className="flex justify-between">
                                         <span className="text-sm font-medium">Monthly Cash Flow:</span>
-                                        <span className={`font-bold ${monthlyRevenue - monthlyExpenses >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                        <span className={`font-bold ${monthlyRevenue - monthlyExpenses >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                                             ${(monthlyRevenue - monthlyExpenses).toLocaleString()}
                                         </span>
                                     </div>
                                     <div className="flex justify-between">
                                         <span className="text-sm font-medium">Annual Cash Flow:</span>
-                                        <span className={`font-bold ${(monthlyRevenue - monthlyExpenses) * 12 >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                        <span className={`font-bold ${(monthlyRevenue - monthlyExpenses) * 12 >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                                             ${((monthlyRevenue - monthlyExpenses) * 12).toLocaleString()}
                                         </span>
                                     </div>
@@ -661,9 +661,9 @@ export default function BusinessCalculator() {
                                 <div className="h-80">
                                     <ResponsiveContainer width="100%" height="100%">
                                         <BarChart data={cashFlowData}>
-                                            <CartesianGrid strokeDasharray="3 3" />
-                                            <XAxis dataKey="month" />
-                                            <YAxis />
+                                            <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
+                                            <XAxis dataKey="month"  tick={{ fill: "#94a3b8" }} />
+                                            <YAxis  tick={{ fill: "#94a3b8" }} />
                                             <Tooltip
                                                 formatter={(value: number, name: string) => [
                                                     `$${value.toLocaleString()}`,
@@ -678,11 +678,11 @@ export default function BusinessCalculator() {
                                 </div>
 
                                 <div className="mt-4 grid grid-cols-2 gap-4">
-                                    <div className="text-center p-3 bg-green-50 rounded-lg">
-                                        <div className="text-lg font-bold text-green-900">
+                                    <div className="text-center p-3 ${theme.status.success.bg} rounded-lg">
+                                        <div className="text-lg font-bold ${theme.status.success.text}">
                                             ${Math.max(...cashFlowData.map(d => d.cumulativeCash)).toLocaleString()}
                                         </div>
-                                        <div className="text-sm text-green-700">Peak Cash Balance</div>
+                                        <div className="text-sm ${theme.textColors.secondary}">Peak Cash Balance</div>
                                     </div>
                                     <div className="text-center p-3 bg-orange-50 rounded-lg">
                                         <div className="text-lg font-bold text-orange-900">

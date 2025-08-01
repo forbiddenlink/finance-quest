@@ -87,50 +87,50 @@ export default function MortgageCalculator() {
                     animate={{ opacity: 1, x: 0 }}
                     className="space-y-6"
                 >
-                    <div className="bg-white rounded-xl shadow-lg p-6">
+                    <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6">
                         <div className="flex items-center gap-3 mb-6">
-                            <Calculator className="w-6 h-6 text-blue-600" />
-                            <h2 className="text-xl font-semibold text-gray-800">Mortgage Details</h2>
+                            <Calculator className="w-6 h-6 text-blue-400" />
+                            <h2 className="${theme.typography.heading4} ${theme.textColors.primary}">Mortgage Details</h2>
                         </div>
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                                     Home Price
                                 </label>
                                 <div className="relative">
-                                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}">$</span>
                                     <input
                                         type="number"
                                         value={homePrice}
                                         onChange={(e) => setHomePrice(e.target.value)}
-                                        className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                                         placeholder="400,000"
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                                     Down Payment
                                 </label>
                                 <div className="relative">
-                                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}">$</span>
                                     <input
                                         type="number"
                                         value={downPayment}
                                         onChange={(e) => setDownPayment(e.target.value)}
-                                        className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                                         placeholder="80,000"
                                     />
                                 </div>
-                                <p className="text-sm text-gray-500 mt-1">
+                                <p className="text-sm ${theme.textColors.muted} mt-1">
                                     {downPaymentPercent.toFixed(1)}% of home price
                                 </p>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                                     Interest Rate
                                 </label>
                                 <div className="relative">
@@ -139,21 +139,21 @@ export default function MortgageCalculator() {
                                         step="0.1"
                                         value={interestRate}
                                         onChange={(e) => setInterestRate(e.target.value)}
-                                        className="w-full pr-8 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full pr-8 pl-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                                         placeholder="6.5"
                                     />
-                                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">%</span>
+                                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}">%</span>
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                                     Loan Term
                                 </label>
                                 <select
                                     value={loanTerm}
                                     onChange={(e) => setLoanTerm(e.target.value)}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    className="w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                                 >
                                     <option value="15">15 years</option>
                                     <option value="30">30 years</option>
@@ -163,37 +163,37 @@ export default function MortgageCalculator() {
                     </div>
 
                     {/* Additional Costs */}
-                    <div className="bg-white rounded-xl shadow-lg p-6">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">Additional Monthly Costs</h3>
+                    <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6">
+                        <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4">Additional Monthly Costs</h3>
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                                     Property Tax (monthly)
                                 </label>
                                 <div className="relative">
-                                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}">$</span>
                                     <input
                                         type="number"
                                         value={propertyTax}
                                         onChange={(e) => setPropertyTax(e.target.value)}
-                                        className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                                         placeholder="500"
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                                     Home Insurance (monthly)
                                 </label>
                                 <div className="relative">
-                                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}">$</span>
                                     <input
                                         type="number"
                                         value={insurance}
                                         onChange={(e) => setInsurance(e.target.value)}
-                                        className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                                         placeholder="200"
                                     />
                                 </div>
@@ -201,16 +201,16 @@ export default function MortgageCalculator() {
 
                             {downPaymentPercent < 20 && (
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                                         PMI (Private Mortgage Insurance)
                                     </label>
                                     <div className="relative">
-                                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}">$</span>
                                         <input
                                             type="number"
                                             value={pmi}
                                             onChange={(e) => setPmi(e.target.value)}
-                                            className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            className="w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                                             placeholder="150"
                                         />
                                     </div>
@@ -221,16 +221,16 @@ export default function MortgageCalculator() {
                             )}
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                                     Monthly Income (for affordability)
                                 </label>
                                 <div className="relative">
-                                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}">$</span>
                                     <input
                                         type="number"
                                         value={monthlyIncome}
                                         onChange={(e) => setMonthlyIncome(e.target.value)}
-                                        className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                                         placeholder="8,000"
                                     />
                                 </div>
@@ -247,30 +247,30 @@ export default function MortgageCalculator() {
                 >
                     {result && (
                         <>
-                            <div className="bg-white rounded-xl shadow-lg p-6">
+                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6">
                                 <div className="flex items-center gap-3 mb-6">
-                                    <Home className="w-6 h-6 text-green-600" />
-                                    <h2 className="text-xl font-semibold text-gray-800">Payment Breakdown</h2>
+                                    <Home className="w-6 h-6 text-green-400" />
+                                    <h2 className="${theme.typography.heading4} ${theme.textColors.primary}">Payment Breakdown</h2>
                                 </div>
 
                                 <div className="space-y-4">
-                                    <div className="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
-                                        <span className="font-medium text-gray-700">Total Monthly Payment</span>
-                                        <span className="text-2xl font-bold text-blue-600">
+                                    <div className="flex justify-between items-center p-4 ${theme.status.info.bg} rounded-lg">
+                                        <span className="font-medium ${theme.textColors.primary}">Total Monthly Payment</span>
+                                        <span className="${theme.typography.heading2} text-blue-400">
                                             ${result.monthlyPayment.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                                         </span>
                                     </div>
 
-                                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                        <span className="text-gray-600">Total Interest Over Life of Loan</span>
-                                        <span className="font-semibold text-gray-800">
+                                    <div className="flex justify-between items-center p-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg">
+                                        <span className="${theme.textColors.secondary}">Total Interest Over Life of Loan</span>
+                                        <span className="font-semibold ${theme.textColors.primary}">
                                             ${result.totalInterest.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                                         </span>
                                     </div>
 
-                                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                        <span className="text-gray-600">Total Cost of Home</span>
-                                        <span className="font-semibold text-gray-800">
+                                    <div className="flex justify-between items-center p-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg">
+                                        <span className="${theme.textColors.secondary}">Total Cost of Home</span>
+                                        <span className="font-semibold ${theme.textColors.primary}">
                                             ${result.totalCost.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                                         </span>
                                     </div>
@@ -278,22 +278,22 @@ export default function MortgageCalculator() {
                             </div>
 
                             {/* Affordability Analysis */}
-                            <div className="bg-white rounded-xl shadow-lg p-6">
+                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6">
                                 <div className="flex items-center gap-3 mb-4">
-                                    <TrendingUp className="w-6 h-6 text-purple-600" />
-                                    <h3 className="text-lg font-semibold text-gray-800">Affordability Analysis</h3>
+                                    <TrendingUp className="w-6 h-6 text-purple-400" />
+                                    <h3 className="${theme.typography.heading4} ${theme.textColors.primary}">Affordability Analysis</h3>
                                 </div>
 
                                 <div className="space-y-4">
                                     <div className={`p-4 rounded-lg border-2 ${result.affordabilityRatio <= 28
-                                            ? 'border-green-200 bg-green-50'
+                                            ? '${theme.status.success.border} ${theme.status.success.bg}'
                                             : result.affordabilityRatio <= 36
-                                                ? 'border-yellow-200 bg-yellow-50'
-                                                : 'border-red-200 bg-red-50'
+                                                ? '${theme.status.warning.border} ${theme.status.warning.bg}'
+                                                : '${theme.status.error.border} ${theme.status.error.bg}'
                                         }`}>
                                         <div className="flex items-center gap-2 mb-2">
                                             {result.affordabilityRatio <= 28 ? (
-                                                <CheckCircle className="w-5 h-5 text-green-600" />
+                                                <CheckCircle className="w-5 h-5 text-green-400" />
                                             ) : (
                                                 <AlertTriangle className="w-5 h-5 text-yellow-600" />
                                             )}
@@ -302,10 +302,10 @@ export default function MortgageCalculator() {
                                             </span>
                                         </div>
                                         <p className={`text-sm ${result.affordabilityRatio <= 28
-                                                ? 'text-green-700'
+                                                ? '${theme.textColors.secondary}'
                                                 : result.affordabilityRatio <= 36
-                                                    ? 'text-yellow-700'
-                                                    : 'text-red-700'
+                                                    ? '${theme.textColors.secondary}'
+                                                    : '${theme.textColors.secondary}'
                                             }`}>
                                             {result.affordabilityRatio <= 28
                                                 ? 'Excellent! Well within recommended limits.'
@@ -315,7 +315,7 @@ export default function MortgageCalculator() {
                                         </p>
                                     </div>
 
-                                    <div className="text-sm text-gray-600 space-y-1">
+                                    <div className="text-sm ${theme.textColors.secondary} space-y-1">
                                         <p>• Ideal: Housing costs ≤ 28% of gross income</p>
                                         <p>• Maximum: Housing costs ≤ 36% of gross income</p>
                                         <p>• This includes principal, interest, taxes, and insurance</p>
@@ -325,8 +325,8 @@ export default function MortgageCalculator() {
 
                             {/* Tips */}
                             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6">
-                                <h3 className="text-lg font-semibold text-gray-800 mb-4">💡 Smart Home Buying Tips</h3>
-                                <div className="space-y-2 text-sm text-gray-700">
+                                <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4">💡 Smart Home Buying Tips</h3>
+                                <div className="space-y-2 text-sm ${theme.textColors.primary}">
                                     <p>• Aim for 20% down payment to avoid PMI</p>
                                     <p>• Get pre-approved before house hunting</p>
                                     <p>• Factor in maintenance costs (1-3% of home value annually)</p>

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { TrendingUp, Target, CreditCard, Calendar } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 
 interface CreditFactor {
     name: string;
@@ -199,7 +200,7 @@ export default function CreditScoreSimulator() {
             <div className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
                 <div className="max-w-7xl mx-auto px-4 py-6">
                     <div className="text-center">
-                        <h2 className="text-3xl font-bold text-white mb-2 flex items-center justify-center gap-3">
+                        <h2 className="${theme.typography.heading2} text-white mb-2 flex items-center justify-center gap-3">
                             <CreditCard className="w-8 h-8 text-amber-400" />
                             Credit Score Simulator
                         </h2>
@@ -215,8 +216,8 @@ export default function CreditScoreSimulator() {
                     {/* Input Controls */}
                     <div className="xl:col-span-1 space-y-6">
                         {/* Current Credit Profile */}
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="text-lg font-semibold text-white mb-4">Current Credit Profile</h3>
+                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+                            <h3 className="${theme.typography.heading4} text-white mb-4">Current Credit Profile</h3>
 
                             <div className="space-y-4">
                                 <div>
@@ -309,8 +310,8 @@ export default function CreditScoreSimulator() {
                         </div>
 
                         {/* Target Profile */}
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="text-lg font-semibold text-white mb-4">Target Improvements</h3>
+                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+                            <h3 className="${theme.typography.heading4} text-white mb-4">Target Improvements</h3>
 
                             <div className="space-y-4">
                                 <div>
@@ -322,7 +323,7 @@ export default function CreditScoreSimulator() {
                                             onChange={(e) => setTargetPaymentHistory(e.target.value)}
                                             min="0"
                                             max="100"
-                                            className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                                         />
                                         <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">%</span>
                                     </div>
@@ -337,7 +338,7 @@ export default function CreditScoreSimulator() {
                                             onChange={(e) => setTargetUtilization(e.target.value)}
                                             min="0"
                                             max="100"
-                                            className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                                         />
                                         <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">%</span>
                                     </div>
@@ -353,7 +354,7 @@ export default function CreditScoreSimulator() {
                                             min="0"
                                             max="30"
                                             step="0.5"
-                                            className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                                         />
                                         <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">years</span>
                                     </div>
@@ -364,7 +365,7 @@ export default function CreditScoreSimulator() {
                                     <select
                                         value={targetCreditMix}
                                         onChange={(e) => setTargetCreditMix(e.target.value)}
-                                        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                                     >
                                         <option value="1">1 type</option>
                                         <option value="2">2 types</option>
@@ -381,7 +382,7 @@ export default function CreditScoreSimulator() {
                                         onChange={(e) => setTargetNewCredit(e.target.value)}
                                         min="0"
                                         max="10"
-                                        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                                     />
                                 </div>
                             </div>
@@ -392,31 +393,31 @@ export default function CreditScoreSimulator() {
                     <div className="xl:col-span-2 space-y-8">
                         {/* Score Comparison */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center">
+                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center">
                                 <Target className="w-8 h-8 mx-auto mb-3 text-amber-400" />
-                                <h3 className="text-lg font-semibold text-white">Current Score</h3>
-                                <p className={`text-3xl font-bold ${getScoreColor(currentScore)}`}>{currentScore}</p>
+                                <h3 className="${theme.typography.heading4} text-white">Current Score</h3>
+                                <p className={`${theme.typography.heading2} ${getScoreColor(currentScore)}`}>{currentScore}</p>
                                 <p className="text-sm text-gray-300">{getScoreGrade(currentScore)}</p>
                             </div>
 
-                            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center">
+                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center">
                                 <TrendingUp className="w-8 h-8 mx-auto mb-3 text-blue-400" />
-                                <h3 className="text-lg font-semibold text-white">Projected Score</h3>
-                                <p className={`text-3xl font-bold ${getScoreColor(projectedScore)}`}>{projectedScore}</p>
+                                <h3 className="${theme.typography.heading4} text-white">Projected Score</h3>
+                                <p className={`${theme.typography.heading2} ${getScoreColor(projectedScore)}`}>{projectedScore}</p>
                                 <p className="text-sm text-gray-300">{getScoreGrade(projectedScore)}</p>
                             </div>
 
-                            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center">
+                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center">
                                 <Calendar className="w-8 h-8 mx-auto mb-3 text-slate-400" />
-                                <h3 className="text-lg font-semibold text-white">Time to Goal</h3>
-                                <p className="text-3xl font-bold text-slate-300">{timeToTarget}</p>
+                                <h3 className="${theme.typography.heading4} text-white">Time to Goal</h3>
+                                <p className="${theme.typography.heading2} text-slate-300">{timeToTarget}</p>
                                 <p className="text-sm text-gray-300">months</p>
                             </div>
                         </div>
 
                         {/* Score Improvement Chart */}
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="text-lg font-semibold text-white mb-4">Credit Score Projection</h3>
+                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+                            <h3 className="${theme.typography.heading4} text-white mb-4">Credit Score Projection</h3>
                             <div className="h-64">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <LineChart data={monthlyProjections}>
@@ -425,11 +426,13 @@ export default function CreditScoreSimulator() {
                                             dataKey="month"
                                             stroke="#9CA3AF"
                                             label={{ value: 'Months', position: 'insideBottom', offset: -5 }}
+                                            tick={{ fill: "#94a3b8" }}
                                         />
                                         <YAxis
                                             stroke="#9CA3AF"
                                             domain={[300, 850]}
                                             label={{ value: 'Credit Score', angle: -90, position: 'insideLeft' }}
+                                            tick={{ fill: "#94a3b8" }}
                                         />
                                         <Tooltip
                                             contentStyle={{
@@ -441,7 +444,7 @@ export default function CreditScoreSimulator() {
                                         <Line
                                             type="monotone"
                                             dataKey="score"
-                                            stroke="#3B82F6"
+                                            stroke="#60a5fa"
                                             strokeWidth={3}
                                             dot={{ fill: '#3B82F6', strokeWidth: 2, r: 4 }}
                                         />
@@ -451,8 +454,8 @@ export default function CreditScoreSimulator() {
                         </div>
 
                         {/* Factor Impact Analysis */}
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="text-lg font-semibold text-white mb-4">Impact by Factor</h3>
+                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+                            <h3 className="${theme.typography.heading4} text-white mb-4">Impact by Factor</h3>
                             <div className="h-64">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={creditFactors}>
@@ -463,10 +466,12 @@ export default function CreditScoreSimulator() {
                                             angle={-45}
                                             textAnchor="end"
                                             height={80}
+                                            tick={{ fill: "#94a3b8" }}
                                         />
                                         <YAxis
                                             stroke="#9CA3AF"
                                             label={{ value: 'Point Impact', angle: -90, position: 'insideLeft' }}
+                                            tick={{ fill: "#94a3b8" }}
                                         />
                                         <Tooltip
                                             contentStyle={{
@@ -475,7 +480,7 @@ export default function CreditScoreSimulator() {
                                                 borderRadius: '8px'
                                             }}
                                         />
-                                        <Bar dataKey="impact" fill="#8B5CF6" />
+                                        <Bar dataKey="impact" fill="#8b5cf6" />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
@@ -484,13 +489,13 @@ export default function CreditScoreSimulator() {
                 </div>
 
                 {/* Action Steps */}
-                <div className="mt-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                    <h3 className="text-lg font-semibold text-white mb-4">🎯 Optimization Strategy</h3>
+                <div className="mt-8 ${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+                    <h3 className="${theme.typography.heading4} text-white mb-4">🎯 Optimization Strategy</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {scoreIncrease > 0 && (
                             <>
                                 {parseFloat(targetUtilization) < parseFloat(creditUtilization) && (
-                                    <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4">
+                                    <div className="${theme.status.info.bg}0/20 border border-blue-500/30 rounded-lg p-4">
                                         <h4 className="font-semibold text-blue-300 mb-2">💳 Reduce Credit Utilization</h4>
                                         <p className="text-sm text-gray-300">
                                             Pay down balances to {targetUtilization}% utilization. This is often the fastest way to improve your score.
@@ -499,7 +504,7 @@ export default function CreditScoreSimulator() {
                                 )}
 
                                 {parseFloat(targetPaymentHistory) > parseFloat(paymentHistory) && (
-                                    <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-4">
+                                    <div className="${theme.status.success.bg}0/20 border border-green-500/30 rounded-lg p-4">
                                         <h4 className="font-semibold text-green-300 mb-2">✅ Perfect Payment History</h4>
                                         <p className="text-sm text-gray-300">
                                             Set up automatic payments to ensure 100% on-time payment history going forward.

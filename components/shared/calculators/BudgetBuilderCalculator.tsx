@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { useProgress } from '@/lib/store/progressHooks';
+import { theme } from '@/lib/theme';
 import {
     Home,
     ShoppingCart,
@@ -47,23 +48,23 @@ export default function BudgetBuilderCalculator() {
     const [monthlyIncome, setMonthlyIncome] = useState(5000);
     const [categories, setCategories] = useState<BudgetCategory[]>([
         // Needs (50%)
-        { id: 'housing', name: 'Housing', budgeted: 1500, actual: 1500, color: '#EF4444', type: 'need', icon: Home },
-        { id: 'food', name: 'Groceries', budgeted: 400, actual: 450, color: '#F97316', type: 'need', icon: ShoppingCart },
-        { id: 'utilities', name: 'Utilities', budgeted: 200, actual: 180, color: '#EAB308', type: 'need', icon: Zap },
-        { id: 'transportation', name: 'Transportation', budgeted: 300, actual: 320, color: '#DC2626', type: 'need', icon: Car },
-        { id: 'insurance', name: 'Insurance', budgeted: 200, actual: 200, color: '#B91C1C', type: 'need', icon: Shield },
+        { id: 'housing', name: 'Housing', budgeted: 1500, actual: 1500, color: '#ef4444', type: 'need', icon: Home },
+        { id: 'food', name: 'Groceries', budgeted: 400, actual: 450, color: '#f97316', type: 'need', icon: ShoppingCart },
+        { id: 'utilities', name: 'Utilities', budgeted: 200, actual: 180, color: '#eab308', type: 'need', icon: Zap },
+        { id: 'transportation', name: 'Transportation', budgeted: 300, actual: 320, color: '#dc2626', type: 'need', icon: Car },
+        { id: 'insurance', name: 'Insurance', budgeted: 200, actual: 200, color: '#b91c1c', type: 'need', icon: Shield },
 
         // Wants (30%)
-        { id: 'entertainment', name: 'Entertainment', budgeted: 300, actual: 350, color: '#8B5CF6', type: 'want', icon: Film },
-        { id: 'dining_out', name: 'Dining Out', budgeted: 250, actual: 280, color: '#A855F7', type: 'want', icon: Pizza },
-        { id: 'shopping', name: 'Shopping', budgeted: 200, actual: 180, color: '#C084FC', type: 'want', icon: ShoppingBag },
-        { id: 'hobbies', name: 'Hobbies', budgeted: 150, actual: 120, color: '#DDD6FE', type: 'want', icon: Palette },
+        { id: 'entertainment', name: 'Entertainment', budgeted: 300, actual: 350, color: '#8b5cf6', type: 'want', icon: Film },
+        { id: 'dining_out', name: 'Dining Out', budgeted: 250, actual: 280, color: '#a855f7', type: 'want', icon: Pizza },
+        { id: 'shopping', name: 'Shopping', budgeted: 200, actual: 180, color: '#c084fc', type: 'want', icon: ShoppingBag },
+        { id: 'hobbies', name: 'Hobbies', budgeted: 150, actual: 120, color: '#ddd6fe', type: 'want', icon: Palette },
 
         // Savings (20%)
-        { id: 'emergency', name: 'Emergency Fund', budgeted: 500, actual: 500, color: '#10B981', type: 'savings', icon: AlertTriangle },
+        { id: 'emergency', name: 'Emergency Fund', budgeted: 500, actual: 500, color: '#10b981', type: 'savings', icon: AlertTriangle },
         { id: 'retirement', name: 'Retirement', budgeted: 400, actual: 400, color: '#059669', type: 'savings', icon: Umbrella },
         { id: 'investments', name: 'Investments', budgeted: 300, actual: 250, color: '#047857', type: 'savings', icon: TrendingUp },
-        { id: 'goals', name: 'Financial Goals', budgeted: 200, actual: 180, color: '#065F46', type: 'savings', icon: Target },
+        { id: 'goals', name: 'Financial Goals', budgeted: 200, actual: 180, color: '#065f46', type: 'savings', icon: Target },
     ]);
 
     const progress = useProgress();
@@ -106,22 +107,22 @@ export default function BudgetBuilderCalculator() {
 
     // Determine budget health
     const getBudgetHealth = () => {
-        if (summary.remaining < 0) return { status: 'Over Budget', color: 'text-red-600', bg: 'bg-red-50' };
-        if (savingsPercentage < 20) return { status: 'Needs More Savings', color: 'text-yellow-600', bg: 'bg-yellow-50' };
+        if (summary.remaining < 0) return { status: 'Over Budget', color: 'text-red-400', bg: '${theme.status.error.bg}' };
+        if (savingsPercentage < 20) return { status: 'Needs More Savings', color: 'text-yellow-600', bg: '${theme.status.warning.bg}' };
         if (needsPercentage <= 50 && wantsPercentage <= 30 && savingsPercentage >= 20) {
-            return { status: 'Excellent Budget!', color: 'text-green-600', bg: 'bg-green-50' };
+            return { status: 'Excellent Budget!', color: 'text-green-400', bg: '${theme.status.success.bg}' };
         }
-        return { status: 'Good Progress', color: 'text-blue-600', bg: 'bg-blue-50' };
+        return { status: 'Good Progress', color: 'text-blue-400', bg: '${theme.status.info.bg}' };
     };
 
     const budgetHealth = getBudgetHealth();
 
     // Data for pie chart
     const pieData = [
-        { name: 'Needs', value: summary.needs, color: '#EF4444' },
-        { name: 'Wants', value: summary.wants, color: '#8B5CF6' },
-        { name: 'Savings', value: summary.savings, color: '#10B981' },
-        { name: 'Remaining', value: Math.max(summary.remaining, 0), color: '#6B7280' }
+        { name: 'Needs', value: summary.needs, color: '#ef4444' },
+        { name: 'Wants', value: summary.wants, color: '#8b5cf6' },
+        { name: 'Savings', value: summary.savings, color: '#10b981' },
+        { name: 'Remaining', value: Math.max(summary.remaining, 0), color: '#6b7280' }
     ];
 
     // Data for comparison chart
@@ -141,103 +142,103 @@ export default function BudgetBuilderCalculator() {
     };
 
     return (
-        <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-6">
+        <div className={`max-w-7xl mx-auto ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg p-6`}>
             <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>
                     Budget Builder Calculator
                 </h2>
-                <p className="text-gray-600">
+                <p className={theme.textColors.secondary}>
                     Create your personal budget using the proven 50/30/20 rule: 50% needs, 30% wants, 20% savings
                 </p>
             </div>
 
             {/* Monthly Income Input */}
-            <div className="mb-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
-                <label className="block text-lg font-semibold text-blue-900 mb-3">
+            <div className={`mb-8 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-6`}>
+                <label className={`block ${theme.typography.heading4} ${theme.status.info.text} mb-3`}>
                     Monthly Take-Home Income
                 </label>
                 <div className="relative max-w-md">
-                    <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">$</span>
+                    <span className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${theme.textColors.secondary} text-lg`}>$</span>
                     <input
                         type="number"
                         value={monthlyIncome}
                         onChange={(e) => setMonthlyIncome(Number(e.target.value))}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg font-semibold"
+                        className={`w-full pl-10 pr-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 ${theme.textColors.primary} ${theme.typography.heading4} transition-all`}
                         min="0"
                         step="100"
                     />
                 </div>
-                <p className="text-sm text-blue-700 mt-2">
+                <p className={`text-sm ${theme.textColors.secondary} mt-2`}>
                     Enter your monthly after-tax income (what you actually receive in your bank account)
                 </p>
             </div>
 
             {/* Budget Overview Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                <div className={`${budgetHealth.bg} border border-gray-200 rounded-lg p-4 text-center`}>
-                    <p className="text-sm font-medium text-gray-600">Budget Status</p>
-                    <p className={`text-lg font-bold ${budgetHealth.color}`}>{budgetHealth.status}</p>
+                <div className={`${budgetHealth.bg.replace('bg-', theme.status.info.bg + ' ')} border ${theme.borderColors.primary} rounded-lg p-4 text-center`}>
+                    <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Budget Status</p>
+                    <p className={`text-lg font-bold ${budgetHealth.color.replace('text-', theme.textColors.accent + ' ')}`}>{budgetHealth.status}</p>
                 </div>
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
-                    <p className="text-sm font-medium text-red-600">Needs ({needsPercentage}%)</p>
-                    <p className="text-xl font-bold text-red-800">{formatCurrency(summary.needs)}</p>
-                    <p className="text-xs text-red-600">Target: 50%</p>
+                <div className={`${theme.status.error.bg} border ${theme.status.error.border} rounded-lg p-4 text-center`}>
+                    <p className={`text-sm font-medium ${theme.status.error.text}`}>Needs ({needsPercentage}%)</p>
+                    <p className={`text-xl font-bold ${theme.textColors.primary}`}>{formatCurrency(summary.needs)}</p>
+                    <p className={`text-xs ${theme.textColors.muted}`}>Target: 50%</p>
                 </div>
-                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 text-center">
-                    <p className="text-sm font-medium text-purple-600">Wants ({wantsPercentage}%)</p>
-                    <p className="text-xl font-bold text-purple-800">{formatCurrency(summary.wants)}</p>
-                    <p className="text-xs text-purple-600">Target: 30%</p>
+                <div className={`bg-purple-500/200/20 border border-purple-500/30 rounded-lg p-4 text-center`}>
+                    <p className="text-sm font-medium text-purple-400">Wants ({wantsPercentage}%)</p>
+                    <p className={`text-xl font-bold ${theme.textColors.primary}`}>{formatCurrency(summary.wants)}</p>
+                    <p className={`text-xs ${theme.textColors.muted}`}>Target: 30%</p>
                 </div>
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-                    <p className="text-sm font-medium text-green-600">Savings ({savingsPercentage}%)</p>
-                    <p className="text-xl font-bold text-green-800">{formatCurrency(summary.savings)}</p>
-                    <p className="text-xs text-green-600">Target: 20%</p>
+                <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4 text-center`}>
+                    <p className={`text-sm font-medium ${theme.status.success.text}`}>Savings ({savingsPercentage}%)</p>
+                    <p className={`text-xl font-bold ${theme.textColors.primary}`}>{formatCurrency(summary.savings)}</p>
+                    <p className={`text-xs ${theme.textColors.muted}`}>Target: 20%</p>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Budget Categories */}
                 <div className="space-y-6">
-                    <h3 className="text-xl font-semibold text-gray-900">Monthly Budget Categories</h3>
+                    <h3 className="${theme.typography.heading4} ${theme.textColors.primary}">Monthly Budget Categories</h3>
 
                     {/* Needs Section */}
-                    <div className="bg-red-50 rounded-lg p-4">
-                        <h4 className="font-semibold text-red-900 mb-3 flex items-center">
+                    <div className="${theme.status.error.bg} rounded-lg p-4">
+                        <h4 className="font-semibold ${theme.status.error.text} mb-3 flex items-center">
                             <Home className="mr-2 w-5 h-5" />
                             Needs (Essential Expenses)
                         </h4>
                         <div className="space-y-3">
                             {categories.filter(cat => cat.type === 'need').map(category => (
-                                <div key={category.id} className="bg-white rounded-lg p-3">
+                                <div key={category.id} className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-3">
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="font-medium text-gray-900 flex items-center">
+                                        <span className="font-medium ${theme.textColors.primary} flex items-center">
                                             <category.icon className="mr-2 w-4 h-4" style={{ color: category.color }} />
                                             {category.name}
                                         </span>
                                     </div>
                                     <div className="grid grid-cols-2 gap-2">
                                         <div>
-                                            <label className="text-xs text-gray-600">Budgeted</label>
+                                            <label className="text-xs ${theme.textColors.secondary}">Budgeted</label>
                                             <div className="relative">
-                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-xs">$</span>
+                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs">$</span>
                                                 <input
                                                     type="number"
                                                     value={category.budgeted}
                                                     onChange={(e) => updateCategory(category.id, 'budgeted', Number(e.target.value))}
-                                                    className="w-full pl-6 pr-2 py-1 border border-gray-300 rounded text-sm"
+                                                    className="w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm"
                                                     min="0"
                                                 />
                                             </div>
                                         </div>
                                         <div>
-                                            <label className="text-xs text-gray-600">Actual</label>
+                                            <label className="text-xs ${theme.textColors.secondary}">Actual</label>
                                             <div className="relative">
-                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-xs">$</span>
+                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs">$</span>
                                                 <input
                                                     type="number"
                                                     value={category.actual}
                                                     onChange={(e) => updateCategory(category.id, 'actual', Number(e.target.value))}
-                                                    className="w-full pl-6 pr-2 py-1 border border-gray-300 rounded text-sm"
+                                                    className="w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm"
                                                     min="0"
                                                 />
                                             </div>
@@ -249,43 +250,43 @@ export default function BudgetBuilderCalculator() {
                     </div>
 
                     {/* Wants Section */}
-                    <div className="bg-purple-50 rounded-lg p-4">
-                        <h4 className="font-semibold text-purple-900 mb-3 flex items-center">
+                    <div className="bg-purple-500/20 rounded-lg p-4">
+                        <h4 className="font-semibold text-purple-400 mb-3 flex items-center">
                             <Film className="mr-2 w-5 h-5" />
                             Wants (Lifestyle Expenses)
                         </h4>
                         <div className="space-y-3">
                             {categories.filter(cat => cat.type === 'want').map(category => (
-                                <div key={category.id} className="bg-white rounded-lg p-3">
+                                <div key={category.id} className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-3">
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="font-medium text-gray-900 flex items-center">
+                                        <span className="font-medium ${theme.textColors.primary} flex items-center">
                                             <category.icon className="mr-2 w-4 h-4" style={{ color: category.color }} />
                                             {category.name}
                                         </span>
                                     </div>
                                     <div className="grid grid-cols-2 gap-2">
                                         <div>
-                                            <label className="text-xs text-gray-600">Budgeted</label>
+                                            <label className="text-xs ${theme.textColors.secondary}">Budgeted</label>
                                             <div className="relative">
-                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-xs">$</span>
+                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs">$</span>
                                                 <input
                                                     type="number"
                                                     value={category.budgeted}
                                                     onChange={(e) => updateCategory(category.id, 'budgeted', Number(e.target.value))}
-                                                    className="w-full pl-6 pr-2 py-1 border border-gray-300 rounded text-sm"
+                                                    className="w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm"
                                                     min="0"
                                                 />
                                             </div>
                                         </div>
                                         <div>
-                                            <label className="text-xs text-gray-600">Actual</label>
+                                            <label className="text-xs ${theme.textColors.secondary}">Actual</label>
                                             <div className="relative">
-                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-xs">$</span>
+                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs">$</span>
                                                 <input
                                                     type="number"
                                                     value={category.actual}
                                                     onChange={(e) => updateCategory(category.id, 'actual', Number(e.target.value))}
-                                                    className="w-full pl-6 pr-2 py-1 border border-gray-300 rounded text-sm"
+                                                    className="w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm"
                                                     min="0"
                                                 />
                                             </div>
@@ -297,43 +298,43 @@ export default function BudgetBuilderCalculator() {
                     </div>
 
                     {/* Savings Section */}
-                    <div className="bg-green-50 rounded-lg p-4">
-                        <h4 className="font-semibold text-green-900 mb-3 flex items-center">
+                    <div className="${theme.status.success.bg} rounded-lg p-4">
+                        <h4 className="font-semibold ${theme.status.success.text} mb-3 flex items-center">
                             <TrendingUp className="mr-2 w-5 h-5" />
                             Savings & Investments
                         </h4>
                         <div className="space-y-3">
                             {categories.filter(cat => cat.type === 'savings').map(category => (
-                                <div key={category.id} className="bg-white rounded-lg p-3">
+                                <div key={category.id} className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-3">
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="font-medium text-gray-900 flex items-center">
+                                        <span className="font-medium ${theme.textColors.primary} flex items-center">
                                             <category.icon className="mr-2 w-4 h-4" style={{ color: category.color }} />
                                             {category.name}
                                         </span>
                                     </div>
                                     <div className="grid grid-cols-2 gap-2">
                                         <div>
-                                            <label className="text-xs text-gray-600">Budgeted</label>
+                                            <label className="text-xs ${theme.textColors.secondary}">Budgeted</label>
                                             <div className="relative">
-                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-xs">$</span>
+                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs">$</span>
                                                 <input
                                                     type="number"
                                                     value={category.budgeted}
                                                     onChange={(e) => updateCategory(category.id, 'budgeted', Number(e.target.value))}
-                                                    className="w-full pl-6 pr-2 py-1 border border-gray-300 rounded text-sm"
+                                                    className="w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm"
                                                     min="0"
                                                 />
                                             </div>
                                         </div>
                                         <div>
-                                            <label className="text-xs text-gray-600">Actual</label>
+                                            <label className="text-xs ${theme.textColors.secondary}">Actual</label>
                                             <div className="relative">
-                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-xs">$</span>
+                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs">$</span>
                                                 <input
                                                     type="number"
                                                     value={category.actual}
                                                     onChange={(e) => updateCategory(category.id, 'actual', Number(e.target.value))}
-                                                    className="w-full pl-6 pr-2 py-1 border border-gray-300 rounded text-sm"
+                                                    className="w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm"
                                                     min="0"
                                                 />
                                             </div>
@@ -347,11 +348,11 @@ export default function BudgetBuilderCalculator() {
 
                 {/* Charts and Analysis */}
                 <div className="space-y-6">
-                    <h3 className="text-xl font-semibold text-gray-900">Budget Analysis</h3>
+                    <h3 className="${theme.typography.heading4} ${theme.textColors.primary}">Budget Analysis</h3>
 
                     {/* Budget Breakdown Pie Chart */}
-                    <div className="bg-gray-50 rounded-lg p-4">
-                        <h4 className="font-semibold text-gray-900 mb-4">Spending Breakdown</h4>
+                    <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4">
+                        <h4 className="font-semibold ${theme.textColors.primary} mb-4">Spending Breakdown</h4>
                         <div className="h-64">
                             <ResponsiveContainer width="100%" height="100%">
                                 <PieChart>
@@ -376,14 +377,14 @@ export default function BudgetBuilderCalculator() {
                     </div>
 
                     {/* Budget vs Actual Comparison */}
-                    <div className="bg-gray-50 rounded-lg p-4">
-                        <h4 className="font-semibold text-gray-900 mb-4">Budget vs Actual</h4>
+                    <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4">
+                        <h4 className="font-semibold ${theme.textColors.primary} mb-4">Budget vs Actual</h4>
                         <div className="h-64">
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart data={comparisonData}>
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="category" />
-                                    <YAxis tickFormatter={(value) => `$${(value / 1000).toFixed(1)}k`} />
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
+                                    <XAxis dataKey="category" tick={{ fill: "#94a3b8" }} />
+                                    <YAxis tickFormatter={(value: number) => `$${(value / 1000).toFixed(1)}k`} tick={{ fill: "#94a3b8" }} />
                                     <Tooltip formatter={(value: number) => formatCurrency(value)} />
                                     <Legend />
                                     <Bar dataKey="budgeted" fill="#94A3B8" name="Budgeted" />
@@ -394,8 +395,8 @@ export default function BudgetBuilderCalculator() {
                     </div>
 
                     {/* Remaining Budget */}
-                    <div className={`rounded-lg p-4 ${summary.remaining >= 0 ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
-                        <h4 className={`font-semibold mb-2 flex items-center ${summary.remaining >= 0 ? 'text-green-900' : 'text-red-900'}`}>
+                    <div className={`rounded-lg p-4 ${summary.remaining >= 0 ? '${theme.status.success.bg} border ${theme.status.success.border}' : '${theme.status.error.bg} border ${theme.status.error.border}'}`}>
+                        <h4 className={`font-semibold mb-2 flex items-center ${summary.remaining >= 0 ? '${theme.status.success.text}' : '${theme.status.error.text}'}`}>
                             {summary.remaining >= 0 ? (
                                 <>
                                     <DollarSign className="w-5 h-5 mr-2" />
@@ -408,10 +409,10 @@ export default function BudgetBuilderCalculator() {
                                 </>
                             )}
                         </h4>
-                        <p className={`text-2xl font-bold ${summary.remaining >= 0 ? 'text-green-800' : 'text-red-800'}`}>
+                        <p className={`${theme.typography.heading2} ${summary.remaining >= 0 ? '${theme.textColors.primary}' : '${theme.textColors.primary}'}`}>
                             {formatCurrency(Math.abs(summary.remaining))}
                         </p>
-                        <p className={`text-sm mt-1 ${summary.remaining >= 0 ? 'text-green-700' : 'text-red-700'}`}>
+                        <p className={`text-sm mt-1 ${summary.remaining >= 0 ? '${theme.textColors.secondary}' : '${theme.textColors.secondary}'}`}>
                             {summary.remaining >= 0
                                 ? 'Great job staying within budget!'
                                 : 'Consider reducing expenses or increasing income.'
@@ -420,12 +421,12 @@ export default function BudgetBuilderCalculator() {
                     </div>
 
                     {/* Tips and Insights */}
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+                    <div className="${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4">
+                        <h4 className="font-semibold ${theme.status.info.text} mb-3 flex items-center gap-2">
                             <Lightbulb className="w-4 h-4" />
                             Budgeting Tips
                         </h4>
-                        <ul className="text-sm text-blue-800 space-y-2">
+                        <ul className="text-sm ${theme.textColors.secondary} space-y-2">
                             <li>• <strong>Track everything:</strong> Use apps or spreadsheets to monitor actual spending</li>
                             <li>• <strong>Pay yourself first:</strong> Set aside savings before spending on wants</li>
                             <li>• <strong>Review monthly:</strong> Adjust categories based on actual spending patterns</li>

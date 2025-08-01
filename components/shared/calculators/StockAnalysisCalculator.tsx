@@ -140,15 +140,15 @@ export default function StockAnalysisCalculator() {
   };
 
   const getRiskColor = (score: number) => {
-    if (score <= 30) return 'text-green-600 bg-green-50 border-green-200';
-    if (score <= 60) return 'text-yellow-600 bg-yellow-50 border-yellow-200';
-    return 'text-red-600 bg-red-50 border-red-200';
+    if (score <= 30) return 'text-green-400 ${theme.status.success.bg} ${theme.status.success.border}';
+    if (score <= 60) return 'text-yellow-600 ${theme.status.warning.bg} ${theme.status.warning.border}';
+    return 'text-red-400 ${theme.status.error.bg} ${theme.status.error.border}';
   };
 
   const getUpsideColor = (upside: number) => {
-    if (upside > 20) return 'text-green-600';
-    if (upside > 0) return 'text-blue-600';
-    return 'text-red-600';
+    if (upside > 20) return 'text-green-400';
+    if (upside > 0) return 'text-blue-400';
+    return 'text-red-400';
   };
 
   return (
@@ -158,7 +158,7 @@ export default function StockAnalysisCalculator() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <Calculator className="w-5 h-5 text-purple-600" />
+              <Calculator className="w-5 h-5 text-purple-400" />
               <span>Stock Fundamentals</span>
             </CardTitle>
             <CardDescription>Enter the company&apos;s financial metrics</CardDescription>
@@ -166,7 +166,7 @@ export default function StockAnalysisCalculator() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
                   Symbol
                 </label>
                 <Input
@@ -177,7 +177,7 @@ export default function StockAnalysisCalculator() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
                   Current Price ($)
                 </label>
                 <Input
@@ -192,7 +192,7 @@ export default function StockAnalysisCalculator() {
             
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
                   Earnings Per Share ($)
                 </label>
                 <Input
@@ -204,7 +204,7 @@ export default function StockAnalysisCalculator() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
                   Book Value Per Share ($)
                 </label>
                 <Input
@@ -219,7 +219,7 @@ export default function StockAnalysisCalculator() {
             
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
                   Annual Revenue (B)
                 </label>
                 <Input
@@ -231,7 +231,7 @@ export default function StockAnalysisCalculator() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
                   Growth Rate (%)
                 </label>
                 <Input
@@ -246,7 +246,7 @@ export default function StockAnalysisCalculator() {
             
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
                   Dividend Yield (%)
                 </label>
                 <Input
@@ -258,7 +258,7 @@ export default function StockAnalysisCalculator() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
                   Total Debt (B)
                 </label>
                 <Input
@@ -272,7 +272,7 @@ export default function StockAnalysisCalculator() {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
                 Total Equity (B)
               </label>
               <Input
@@ -294,7 +294,7 @@ export default function StockAnalysisCalculator() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <TrendingUp className="w-5 h-5 text-green-600" />
+              <TrendingUp className="w-5 h-5 text-green-400" />
               <span>Valuation Analysis</span>
             </CardTitle>
             <CardDescription>Investment recommendation and risk assessment</CardDescription>
@@ -303,46 +303,46 @@ export default function StockAnalysisCalculator() {
             {results ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="p-3 bg-blue-50 rounded-lg">
+                  <div className="p-3 ${theme.status.info.bg} rounded-lg">
                     <div className="flex items-center space-x-2 mb-1">
-                      <DollarSign className="w-4 h-4 text-blue-600" />
-                      <span className="text-sm font-medium text-blue-800">Intrinsic Value</span>
+                      <DollarSign className="w-4 h-4 text-blue-400" />
+                      <span className="text-sm font-medium ${theme.textColors.secondary}">Intrinsic Value</span>
                     </div>
-                    <p className="text-lg font-bold text-blue-900">
+                    <p className="text-lg font-bold ${theme.status.info.text}">
                       {formatCurrency(results.intrinsicValue)}
                     </p>
                   </div>
                   
-                  <div className="p-3 bg-green-50 rounded-lg">
+                  <div className="p-3 ${theme.status.success.bg} rounded-lg">
                     <div className="flex items-center space-x-2 mb-1">
-                      <Target className="w-4 h-4 text-green-600" />
-                      <span className="text-sm font-medium text-green-800">Fair Value</span>
+                      <Target className="w-4 h-4 text-green-400" />
+                      <span className="text-sm font-medium ${theme.textColors.primary}">Fair Value</span>
                     </div>
-                    <p className="text-lg font-bold text-green-900">
+                    <p className="text-lg font-bold ${theme.status.success.text}">
                       {formatCurrency(results.fairValue)}
                     </p>
                   </div>
                   
-                  <div className="p-3 bg-purple-50 rounded-lg">
+                  <div className="p-3 bg-purple-500/20 rounded-lg">
                     <div className="flex items-center space-x-2 mb-1">
                       {results.upside > 0 ? (
-                        <TrendingUp className="w-4 h-4 text-purple-600" />
+                        <TrendingUp className="w-4 h-4 text-purple-400" />
                       ) : (
-                        <TrendingDown className="w-4 h-4 text-purple-600" />
+                        <TrendingDown className="w-4 h-4 text-purple-400" />
                       )}
-                      <span className="text-sm font-medium text-purple-800">Upside Potential</span>
+                      <span className="text-sm font-medium ${theme.textColors.primary}">Upside Potential</span>
                     </div>
                     <p className={`text-lg font-bold ${getUpsideColor(results.upside)}`}>
                       {formatPercent(results.upside)}
                     </p>
                   </div>
                   
-                  <div className="p-3 bg-gray-50 rounded-lg">
+                  <div className="p-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg">
                     <div className="flex items-center space-x-2 mb-1">
-                      <Percent className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm font-medium text-gray-800">Investment Grade</span>
+                      <Percent className="w-4 h-4 ${theme.textColors.secondary}" />
+                      <span className="text-sm font-medium ${theme.textColors.primary}">Investment Grade</span>
                     </div>
-                    <p className="text-lg font-bold text-gray-900">
+                    <p className="text-lg font-bold ${theme.textColors.primary}">
                       {results.investmentGrade}
                     </p>
                   </div>
@@ -355,7 +355,7 @@ export default function StockAnalysisCalculator() {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-lg font-bold">{results.riskScore}/100</span>
-                    <Badge variant="outline" className="bg-white/50">
+                    <Badge variant="outline" className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/50">
                       {results.riskScore <= 30 ? 'Low Risk' : results.riskScore <= 60 ? 'Medium Risk' : 'High Risk'}
                     </Badge>
                   </div>
@@ -365,11 +365,11 @@ export default function StockAnalysisCalculator() {
                 
                 <div className="space-y-3">
                   <div>
-                    <h4 className="font-medium text-green-800 mb-2 flex items-center">
-                      <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                    <h4 className="font-medium ${theme.textColors.primary} mb-2 flex items-center">
+                      <div className="w-2 h-2 ${theme.status.success.bg}0 rounded-full mr-2"></div>
                       Key Strengths
                     </h4>
-                    <ul className="space-y-1 text-sm text-green-700">
+                    <ul className="space-y-1 text-sm ${theme.textColors.secondary}">
                       {results.keyStrengths.map((strength, index) => (
                         <li key={index} className="flex items-center space-x-2">
                           <span>•</span>
@@ -380,11 +380,11 @@ export default function StockAnalysisCalculator() {
                   </div>
                   
                   <div>
-                    <h4 className="font-medium text-red-800 mb-2 flex items-center">
-                      <div className="w-2 h-2 bg-red-500 rounded-full mr-2"></div>
+                    <h4 className="font-medium ${theme.textColors.primary} mb-2 flex items-center">
+                      <div className="w-2 h-2 ${theme.status.error.bg}0 rounded-full mr-2"></div>
                       Key Risks
                     </h4>
-                    <ul className="space-y-1 text-sm text-red-700">
+                    <ul className="space-y-1 text-sm ${theme.textColors.secondary}">
                       {results.keyRisks.map((risk, index) => (
                         <li key={index} className="flex items-center space-x-2">
                           <span>•</span>
@@ -396,7 +396,7 @@ export default function StockAnalysisCalculator() {
                 </div>
               </div>
             ) : (
-              <div className="text-center py-8 text-gray-500">
+              <div className="text-center py-8 ${theme.textColors.muted}">
                 <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
                 <p>Enter stock details and click analyze to see results</p>
               </div>
@@ -421,9 +421,9 @@ export default function StockAnalysisCalculator() {
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={historicalData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
+                  <XAxis dataKey="month"  tick={{ fill: "#94a3b8" }} />
+                  <YAxis  tick={{ fill: "#94a3b8" }} />
                   <Tooltip 
                     formatter={(value: number, name: string) => [
                       name === 'price' ? `$${value}` : `${value}x`,
@@ -451,26 +451,26 @@ export default function StockAnalysisCalculator() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid md:grid-cols-3 gap-4">
-            <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <h4 className="font-medium text-blue-800 mb-2">Valuation Metrics</h4>
-              <div className="space-y-1 text-sm text-blue-700">
+            <div className="p-4 ${theme.status.info.bg} rounded-lg border ${theme.status.info.border}">
+              <h4 className="font-medium ${theme.textColors.secondary} mb-2">Valuation Metrics</h4>
+              <div className="space-y-1 text-sm ${theme.textColors.secondary}">
                 <p><span className="font-medium">P/E Ratio:</span> Price ÷ Earnings per share</p>
                 <p><span className="font-medium">PEG Ratio:</span> P/E ÷ Growth rate</p>
                 <p><span className="font-medium">P/B Ratio:</span> Price ÷ Book value per share</p>
               </div>
             </div>
             
-            <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-              <h4 className="font-medium text-green-800 mb-2">Quality Indicators</h4>
-              <div className="space-y-1 text-sm text-green-700">
+            <div className="p-4 ${theme.status.success.bg} rounded-lg border ${theme.status.success.border}">
+              <h4 className="font-medium ${theme.textColors.primary} mb-2">Quality Indicators</h4>
+              <div className="space-y-1 text-sm ${theme.textColors.secondary}">
                 <p><span className="font-medium">ROE:</span> Return on equity</p>
                 <p><span className="font-medium">Debt/Equity:</span> Financial leverage</p>
                 <p><span className="font-medium">Growth Rate:</span> Revenue/earnings growth</p>
               </div>
             </div>
             
-            <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-              <h4 className="font-medium text-purple-800 mb-2">Investment Rules</h4>
+            <div className="p-4 bg-purple-500/20 rounded-lg border border-purple-500/30">
+              <h4 className="font-medium ${theme.textColors.primary} mb-2">Investment Rules</h4>
               <div className="space-y-1 text-sm text-purple-700">
                 <p><span className="font-medium">Diversify:</span> Don&apos;t put all eggs in one basket</p>
                 <p><span className="font-medium">Long-term:</span> Hold quality stocks for years</p>
@@ -479,9 +479,9 @@ export default function StockAnalysisCalculator() {
             </div>
           </div>
           
-          <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-            <h4 className="font-medium text-yellow-800 mb-2">⚠️ Important Disclaimer</h4>
-            <p className="text-yellow-700 text-sm">
+          <div className="p-4 ${theme.status.warning.bg} rounded-lg border ${theme.status.warning.border}">
+            <h4 className="font-medium ${theme.status.warning.text} mb-2">⚠️ Important Disclaimer</h4>
+            <p className="${theme.textColors.secondary} text-sm">
               This calculator provides educational analysis based on simplified models. It should not be used as the sole basis 
               for investment decisions. Always conduct thorough research, consider multiple valuation methods, and consult with 
               financial professionals before investing. Past performance does not guarantee future results.

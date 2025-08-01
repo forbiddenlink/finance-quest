@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { Lightbulb, Sparkles } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
-
+import { theme } from '@/lib/theme';
 interface CompoundData {
   year: number;
   principal: number;
@@ -101,15 +101,15 @@ export default function CompoundInterestCalculator() {
   const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ color: string; value: number; dataKey: string; payload: { principal: number; interest: number; total: number } }>; label?: string }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white p-4 border border-gray-300 rounded-lg shadow-lg">
-          <p className="font-semibold">{`Year ${label}`}</p>
-          <p className="text-blue-600">
+        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg p-4`}>
+          <p className={`font-semibold ${theme.textColors.primary}`}>{`Year ${label}`}</p>
+          <p className="text-blue-400">
             {`Total Contributions: ${formatCurrency(payload[0].payload.principal)}`}
           </p>
-          <p className="text-green-600">
+          <p className="text-green-400">
             {`Interest Earned: ${formatCurrency(payload[0].payload.interest)}`}
           </p>
-          <p className="text-purple-600 font-semibold">
+          <p className={`${theme.textColors.accent} font-semibold`}>
             {`Total Value: ${formatCurrency(payload[0].payload.total)}`}
           </p>
         </div>
@@ -119,9 +119,9 @@ export default function CompoundInterestCalculator() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-8">
-      <h2 className="text-3xl font-bold text-gray-900 mb-2">Compound Interest Calculator</h2>
-      <p className="text-gray-600 mb-8">
+    <div className={`max-w-6xl mx-auto ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg p-8`}>
+      <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>Compound Interest Calculator</h2>
+      <p className={`${theme.textColors.secondary} mb-8`}>
         See the magic of compound interest - how your money grows exponentially over time
       </p>
 
@@ -129,39 +129,39 @@ export default function CompoundInterestCalculator() {
         {/* Input Controls */}
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
               Initial Investment
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+              <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.secondary}`}>$</span>
               <input
                 type="number"
                 value={principal}
                 onChange={(e) => setPrincipal(e.target.value)}
-                className="pl-8 w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500 ${theme.textColors.primary} text-lg transition-all`}
                 placeholder="10000"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
               Monthly Contribution
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+              <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.secondary}`}>$</span>
               <input
                 type="number"
                 value={monthlyContribution}
                 onChange={(e) => setMonthlyContribution(e.target.value)}
-                className="pl-8 w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500 ${theme.textColors.primary} text-lg transition-all`}
                 placeholder="500"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
               Annual Interest Rate
             </label>
             <div className="relative">
@@ -170,16 +170,16 @@ export default function CompoundInterestCalculator() {
                 step="0.1"
                 value={rate}
                 onChange={(e) => setRate(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                className={`w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500 ${theme.textColors.primary} text-lg transition-all`}
                 placeholder="7"
               />
-              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">%</span>
+              <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.secondary}`}>%</span>
             </div>
-            <p className="text-xs text-gray-500 mt-1">S&P 500 historical average: ~10%</p>
+            <p className={`text-xs ${theme.textColors.muted} mt-1`}>S&P 500 historical average: ~10%</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
               Time Period
             </label>
             <div className="relative">
@@ -187,34 +187,34 @@ export default function CompoundInterestCalculator() {
                 type="number"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                className={`w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500 ${theme.textColors.primary} text-lg transition-all`}
                 placeholder="30"
               />
-              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">years</span>
+              <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.secondary}`}>years</span>
             </div>
           </div>
 
           {/* Key Statistics */}
-          <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-lg p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-gray-900">Final Results</h3>
+          <div className={`${theme.backgrounds.glass} border ${theme.borderColors.accent} rounded-lg p-6 space-y-4`}>
+            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Final Results</h3>
             <div className="grid grid-cols-1 gap-3">
               <div className="flex justify-between">
-                <span className="text-gray-600">Total Contributed:</span>
-                <span className="font-semibold text-blue-600">{formatCurrency(totalContributed)}</span>
+                <span className={theme.textColors.secondary}>Total Contributed:</span>
+                <span className="font-semibold text-blue-400">{formatCurrency(totalContributed)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Interest Earned:</span>
-                <span className="font-semibold text-green-600">{formatCurrency(totalInterest)}</span>
+                <span className={theme.textColors.secondary}>Interest Earned:</span>
+                <span className="font-semibold text-green-400">{formatCurrency(totalInterest)}</span>
               </div>
-              <div className="flex justify-between pt-2 border-t border-gray-300">
-                <span className="text-lg font-semibold text-gray-900">Final Amount:</span>
-                <span className="text-xl font-bold text-purple-600">{formatCurrency(finalAmount)}</span>
+              <div className={`flex justify-between pt-2 border-t ${theme.borderColors.primary}`}>
+                <span className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Final Amount:</span>
+                <span className={`text-xl font-bold ${theme.textColors.accent}`}>{formatCurrency(finalAmount)}</span>
               </div>
             </div>
 
             {totalInterest > totalContributed && (
-              <div className="bg-yellow-100 border border-yellow-300 rounded-lg p-3">
-                <p className="text-sm text-yellow-800 flex items-center gap-2">
+              <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-3`}>
+                <p className={`text-sm ${theme.status.warning.text} flex items-center gap-2`}>
                   <Sparkles className="w-4 h-4" />
                   Your money more than doubled through compound interest!
                 </p>
@@ -225,24 +225,26 @@ export default function CompoundInterestCalculator() {
 
         {/* Chart */}
         <div className="lg:col-span-1">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Growth Over Time</h3>
+          <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Growth Over Time</h3>
           <div className="h-96 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
                 <XAxis
                   dataKey="year"
                   label={{ value: 'Years', position: 'insideBottom', offset: -5 }}
+                  tick={{ fill: '#94a3b8' }}
                 />
                 <YAxis
                   tickFormatter={(value: number) => `$${(value / 1000).toFixed(0)}k`}
                   label={{ value: 'Amount ($)', angle: -90, position: 'insideLeft' }}
+                  tick={{ fill: '#94a3b8' }}
                 />
                 <Tooltip content={<CustomTooltip />} />
                 <Line
                   type="monotone"
                   dataKey="principal"
-                  stroke="#3B82F6"
+                  stroke="#60a5fa"
                   strokeWidth={2}
                   name="Contributions"
                   dot={false}
@@ -250,14 +252,14 @@ export default function CompoundInterestCalculator() {
                 <Line
                   type="monotone"
                   dataKey="total"
-                  stroke="#8B5CF6"
+                  stroke="#fbbf24"
                   strokeWidth={3}
                   name="Total Value"
                   dot={false}
                 />
                 <ReferenceLine
                   y={totalContributed}
-                  stroke="#EF4444"
+                  stroke="#ef4444"
                   strokeDasharray="5 5"
                   label="Total Contributions"
                 />
@@ -268,26 +270,26 @@ export default function CompoundInterestCalculator() {
       </div>
 
       {/* Educational Insights */}
-      <div className="mt-8 bg-blue-50 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-blue-900 mb-4 flex items-center gap-2">
+      <div className={`mt-8 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-6`}>
+        <h3 className={`${theme.typography.heading4} ${theme.status.info.text} mb-4 flex items-center gap-2`}>
           <Lightbulb className="w-5 h-5" />
           Key Lessons About Compound Interest
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-800">
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 text-sm ${theme.textColors.secondary}`}>
           <div>
-            <h4 className="font-semibold mb-2">Time is Your Best Friend</h4>
+            <h4 className={`font-semibold mb-2 ${theme.textColors.primary}`}>Time is Your Best Friend</h4>
             <p>The earlier you start investing, the more time compound interest has to work its magic.</p>
           </div>
           <div>
-            <h4 className="font-semibold mb-2">Consistency Matters</h4>
+            <h4 className={`font-semibold mb-2 ${theme.textColors.primary}`}>Consistency Matters</h4>
             <p>Regular monthly contributions can be more powerful than large one-time investments.</p>
           </div>
           <div>
-            <h4 className="font-semibold mb-2">The Power of Growth</h4>
+            <h4 className={`font-semibold mb-2 ${theme.textColors.primary}`}>The Power of Growth</h4>
             <p>Small differences in interest rates compound into huge differences over time.</p>
           </div>
           <div>
-            <h4 className="font-semibold mb-2">Einstein&apos;s &quot;8th Wonder&quot;</h4>
+            <h4 className={`font-semibold mb-2 ${theme.textColors.primary}`}>Einstein&apos;s &quot;8th Wonder&quot;</h4>
             <p>Einstein allegedly called compound interest &quot;the eighth wonder of the world.&quot;</p>
           </div>
         </div>

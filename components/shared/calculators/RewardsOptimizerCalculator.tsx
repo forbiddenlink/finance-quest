@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { CreditCard, Star, Zap, ShoppingCart, Car, Plane, DollarSign, Award, Trophy } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 
 interface SpendingCategory {
     name: string;
@@ -99,7 +100,7 @@ export default function RewardsOptimizerCalculator() {
             },
             signupBonus: 0,
             signupSpend: 0,
-            color: '#DC2626'
+            color: '#dc2626'
         },
         {
             id: 'blue-cash-preferred',
@@ -137,7 +138,7 @@ export default function RewardsOptimizerCalculator() {
             },
             signupBonus: 20000,
             signupSpend: 1500,
-            color: '#6B7280'
+            color: '#6b7280'
         }
     ], []); // Empty dependency array since card data is static
 
@@ -158,13 +159,13 @@ export default function RewardsOptimizerCalculator() {
 
         // Spending breakdown for pie chart
         const breakdown: SpendingCategory[] = [
-            { name: 'Groceries', amount: spending.groceries, color: '#10B981', icon: <ShoppingCart className="w-4 h-4" /> },
+            { name: 'Groceries', amount: spending.groceries, color: '#10b981', icon: <ShoppingCart className="w-4 h-4" /> },
             { name: 'Gasoline', amount: spending.gasoline, color: '#F59E0B', icon: <Car className="w-4 h-4" /> },
-            { name: 'Dining', amount: spending.dining, color: '#EF4444', icon: <Star className="w-4 h-4" /> },
+            { name: 'Dining', amount: spending.dining, color: '#ef4444', icon: <Star className="w-4 h-4" /> },
             { name: 'Travel', amount: spending.travel, color: '#3B82F6', icon: <Plane className="w-4 h-4" /> },
-            { name: 'Entertainment', amount: spending.entertainment, color: '#8B5CF6', icon: <Zap className="w-4 h-4" /> },
+            { name: 'Entertainment', amount: spending.entertainment, color: '#8b5cf6', icon: <Zap className="w-4 h-4" /> },
             { name: 'Shopping', amount: spending.shopping, color: '#EC4899', icon: <ShoppingCart className="w-4 h-4" /> },
-            { name: 'Utilities', amount: spending.utilities, color: '#6B7280', icon: <DollarSign className="w-4 h-4" /> },
+            { name: 'Utilities', amount: spending.utilities, color: '#6b7280', icon: <DollarSign className="w-4 h-4" /> },
             { name: 'Other', amount: spending.other, color: '#14B8A6', icon: <DollarSign className="w-4 h-4" /> }
         ].filter(category => category.amount > 0);
 
@@ -242,7 +243,7 @@ export default function RewardsOptimizerCalculator() {
             <div className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
                 <div className="max-w-7xl mx-auto px-4 py-6">
                     <div className="text-center">
-                        <h2 className="text-3xl font-bold text-white mb-2 flex items-center justify-center gap-3">
+                        <h2 className="${theme.typography.heading2} text-white mb-2 flex items-center justify-center gap-3">
                             <Award className="w-8 h-8 text-amber-400" />
                             Credit Card Rewards Optimizer
                         </h2>
@@ -258,8 +259,8 @@ export default function RewardsOptimizerCalculator() {
                     {/* Input Controls */}
                     <div className="xl:col-span-1 space-y-6">
                         {/* Monthly Spending */}
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="text-lg font-semibold text-white mb-4">Monthly Spending by Category</h3>
+                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+                            <h3 className="${theme.typography.heading4} text-white mb-4">Monthly Spending by Category</h3>
 
                             <div className="space-y-4">
                                 <div>
@@ -393,8 +394,8 @@ export default function RewardsOptimizerCalculator() {
                         </div>
 
                         {/* Settings */}
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="text-lg font-semibold text-white mb-4">Optimization Settings</h3>
+                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+                            <h3 className="${theme.typography.heading4} text-white mb-4">Optimization Settings</h3>
 
                             <div className="space-y-4">
                                 <div>
@@ -445,7 +446,7 @@ export default function RewardsOptimizerCalculator() {
                         {/* Best Recommendation */}
                         {bestCard && (
                             <div className="bg-gradient-to-r from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-xl p-6">
-                                <h3 className="text-xl font-semibold text-amber-300 mb-4 flex items-center gap-2">
+                                <h3 className="${theme.typography.heading4} text-amber-300 mb-4 flex items-center gap-2">
                                     <Trophy className="w-6 h-6" />
                                     Best Card for Your Spending
                                 </h3>
@@ -455,13 +456,13 @@ export default function RewardsOptimizerCalculator() {
                                         <p className="text-sm text-gray-300">Top recommendation</p>
                                     </div>
                                     <div>
-                                        <p className="text-2xl font-bold text-amber-300">
+                                        <p className="${theme.typography.heading2} text-amber-300">
                                             {formatCurrency(bestCard.netValue)}
                                         </p>
                                         <p className="text-sm text-gray-300">Total value over {timeHorizon} months</p>
                                     </div>
                                     <div>
-                                        <p className={`text-lg font-semibold ${getRewardCategory(bestCard.netValue).color}`}>
+                                        <p className={`${theme.typography.heading4} ${getRewardCategory(bestCard.netValue).color}`}>
                                             {getRewardCategory(bestCard.netValue).label}
                                         </p>
                                         <p className="text-sm text-gray-300">Reward optimization</p>
@@ -472,10 +473,10 @@ export default function RewardsOptimizerCalculator() {
 
                         {/* Spending Overview */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                                <h3 className="text-lg font-semibold text-white mb-4">Monthly Spending</h3>
+                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+                                <h3 className="${theme.typography.heading4} text-white mb-4">Monthly Spending</h3>
                                 <div className="text-center">
-                                    <p className="text-3xl font-bold text-blue-300">{formatCurrency(totalMonthlySpend)}</p>
+                                    <p className="${theme.typography.heading2} text-blue-300">{formatCurrency(totalMonthlySpend)}</p>
                                     <p className="text-sm text-gray-300">Total monthly spending</p>
                                     <p className="text-lg font-medium text-blue-400 mt-2">
                                         {formatCurrency(totalMonthlySpend * 12)}/year
@@ -483,8 +484,8 @@ export default function RewardsOptimizerCalculator() {
                                 </div>
                             </div>
 
-                            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                                <h3 className="text-lg font-semibold text-white mb-4">Spending Breakdown</h3>
+                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+                                <h3 className="${theme.typography.heading4} text-white mb-4">Spending Breakdown</h3>
                                 <div className="h-40">
                                     <ResponsiveContainer width="100%" height="100%">
                                         <PieChart>
@@ -509,8 +510,8 @@ export default function RewardsOptimizerCalculator() {
                         </div>
 
                         {/* Card Comparison */}
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="text-lg font-semibold text-white mb-4">Card Recommendations</h3>
+                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+                            <h3 className="${theme.typography.heading4} text-white mb-4">Card Recommendations</h3>
                             <div className="h-64">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={cardRecommendations}>
@@ -522,10 +523,12 @@ export default function RewardsOptimizerCalculator() {
                                             textAnchor="end"
                                             height={80}
                                             fontSize={12}
+                                            tick={{ fill: "#94a3b8" }}
                                         />
                                         <YAxis
                                             stroke="#9CA3AF"
                                             label={{ value: 'Net Value ($)', angle: -90, position: 'insideLeft' }}
+                                            tick={{ fill: "#94a3b8" }}
                                         />
                                         <Tooltip
                                             contentStyle={{
@@ -542,8 +545,8 @@ export default function RewardsOptimizerCalculator() {
                         </div>
 
                         {/* Detailed Comparison */}
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="text-lg font-semibold text-white mb-4">Detailed Comparison</h3>
+                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+                            <h3 className="${theme.typography.heading4} text-white mb-4">Detailed Comparison</h3>
                             <div className="space-y-3">
                                 {cardRecommendations.map((card, index) => (
                                     <div
@@ -583,17 +586,17 @@ export default function RewardsOptimizerCalculator() {
                 </div>
 
                 {/* Optimization Tips */}
-                <div className="mt-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                    <h3 className="text-lg font-semibold text-white mb-4">💡 Reward Optimization Tips</h3>
+                <div className="mt-8 ${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+                    <h3 className="${theme.typography.heading4} text-white mb-4">💡 Reward Optimization Tips</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-                        <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4">
+                        <div className="${theme.status.info.bg}0/20 border border-blue-500/30 rounded-lg p-4">
                             <h4 className="font-semibold mb-2 text-blue-300">📊 Track Your Spending</h4>
                             <p className="text-gray-300">
                                 Monitor your actual spending patterns quarterly. Your categories may change, requiring different cards for optimal rewards.
                             </p>
                         </div>
 
-                        <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-4">
+                        <div className="${theme.status.success.bg}0/20 border border-green-500/30 rounded-lg p-4">
                             <h4 className="font-semibold mb-2 text-green-300">🎯 Maximize Signup Bonuses</h4>
                             <p className="text-gray-300">
                                 Plan large purchases around new card applications to easily meet minimum spending requirements for signup bonuses.

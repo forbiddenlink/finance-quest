@@ -120,7 +120,7 @@ const SavingsCalculator = () => {
 
   return (
     <motion.div
-      className="bg-white rounded-lg shadow-lg overflow-hidden"
+      className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg overflow-hidden"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -132,7 +132,7 @@ const SavingsCalculator = () => {
       >
         <div className="flex items-center space-x-3 mb-4">
           <PiggyBank className="w-8 h-8" />
-          <h2 className="text-3xl font-bold">Savings Growth Calculator</h2>
+          <h2 className="${theme.typography.heading2}">Savings Growth Calculator</h2>
         </div>
         <p className="text-lg opacity-90">
           See how your money grows with compound interest and regular savings
@@ -143,11 +143,11 @@ const SavingsCalculator = () => {
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Input Section */}
           <motion.div variants={itemVariants} className="space-y-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Your Savings Plan</h3>
+            <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4">Your Savings Plan</h3>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                   Initial Deposit
                 </label>
                 <div className="relative">
@@ -156,7 +156,7 @@ const SavingsCalculator = () => {
                     type="number"
                     value={initialDeposit}
                     onChange={(e) => setInitialDeposit(Number(e.target.value))}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     min="0"
                     step="100"
                   />
@@ -164,7 +164,7 @@ const SavingsCalculator = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                   Monthly Deposit
                 </label>
                 <div className="relative">
@@ -173,7 +173,7 @@ const SavingsCalculator = () => {
                     type="number"
                     value={monthlyDeposit}
                     onChange={(e) => setMonthlyDeposit(Number(e.target.value))}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     min="0"
                     step="25"
                   />
@@ -181,7 +181,7 @@ const SavingsCalculator = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                   Annual Interest Rate (%)
                 </label>
                 <div className="relative">
@@ -190,19 +190,19 @@ const SavingsCalculator = () => {
                     type="number"
                     value={interestRate}
                     onChange={(e) => setInterestRate(Number(e.target.value))}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     min="0"
                     max="20"
                     step="0.1"
                   />
                 </div>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs ${theme.textColors.muted} mt-1">
                   High-yield savings: 4-5%, Traditional savings: 0.01-0.5%
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                   Time Period (Years)
                 </label>
                 <div className="relative">
@@ -211,7 +211,7 @@ const SavingsCalculator = () => {
                     type="number"
                     value={timeYears}
                     onChange={(e) => setTimeYears(Number(e.target.value))}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     min="1"
                     max="50"
                     step="1"
@@ -221,8 +221,8 @@ const SavingsCalculator = () => {
             </div>
 
             {/* Quick Presets */}
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h4 className="font-medium text-gray-800 mb-3">Quick Scenarios</h4>
+            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} p-4 rounded-lg">
+              <h4 className="font-medium ${theme.textColors.primary} mb-3">Quick Scenarios</h4>
               <div className="grid grid-cols-2 gap-2">
                 {[
                   { label: 'Emergency Fund', initial: 0, monthly: 200, rate: 4.5, years: 2 },
@@ -238,7 +238,7 @@ const SavingsCalculator = () => {
                       setInterestRate(preset.rate);
                       setTimeYears(preset.years);
                     }}
-                    className="text-xs p-2 bg-white border border-gray-200 rounded hover:bg-blue-50 hover:border-blue-300 transition-colors"
+                    className="text-xs p-2 ${theme.backgrounds.glass} border ${theme.borderColors.primary} border ${theme.borderColors.primary} rounded hover:${theme.status.info.bg} hover:border-blue-300 transition-colors"
                   >
                     {preset.label}
                   </button>
@@ -251,44 +251,44 @@ const SavingsCalculator = () => {
           <motion.div variants={itemVariants} className="space-y-6">
             {results && (
               <>
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">Your Results</h3>
+                <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4">Your Results</h3>
 
                 <div className="grid grid-cols-2 gap-4">
                   <motion.div
-                    className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200"
+                    className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border ${theme.status.info.border}"
                     whileHover={{ scale: 1.02 }}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <Target className="w-5 h-5 text-green-600" />
-                      <span className="text-xs text-green-600 font-medium">FUTURE VALUE</span>
+                      <Target className="w-5 h-5 text-green-400" />
+                      <span className="text-xs text-green-400 font-medium">FUTURE VALUE</span>
                     </div>
-                    <div className="text-2xl font-bold text-green-700">
+                    <div className="${theme.typography.heading2} ${theme.textColors.secondary}">
                       {formatCurrency(results.futureValue)}
                     </div>
                   </motion.div>
 
                   <motion.div
-                    className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200"
+                    className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border ${theme.status.info.border}"
                     whileHover={{ scale: 1.02 }}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <DollarSign className="w-5 h-5 text-blue-600" />
-                      <span className="text-xs text-blue-600 font-medium">TOTAL DEPOSITED</span>
+                      <DollarSign className="w-5 h-5 text-blue-400" />
+                      <span className="text-xs text-blue-400 font-medium">TOTAL DEPOSITED</span>
                     </div>
-                    <div className="text-2xl font-bold text-blue-700">
+                    <div className="${theme.typography.heading2} ${theme.textColors.secondary}">
                       {formatCurrency(results.totalDeposited)}
                     </div>
                   </motion.div>
 
                   <motion.div
-                    className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200"
+                    className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border ${theme.status.info.border}"
                     whileHover={{ scale: 1.02 }}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <TrendingUp className="w-5 h-5 text-purple-600" />
-                      <span className="text-xs text-purple-600 font-medium">INTEREST EARNED</span>
+                      <TrendingUp className="w-5 h-5 text-purple-400" />
+                      <span className="text-xs text-purple-400 font-medium">INTEREST EARNED</span>
                     </div>
-                    <div className="text-2xl font-bold text-purple-700">
+                    <div className="${theme.typography.heading2} text-purple-700">
                       {formatCurrency(results.interestEarned)}
                     </div>
                   </motion.div>
@@ -301,16 +301,16 @@ const SavingsCalculator = () => {
                       <TrendingUp className="w-5 h-5 text-orange-600" />
                       <span className="text-xs text-orange-600 font-medium">EFFECTIVE RATE</span>
                     </div>
-                    <div className="text-2xl font-bold text-orange-700">
+                    <div className="${theme.typography.heading2} text-orange-700">
                       {results.effectiveRate.toFixed(1)}%
                     </div>
                   </motion.div>
                 </div>
 
                 {/* Insights */}
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
-                  <h4 className="font-semibold text-blue-800 mb-2">💡 Key Insights</h4>
-                  <ul className="text-sm text-blue-700 space-y-1">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border ${theme.status.info.border}">
+                  <h4 className="font-semibold ${theme.textColors.secondary} mb-2">💡 Key Insights</h4>
+                  <ul className="text-sm ${theme.textColors.secondary} space-y-1">
                     <li>• Your money will grow by {((results.futureValue / results.totalDeposited - 1) * 100).toFixed(1)}% over {timeYears} years</li>
                     <li>• Interest will earn you {formatCurrency(results.interestEarned)} - that&apos;s {(results.interestEarned / results.totalDeposited * 100).toFixed(1)}% of your deposits!</li>
                     <li>• Monthly deposits of {formatCurrency(monthlyDeposit)} grow to {formatCurrency(results.futureValue / (timeYears * 12))} per month</li>
@@ -325,20 +325,22 @@ const SavingsCalculator = () => {
         {chartData.length > 0 && (
           <motion.div
             variants={itemVariants}
-            className="mt-8 bg-gray-50 p-6 rounded-lg"
+            className="mt-8 ${theme.backgrounds.glass} border ${theme.borderColors.primary} p-6 rounded-lg"
           >
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Growth Over Time</h3>
+            <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4">Growth Over Time</h3>
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
                   <XAxis
                     dataKey="year"
                     label={{ value: 'Years', position: 'insideBottom', offset: -10 }}
+                    tick={{ fill: "#94a3b8" }}
                   />
                   <YAxis
-                    tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                    tickFormatter={(value: number) => `$${(value / 1000).toFixed(1)}k`}
                     label={{ value: 'Amount ($)', angle: -90, position: 'insideLeft' }}
+                    tick={{ fill: "#94a3b8" }}
                   />
                   <Tooltip
                     formatter={(value: number, name: string) => [formatCurrency(value), name]}
@@ -371,15 +373,15 @@ const SavingsCalculator = () => {
 
             <div className="flex justify-center space-x-6 mt-4 text-sm">
               <div className="flex items-center">
-                <div className="w-4 h-1 bg-blue-500 mr-2"></div>
+                <div className="w-4 h-1 ${theme.status.info.bg}0 mr-2"></div>
                 <span>Total Deposited</span>
               </div>
               <div className="flex items-center">
-                <div className="w-4 h-1 bg-green-500 mr-2"></div>
+                <div className="w-4 h-1 ${theme.status.success.bg}0 mr-2"></div>
                 <span>Total Value</span>
               </div>
               <div className="flex items-center">
-                <div className="w-4 h-1 bg-yellow-500 mr-2"></div>
+                <div className="w-4 h-1 ${theme.status.warning.bg}0 mr-2"></div>
                 <span>Interest Earned</span>
               </div>
             </div>

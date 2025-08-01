@@ -5,7 +5,6 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { Lightbulb, DollarSign, TrendingDown, Calculator, AlertCircle } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-
 interface PaycheckBreakdown {
   grossPay: number;
   federalTax: number;
@@ -149,10 +148,10 @@ export default function PaycheckCalculator() {
 
   // Prepare data for charts
   const pieData = breakdown ? [
-    { name: 'Take-Home Pay', value: breakdown.netPay, color: '#10B981' },
-    { name: 'Federal Tax', value: breakdown.federalTax, color: '#EF4444' },
+    { name: 'Take-Home Pay', value: breakdown.netPay, color: '#10b981' },
+    { name: 'Federal Tax', value: breakdown.federalTax, color: '#ef4444' },
     { name: 'State Tax', value: breakdown.stateTax, color: '#F59E0B' },
-    { name: 'Social Security', value: breakdown.socialSecurity, color: '#8B5CF6' },
+    { name: 'Social Security', value: breakdown.socialSecurity, color: '#8b5cf6' },
     { name: 'Medicare', value: breakdown.medicare, color: '#EC4899' },
     { name: 'Health Insurance', value: breakdown.healthInsurance || 0, color: '#06B6D4' },
     { name: '401k Contribution', value: breakdown.retirement401k || 0, color: '#84CC16' }
@@ -161,7 +160,7 @@ export default function PaycheckCalculator() {
   return (
     <div className={`max-w-7xl mx-auto ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg shadow-lg p-8`}>
       <div className="mb-8">
-        <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2 flex items-center gap-3`}>
+        <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2 flex items-center gap-3`}>
           <Calculator className={`w-8 h-8 ${theme.textColors.accent}`} />
           Enhanced Paycheck Calculator
         </h2>
@@ -173,37 +172,37 @@ export default function PaycheckCalculator() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Controls */}
         <div className="space-y-6">
-          <div className="bg-blue-50 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-blue-900 mb-4 flex items-center gap-2">
+          <div className="${theme.status.info.bg} rounded-lg p-6">
+            <h3 className="${theme.typography.heading4} ${theme.status.info.text} mb-4 flex items-center gap-2">
               <DollarSign className="w-5 h-5" />
               Income & Tax Information
             </h3>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                   Monthly Gross Pay
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}">$</span>
                   <input
                     type="number"
                     value={grossPay}
                     onChange={(e) => setGrossPay(e.target.value)}
-                    className="pl-8 w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                    className="pl-8 w-full px-4 py-3 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all text-lg"
                     placeholder="5000"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                   Filing Status
                 </label>
                 <select
                   value={filingStatus}
                   onChange={(e) => setFilingStatus(e.target.value as 'single' | 'married')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                 >
                   <option value="single">Single</option>
                   <option value="married">Married Filing Jointly</option>
@@ -211,13 +210,13 @@ export default function PaycheckCalculator() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                   State
                 </label>
                 <select
                   value={state}
                   onChange={(e) => setState(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                 >
                   <option value="CA">California</option>
                   <option value="NY">New York</option>
@@ -234,31 +233,31 @@ export default function PaycheckCalculator() {
             </div>
           </div>
 
-          <div className="bg-green-50 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-green-900 mb-4 flex items-center gap-2">
+          <div className="${theme.status.success.bg} rounded-lg p-6">
+            <h3 className="${theme.typography.heading4} ${theme.status.success.text} mb-4 flex items-center gap-2">
               <TrendingDown className="w-5 h-5" />
               Pre-Tax Deductions
             </h3>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                   Health Insurance (Monthly)
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}">$</span>
                   <input
                     type="number"
                     value={healthInsurance}
                     onChange={(e) => setHealthInsurance(e.target.value)}
-                    className="pl-8 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="pl-8 w-full px-4 py-2 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="200"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
                   401(k) Contribution (%)
                 </label>
                 <div className="relative">
@@ -267,12 +266,12 @@ export default function PaycheckCalculator() {
                     step="0.5"
                     value={retirement401k}
                     onChange={(e) => setRetirement401k(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="5"
                   />
-                  <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">%</span>
+                  <span className="absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}">%</span>
                 </div>
-                <p className="text-xs text-green-600 mt-1">Recommended: 10-15% for retirement</p>
+                <p className="text-xs text-green-400 mt-1">Recommended: 10-15% for retirement</p>
               </div>
             </div>
           </div>
@@ -283,30 +282,30 @@ export default function PaycheckCalculator() {
           {breakdown && (
             <>
               {/* Summary Card */}
-              <div className="bg-gradient-to-r from-blue-50 to-blue-50 rounded-lg p-6 border border-blue-200">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Paycheck Summary</h3>
+              <div className="bg-gradient-to-r from-blue-50 to-blue-50 rounded-lg p-6 border ${theme.status.info.border}">
+                <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4">Paycheck Summary</h3>
 
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="text-center">
-                    <p className="text-sm text-gray-600">Gross Pay</p>
-                    <p className="text-2xl font-bold text-blue-600">{formatCurrency(breakdown.grossPay)}</p>
+                    <p className="text-sm ${theme.textColors.secondary}">Gross Pay</p>
+                    <p className="${theme.typography.heading2} text-blue-400">{formatCurrency(breakdown.grossPay)}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-sm text-gray-600">Take-Home Pay</p>
-                    <p className="text-2xl font-bold text-green-600">{formatCurrency(breakdown.netPay)}</p>
+                    <p className="text-sm ${theme.textColors.secondary}">Take-Home Pay</p>
+                    <p className="${theme.typography.heading2} text-green-400">{formatCurrency(breakdown.netPay)}</p>
                   </div>
                 </div>
 
-                <div className="bg-white bg-opacity-60 rounded-lg p-3">
+                <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} bg-opacity-60 rounded-lg p-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Take-home percentage:</span>
-                    <span className="font-semibold text-green-700">
+                    <span className="text-sm ${theme.textColors.secondary}">Take-home percentage:</span>
+                    <span className="font-semibold ${theme.textColors.secondary}">
                       {((breakdown.netPay / breakdown.grossPay) * 100).toFixed(1)}%
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Total deductions:</span>
-                    <span className="font-semibold text-red-600">
+                    <span className="text-sm ${theme.textColors.secondary}">Total deductions:</span>
+                    <span className="font-semibold text-red-400">
                       {formatCurrency(breakdown.grossPay - breakdown.netPay)}
                     </span>
                   </div>
@@ -314,8 +313,8 @@ export default function PaycheckCalculator() {
               </div>
 
               {/* Pie Chart */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h4 className="text-lg font-semibold text-gray-900 mb-4">Paycheck Breakdown</h4>
+              <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6 border ${theme.borderColors.primary}">
+                <h4 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4">Paycheck Breakdown</h4>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
@@ -338,64 +337,64 @@ export default function PaycheckCalculator() {
               </div>
 
               {/* Detailed Breakdown */}
-              <div className="bg-gray-50 rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-gray-900 mb-4">Detailed Breakdown</h4>
+              <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6">
+                <h4 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4">Detailed Breakdown</h4>
 
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="font-medium text-gray-900">Gross Pay</span>
-                    <span className="text-lg font-semibold text-green-600">
+                  <div className="flex justify-between items-center py-2 border-b ${theme.borderColors.primary}">
+                    <span className="font-medium ${theme.textColors.primary}">Gross Pay</span>
+                    <span className="${theme.typography.heading4} text-green-400">
                       {formatCurrency(breakdown.grossPay)}
                     </span>
                   </div>
 
                   <div className="space-y-2">
-                    <h5 className="font-medium text-gray-700">Pre-Tax Deductions:</h5>
+                    <h5 className="font-medium ${theme.textColors.primary}">Pre-Tax Deductions:</h5>
                     {breakdown.healthInsurance && breakdown.healthInsurance > 0 && (
                       <div className="flex justify-between items-center pl-4">
-                        <span className="text-gray-600">Health Insurance</span>
-                        <span className="text-blue-600">-{formatCurrency(breakdown.healthInsurance)}</span>
+                        <span className="${theme.textColors.secondary}">Health Insurance</span>
+                        <span className="text-blue-400">-{formatCurrency(breakdown.healthInsurance)}</span>
                       </div>
                     )}
                     {breakdown.retirement401k && breakdown.retirement401k > 0 && (
                       <div className="flex justify-between items-center pl-4">
-                        <span className="text-gray-600">401(k) Contribution ({retirement401k}%)</span>
-                        <span className="text-green-600">-{formatCurrency(breakdown.retirement401k)}</span>
+                        <span className="${theme.textColors.secondary}">401(k) Contribution ({retirement401k}%)</span>
+                        <span className="text-green-400">-{formatCurrency(breakdown.retirement401k)}</span>
                       </div>
                     )}
                   </div>
 
                   <div className="space-y-2">
-                    <h5 className="font-medium text-gray-700">Taxes:</h5>
+                    <h5 className="font-medium ${theme.textColors.primary}">Taxes:</h5>
                     <div className="flex justify-between items-center pl-4">
-                      <span className="text-gray-600">Federal Tax</span>
-                      <span className="text-red-600">-{formatCurrency(breakdown.federalTax)}</span>
+                      <span className="${theme.textColors.secondary}">Federal Tax</span>
+                      <span className="text-red-400">-{formatCurrency(breakdown.federalTax)}</span>
                     </div>
                     {breakdown.stateTax > 0 && (
                       <div className="flex justify-between items-center pl-4">
-                        <span className="text-gray-600">State Tax ({state})</span>
-                        <span className="text-red-600">-{formatCurrency(breakdown.stateTax)}</span>
+                        <span className="${theme.textColors.secondary}">State Tax ({state})</span>
+                        <span className="text-red-400">-{formatCurrency(breakdown.stateTax)}</span>
                       </div>
                     )}
                     <div className="flex justify-between items-center pl-4">
-                      <span className="text-gray-600">Social Security (6.2%)</span>
-                      <span className="text-red-600">-{formatCurrency(breakdown.socialSecurity)}</span>
+                      <span className="${theme.textColors.secondary}">Social Security (6.2%)</span>
+                      <span className="text-red-400">-{formatCurrency(breakdown.socialSecurity)}</span>
                     </div>
                     <div className="flex justify-between items-center pl-4">
-                      <span className="text-gray-600">Medicare (1.45%)</span>
-                      <span className="text-red-600">-{formatCurrency(breakdown.medicare)}</span>
+                      <span className="${theme.textColors.secondary}">Medicare (1.45%)</span>
+                      <span className="text-red-400">-{formatCurrency(breakdown.medicare)}</span>
                     </div>
                     {breakdown.stateDisability && breakdown.stateDisability > 0 && (
                       <div className="flex justify-between items-center pl-4">
-                        <span className="text-gray-600">State Disability</span>
-                        <span className="text-red-600">-{formatCurrency(breakdown.stateDisability)}</span>
+                        <span className="${theme.textColors.secondary}">State Disability</span>
+                        <span className="text-red-400">-{formatCurrency(breakdown.stateDisability)}</span>
                       </div>
                     )}
                   </div>
 
-                  <div className="flex justify-between items-center py-3 border-t-2 border-gray-300">
-                    <span className="text-lg font-bold text-gray-900">Net Pay (Take-Home)</span>
-                    <span className="text-xl font-bold text-green-600">
+                  <div className="flex justify-between items-center py-3 border-t-2 ${theme.borderColors.primary}">
+                    <span className="text-lg font-bold ${theme.textColors.primary}">Net Pay (Take-Home)</span>
+                    <span className="text-xl font-bold text-green-400">
                       {formatCurrency(breakdown.netPay)}
                     </span>
                   </div>
@@ -408,12 +407,12 @@ export default function PaycheckCalculator() {
 
       {/* Educational Insights */}
       {breakdown && (
-        <div className="mt-8 bg-blue-50 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-blue-900 mb-4 flex items-center gap-2">
+        <div className="mt-8 ${theme.status.info.bg} rounded-lg p-6">
+          <h3 className="${theme.typography.heading4} ${theme.status.info.text} mb-4 flex items-center gap-2">
             <Lightbulb className="w-5 h-5" />
             Smart Financial Insights
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-800">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm ${theme.textColors.secondary}">
             <div>
               <h4 className="font-semibold mb-2 flex items-center gap-1">
                 <AlertCircle className="w-4 h-4" />
@@ -444,7 +443,7 @@ export default function PaycheckCalculator() {
 
           {stateTaxRates[state] === 0 && (
             <div className="mt-4 p-3 bg-green-100 border border-green-300 rounded-lg">
-              <p className="text-sm text-green-800 flex items-center gap-1">
+              <p className="text-sm ${theme.textColors.primary} flex items-center gap-1">
                 <Lightbulb className="w-4 h-4" />
                 <strong>Tax Advantage:</strong> {state} has no state income tax, giving you more take-home pay!
               </p>
