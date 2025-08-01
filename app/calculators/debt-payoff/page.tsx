@@ -3,25 +3,26 @@
 import DebtPayoffCalculator from '@/components/shared/calculators/DebtPayoffCalculator';
 import QASystem from '@/components/shared/QASystem';
 import { CreditCard, Zap, Target, BarChart3, Lightbulb, Rocket, Trophy, Mountain, Snowflake } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 export default function DebtPayoffPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+    <div className={`min-h-screen ${theme.backgrounds.primary}`}>
       {/* Header */}
-      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
+      <header className={`${theme.backgrounds.header} border-b ${theme.borderColors.accent}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => window.history.back()}
-                className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
+                className={`${theme.textColors.accent} hover:${theme.textColors.accentSecondary} font-medium transition-colors`}
               >
                 ← Back
               </button>
-              <h1 className="text-2xl font-bold text-white">Debt Payoff Calculator</h1>
+              <h1 className={`${theme.typography.heading3} ${theme.textColors.primary}`}>Debt Payoff Calculator</h1>
             </div>
-            <div className="bg-orange-500/20 border border-orange-500/30 px-3 py-1 rounded-full backdrop-blur-sm">
-              <span className="text-sm font-medium text-orange-300 flex items-center gap-1">
+            <div className={`${theme.status.error.bg} border ${theme.status.error.border} px-3 py-1 rounded-full backdrop-blur-sm`}>
+              <span className={`${theme.typography.small} font-medium ${theme.status.error.text} flex items-center gap-1`}>
                 <CreditCard className="w-4 h-4" />
                 Debt Destroyer
               </span>

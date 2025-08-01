@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { Shield, Target, Calendar, DollarSign, TrendingUp, AlertCircle, CheckCircle } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 
 interface ExpenseCategory {
   name: string;
@@ -130,7 +131,7 @@ export default function EmergencyFundCalculator() {
   const currentProgress = emergencyFundTarget > 0 ? (parseFloat(currentSavings) / emergencyFundTarget) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+    <div className={`min-h-screen ${theme.backgrounds.primary}`}>
       {/* Header */}
       <div className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
         <div className="max-w-7xl mx-auto px-4 py-6">

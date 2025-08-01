@@ -3,16 +3,17 @@
 import MortgageCalculator from '@/components/shared/calculators/MortgageCalculator';
 import QASystem from '@/components/shared/QASystem';
 import { Home, DollarSign, Calculator, TrendingUp, Target, AlertTriangle } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 export default function MortgageCalculatorPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+    <div className={`min-h-screen ${theme.backgrounds.primary}`}>
       {/* Header */}
-      <div className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
+      <div className={`${theme.backgrounds.header} border-b ${theme.borderColors.accent}`}>
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 bg-amber-500/20 rounded-xl">
-              <Home className="w-8 h-8 text-amber-400" />
+            <div className={`p-3 ${theme.status.warning.bg} rounded-xl`}>
+              <Home className={`w-8 h-8 ${theme.textColors.accent}`} />
             </div>
             <div>
               <h1 className="text-3xl font-bold text-white">Mortgage Calculator</h1>

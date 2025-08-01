@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import CrisisSimulationDashboard from '@/components/shared/ui/CrisisSimulationDashboard';
 import { AlertTriangle, Shield, Brain } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 export default function CrisisSimulationPage() {
   return (
@@ -10,7 +11,7 @@ export default function CrisisSimulationPage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-6"
+      className={`min-h-screen ${theme.backgrounds.primary} p-6`}
     >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
@@ -28,7 +29,7 @@ export default function CrisisSimulationPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-4xl md:text-5xl font-bold text-white mb-4"
+            className={`${theme.typography.heading1} md:text-5xl ${theme.textColors.primary} mb-4`}
           >
             Crisis Simulation Training
           </motion.h1>
@@ -37,7 +38,7 @@ export default function CrisisSimulationPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="text-xl text-gray-300 max-w-3xl mx-auto mb-8"
+            className={`${theme.typography.heading4} ${theme.textColors.secondary} max-w-3xl mx-auto mb-8`}
           >
             Practice handling financial emergencies in a safe environment. Build confidence and learn proven strategies
             for navigating life&apos;s unexpected financial challenges.
@@ -50,26 +51,26 @@ export default function CrisisSimulationPage() {
             transition={{ delay: 0.5 }}
             className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12"
           >
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6">
-              <Shield className="w-8 h-8 text-amber-400 mx-auto mb-3" />
-              <h3 className="font-bold text-white mb-2">Safe Practice</h3>
-              <p className="text-sm text-gray-300">
+            <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg ${theme.spacing.md}`}>
+              <Shield className={`w-8 h-8 ${theme.textColors.accent} mx-auto mb-3`} />
+              <h3 className={`font-bold ${theme.textColors.primary} mb-2`}>Safe Practice</h3>
+              <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>
                 Learn from mistakes without real financial consequences
               </p>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6">
+            <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg ${theme.spacing.md}`}>
               <Brain className="w-8 h-8 text-blue-400 mx-auto mb-3" />
-              <h3 className="font-bold text-white mb-2">Build Confidence</h3>
-              <p className="text-sm text-gray-300">
+              <h3 className={`font-bold ${theme.textColors.primary} mb-2`}>Build Confidence</h3>
+              <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>
                 Develop decision-making skills for high-pressure situations
               </p>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6">
-              <AlertTriangle className="w-8 h-8 text-slate-400 mx-auto mb-3" />
-              <h3 className="font-bold text-white mb-2">Real Scenarios</h3>
-              <p className="text-sm text-gray-300">
+            <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg ${theme.spacing.md}`}>
+              <AlertTriangle className={`w-8 h-8 ${theme.textColors.muted} mx-auto mb-3`} />
+              <h3 className={`font-bold ${theme.textColors.primary} mb-2`}>Real Scenarios</h3>
+              <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>
                 Practice with realistic crisis situations you might face
               </p>
             </div>

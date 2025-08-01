@@ -15,6 +15,7 @@ import {
   Brain
 } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 
 interface HealthScoreData {
   emergencyFund: number; // 0-25 points
@@ -216,28 +217,28 @@ export default function FinancialHealthScoreCalculator() {
 
   if (!mounted) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-8 animate-pulse">
-        <div className="h-64 bg-gray-200 rounded"></div>
+      <div className={`${theme.backgrounds.card} rounded-xl shadow-lg p-8 animate-pulse`}>
+        <div className={`h-64 ${theme.backgrounds.cardHover} rounded`}></div>
       </div>
     );
   }
 
   return (
     <motion.div
-      className="bg-gradient-to-br from-white to-purple-50 rounded-xl shadow-xl border border-purple-100 p-8"
+      className={`${theme.backgrounds.card} rounded-xl shadow-xl border ${theme.borderColors.primary} p-8`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="bg-gradient-to-r from-blue-100 to-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-          <Brain className="w-8 h-8 text-purple-600" />
+        <div className="bg-amber-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+          <Brain className="w-8 h-8 text-amber-400" />
         </div>
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">
+        <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>
           AI Financial Health Score
         </h2>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className={`text-lg ${theme.textColors.secondary} max-w-2xl mx-auto`}>
           Get an instant assessment of your financial health with personalized improvement recommendations
         </p>
       </div>
@@ -254,14 +255,14 @@ export default function FinancialHealthScoreCalculator() {
             {/* Progress Bar */}
             <div className="mb-8">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium text-gray-700">
+                <span className={`text-sm font-medium ${theme.textColors.primary}`}>
                   Question {currentQuestion + 1} of {assessmentQuestions.length}
                 </span>
-                <span className="text-sm text-gray-500">
+                <span className={`text-sm ${theme.textColors.secondary}`}>
                   {Math.round(((currentQuestion + 1) / assessmentQuestions.length) * 100)}% Complete
                 </span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-3">
+              <div className={`w-full ${theme.backgrounds.cardHover} rounded-full h-3`}>
                 <motion.div
                   className="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full"
                   initial={{ width: 0 }}
@@ -276,9 +277,9 @@ export default function FinancialHealthScoreCalculator() {
               key={currentQuestion}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-lg p-6 shadow-lg border border-gray-100 mb-8"
+              className={`${theme.backgrounds.card} rounded-lg p-6 shadow-lg border ${theme.borderColors.primary} mb-8`}
             >
-              <h3 className="text-xl font-semibold text-gray-900 mb-6">
+              <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-6`}>
                 {assessmentQuestions[currentQuestion].question}
               </h3>
 
@@ -287,15 +288,15 @@ export default function FinancialHealthScoreCalculator() {
                   <motion.button
                     key={index}
                     onClick={() => handleAnswer(option.points)}
-                    className="w-full text-left p-4 rounded-lg border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all group"
+                    className={`w-full text-left p-4 rounded-lg border ${theme.borderColors.primary} hover:${theme.borderColors.accent} ${theme.interactive.hover} transition-all group`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-700 group-hover:text-purple-700">
+                      <span className={`${theme.textColors.primary} group-hover:text-amber-300`}>
                         {option.text}
                       </span>
-                      <div className="text-sm text-gray-400 group-hover:text-purple-500">
+                      <div className={`text-sm ${theme.textColors.secondary} group-hover:text-amber-400`}>
                         {option.points} pts
                       </div>
                     </div>
@@ -372,13 +373,13 @@ export default function FinancialHealthScoreCalculator() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 + (index * 0.1) }}
-                    className="bg-white rounded-lg p-4 shadow-lg border border-gray-100"
+                    className={`${theme.backgrounds.card} rounded-lg p-4 shadow-lg border ${theme.borderColors.primary}`}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <Icon className={`w-6 h-6 text-${category.color}-600`} />
                       <ScoreIcon className={`w-5 h-5 ${getScoreColor(category.score)}`} />
                     </div>
-                    <h4 className="font-semibold text-gray-900 mb-1">{category.title}</h4>
+                    <h4 className={`font-semibold ${theme.textColors.primary} mb-1`}>{category.title}</h4>
                     <div className="flex items-center justify-between">
                       <span className={`text-2xl font-bold ${getScoreColor(category.score)}`}>
                         {category.score}
@@ -403,20 +404,20 @@ export default function FinancialHealthScoreCalculator() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6 border border-blue-200"
+              className={`${theme.backgrounds.cardHover} rounded-lg p-6 border ${theme.borderColors.accent}`}
             >
-              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                <Sparkles className="w-6 h-6 mr-2 text-purple-600" />
+              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center`}>
+                <Sparkles className="w-6 h-6 mr-2 text-amber-400" />
                 Your Personalized Action Plan
               </h3>
 
               <div className="space-y-4">
                 {healthScore!.emergencyFund < 20 && (
-                  <div className="flex items-start space-x-3 bg-white p-4 rounded-lg border border-blue-200">
-                    <Shield className="w-5 h-5 text-blue-600 mt-0.5" />
+                  <div className={`flex items-start space-x-3 ${theme.backgrounds.card} p-4 rounded-lg border ${theme.borderColors.primary}`}>
+                    <Shield className="w-5 h-5 text-blue-400 mt-0.5" />
                     <div>
-                      <h4 className="font-semibold text-gray-900">Build Your Emergency Fund</h4>
-                      <p className="text-sm text-gray-600">
+                      <h4 className={`font-semibold ${theme.textColors.primary}`}>Build Your Emergency Fund</h4>
+                      <p className={`text-sm ${theme.textColors.secondary}`}>
                         Start with $1,000 and work toward 3-6 months of expenses. Try our Budget Builder to find extra money.
                       </p>
                     </div>
@@ -424,11 +425,11 @@ export default function FinancialHealthScoreCalculator() {
                 )}
 
                 {healthScore!.debtToIncome < 18 && (
-                  <div className="flex items-start space-x-3 bg-white p-4 rounded-lg border border-purple-200">
-                    <CreditCard className="w-5 h-5 text-purple-600 mt-0.5" />
+                  <div className={`flex items-start space-x-3 ${theme.backgrounds.card} p-4 rounded-lg border ${theme.borderColors.primary}`}>
+                    <CreditCard className="w-5 h-5 text-purple-400 mt-0.5" />
                     <div>
-                      <h4 className="font-semibold text-gray-900">Optimize Debt Payments</h4>
-                      <p className="text-sm text-gray-600">
+                      <h4 className={`font-semibold ${theme.textColors.primary}`}>Optimize Debt Payments</h4>
+                      <p className={`text-sm ${theme.textColors.secondary}`}>
                         Use our Debt Payoff Calculator to compare avalanche vs snowball strategies and save thousands.
                       </p>
                     </div>
@@ -436,11 +437,11 @@ export default function FinancialHealthScoreCalculator() {
                 )}
 
                 {healthScore!.savingsRate < 15 && (
-                  <div className="flex items-start space-x-3 bg-white p-4 rounded-lg border border-green-200">
-                    <TrendingUp className="w-5 h-5 text-green-600 mt-0.5" />
+                  <div className={`flex items-start space-x-3 ${theme.backgrounds.card} p-4 rounded-lg border ${theme.borderColors.primary}`}>
+                    <TrendingUp className="w-5 h-5 text-green-400 mt-0.5" />
                     <div>
-                      <h4 className="font-semibold text-gray-900">Increase Your Savings Rate</h4>
-                      <p className="text-sm text-gray-600">
+                      <h4 className={`font-semibold ${theme.textColors.primary}`}>Increase Your Savings Rate</h4>
+                      <p className={`text-sm ${theme.textColors.secondary}`}>
                         Aim for at least 20% savings rate. Use our Compound Interest Calculator to see the long-term impact.
                       </p>
                     </div>
@@ -448,11 +449,11 @@ export default function FinancialHealthScoreCalculator() {
                 )}
 
                 {healthScore!.financialKnowledge < 20 && (
-                  <div className="flex items-start space-x-3 bg-white p-4 rounded-lg border border-orange-200">
-                    <Brain className="w-5 h-5 text-orange-600 mt-0.5" />
+                  <div className={`flex items-start space-x-3 ${theme.backgrounds.card} p-4 rounded-lg border ${theme.borderColors.primary}`}>
+                    <Brain className="w-5 h-5 text-orange-400 mt-0.5" />
                     <div>
-                      <h4 className="font-semibold text-gray-900">Continue Learning</h4>
-                      <p className="text-sm text-gray-600">
+                      <h4 className={`font-semibold ${theme.textColors.primary}`}>Continue Learning</h4>
+                      <p className={`text-sm ${theme.textColors.secondary}`}>
                         Complete more Finance Quest chapters to boost your knowledge score and make better decisions.
                       </p>
                     </div>
@@ -465,7 +466,7 @@ export default function FinancialHealthScoreCalculator() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
               <motion.button
                 onClick={resetAssessment}
-                className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+                className={`px-6 py-3 ${theme.buttons.ghost} rounded-lg font-semibold transition-colors`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

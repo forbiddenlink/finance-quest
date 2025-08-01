@@ -120,9 +120,9 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'text-red-600 bg-red-100';
-      case 'medium': return 'text-yellow-600 bg-yellow-100';
-      default: return 'text-green-600 bg-green-100';
+      case 'high': return 'text-red-300 bg-red-500/20';
+      case 'medium': return 'text-yellow-300 bg-yellow-500/20';
+      default: return 'text-green-300 bg-green-500/20';
     }
   };
 
@@ -219,7 +219,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
                 <p className="text-sm font-medium mb-2">Focus on these concepts:</p>
                 <div className="flex flex-wrap gap-2">
                   {recommendation.concepts.slice(0, 3).map((concept, index) => (
-                    <span key={index} className="text-xs bg-white bg-opacity-50 px-2 py-1 rounded">
+                    <span key={index} className={`text-xs ${theme.backgrounds.cardHover} px-2 py-1 rounded ${theme.textColors.secondary}`}>
                       {concept.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                     </span>
                   ))}
@@ -274,10 +274,10 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
                 key={quality}
                 onClick={() => handleReviewResponse(quality, quality)}
                 className={`p-3 rounded-lg font-semibold transition-all hover:scale-105 ${quality <= 2
-                  ? 'bg-red-100 text-red-700 hover:bg-red-200'
+                  ? 'bg-red-500/20 text-red-300 hover:bg-red-500/30'
                   : quality <= 3
-                    ? 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200'
-                    : 'bg-green-100 text-green-700 hover:bg-green-200'
+                    ? 'bg-yellow-500/20 text-yellow-300 hover:bg-yellow-500/30'
+                    : 'bg-green-500/20 text-green-300 hover:bg-green-500/30'
                   }`}
               >
                 <Star className="w-5 h-5 mx-auto mb-1" />

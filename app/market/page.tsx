@@ -3,6 +3,7 @@
 import React from 'react';
 import MarketDashboard from '@/components/shared/ui/MarketDashboard';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 
 export default function MarketDashboardPage() {
   const recordCalculatorUsage = useProgressStore(state => state.recordCalculatorUsage);
@@ -13,7 +14,7 @@ export default function MarketDashboardPage() {
   }, [recordCalculatorUsage]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 py-8">
+    <div className={`min-h-screen ${theme.backgrounds.primary} py-8`}>
       <div className="container mx-auto px-4">
         <MarketDashboard />
       </div>

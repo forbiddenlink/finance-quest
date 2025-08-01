@@ -9,6 +9,7 @@ import FinancialHealthScoreCalculator from '@/components/shared/ui/FinancialHeal
 import VoiceQA from '@/components/shared/ui/VoiceQA';
 import CompoundInterestCalculator from '@/components/shared/calculators/CompoundInterestCalculator';
 import GradientCard from '@/components/shared/ui/GradientCard';
+import { theme } from '@/lib/theme';
 import {
   Trophy,
   Target,
@@ -59,7 +60,7 @@ export default function DemoPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+    <div className={`min-h-screen ${theme.backgrounds.primary}`}>
       {/* Judge Mode Overlay */}
       <JudgeMode
         isActive={judgeModeActive}
@@ -67,21 +68,21 @@ export default function DemoPage() {
       />
 
       {/* Header */}
-      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20 shadow-sm relative z-10">
+      <header className={`${theme.backgrounds.header} border-b ${theme.borderColors.accent} shadow-sm relative z-10`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="bg-gradient-to-r from-amber-500 to-blue-500 p-3 rounded-2xl">
-                <Trophy className="w-8 h-8 text-white" />
+                <Trophy className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
               <div>
-                <h1 className="text-4xl font-bold text-white">Finance Quest</h1>
-                <p className="text-lg text-gray-300">Contest Demo Experience</p>
+                <h1 className={`${theme.typography.heading1} ${theme.textColors.primary}`}>Finance Quest</h1>
+                <p className={`${theme.typography.heading4} ${theme.textColors.secondary}`}>Contest Demo Experience</p>
               </div>
             </div>
 
-            <div className="bg-amber-500/20 border border-amber-500/30 rounded-lg p-4 mb-6 inline-block backdrop-blur-sm">
-              <p className="text-amber-300 font-semibold flex items-center gap-2">
+            <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4 mb-6 inline-block backdrop-blur-sm`}>
+              <p className={`${theme.textColors.accentSecondary} font-semibold flex items-center gap-2`}>
                 <Target className="w-5 h-5" />
                 Solving the 64% Financial Illiteracy Crisis
               </p>
@@ -98,7 +99,7 @@ export default function DemoPage() {
 
               <button
                 onClick={() => setJudgeModeActive(true)}
-                className="bg-white/10 border border-white/20 text-gray-300 px-6 py-3 rounded-full font-semibold hover:bg-white/20 hover:text-white transition-all flex items-center gap-2 backdrop-blur-sm"
+                className={`${theme.buttons.ghost} border ${theme.borderColors.primary} px-6 py-3 rounded-full font-semibold transition-all flex items-center gap-2 backdrop-blur-sm`}
               >
                 <Trophy className="w-5 h-5" />
                 Judge Mode
@@ -111,15 +112,15 @@ export default function DemoPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Impact Metrics */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold text-center text-white mb-8">
+          <h2 className={`${theme.typography.heading2} text-center ${theme.textColors.primary} mb-8`}>
             Measurable Contest Impact
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {impactMetrics.map((metric, index) => (
-              <GradientCard key={index} variant="glass" gradient="blue" className="p-6 text-center bg-white/5 backdrop-blur-xl border border-white/10">
-                <div className="text-3xl font-bold text-amber-500 mb-2">{metric.value}</div>
-                <div className="font-semibold text-white mb-1">{metric.label}</div>
-                <div className="text-sm text-gray-300">{metric.subtitle}</div>
+              <GradientCard key={index} variant="glass" gradient="blue" className={`p-6 text-center ${theme.backgrounds.card} border ${theme.borderColors.primary}`}>
+                <div className={`text-3xl font-bold ${theme.textColors.accent} mb-2`}>{metric.value}</div>
+                <div className={`font-semibold ${theme.textColors.primary} mb-1`}>{metric.label}</div>
+                <div className={`text-sm ${theme.textColors.secondary}`}>{metric.subtitle}</div>
               </GradientCard>
             ))}
           </div>
@@ -127,7 +128,7 @@ export default function DemoPage() {
 
         {/* Technical Features Showcase */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold text-center text-white mb-8">
+          <h2 className={`${theme.typography.heading2} text-center ${theme.textColors.primary} mb-8`}>
             Technical Innovation Showcase
           </h2>
           <div className="space-y-12">
@@ -140,8 +141,8 @@ export default function DemoPage() {
                       {feature.highlight}
                     </p>
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-4">{feature.title}</h3>
-                  <p className="text-lg text-gray-300 mb-6">{feature.description}</p>
+                  <h3 className={`${theme.typography.heading3} ${theme.textColors.primary} mb-4`}>{feature.title}</h3>
+                  <p className={`text-lg ${theme.textColors.secondary} mb-6`}>{feature.description}</p>
                   <div className="flex items-center gap-4">
                     <button className="bg-gradient-to-r from-amber-500 to-blue-500 text-white px-6 py-2 rounded-lg hover:from-amber-600 hover:to-blue-600 transition-colors flex items-center gap-2">
                       <ArrowRight className="w-4 h-4" />
@@ -150,7 +151,7 @@ export default function DemoPage() {
                   </div>
                 </div>
                 <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                  <GradientCard variant="glass" gradient="purple" className="p-6 bg-white/5 backdrop-blur-xl border border-white/10">
+                  <GradientCard variant="glass" gradient="purple" className={`p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary}`}>
                     {feature.component}
                   </GradientCard>
                 </div>
@@ -161,7 +162,7 @@ export default function DemoPage() {
 
         {/* Economic Dashboard Integration */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold text-center text-white mb-8">
+          <h2 className={`${theme.typography.heading2} text-center ${theme.textColors.primary} mb-8`}>
             Live Economic Data Integration
           </h2>
           <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4 mb-6 text-center backdrop-blur-sm">
@@ -175,16 +176,16 @@ export default function DemoPage() {
 
         {/* Contest Differentiators */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold text-center text-white mb-8">
+          <h2 className={`${theme.typography.heading2} text-center ${theme.textColors.primary} mb-8`}>
             Competitive Advantages
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <GradientCard variant="glass" gradient="purple" className="p-8 bg-white/5 backdrop-blur-xl border border-white/10">
+            <GradientCard variant="glass" gradient="purple" className={`p-8 ${theme.backgrounds.card} border ${theme.borderColors.primary}`}>
               <div className="flex items-center gap-3 mb-4">
                 <Brain className="w-8 h-8 text-blue-500" />
-                <h3 className="text-xl font-bold text-white">Real AI vs Simulated</h3>
+                <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>Real AI vs Simulated</h3>
               </div>
-              <p className="text-gray-300 mb-4">
+              <p className={`${theme.textColors.secondary} mb-4`}>
                 Actual OpenAI GPT-4o-mini integration with contextual responses, not pre-scripted chatbots like competitors.
               </p>
               <div className="bg-blue-500/20 border border-blue-500/30 p-4 rounded-lg backdrop-blur-sm">
@@ -194,12 +195,12 @@ export default function DemoPage() {
               </div>
             </GradientCard>
 
-            <GradientCard variant="glass" gradient="green" className="p-8 bg-white/5 backdrop-blur-xl border border-white/10">
+            <GradientCard variant="glass" gradient="green" className={`p-8 ${theme.backgrounds.card} border ${theme.borderColors.primary}`}>
               <div className="flex items-center gap-3 mb-4">
                 <Mic className="w-8 h-8 text-amber-500" />
-                <h3 className="text-xl font-bold text-white">Accessibility Innovation</h3>
+                <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>Accessibility Innovation</h3>
               </div>
-              <p className="text-gray-300 mb-4">
+              <p className={`${theme.textColors.secondary} mb-4`}>
                 Voice-first interface supporting users with different learning needs and accessibility requirements.
               </p>
               <div className="bg-amber-500/20 border border-amber-500/30 p-4 rounded-lg backdrop-blur-sm">
@@ -213,10 +214,10 @@ export default function DemoPage() {
 
         {/* Call to Action */}
         <section className="text-center py-12">
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-4`}>
             Ready to Experience the Future of Financial Education?
           </h2>
-          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p className={`text-lg ${theme.textColors.secondary} mb-8 max-w-2xl mx-auto`}>
             See how Finance Quest combines real AI, live market data, and accessibility features
             to solve the 64% financial illiteracy crisis with measurable outcomes.
           </p>

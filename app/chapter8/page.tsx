@@ -19,15 +19,15 @@ export default function Chapter8Page() {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+        <div className={`min-h-screen ${theme.backgrounds.primary}`}>
             {/* Header */}
-            <header className={`${theme.backgrounds.header} border-b border-amber-500/20`}>
+            <header className={`${theme.backgrounds.header} border-b ${theme.borderColors.accent}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                             <button
                                 onClick={() => window.history.back()}
-                                className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
+                                className={`${theme.textColors.accent} hover:${theme.textColors.accentSecondary} font-medium transition-colors`}
                             >
                                 ← Back to Home
                             </button>
