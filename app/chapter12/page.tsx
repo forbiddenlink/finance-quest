@@ -62,7 +62,7 @@ export default function Chapter12Page() {
         </div>
 
         {/* Content */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden">
+        <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden`}>
           {activeTab === 'lesson' && (
             <div className="p-8">
               <div className="mb-6">

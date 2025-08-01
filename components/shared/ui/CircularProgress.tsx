@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { theme } from '@/lib/theme';
 
 interface CircularProgressProps {
   percentage: number;
@@ -94,7 +95,7 @@ export default function CircularProgress({
       {/* Center Content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         {showPercentage && (
-          <span className="text-2xl font-bold text-gray-800 animate-number-count">
+          <span className={`text-2xl font-bold ${theme.textColors.primary} animate-number-count`}>
             {Math.round(animatedPercentage)}%
           </span>
         )}

@@ -158,7 +158,7 @@ export default function Chapter5Page() {
               <div className="text-2xl font-bold text-orange-700">78%</div>
               <div className="text-sm text-orange-600">live paycheck to paycheck</div>
             </div>
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 text-center">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 text-center`}>
               <Shield className="w-8 h-8 mx-auto mb-3 text-green-400" />
               <div className="text-2xl font-bold text-green-700">$1,000</div>
               <div className="text-sm text-green-600">minimum emergency fund recommended</div>
@@ -166,7 +166,7 @@ export default function Chapter5Page() {
           </div>
 
           {/* What You'll Learn */}
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6">
+          <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-6`}>
             <h3 className="text-lg font-semibold text-white mb-4">What You&apos;ll Master in This Chapter</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
@@ -296,7 +296,7 @@ export default function Chapter5Page() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-8 mb-8"
+          className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-8 mb-8`}
         >
           <h3 className="text-xl font-bold text-white mb-6">Emergency Fund Success Stories</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -331,7 +331,7 @@ export default function Chapter5Page() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-8 mb-8"
+          className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-8 mb-8`}
         >
           <div className="text-center">
             <h3 className="text-xl font-bold text-white mb-4">Ready to Calculate Your Emergency Fund?</h3>
@@ -358,7 +358,7 @@ export default function Chapter5Page() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-white/10 border border-white/20 text-gray-300 px-6 py-3 rounded-lg font-semibold hover:bg-white/20 hover:text-white transition-colors backdrop-blur-sm"
+              className={`${theme.backgrounds.glass}/10 border border-white/20 text-gray-300 px-6 py-3 rounded-lg font-semibold hover:${theme.backgrounds.glass}/20 hover:text-white transition-colors backdrop-blur-sm`}
             >
               ← Previous Chapter
             </motion.button>

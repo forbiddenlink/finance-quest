@@ -152,7 +152,7 @@ export default function EmergencyFundCalculator() {
           {/* Input Controls */}
           <div className="xl:col-span-1 space-y-6">
             {/* Income */}
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
               <h3 className="text-lg font-semibold text-white mb-4">Monthly Income</h3>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
@@ -167,7 +167,7 @@ export default function EmergencyFundCalculator() {
             </div>
 
             {/* Essential Expenses */}
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
               <h3 className="text-lg font-semibold text-white mb-4">Essential Monthly Expenses</h3>
               <div className="space-y-4">
                 <div>
@@ -271,7 +271,7 @@ export default function EmergencyFundCalculator() {
             </div>
 
             {/* Emergency Fund Settings */}
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
               <h3 className="text-lg font-semibold text-white mb-4">Emergency Fund Goals</h3>
 
               <div className="space-y-4">
@@ -328,21 +328,21 @@ export default function EmergencyFundCalculator() {
           <div className="xl:col-span-2 space-y-8">
             {/* Key Results */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center">
+              <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center`}>
                 <DollarSign className="w-8 h-8 mx-auto mb-3 text-amber-400" />
                 <h3 className="text-lg font-semibold text-white">Monthly Expenses</h3>
                 <p className="text-2xl font-bold text-amber-300">{formatCurrency(totalExpenses)}</p>
                 <p className="text-sm text-gray-300">Essential costs to cover</p>
               </div>
 
-              <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center">
+              <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center`}>
                 <Target className="w-8 h-8 mx-auto mb-3 text-blue-400" />
                 <h3 className="text-lg font-semibold text-white">Emergency Fund Target</h3>
                 <p className="text-2xl font-bold text-blue-300">{formatCurrency(emergencyFundTarget)}</p>
                 <p className="text-sm text-gray-300">{monthsOfExpenses} months of expenses</p>
               </div>
 
-              <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center">
+              <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center`}>
                 <Calendar className="w-8 h-8 mx-auto mb-3 text-slate-400" />
                 <h3 className="text-lg font-semibold text-white">Time to Goal</h3>
                 <p className="text-2xl font-bold text-slate-300">{formatMonths(timeToGoal)}</p>
@@ -351,7 +351,7 @@ export default function EmergencyFundCalculator() {
             </div>
 
             {/* Progress Bar */}
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
               <h3 className="text-lg font-semibold text-white mb-4">Current Progress</h3>
               <div className="relative">
                 <div className="w-full bg-slate-700 rounded-full h-6">
@@ -369,7 +369,7 @@ export default function EmergencyFundCalculator() {
             </div>
 
             {/* Expense Breakdown Chart */}
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
               <h3 className="text-lg font-semibold text-white mb-4">Monthly Expense Breakdown</h3>
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
@@ -394,7 +394,7 @@ export default function EmergencyFundCalculator() {
             </div>
 
             {/* Savings Milestones */}
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
               <h3 className="text-lg font-semibold text-white mb-4">Savings Milestones</h3>
               <div className="space-y-3">
                 {savingsMilestones.map((milestone, index) => {
@@ -474,7 +474,7 @@ export default function EmergencyFundCalculator() {
         </div>
 
         {/* Tips */}
-        <div className="mt-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+        <div className={`mt-8 ${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
           <h3 className="text-lg font-semibold text-white mb-4">💡 Emergency Fund Strategy Tips</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>

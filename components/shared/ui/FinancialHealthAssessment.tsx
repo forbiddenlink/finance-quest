@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import { Heart, TrendingUp, AlertTriangle, CheckCircle, Target, Shield, PiggyBank, CreditCard, Brain } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface FinancialHealthMetrics {
   budgetingScore: number;
@@ -244,7 +245,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
     return (
       <GradientCard variant="glass" gradient="green" className="p-8 text-center">
         <Heart className="w-16 h-16 text-green-600 mx-auto mb-6" />
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Financial Health Assessment</h2>
+        <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-4`}>Financial Health Assessment</h2>
         <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
           Get your personalized Financial Health Score with actionable recommendations to improve your financial well-being.
         </p>
@@ -264,7 +265,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
       <GradientCard variant="glass" gradient="blue" className="p-8">
         <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-2xl font-bold text-gray-900">{currentCategory.category}</h3>
+            <h3 className={`text-2xl font-bold ${theme.textColors.primary}`}>{currentCategory.category}</h3>
             <span className="text-sm text-gray-600">Step {currentStep + 1} of {questions.length}</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
@@ -278,14 +279,14 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
         <div className="space-y-6">
           {currentCategory.questions.map((q) => (
             <div key={q.key} className="space-y-3">
-              <label className="block text-lg font-medium text-gray-900">{q.question}</label>
+              <label className={`block text-lg font-medium ${theme.textColors.primary}`}>{q.question}</label>
               {q.type === 'number' ? (
                 <input
                   type="number"
                   placeholder={q.placeholder}
                   value={responses[q.key as keyof typeof responses] as string}
                   onChange={(e) => handleInputChange(q.key, e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                  className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg`}
                 />
               ) : (
                 <div className="flex space-x-4">
@@ -293,7 +294,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                     onClick={() => handleInputChange(q.key, true)}
                     className={`px-6 py-3 rounded-lg font-medium transition-all ${responses[q.key as keyof typeof responses] === true
                       ? 'bg-green-500 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      : 'bg-gray-200 ${theme.textColors.secondary} hover:bg-gray-300'
                       }`}
                   >
                     Yes
@@ -302,7 +303,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                     onClick={() => handleInputChange(q.key, false)}
                     className={`px-6 py-3 rounded-lg font-medium transition-all ${responses[q.key as keyof typeof responses] === false
                       ? 'bg-red-500 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      : 'bg-gray-200 ${theme.textColors.secondary} hover:bg-gray-300'
                       }`}
                   >
                     No
@@ -317,7 +318,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
           <button
             onClick={handlePrevStep}
             disabled={currentStep === 0}
-            className="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 transition-all"
+            className={`px-6 py-3 bg-gray-300 ${theme.textColors.secondary} rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 transition-all`}
           >
             Previous
           </button>
@@ -340,7 +341,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
           <div className={`w-24 h-24 ${getGradeColor(healthScore.grade)} rounded-full flex items-center justify-center mx-auto mb-6`}>
             <span className="text-4xl font-bold text-white">{healthScore.grade}</span>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Your Financial Health Score</h2>
+          <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>Your Financial Health Score</h2>
           <div className="text-6xl font-bold text-purple-600 mb-4">{healthScore.overallScore}</div>
           <p className="text-lg text-gray-600">
             {healthScore.overallScore >= 90 ? 'Excellent financial health!' :
@@ -353,7 +354,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
 
         {/* Detailed Breakdown */}
         <GradientCard variant="glass" gradient="blue" className="p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-6">Detailed Breakdown</h3>
+          <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-6`}>Detailed Breakdown</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               { name: 'Budgeting', score: healthScore.budgetingScore, icon: Target },
@@ -363,11 +364,11 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
               { name: 'Investments', score: healthScore.investmentScore, icon: TrendingUp },
               { name: 'Knowledge', score: healthScore.knowledgeScore, icon: Brain }
             ].map(({ name, score, icon: Icon }) => (
-              <div key={name} className="bg-white bg-opacity-50 rounded-lg p-4">
+              <div key={name} className={`${theme.backgrounds.glass} bg-opacity-50 rounded-lg p-4`}>
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <Icon className="w-5 h-5 text-gray-600" />
-                    <span className="font-medium text-gray-900">{name}</span>
+                    <span className={`font-medium ${theme.textColors.primary}`}>{name}</span>
                   </div>
                   <span className={`font-bold ${getScoreColor(score)}`}>{score}</span>
                 </div>
@@ -388,7 +389,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
           {/* Improvements */}
           {healthScore.improvements.length > 0 && (
             <GradientCard variant="glass" gradient="red" className="p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
                 <AlertTriangle className="w-6 h-6 text-red-600" />
                 Priority Improvements
               </h3>
@@ -398,7 +399,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                     <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-white text-sm font-bold">{idx + 1}</span>
                     </div>
-                    <span className="text-gray-800">{improvement}</span>
+                    <span className={`${theme.textColors.primary}`}>{improvement}</span>
                   </li>
                 ))}
               </ul>
@@ -408,7 +409,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
           {/* Strengths */}
           {healthScore.strengths.length > 0 && (
             <GradientCard variant="glass" gradient="green" className="p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
                 <CheckCircle className="w-6 h-6 text-green-600" />
                 Your Strengths
               </h3>
@@ -416,7 +417,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                 {healthScore.strengths.map((strength, idx) => (
                   <li key={idx} className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                    <span className="text-gray-800">{strength}</span>
+                    <span className={`${theme.textColors.primary}`}>{strength}</span>
                   </li>
                 ))}
               </ul>

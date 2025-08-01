@@ -188,7 +188,7 @@ export default function ProgressDashboard() {
 
       {/* Learning Activity Timeline */}
       <div className={`${theme.backgrounds.cardHover} rounded-lg p-6 mb-8`}>
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Learning Activity Timeline</h3>
+        <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>Learning Activity Timeline</h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={activityData}>
@@ -360,7 +360,7 @@ export default function ProgressDashboard() {
       {/* Spaced Repetition Learning System */}
       {totalLessonsCompleted > 0 && (
         <div className="mt-8">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
             <Brain className="w-5 h-5 text-purple-600" />
             Learning Retention System
           </h3>
@@ -375,7 +375,7 @@ export default function ProgressDashboard() {
           Contest Judge Highlights
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white bg-opacity-60 rounded-lg p-4">
+          <div className={`${theme.backgrounds.glass} bg-opacity-60 rounded-lg p-4`}>
             <h4 className="font-semibold text-purple-800 mb-2 flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
               Measurable Impact
@@ -384,7 +384,7 @@ export default function ProgressDashboard() {
               Real progress tracking with persistent data across sessions. Every interaction measured and analyzed.
             </p>
           </div>
-          <div className="bg-white bg-opacity-60 rounded-lg p-4">
+          <div className={`${theme.backgrounds.glass} bg-opacity-60 rounded-lg p-4`}>
             <h4 className="font-semibold text-purple-800 mb-2 flex items-center gap-2">
               <Bot className="w-4 h-4" />
               AI Integration
@@ -393,7 +393,7 @@ export default function ProgressDashboard() {
               OpenAI GPT-4o-mini provides contextual coaching based on actual user progress and struggling topics.
             </p>
           </div>
-          <div className="bg-white bg-opacity-60 rounded-lg p-4">
+          <div className={`${theme.backgrounds.glass} bg-opacity-60 rounded-lg p-4`}>
             <h4 className="font-semibold text-purple-800 mb-2 flex items-center gap-2">
               <Zap className="w-4 h-4" />
               Educational Effectiveness

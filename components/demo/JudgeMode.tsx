@@ -15,6 +15,7 @@ import {
   EyeOff
 } from 'lucide-react';
 import GradientCard from '@/components/shared/ui/GradientCard';
+import { theme } from '@/lib/theme';
 
 interface JudgeModeProps {
   isActive?: boolean;
@@ -108,7 +109,7 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
           onClick={() => onToggle?.(!isActive)}
           className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg transition-all ${isActive
               ? 'bg-gradient-to-r from-blue-600 to-slate-600 text-white'
-              : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+              : '${theme.backgrounds.glass} ${theme.textColors.secondary} border ${theme.borderColors.primary} hover:bg-gray-50'
             }`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -154,7 +155,7 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
                   key={highlight.id}
                   onHoverStart={() => setActiveHighlight(highlight.id)}
                   onHoverEnd={() => setActiveHighlight(null)}
-                  className={`bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-4 border border-white border-opacity-20 hover:bg-opacity-20 transition-all cursor-pointer`}
+                  className={`${theme.backgrounds.glass} bg-opacity-10 backdrop-blur-sm rounded-lg p-4 border border-white border-opacity-20 hover:bg-opacity-20 transition-all cursor-pointer`}
                   whileHover={{ scale: 1.02 }}
                 >
                   <div className="flex items-center gap-2 mb-2">

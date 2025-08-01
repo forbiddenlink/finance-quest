@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEnhancedProgress } from '@/lib/store/progressHooks';
+import { theme } from '@/lib/theme';
 import {
     BookOpen,
     CreditCard,
@@ -480,7 +481,7 @@ const ComprehensiveNavigation = () => {
                                     {track.chapters.map((chapter) => (
                                         <div
                                             key={chapter.id}
-                                            className={`bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 ${chapter.isAvailable ? 'hover:border-white/20 cursor-pointer' : 'opacity-60'
+                                            className={`${theme.backgrounds.glass}/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 ${chapter.isAvailable ? 'hover:border-white/20 cursor-pointer' : 'opacity-60'
                                                 } transition-all duration-300`}
                                         >
                                             {chapter.route && chapter.isAvailable ? (
@@ -500,7 +501,7 @@ const ComprehensiveNavigation = () => {
             </div>
 
             {/* Overall Progress Summary */}
-            <div className="mt-12 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+            <div className={`mt-12 ${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8`}>
                 <div className="text-center">
                     <h3 className="text-2xl font-bold text-white mb-6">Your Learning Journey</h3>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -536,7 +537,7 @@ const ComprehensiveNavigation = () => {
 const ChapterContent = ({ chapter }: { chapter: Chapter }) => (
     <div className="flex items-center justify-between">
         <div className="flex items-center">
-            <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center mr-3">
+            <div className={`w-8 h-8 ${theme.backgrounds.glass}/10 rounded-lg flex items-center justify-center mr-3`}>
                 {chapter.icon}
             </div>
             <div>

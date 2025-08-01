@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { theme } from '@/lib/theme';
 import {
   TrendingUp,
   Users,
@@ -105,7 +106,7 @@ export default function InteractiveDashboardCards() {
                   <Icon className="w-6 h-6" />
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-bold text-gray-900">{card.mainStat}</div>
+                  <div className={`text-3xl font-bold ${theme.textColors.primary}`}>{card.mainStat}</div>
                   <Progress value={card.progress} className="w-16 h-2 mt-1" />
                 </div>
               </div>
@@ -114,7 +115,7 @@ export default function InteractiveDashboardCards() {
             <CardContent className="relative">
               <div className="space-y-3">
                 <div>
-                  <CardTitle className="text-lg font-semibold text-gray-900 mb-1">
+                  <CardTitle className={`text-lg font-semibold ${theme.textColors.primary} mb-1`}>
                     {card.title}
                   </CardTitle>
                   <p className="text-sm text-gray-600 leading-relaxed">
@@ -125,7 +126,7 @@ export default function InteractiveDashboardCards() {
                 {/* Expanded Details */}
                 {isExpanded && (
                   <div className="mt-4 space-y-3 animate-in slide-in-from-top-2 duration-300">
-                    <div className="flex items-center text-sm font-medium text-gray-700">
+                    <div className={`flex items-center text-sm font-medium ${theme.textColors.secondary}`}>
                       <Zap className="w-4 h-4 mr-2 text-yellow-500" />
                       Detailed Breakdown
                     </div>
@@ -134,10 +135,10 @@ export default function InteractiveDashboardCards() {
                       {card.details.map((detail, detailIndex) => (
                         <div
                           key={detailIndex}
-                          className="flex items-center p-3 bg-white/70 rounded-lg border border-gray-100"
+                          className={`flex items-center p-3 ${theme.backgrounds.glass}/70 rounded-lg border border-gray-100`}
                         >
                           <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mr-3 flex-shrink-0" />
-                          <span className="text-sm text-gray-700">{detail}</span>
+                          <span className={`text-sm ${theme.textColors.secondary}`}>{detail}</span>
                         </div>
                       ))}
                     </div>

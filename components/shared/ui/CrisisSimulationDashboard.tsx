@@ -21,6 +21,7 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import GradientCard from '@/components/shared/ui/GradientCard';
 
 import { LucideIcon } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface CrisisScenario {
   id: string;
@@ -649,7 +650,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
   };
 
   const getScenarioStatusColor = (scenario: CrisisScenario) => {
-    if (!scenario.unlocked) return 'bg-gray-100 border-gray-200';
+    if (!scenario.unlocked) return 'bg-gray-100 ${theme.borderColors.primary}';
     if (completedScenarios.includes(scenario.id)) return 'bg-amber-50 border-amber-200';
 
     switch (scenario.urgency) {
@@ -685,24 +686,24 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
               }`}>
               <span className="text-3xl font-bold text-white">{simulationResult.grade}</span>
             </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Crisis Simulation Complete!</h2>
+            <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>Crisis Simulation Complete!</h2>
             <p className="text-lg text-gray-600">{activeScenario?.title}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="text-center p-4 bg-white bg-opacity-50 rounded-lg">
+            <div className={`text-center p-4 ${theme.backgrounds.glass} bg-opacity-50 rounded-lg`}>
               <Target className="w-8 h-8 mx-auto mb-2 text-purple-600" />
-              <div className="text-2xl font-bold text-gray-900">{simulationResult.totalScore}</div>
+              <div className={`text-2xl font-bold ${theme.textColors.primary}`}>{simulationResult.totalScore}</div>
               <div className="text-sm text-gray-600">Average Score</div>
             </div>
-            <div className="text-center p-4 bg-white bg-opacity-50 rounded-lg">
+            <div className={`text-center p-4 ${theme.backgrounds.glass} bg-opacity-50 rounded-lg`}>
               <CheckCircle className="w-8 h-8 mx-auto mb-2 text-green-600" />
-              <div className="text-2xl font-bold text-gray-900">
+              <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
                 {simulationResult.correctAnswers}/{simulationResult.totalQuestions}
               </div>
               <div className="text-sm text-gray-600">Correct Decisions</div>
             </div>
-            <div className="text-center p-4 bg-white bg-opacity-50 rounded-lg">
+            <div className={`text-center p-4 ${theme.backgrounds.glass} bg-opacity-50 rounded-lg`}>
               <DollarSign className={`w-8 h-8 mx-auto mb-2 ${simulationResult.financialOutcome >= 0 ? 'text-green-600' : 'text-red-600'
                 }`} />
               <div className={`text-2xl font-bold ${simulationResult.financialOutcome >= 0 ? 'text-green-600' : 'text-red-600'
@@ -753,7 +754,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={resetSimulation}
-              className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors flex items-center gap-2"
+              className={`px-6 py-3 bg-gray-200 ${theme.textColors.secondary} rounded-lg font-semibold hover:bg-gray-300 transition-colors flex items-center gap-2`}
             >
               <RefreshCw className="w-4 h-4" />
               Try Another Scenario
@@ -788,7 +789,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
             <div className="flex items-center gap-3">
               <activeScenario.icon className="w-8 h-8 text-red-600" />
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">{activeScenario.title}</h2>
+                <h2 className={`text-2xl font-bold ${theme.textColors.primary}`}>{activeScenario.title}</h2>
                 <p className="text-gray-600">{currentSimulationStep.title}</p>
               </div>
             </div>
@@ -817,7 +818,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
 
           {/* Options */}
           <div className="space-y-4 mb-8">
-            <h3 className="font-bold text-gray-900 mb-4">What should you do?</h3>
+            <h3 className={`font-bold ${theme.textColors.primary} mb-4`}>What should you do?</h3>
             {currentSimulationStep.options.map((option, index) => (
               <motion.button
                 key={index}
@@ -830,14 +831,14 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
                   : hasAnswered && index === currentSimulationStep.correctAnswer
                     ? 'border-green-500 bg-green-50'
                     : hasAnswered
-                      ? 'border-gray-200 bg-gray-50 opacity-60'
-                      : 'border-gray-200 hover:border-red-300 hover:bg-red-50'
+                      ? '${theme.borderColors.primary} bg-gray-50 opacity-60'
+                      : '${theme.borderColors.primary} hover:border-red-300 hover:bg-red-50'
                   } ${hasAnswered ? 'cursor-default' : 'cursor-pointer'}`}
                 whileHover={!hasAnswered ? { scale: 1.02 } : {}}
                 whileTap={!hasAnswered ? { scale: 0.98 } : {}}
               >
                 <div className="flex items-start justify-between">
-                  <span className="font-medium text-gray-900">{option.text}</span>
+                  <span className={`font-medium ${theme.textColors.primary}`}>{option.text}</span>
                   {hasAnswered && (
                     <div className="ml-4 flex-shrink-0">
                       {index === currentSimulationStep.correctAnswer ? (
@@ -867,7 +868,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
               <h4 className="font-bold text-blue-900 mb-3">Explanation</h4>
               <p className="text-blue-800 mb-4">{currentSimulationStep.explanation}</p>
 
-              <div className="bg-white bg-opacity-60 rounded p-4">
+              <div className={`${theme.backgrounds.glass} bg-opacity-60 rounded p-4`}>
                 <h5 className="font-semibold text-blue-900 mb-2">Consequences:</h5>
                 <ul className="text-sm text-blue-800 space-y-1">
                   {currentSimulationStep.consequences.map((consequence, index) => (
@@ -890,7 +891,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
     <div className={`space-y-6 ${className}`}>
       <GradientCard variant="glass" gradient="red" className="p-8 text-center">
         <AlertTriangle className="w-16 h-16 text-red-600 mx-auto mb-4" />
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Crisis Simulation Training</h2>
+        <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-4`}>Crisis Simulation Training</h2>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
           Practice handling financial emergencies in a safe environment. Learn to make sound decisions under pressure
           and build confidence for real-world crisis situations.
@@ -921,8 +922,8 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
                 )}
               </div>
 
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{scenario.title}</h3>
-              <p className="text-gray-700 text-sm mb-4 leading-relaxed">{scenario.description}</p>
+              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-2`}>{scenario.title}</h3>
+              <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>{scenario.description}</p>
 
               <div className="space-y-2 text-xs">
                 <div className="flex items-center justify-between">

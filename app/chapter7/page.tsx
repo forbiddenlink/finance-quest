@@ -199,7 +199,7 @@ export default function Chapter7Page() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.8 }}
-                    className="bg-white/5 backdrop-blur-xl border border-amber-500/20 rounded-2xl p-8 mb-12"
+                    className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-amber-500/20 rounded-2xl p-8 mb-12`}
                 >
                     <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
                         <Target className="w-6 h-6 mr-3 text-amber-400" />
@@ -245,7 +245,7 @@ export default function Chapter7Page() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 + index * 0.1, duration: 0.8 }}
-                            className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300 cursor-pointer"
+                            className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300 cursor-pointer`}
                             onClick={() => setSelectedLesson(selectedLesson === lesson.id ? null : lesson.id)}
                         >
                             <div className="flex items-start justify-between mb-4">
@@ -319,7 +319,7 @@ export default function Chapter7Page() {
                             </Button>
                         </Link>
                         <Link href="/chapter1">
-                            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+                            <Button variant="outline" className={`border-white/20 text-white hover:${theme.backgrounds.glass}/10`}>
                                 Continue Foundation Track
                             </Button>
                         </Link>

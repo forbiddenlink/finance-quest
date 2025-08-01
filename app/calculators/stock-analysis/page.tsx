@@ -5,12 +5,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, BarChart3, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
+import { theme } from '@/lib/theme';
 
 export default function StockAnalysisCalculatorPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
+      <div className={`${theme.backgrounds.glass} border-b ${theme.borderColors.primary}`}>
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -24,7 +25,7 @@ export default function StockAnalysisCalculatorPage() {
                 <BarChart3 className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Stock Analysis Calculator</h1>
+                <h1 className={`text-2xl font-bold ${theme.textColors.primary}`}>Stock Analysis Calculator</h1>
                 <p className="text-gray-600">Analyze stocks using fundamental valuation metrics</p>
               </div>
             </div>
@@ -83,7 +84,7 @@ export default function StockAnalysisCalculatorPage() {
           <CardContent>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-medium text-gray-900 mb-3">Key Valuation Ratios</h4>
+                <h4 className={`font-medium ${theme.textColors.primary} mb-3`}>Key Valuation Ratios</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">P/E Ratio:</span>
@@ -109,22 +110,22 @@ export default function StockAnalysisCalculatorPage() {
               </div>
               
               <div>
-                <h4 className="font-medium text-gray-900 mb-3">Analysis Guidelines</h4>
+                <h4 className={`font-medium ${theme.textColors.primary} mb-3`}>Analysis Guidelines</h4>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <h5 className="font-medium text-gray-800">Value Investing</h5>
+                    <h5 className={`font-medium ${theme.textColors.primary}`}>Value Investing</h5>
                     <p className="text-gray-600">Look for low P/E, P/B ratios and strong fundamentals</p>
                   </div>
                   <div>
-                    <h5 className="font-medium text-gray-800">Growth Investing</h5>
+                    <h5 className={`font-medium ${theme.textColors.primary}`}>Growth Investing</h5>
                     <p className="text-gray-600">Focus on high growth rates and reasonable PEG ratios</p>
                   </div>
                   <div>
-                    <h5 className="font-medium text-gray-800">Quality Assessment</h5>
+                    <h5 className={`font-medium ${theme.textColors.primary}`}>Quality Assessment</h5>
                     <p className="text-gray-600">Examine debt levels, profitability, and management</p>
                   </div>
                   <div>
-                    <h5 className="font-medium text-gray-800">Risk Management</h5>
+                    <h5 className={`font-medium ${theme.textColors.primary}`}>Risk Management</h5>
                     <p className="text-gray-600">Diversify across sectors and company sizes</p>
                   </div>
                 </div>

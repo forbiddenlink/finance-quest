@@ -5,12 +5,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Shield, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
+import { theme } from '@/lib/theme';
 
 export default function BondCalculatorPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
+      <div className={`${theme.backgrounds.glass} border-b ${theme.borderColors.primary}`}>
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -24,7 +25,7 @@ export default function BondCalculatorPage() {
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Bond Calculator</h1>
+                <h1 className={`text-2xl font-bold ${theme.textColors.primary}`}>Bond Calculator</h1>
                                     <p className="text-gray-600">We&apos;re building a complete suite of financial calculators to help you master every aspect of money management</p>
               </div>
             </div>
@@ -83,7 +84,7 @@ export default function BondCalculatorPage() {
           <CardContent>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-medium text-gray-900 mb-3">Key Bond Terms</h4>
+                <h4 className={`font-medium ${theme.textColors.primary} mb-3`}>Key Bond Terms</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Face Value:</span>
@@ -109,22 +110,22 @@ export default function BondCalculatorPage() {
               </div>
               
               <div>
-                <h4 className="font-medium text-gray-900 mb-3">Investment Strategies</h4>
+                <h4 className={`font-medium ${theme.textColors.primary} mb-3`}>Investment Strategies</h4>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <h5 className="font-medium text-gray-800">Bond Laddering</h5>
+                    <h5 className={`font-medium ${theme.textColors.primary}`}>Bond Laddering</h5>
                     <p className="text-gray-600">Spread investments across different maturities</p>
                   </div>
                   <div>
-                    <h5 className="font-medium text-gray-800">Duration Matching</h5>
+                    <h5 className={`font-medium ${theme.textColors.primary}`}>Duration Matching</h5>
                     <p className="text-gray-600">Match bond duration to investment timeline</p>
                   </div>
                   <div>
-                    <h5 className="font-medium text-gray-800">Credit Analysis</h5>
+                    <h5 className={`font-medium ${theme.textColors.primary}`}>Credit Analysis</h5>
                     <p className="text-gray-600">Evaluate issuer&apos;s ability to repay debt</p>
                   </div>
                   <div>
-                    <h5 className="font-medium text-gray-800">Rate Environment</h5>
+                    <h5 className={`font-medium ${theme.textColors.primary}`}>Rate Environment</h5>
                     <p className="text-gray-600">Consider current and expected interest rate trends</p>
                   </div>
                 </div>

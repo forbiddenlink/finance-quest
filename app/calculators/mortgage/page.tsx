@@ -54,7 +54,7 @@ export default function MortgageCalculatorPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Educational Tips */}
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl p-6`}>
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5 text-amber-400" />
                 Key Considerations

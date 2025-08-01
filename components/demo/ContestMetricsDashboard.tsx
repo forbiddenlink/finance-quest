@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import GradientCard from '@/components/shared/ui/GradientCard';
+import { theme } from '@/lib/theme';
 
 interface ImpactMetric {
   label: string;
@@ -167,7 +168,7 @@ export default function ContestMetricsDashboard() {
               <Trophy className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-gray-900">Contest Impact Dashboard</h1>
+              <h1 className={`text-4xl font-bold ${theme.textColors.primary}`}>Contest Impact Dashboard</h1>
               <p className="text-lg text-gray-600">Measurable Outcomes for Hack the Economy Judges</p>
             </div>
           </div>
@@ -196,7 +197,7 @@ export default function ContestMetricsDashboard() {
                     {metric.trend === 'up' && <TrendingUp className="w-5 h-5 text-green-500" />}
                     {metric.trend === 'down' && <TrendingUp className="w-5 h-5 text-red-500 rotate-180" />}
                     {metric.trend === 'stable' && <CheckCircle className="w-5 h-5 text-blue-500" />}
-                    <h3 className="font-semibold text-gray-900">{metric.label}</h3>
+                    <h3 className={`font-semibold ${theme.textColors.primary}`}>{metric.label}</h3>
                   </div>
                   <div className={`px-2 py-1 rounded-full text-xs font-medium ${metric.value >= metric.target
                     ? 'bg-green-100 text-green-800'
@@ -206,7 +207,7 @@ export default function ContestMetricsDashboard() {
                   </div>
                 </div>
 
-                <div className="text-3xl font-bold text-gray-900 mb-2">
+                <div className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>
                   {metric.value}{metric.unit}
                   <span className="text-sm text-gray-500 ml-1">/ {metric.target}{metric.unit}</span>
                 </div>
@@ -242,7 +243,7 @@ export default function ContestMetricsDashboard() {
         {/* Learning Outcomes Chart */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <GradientCard variant="glass" gradient="purple" className="p-6">
-            <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
               <Brain className="w-6 h-6 text-purple-600" />
               Learning Outcome Improvements
             </h3>
@@ -259,7 +260,7 @@ export default function ContestMetricsDashboard() {
           </GradientCard>
 
           <GradientCard variant="glass" gradient="green" className="p-6">
-            <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
               <Users className="w-6 h-6 text-green-600" />
               User Engagement Growth
             </h3>
@@ -279,7 +280,7 @@ export default function ContestMetricsDashboard() {
         {/* Feature Usage & Contest Scoring */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <GradientCard variant="glass" gradient="yellow" className="p-6">
-            <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
               <Zap className="w-6 h-6 text-yellow-600" />
               Feature Adoption Rates
             </h3>
@@ -305,15 +306,15 @@ export default function ContestMetricsDashboard() {
           </GradientCard>
 
           <GradientCard variant="glass" gradient="red" className="p-6">
-            <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
               <Award className="w-6 h-6 text-red-600" />
               Contest Judging Criteria
             </h3>
             <div className="space-y-4">
               {contestJudgingCriteria.map((criterion, index) => (
-                <div key={criterion.criterion} className="border-b border-gray-200 pb-3">
+                <div key={criterion.criterion} className={`border-b ${theme.borderColors.primary} pb-3`}>
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-gray-900">{criterion.criterion}</h4>
+                    <h4 className={`font-semibold ${theme.textColors.primary}`}>{criterion.criterion}</h4>
                     <span className="text-lg font-bold text-red-600">{criterion.score}/100</span>
                   </div>
                   <p className="text-sm text-gray-600 mb-2">{criterion.evidence}</p>
@@ -333,7 +334,7 @@ export default function ContestMetricsDashboard() {
 
         {/* Technical Achievements Summary */}
         <GradientCard variant="glass" gradient="blue" className="p-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+          <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-6 flex items-center gap-2`}>
             <Star className="w-8 h-8 text-blue-600" />
             Contest-Winning Technical Achievements
           </h3>
@@ -342,28 +343,28 @@ export default function ContestMetricsDashboard() {
               <div className="bg-blue-100 p-4 rounded-lg mb-3">
                 <Brain className="w-8 h-8 text-blue-600 mx-auto" />
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Real AI Integration</h4>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Real AI Integration</h4>
               <p className="text-sm text-gray-600">OpenAI GPT-4o-mini with contextual responses, not simulated chatbots</p>
             </div>
             <div className="text-center">
               <div className="bg-green-100 p-4 rounded-lg mb-3">
                 <Mic className="w-8 h-8 text-green-600 mx-auto" />
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Voice Accessibility</h4>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Voice Accessibility</h4>
               <p className="text-sm text-gray-600">Web Speech API integration for inclusive financial education</p>
             </div>
             <div className="text-center">
               <div className="bg-purple-100 p-4 rounded-lg mb-3">
                 <BarChart3 className="w-8 h-8 text-purple-600 mx-auto" />
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Live Market Data</h4>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Live Market Data</h4>
               <p className="text-sm text-gray-600">Real-time Yahoo Finance & FRED API integration with fallbacks</p>
             </div>
             <div className="text-center">
               <div className="bg-yellow-100 p-4 rounded-lg mb-3">
                 <Target className="w-8 h-8 text-yellow-600 mx-auto" />
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Measurable Impact</h4>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Measurable Impact</h4>
               <p className="text-sm text-gray-600">42% knowledge improvement with quantifiable learning outcomes</p>
             </div>
           </div>

@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import GradientCard from '@/components/shared/ui/GradientCard';
+import { theme } from '@/lib/theme';
 
 interface AssessmentQuestion {
   id: string;
@@ -264,7 +265,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                     <Target className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h1 className="text-3xl font-bold text-gray-900">Before & After Assessment</h1>
+                    <h1 className={`text-3xl font-bold ${theme.textColors.primary}`}>Before & After Assessment</h1>
                     <p className="text-gray-600">Measure your financial literacy improvement</p>
                   </div>
                 </div>
@@ -276,7 +277,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   </p>
                 </div>
 
-                <p className="text-lg text-gray-700 mb-8">
+                <p className={`text-lg ${theme.textColors.secondary} mb-8`}>
                   This assessment demonstrates measurable learning improvements that address the 64% financial illiteracy crisis.
                   Take the same test before and after using Finance Quest to see your knowledge growth.
                 </p>
@@ -311,7 +312,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   {isDemo && (
                     <button
                       onClick={startDemo}
-                      className="bg-white text-gray-700 px-6 py-3 rounded-full font-semibold border border-gray-300 hover:bg-gray-50 transition-all flex items-center gap-2"
+                      className={`${theme.backgrounds.glass} ${theme.textColors.secondary} px-6 py-3 rounded-full font-semibold border ${theme.borderColors.primary} hover:bg-gray-50 transition-all flex items-center gap-2`}
                     >
                       <Zap className="w-5 h-5" />
                       Demo Mode
@@ -331,7 +332,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
               <GradientCard variant="glass" gradient="purple" className="p-8">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900">
+                    <h2 className={`text-2xl font-bold ${theme.textColors.primary}`}>
                       {phase === 'before' ? 'Before Assessment' : 'After Assessment'}
                     </h2>
                     <p className="text-gray-600">
@@ -350,7 +351,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                 </div>
 
                 <div className="mb-8">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-6">
+                  <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-6`}>
                     {assessmentQuestions[currentQuestion].question}
                   </h3>
 
@@ -359,15 +360,15 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                       <motion.button
                         key={index}
                         onClick={() => handleAnswer(index)}
-                        className="w-full text-left p-4 rounded-lg border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all"
+                        className={`w-full text-left p-4 rounded-lg border ${theme.borderColors.primary} hover:border-purple-300 hover:bg-purple-50 transition-all`}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-6 h-6 rounded-full border border-gray-300 flex items-center justify-center">
+                          <div className={`w-6 h-6 rounded-full border ${theme.borderColors.primary} flex items-center justify-center`}>
                             <div className="w-3 h-3 rounded-full bg-purple-500 opacity-0 transition-opacity hover:opacity-100" />
                           </div>
-                          <span className="text-gray-900">{option}</span>
+                          <span className={`${theme.textColors.primary}`}>{option}</span>
                         </div>
                       </motion.button>
                     ))}
@@ -390,7 +391,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                     <Brain className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-3xl font-bold text-gray-900">Learning Phase Complete!</h2>
+                    <h2 className={`text-3xl font-bold ${theme.textColors.primary}`}>Learning Phase Complete!</h2>
                     <p className="text-gray-600">Your baseline has been established</p>
                   </div>
                 </div>
@@ -404,7 +405,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   ))}
                 </div>
 
-                <p className="text-lg text-gray-700 mb-8">
+                <p className={`text-lg ${theme.textColors.secondary} mb-8`}>
                   Now experience Finance Quest&apos;s interactive lessons, AI coaching, and hands-on calculators.
                   When ready, take the same assessment to measure your improvement!
                 </p>
@@ -420,7 +421,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
 
                   <button
                     onClick={simulateAfterScores}
-                    className="bg-white text-gray-700 px-6 py-3 rounded-full font-semibold border border-gray-300 hover:bg-gray-50 transition-all"
+                    className={`${theme.backgrounds.glass} ${theme.textColors.secondary} px-6 py-3 rounded-full font-semibold border ${theme.borderColors.primary} hover:bg-gray-50 transition-all`}
                   >
                     Simulate Results
                   </button>
@@ -441,7 +442,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                     <Award className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-4xl font-bold text-gray-900">Remarkable Improvement!</h2>
+                    <h2 className={`text-4xl font-bold ${theme.textColors.primary}`}>Remarkable Improvement!</h2>
                     <p className="text-lg text-gray-600">Your financial literacy has measurably increased</p>
                   </div>
                 </div>
@@ -456,7 +457,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                 <GradientCard variant="glass" gradient="blue" className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">Score Comparison</h3>
+                  <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4`}>Score Comparison</h3>
                   <ResponsiveContainer width="100%" height={300}>
                     <BarChart data={afterScores}>
                       <CartesianGrid strokeDasharray="3 3" />
@@ -470,7 +471,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                 </GradientCard>
 
                 <GradientCard variant="glass" gradient="green" className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">Improvement Breakdown</h3>
+                  <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4`}>Improvement Breakdown</h3>
                   <div className="space-y-4">
                     {afterScores.map((score, index) => (
                       <div key={index} className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
@@ -489,7 +490,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
               </div>
 
               <GradientCard variant="glass" gradient="purple" className="p-8 text-center">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Contest Impact Demonstrated</h3>
+                <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-4`}>Contest Impact Demonstrated</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
                     <div className="text-3xl font-bold text-purple-600 mb-2">{averageImprovement}%</div>
@@ -504,7 +505,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                     <div className="text-sm text-gray-600">Measurable Improvement</div>
                   </div>
                 </div>
-                <p className="text-gray-700 mt-6">
+                <p className={`${theme.textColors.secondary} mt-6`}>
                   This quantifiable improvement demonstrates Finance Quest&apos;s effectiveness in addressing
                   the financial literacy crisis through personalized AI coaching and interactive learning.
                 </p>

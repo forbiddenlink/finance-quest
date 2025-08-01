@@ -49,14 +49,14 @@ export default function CompoundInterestPage() {
               </h3>
               <p className={theme.textColors.secondary}>Starting 10 years earlier can double your final balance</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3">
+            <div className={`${theme.backgrounds.glass}/10 backdrop-blur-sm border border-white/20 rounded-lg p-3`}>
               <h3 className="font-semibold text-white flex items-center gap-2">
                 <RotateCcw className="w-4 h-4 text-blue-400" />
                 Compounding Effect
               </h3>
               <p className="text-gray-300">Your money earns money, which earns more money</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3">
+            <div className={`${theme.backgrounds.glass}/10 backdrop-blur-sm border border-white/20 rounded-lg p-3`}>
               <h3 className="font-semibold text-white flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-amber-400" />
                 Exponential Growth
@@ -75,7 +75,7 @@ export default function CompoundInterestPage() {
         />
 
         {/* Learning Objectives */}
-        <div className="mt-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6">
+        <div className={`mt-8 ${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-6`}>
           <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
             <Target className="w-5 h-5 text-amber-400" />
             What You&apos;ll Learn
@@ -103,25 +103,25 @@ export default function CompoundInterestPage() {
         </div>
 
         {/* Action Steps */}
-        <div className="mt-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6">
+        <div className={`mt-6 ${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-6`}>
           <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
             <Rocket className="w-5 h-5 text-amber-400" />
             Next Steps
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/10 backdrop-blur-sm border border-white/20 rounded-lg p-4`}>
               <h4 className="font-semibold text-amber-300 mb-2">1. Start Now</h4>
               <p className="text-gray-300 text-sm">
                 Even $25/month makes a difference. Open a high-yield savings account or investment account today.
               </p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/10 backdrop-blur-sm border border-white/20 rounded-lg p-4`}>
               <h4 className="font-semibold text-amber-300 mb-2">2. Automate</h4>
               <p className="text-gray-300 text-sm">
                 Set up automatic transfers to make saving effortless. Pay yourself first every month.
               </p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/10 backdrop-blur-sm border border-white/20 rounded-lg p-4`}>
               <h4 className="font-semibold text-amber-300 mb-2">3. Increase Gradually</h4>
               <p className="text-gray-300 text-sm">
                 Raise your contribution by 1% each year or whenever you get a raise. Small increases compound too!

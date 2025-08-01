@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { theme } from '@/lib/theme';
 import {
   Calculator,
   PieChart,
@@ -102,7 +103,7 @@ export default function EnhancedCalculatorGrid() {
           <Calculator className="w-4 h-4 mr-2" />
           Professional Financial Tools
         </Badge>
-        <h2 className="text-4xl font-bold text-gray-900">
+        <h2 className={`text-4xl font-bold ${theme.textColors.primary}`}>
           Interactive Financial Calculators
         </h2>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -136,7 +137,7 @@ export default function EnhancedCalculatorGrid() {
                 </div>
 
                 <div className="space-y-2">
-                  <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-blue-700 transition-colors">
+                  <CardTitle className={`text-xl font-bold ${theme.textColors.primary} group-hover:text-blue-700 transition-colors`}>
                     {calc.title}
                   </CardTitle>
                   <p className="text-sm text-gray-600 leading-relaxed">
@@ -148,7 +149,7 @@ export default function EnhancedCalculatorGrid() {
               <CardContent className="relative space-y-4">
                 {/* Features */}
                 <div className="space-y-2">
-                  <h4 className="text-sm font-semibold text-gray-700 flex items-center">
+                  <h4 className={`text-sm font-semibold ${theme.textColors.secondary} flex items-center`}>
                     <Zap className="w-4 h-4 mr-2 text-yellow-500" />
                     Key Features
                   </h4>
@@ -192,7 +193,7 @@ export default function EnhancedCalculatorGrid() {
       <div className="text-center pt-8">
         <Card className="max-w-2xl mx-auto bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
           <CardContent className="p-6">
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
+            <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-2`}>
               🎯 Educational Focus
             </h3>
             <p className="text-gray-600 mb-4">

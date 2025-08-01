@@ -89,7 +89,7 @@ export default function Chapter4Page() {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl p-8 max-w-md text-center"
+          className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl p-8 max-w-md text-center`}
         >
           <Lock className="w-16 h-16 text-amber-400 mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-white mb-4">Chapter 4 Locked</h1>
@@ -133,7 +133,7 @@ export default function Chapter4Page() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-3 bg-white/10 border border-white/20 backdrop-blur-sm rounded-full px-6 py-3 mb-6">
+          <div className={`inline-flex items-center gap-3 ${theme.backgrounds.glass}/10 border border-white/20 backdrop-blur-sm rounded-full px-6 py-3 mb-6`}>
             <CreditCard className="w-8 h-8 text-amber-400" />
             <span className={`text-lg font-semibold ${theme.textColors.primary}`}>Chapter 4</span>
           </div>
@@ -171,7 +171,7 @@ export default function Chapter4Page() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl p-8"
+              className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl p-8`}
             >
               <div className="flex items-center justify-between mb-6">
                 <button
@@ -206,7 +206,7 @@ export default function Chapter4Page() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ scale: 1.02 }}
-                  className={`bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-lg cursor-pointer transition-all duration-300 ${lesson.completed ? 'ring-2 ring-amber-500' : 'hover:shadow-xl'
+                  className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-lg cursor-pointer transition-all duration-300 ${lesson.completed ? 'ring-2 ring-amber-500' : 'hover:shadow-xl'
                     }`}
                   onClick={() => setCurrentLesson(lesson.id)}
                 >
@@ -390,19 +390,19 @@ function DebtTypesLesson() {
           </p>
 
           <div className="space-y-4">
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-blue-300 mb-2">🏠 Mortgages</h4>
               <p className="text-gray-300 text-sm">Real estate typically appreciates over time and provides tax benefits.</p>
               <p className="text-blue-400 text-sm font-medium">Typical Rate: 3-7%</p>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-blue-300 mb-2">🎓 Student Loans</h4>
               <p className="text-gray-300 text-sm">Education increases earning potential over your lifetime.</p>
               <p className="text-blue-400 text-sm font-medium">Typical Rate: 3-8%</p>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-blue-300 mb-2">💼 Business Loans</h4>
               <p className="text-gray-300 text-sm">Investing in income-generating business opportunities.</p>
               <p className="text-blue-400 text-sm font-medium">Typical Rate: 4-10%</p>
@@ -421,19 +421,19 @@ function DebtTypesLesson() {
           </p>
 
           <div className="space-y-4">
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-red-300 mb-2">💳 Credit Cards</h4>
               <p className="text-gray-300 text-sm">High interest on consumer purchases that depreciate quickly.</p>
               <p className="text-red-400 text-sm font-medium">Typical Rate: 15-25%</p>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-red-300 mb-2">🚗 Car Loans</h4>
               <p className="text-gray-300 text-sm">Vehicles depreciate rapidly, especially new cars.</p>
               <p className="text-red-400 text-sm font-medium">Typical Rate: 4-12%</p>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-red-300 mb-2">💸 Payday Loans</h4>
               <p className="text-gray-300 text-sm">Extremely high-cost short-term loans that trap borrowers.</p>
               <p className="text-red-400 text-sm font-medium">Typical Rate: 300-400%</p>
@@ -501,7 +501,7 @@ function DebtStrategyLesson() {
           </p>
 
           <div className="space-y-3">
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-blue-300 mb-2">✅ Pros</h4>
               <ul className="text-gray-300 text-sm space-y-1">
                 <li>• Quick wins build momentum</li>
@@ -511,7 +511,7 @@ function DebtStrategyLesson() {
               </ul>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-red-300 mb-2">❌ Cons</h4>
               <ul className="text-gray-300 text-sm space-y-1">
                 <li>• May pay more interest overall</li>
@@ -539,7 +539,7 @@ function DebtStrategyLesson() {
           </p>
 
           <div className="space-y-3">
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-blue-300 mb-2">✅ Pros</h4>
               <ul className="text-gray-300 text-sm space-y-1">
                 <li>• Saves the most money</li>
@@ -549,7 +549,7 @@ function DebtStrategyLesson() {
               </ul>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-red-300 mb-2">❌ Cons</h4>
               <ul className="text-gray-300 text-sm space-y-1">
                 <li>• Slower initial progress</li>
@@ -572,17 +572,17 @@ function DebtStrategyLesson() {
         <p className="text-gray-300 mb-4">Let&apos;s say you have these debts and $500 extra per month to pay them off:</p>
 
         <div className="grid md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center">
+          <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center`}>
             <h4 className="font-semibold text-red-300">Credit Card A</h4>
             <p className="text-2xl font-bold text-red-400">$2,000</p>
             <p className="text-sm text-gray-300">22% APR, $40 minimum</p>
           </div>
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center">
+          <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center`}>
             <h4 className="font-semibold text-red-300">Credit Card B</h4>
             <p className="text-2xl font-bold text-red-400">$5,000</p>
             <p className="text-sm text-gray-300">18% APR, $100 minimum</p>
           </div>
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center">
+          <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center`}>
             <h4 className="font-semibold text-blue-300">Car Loan</h4>
             <p className="text-2xl font-bold text-blue-400">$8,000</p>
             <p className="text-sm text-gray-300">6% APR, $200 minimum</p>
@@ -668,7 +668,7 @@ function CreditBuildingLesson() {
           </ul>
         </div>
 
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 text-center">
+        <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 text-center`}>
           <div className="text-3xl font-bold text-green-400 mb-2">Excellent</div>
           <p className="text-green-700 text-sm mb-4">740+ score range</p>
           <ul className="text-left text-green-700 text-sm space-y-1">
@@ -711,7 +711,7 @@ function CreditBuildingLesson() {
             <h4 className="text-lg font-semibold text-blue-300">Year 2+: Optimization</h4>
             <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">Mastery</span>
           </div>
-          <ul className="text-gray-700 space-y-1">
+          <ul className={`${theme.textColors.secondary} space-y-1`}>
             <li>• Score typically reaches 700+</li>
             <li>• Qualify for premium credit cards</li>
             <li>• Build diverse credit mix (car loan, mortgage)</li>
@@ -725,7 +725,7 @@ function CreditBuildingLesson() {
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <h4 className="font-semibold text-white mb-2">🎯 Utilization Optimization</h4>
-            <ul className="text-gray-700 text-sm space-y-1">
+            <ul className={`${theme.textColors.secondary} text-sm space-y-1`}>
               <li>• Keep total utilization under 10%</li>
               <li>• Consider multiple small payments</li>
               <li>• Pay before statement close date</li>
@@ -735,7 +735,7 @@ function CreditBuildingLesson() {
 
           <div>
             <h4 className="font-semibold text-white mb-2">📊 Score Monitoring</h4>
-            <ul className="text-gray-700 text-sm space-y-1">
+            <ul className={`${theme.textColors.secondary} text-sm space-y-1`}>
               <li>• Check credit reports quarterly</li>
               <li>• Dispute any errors immediately</li>
               <li>• Use free monitoring services</li>

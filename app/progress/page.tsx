@@ -102,7 +102,7 @@ export default function ProgressPage() {
           transition={{ delay: 0.1 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
         >
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+          <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
             <div className="flex items-center justify-between">
               <div>
                 <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Financial Literacy Score</p>
@@ -117,7 +117,7 @@ export default function ProgressPage() {
             </div>
           </div>
 
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+          <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
             <div className="flex items-center justify-between">
               <div>
                 <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Lessons Completed</p>
@@ -132,7 +132,7 @@ export default function ProgressPage() {
             </div>
           </div>
 
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+          <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
             <div className="flex items-center justify-between">
               <div>
                 <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Average Quiz Score</p>
@@ -147,7 +147,7 @@ export default function ProgressPage() {
             </div>
           </div>
 
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
+          <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
             <div className="flex items-center justify-between">
               <div>
                 <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Current Streak</p>
@@ -171,7 +171,7 @@ export default function ProgressPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6"
+              className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}
             >
               <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-6`}>Chapter Progress</h3>
               <div className="space-y-4">
@@ -204,7 +204,7 @@ export default function ProgressPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6"
+              className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}
             >
               <h3 className="text-xl font-bold text-white mb-6">Learning Statistics</h3>
               <div className="grid grid-cols-2 gap-6">
@@ -260,7 +260,7 @@ export default function ProgressPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6"
+              className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}
             >
               <h3 className="text-xl font-bold text-white mb-6">Achievements</h3>
               <div className="space-y-4">

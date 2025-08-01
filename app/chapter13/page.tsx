@@ -28,7 +28,7 @@ export default function Chapter13() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
+      <div className={`${theme.backgrounds.glass} border-b ${theme.borderColors.primary}`}>
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -98,25 +98,25 @@ export default function Chapter13() {
                   </div>
                   
                   <div className="grid md:grid-cols-2 gap-4">
-                    <div className="p-4 border border-gray-200 rounded-lg">
+                    <div className={`p-4 border ${theme.borderColors.primary} rounded-lg`}>
                       <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Government Bonds</h4>
                       <p className={`text-sm ${theme.textColors.secondary}`}>
                         Safest option. U.S. Treasury bonds are backed by the full faith and credit of the government.
                       </p>
                     </div>
-                    <div className="p-4 border border-gray-200 rounded-lg">
+                    <div className={`p-4 border ${theme.borderColors.primary} rounded-lg`}>
                       <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Corporate Bonds</h4>
                       <p className={`text-sm ${theme.textColors.secondary}`}>
                         Higher yields but more risk. Quality depends on the financial health of the issuing company.
                       </p>
                     </div>
-                    <div className="p-4 border border-gray-200 rounded-lg">
+                    <div className={`p-4 border ${theme.borderColors.primary} rounded-lg`}>
                       <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Municipal Bonds</h4>
                       <p className={`text-sm ${theme.textColors.secondary}`}>
                         Issued by local governments. Often tax-free, making them attractive for high earners.
                       </p>
                     </div>
-                    <div className="p-4 border border-gray-200 rounded-lg">
+                    <div className={`p-4 border ${theme.borderColors.primary} rounded-lg`}>
                       <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>TIPS</h4>
                       <p className={`text-sm ${theme.textColors.secondary}`}>
                         Treasury Inflation-Protected Securities adjust with inflation to preserve purchasing power.
@@ -223,7 +223,7 @@ export default function Chapter13() {
 
                 {/* Portfolio Role */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Bonds in Your Portfolio</h3>
+                  <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>Bonds in Your Portfolio</h3>
                   
                   <div className="grid md:grid-cols-3 gap-4">
                     <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg text-center">
@@ -250,8 +250,8 @@ export default function Chapter13() {
                   </div>
                   
                   <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                    <h4 className="font-medium text-gray-900 mb-2">Rule of Thumb: Age in Bonds</h4>
-                    <p className="text-gray-700 text-sm">
+                    <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Rule of Thumb: Age in Bonds</h4>
+                    <p className={`${theme.textColors.secondary} text-sm`}>
                       A common guideline suggests holding your age as a percentage in bonds. 
                       At 30, hold 30% bonds; at 60, hold 60% bonds. This becomes more conservative as you age, 
                       but modern portfolio theory suggests this may be too conservative for young investors.
@@ -303,7 +303,7 @@ export default function Chapter13() {
               <CardContent className="space-y-6">
                 <div className="text-center py-8">
                   <Award className="w-16 h-16 text-purple-600 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Quiz Coming Soon</h3>
+                  <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Quiz Coming Soon</h3>
                   <p className="text-gray-600">
                     Interactive assessment will be available in the next update.
                     Continue practicing with the Bond Calculator!

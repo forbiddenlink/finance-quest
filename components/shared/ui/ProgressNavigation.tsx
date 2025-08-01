@@ -205,7 +205,7 @@ export default function ProgressNavigation() {
           {/* Overall Progress Display */}
           <div className="flex items-center space-x-2 flex-shrink-0">
             <div className="text-right hidden xl:block">
-              <p className="text-sm font-medium text-gray-900">Progress</p>
+              <p className={`text-sm font-medium ${theme.textColors.primary}`}>Progress</p>
               <p className="text-xs text-gray-500">{overallProgress}%</p>
             </div>
             <div className="relative w-10 h-10 flex-shrink-0">
@@ -246,7 +246,7 @@ export default function ProgressNavigation() {
       </div>
 
       {/* Mobile Navigation */}
-      <div className="md:hidden border-t border-gray-200">
+      <div className={`md:hidden border-t ${theme.borderColors.primary}`}>
         <div className="px-4 py-3 space-y-2">
           {navigationItems.slice(0, 4).map((item) => {
             const Icon = item.icon;
@@ -263,9 +263,9 @@ export default function ProgressNavigation() {
                   purple: "bg-purple-100 text-purple-700",
                   orange: "bg-orange-100 text-orange-700"
                 };
-                return colorMap[item.color as keyof typeof colorMap] || "bg-gray-100 text-gray-700";
+                return colorMap[item.color as keyof typeof colorMap] || "bg-gray-100 ${theme.textColors.secondary}";
               }
-              return "text-gray-700 hover:bg-gray-100";
+              return "${theme.textColors.secondary} hover:bg-gray-100";
             };
 
             return (

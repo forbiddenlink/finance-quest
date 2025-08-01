@@ -323,7 +323,7 @@ export default function FinancialHealthScoreCalculator() {
                 <div className={`text-8xl font-bold ${getScoreColor(healthScore!.totalScore)} mb-2`}>
                   {healthScore!.totalScore}
                 </div>
-                <div className="text-2xl font-semibold text-gray-700 mb-2">
+                <div className={`text-2xl font-semibold ${theme.textColors.secondary} mb-2`}>
                   Grade: {healthScore!.grade}
                 </div>
                 <div className={`text-lg font-medium px-6 py-2 rounded-full inline-block ${healthScore!.category === 'Excellent' ? 'bg-green-100 text-green-800' :

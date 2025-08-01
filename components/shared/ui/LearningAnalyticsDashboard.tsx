@@ -14,6 +14,7 @@ import {
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import GradientCard from './GradientCard';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 
 interface LearningMetrics {
   sessionTime: number;
@@ -127,7 +128,7 @@ export default function LearningAnalyticsDashboard() {
     <div className="space-y-6">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Learning Analytics Dashboard</h2>
+        <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>Learning Analytics Dashboard</h2>
         <p className="text-gray-600">Advanced insights into your financial education journey</p>
       </div>
 
@@ -230,7 +231,7 @@ export default function LearningAnalyticsDashboard() {
           transition={{ delay: 0.5 }}
         >
           <GradientCard variant="glass" className="p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center`}>
               <TrendingUp className="w-5 h-5 mr-2 text-blue-600" />
               Learning Progress Trends
             </h3>
@@ -269,7 +270,7 @@ export default function LearningAnalyticsDashboard() {
           transition={{ delay: 0.6 }}
         >
           <GradientCard variant="glass" className="p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center`}>
               <BarChart3 className="w-5 h-5 mr-2 text-purple-600" />
               Time Distribution
             </h3>
@@ -303,7 +304,7 @@ export default function LearningAnalyticsDashboard() {
         transition={{ delay: 0.7 }}
       >
         <GradientCard variant="glass" className="p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-6 flex items-center`}>
             <Brain className="w-5 h-5 mr-2 text-green-600" />
             Cognitive Load & Learning Efficiency
           </h3>
@@ -375,30 +376,30 @@ export default function LearningAnalyticsDashboard() {
         transition={{ delay: 0.8 }}
       >
         <GradientCard variant="glass" gradient="purple" className="p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center`}>
             <Brain className="w-5 h-5 mr-2 text-purple-600" />
             AI-Powered Learning Insights
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white bg-opacity-50 rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
+            <div className={`${theme.backgrounds.glass} bg-opacity-50 rounded-lg p-4`}>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-2 flex items-center`}>
                 <Award className="w-4 h-4 mr-2 text-yellow-500" />
                 Strengths Identified
               </h4>
-              <ul className="space-y-1 text-sm text-gray-700">
+              <ul className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
                 <li>• Excellent at compound interest calculations</li>
                 <li>• Strong understanding of paycheck components</li>
                 <li>• Consistent engagement with practice tools</li>
               </ul>
             </div>
 
-            <div className="bg-white bg-opacity-50 rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-2 flex items-center">
+            <div className={`${theme.backgrounds.glass} bg-opacity-50 rounded-lg p-4`}>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-2 flex items-center`}>
                 <Target className="w-4 h-4 mr-2 text-blue-500" />
                 Recommended Focus Areas
               </h4>
-              <ul className="space-y-1 text-sm text-gray-700">
+              <ul className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
                 <li>• Review banking fee structures</li>
                 <li>• Practice more budgeting scenarios</li>
                 <li>• Explore advanced investment concepts</li>

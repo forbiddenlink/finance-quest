@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
+import { theme } from '@/lib/theme';
 import {
   TrendingUp,
   Shield,
@@ -123,11 +124,11 @@ export default function EnhancedHeroSection() {
 
           {/* Right Content - Interactive Preview */}
           <div className="lg:pl-8">
-            <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
+            <Card className={`shadow-2xl border-0 ${theme.backgrounds.glass}/80 backdrop-blur-sm`}>
               <CardContent className="p-8">
                 <div className="space-y-6">
                   <div className="text-center">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>
                       Your Learning Journey
                     </h3>
                     <p className="text-gray-600">

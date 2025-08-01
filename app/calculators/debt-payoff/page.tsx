@@ -42,14 +42,14 @@ export default function DebtPayoffPage() {
             &quot;The borrower is slave to the lender.&quot; - Proverbs 22:7. Take control with proven debt elimination strategies.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3">
+            <div className={`${theme.backgrounds.glass}/10 backdrop-blur-sm border border-white/20 rounded-lg p-3`}>
               <h3 className="font-semibold text-white flex items-center gap-2">
                 <Mountain className="w-4 h-4 text-amber-400" />
                 Debt Avalanche
               </h3>
               <p className="text-gray-300">Target highest interest rates first - saves the most money mathematically</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3">
+            <div className={`${theme.backgrounds.glass}/10 backdrop-blur-sm border border-white/20 rounded-lg p-3`}>
               <h3 className="font-semibold text-white flex items-center gap-2">
                 <Snowflake className="w-4 h-4 text-blue-400" />
                 Debt Snowball
@@ -68,7 +68,7 @@ export default function DebtPayoffPage() {
         />
 
         {/* Learning Objectives */}
-        <div className="mt-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6">
+        <div className={`mt-8 ${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-6`}>
           <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
             <Target className="w-5 h-5 text-amber-400" />
             What You&apos;ll Master
@@ -102,15 +102,15 @@ export default function DebtPayoffPage() {
             Eye-Opening Debt Statistics
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center`}>
               <p className="text-2xl font-bold text-amber-400">$6,194</p>
               <p className="text-sm text-gray-300">Average American credit card debt</p>
             </div>
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center`}>
               <p className="text-2xl font-bold text-amber-400">18.99%</p>
               <p className="text-sm text-gray-300">Average credit card interest rate</p>
             </div>
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4 text-center`}>
               <p className="text-2xl font-bold text-amber-400">14.5 years</p>
               <p className="text-sm text-gray-300">Time to pay off $6,194 with minimum payments</p>
             </div>
@@ -130,13 +130,13 @@ export default function DebtPayoffPage() {
             Debt Freedom Success Stories
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-blue-400 mb-2">Jessica&apos;s $47,000 Triumph</h4>
               <p className="text-gray-300 text-sm">
                 &quot;I had $47,000 in student loans and credit cards. Using the avalanche method and a side hustle, I became debt-free in 3 years instead of 15!&quot;
               </p>
             </div>
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-blue-400 mb-2">Mark&apos;s Snowball Victory</h4>
               <p className="text-gray-300 text-sm">
                 &quot;The snowball method gave me momentum I needed. Paying off small debts first kept me motivated through the 2-year journey to eliminate $32,000.&quot;
@@ -152,25 +152,25 @@ export default function DebtPayoffPage() {
             Your Debt Freedom Action Plan
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-slate-400 mb-2">Week 1: List Everything</h4>
               <p className="text-gray-300 text-sm">
                 Gather all statements. List every debt with balance, minimum payment, and interest rate.
               </p>
             </div>
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-slate-400 mb-2">Week 2: Choose Strategy</h4>
               <p className="text-gray-300 text-sm">
                 Pick avalanche (save money) or snowball (build momentum). Use this calculator to compare both.
               </p>
             </div>
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-slate-400 mb-2">Week 3: Find Extra Money</h4>
               <p className="text-gray-300 text-sm">
                 Review budget, sell items, consider side income. Every extra $100/month cuts years off payoff.
               </p>
             </div>
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-4">
+            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-lg p-4`}>
               <h4 className="font-semibold text-slate-400 mb-2">Week 4: Start Attacking</h4>
               <p className="text-gray-300 text-sm">
                 Make first extra payment. Set up automatic payments. Track progress monthly. Celebrate wins!

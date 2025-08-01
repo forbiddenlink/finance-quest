@@ -425,7 +425,7 @@ export default function HomePage() {
               transition={{ delay: 1.0, duration: 0.6 }}
             >
               {progress.userProgress.currentChapter >= 3 ? (
-                <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-slate-500/30 rounded-2xl p-6 hover:border-slate-400/50 transition-all duration-300">
+                <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-slate-500/30 rounded-2xl p-6 hover:border-slate-400/50 transition-all duration-300`}>
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-slate-600 to-slate-700 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-slate-500/25">
                       <Briefcase className={`w-6 h-6 ${theme.textColors.primary}`} />
@@ -506,7 +506,7 @@ export default function HomePage() {
           >
             <Button
               onClick={() => setExpandedSection(expandedSection === 'chapters' ? null : 'chapters')}
-              className={`bg-transparent hover:bg-white/5 ${theme.textColors.muted} border-none text-sm transition-all duration-300`}
+              className={`bg-transparent hover:${theme.backgrounds.glass}/5 ${theme.textColors.muted} border-none text-sm transition-all duration-300`}
             >
               {expandedSection === 'chapters' ? 'Hide Foundation Preview' : 'Quick Foundation Preview'}
               {expandedSection === 'chapters' ?
@@ -685,7 +685,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.8 }}
-          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 mb-20"
+          className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 mb-20`}
         >
           <div className="text-center mb-12">
             <motion.h3
@@ -731,7 +731,7 @@ export default function HomePage() {
                 <p className="text-gray-300 mb-6 leading-relaxed">
                   Discover how your money grows exponentially over time through the magic of compound interest.
                 </p>
-                <div className="mb-6 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-amber-500/20">
+                <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border border-amber-500/20`}>
                   <div className="text-xs text-amber-400 mb-1">$100/month × 30 years @ 7%</div>
                   <div className="text-2xl font-bold text-white">$303,219</div>
                   <div className="text-xs text-amber-300">From just $36k invested!</div>
@@ -764,7 +764,7 @@ export default function HomePage() {
                 <p className="text-gray-300 mb-6 leading-relaxed">
                   Master the proven 50/30/20 budgeting framework for needs, wants, and financial goals.
                 </p>
-                <div className="mb-6 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-blue-500/20">
+                <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border border-blue-500/20`}>
                   <div className="text-xs text-blue-400 mb-1">$5,000 income breakdown</div>
                   <div className="text-2xl font-bold text-white">Perfect Balance</div>
                   <div className="text-xs text-blue-300">Needs • Wants • Savings</div>
@@ -797,7 +797,7 @@ export default function HomePage() {
                 <p className="text-gray-300 mb-6 leading-relaxed">
                   Compare avalanche vs snowball strategies and accelerate your path to financial freedom.
                 </p>
-                <div className="mb-6 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-orange-500/20">
+                <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border border-orange-500/20`}>
                   <div className="text-xs text-orange-400 mb-1">$25k debt + $200 extra</div>
                   <div className="text-2xl font-bold text-white">5 Years Saved</div>
                   <div className="text-xs text-orange-300">Thousands in interest!</div>
@@ -821,7 +821,7 @@ export default function HomePage() {
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <Link href="/calculators/mortgage" className="group">
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1">
+                <div className={`${theme.backgrounds.glass}/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1`}>
                   <Building className="w-8 h-8 mx-auto mb-2 text-amber-400" />
                   <h4 className="font-semibold text-white text-sm mb-1">Mortgage Calculator</h4>
                   <p className="text-xs text-gray-400">Payment & affordability</p>
@@ -829,7 +829,7 @@ export default function HomePage() {
                 </div>
               </Link>
               <Link href="/calculators/emergency-fund" className="group">
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1">
+                <div className={`${theme.backgrounds.glass}/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1`}>
                   <Umbrella className="w-8 h-8 mx-auto mb-2 text-blue-400" />
                   <h4 className="font-semibold text-white text-sm mb-1">Emergency Fund</h4>
                   <p className="text-xs text-gray-400">Safety net planning</p>
@@ -837,7 +837,7 @@ export default function HomePage() {
                 </div>
               </Link>
               <Link href="/calculators/paycheck" className="group">
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1">
+                <div className={`${theme.backgrounds.glass}/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1`}>
                   <Briefcase className="w-8 h-8 mx-auto mb-2 text-amber-400" />
                   <h4 className="font-semibold text-white text-sm mb-1">Paycheck Calculator</h4>
                   <p className="text-xs text-gray-400">Tax & deduction breakdown</p>
@@ -845,7 +845,7 @@ export default function HomePage() {
                 </div>
               </Link>
               <Link href="/market" className="group">
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1">
+                <div className={`${theme.backgrounds.glass}/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1`}>
                   <BarChart3 className="w-8 h-8 mx-auto mb-2 text-amber-400" />
                   <h4 className="font-semibold text-white text-sm mb-1">Market Dashboard</h4>
                   <p className="text-xs text-gray-400">Real-time data</p>
@@ -1015,7 +1015,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.6 }}
             >
-              <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-blue-600/20 rounded-2xl p-6 hover:border-blue-500/40 transition-all duration-300">
+              <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-blue-600/20 rounded-2xl p-6 hover:border-blue-500/40 transition-all duration-300`}>
                 <div className="w-14 h-14 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-600/25">
                   <Brain className="w-7 h-7 text-white" />
                 </div>
@@ -1035,7 +1035,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.3, duration: 0.6 }}
             >
-              <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-slate-600/20 rounded-2xl p-6 hover:border-slate-500/40 transition-all duration-300">
+              <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-slate-600/20 rounded-2xl p-6 hover:border-slate-500/40 transition-all duration-300`}>
                 <div className="w-14 h-14 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-slate-600/25">
                   <BarChart3 className="w-7 h-7 text-white" />
                 </div>
@@ -1055,7 +1055,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.4, duration: 0.6 }}
             >
-              <InteractiveCard className="bg-white/5 backdrop-blur-xl border border-amber-500/20 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300">
+              <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-amber-500/20 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300`}>
                 <div className="w-14 h-14 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-amber-500/25">
                   <Lightbulb className="w-7 h-7 text-white" />
                 </div>
@@ -1148,7 +1148,7 @@ export default function HomePage() {
             <Link href="/advanced-progress">
               <Button
                 size="lg"
-                className="group bg-white/10 hover:bg-white/20 text-white px-10 py-6 text-xl font-semibold border border-white/20 hover:border-white/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
+                className={`group ${theme.backgrounds.glass}/10 hover:${theme.backgrounds.glass}/20 text-white px-10 py-6 text-xl font-semibold border border-white/20 hover:border-white/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1`}
               >
                 <BarChart3 className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform" />
                 View Dashboard

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { theme } from '@/lib/theme';
 
 interface ProgressRingProps {
   progress: number; // 0-100
@@ -78,7 +79,7 @@ export default function ProgressRing({
       {/* Percentage display */}
       {showPercentage && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-lg font-bold text-gray-700">
+          <span className={`text-lg font-bold ${theme.textColors.secondary}`}>
             {Math.round(animatedProgress)}%
           </span>
         </div>

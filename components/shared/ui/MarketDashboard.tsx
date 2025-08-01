@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { TrendingUp, TrendingDown, DollarSign, Activity, AlertCircle, RefreshCw, Globe, BarChart3, Target, Clock } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface StockQuote {
   symbol: string;
@@ -141,7 +142,7 @@ export default function MarketDashboard() {
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-8">
+      <div className={`max-w-7xl mx-auto ${theme.backgrounds.glass} rounded-lg shadow-lg p-8`}>
         <div className="flex items-center justify-center min-h-64">
           <div className="text-center">
             <RefreshCw className="w-8 h-8 mx-auto mb-4 text-blue-600 animate-spin" />
@@ -154,7 +155,7 @@ export default function MarketDashboard() {
 
   if (error) {
     return (
-      <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-8">
+      <div className={`max-w-7xl mx-auto ${theme.backgrounds.glass} rounded-lg shadow-lg p-8`}>
         <div className="flex items-center justify-center min-h-64">
           <div className="text-center">
             <AlertCircle className="w-8 h-8 mx-auto mb-4 text-red-600" />
@@ -188,10 +189,10 @@ export default function MarketDashboard() {
   }));
 
   return (
-    <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-8">
+    <div className={`max-w-7xl mx-auto ${theme.backgrounds.glass} rounded-lg shadow-lg p-8`}>
       {/* Header */}
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2 flex items-center justify-center gap-3">
+        <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2 flex items-center justify-center gap-3`}>
           <Globe className="w-8 h-8 text-blue-600" />
           Real-Time Market Dashboard
         </h2>
@@ -250,15 +251,15 @@ export default function MarketDashboard() {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         {/* Stock Performance Table */}
         <div className="bg-gray-50 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Stock Performance</h3>
+          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>Stock Performance</h3>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="text-left py-3 px-2 font-semibold text-gray-700">Symbol</th>
-                  <th className="text-right py-3 px-2 font-semibold text-gray-700">Price</th>
-                  <th className="text-right py-3 px-2 font-semibold text-gray-700">Change</th>
-                  <th className="text-right py-3 px-2 font-semibold text-gray-700">%</th>
+                <tr className={`border-b ${theme.borderColors.primary}`}>
+                  <th className={`text-left py-3 px-2 font-semibold ${theme.textColors.secondary}`}>Symbol</th>
+                  <th className={`text-right py-3 px-2 font-semibold ${theme.textColors.secondary}`}>Price</th>
+                  <th className={`text-right py-3 px-2 font-semibold ${theme.textColors.secondary}`}>Change</th>
+                  <th className={`text-right py-3 px-2 font-semibold ${theme.textColors.secondary}`}>%</th>
                 </tr>
               </thead>
               <tbody>
@@ -271,7 +272,7 @@ export default function MarketDashboard() {
                   >
                     <td className="py-3 px-2">
                       <div>
-                        <div className="font-semibold text-gray-900">{stock.symbol}</div>
+                        <div className={`font-semibold ${theme.textColors.primary}`}>{stock.symbol}</div>
                         <div className="text-xs text-gray-500 truncate max-w-32">
                           {stock.companyName}
                         </div>
@@ -298,7 +299,7 @@ export default function MarketDashboard() {
 
         {/* Market Cap Distribution */}
         <div className="bg-gray-50 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Market Cap Distribution</h3>
+          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>Market Cap Distribution</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -326,7 +327,7 @@ export default function MarketDashboard() {
 
         {/* Economic Indicators */}
         <div className="xl:col-span-2 bg-gray-50 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Economic Indicators</h3>
+          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>Economic Indicators</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={economicChartData}>
@@ -348,7 +349,7 @@ export default function MarketDashboard() {
       {/* Selected Stock Details */}
       {selectedStock && (
         <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
             <Target className="w-5 h-5 inline mr-2" />
             Focus Stock: {selectedStock.companyName} ({selectedStock.symbol})
           </h3>
@@ -356,7 +357,7 @@ export default function MarketDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center">
               <p className="text-sm text-gray-600">Current Price</p>
-              <p className="text-2xl font-bold text-gray-900">{formatCurrency(selectedStock.latestPrice)}</p>
+              <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{formatCurrency(selectedStock.latestPrice)}</p>
             </div>
             <div className="text-center">
               <p className="text-sm text-gray-600">Daily Change</p>
@@ -372,7 +373,7 @@ export default function MarketDashboard() {
             </div>
             <div className="text-center">
               <p className="text-sm text-gray-600">Market Cap</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className={`text-2xl font-bold ${theme.textColors.primary}`}>
                 {formatCurrency(selectedStock.marketCap, true)}
               </p>
             </div>

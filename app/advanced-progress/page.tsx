@@ -22,6 +22,7 @@ import {
     ArrowRight
 } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 
 export default function AdvancedProgressDashboard() {
     const userProgress = useProgressStore((state) => state.userProgress);
@@ -208,7 +209,7 @@ export default function AdvancedProgressDashboard() {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 text-center"
+                        className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 text-center`}
                     >
                         <Target className="w-8 h-8 mx-auto mb-3 text-blue-400" />
                         <h3 className="text-lg font-semibold text-white">Overall Progress</h3>
@@ -220,7 +221,7 @@ export default function AdvancedProgressDashboard() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 text-center"
+                        className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 text-center`}
                     >
                         <Flame className="w-8 h-8 mx-auto mb-3 text-orange-400" />
                         <h3 className="text-lg font-semibold text-white">Learning Streak</h3>
@@ -232,7 +233,7 @@ export default function AdvancedProgressDashboard() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 text-center"
+                        className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 text-center`}
                     >
                         <Clock className="w-8 h-8 mx-auto mb-3 text-green-400" />
                         <h3 className="text-lg font-semibold text-white">Time Invested</h3>
@@ -244,7 +245,7 @@ export default function AdvancedProgressDashboard() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 text-center"
+                        className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 text-center`}
                     >
                         <Award className="w-8 h-8 mx-auto mb-3 text-amber-400" />
                         <h3 className="text-lg font-semibold text-white">Literacy Score</h3>
@@ -267,7 +268,7 @@ export default function AdvancedProgressDashboard() {
                                     initial={{ opacity: 0, x: -20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: index * 0.1 }}
-                                    className={`bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 ${track.bgColor}`}
+                                    className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 ${track.bgColor}`}
                                 >
                                     <div className="flex items-center justify-between mb-4">
                                         <div className="flex items-center gap-3">
@@ -322,7 +323,7 @@ export default function AdvancedProgressDashboard() {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: index * 0.1 }}
-                                className={`bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 text-center ${achievement.unlocked ? 'border-amber-500/30 bg-amber-500/10' : ''
+                                className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl p-6 text-center ${achievement.unlocked ? 'border-amber-500/30 bg-amber-500/10' : ''
                                     }`}
                             >
                                 <achievement.icon className={`w-8 h-8 mx-auto mb-3 ${achievement.unlocked ? 'text-amber-400' : 'text-gray-400'
@@ -352,7 +353,7 @@ export default function AdvancedProgressDashboard() {
                 </div>
 
                 {/* Next Steps */}
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-6">
+                <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl p-6`}>
                     <h2 className="text-xl font-bold text-white mb-4">🎯 Recommended Next Steps</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {completedChapters < 5 && (

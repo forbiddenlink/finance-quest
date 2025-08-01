@@ -18,6 +18,7 @@ import {
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import AnimatedCounter from '@/components/shared/ui/AnimatedCounter';
+import { theme } from '@/lib/theme';
 
 interface ImpactVisualizationProps {
   simulateRealTime?: boolean;
@@ -101,7 +102,7 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
               <TrendingUp className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-gray-900">Live Impact Dashboard</h1>
+              <h1 className={`text-4xl font-bold ${theme.textColors.primary}`}>Live Impact Dashboard</h1>
               <p className="text-lg text-gray-600">Real-time financial literacy improvement metrics</p>
             </div>
           </div>
@@ -216,7 +217,7 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
         {/* Time Series Chart */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <GradientCard variant="glass" gradient="blue" className="p-6">
-            <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
               <BarChart3 className="w-6 h-6 text-blue-600" />
               Learning Progress Over Time
             </h3>
@@ -233,15 +234,15 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
           </GradientCard>
 
           <GradientCard variant="glass" gradient="purple" className="p-6">
-            <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
               <Award className="w-6 h-6 text-purple-600" />
               Category Impact Breakdown
             </h3>
             <div className="space-y-4">
               {categoryImpacts.map((category, index) => (
-                <div key={index} className="border-b border-gray-200 pb-3 last:border-b-0">
+                <div key={index} className={`border-b ${theme.borderColors.primary} pb-3 last:border-b-0`}>
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-gray-900">{category.category}</h4>
+                    <h4 className={`font-semibold ${theme.textColors.primary}`}>{category.category}</h4>
                     <span className="text-sm font-medium text-purple-600">
                       {category.users} users
                     </span>
@@ -269,7 +270,7 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
 
         {/* Success Stories Carousel */}
         <GradientCard variant="glass" gradient="green" className="p-8 mb-8">
-          <h3 className="text-xl font-bold text-gray-900 mb-6 text-center flex items-center justify-center gap-2">
+          <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-6 text-center flex items-center justify-center gap-2`}>
             <Star className="w-6 h-6 text-green-600" />
             Real User Success Stories
           </h3>
@@ -311,7 +312,7 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
 
         {/* Contest Impact Summary */}
         <GradientCard variant="glass" gradient="yellow" className="p-8 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">Contest Impact Summary</h3>
+          <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-4`}>Contest Impact Summary</h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div>
               <div className="text-3xl font-bold text-blue-600 mb-2">42%</div>
@@ -335,7 +336,7 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
             </div>
           </div>
 
-          <p className="text-gray-700 mt-6 max-w-3xl mx-auto">
+          <p className={`${theme.textColors.secondary} mt-6 max-w-3xl mx-auto`}>
             Finance Quest demonstrates measurable impact on the 64% financial illiteracy crisis through
             real AI integration, live market data, and personalized learning experiences that deliver
             quantifiable improvements in financial knowledge and decision-making confidence.
