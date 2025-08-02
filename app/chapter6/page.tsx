@@ -3,9 +3,10 @@
 import React, { useState } from 'react';
 import BudgetBuilderCalculator from '@/components/shared/calculators/BudgetBuilderCalculator';
 import BudgetingMasteryQuiz from '@/components/chapters/fundamentals/assessments/BudgetingMasteryQuiz';
+import BudgetingMasteryLesson from '@/components/chapters/fundamentals/lessons/BudgetingMasteryLesson';
 import QASystem from '@/components/shared/QASystem';
 import { theme } from '@/lib/theme';
-import { BookOpen, Calculator, FileText, Bot, Target, PiggyBank } from 'lucide-react';
+import { BookOpen, Calculator, FileText, Bot } from 'lucide-react';
 
 type TabType = 'lesson' | 'calculator' | 'quiz' | 'assistant';
 
@@ -65,59 +66,10 @@ export default function Chapter6Page() {
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl ${theme.shadows.xl} overflow-hidden`}>
                     {activeTab === 'lesson' && (
                         <div className={theme.spacing.lg}>
-                            <div className="mb-6">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <PiggyBank className={`w-8 h-8 ${theme.textColors.accent}`} />
-                                    <h2 className={`${theme.typography.heading2} ${theme.textColors.primary}`}>Budgeting Mastery & Cash Flow Management</h2>
-                                </div>
-                                <p className={`${theme.textColors.secondary} text-lg`}>
-                                    Master zero-based budgeting, cash flow optimization, and automated savings systems to take complete control of your financial future.
-                                </p>
-                            </div>
-
-                            {/* Placeholder for actual lesson component */}
-                            <div className="space-y-6">
-                                <div className={`${theme.backgrounds.card} rounded-xl ${theme.spacing.md}`}>
-                                    <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>🎯 Learning Objectives</h3>
-                                    <ul className={`space-y-2 ${theme.textColors.secondary}`}>
-                                        <li>• Master zero-based budgeting methodology</li>
-                                        <li>• Optimize cash flow timing and management</li>
-                                        <li>• Implement automated savings systems</li>
-                                        <li>• Design sustainable spending frameworks</li>
-                                        <li>• Build advanced tracking and monitoring systems</li>
-                                        <li>• Create flexible budgets that adapt to life changes</li>
-                                    </ul>
-                                </div>
-
-                                <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-xl ${theme.spacing.md}`}>
-                                    <h3 className={`${theme.typography.heading4} ${theme.textColors.accentSecondary} mb-4`}>💡 Chapter Preview</h3>
-                                    <p className={theme.textColors.secondary}>
-                                        This advanced budgeting chapter completes your Foundation Track education. You&apos;ll learn professional-grade
-                                        cash flow management techniques used by financial planners and successful investors. Master these skills
-                                        to unlock the Credit & Lending Track!
-                                    </p>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className={`${theme.backgrounds.card} rounded-xl ${theme.spacing.md}`}>
-                                        <Target className={`w-8 h-8 ${theme.textColors.accent} mb-3`} />
-                                        <h4 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Zero-Based Budgeting</h4>
-                                        <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>
-                                            Give every dollar a purpose. Learn the professional methodology where income minus expenses equals zero,
-                                            ensuring maximum efficiency and intentional spending.
-                                        </p>
-                                    </div>
-
-                                    <div className={`${theme.backgrounds.card} rounded-xl ${theme.spacing.md}`}>
-                                        <Calculator className={`w-8 h-8 ${theme.textColors.accent} mb-3`} />
-                                        <h4 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Cash Flow Optimization</h4>
-                                        <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>
-                                            Master timing strategies, automated systems, and advanced techniques to maximize your financial
-                                            efficiency and create sustainable wealth-building habits.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            <BudgetingMasteryLesson onComplete={() => {
+                                // Handle lesson completion - could trigger achievement unlock
+                                console.log('Chapter 6 lesson completed!');
+                            }} />
                         </div>
                     )}
 
