@@ -155,7 +155,7 @@ export default function Chapter8Page() {
                             <Card className="max-w-4xl mx-auto">
                                 <CardHeader className="text-center">
                                     <CardTitle className="flex items-center justify-center space-x-2">
-                                        <Calculator className="w-6 h-6 text-red-600" />
+                                        <Calculator className={`w-6 h-6 ${theme.status.error.text}`} />
                                         <span>Debt Payoff Calculator</span>
                                     </CardTitle>
                                     <CardDescription>
@@ -167,7 +167,7 @@ export default function Chapter8Page() {
                                         <p className={`${theme.textColors.secondary} mb-4`}>
                                             Interactive debt calculator coming soon!
                                         </p>
-                                        <p className="text-sm text-gray-500">
+                                        <p className={`text-sm ${theme.textColors.muted}`}>
                                             This will help you compare avalanche vs snowball methods
                                         </p>
                                     </div>
@@ -185,7 +185,7 @@ export default function Chapter8Page() {
                             <Card className="max-w-4xl mx-auto">
                                 <CardHeader className="text-center">
                                     <CardTitle className="flex items-center justify-center space-x-2">
-                                        <Trophy className="w-6 h-6 text-red-600" />
+                                        <Trophy className={`w-6 h-6 ${theme.status.error.text}`} />
                                         <span>Debt Management Quiz</span>
                                     </CardTitle>
                                     <CardDescription>
@@ -197,7 +197,7 @@ export default function Chapter8Page() {
                                         <p className={`${theme.textColors.secondary} mb-4`}>
                                             Quiz questions coming soon!
                                         </p>
-                                        <p className="text-sm text-gray-500">
+                                        <p className={`text-sm ${theme.textColors.muted}`}>
                                             Score 80%+ to unlock Chapter 9: Retirement Planning
                                         </p>
                                     </div>

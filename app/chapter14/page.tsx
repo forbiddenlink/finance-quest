@@ -40,7 +40,7 @@ export default function Chapter14() {
                 <p className={theme.textColors.secondary}>Master diversification, risk management, and optimal allocation</p>
               </div>
             </div>
-            <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">
+            <Badge variant="outline" className={`${theme.textColors.accent} ${theme.backgrounds.card} ${theme.borderColors.accent}`}>
               Investment Track
             </Badge>
           </div>
@@ -62,7 +62,7 @@ export default function Chapter14() {
             <TabsTrigger value="lesson" className="flex items-center space-x-2">
               <Clock className="w-4 h-4" />
               <span>Learn</span>
-              {lessonCompleted && <CheckCircle className="w-4 h-4 text-green-500" />}
+              {lessonCompleted && <CheckCircle className={`w-4 h-4 ${theme.status.success.text}`} />}
             </TabsTrigger>
             <TabsTrigger value="calculator" className="flex items-center space-x-2">
               <Calculator className="w-4 h-4" />
@@ -78,7 +78,7 @@ export default function Chapter14() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
-                  <BarChart3 className="w-5 h-5 text-indigo-600" />
+                  <BarChart3 className={`w-5 h-5 ${theme.status.info.text}`} />
                   <span>Modern Portfolio Theory</span>
                 </CardTitle>
                 <CardDescription>
@@ -100,7 +100,7 @@ export default function Chapter14() {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className={`p-4 border ${theme.borderColors.primary} rounded-lg`}>
                       <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center`}>
-                        <Target className="w-5 h-5 text-indigo-600 mr-2" />
+                        <Target className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
                         Risk vs Return
                       </h4>
                       <p className={`text-sm ${theme.textColors.secondary}`}>
@@ -110,7 +110,7 @@ export default function Chapter14() {
                     </div>
                     <div className={`p-4 border ${theme.borderColors.primary} rounded-lg`}>
                       <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center`}>
-                        <Zap className="w-5 h-5 text-indigo-600 mr-2" />
+                        <Zap className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
                         Diversification Effect
                       </h4>
                       <p className="text-sm text-gray-600">

@@ -150,7 +150,7 @@ export default function Chapter9() {
                             <h1 className={`${theme.typography.heading1} ${theme.textColors.primary}`}>Chapter 9: Retirement Planning & Long-term Wealth</h1>
                             <p className={`${theme.textColors.muted}`}>Build a comprehensive retirement strategy for financial independence</p>
                         </div>
-                        <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">
+                        <Badge variant="outline" className={`${theme.textColors.accent} ${theme.backgrounds.card} ${theme.borderColors.accent}`}>
                             Wealth Track
                         </Badge>
                     </div>
@@ -216,7 +216,7 @@ export default function Chapter9() {
                             <Card>
                                 <CardHeader>
                                     <CardTitle className="flex items-center space-x-2">
-                                        <Award className="w-5 h-5 text-purple-600" />
+                                        <Award className={`w-5 h-5 ${theme.textColors.accent}`} />
                                         <span>Retirement Planning Quiz</span>
                                     </CardTitle>
                                     <CardDescription>
@@ -247,7 +247,7 @@ export default function Chapter9() {
                                                                     name={`question-${index}`}
                                                                     value={option}
                                                                     onChange={() => handleQuizAnswer(index, option)}
-                                                                    className="text-red-600"
+                                                                    className={theme.status.error.text}
                                                                 />
                                                                 <span className={theme.textColors.secondary}>{option}</span>
                                                             </label>
@@ -268,7 +268,7 @@ export default function Chapter9() {
                                         </div>
                                     ) : (
                                         <div className="text-center space-y-4">
-                                            <CheckCircle className="w-16 h-16 text-green-600 mx-auto" />
+                                            <CheckCircle className={`w-16 h-16 ${theme.status.success.text} mx-auto`} />
                                             <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>Quiz Completed!</h3>
                                             <p className={theme.textColors.secondary}>
                                                 You scored {Math.round((Object.values(quizAnswers).filter((answer, index) =>
@@ -276,18 +276,18 @@ export default function Chapter9() {
                                             </p>
                                             {Math.round((Object.values(quizAnswers).filter((answer, index) =>
                                                 answer === quizQuestions[index]?.correct).length / quizQuestions.length) * 100) >= 80 ? (
-                                                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                                                    <p className="text-green-800 font-medium">Congratulations! You can now advance to Chapter 10.</p>
+                                                <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4`}>
+                                                    <p className={`${theme.status.success.text} font-medium`}>Congratulations! You can now advance to Chapter 10.</p>
                                                     <Link href="/chapter10" className="inline-block mt-3">
-                                                        <Button className="bg-green-600 hover:bg-green-700">
+                                                        <Button className={theme.buttons.primary}>
                                                             Continue to Chapter 10
                                                             <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
                                                         </Button>
                                                     </Link>
                                                 </div>
                                             ) : (
-                                                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                                                    <p className="text-yellow-800">You need 80% or higher to advance. Review the lesson and try again!</p>
+                                                <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4`}>
+                                                    <p className={theme.status.warning.text}>You need 80% or higher to advance. Review the lesson and try again!</p>
                                                 </div>
                                             )}
                                         </div>
