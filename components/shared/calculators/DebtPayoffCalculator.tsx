@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from 'recharts';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 import {
   CreditCard,
   GraduationCap,
@@ -238,15 +239,15 @@ export default function DebtPayoffCalculator() {
       {/* Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="${theme.status.error.bg} border ${theme.status.error.border} rounded-lg p-4 text-center">
-          <p className="text-sm font-medium text-red-400">Total Debt</p>
+          <p className={`text-sm font-medium ${theme.status.error.text}`}>Total Debt</p>
           <p className="text-xl font-bold ${theme.textColors.primary}">{formatCurrency(totalBalance)}</p>
         </div>
         <div className="${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4 text-center">
-          <p className="text-sm font-medium text-blue-400">Payoff Time</p>
+          <p className={`text-sm font-medium ${theme.status.info.text}`}>Payoff Time</p>
           <p className="text-xl font-bold ${theme.textColors.secondary}">{payoffTime} months</p>
         </div>
         <div className="${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4 text-center">
-          <p className="text-sm font-medium text-yellow-600">Interest Paid</p>
+          <p className={`text-sm font-medium ${theme.status.warning.text}`}>Interest Paid</p>
           <p className="text-xl font-bold ${theme.status.warning.text}">{formatCurrency(totalInterestPaid)}</p>
         </div>
         <div className="${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4 text-center">

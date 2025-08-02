@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 import { Calculator, Home, TrendingUp, AlertTriangle, CheckCircle } from 'lucide-react';
 
 interface MortgageResult {
@@ -89,7 +90,7 @@ export default function MortgageCalculator() {
                 >
                     <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6">
                         <div className="flex items-center gap-3 mb-6">
-                            <Calculator className="w-6 h-6 text-blue-400" />
+                            <Calculator className={`w-6 h-6 ${theme.status.info.text}`} />
                             <h2 className="${theme.typography.heading4} ${theme.textColors.primary}">Mortgage Details</h2>
                         </div>
 
@@ -214,7 +215,7 @@ export default function MortgageCalculator() {
                                             placeholder="150"
                                         />
                                     </div>
-                                    <p className="text-sm text-yellow-600 mt-1">
+                                    <p className={`text-sm ${theme.status.warning.text} mt-1`}>
                                         Required when down payment is less than 20%
                                     </p>
                                 </div>
@@ -249,14 +250,14 @@ export default function MortgageCalculator() {
                         <>
                             <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6">
                                 <div className="flex items-center gap-3 mb-6">
-                                    <Home className="w-6 h-6 text-green-400" />
+                                    <Home className={`w-6 h-6 ${theme.status.success.text}`} />
                                     <h2 className="${theme.typography.heading4} ${theme.textColors.primary}">Payment Breakdown</h2>
                                 </div>
 
                                 <div className="space-y-4">
                                     <div className="flex justify-between items-center p-4 ${theme.status.info.bg} rounded-lg">
                                         <span className="font-medium ${theme.textColors.primary}">Total Monthly Payment</span>
-                                        <span className="${theme.typography.heading2} text-blue-400">
+                                        <span className={`${theme.typography.heading2} ${theme.status.info.text}`}>
                                             ${result.monthlyPayment.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                                         </span>
                                     </div>
@@ -280,7 +281,7 @@ export default function MortgageCalculator() {
                             {/* Affordability Analysis */}
                             <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6">
                                 <div className="flex items-center gap-3 mb-4">
-                                    <TrendingUp className="w-6 h-6 text-purple-400" />
+                                    <TrendingUp className={`w-6 h-6 ${theme.textColors.accent}`} />
                                     <h3 className="${theme.typography.heading4} ${theme.textColors.primary}">Affordability Analysis</h3>
                                 </div>
 
@@ -293,9 +294,9 @@ export default function MortgageCalculator() {
                                         }`}>
                                         <div className="flex items-center gap-2 mb-2">
                                             {result.affordabilityRatio <= 28 ? (
-                                                <CheckCircle className="w-5 h-5 text-green-400" />
+                                                <CheckCircle className={`w-5 h-5 ${theme.status.success.text}`} />
                                             ) : (
-                                                <AlertTriangle className="w-5 h-5 text-yellow-600" />
+                                                <AlertTriangle className={`w-5 h-5 ${theme.status.warning.text}`} />
                                             )}
                                             <span className="font-medium">
                                                 Housing Payment Ratio: {result.affordabilityRatio.toFixed(1)}%
