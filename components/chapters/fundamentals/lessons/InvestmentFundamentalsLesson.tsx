@@ -178,7 +178,7 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
               {lesson.keyPoints.map((point, index) => (
                 <li key={index} className={`flex items-start animate-slide-in-right stagger-${(index % 4) + 1}`}>
                   <div className={`flex-shrink-0 w-6 h-6 ${theme.status.success.bg} rounded-full flex items-center justify-center mt-1 mr-3 animate-glow-pulse`}>
-                    <CheckCircle className="w-4 h-4 text-white" />
+                    <CheckCircle className={`w-4 h-4 ${theme.status.success.text}`} />
                   </div>
                   <span className={`${theme.textColors.secondary} font-medium`}>{point}</span>
                 </li>
@@ -198,18 +198,18 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
               <p className={`font-medium ${theme.textColors.primary}`}>See the magic of compound growth:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
-                  <DollarSign className="w-8 h-8 mx-auto mb-3 text-green-400" />
-                  <div className="text-xl font-bold text-green-400">Starting at 25</div>
-                  <div className="text-sm text-gray-300 mb-2">$200/month for 10 years</div>
-                  <div className="text-xs text-gray-400">Total invested: $24,000</div>
-                  <div className="text-lg font-bold text-green-300 mt-2">Result at 65: $525,000</div>
+                  <DollarSign className={`w-8 h-8 mx-auto mb-3 ${theme.textColors.accent}`} />
+                  <div className={`text-xl font-bold ${theme.status.success.text}`}>Starting at 25</div>
+                  <div className={`text-sm ${theme.textColors.muted} mb-2`}>$200/month for 10 years</div>
+                  <div className={`text-xs ${theme.textColors.muted}`}>Total invested: $24,000</div>
+                  <div className={`text-lg font-bold ${theme.status.success.text} mt-2`}>Result at 65: $525,000</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
-                  <AlertTriangle className="w-8 h-8 mx-auto mb-3 text-orange-400" />
-                  <div className="text-xl font-bold text-orange-400">Starting at 35</div>
-                  <div className="text-sm text-gray-300 mb-2">$200/month for 30 years</div>
-                  <div className="text-xs text-gray-400">Total invested: $72,000</div>
-                  <div className="text-lg font-bold text-orange-300 mt-2">Result at 65: $394,000</div>
+                  <AlertTriangle className={`w-8 h-8 mx-auto mb-3 ${theme.status.warning.text}`} />
+                  <div className={`text-xl font-bold ${theme.status.warning.text}`}>Starting at 35</div>
+                  <div className={`text-sm ${theme.textColors.muted} mb-2`}>$200/month for 30 years</div>
+                  <div className={`text-xs ${theme.textColors.muted}`}>Total invested: $72,000</div>
+                  <div className={`text-lg font-bold ${theme.status.warning.text} mt-2`}>Result at 65: $394,000</div>
                 </div>
               </div>
               <p className={`mt-4 font-medium ${theme.textColors.accent} text-center`}>
@@ -229,41 +229,41 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                    <TrendingUp className="w-4 h-4 text-green-400" />
+                    <TrendingUp className={`w-4 h-4 ${theme.status.success.text}`} />
                     Higher Risk, Higher Return
                   </h4>
                   <ul className={`space-y-2 ${theme.textColors.secondary} text-sm`}>
                     <li className="flex justify-between">
                       <span>Stocks (S&P 500)</span>
-                      <span className="text-green-400 font-medium">~10% annually</span>
+                      <span className={`${theme.status.success.text} font-medium`}>~10% annually</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Real Estate (REITs)</span>
-                      <span className="text-green-400 font-medium">~8% annually</span>
+                      <span className={`${theme.status.success.text} font-medium`}>~8% annually</span>
                     </li>
                     <li className="flex justify-between">
                       <span>International Stocks</span>
-                      <span className="text-green-400 font-medium">~7% annually</span>
+                      <span className={`${theme.status.success.text} font-medium`}>~7% annually</span>
                     </li>
                   </ul>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                    <Shield className="w-4 h-4 text-blue-400" />
+                    <Shield className={`w-4 h-4 ${theme.status.info.text}`} />
                     Lower Risk, Lower Return
                   </h4>
                   <ul className={`space-y-2 ${theme.textColors.secondary} text-sm`}>
                     <li className="flex justify-between">
                       <span>Government Bonds</span>
-                      <span className="text-blue-400 font-medium">~4% annually</span>
+                      <span className={`${theme.status.info.text} font-medium`}>~4% annually</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Corporate Bonds</span>
-                      <span className="text-blue-400 font-medium">~5% annually</span>
+                      <span className={`${theme.status.info.text} font-medium`}>~5% annually</span>
                     </li>
                     <li className="flex justify-between">
                       <span>High-Yield Savings</span>
-                      <span className="text-blue-400 font-medium">~4% annually</span>
+                      <span className={`${theme.status.info.text} font-medium`}>~4% annually</span>
                     </li>
                   </ul>
                 </div>
@@ -288,66 +288,66 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>US Stocks</span>
-                      <span className="text-green-400 font-medium">60%</span>
+                      <span className={`${theme.status.success.text} font-medium`}>60%</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>International Stocks</span>
-                      <span className="text-green-400 font-medium">25%</span>
+                      <span className={`${theme.status.success.text} font-medium`}>25%</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>Bonds</span>
-                      <span className="text-blue-400 font-medium">10%</span>
+                      <span className={`${theme.status.info.text} font-medium`}>10%</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>REITs</span>
-                      <span className="text-purple-400 font-medium">5%</span>
+                      <span className={`${theme.textColors.accent} font-medium`}>5%</span>
                     </div>
                   </div>
-                  <div className="mt-3 text-xs text-gray-400">Aggressive Growth</div>
+                  <div className={`mt-3 text-xs ${theme.textColors.muted}`}>Aggressive Growth</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Age 40-50</h4>
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>US Stocks</span>
-                      <span className="text-green-400 font-medium">50%</span>
+                      <span className={`${theme.status.success.text} font-medium`}>50%</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>International Stocks</span>
-                      <span className="text-green-400 font-medium">20%</span>
+                      <span className={`${theme.status.success.text} font-medium`}>20%</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>Bonds</span>
-                      <span className="text-blue-400 font-medium">25%</span>
+                      <span className={`${theme.status.info.text} font-medium`}>25%</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>REITs</span>
-                      <span className="text-purple-400 font-medium">5%</span>
+                      <span className={`${theme.textColors.accent} font-medium`}>5%</span>
                     </div>
                   </div>
-                  <div className="mt-3 text-xs text-gray-400">Balanced Growth</div>
+                  <div className={`mt-3 text-xs ${theme.textColors.muted}`}>Balanced Growth</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Age 55-65</h4>
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>US Stocks</span>
-                      <span className="text-green-400 font-medium">35%</span>
+                      <span className={`${theme.status.success.text} font-medium`}>35%</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>International Stocks</span>
-                      <span className="text-green-400 font-medium">15%</span>
+                      <span className={`${theme.status.success.text} font-medium`}>15%</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>Bonds</span>
-                      <span className="text-blue-400 font-medium">45%</span>
+                      <span className={`${theme.status.info.text} font-medium`}>45%</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>REITs</span>
-                      <span className="text-purple-400 font-medium">5%</span>
+                      <span className={`${theme.textColors.accent} font-medium`}>5%</span>
                     </div>
                   </div>
-                  <div className="mt-3 text-xs text-gray-400">Conservative Growth</div>
+                  <div className={`mt-3 text-xs ${theme.textColors.muted}`}>Conservative Growth</div>
                 </div>
               </div>
               <p className={`mt-4 font-medium ${theme.status.info.text}`}>
@@ -368,10 +368,10 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <div className="flex items-center justify-between mb-2">
                     <h4 className={`font-medium ${theme.textColors.primary} flex items-center gap-2`}>
-                      <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">1</span>
+                      <span className={`${theme.status.success.bg} ${theme.status.success.text} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>1</span>
                       401(k) Company Match
                     </h4>
-                    <span className="text-green-400 font-medium">Free Money!</span>
+                    <span className={`${theme.status.success.text} font-medium`}>Free Money!</span>
                   </div>
                   <p className={`text-sm ${theme.textColors.secondary}`}>
                     Contribute enough to get full employer match. This is an instant 100% return on investment.
@@ -380,10 +380,10 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <div className="flex items-center justify-between mb-2">
                     <h4 className={`font-medium ${theme.textColors.primary} flex items-center gap-2`}>
-                      <span className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">2</span>
+                      <span className={`${theme.status.info.bg} ${theme.status.info.text} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>2</span>
                       Emergency Fund
                     </h4>
-                    <span className="text-blue-400 font-medium">Security First</span>
+                    <span className={`${theme.status.info.text} font-medium`}>Security First</span>
                   </div>
                   <p className={`text-sm ${theme.textColors.secondary}`}>
                     Build 3-6 months of expenses in high-yield savings before investing more.
@@ -392,10 +392,10 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <div className="flex items-center justify-between mb-2">
                     <h4 className={`font-medium ${theme.textColors.primary} flex items-center gap-2`}>
-                      <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">3</span>
+                      <span className={`${theme.textColors.accent} bg-slate-100 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>3</span>
                       Roth IRA
                     </h4>
-                    <span className="text-purple-400 font-medium">Tax-Free Growth</span>
+                    <span className={`${theme.textColors.accent} font-medium`}>Tax-Free Growth</span>
                   </div>
                   <p className={`text-sm ${theme.textColors.secondary}`}>
                     $7,000/year limit. Tax-free growth and withdrawals in retirement.
@@ -404,10 +404,10 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <div className="flex items-center justify-between mb-2">
                     <h4 className={`font-medium ${theme.textColors.primary} flex items-center gap-2`}>
-                      <span className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">4</span>
+                      <span className={`${theme.status.warning.bg} ${theme.status.warning.text} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>4</span>
                       Additional 401(k)
                     </h4>
-                    <span className="text-orange-400 font-medium">Max Tax Benefits</span>
+                    <span className={`${theme.status.warning.text} font-medium`}>Max Tax Benefits</span>
                   </div>
                   <p className={`text-sm ${theme.textColors.secondary}`}>
                     Contribute up to $23,000 limit for maximum tax-deferred growth.
