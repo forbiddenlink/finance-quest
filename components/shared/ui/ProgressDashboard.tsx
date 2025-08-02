@@ -258,7 +258,7 @@ export default function ProgressDashboard() {
             <div className={`${theme.backgrounds.card} rounded-lg p-4`}>
               <h4 className={`font-semibold ${theme.textColors.success} mb-2`}>Knowledge Retention</h4>
               <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{averageQuizScore > 0 ? averageQuizScore : 0}%</p>
-              <p className="text-sm text-green-700">Information successfully retained</p>
+              <p className={`text-sm ${theme.status.success.text}`}>Information successfully retained</p>
             </div>
           </div>
         </div>
@@ -266,7 +266,7 @@ export default function ProgressDashboard() {
 
       {/* Tools Usage Summary */}
       <div className="mt-8 bg-indigo-50 border border-indigo-200 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-indigo-900 mb-4 flex items-center gap-2">
+        <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
           <Calculator className="w-5 h-5" />
           Interactive Tools Mastered
         </h3>
@@ -277,7 +277,7 @@ export default function ProgressDashboard() {
               <Calculator className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Paycheck Calculator</p>
-            <p className="text-xs text-indigo-600 flex items-center justify-center gap-1">
+            <p className={`text-xs ${theme.status.info.text} flex items-center justify-center gap-1`}>
               {userProgress.calculatorUsage['paycheck-calculator'] ? (
                 <>
                   <CheckCircle className="w-3 h-3" />
@@ -298,7 +298,7 @@ export default function ProgressDashboard() {
               <TrendingUp className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Compound Interest</p>
-            <p className="text-xs text-indigo-600 flex items-center justify-center gap-1">
+            <p className={`text-xs ${theme.status.info.text} flex items-center justify-center gap-1`}>
               {userProgress.calculatorUsage['compound-interest'] ? (
                 <>
                   <CheckCircle className="w-3 h-3" />

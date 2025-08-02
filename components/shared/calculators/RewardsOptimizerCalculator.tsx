@@ -296,11 +296,11 @@ export default function RewardsOptimizerCalculator() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                                         🍽️ Dining & Restaurants
                                     </label>
                                     <div className="relative">
-                                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
                                         <input
                                             type="number"
                                             value={dining}
@@ -312,11 +312,11 @@ export default function RewardsOptimizerCalculator() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                                         ✈️ Travel & Hotels
                                     </label>
                                     <div className="relative">
-                                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
                                         <input
                                             type="number"
                                             value={travel}
