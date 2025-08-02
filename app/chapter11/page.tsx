@@ -50,7 +50,7 @@ export default function Chapter11Page() {
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`flex items-center px-6 py-3 rounded-md font-medium transition-all duration-200 ${activeTab === tab.id
                                     ? 'bg-emerald-500 text-slate-900 shadow-lg'
-                                    : 'text-gray-300 hover:text-white hover:bg-slate-700/50'
+                                    : `${theme.textColors.secondary} hover:${theme.textColors.primary} hover:bg-slate-700/50`
                                     }`}
                             >
                                 <tab.icon className="w-4 h-4 mr-2" />
@@ -67,9 +67,9 @@ export default function Chapter11Page() {
                             <div className="mb-6">
                                 <div className="flex items-center gap-3 mb-4">
                                     <TrendingUp className="w-8 h-8 text-emerald-400" />
-                                    <h2 className="text-2xl font-bold text-white">Investment Fundamentals</h2>
+                                    <h2 className={`text-2xl font-bold ${theme.textColors.primary}`}>Investment Fundamentals</h2>
                                 </div>
-                                <p className="text-gray-300 text-lg">
+                                <p className={`${theme.textColors.secondary} text-lg`}>
                                     Master the essentials of investing: from stocks and bonds to portfolio construction, risk management,
                                     and long-term wealth building strategies that grow your money faster than inflation.
                                 </p>
@@ -77,11 +77,11 @@ export default function Chapter11Page() {
 
                             <div className="space-y-6">
                                 <div className="bg-slate-800/50 rounded-xl p-6">
-                                    <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                                    <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
                                         <Award className="w-6 h-6 text-emerald-400" />
                                         🎯 Learning Objectives
                                     </h3>
-                                    <ul className="space-y-2 text-gray-300">
+                                    <ul className={`space-y-2 ${theme.textColors.secondary}`}>
                                         <li>• Understand different investment types (stocks, bonds, ETFs, mutual funds)</li>
                                         <li>• Learn risk vs. return fundamentals and portfolio theory</li>
                                         <li>• Master asset allocation and diversification strategies</li>
@@ -94,7 +94,7 @@ export default function Chapter11Page() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-xl p-6">
                                         <h3 className="text-xl font-semibold text-emerald-300 mb-4">💡 Chapter Preview</h3>
-                                        <p className="text-gray-300">
+                                        <p className={`${theme.textColors.secondary}`}>
                                             Begin the Investment Track with foundational knowledge that powers all successful investing.
                                             This chapter builds on your budgeting and debt management skills to start building
                                             real wealth through intelligent investing strategies.
@@ -103,7 +103,7 @@ export default function Chapter11Page() {
 
                                     <div className="bg-amber-500/20 border border-amber-500/30 rounded-xl p-6">
                                         <h3 className="text-xl font-semibold text-amber-300 mb-4">🚧 Coming Soon</h3>
-                                        <p className="text-gray-300">
+                                        <p className={`${theme.textColors.secondary}`}>
                                             Interactive lessons are in development! This chapter will include:
                                         </p>
                                         <ul className="mt-3 space-y-1 text-sm text-amber-200">
@@ -118,8 +118,8 @@ export default function Chapter11Page() {
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div className="bg-slate-800/50 rounded-xl p-6">
                                         <PieChart className="w-8 h-8 text-blue-400 mb-3" />
-                                        <h4 className="text-lg font-semibold text-white mb-2">Asset Allocation</h4>
-                                        <p className="text-gray-300 text-sm">
+                                        <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Asset Allocation</h4>
+                                        <p className={`${theme.textColors.secondary} text-sm`}>
                                             Learn how to balance stocks, bonds, and other investments based on your goals,
                                             timeline, and risk tolerance for optimal returns.
                                         </p>
@@ -127,8 +127,8 @@ export default function Chapter11Page() {
 
                                     <div className="bg-slate-800/50 rounded-xl p-6">
                                         <Shield className="w-8 h-8 text-green-400 mb-3" />
-                                        <h4 className="text-lg font-semibold text-white mb-2">Risk Management</h4>
-                                        <p className="text-gray-300 text-sm">
+                                        <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Risk Management</h4>
+                                        <p className={`${theme.textColors.secondary} text-sm`}>
                                             Understand different types of investment risk and how diversification,
                                             time horizon, and asset allocation protect your wealth.
                                         </p>
@@ -136,8 +136,8 @@ export default function Chapter11Page() {
 
                                     <div className="bg-slate-800/50 rounded-xl p-6">
                                         <Target className="w-8 h-8 text-purple-400 mb-3" />
-                                        <h4 className="text-lg font-semibold text-white mb-2">Portfolio Building</h4>
-                                        <p className="text-gray-300 text-sm">
+                                        <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Portfolio Building</h4>
+                                        <p className={`${theme.textColors.secondary} text-sm`}>
                                             Construct your first investment portfolio using modern portfolio theory
                                             principles and low-cost, diversified investment options.
                                         </p>
@@ -146,15 +146,15 @@ export default function Chapter11Page() {
 
                                 {/* Investment Track Overview */}
                                 <div className="bg-gradient-to-r from-emerald-500/10 to-blue-500/10 border border-emerald-500/20 rounded-xl p-6">
-                                    <h3 className="text-xl font-semibold text-white mb-4">🚀 Investment Track Journey</h3>
-                                    <p className="text-gray-300 mb-4">
+                                    <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-4`}>🚀 Investment Track Journey</h3>
+                                    <p className={`${theme.textColors.secondary} mb-4`}>
                                         This is the first chapter in the comprehensive Investment Track (Chapters 11-16).
                                         You&apos;ll progress through increasingly sophisticated investing topics:
                                     </p>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                                         <div>
                                             <h4 className="font-medium text-emerald-300 mb-2">Foundation Chapters</h4>
-                                            <ul className="space-y-1 text-gray-300">
+                                            <ul className={`space-y-1 ${theme.textColors.secondary}`}>
                                                 <li>• Ch 11: Investment Fundamentals</li>
                                                 <li>• Ch 12: Stock Market Mastery</li>
                                                 <li>• Ch 13: Bond & Fixed Income</li>
@@ -162,7 +162,7 @@ export default function Chapter11Page() {
                                         </div>
                                         <div>
                                             <h4 className="font-medium text-emerald-300 mb-2">Advanced Topics</h4>
-                                            <ul className="space-y-1 text-gray-300">
+                                            <ul className={`space-y-1 ${theme.textColors.secondary}`}>
                                                 <li>• Ch 14: Advanced Portfolio Theory</li>
                                                 <li>• Ch 15: Alternative Investments</li>
                                                 <li>• Ch 16: Tax-Efficient Strategies</li>
@@ -173,15 +173,15 @@ export default function Chapter11Page() {
 
                                 {/* Interactive Preview */}
                                 <div className="bg-gradient-to-r from-emerald-500/10 to-purple-500/10 border border-emerald-500/20 rounded-xl p-6">
-                                    <h3 className="text-xl font-semibold text-white mb-4">📊 Try the Portfolio Analyzer</h3>
-                                    <p className="text-gray-300 mb-4">
+                                    <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-4`}>📊 Try the Portfolio Analyzer</h3>
+                                    <p className={`${theme.textColors.secondary} mb-4`}>
                                         While the full lesson is in development, start analyzing investment portfolios right now!
                                         Use our professional Portfolio Analyzer to understand asset allocation, diversification,
                                         and get personalized recommendations for optimizing your investments.
                                     </p>
                                     <button
                                         onClick={() => setActiveTab('calculator')}
-                                        className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
+                                        className={`bg-emerald-600 hover:bg-emerald-700 ${theme.textColors.primary} px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2`}
                                     >
                                         <Calculator className="w-4 h-4" />
                                         Open Portfolio Analyzer
@@ -194,8 +194,8 @@ export default function Chapter11Page() {
                     {activeTab === 'calculator' && (
                         <div className="p-8">
                             <div className="mb-6">
-                                <h2 className="text-2xl font-bold text-white mb-2">Portfolio Analyzer</h2>
-                                <p className="text-gray-300">
+                                <h2 className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>Portfolio Analyzer</h2>
+                                <p className={`${theme.textColors.secondary}`}>
                                     Analyze your investment portfolio&apos;s allocation, diversification, and get optimization recommendations.
                                 </p>
                             </div>
@@ -206,18 +206,18 @@ export default function Chapter11Page() {
                     {activeTab === 'quiz' && (
                         <div className="p-8">
                             <div className="mb-6">
-                                <h2 className="text-2xl font-bold text-white mb-2">Investment Fundamentals Assessment</h2>
-                                <p className="text-gray-300">
+                                <h2 className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>Investment Fundamentals Assessment</h2>
+                                <p className={`${theme.textColors.secondary}`}>
                                     Test your understanding of investment basics, portfolio construction, and risk management principles.
                                 </p>
                             </div>
 
                             <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-xl p-6">
                                 <h3 className="text-xl font-semibold text-emerald-300 mb-4">🚧 Assessment Coming Soon</h3>
-                                <p className="text-gray-300">
+                                <p className={`${theme.textColors.secondary}`}>
                                     The Chapter 11 assessment is in development. This comprehensive quiz will test your mastery of:
                                 </p>
-                                <ul className="mt-4 space-y-2 text-gray-300">
+                                <ul className={`mt-4 space-y-2 ${theme.textColors.secondary}`}>
                                     <li>• Investment types and characteristics (stocks, bonds, ETFs, mutual funds)</li>
                                     <li>• Risk vs. return relationships and portfolio theory</li>
                                     <li>• Asset allocation strategies by age and risk tolerance</li>
@@ -237,8 +237,8 @@ export default function Chapter11Page() {
                     {activeTab === 'assistant' && (
                         <div className="p-8">
                             <div className="mb-6">
-                                <h2 className="text-2xl font-bold text-white mb-2">AI Investment Coach</h2>
-                                <p className="text-gray-300">
+                                <h2 className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>AI Investment Coach</h2>
+                                <p className={`${theme.textColors.secondary}`}>
                                     Get expert guidance on investment fundamentals, portfolio construction, and wealth building strategies.
                                 </p>
                             </div>

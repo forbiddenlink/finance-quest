@@ -272,7 +272,7 @@ export default function ProgressDashboard() {
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['paycheck-calculator'] ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['paycheck-calculator'] ? `${theme.status.success.bg} ${theme.status.success.text}` : `${theme.backgrounds.disabled} ${theme.textColors.muted}`
               }`}>
               <Calculator className="w-8 h-8" />
             </div>
@@ -293,7 +293,7 @@ export default function ProgressDashboard() {
           </div>
 
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['compound-interest'] ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['compound-interest'] ? `${theme.status.success.bg} ${theme.status.success.text}` : `${theme.backgrounds.disabled} ${theme.textColors.muted}`
               }`}>
               <TrendingUp className="w-8 h-8" />
             </div>
@@ -314,7 +314,7 @@ export default function ProgressDashboard() {
           </div>
 
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['budget-builder'] ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['budget-builder'] ? `${theme.status.success.bg} ${theme.status.success.text}` : `${theme.backgrounds.disabled} ${theme.textColors.muted}`
               }`}>
               <PieChartIcon className="w-8 h-8" />
             </div>
