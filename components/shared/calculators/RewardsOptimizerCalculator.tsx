@@ -231,10 +231,10 @@ export default function RewardsOptimizerCalculator() {
     };
 
     const getRewardCategory = (amount: number) => {
-        if (amount >= 500) return { color: 'text-green-400', label: 'Excellent' };
-        if (amount >= 300) return { color: 'text-blue-400', label: 'Good' };
-        if (amount >= 150) return { color: 'text-yellow-400', label: 'Fair' };
-        return { color: 'text-gray-400', label: 'Basic' };
+        if (amount >= 500) return { color: `${theme.status.success.text}`, label: 'Excellent' };
+        if (amount >= 300) return { color: `${theme.textColors.accent}`, label: 'Good' };
+        if (amount >= 150) return { color: `${theme.status.warning.text}`, label: 'Fair' };
+        return { color: `${theme.textColors.muted}`, label: 'Basic' };
     };
 
     return (
@@ -243,11 +243,11 @@ export default function RewardsOptimizerCalculator() {
             <div className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
                 <div className="max-w-7xl mx-auto px-4 py-6">
                     <div className="text-center">
-                        <h2 className="${theme.typography.heading2} text-white mb-2 flex items-center justify-center gap-3">
-                            <Award className="w-8 h-8 text-amber-400" />
+                        <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2 flex items-center justify-center gap-3`}>
+                            <Award className={`w-8 h-8 ${theme.textColors.accent}`} />
                             Credit Card Rewards Optimizer
                         </h2>
-                        <p className="text-gray-300">
+                        <p className={`${theme.textColors.secondary}`}>
                             Maximize your credit card rewards with personalized recommendations based on your spending
                         </p>
                     </div>
@@ -259,32 +259,32 @@ export default function RewardsOptimizerCalculator() {
                     {/* Input Controls */}
                     <div className="xl:col-span-1 space-y-6">
                         {/* Monthly Spending */}
-                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="${theme.typography.heading4} text-white mb-4">Monthly Spending by Category</h3>
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
+                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Monthly Spending by Category</h3>
 
                             <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                                         🛒 Groceries
                                     </label>
                                     <div className="relative">
-                                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
                                         <input
                                             type="number"
                                             value={groceries}
                                             onChange={(e) => setGroceries(e.target.value)}
-                                            className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            className={`pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                             placeholder="800"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                                         ⛽ Gas & Fuel
                                     </label>
                                     <div className="relative">
-                                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
                                         <input
                                             type="number"
                                             value={gasoline}
