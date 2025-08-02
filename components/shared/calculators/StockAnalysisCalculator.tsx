@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
+import { theme } from '@/lib/theme';
 import { Calculator, TrendingUp, TrendingDown, AlertTriangle, DollarSign, Percent, Target } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useProgressStore } from '@/lib/store/progressStore';
@@ -140,15 +141,15 @@ export default function StockAnalysisCalculator() {
   };
 
   const getRiskColor = (score: number) => {
-    if (score <= 30) return 'text-green-400 ${theme.status.success.bg} ${theme.status.success.border}';
-    if (score <= 60) return 'text-yellow-600 ${theme.status.warning.bg} ${theme.status.warning.border}';
-    return 'text-red-400 ${theme.status.error.bg} ${theme.status.error.border}';
+    if (score <= 30) return `${theme.status.success.text} ${theme.status.success.bg} ${theme.status.success.border}`;
+    if (score <= 60) return `${theme.status.warning.text} ${theme.status.warning.bg} ${theme.status.warning.border}`;
+    return `${theme.status.error.text} ${theme.status.error.bg} ${theme.status.error.border}`;
   };
 
   const getUpsideColor = (upside: number) => {
-    if (upside > 20) return 'text-green-400';
-    if (upside > 0) return 'text-blue-400';
-    return 'text-red-400';
+    if (upside > 20) return theme.status.success.text;
+    if (upside > 0) return theme.status.info.text;
+    return theme.status.error.text;
   };
 
   return (
@@ -158,7 +159,7 @@ export default function StockAnalysisCalculator() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <Calculator className="w-5 h-5 text-purple-400" />
+              <Calculator className={`w-5 h-5 ${theme.textColors.accent}`} />
               <span>Stock Fundamentals</span>
             </CardTitle>
             <CardDescription>Enter the company&apos;s financial metrics</CardDescription>
@@ -294,7 +295,7 @@ export default function StockAnalysisCalculator() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <TrendingUp className="w-5 h-5 text-green-400" />
+              <TrendingUp className={`w-5 h-5 ${theme.status.success.text}`} />
               <span>Valuation Analysis</span>
             </CardTitle>
             <CardDescription>Investment recommendation and risk assessment</CardDescription>
@@ -305,7 +306,7 @@ export default function StockAnalysisCalculator() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-3 ${theme.status.info.bg} rounded-lg">
                     <div className="flex items-center space-x-2 mb-1">
-                      <DollarSign className="w-4 h-4 text-blue-400" />
+                      <DollarSign className={`w-4 h-4 ${theme.status.info.text}`} />
                       <span className="text-sm font-medium ${theme.textColors.secondary}">Intrinsic Value</span>
                     </div>
                     <p className="text-lg font-bold ${theme.status.info.text}">
@@ -315,7 +316,7 @@ export default function StockAnalysisCalculator() {
                   
                   <div className="p-3 ${theme.status.success.bg} rounded-lg">
                     <div className="flex items-center space-x-2 mb-1">
-                      <Target className="w-4 h-4 text-green-400" />
+                      <Target className={`w-4 h-4 ${theme.status.success.text}`} />
                       <span className="text-sm font-medium ${theme.textColors.primary}">Fair Value</span>
                     </div>
                     <p className="text-lg font-bold ${theme.status.success.text}">

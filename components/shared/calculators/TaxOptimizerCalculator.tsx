@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Calculator, DollarSign, Target, TrendingDown, Shield, FileText, Zap } from 'lucide-react';
 
@@ -235,10 +236,10 @@ export default function TaxOptimizerCalculator() {
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Easy': return 'text-green-400 bg-green-100';
-      case 'Medium': return 'text-yellow-600 bg-yellow-100';
-      case 'Advanced': return 'text-red-400 bg-red-100';
-      default: return '${theme.textColors.secondary} bg-gray-100';
+      case 'Easy': return `${theme.status.success.text} ${theme.status.success.bg}`;
+      case 'Medium': return `${theme.status.warning.text} ${theme.status.warning.bg}`;
+      case 'Advanced': return `${theme.status.error.text} ${theme.status.error.bg}`;
+      default: return `${theme.textColors.secondary} ${theme.backgrounds.disabled}`;
     }
   };
 
@@ -269,7 +270,7 @@ export default function TaxOptimizerCalculator() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <FileText className="w-5 h-5 text-blue-400" />
+              <FileText className={`w-5 h-5 ${theme.status.info.text}`} />
               Tax Information
             </CardTitle>
             <CardDescription>
@@ -404,7 +405,7 @@ export default function TaxOptimizerCalculator() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Target className="w-5 h-5 text-green-400" />
+              <Target className={`w-5 h-5 ${theme.status.success.text}`} />
               Tax Optimization Results
             </CardTitle>
             <CardDescription>
@@ -417,7 +418,7 @@ export default function TaxOptimizerCalculator() {
                 {/* Key Metrics */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-4 ${theme.status.error.bg} rounded-lg">
-                    <div className="${theme.typography.heading2} text-red-400">
+                    <div className={`${theme.typography.heading2} ${theme.status.error.text}`}>
                       {formatCurrency(results.currentTaxes)}
                     </div>
                     <div className="text-sm ${theme.textColors.secondary}">Current Taxes</div>
@@ -426,7 +427,7 @@ export default function TaxOptimizerCalculator() {
                     </div>
                   </div>
                   <div className="text-center p-4 ${theme.status.success.bg} rounded-lg">
-                    <div className="${theme.typography.heading2} text-green-400">
+                    <div className={`${theme.typography.heading2} ${theme.status.success.text}`}>
                       {formatCurrency(results.taxSavings)}
                     </div>
                     <div className="text-sm ${theme.textColors.secondary}">Potential Savings</div>
@@ -449,7 +450,7 @@ export default function TaxOptimizerCalculator() {
                             {strategy.difficulty}
                           </div>
                         </div>
-                        <div className="text-green-400 font-semibold">
+                        <div className={`${theme.status.success.text} font-semibold`}>
                           {formatCurrency(strategy.potentialSavings)}
                         </div>
                       </div>
@@ -460,13 +461,13 @@ export default function TaxOptimizerCalculator() {
                 {/* Recommendations */}
                 <div>
                   <h4 className="font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-yellow-500" />
+                    <Zap className={`w-4 h-4 ${theme.status.warning.text}`} />
                     Key Recommendations
                   </h4>
                   <ul className="space-y-1 text-sm ${theme.textColors.secondary}">
                     {results.recommendations.slice(0, 4).map((rec, index) => (
                       <li key={index} className="flex items-start gap-2">
-                        <span className="text-blue-500 mt-1">•</span>
+                        <span className={`${theme.status.info.text} mt-1`}>•</span>
                         {rec}
                       </li>
                     ))}
@@ -490,7 +491,7 @@ export default function TaxOptimizerCalculator() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <TrendingDown className="w-5 h-5 text-green-400" />
+                <TrendingDown className={`w-5 h-5 ${theme.status.success.text}`} />
                 Tax Comparison
               </CardTitle>
             </CardHeader>
@@ -511,7 +512,7 @@ export default function TaxOptimizerCalculator() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <DollarSign className="w-5 h-5 text-purple-400" />
+                <DollarSign className={`w-5 h-5 ${theme.textColors.accent}`} />
                 Strategy Savings Breakdown
               </CardTitle>
             </CardHeader>
@@ -544,7 +545,7 @@ export default function TaxOptimizerCalculator() {
       <Card className="bg-gradient-to-r from-blue-50 to-green-50">
         <CardContent className="p-6">
           <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2">
-            <Shield className="w-5 h-5 text-blue-400" />
+            <Shield className={`w-5 h-5 ${theme.status.info.text}`} />
             Tax Optimization Strategies
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
