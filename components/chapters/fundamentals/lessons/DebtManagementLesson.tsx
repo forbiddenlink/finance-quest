@@ -179,7 +179,7 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
               {lesson.keyPoints.map((point, index) => (
                 <li key={index} className={`flex items-start animate-slide-in-right stagger-${(index % 4) + 1}`}>
                   <div className={`flex-shrink-0 w-6 h-6 ${theme.status.warning.bg} rounded-full flex items-center justify-center mt-1 mr-3 animate-glow-pulse`}>
-                    <CheckCircle className="w-4 h-4 text-white" />
+                    <CheckCircle className={`w-4 h-4 ${theme.status.warning.text}`} />
                   </div>
                   <span className={`${theme.textColors.secondary} font-medium`}>{point}</span>
                 </li>
@@ -200,7 +200,7 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                    <Award className="w-4 h-4 text-green-400" />
+                    <Award className={`w-4 h-4 ${theme.status.success.text}`} />
                     Good Debt (Wealth Building)
                   </h4>
                   <ul className={`space-y-2 ${theme.textColors.secondary} text-sm`}>
@@ -209,11 +209,11 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
                     <li>• Business loans: $________ at ___% APR</li>
                     <li>• Investment property: $________ at ___% APR</li>
                   </ul>
-                  <div className="mt-3 text-xs text-green-400">Often tax-deductible</div>
+                  <div className={`mt-3 text-xs ${theme.status.success.text}`}>Often tax-deductible</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                    <AlertTriangle className="w-4 h-4 text-red-400" />
+                    <AlertTriangle className={`w-4 h-4 ${theme.status.error.text}`} />
                     Bad Debt (Wealth Destroying)
                   </h4>
                   <ul className={`space-y-2 ${theme.textColors.secondary} text-sm`}>
@@ -222,7 +222,7 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
                     <li>• Personal loans: $________ at ___% APR</li>
                     <li>• Payday loans: $________ at ___% APR</li>
                   </ul>
-                  <div className="mt-3 text-xs text-red-400">Eliminate ASAP</div>
+                  <div className={`mt-3 text-xs ${theme.status.error.text}`}>Eliminate ASAP</div>
                 </div>
               </div>
               <p className={`mt-4 font-medium ${theme.textColors.accent}`}>
@@ -242,53 +242,53 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                    <Calculator className="w-4 h-4 text-blue-400" />
+                    <Calculator className={`w-4 h-4 ${theme.status.info.text}`} />
                     Debt Avalanche Method
                   </h4>
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>Approach</span>
-                      <span className="text-blue-400 font-medium">Highest Interest First</span>
+                      <span className={`${theme.status.info.text} font-medium`}>Highest Interest First</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>Math Result</span>
-                      <span className="text-blue-400 font-medium">Saves Most Money</span>
+                      <span className={`${theme.status.info.text} font-medium`}>Saves Most Money</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>Psychology</span>
-                      <span className="text-blue-400 font-medium">Requires Discipline</span>
+                      <span className={`${theme.status.info.text} font-medium`}>Requires Discipline</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>Best For</span>
-                      <span className="text-blue-400 font-medium">Logical Decision Makers</span>
+                      <span className={`${theme.status.info.text} font-medium`}>Logical Decision Makers</span>
                     </div>
                   </div>
-                  <div className="mt-3 text-xs text-blue-400">Example: 25% faster payoff</div>
+                  <div className={`mt-3 text-xs ${theme.status.info.text}`}>Example: 25% faster payoff</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                    <Zap className="w-4 h-4 text-green-400" />
+                    <Zap className={`w-4 h-4 ${theme.status.success.text}`} />
                     Debt Snowball Method
                   </h4>
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>Approach</span>
-                      <span className="text-green-400 font-medium">Smallest Balance First</span>
+                      <span className={`${theme.status.success.text} font-medium`}>Smallest Balance First</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>Math Result</span>
-                      <span className="text-green-400 font-medium">Costs More Interest</span>
+                      <span className={`${theme.status.success.text} font-medium`}>Costs More Interest</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>Psychology</span>
-                      <span className="text-green-400 font-medium">Quick Wins & Motivation</span>
+                      <span className={`${theme.status.success.text} font-medium`}>Quick Wins & Motivation</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>Best For</span>
-                      <span className="text-green-400 font-medium">Emotional Decision Makers</span>
+                      <span className={`${theme.status.success.text} font-medium`}>Emotional Decision Makers</span>
                     </div>
                   </div>
-                  <div className="mt-3 text-xs text-green-400">Example: Higher success rate</div>
+                  <div className={`mt-3 text-xs ${theme.status.success.text}`}>Example: Higher success rate</div>
                 </div>
               </div>
               <p className={`mt-4 font-medium ${theme.status.warning.text}`}>
@@ -308,48 +308,48 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                    <Shield className="w-4 h-4 text-blue-400" />
+                    <Shield className={`w-4 h-4 ${theme.status.info.text}`} />
                     Credit Score Protection
                   </h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center">
-                      <CheckCircle className="w-4 h-4 text-green-400 mr-2" />
+                      <CheckCircle className={`w-4 h-4 ${theme.status.success.text} mr-2`} />
                       <span>Keep total utilization under 30%</span>
                     </div>
                     <div className="flex items-center">
-                      <CheckCircle className="w-4 h-4 text-green-400 mr-2" />
+                      <CheckCircle className={`w-4 h-4 ${theme.status.success.text} mr-2`} />
                       <span>Keep individual cards under 10%</span>
                     </div>
                     <div className="flex items-center">
-                      <CheckCircle className="w-4 h-4 text-green-400 mr-2" />
+                      <CheckCircle className={`w-4 h-4 ${theme.status.success.text} mr-2`} />
                       <span>Pay before statement closes</span>
                     </div>
                     <div className="flex items-center">
-                      <CheckCircle className="w-4 h-4 text-green-400 mr-2" />
+                      <CheckCircle className={`w-4 h-4 ${theme.status.success.text} mr-2`} />
                       <span>Never close old no-fee cards</span>
                     </div>
                   </div>
                 </div>
                 <div>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                    <DollarSign className="w-4 h-4 text-green-400" />
+                    <DollarSign className={`w-4 h-4 ${theme.status.success.text}`} />
                     Rewards Maximization
                   </h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center">
-                      <CheckCircle className="w-4 h-4 text-green-400 mr-2" />
+                      <CheckCircle className={`w-4 h-4 ${theme.status.success.text} mr-2`} />
                       <span>5% categories: Gas, groceries, dining</span>
                     </div>
                     <div className="flex items-center">
-                      <CheckCircle className="w-4 h-4 text-green-400 mr-2" />
+                      <CheckCircle className={`w-4 h-4 ${theme.status.success.text} mr-2`} />
                       <span>2% everywhere card for other purchases</span>
                     </div>
                     <div className="flex items-center">
-                      <CheckCircle className="w-4 h-4 text-green-400 mr-2" />
+                      <CheckCircle className={`w-4 h-4 ${theme.status.success.text} mr-2`} />
                       <span>Travel cards for hotels/flights</span>
                     </div>
                     <div className="flex items-center">
-                      <CheckCircle className="w-4 h-4 text-green-400 mr-2" />
+                      <CheckCircle className={`w-4 h-4 ${theme.status.success.text} mr-2`} />
                       <span>Pay statement balance in full</span>
                     </div>
                   </div>
@@ -363,7 +363,7 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
                   <li>• Groceries ($800): 5% cash back = $40/month</li>
                   <li>• Gas ($300): 5% cash back = $15/month</li>
                   <li>• Everything else ($3,900): 2% cash back = $78/month</li>
-                  <li className="font-bold text-green-400">• Total rewards: $133/month = $1,596/year</li>
+                  <li className={`font-bold ${theme.status.success.text}`}>• Total rewards: $133/month = $1,596/year</li>
                 </ul>
               </div>
               <p className={`mt-4 font-medium ${theme.status.info.text}`}>
@@ -383,7 +383,7 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <span className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">1</span>
+                    <span className={`${theme.status.info.bg} ${theme.status.info.text} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>1</span>
                     Hardship Programs
                   </h4>
                   <ul className={`space-y-1 text-xs ${theme.textColors.secondary}`}>
@@ -392,11 +392,11 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
                     <li>• Skip payment options</li>
                     <li>• No credit score impact</li>
                   </ul>
-                  <div className="mt-2 text-xs text-blue-400">Best first option</div>
+                  <div className={`mt-2 text-xs ${theme.status.info.text}`}>Best first option</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <span className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">2</span>
+                    <span className={`${theme.status.warning.bg} ${theme.status.warning.text} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>2</span>
                     Settlement
                   </h4>
                   <ul className={`space-y-1 text-xs ${theme.textColors.secondary}`}>
@@ -405,11 +405,11 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
                     <li>• Credit score damage</li>
                     <li>• Tax implications possible</li>
                   </ul>
-                  <div className="mt-2 text-xs text-orange-400">Last resort option</div>
+                  <div className={`mt-2 text-xs ${theme.status.warning.text}`}>Last resort option</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">3</span>
+                    <span className={`${theme.status.success.bg} ${theme.status.success.text} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>3</span>
                     Pay-for-Delete
                   </h4>
                   <ul className={`space-y-1 text-xs ${theme.textColors.secondary}`}>
@@ -418,7 +418,7 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
                     <li>• Pay agreed amount</li>
                     <li>• Monitor for removal</li>
                   </ul>
-                  <div className="mt-2 text-xs text-green-400">Credit repair option</div>
+                  <div className={`mt-2 text-xs ${theme.status.success.text}`}>Credit repair option</div>
                 </div>
               </div>
               <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
