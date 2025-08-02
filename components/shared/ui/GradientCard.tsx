@@ -13,34 +13,34 @@ interface GradientCardProps {
 
 const gradients = {
   blue: {
-    solid: 'bg-gradient-to-br from-blue-500 to-indigo-600',
-    border: 'bg-gradient-to-r from-blue-500 to-indigo-600',
-    glass: `${theme.backgrounds.card} ${theme.borderColors.accent}`
-  },
-  green: {
     solid: 'bg-gradient-to-br from-blue-500 to-blue-600',
     border: 'bg-gradient-to-r from-blue-500 to-blue-600',
-    glass: `${theme.status.success.bg} ${theme.status.success.border}`
+    glass: `${theme.status.info.bg} border-blue-500/20`
+  },
+  green: {
+    solid: 'bg-gradient-to-br from-green-500 to-green-600',
+    border: 'bg-gradient-to-r from-green-500 to-green-600',
+    glass: `${theme.status.success.bg} border-green-500/20`
   },
   purple: {
-    solid: 'bg-gradient-to-br from-blue-500 to-slate-600',
-    border: 'bg-gradient-to-r from-blue-500 to-slate-600',
-    glass: `${theme.backgrounds.card} ${theme.borderColors.accent}`
+    solid: 'bg-gradient-to-br from-purple-500 to-purple-600',
+    border: 'bg-gradient-to-r from-purple-500 to-purple-600',
+    glass: `${theme.backgrounds.card} border-purple-500/20`
   },
   red: {
-    solid: 'bg-gradient-to-br from-red-500 to-pink-600',
-    border: 'bg-gradient-to-r from-red-500 to-pink-600',
-    glass: `${theme.status.error.bg} ${theme.status.error.border}`
+    solid: 'bg-gradient-to-br from-red-500 to-red-600',
+    border: 'bg-gradient-to-r from-red-500 to-red-600',
+    glass: `${theme.status.error.bg} border-red-500/20`
   },
   yellow: {
-    solid: 'bg-gradient-to-br from-yellow-500 to-orange-600',
-    border: 'bg-gradient-to-r from-yellow-500 to-orange-600',
-    glass: `${theme.status.warning.bg} ${theme.status.warning.border}`
+    solid: 'bg-gradient-to-br from-yellow-500 to-amber-600',
+    border: 'bg-gradient-to-r from-yellow-500 to-amber-600',
+    glass: `${theme.status.warning.bg} border-amber-500/20`
   },
   pink: {
-    solid: 'bg-gradient-to-br from-yellow-500 to-orange-600',
-    border: 'bg-gradient-to-r from-yellow-500 to-orange-600',
-    glass: `${theme.status.warning.bg} ${theme.status.warning.border}`
+    solid: 'bg-gradient-to-br from-pink-500 to-pink-600',
+    border: 'bg-gradient-to-r from-pink-500 to-pink-600',
+    glass: `${theme.backgrounds.card} border-pink-500/20`
   }
 };
 

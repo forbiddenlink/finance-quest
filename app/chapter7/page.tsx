@@ -38,7 +38,7 @@ export default function Chapter7Page() {
 
     if (!isUnlocked) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center">
+            <div className={`min-h-screen ${theme.backgrounds.primary} flex items-center justify-center`}>
                 <div className="max-w-2xl mx-auto px-6 text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -79,12 +79,12 @@ export default function Chapter7Page() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+        <div className={`min-h-screen ${theme.backgrounds.primary}`}>
             {/* Header */}
-            <div className="bg-slate-900/50 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+            <div className={`${theme.backgrounds.header} border-b ${theme.borderColors.primary} sticky top-0 z-50`}>
                 <div className="max-w-7xl mx-auto px-6 py-4">
                     <div className="flex items-center justify-between">
-                        <Link href="/" className="flex items-center text-white hover:text-blue-400 transition-colors">
+                        <Link href="/" className={`flex items-center ${theme.textColors.primary} hover:${theme.textColors.accent} transition-colors`}>
                             <ArrowLeft className="w-5 h-5 mr-2" />
                             Back to Home
                         </Link>

@@ -107,7 +107,7 @@ export default function Chapter9() {
 
     if (!isUnlocked) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 flex items-center justify-center">
+            <div className={`min-h-screen ${theme.backgrounds.primary} flex items-center justify-center`}>
                 <Card className="max-w-md mx-auto text-center">
                     <CardHeader>
                         <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -129,7 +129,7 @@ export default function Chapter9() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50">
+        <div className={`min-h-screen ${theme.backgrounds.primary}`}>
             {/* Header */}
             <div className={`${theme.backgrounds.glass} border-b ${theme.borderColors.primary}`}>
                 <div className="max-w-6xl mx-auto px-4 py-6">

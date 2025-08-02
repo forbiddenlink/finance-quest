@@ -37,7 +37,7 @@ export default function Chapter8Page() {
 
     if (!isUnlocked) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 via-red-900 to-slate-800 flex items-center justify-center">
+            <div className={`min-h-screen ${theme.backgrounds.primary} flex items-center justify-center`}>
                 <div className="max-w-2xl mx-auto px-6 text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -80,7 +80,7 @@ export default function Chapter8Page() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-pink-50">
+        <div className={`min-h-screen ${theme.backgrounds.primary}`}>
             {/* Header */}
             <div className={`${theme.backgrounds.glass} border-b ${theme.borderColors.primary}`}>
                 <div className="max-w-6xl mx-auto px-6 py-8">
