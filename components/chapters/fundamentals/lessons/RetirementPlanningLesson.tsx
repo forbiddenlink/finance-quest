@@ -144,9 +144,9 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
               <div className="bg-purple-500/20 p-2 rounded-lg animate-float">
-                <PiggyBank className="w-6 h-6 text-purple-400" />
+                <PiggyBank className={`w-6 h-6 ${theme.textColors.accent}`} />
               </div>
-              <span className="text-sm font-medium text-purple-400 animate-fade-in-up">
+              <span className={`text-sm font-medium ${theme.textColors.accent} animate-fade-in-up`}>
                 Lesson {currentLesson + 1} of {lessons.length}
               </span>
             </div>
@@ -199,7 +199,7 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                    <Award className="w-4 h-4 text-purple-400" />
+                    <Award className={`w-4 h-4 ${theme.textColors.accent}`} />
                     Employer Sponsored (2024 Limits)
                   </h4>
                   <ul className={`space-y-2 ${theme.textColors.secondary} text-sm`}>
@@ -211,7 +211,7 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                    <PiggyBank className="w-4 h-4 text-green-400" />
+                    <PiggyBank className={`w-4 h-4 ${theme.status.success.text}`} />
                     Individual Accounts (2024 Limits)
                   </h4>
                   <ul className={`space-y-2 ${theme.textColors.secondary} text-sm`}>
@@ -240,25 +240,25 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Conservative (3%)</h4>
                   <div className="space-y-2">
-                    <div className="text-2xl font-bold text-green-400">$1M</div>
-                    <div className="text-sm text-gray-300">→ $30,000/year</div>
-                    <div className="text-xs text-gray-400">Safest for early retirement</div>
+                    <div className={`text-2xl font-bold ${theme.status.success.text}`}>$1M</div>
+                    <div className={`text-sm ${theme.textColors.secondary}`}>→ $30,000/year</div>
+                    <div className={`text-xs ${theme.textColors.muted}`}>Safest for early retirement</div>
                   </div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Moderate (4%)</h4>
                   <div className="space-y-2">
-                    <div className="text-2xl font-bold text-blue-400">$1M</div>
-                    <div className="text-sm text-gray-300">→ $40,000/year</div>
-                    <div className="text-xs text-gray-400">Traditional retirement age</div>
+                    <div className={`text-2xl font-bold ${theme.status.info.text}`}>$1M</div>
+                    <div className={`text-sm ${theme.textColors.secondary}`}>→ $40,000/year</div>
+                    <div className={`text-xs ${theme.textColors.muted}`}>Traditional retirement age</div>
                   </div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Aggressive (5%)</h4>
                   <div className="space-y-2">
-                    <div className="text-2xl font-bold text-orange-400">$1M</div>
-                    <div className="text-sm text-gray-300">→ $50,000/year</div>
-                    <div className="text-xs text-gray-400">Higher risk of depletion</div>
+                    <div className={`text-2xl font-bold ${theme.status.warning.text}`}>$1M</div>
+                    <div className={`text-sm ${theme.textColors.secondary}`}>→ $50,000/year</div>
+                    <div className={`text-xs ${theme.textColors.muted}`}>Higher risk of depletion</div>
                   </div>
                 </div>
               </div>
@@ -289,49 +289,49 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                    <Clock className="w-4 h-4 text-blue-400" />
+                    <Clock className={`w-4 h-4 ${theme.status.info.text}`} />
                     Time to Retirement Impact
                   </h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span>Starting at 25:</span>
-                      <span className="text-green-400 font-medium">40 years to grow</span>
+                      <span className={`${theme.status.success.text} font-medium`}>40 years to grow</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Starting at 35:</span>
-                      <span className="text-yellow-400 font-medium">30 years to grow</span>
+                      <span className={`${theme.status.warning.text} font-medium`}>30 years to grow</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Starting at 45:</span>
-                      <span className="text-orange-400 font-medium">20 years to grow</span>
+                      <span className={`${theme.status.warning.text} font-medium`}>20 years to grow</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Starting at 55:</span>
-                      <span className="text-red-400 font-medium">10 years to grow</span>
+                      <span className={`${theme.status.error.text} font-medium`}>10 years to grow</span>
                     </div>
                   </div>
                 </div>
                 <div>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                    <TrendingUp className="w-4 h-4 text-green-400" />
+                    <TrendingUp className={`w-4 h-4 ${theme.status.success.text}`} />
                     Compound Growth Example
                   </h4>
                   <div className="space-y-2 text-sm">
                     <div className="text-center p-3 bg-gray-800 rounded-lg">
-                      <div className="text-lg font-bold text-green-400">$500/month @ 7% return</div>
-                      <div className="text-xs text-gray-400 mt-1">Starting at different ages:</div>
+                      <div className={`text-lg font-bold ${theme.status.success.text}`}>$500/month @ 7% return</div>
+                      <div className={`text-xs ${theme.textColors.muted} mt-1`}>Starting at different ages:</div>
                     </div>
                     <div className="flex justify-between">
                       <span>Age 25 → 65:</span>
-                      <span className="text-green-400 font-medium">$1.35M</span>
+                      <span className={`${theme.status.success.text} font-medium`}>$1.35M</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Age 35 → 65:</span>
-                      <span className="text-yellow-400 font-medium">$611K</span>
+                      <span className={`${theme.status.warning.text} font-medium`}>$611K</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Age 45 → 65:</span>
-                      <span className="text-orange-400 font-medium">$246K</span>
+                      <span className={`${theme.status.warning.text} font-medium`}>$246K</span>
                     </div>
                   </div>
                 </div>
@@ -353,7 +353,7 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">1</span>
+                    <span className={`bg-purple-500 ${theme.textColors.primary} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>1</span>
                     Mega Backdoor Roth Setup
                   </h4>
                   <ul className={`space-y-1 text-xs ${theme.textColors.secondary}`}>
@@ -362,11 +362,11 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
                     <li>• Convert to Roth: Tax-free growth</li>
                     <li>• Total possible: $69,000/year</li>
                   </ul>
-                  <div className="mt-2 text-xs text-purple-400">Requires employer plan support</div>
+                  <div className={`mt-2 text-xs ${theme.textColors.accent}`}>Requires employer plan support</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">2</span>
+                    <span className={`bg-green-500 ${theme.textColors.primary} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>2</span>
                     Tax-Loss Harvesting
                   </h4>
                   <ul className={`space-y-1 text-xs ${theme.textColors.secondary}`}>
@@ -375,30 +375,30 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
                     <li>• Reduce taxable income</li>
                     <li>• Reinvest in similar assets</li>
                   </ul>
-                  <div className="mt-2 text-xs text-green-400">Can save 15-25% in taxes</div>
+                  <div className={`mt-2 text-xs ${theme.status.success.text}`}>Can save 15-25% in taxes</div>
                 </div>
               </div>
               <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                 <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Asset Location Optimization:</h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
                   <div>
-                    <div className="font-medium text-green-400">Tax-Advantaged Accounts:</div>
+                    <div className={`font-medium ${theme.status.success.text}`}>Tax-Advantaged Accounts:</div>
                     <div>• Bonds & REITs</div>
                     <div>• High-turnover funds</div>
                   </div>
                   <div>
-                    <div className="font-medium text-blue-400">Roth Accounts:</div>
+                    <div className={`font-medium ${theme.status.info.text}`}>Roth Accounts:</div>
                     <div>• Growth stocks</div>
                     <div>• High-return investments</div>
                   </div>
                   <div>
-                    <div className="font-medium text-orange-400">Taxable Accounts:</div>
+                    <div className={`font-medium ${theme.status.warning.text}`}>Taxable Accounts:</div>
                     <div>• Tax-efficient index funds</div>
                     <div>• Tax-exempt bonds</div>
                   </div>
                 </div>
               </div>
-              <p className={`mt-4 font-medium text-purple-400`}>
+              <p className={`mt-4 font-medium ${theme.textColors.accent}`}>
                 💡 <strong>Advanced strategies:</strong> Can add $500K-1M+ to retirement wealth over 30 years!
               </p>
             </div>
