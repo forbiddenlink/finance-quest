@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
@@ -12,12 +11,8 @@ import {
   DollarSign,
   Users,
   Target,
-  ArrowRight,
   CheckCircle,
-  AlertCircle,
   Lightbulb,
-  Award,
-  FileText,
   Calculator,
   ChevronLeft,
   ChevronRight,

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
@@ -11,7 +10,6 @@ import {
   Target,
   DollarSign,
   TrendingUp,
-  ArrowRight,
   CheckCircle,
   AlertCircle,
   Lightbulb,
@@ -50,7 +48,7 @@ const lessons: LessonContent[] = [
   },
   {
     title: "Calculating Your Perfect Emergency Fund Size",
-    content: "The standard '3-6 months' advice is oversimplified. Your optimal emergency fund depends on job security, health, dependents, and income stability. A gig worker needs 12 months, while a tenured professor needs 3. Here's how to calculate your personalized target that provides security without over-saving.",
+    content: "The standard &apos;3-6 months&apos; advice is oversimplified. Your optimal emergency fund depends on job security, health, dependents, and income stability. A gig worker needs 12 months, while a tenured professor needs 3. Here&apos;s how to calculate your personalized target that provides security without over-saving.",
     keyPoints: [
       "High job security (teacher, government) = 3-4 months of expenses minimum",
       "Variable income (sales, freelance, business owner) = 8-12 months for stability",
@@ -204,7 +202,7 @@ export default function EmergencyFundsLesson({ onComplete }: EmergencyFundsLesso
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
                   <AlertCircle className="w-8 h-8 mx-auto mb-3 text-red-400" />
                   <div className="text-2xl font-bold text-red-400">40%</div>
-                  <div className="text-sm text-gray-300">Can't cover $400 emergency</div>
+                  <div className="text-sm text-gray-300">Can&apos;t cover $400 emergency</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
                   <Clock className="w-8 h-8 mx-auto mb-3 text-orange-400" />
@@ -349,10 +347,10 @@ export default function EmergencyFundsLesson({ onComplete }: EmergencyFundsLesso
               <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                 <p className={`font-medium ${theme.textColors.primary} mb-2`}>Milestone Celebration Plan:</p>
                 <ul className={`list-disc list-inside space-y-1 ml-4 ${theme.textColors.secondary} text-sm`}>
-                  <li>$1,000: Treat yourself to something small you've wanted</li>
+                  <li>$1,000: Treat yourself to something small you&apos;ve wanted</li>
                   <li>$5,000: Special dinner or experience with loved ones</li>
                   <li>$10,000: Weekend getaway to celebrate your security</li>
-                  <li>Full target: You've achieved financial fortress status! 🏰</li>
+                  <li>Full target: You&apos;ve achieved financial fortress status! 🏰</li>
                 </ul>
               </div>
             </div>
@@ -366,7 +364,7 @@ export default function EmergencyFundsLesson({ onComplete }: EmergencyFundsLesso
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-blue-500/20 border border-blue-500/30 backdrop-blur-sm rounded-lg p-4">
                 <Briefcase className="w-6 h-6 text-blue-400 mb-2" />
-                <h4 className="font-semibold text-blue-300 mb-2">Sarah's Job Loss Recovery</h4>
+                <h4 className="font-semibold text-blue-300 mb-2">Sarah&apos;s Job Loss Recovery</h4>
                 <p className="text-sm text-gray-300">
                   With 6 months saved, Sarah took time to find the right job instead of accepting the first offer. 
                   Result: 30% salary increase.
@@ -374,7 +372,7 @@ export default function EmergencyFundsLesson({ onComplete }: EmergencyFundsLesso
               </div>
               <div className="bg-red-500/20 border border-red-500/30 backdrop-blur-sm rounded-lg p-4">
                 <Heart className="w-6 h-6 text-red-400 mb-2" />
-                <h4 className="font-semibold text-red-300 mb-2">Mike's Medical Emergency</h4>
+                <h4 className="font-semibold text-red-300 mb-2">Mike&apos;s Medical Emergency</h4>
                 <p className="text-sm text-gray-300">
                   Surgery cost $15,000. His emergency fund covered deductible and lost income, 
                   avoiding bankruptcy.
@@ -382,7 +380,7 @@ export default function EmergencyFundsLesson({ onComplete }: EmergencyFundsLesso
               </div>
               <div className="bg-green-500/20 border border-green-500/30 backdrop-blur-sm rounded-lg p-4">
                 <Home className="w-6 h-6 text-green-400 mb-2" />
-                <h4 className="font-semibold text-green-300 mb-2">Lisa's Home Opportunity</h4>
+                <h4 className="font-semibold text-green-300 mb-2">Lisa&apos;s Home Opportunity</h4>
                 <p className="text-sm text-gray-300">
                   Used emergency fund for dream home down payment, then quickly rebuilt it. 
                   Emergency funds provide options.

@@ -4,15 +4,11 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useProgressStore } from '@/lib/store/progressStore';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { theme } from '@/lib/theme';
 import {
   Home,
   BookOpen,
   Calculator,
   BarChart3,
-  Trophy,
   Target,
   CheckCircle,
   Lock,

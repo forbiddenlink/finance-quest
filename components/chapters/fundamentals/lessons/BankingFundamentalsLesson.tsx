@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
@@ -10,9 +9,7 @@ import {
   Building2,
   CreditCard,
   PiggyBank,
-  Shield,
   DollarSign,
-  ArrowRight,
   CheckCircle,
   AlertCircle,
   TrendingUp,
@@ -230,7 +227,7 @@ export default function BankingFundamentalsLesson({ onComplete }: BankingFundame
                 </div>
               </div>
               <p className={`mt-4 font-medium ${theme.status.warning.text}`}>
-                💡 <strong>Total Impact:</strong> Smart banking saves you $1,140+ per year - that's a week's vacation!
+                💡 <strong>Total Impact:</strong> Smart banking saves you $1,140+ per year - that&apos;s a week&apos;s vacation!
               </p>
             </div>
           </div>

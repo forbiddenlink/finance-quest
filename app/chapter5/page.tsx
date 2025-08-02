@@ -12,7 +12,7 @@ import EmergencyFundCalculator from '@/components/shared/calculators/EmergencyFu
 export default function Chapter5Page() {
   const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
   const [lessonCompleted, setLessonCompleted] = useState(false);
-  const { userProgress, completeLesson, recordQuizScore } = useProgressStore();
+  const { userProgress, completeLesson } = useProgressStore();
 
   const pageVariants = {
     initial: { opacity: 0, x: 20 },
@@ -29,11 +29,6 @@ export default function Chapter5Page() {
   const handleLessonComplete = () => {
     setLessonCompleted(true);
     completeLesson('chapter5-lesson', 20);
-  };
-
-  const handleQuizComplete = () => {
-    // recordQuizScore('chapter5-quiz', score, 10);
-    // Quiz completion advances chapter automatically in Zustand store
   };
 
   return (
@@ -67,7 +62,7 @@ export default function Chapter5Page() {
                 Chapter 5: Emergency Funds & Financial Safety
               </h1>
               <p className={`text-xl ${theme.textColors.secondary}`}>
-                Build your financial fortress against life's uncertainties and unexpected challenges
+                Build your financial fortress against life&apos;s uncertainties and unexpected challenges
               </p>
             </div>
 

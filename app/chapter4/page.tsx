@@ -12,7 +12,7 @@ import DebtPayoffCalculator from '@/components/shared/calculators/DebtPayoffCalc
 export default function Chapter4Page() {
   const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
   const [lessonCompleted, setLessonCompleted] = useState(false);
-  const { userProgress, completeLesson, recordQuizScore } = useProgressStore();
+  const { userProgress, completeLesson } = useProgressStore();
 
   const pageVariants = {
     initial: { opacity: 0, x: 20 },
@@ -29,11 +29,6 @@ export default function Chapter4Page() {
   const handleLessonComplete = () => {
     setLessonCompleted(true);
     completeLesson('chapter4-lesson', 20);
-  };
-
-  const handleQuizComplete = () => {
-    // recordQuizScore('chapter4-quiz', score, 10);
-    // Quiz completion advances chapter automatically in Zustand store
   };
 
   return (

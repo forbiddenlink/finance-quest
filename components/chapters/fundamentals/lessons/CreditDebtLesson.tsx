@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
@@ -9,7 +8,6 @@ import ProgressRing from '@/components/shared/ui/ProgressRing';
 import {
   CreditCard,
   AlertTriangle,
-  TrendingDown,
   Calculator,
   CheckCircle,
   ChevronLeft,
@@ -281,7 +279,7 @@ export default function CreditDebtLesson({ onComplete }: CreditDebtLessonProps) 
                 </div>
               </div>
               <p className={`mt-4 font-medium ${theme.status.info.text}`}>
-                💡 <strong>Both work!</strong> Choose the method you'll stick with consistently.
+                💡 <strong>Both work!</strong> Choose the method you&apos;ll stick with consistently.
               </p>
             </div>
           </div>
