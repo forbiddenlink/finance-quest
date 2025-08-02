@@ -153,7 +153,7 @@ export default function RetirementPlannerCalculator() {
   };
 
   const getTrackColor = (isOnTrack: boolean) => {
-    return isOnTrack ? 'text-green-400' : 'text-red-400';
+    return isOnTrack ? theme.status.success.text : theme.status.error.text;
   };
 
   const getTrackBgColor = (isOnTrack: boolean) => {
@@ -313,7 +313,7 @@ export default function RetirementPlannerCalculator() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Target className="w-5 h-5 text-purple-400" />
+              <Target className={`w-5 h-5 ${theme.textColors.accent}`} />
               Retirement Projection
             </CardTitle>
             <CardDescription>
@@ -326,13 +326,13 @@ export default function RetirementPlannerCalculator() {
                 {/* Key Metrics */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-4 ${theme.status.info.bg} rounded-lg">
-                    <div className="${theme.typography.heading2} text-blue-400">
+                    <div className={`${theme.typography.heading2} ${theme.status.info.text}`}>
                       {formatCurrency(results.finalBalance)}
                     </div>
                     <div className="text-sm ${theme.textColors.secondary}">Retirement Balance</div>
                   </div>
                   <div className="text-center p-4 ${theme.status.success.bg} rounded-lg">
-                    <div className="${theme.typography.heading2} text-green-400">
+                    <div className={`${theme.typography.heading2} ${theme.status.success.text}`}>
                       {formatCurrency(results.monthlyRetirementIncome)}
                     </div>
                     <div className="text-sm ${theme.textColors.secondary}">Monthly Income</div>
@@ -354,7 +354,7 @@ export default function RetirementPlannerCalculator() {
                   {!results.isOnTrack && (
                     <div className="mt-2 text-sm ${theme.textColors.primary}">
                       <strong>Recommended:</strong> Increase monthly contribution to{' '}
-                      <span className="font-semibold text-blue-400">
+                      <span className={`font-semibold ${theme.status.info.text}`}>
                         {formatCurrency(results.recommendedContribution)}
                       </span>
                     </div>
@@ -402,7 +402,7 @@ export default function RetirementPlannerCalculator() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-green-400" />
+                <TrendingUp className={`w-5 h-5 ${theme.status.success.text}`} />
                 Retirement Savings Growth
               </CardTitle>
             </CardHeader>
@@ -443,7 +443,7 @@ export default function RetirementPlannerCalculator() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <DollarSign className="w-5 h-5 text-blue-400" />
+                <DollarSign className={`w-5 h-5 ${theme.status.info.text}`} />
                 Contribution Analysis
               </CardTitle>
             </CardHeader>
@@ -459,13 +459,13 @@ export default function RetirementPlannerCalculator() {
                 </div>
                 <div className="flex justify-between items-center p-3 bg-purple-500/20 rounded-lg">
                   <span className="${theme.textColors.primary}">Total Monthly</span>
-                  <span className="font-semibold text-purple-400">
+                  <span className={`font-semibold ${theme.textColors.accent}`}>
                     {formatCurrency(parseFloat(monthlyContribution) + (parseFloat(monthlyContribution) * parseFloat(employerMatch)) / 100)}/month
                   </span>
                 </div>
                 <div className="flex justify-between items-center p-3 ${theme.status.warning.bg} rounded-lg">
                   <span className="${theme.textColors.primary}">Annual Total</span>
-                  <span className="font-semibold text-yellow-600">
+                  <span className={`font-semibold ${theme.status.warning.text}`}>
                     {formatCurrency((parseFloat(monthlyContribution) + (parseFloat(monthlyContribution) * parseFloat(employerMatch)) / 100) * 12)}/year
                   </span>
                 </div>
@@ -479,7 +479,7 @@ export default function RetirementPlannerCalculator() {
       <Card className="bg-gradient-to-r from-blue-50 to-purple-50">
         <CardContent className="p-6">
           <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2">
-            <Shield className="w-5 h-5 text-blue-400" />
+            <Shield className={`w-5 h-5 ${theme.status.info.text}`} />
             Retirement Planning Insights
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">

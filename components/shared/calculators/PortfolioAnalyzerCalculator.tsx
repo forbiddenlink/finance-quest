@@ -190,17 +190,17 @@ export default function PortfolioAnalyzerCalculator() {
 
     const getRiskColor = (risk: string) => {
         switch (risk) {
-            case 'Conservative': return 'text-green-400';
-            case 'Moderate': return 'text-yellow-600';
-            case 'Aggressive': return 'text-red-400';
-            default: return '${theme.textColors.secondary}';
+            case 'Conservative': return theme.status.success.text;
+            case 'Moderate': return theme.status.warning.text;
+            case 'Aggressive': return theme.status.error.text;
+            default: return theme.textColors.secondary;
         }
     };
 
     const getDiversificationColor = (score: number) => {
-        if (score >= 80) return 'text-green-400';
-        if (score >= 60) return 'text-yellow-600';
-        return 'text-red-400';
+        if (score >= 80) return theme.status.success.text;
+        if (score >= 60) return theme.status.warning.text;
+        return theme.status.error.text;
     };
 
     return (
@@ -219,7 +219,7 @@ export default function PortfolioAnalyzerCalculator() {
                 <Card>
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
-                            <DollarSign className="w-5 h-5 text-blue-400" />
+                            <DollarSign className={`w-5 h-5 ${theme.status.info.text}`} />
                             Portfolio Holdings
                         </CardTitle>
                         <CardDescription>
@@ -318,7 +318,7 @@ export default function PortfolioAnalyzerCalculator() {
                                                 variant="outline"
                                                 size="sm"
                                                 onClick={() => removeHolding(index)}
-                                                className="text-red-400 hover:${theme.textColors.secondary}"
+                                                className={`${theme.status.error.text} hover:${theme.textColors.secondary}`}
                                             >
                                                 Remove
                                             </Button>
@@ -334,7 +334,7 @@ export default function PortfolioAnalyzerCalculator() {
                 <Card>
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
-                            <Target className="w-5 h-5 text-purple-400" />
+                            <Target className={`w-5 h-5 ${theme.textColors.accent}`} />
                             Portfolio Analysis
                         </CardTitle>
                         <CardDescription>
@@ -347,7 +347,7 @@ export default function PortfolioAnalyzerCalculator() {
                                 {/* Key Metrics */}
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="text-center p-4 ${theme.status.info.bg} rounded-lg">
-                                        <div className="${theme.typography.heading2} text-blue-400">
+                                        <div className={`${theme.typography.heading2} ${theme.status.info.text}`}>
                                             ${portfolioMetrics.totalValue.toLocaleString()}
                                         </div>
                                         <div className="text-sm ${theme.textColors.secondary}">Total Value</div>
@@ -410,7 +410,7 @@ export default function PortfolioAnalyzerCalculator() {
                     <Card>
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
-                                <PieChartIcon className="w-5 h-5 text-green-400" />
+                                <PieChartIcon className={`w-5 h-5 ${theme.status.success.text}`} />
                                 Asset Allocation
                             </CardTitle>
                         </CardHeader>
@@ -441,7 +441,7 @@ export default function PortfolioAnalyzerCalculator() {
                     <Card>
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
-                                <BarChart3 className="w-5 h-5 text-blue-400" />
+                                <BarChart3 className={`w-5 h-5 ${theme.status.info.text}`} />
                                 Target vs Actual Allocation
                             </CardTitle>
                         </CardHeader>
