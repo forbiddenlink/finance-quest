@@ -6,12 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Separator } from '@/components/ui/separator';
-import { CheckCircle, Clock, Calculator, Award, FileText, TrendingDown, Shield, Target, ArrowLeft } from 'lucide-react';
+import { CheckCircle, Calculator, Award, FileText, PiggyBank, Shield, Target, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
-import TaxOptimizerCalculator from '@/components/shared/calculators/TaxOptimizerCalculator';
+import RetirementPlannerCalculator from '@/components/shared/calculators/RetirementPlannerCalculator';
 import QASystem from '@/components/shared/QASystem';
+import RetirementPlanningLesson from '@/components/chapters/fundamentals/lessons/RetirementPlanningLesson';
 import Link from 'next/link';
 import { theme } from '@/lib/theme';
 
@@ -28,7 +28,7 @@ export default function Chapter9() {
     const isUnlocked = isChapterUnlocked(9);
 
     const handleLessonComplete = () => {
-        completeLesson('chapter9-tax-optimization', 45);
+        completeLesson('chapter9-retirement-planning', 45);
         setLessonCompleted(true);
     };
 
@@ -54,60 +54,60 @@ export default function Chapter9() {
 
     const quizQuestions = [
         {
-            question: "What is the standard deduction for single filers in 2024?",
-            options: ["$12,950", "$13,850", "$14,600", "$15,200"],
-            correct: "$14,600"
+            question: "What is the traditional retirement account contribution limit for 2024 (under age 50)?",
+            options: ["$6,500", "$7,000", "$7,500", "$8,000"],
+            correct: "$7,000"
         },
         {
-            question: "Which tax-advantaged account has required minimum distributions (RMDs)?",
-            options: ["Roth IRA", "Traditional IRA", "HSA", "529 Plan"],
-            correct: "Traditional IRA"
+            question: "According to the 4% rule, how much can you safely withdraw annually from a $1M portfolio?",
+            options: ["$30,000", "$35,000", "$40,000", "$45,000"],
+            correct: "$40,000"
         },
         {
-            question: "What is the maximum 401(k) contribution limit for 2024 (under age 50)?",
-            options: ["$22,500", "$23,000", "$23,500", "$24,000"],
-            correct: "$23,000"
+            question: "What is the maximum 401(k) contribution limit for 2024 (including catch-up for 50+)?",
+            options: ["$23,000", "$30,500", "$69,000", "$76,500"],
+            correct: "$30,500"
         },
         {
-            question: "Which investment type receives preferential long-term capital gains tax treatment?",
-            options: ["Assets held > 1 year", "Assets held > 6 months", "Assets held > 2 years", "All investments"],
-            correct: "Assets held > 1 year"
+            question: "What is the main advantage of a Roth IRA over a traditional IRA?",
+            options: ["Higher contribution limits", "Tax-free withdrawals in retirement", "Immediate tax deduction", "No income restrictions"],
+            correct: "Tax-free withdrawals in retirement"
         },
         {
-            question: "What is tax loss harvesting?",
-            options: ["Selling profitable investments", "Claiming business expenses", "Selling losing investments to offset gains", "Contributing to retirement accounts"],
-            correct: "Selling losing investments to offset gains"
+            question: "What is the 25x rule for retirement planning?",
+            options: ["Save 25% of income", "Retire at 25", "Need 25x annual expenses", "Invest for 25 years"],
+            correct: "Need 25x annual expenses"
         },
         {
-            question: "Which deduction phase-out begins at higher income levels?",
-            options: ["Standard deduction", "Mortgage interest", "State/local taxes", "Student loan interest"],
-            correct: "Student loan interest"
+            question: "What is the main risk with early retirement withdrawals from 401(k) accounts?",
+            options: ["10% penalty before age 59½", "Loss of employer match", "Reduced Social Security", "Higher tax rates"],
+            correct: "10% penalty before age 59½"
         },
         {
-            question: "What is the HSA contribution limit for individual coverage in 2024?",
-            options: ["$3,650", "$4,150", "$4,300", "$4,650"],
-            correct: "$4,300"
+            question: "What strategy allows high earners to contribute up to $69,000 annually to retirement accounts?",
+            options: ["Roth conversion", "Backdoor Roth", "Mega backdoor Roth", "401(k) loans"],
+            correct: "Mega backdoor Roth"
         },
         {
-            question: "Which strategy helps minimize taxes in retirement?",
-            options: ["Only using taxable accounts", "Roth conversion ladder", "Taking maximum Social Security early", "Avoiding retirement accounts"],
-            correct: "Roth conversion ladder"
+            question: "What percentage of pre-retirement income do most experts recommend for retirement?",
+            options: ["50-60%", "70-90%", "100%", "110-120%"],
+            correct: "70-90%"
         },
         {
-            question: "What is the child tax credit amount for qualifying children in 2024?",
-            options: ["$2,000", "$2,500", "$3,000", "$3,600"],
-            correct: "$2,000"
+            question: "What is sequence of returns risk?",
+            options: ["Risk of low returns", "Risk of poor early retirement returns", "Risk of inflation", "Risk of market volatility"],
+            correct: "Risk of poor early retirement returns"
         },
         {
-            question: "Which tax filing status typically provides the lowest tax rates?",
-            options: ["Single", "Married Filing Jointly", "Head of Household", "Married Filing Separately"],
-            correct: "Married Filing Jointly"
+            question: "Which has the 'triple tax advantage' for retirement and healthcare?",
+            options: ["401(k)", "Roth IRA", "HSA", "Traditional IRA"],
+            correct: "HSA"
         }
     ];
 
     if (!isUnlocked) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 flex items-center justify-center">
                 <Card className="max-w-md mx-auto text-center">
                     <CardHeader>
                         <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -115,7 +115,7 @@ export default function Chapter9() {
                         </div>
                         <CardTitle>Chapter 9 Locked</CardTitle>
                         <CardDescription>
-                            Complete Chapter 8 with 80%+ quiz score to unlock Tax Optimization
+                            Complete Chapter 8 with 80%+ quiz score to unlock Retirement Planning
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -129,7 +129,7 @@ export default function Chapter9() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
+        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50">
             {/* Header */}
             <div className={`${theme.backgrounds.glass} border-b ${theme.borderColors.primary}`}>
                 <div className="max-w-6xl mx-auto px-4 py-6">
@@ -143,15 +143,15 @@ export default function Chapter9() {
                     </div>
 
                     <div className="mt-4 flex items-center space-x-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-red-600 to-orange-600 rounded-lg flex items-center justify-center">
-                            <TrendingDown className={`w-6 h-6 ${theme.textColors.primary}`} />
+                        <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                            <PiggyBank className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
-                            <h1 className={`${theme.typography.heading1} ${theme.textColors.primary}`}>Chapter 9: Tax Optimization</h1>
-                            <p className={`${theme.textColors.muted}`}>Master tax strategies to keep more of your hard-earned money</p>
+                            <h1 className={`${theme.typography.heading1} ${theme.textColors.primary}`}>Chapter 9: Retirement Planning & Long-term Wealth</h1>
+                            <p className={`${theme.textColors.muted}`}>Build a comprehensive retirement strategy for financial independence</p>
                         </div>
-                        <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
-                            Planning Track
+                        <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">
+                            Wealth Track
                         </Badge>
                     </div>
 
@@ -175,7 +175,7 @@ export default function Chapter9() {
                         </TabsTrigger>
                         <TabsTrigger value="calculator" className="flex items-center space-x-2">
                             <Calculator className="w-4 h-4" />
-                            <span>Tax Calculator</span>
+                            <span>Retirement Calculator</span>
                         </TabsTrigger>
                         <TabsTrigger value="quiz" disabled={!lessonCompleted} className="flex items-center space-x-2">
                             <Award className="w-4 h-4" />
@@ -193,104 +193,7 @@ export default function Chapter9() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle className="flex items-center space-x-2">
-                                        <TrendingDown className="w-5 h-5 text-red-600" />
-                                        <span>Understanding Tax Optimization</span>
-                                    </CardTitle>
-                                    <CardDescription>
-                                        Learn legal strategies to minimize your tax burden and maximize your wealth
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent className="space-y-6">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="space-y-4">
-                                            <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Tax-Advantaged Accounts</h3>
-                                            <div className="space-y-3">
-                                                <div className={`${theme.backgrounds.glass} ${theme.spacing.sm} rounded-lg`}>
-                                                    <h4 className="font-medium text-slate-900">401(k) & Traditional IRA</h4>
-                                                    <p className="text-sm text-slate-800 mt-1">Reduce current taxes, pay taxes in retirement</p>
-                                                </div>
-                                                <div className="bg-green-50 p-4 rounded-lg">
-                                                    <h4 className="font-medium text-green-900">Roth IRA & Roth 401(k)</h4>
-                                                    <p className="text-sm text-green-800 mt-1">Pay taxes now, tax-free growth and withdrawals</p>
-                                                </div>
-                                                <div className="bg-purple-50 p-4 rounded-lg">
-                                                    <h4 className="font-medium text-purple-900">HSA (Health Savings Account)</h4>
-                                                    <p className="text-sm text-purple-800 mt-1">Triple tax advantage: deductible, growth, and withdrawals</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-4">
-                                            <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Advanced Strategies</h3>
-                                            <div className="space-y-3">
-                                                <div className="bg-orange-50 p-4 rounded-lg">
-                                                    <h4 className="font-medium text-orange-900">Tax Loss Harvesting</h4>
-                                                    <p className="text-sm text-orange-800 mt-1">Sell losing investments to offset capital gains</p>
-                                                </div>
-                                                <div className="bg-indigo-50 p-4 rounded-lg">
-                                                    <h4 className="font-medium text-indigo-900">Asset Location</h4>
-                                                    <p className="text-sm text-indigo-800 mt-1">Place investments in optimal account types</p>
-                                                </div>
-                                                <div className="bg-pink-50 p-4 rounded-lg">
-                                                    <h4 className="font-medium text-pink-900">Roth Conversions</h4>
-                                                    <p className="text-sm text-pink-800 mt-1">Strategic conversion during low-income years</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <Separator />
-
-                                    <div className="space-y-4">
-                                        <h3 className={`text-lg font-semibold ${theme.textColors.primary} flex items-center space-x-2`}>
-                                            <Clock className="w-5 h-5 text-blue-600" />
-                                            <span>Key Tax Concepts & Deadlines</span>
-                                        </h3>
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                            <div className="text-center p-4 bg-gray-50 rounded-lg">
-                                                <Clock className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-                                                <div className={`text-2xl font-bold ${theme.textColors.primary}`}>Apr 15</div>
-                                                <div className={`text-sm ${theme.textColors.secondary}`}>Tax Filing Deadline</div>
-                                            </div>
-                                            <div className="text-center p-4 bg-gray-50 rounded-lg">
-                                                <div className={`text-2xl font-bold ${theme.textColors.primary}`}>$23,000</div>
-                                                <div className={`text-sm ${theme.textColors.secondary}`}>401(k) Limit 2024 (Under 50)</div>
-                                            </div>
-                                            <div className="text-center p-4 bg-gray-50 rounded-lg">
-                                                <div className={`text-2xl font-bold ${theme.textColors.primary}`}>20%</div>
-                                                <div className={`text-sm ${theme.textColors.secondary}`}>Max Long-term Capital Gains Rate</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                                        <h4 className="font-medium text-yellow-900 mb-2">💡 Pro Tip</h4>
-                                        <p className="text-sm text-yellow-800">
-                                            Tax optimization is a marathon, not a sprint. Start with maximizing employer matching,
-                                            then utilize tax-advantaged accounts based on your current and expected future tax brackets.
-                                        </p>
-                                    </div>
-
-                                    {!lessonCompleted && (
-                                        <div className="flex justify-center pt-6">
-                                            <Button onClick={handleLessonComplete} size="lg" className="bg-red-600 hover:bg-red-700">
-                                                Complete Lesson
-                                                <CheckCircle className="w-4 h-4 ml-2" />
-                                            </Button>
-                                        </div>
-                                    )}
-
-                                    {lessonCompleted && (
-                                        <div className="text-center p-4 bg-green-50 border border-green-200 rounded-lg">
-                                            <CheckCircle className="w-6 h-6 text-green-600 mx-auto mb-2" />
-                                            <p className="text-green-800 font-medium">Lesson completed! Try the tax calculator next.</p>
-                                        </div>
-                                    )}
-                                </CardContent>
-                            </Card>
+                            <RetirementPlanningLesson onComplete={handleLessonComplete} />
                         </motion.div>
                     </TabsContent>
 
@@ -300,7 +203,7 @@ export default function Chapter9() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <TaxOptimizerCalculator />
+                            <RetirementPlannerCalculator />
                         </motion.div>
                     </TabsContent>
 
@@ -313,11 +216,11 @@ export default function Chapter9() {
                             <Card>
                                 <CardHeader>
                                     <CardTitle className="flex items-center space-x-2">
-                                        <Award className="w-5 h-5 text-red-600" />
-                                        <span>Tax Optimization Quiz</span>
+                                        <Award className="w-5 h-5 text-purple-600" />
+                                        <span>Retirement Planning Quiz</span>
                                     </CardTitle>
                                     <CardDescription>
-                                        Test your knowledge of tax strategies. Score 80% or higher to advance to Chapter 10.
+                                        Test your knowledge of retirement strategies. Score 80% or higher to advance to Chapter 10.
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
@@ -357,7 +260,7 @@ export default function Chapter9() {
                                                 <Button
                                                     onClick={handleQuizComplete}
                                                     disabled={Object.keys(quizAnswers).length < quizQuestions.length}
-                                                    className="bg-red-600 hover:bg-red-700"
+                                                    className="bg-purple-600 hover:bg-purple-700"
                                                 >
                                                     Submit Quiz
                                                 </Button>
