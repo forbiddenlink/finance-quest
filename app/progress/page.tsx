@@ -52,7 +52,7 @@ export default function ProgressPage() {
       description: 'Passed 3 quizzes with 80%+',
       unlocked: progress.totalQuizzesTaken >= 3 && progress.averageQuizScore >= 80,
       icon: Brain,
-      color: 'text-purple-600'
+      color: theme.textColors.accent
     },
     {
       id: 'calculator-pro',
@@ -60,7 +60,7 @@ export default function ProgressPage() {
       description: 'Used all 6 financial calculators',
       unlocked: Object.keys(progress.userProgress.calculatorUsage).length >= 6,
       icon: Calculator,
-      color: 'text-green-600'
+      color: theme.status.success.text
     },
     {
       id: 'streak-master',
@@ -68,7 +68,7 @@ export default function ProgressPage() {
       description: '7-day learning streak',
       unlocked: progress.currentStreak >= 7,
       icon: Zap,
-      color: 'text-yellow-600'
+      color: theme.status.warning.text
     },
     {
       id: 'financial-literacy',

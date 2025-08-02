@@ -206,11 +206,11 @@ export default function MoneyFundamentalsQuiz() {
   const isCorrect = selectedAnswer === question.correctAnswer;
 
   return (
-    <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg">
+    <div className={`max-w-2xl mx-auto ${theme.backgrounds.card} rounded-lg shadow-lg`}>
       {/* Progress Bar */}
-      <div className="bg-gray-200 rounded-t-lg">
+      <div className={`${theme.backgrounds.disabled} rounded-t-lg`}>
         <div
-          className="bg-purple-500 h-2 rounded-t-lg transition-all duration-300"
+          className={`${theme.status.info.bg} h-2 rounded-t-lg transition-all duration-300`}
           style={{ width: `${progress}%` }}
         ></div>
       </div>
@@ -290,7 +290,7 @@ export default function MoneyFundamentalsQuiz() {
             {selectedAnswer !== -1 && !showExplanation && (
               <button
                 onClick={checkAnswer}
-                className="px-6 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors"
+                className={`px-6 py-2 ${theme.buttons.primary} rounded-md transition-colors`}
               >
                 Check Answer
               </button>
@@ -298,7 +298,7 @@ export default function MoneyFundamentalsQuiz() {
             {showExplanation && (
               <button
                 onClick={nextQuestion}
-                className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                className={`px-6 py-2 ${theme.buttons.secondary} rounded-md transition-colors`}
               >
                 {currentQuestion === quizQuestions.length - 1 ? 'View Results' : 'Next Question'}
               </button>

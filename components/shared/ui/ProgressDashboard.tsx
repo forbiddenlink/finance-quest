@@ -265,7 +265,7 @@ export default function ProgressDashboard() {
       </div>
 
       {/* Tools Usage Summary */}
-      <div className="mt-8 bg-indigo-50 border border-indigo-200 rounded-lg p-6">
+      <div className={`mt-8 ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-lg p-6`}>
         <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
           <Calculator className="w-5 h-5" />
           Interactive Tools Mastered
@@ -335,12 +335,12 @@ export default function ProgressDashboard() {
           </div>
 
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['debt-payoff-calculator'] ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['debt-payoff-calculator'] ? `${theme.status.success.bg} ${theme.status.success.text}` : `${theme.backgrounds.disabled} ${theme.textColors.muted}`
               }`}>
               <CreditCard className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Debt Destroyer</p>
-            <p className="text-xs text-indigo-600 flex items-center justify-center gap-1">
+            <p className={`text-xs ${theme.status.info.text} flex items-center justify-center gap-1`}>
               {userProgress.calculatorUsage['debt-payoff-calculator'] ? (
                 <>
                   <CheckCircle className="w-3 h-3" />
@@ -361,7 +361,7 @@ export default function ProgressDashboard() {
       {totalLessonsCompleted > 0 && (
         <div className="mt-8">
           <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-            <Brain className="w-5 h-5 text-purple-600" />
+            <Brain className={`w-5 h-5 ${theme.textColors.accent}`} />
             Learning Retention System
           </h3>
           <SpacedRepetitionDashboard />
@@ -370,7 +370,7 @@ export default function ProgressDashboard() {
 
       {/* Contest Demo Section */}
       <div className="mt-8 bg-gradient-to-r from-blue-50 to-slate-50 border border-blue-200 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-purple-900 mb-4 flex items-center gap-2">
+        <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
           <Target className="w-5 h-5" />
           Contest Judge Highlights
         </h3>

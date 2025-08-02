@@ -3,7 +3,26 @@
 import { useState, useEffect } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { spacedRepetitionSystem, ReviewItem, ReviewResponse } from '@/lib/algorithms/spacedRepetition';
-import GradientCard from '@/components/shared/ui/GradientCard';
+import GradientCar            <div className="flex justify-between items-center mb-2">
+              <h4 className="text-lg font-semibold">Review Session</h4>
+              <span className={`text-sm ${theme.textColors.muted}`}>
+                {currentReviewIndex + 1} of {dueItems.length}
+              </span>
+            </div>
+            <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
+              <div
+                className={`${theme.status.info.bg} h-2 rounded-full transition-all duration-300`}
+                style={{ width: `${((currentReviewIndex + 1) / dueItems.length) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+
+          <div className="text-center mb-6">
+            <h5 className="text-xl font-bold mb-2">
+              {dueItems[currentReviewIndex].topic}
+            </h5>
+            <p className={`${theme.textColors.secondary}`}>How well do you remember this concept?</p>
+          </div>/shared/ui/GradientCard';
 import { theme } from '@/lib/theme';
 import { Brain, Clock, CheckCircle, AlertTriangle, Star, RefreshCw } from 'lucide-react';
 
@@ -181,9 +200,9 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
               <span>Mastery Rate</span>
               <span className="font-medium">{stats.masteryRate.toFixed(1)}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
               <div
-                className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+                className={`${theme.status.success.bg} h-2 rounded-full transition-all duration-500`}
                 style={{ width: `${stats.masteryRate}%` }}
               ></div>
             </div>
@@ -195,9 +214,9 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
                 <span>Concepts Needing Attention</span>
                 <span className="font-medium">{stats.strugglingRate.toFixed(1)}%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
                 <div
-                  className="bg-red-500 h-2 rounded-full transition-all duration-500"
+                  className={`${theme.status.error.bg} h-2 rounded-full transition-all duration-500`}
                   style={{ width: `${stats.strugglingRate}%` }}
                 ></div>
               </div>
@@ -274,10 +293,10 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
                 key={quality}
                 onClick={() => handleReviewResponse(quality, quality)}
                 className={`p-3 rounded-lg font-semibold transition-all hover:scale-105 ${quality <= 2
-                  ? 'bg-red-500/20 text-red-300 hover:bg-red-500/30'
+                  ? `${theme.status.error.bg}/20 ${theme.status.error.text} hover:${theme.status.error.bg}/30`
                   : quality <= 3
-                    ? 'bg-yellow-500/20 text-yellow-300 hover:bg-yellow-500/30'
-                    : 'bg-green-500/20 text-green-300 hover:bg-green-500/30'
+                    ? `${theme.status.warning.bg}/20 ${theme.status.warning.text} hover:${theme.status.warning.bg}/30`
+                    : `${theme.status.success.bg}/20 ${theme.status.success.text} hover:${theme.status.success.bg}/30`
                   }`}
               >
                 <Star className="w-5 h-5 mx-auto mb-1" />
@@ -291,7 +310,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
             ))}
           </div>
 
-          <div className="text-center text-sm text-gray-600">
+          <div className={`text-center text-sm ${theme.textColors.muted}`}>
             Rate your recall: 1 = Completely forgot, 5 = Perfect recall
           </div>
         </GradientCard>

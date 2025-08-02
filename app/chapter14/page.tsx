@@ -89,7 +89,7 @@ export default function Chapter14() {
                 {/* Core Principles */}
                 <div>
                   <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>Core Principles</h3>
-                  <div className="bg-indigo-50 p-4 rounded-lg mb-4">
+                  <div className={`${theme.status.info.bg}/10 border ${theme.status.info.border} p-4 rounded-lg mb-4`}>
                     <p className={theme.textColors.secondary}>
                       Modern Portfolio Theory (MPT), developed by Harry Markowitz, revolutionized investing 
                       by showing how to maximize returns for a given level of risk through optimal diversification. 
