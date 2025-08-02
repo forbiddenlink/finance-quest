@@ -659,12 +659,12 @@ export default function HomePage() {
                           <p className="text-navy-400 text-sm">Chapters 17-20</p>
                         </div>
                       </div>
-                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                      <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>
                         Protect your wealth with insurance, healthcare planning, and risk management.
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className="text-navy-400 text-xs font-medium">🚧 Coming Soon</span>
-                        <span className="text-gray-400 text-xs">24 Lessons</span>
+                        <span className={`${theme.textColors.accent} text-xs font-medium`}>🚧 Coming Soon</span>
+                        <span className={`${theme.textColors.muted} text-xs`}>24 Lessons</span>
                       </div>
                     </div>
 
@@ -679,12 +679,12 @@ export default function HomePage() {
                           <p className="text-indigo-400 text-sm">Chapters 21-25</p>
                         </div>
                       </div>
-                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                      <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>
                         Master tax optimization, real estate, business finance, and estate planning.
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className="text-orange-400 text-xs font-medium">🚧 Coming Soon</span>
-                        <span className="text-gray-400 text-xs">30 Lessons</span>
+                        <span className={`${theme.textColors.warning} text-xs font-medium`}>🚧 Coming Soon</span>
+                        <span className={`${theme.textColors.muted} text-xs`}>30 Lessons</span>
                       </div>
                     </div>
 
@@ -757,7 +757,7 @@ export default function HomePage() {
               className="text-3xl md:text-4xl font-bold mb-6 flex items-center justify-center gap-3"
             >
               <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-500/25">
-                <Calculator className="w-6 h-6 text-white" />
+                <Calculator className={`w-6 h-6 ${theme.textColors.primary}`} />
               </div>
               <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                 Interactive Financial Tools
@@ -767,7 +767,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9, duration: 0.6 }}
-              className="text-lg text-gray-400 max-w-2xl mx-auto"
+              className={`text-lg ${theme.textColors.secondary} max-w-2xl mx-auto`}
             >
               Master financial concepts through hands-on calculators with real-time feedback and professional accuracy
             </motion.p>
@@ -783,20 +783,20 @@ export default function HomePage() {
               <InteractiveCard className="group bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300">
                 <div className="flex items-center mb-6">
                   <div className="w-14 h-14 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg shadow-amber-500/25 group-hover:shadow-amber-500/40 transition-all duration-300">
-                    <TrendingUp className="w-7 h-7 text-white" />
+                    <TrendingUp className={`w-7 h-7 ${theme.textColors.primary}`} />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold text-white">Compound Interest</h4>
-                    <p className="text-amber-400 text-sm">The 8th Wonder</p>
+                    <h4 className={`text-xl font-bold ${theme.textColors.primary}`}>Compound Interest</h4>
+                    <p className={`${theme.textColors.accent} text-sm`}>The 8th Wonder</p>
                   </div>
                 </div>
-                <p className="text-gray-300 mb-6 leading-relaxed">
+                <p className={`${theme.textColors.secondary} mb-6 leading-relaxed`}>
                   Discover how your money grows exponentially over time through the magic of compound interest.
                 </p>
                 <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border border-amber-500/20`}>
-                  <div className="text-xs text-amber-400 mb-1">$100/month × 30 years @ 7%</div>
-                  <div className="text-2xl font-bold text-white">$303,219</div>
-                  <div className="text-xs text-amber-300">From just $36k invested!</div>
+                  <div className={`text-xs ${theme.textColors.accent} mb-1`}>$100/month × 30 years @ 7%</div>
+                  <div className={`text-2xl font-bold ${theme.textColors.primary}`}>$303,219</div>
+                  <div className={`text-xs ${theme.textColors.warning}`}>From just $36k invested!</div>
                 </div>
                 <Link href="/calculators/compound-interest" className="block">
                   <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25 group-hover:-translate-y-1">
@@ -816,23 +816,23 @@ export default function HomePage() {
               <InteractiveCard className="group bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-2xl p-6 hover:border-blue-400/40 transition-all duration-300">
                 <div className="flex items-center mb-6">
                   <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-300">
-                    <BarChart3 className="w-7 h-7 text-white" />
+                    <BarChart3 className={`w-7 h-7 ${theme.textColors.primary}`} />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold text-white">Budget Builder</h4>
-                    <p className="text-blue-400 text-sm">50/30/20 Rule</p>
+                    <h4 className={`text-xl font-bold ${theme.textColors.primary}`}>Budget Builder</h4>
+                    <p className={`${theme.textColors.accent} text-sm`}>50/30/20 Rule</p>
                   </div>
                 </div>
-                <p className="text-gray-300 mb-6 leading-relaxed">
+                <p className={`${theme.textColors.secondary} mb-6 leading-relaxed`}>
                   Master the proven 50/30/20 budgeting framework for needs, wants, and financial goals.
                 </p>
                 <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border border-blue-500/20`}>
-                  <div className="text-xs text-blue-400 mb-1">$5,000 income breakdown</div>
-                  <div className="text-2xl font-bold text-white">Perfect Balance</div>
-                  <div className="text-xs text-blue-300">Needs • Wants • Savings</div>
+                  <div className={`text-xs ${theme.textColors.accent} mb-1`}>$5,000 income breakdown</div>
+                  <div className={`text-2xl font-bold ${theme.textColors.primary}`}>Perfect Balance</div>
+                  <div className={`text-xs ${theme.textColors.accent}`}>Needs • Wants • Savings</div>
                 </div>
                 <Link href="/calculators/budget-builder" className="block">
-                  <Button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 group-hover:-translate-y-1">
+                  <Button className={`w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 group-hover:-translate-y-1`}>
                     Build Your Budget
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
@@ -849,23 +849,23 @@ export default function HomePage() {
               <InteractiveCard className="group bg-gradient-to-br from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-2xl p-6 hover:border-orange-400/40 transition-all duration-300">
                 <div className="flex items-center mb-6">
                   <div className="w-14 h-14 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mr-4 shadow-lg shadow-orange-500/25 group-hover:shadow-orange-500/40 transition-all duration-300">
-                    <CreditCard className="w-7 h-7 text-white" />
+                    <CreditCard className={`w-7 h-7 ${theme.textColors.primary}`} />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold text-white">Debt Destroyer</h4>
-                    <p className="text-orange-400 text-sm">Break Free</p>
+                    <h4 className={`text-xl font-bold ${theme.textColors.primary}`}>Debt Destroyer</h4>
+                    <p className={`${theme.textColors.warning} text-sm`}>Break Free</p>
                   </div>
                 </div>
-                <p className="text-gray-300 mb-6 leading-relaxed">
+                <p className={`${theme.textColors.secondary} mb-6 leading-relaxed`}>
                   Compare avalanche vs snowball strategies and accelerate your path to financial freedom.
                 </p>
                 <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border border-orange-500/20`}>
-                  <div className="text-xs text-orange-400 mb-1">$25k debt + $200 extra</div>
-                  <div className="text-2xl font-bold text-white">5 Years Saved</div>
-                  <div className="text-xs text-orange-300">Thousands in interest!</div>
+                  <div className={`text-xs ${theme.textColors.warning} mb-1`}>$25k debt + $200 extra</div>
+                  <div className={`text-2xl font-bold ${theme.textColors.primary}`}>5 Years Saved</div>
+                  <div className={`text-xs ${theme.textColors.warning}`}>Thousands in interest!</div>
                 </div>
                 <Link href="/calculators/debt-payoff" className="block">
-                  <Button className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/25 group-hover:-translate-y-1">
+                  <Button className={`w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/25 group-hover:-translate-y-1`}>
                     Destroy Your Debt
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
@@ -884,34 +884,34 @@ export default function HomePage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <Link href="/calculators/mortgage" className="group">
                 <div className={`${theme.backgrounds.glass}/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1`}>
-                  <Building className="w-8 h-8 mx-auto mb-2 text-amber-400" />
-                  <h4 className="font-semibold text-white text-sm mb-1">Mortgage Calculator</h4>
-                  <p className="text-xs text-gray-400">Payment & affordability</p>
-                  <div className="mt-2 text-xs text-amber-400">✨ Available</div>
+                  <Building className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.warning}`} />
+                  <h4 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Mortgage Calculator</h4>
+                  <p className={`text-xs ${theme.textColors.muted}`}>Payment & affordability</p>
+                  <div className={`mt-2 text-xs ${theme.textColors.warning}`}>✨ Available</div>
                 </div>
               </Link>
               <Link href="/calculators/emergency-fund" className="group">
                 <div className={`${theme.backgrounds.glass}/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1`}>
-                  <Umbrella className="w-8 h-8 mx-auto mb-2 text-blue-400" />
-                  <h4 className="font-semibold text-white text-sm mb-1">Emergency Fund</h4>
-                  <p className="text-xs text-gray-400">Safety net planning</p>
-                  <div className="mt-2 text-xs text-blue-400">✨ Available</div>
+                  <Umbrella className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+                  <h4 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Emergency Fund</h4>
+                  <p className={`text-xs ${theme.textColors.muted}`}>Safety net planning</p>
+                  <div className={`mt-2 text-xs ${theme.textColors.accent}`}>✨ Available</div>
                 </div>
               </Link>
               <Link href="/calculators/paycheck" className="group">
                 <div className={`${theme.backgrounds.glass}/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1`}>
-                  <Briefcase className="w-8 h-8 mx-auto mb-2 text-amber-400" />
-                  <h4 className="font-semibold text-white text-sm mb-1">Paycheck Calculator</h4>
-                  <p className="text-xs text-gray-400">Tax & deduction breakdown</p>
-                  <div className="mt-2 text-xs text-amber-400">✨ Available</div>
+                  <Briefcase className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.warning}`} />
+                  <h4 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Paycheck Calculator</h4>
+                  <p className={`text-xs ${theme.textColors.muted}`}>Tax & deduction breakdown</p>
+                  <div className={`mt-2 text-xs ${theme.textColors.warning}`}>✨ Available</div>
                 </div>
               </Link>
               <Link href="/market" className="group">
                 <div className={`${theme.backgrounds.glass}/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1`}>
-                  <BarChart3 className="w-8 h-8 mx-auto mb-2 text-amber-400" />
-                  <h4 className="font-semibold text-white text-sm mb-1">Market Dashboard</h4>
-                  <p className="text-xs text-gray-400">Real-time data</p>
-                  <div className="mt-2 text-xs text-amber-400">🔥 Live!</div>
+                  <BarChart3 className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.warning}`} />
+                  <h4 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Market Dashboard</h4>
+                  <p className={`text-xs ${theme.textColors.muted}`}>Real-time data</p>
+                  <div className={`mt-2 text-xs ${theme.textColors.warning}`}>🔥 Live!</div>
                 </div>
               </Link>
             </div>
@@ -925,8 +925,8 @@ export default function HomePage() {
             className="mt-12 pt-8 border-t border-white/10"
           >
             <div className="text-center mb-8">
-              <h4 className="text-2xl font-bold text-white mb-4">Comprehensive Calculator Library</h4>
-              <p className="text-gray-400 max-w-2xl mx-auto">
+              <h4 className={`text-2xl font-bold ${theme.textColors.primary} mb-4`}>Comprehensive Calculator Library</h4>
+              <p className={`${theme.textColors.secondary} max-w-2xl mx-auto`}>
                 20+ specialized financial tools covering every aspect of personal finance
               </p>
             </div>
@@ -934,105 +934,105 @@ export default function HomePage() {
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {/* Available Calculators */}
               <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
-                <TrendingUp className="w-8 h-8 mx-auto mb-2 text-amber-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Compound Interest</h5>
-                <div className="text-xs text-amber-400 font-medium">✅ Available</div>
+                <TrendingUp className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.warning}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Compound Interest</h5>
+                <div className={`text-xs ${theme.textColors.warning} font-medium`}>✅ Available</div>
               </div>
 
               <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
-                <Calculator className="w-8 h-8 mx-auto mb-2 text-amber-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Budget Builder</h5>
-                <div className="text-xs text-amber-400 font-medium">✅ Available</div>
+                <Calculator className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.warning}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Budget Builder</h5>
+                <div className={`text-xs ${theme.textColors.warning} font-medium`}>✅ Available</div>
               </div>
 
               <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
-                <CreditCard className="w-8 h-8 mx-auto mb-2 text-amber-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Debt Payoff</h5>
-                <div className="text-xs text-amber-400 font-medium">✅ Available</div>
+                <CreditCard className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.warning}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Debt Payoff</h5>
+                <div className={`text-xs ${theme.textColors.warning} font-medium`}>✅ Available</div>
               </div>
 
               <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
-                <Building className="w-8 h-8 mx-auto mb-2 text-amber-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Mortgage</h5>
-                <div className="text-xs text-amber-400 font-medium">✅ Available</div>
+                <Building className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.warning}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Mortgage</h5>
+                <div className={`text-xs ${theme.textColors.warning} font-medium`}>✅ Available</div>
               </div>
 
               <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
-                <Umbrella className="w-8 h-8 mx-auto mb-2 text-amber-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Emergency Fund</h5>
-                <div className="text-xs text-amber-400 font-medium">✅ Available</div>
+                <Umbrella className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.warning}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Emergency Fund</h5>
+                <div className={`text-xs ${theme.textColors.warning} font-medium`}>✅ Available</div>
               </div>
 
               {/* Coming Soon Calculators - Credit Track */}
               <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
-                <Star className="w-8 h-8 mx-auto mb-2 text-amber-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Credit Score Simulator</h5>
-                <div className="text-xs text-amber-400 font-medium">🚧 Soon</div>
+                <Star className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.warning}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Credit Score Simulator</h5>
+                <div className={`text-xs ${theme.textColors.warning} font-medium`}>🚧 Soon</div>
               </div>
 
               <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
-                <CreditCard className="w-8 h-8 mx-auto mb-2 text-amber-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Rewards Optimizer</h5>
-                <div className="text-xs text-amber-400 font-medium">🚧 Soon</div>
+                <CreditCard className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.warning}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Rewards Optimizer</h5>
+                <div className={`text-xs ${theme.textColors.warning} font-medium`}>🚧 Soon</div>
               </div>
 
               <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
-                <Target className="w-8 h-8 mx-auto mb-2 text-amber-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Loan Comparison</h5>
-                <div className="text-xs text-amber-400 font-medium">🚧 Soon</div>
+                <Target className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.warning}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Loan Comparison</h5>
+                <div className={`text-xs ${theme.textColors.warning} font-medium`}>🚧 Soon</div>
               </div>
 
               {/* Coming Soon Calculators - Investment Track */}
               <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-xl p-4 text-center hover:border-blue-400/40 transition-all duration-300">
-                <BarChart3 className="w-8 h-8 mx-auto mb-2 text-blue-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Portfolio Analyzer</h5>
-                <div className="text-xs text-blue-400 font-medium">🚧 Soon</div>
+                <BarChart3 className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Portfolio Analyzer</h5>
+                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
               </div>
 
               <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-xl p-4 text-center hover:border-blue-400/40 transition-all duration-300">
-                <Timer className="w-8 h-8 mx-auto mb-2 text-blue-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Retirement Planner</h5>
-                <div className="text-xs text-blue-400 font-medium">🚧 Soon</div>
+                <Timer className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Retirement Planner</h5>
+                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
               </div>
 
               {/* Coming Soon Calculators - Advanced Track */}
               <div className="bg-gradient-to-br from-navy-500/10 to-navy-600/10 border border-navy-500/20 rounded-xl p-4 text-center hover:border-navy-400/40 transition-all duration-300">
-                <Lightbulb className="w-8 h-8 mx-auto mb-2 text-navy-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Tax Optimizer</h5>
-                <div className="text-xs text-navy-400 font-medium">🚧 Soon</div>
+                <Lightbulb className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Tax Optimizer</h5>
+                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
               </div>
 
               <div className="bg-gradient-to-br from-navy-500/10 to-navy-600/10 border border-navy-500/20 rounded-xl p-4 text-center hover:border-navy-400/40 transition-all duration-300">
-                <Building className="w-8 h-8 mx-auto mb-2 text-navy-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Real Estate ROI</h5>
-                <div className="text-xs text-navy-400 font-medium">🚧 Soon</div>
+                <Building className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Real Estate ROI</h5>
+                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
               </div>
 
               <div className="bg-gradient-to-br from-navy-500/10 to-navy-600/10 border border-navy-500/20 rounded-xl p-4 text-center hover:border-navy-400/40 transition-all duration-300">
-                <Briefcase className="w-8 h-8 mx-auto mb-2 text-navy-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Business Cashflow</h5>
-                <div className="text-xs text-navy-400 font-medium">🚧 Soon</div>
+                <Briefcase className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Business Cashflow</h5>
+                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
               </div>
 
               {/* Protection Track */}
               <div className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/10 border border-indigo-500/20 rounded-xl p-4 text-center hover:border-indigo-400/40 transition-all duration-300">
-                <Shield className="w-8 h-8 mx-auto mb-2 text-indigo-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">Insurance Needs</h5>
-                <div className="text-xs text-indigo-400 font-medium">🚧 Soon</div>
+                <Shield className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Insurance Needs</h5>
+                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
               </div>
 
               <div className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/10 border border-indigo-500/20 rounded-xl p-4 text-center hover:border-indigo-400/40 transition-all duration-300">
-                <Globe className="w-8 h-8 mx-auto mb-2 text-indigo-400" />
-                <h5 className="font-semibold text-white text-sm mb-1">FIRE Calculator</h5>
-                <div className="text-xs text-indigo-400 font-medium">🚧 Soon</div>
+                <Globe className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+                <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>FIRE Calculator</h5>
+                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
               </div>
             </div>
 
             <div className="text-center mt-8">
-              <p className="text-gray-400 text-sm">
-                <span className="text-amber-400 font-semibold">6 Available Now</span> •
-                <span className="text-navy-400 font-semibold"> 14+ Coming Soon</span> •
-                <span className="text-white font-semibold">Complete Financial Toolkit</span>
+              <p className={`${theme.textColors.secondary} text-sm`}>
+                <span className={`${theme.textColors.warning} font-semibold`}>6 Available Now</span> •
+                <span className={`${theme.textColors.accent} font-semibold`}> 14+ Coming Soon</span> •
+                <span className={`${theme.textColors.primary} font-semibold`}>Complete Financial Toolkit</span>
               </p>
             </div>
           </motion.div>
@@ -1053,7 +1053,7 @@ export default function HomePage() {
               className="text-3xl md:text-4xl font-bold mb-6 flex items-center justify-center gap-3"
             >
               <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-600/25">
-                <Brain className="w-6 h-6 text-white" />
+                <Brain className={`w-6 h-6 ${theme.textColors.primary}`} />
               </div>
               <span className="bg-gradient-to-r from-blue-400 via-blue-300 to-amber-400 bg-clip-text text-transparent">
                 AI-Powered Learning Experience
@@ -1063,10 +1063,10 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1, duration: 0.6 }}
-              className="text-lg text-gray-300 max-w-3xl mx-auto"
+              className={`text-lg ${theme.textColors.secondary} max-w-3xl mx-auto`}
             >
               Unlike other platforms with simulated chatbots, we use real{' '}
-              <span className="text-blue-400 font-medium">OpenAI GPT-4o-mini</span>{' '}
+              <span className={`${theme.textColors.accent} font-medium`}>OpenAI GPT-4o-mini</span>{' '}
               for personalized financial coaching that adapts to your learning journey
             </motion.p>
           </div>
@@ -1079,13 +1079,13 @@ export default function HomePage() {
             >
               <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-blue-600/20 rounded-2xl p-6 hover:border-blue-500/40 transition-all duration-300`}>
                 <div className="w-14 h-14 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-600/25">
-                  <Brain className="w-7 h-7 text-white" />
+                  <Brain className={`w-7 h-7 ${theme.textColors.primary}`} />
                 </div>
-                <h4 className="text-xl font-bold text-white mb-3">Contextual AI Coaching</h4>
-                <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                <h4 className={`text-xl font-bold ${theme.textColors.primary} mb-3`}>Contextual AI Coaching</h4>
+                <p className={`${theme.textColors.secondary} text-sm leading-relaxed mb-4`}>
                   Our AI knows your learning progress, quiz scores, and struggling topics to provide personalized guidance exactly when you need it.
                 </p>
-                <div className="flex items-center gap-2 text-xs text-blue-400">
+                <div className={`flex items-center gap-2 text-xs ${theme.textColors.accent}`}>
                   <Zap className="w-3 h-3" />
                   <span>Real-time adaptation</span>
                 </div>
@@ -1099,13 +1099,13 @@ export default function HomePage() {
             >
               <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-slate-600/20 rounded-2xl p-6 hover:border-slate-500/40 transition-all duration-300`}>
                 <div className="w-14 h-14 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-slate-600/25">
-                  <BarChart3 className="w-7 h-7 text-white" />
+                  <BarChart3 className={`w-7 h-7 ${theme.textColors.primary}`} />
                 </div>
-                <h4 className="text-xl font-bold text-white mb-3">Advanced Analytics</h4>
-                <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                <h4 className={`text-xl font-bold ${theme.textColors.primary} mb-3`}>Advanced Analytics</h4>
+                <p className={`${theme.textColors.secondary} text-sm leading-relaxed mb-4`}>
                   Every lesson completed, calculator used, and quiz taken is tracked with comprehensive analytics and progress insights.
                 </p>
-                <div className="flex items-center gap-2 text-xs text-slate-400">
+                <div className={`flex items-center gap-2 text-xs ${theme.textColors.muted}`}>
                   <Timer className="w-3 h-3" />
                   <span>Persistent tracking</span>
                 </div>
@@ -1119,13 +1119,13 @@ export default function HomePage() {
             >
               <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-amber-500/20 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300`}>
                 <div className="w-14 h-14 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-amber-500/25">
-                  <Lightbulb className="w-7 h-7 text-white" />
+                  <Lightbulb className={`w-7 h-7 ${theme.textColors.primary}`} />
                 </div>
-                <h4 className="text-xl font-bold text-white mb-3">Smart Q&A System</h4>
-                <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                <h4 className={`text-xl font-bold ${theme.textColors.primary} mb-3`}>Smart Q&A System</h4>
+                <p className={`${theme.textColors.secondary} text-sm leading-relaxed mb-4`}>
                   Ask any financial question and get expert-level answers that adapt to your current learning level and progress.
                 </p>
-                <div className="flex items-center gap-2 text-xs text-amber-400">
+                <div className={`flex items-center gap-2 text-xs ${theme.textColors.warning}`}>
                   <Star className="w-3 h-3" />
                   <span>Expert-level responses</span>
                 </div>
@@ -1142,20 +1142,20 @@ export default function HomePage() {
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
-                <div className="text-2xl font-bold text-blue-400 mb-1">42%</div>
-                <div className="text-xs text-gray-400">Average Knowledge Improvement</div>
+                <div className={`text-2xl font-bold ${theme.textColors.accent} mb-1`}>42%</div>
+                <div className={`text-xs ${theme.textColors.muted}`}>Average Knowledge Improvement</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-amber-400 mb-1">8.2min</div>
-                <div className="text-xs text-gray-400">Average Session Duration</div>
+                <div className={`text-2xl font-bold ${theme.textColors.warning} mb-1`}>8.2min</div>
+                <div className={`text-xs ${theme.textColors.muted}`}>Average Session Duration</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-blue-300 mb-1">94%</div>
-                <div className="text-xs text-gray-400">30-Day Retention Rate</div>
+                <div className={`text-2xl font-bold ${theme.textColors.accent} mb-1`}>94%</div>
+                <div className={`text-xs ${theme.textColors.muted}`}>30-Day Retention Rate</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-amber-300 mb-1">47</div>
-                <div className="text-xs text-gray-400">Countries Represented</div>
+                <div className={`text-2xl font-bold ${theme.textColors.warning} mb-1`}>47</div>
+                <div className={`text-xs ${theme.textColors.muted}`}>Countries Represented</div>
               </div>
             </div>
           </motion.div>
@@ -1186,7 +1186,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.3, duration: 0.6 }}
-            className="text-lg text-gray-400 max-w-2xl mx-auto mb-10"
+            className={`text-lg ${theme.textColors.secondary} max-w-2xl mx-auto mb-10`}
           >
             Join thousands of learners who&apos;ve gone from financial confusion to confidence.
             Start your journey today and see measurable results in just weeks.
@@ -1200,7 +1200,7 @@ export default function HomePage() {
             <Link href="/chapter1">
               <Button
                 size="lg"
-                className="group bg-gradient-to-r from-amber-500 via-blue-600 to-blue-700 hover:from-amber-600 hover:via-blue-700 hover:to-blue-800 text-white px-10 py-6 text-xl font-semibold shadow-2xl shadow-amber-500/25 hover:shadow-amber-500/40 transition-all duration-300 hover:-translate-y-1 border-0"
+                className={`group bg-gradient-to-r from-amber-500 via-blue-600 to-blue-700 hover:from-amber-600 hover:via-blue-700 hover:to-blue-800 ${theme.textColors.primary} px-10 py-6 text-xl font-semibold shadow-2xl shadow-amber-500/25 hover:shadow-amber-500/40 transition-all duration-300 hover:-translate-y-1 border-0`}
               >
                 <Sparkles className="mr-3 w-6 h-6 group-hover:rotate-12 transition-transform" />
                 Start Learning Now
@@ -1210,7 +1210,7 @@ export default function HomePage() {
             <Link href="/advanced-progress">
               <Button
                 size="lg"
-                className={`group ${theme.backgrounds.glass}/10 hover:${theme.backgrounds.glass}/20 text-white px-10 py-6 text-xl font-semibold border border-white/20 hover:border-white/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1`}
+                className={`group ${theme.backgrounds.glass}/10 hover:${theme.backgrounds.glass}/20 ${theme.textColors.primary} px-10 py-6 text-xl font-semibold border border-white/20 hover:border-white/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1`}
               >
                 <BarChart3 className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform" />
                 View Dashboard
