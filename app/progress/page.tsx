@@ -206,28 +206,28 @@ export default function ProgressPage() {
               transition={{ delay: 0.4 }}
               className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}
             >
-              <h3 className="text-xl font-bold text-white mb-6">Learning Statistics</h3>
+              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-6`}>Learning Statistics</h3>
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
                   <Clock className={`w-8 h-8 mx-auto mb-2 ${theme.status.info.text}`} />
-                  <div className="text-2xl font-bold text-white">{progress.totalTimeSpentHours}h</div>
+                  <div className={`text-2xl font-bold ${theme.textColors.primary}`}>{progress.totalTimeSpentHours}h</div>
                   <div className={`text-sm ${theme.textColors.secondary}`}>Total Time</div>
                 </div>
                 <div className="text-center">
                   <TrendingUp className="w-8 h-8 mx-auto mb-2 text-amber-400" />
-                  <div className="text-2xl font-bold text-white">{learningVelocity}</div>
+                  <div className={`text-2xl font-bold ${theme.textColors.primary}`}>{learningVelocity}</div>
                   <div className={`text-sm ${theme.textColors.secondary}`}>Lessons/Week</div>
                 </div>
                 <div className="text-center">
                   <Calculator className="w-8 h-8 mx-auto mb-2 text-slate-400" />
-                  <div className="text-2xl font-bold text-white">
+                  <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
                     {Object.keys(progress.userProgress.calculatorUsage).length}/6
                   </div>
                   <div className={`text-sm ${theme.textColors.secondary}`}>Tools Used</div>
                 </div>
                 <div className="text-center">
                   <Award className="w-8 h-8 mx-auto mb-2 text-amber-400" />
-                  <div className="text-2xl font-bold text-white">
+                  <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
                     {achievements.filter(a => a.unlocked).length}/{achievements.length}
                   </div>
                   <div className={`text-sm ${theme.textColors.secondary}`}>Achievements</div>
@@ -243,13 +243,13 @@ export default function ProgressPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-gradient-to-r from-amber-600/20 to-blue-600/20 border border-amber-500/30 backdrop-blur-xl rounded-xl shadow-lg p-6 text-white"
+              className={`bg-gradient-to-r from-amber-600/20 to-blue-600/20 border border-amber-500/30 backdrop-blur-xl rounded-xl shadow-lg p-6 ${theme.textColors.primary}`}
             >
               <h3 className="text-lg font-bold mb-4">Next Recommended Action</h3>
               <div className="flex items-start gap-3">
                 <Target className="w-6 h-6 mt-1 flex-shrink-0 text-amber-400" />
                 <div>
-                  <p className="font-medium mb-1 text-white">{nextAction.message}</p>
+                  <p className={`font-medium mb-1 ${theme.textColors.primary}`}>{nextAction.message}</p>
                   <p className={`text-sm ${theme.textColors.secondary}`}>{nextAction.action}</p>
                 </div>
               </div>
@@ -262,7 +262,7 @@ export default function ProgressPage() {
               transition={{ delay: 0.3 }}
               className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}
             >
-              <h3 className="text-xl font-bold text-white mb-6">Achievements</h3>
+              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-6`}>Achievements</h3>
               <div className="space-y-4">
                 {achievements.map((achievement, index) => {
                   const Icon = achievement.icon;
@@ -287,7 +287,7 @@ export default function ProgressPage() {
                           }`}>
                           {achievement.title}
                         </p>
-                        <p className={`text-xs ${achievement.unlocked ? 'text-gray-300' : 'text-gray-500'
+                        <p className={`text-xs ${achievement.unlocked ? theme.textColors.secondary : theme.textColors.muted
                           }`}>
                           {achievement.description}
                         </p>
