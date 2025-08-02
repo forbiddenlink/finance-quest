@@ -324,12 +324,12 @@ export default function StockAnalysisCalculator() {
                     </p>
                   </div>
                   
-                  <div className="p-3 bg-purple-500/20 rounded-lg">
+                  <div className={`p-3 ${theme.status.info.bg} rounded-lg`}>
                     <div className="flex items-center space-x-2 mb-1">
                       {results.upside > 0 ? (
-                        <TrendingUp className="w-4 h-4 text-purple-400" />
+                        <TrendingUp className={`w-4 h-4 ${theme.status.info.text}`} />
                       ) : (
-                        <TrendingDown className="w-4 h-4 text-purple-400" />
+                        <TrendingDown className={`w-4 h-4 ${theme.status.info.text}`} />
                       )}
                       <span className="text-sm font-medium ${theme.textColors.primary}">Upside Potential</span>
                     </div>

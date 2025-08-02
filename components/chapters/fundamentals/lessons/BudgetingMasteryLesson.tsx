@@ -276,7 +276,7 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <p className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <AlertTriangle className="w-4 h-4 text-orange-400" />
+                    <AlertTriangle className={`w-4 h-4 ${theme.status.warning.text}`} />
                     Emergency Fund Priority
                   </p>
                   <ul className={`list-disc list-inside space-y-1 ml-4 ${theme.textColors.secondary} text-sm`}>

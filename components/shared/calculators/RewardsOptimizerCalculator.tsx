@@ -360,11 +360,11 @@ export default function RewardsOptimizerCalculator() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                                         🔌 Utilities & Bills
                                     </label>
                                     <div className="relative">
-                                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
                                         <input
                                             type="number"
                                             value={utilities}
@@ -376,11 +376,11 @@ export default function RewardsOptimizerCalculator() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                                         💳 Other Purchases
                                     </label>
                                     <div className="relative">
-                                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
                                         <input
                                             type="number"
                                             value={other}
@@ -399,7 +399,7 @@ export default function RewardsOptimizerCalculator() {
 
                             <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">Time Horizon</label>
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>Time Horizon</label>
                                     <select
                                         value={timeHorizon}
                                         onChange={(e) => setTimeHorizon(e.target.value)}
@@ -420,7 +420,7 @@ export default function RewardsOptimizerCalculator() {
                                         onChange={(e) => setIncludeAnnualFees(e.target.checked)}
                                         className="w-4 h-4 text-amber-600 bg-slate-800 border-slate-600 rounded focus:ring-amber-500"
                                     />
-                                    <label htmlFor="include-fees" className="text-sm text-gray-300">
+                                    <label htmlFor="include-fees" className={`text-sm ${theme.textColors.secondary}`}>
                                         Include annual fees in calculation
                                     </label>
                                 </div>
@@ -433,7 +433,7 @@ export default function RewardsOptimizerCalculator() {
                                         onChange={(e) => setIncludeSignupBonus(e.target.checked)}
                                         className="w-4 h-4 text-amber-600 bg-slate-800 border-slate-600 rounded focus:ring-amber-500"
                                     />
-                                    <label htmlFor="include-signup" className="text-sm text-gray-300">
+                                    <label htmlFor="include-signup" className={`text-sm ${theme.textColors.secondary}`}>
                                         Include signup bonuses
                                     </label>
                                 </div>
@@ -453,19 +453,19 @@ export default function RewardsOptimizerCalculator() {
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
                                         <h4 className="font-medium text-white mb-1">{bestCard.cardName}</h4>
-                                        <p className="text-sm text-gray-300">Top recommendation</p>
+                                        <p className={`text-sm ${theme.textColors.secondary}`}>Top recommendation</p>
                                     </div>
                                     <div>
                                         <p className="${theme.typography.heading2} text-amber-300">
                                             {formatCurrency(bestCard.netValue)}
                                         </p>
-                                        <p className="text-sm text-gray-300">Total value over {timeHorizon} months</p>
+                                        <p className={`text-sm ${theme.textColors.secondary}`}>Total value over {timeHorizon} months</p>
                                     </div>
                                     <div>
                                         <p className={`${theme.typography.heading4} ${getRewardCategory(bestCard.netValue).color}`}>
                                             {getRewardCategory(bestCard.netValue).label}
                                         </p>
-                                        <p className="text-sm text-gray-300">Reward optimization</p>
+                                        <p className={`text-sm ${theme.textColors.secondary}`}>Reward optimization</p>
                                     </div>
                                 </div>
                             </div>
@@ -476,9 +476,9 @@ export default function RewardsOptimizerCalculator() {
                             <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
                                 <h3 className="${theme.typography.heading4} text-white mb-4">Monthly Spending</h3>
                                 <div className="text-center">
-                                    <p className="${theme.typography.heading2} text-blue-300">{formatCurrency(totalMonthlySpend)}</p>
-                                    <p className="text-sm text-gray-300">Total monthly spending</p>
-                                    <p className="text-lg font-medium text-blue-400 mt-2">
+                                    <p className={`${theme.typography.heading2} ${theme.textColors.accent}`}>{formatCurrency(totalMonthlySpend)}</p>
+                                    <p className={`text-sm ${theme.textColors.secondary}`}>Total monthly spending</p>
+                                    <p className={`text-lg font-medium ${theme.textColors.accent} mt-2`}>
                                         {formatCurrency(totalMonthlySpend * 12)}/year
                                     </p>
                                 </div>
@@ -563,7 +563,7 @@ export default function RewardsOptimizerCalculator() {
                                                     <h4 className={`font-medium ${index === 0 ? 'text-amber-300' : 'text-white'}`}>
                                                         {card.cardName}
                                                     </h4>
-                                                    <div className="flex gap-4 text-sm text-gray-300">
+                                                    <div className={`flex gap-4 text-sm ${theme.textColors.secondary}`}>
                                                         <span>Rewards: {formatCurrency(card.totalRewards)}</span>
                                                         {card.signupBonus > 0 && (
                                                             <span>Bonus: {formatCurrency(card.signupBonus)}</span>
@@ -575,7 +575,7 @@ export default function RewardsOptimizerCalculator() {
                                                 <div className={`text-lg font-bold ${index === 0 ? 'text-amber-300' : 'text-white'}`}>
                                                     {formatCurrency(card.netValue)}
                                                 </div>
-                                                <div className="text-sm text-gray-400">Net value</div>
+                                                <div className={`text-sm ${theme.textColors.muted}`}>Net value</div>
                                             </div>
                                         </div>
                                     </div>
@@ -590,22 +590,22 @@ export default function RewardsOptimizerCalculator() {
                     <h3 className="${theme.typography.heading4} text-white mb-4">💡 Reward Optimization Tips</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                         <div className="${theme.status.info.bg}0/20 border border-blue-500/30 rounded-lg p-4">
-                            <h4 className="font-semibold mb-2 text-blue-300">📊 Track Your Spending</h4>
-                            <p className="text-gray-300">
+                            <h4 className={`font-semibold mb-2 ${theme.status.info.text}`}>📊 Track Your Spending</h4>
+                            <p className={`${theme.textColors.secondary}`}>
                                 Monitor your actual spending patterns quarterly. Your categories may change, requiring different cards for optimal rewards.
                             </p>
                         </div>
 
                         <div className="${theme.status.success.bg}0/20 border border-green-500/30 rounded-lg p-4">
-                            <h4 className="font-semibold mb-2 text-green-300">🎯 Maximize Signup Bonuses</h4>
-                            <p className="text-gray-300">
+                            <h4 className={`font-semibold mb-2 ${theme.status.success.text}`}>🎯 Maximize Signup Bonuses</h4>
+                            <p className={`${theme.textColors.secondary}`}>
                                 Plan large purchases around new card applications to easily meet minimum spending requirements for signup bonuses.
                             </p>
                         </div>
 
                         <div className="bg-amber-500/20 border border-amber-500/30 rounded-lg p-4">
                             <h4 className="font-semibold mb-2 text-amber-300">💳 Consider Multiple Cards</h4>
-                            <p className="text-gray-300">
+                            <p className={`${theme.textColors.secondary}`}>
                                 Use different cards for different categories to maximize rewards. Just ensure you can manage multiple payments responsibly.
                             </p>
                         </div>
