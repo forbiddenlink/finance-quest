@@ -202,17 +202,17 @@ export default function EmergencyFundsLesson({ onComplete }: EmergencyFundsLesso
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
                   <AlertCircle className={`w-8 h-8 mx-auto mb-3 ${theme.status.error.text}`} />
                   <div className={`text-2xl font-bold ${theme.status.error.text}`}>40%</div>
-                  <div className="text-sm text-gray-300">Can&apos;t cover $400 emergency</div>
+                  <div className={`text-sm ${theme.textColors.secondary}`}>Can&apos;t cover $400 emergency</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
-                  <Clock className="w-8 h-8 mx-auto mb-3 text-orange-400" />
-                  <div className="text-2xl font-bold text-orange-400">78%</div>
-                  <div className="text-sm text-gray-300">Live paycheck to paycheck</div>
+                  <Clock className={`w-8 h-8 mx-auto mb-3 ${theme.status.warning.text}`} />
+                  <div className={`text-2xl font-bold ${theme.status.warning.text}`}>78%</div>
+                  <div className={`text-sm ${theme.textColors.secondary}`}>Live paycheck to paycheck</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
                   <Shield className={`w-8 h-8 mx-auto mb-3 ${theme.status.success.text}`} />
                   <div className={`text-2xl font-bold ${theme.status.success.text}`}>$1,000</div>
-                  <div className="text-sm text-gray-300">Minimum recommended fund</div>
+                  <div className={`text-sm ${theme.textColors.secondary}`}>Minimum recommended fund</div>
                 </div>
               </div>
               <p className={`mt-4 font-medium ${theme.textColors.accent}`}>
@@ -297,7 +297,7 @@ export default function EmergencyFundsLesson({ onComplete }: EmergencyFundsLesso
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <Clock className="w-4 h-4 text-purple-400" />
+                    <Clock className={`w-4 h-4 ${theme.textColors.accent}`} />
                     CD Ladders
                   </h4>
                   <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
@@ -329,7 +329,7 @@ export default function EmergencyFundsLesson({ onComplete }: EmergencyFundsLesso
                   <p className={`text-sm ${theme.textColors.secondary}`}>Build $1,000 as fast as possible for small emergencies</p>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
-                  <div className="text-lg font-bold text-orange-400 mb-2">Step 2</div>
+                  <div className={`text-lg font-bold ${theme.status.warning.text} mb-2`}>Step 2</div>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Automate</h4>
                   <p className={`text-sm ${theme.textColors.secondary}`}>Set up automatic transfers on payday before spending</p>
                 </div>
@@ -365,7 +365,7 @@ export default function EmergencyFundsLesson({ onComplete }: EmergencyFundsLesso
               <div className="bg-blue-500/20 border border-blue-500/30 backdrop-blur-sm rounded-lg p-4">
                 <Briefcase className={`w-6 h-6 ${theme.status.info.text} mb-2`} />
                 <h4 className="font-semibold text-blue-300 mb-2">Sarah&apos;s Job Loss Recovery</h4>
-                <p className="text-sm text-gray-300">
+                <p className={`text-sm ${theme.textColors.secondary}`}>
                   With 6 months saved, Sarah took time to find the right job instead of accepting the first offer. 
                   Result: 30% salary increase.
                 </p>
@@ -373,7 +373,7 @@ export default function EmergencyFundsLesson({ onComplete }: EmergencyFundsLesso
               <div className="bg-red-500/20 border border-red-500/30 backdrop-blur-sm rounded-lg p-4">
                 <Heart className={`w-6 h-6 ${theme.status.error.text} mb-2`} />
                 <h4 className="font-semibold text-red-300 mb-2">Mike&apos;s Medical Emergency</h4>
-                <p className="text-sm text-gray-300">
+                <p className={`text-sm ${theme.textColors.secondary}`}>
                   Surgery cost $15,000. His emergency fund covered deductible and lost income, 
                   avoiding bankruptcy.
                 </p>
@@ -381,7 +381,7 @@ export default function EmergencyFundsLesson({ onComplete }: EmergencyFundsLesso
               <div className="bg-green-500/20 border border-green-500/30 backdrop-blur-sm rounded-lg p-4">
                 <Home className={`w-6 h-6 ${theme.status.success.text} mb-2`} />
                 <h4 className="font-semibold text-green-300 mb-2">Lisa&apos;s Home Opportunity</h4>
-                <p className="text-sm text-gray-300">
+                <p className={`text-sm ${theme.textColors.secondary}`}>
                   Used emergency fund for dream home down payment, then quickly rebuilt it. 
                   Emergency funds provide options.
                 </p>
