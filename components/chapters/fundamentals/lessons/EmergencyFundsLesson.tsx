@@ -362,25 +362,25 @@ export default function EmergencyFundsLesson({ onComplete }: EmergencyFundsLesso
           <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>Emergency Fund Success Stories</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-blue-500/20 border border-blue-500/30 backdrop-blur-sm rounded-lg p-4">
+              <div className={`${theme.status.info.bg} border ${theme.status.info.border} backdrop-blur-sm rounded-lg p-4`}>
                 <Briefcase className={`w-6 h-6 ${theme.status.info.text} mb-2`} />
-                <h4 className="font-semibold text-blue-300 mb-2">Sarah&apos;s Job Loss Recovery</h4>
+                <h4 className={`font-semibold ${theme.status.info.text} mb-2`}>Sarah&apos;s Job Loss Recovery</h4>
                 <p className={`text-sm ${theme.textColors.secondary}`}>
                   With 6 months saved, Sarah took time to find the right job instead of accepting the first offer. 
                   Result: 30% salary increase.
                 </p>
               </div>
-              <div className="bg-red-500/20 border border-red-500/30 backdrop-blur-sm rounded-lg p-4">
+              <div className={`${theme.status.error.bg} border ${theme.status.error.border} backdrop-blur-sm rounded-lg p-4`}>
                 <Heart className={`w-6 h-6 ${theme.status.error.text} mb-2`} />
-                <h4 className="font-semibold text-red-300 mb-2">Mike&apos;s Medical Emergency</h4>
+                <h4 className={`font-semibold ${theme.status.error.text} mb-2`}>Mike&apos;s Medical Emergency</h4>
                 <p className={`text-sm ${theme.textColors.secondary}`}>
                   Surgery cost $15,000. His emergency fund covered deductible and lost income, 
                   avoiding bankruptcy.
                 </p>
               </div>
-              <div className="bg-green-500/20 border border-green-500/30 backdrop-blur-sm rounded-lg p-4">
+              <div className={`${theme.status.success.bg} border ${theme.status.success.border} backdrop-blur-sm rounded-lg p-4`}>
                 <Home className={`w-6 h-6 ${theme.status.success.text} mb-2`} />
-                <h4 className="font-semibold text-green-300 mb-2">Lisa&apos;s Home Opportunity</h4>
+                <h4 className={`font-semibold ${theme.status.success.text} mb-2`}>Lisa&apos;s Home Opportunity</h4>
                 <p className={`text-sm ${theme.textColors.secondary}`}>
                   Used emergency fund for dream home down payment, then quickly rebuilt it. 
                   Emergency funds provide options.

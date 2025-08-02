@@ -169,16 +169,16 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
           {/* Enhanced Key Points */}
           <GradientCard variant="glass" gradient="pink" className="p-6 animate-fade-in-up stagger-4">
             <div className="flex items-center mb-4">
-              <div className="bg-pink-500/20 p-2 rounded-lg mr-3 animate-wiggle">
-                <Star className="w-5 h-5 text-pink-400" />
+              <div className={`${theme.status.info.bg} p-2 rounded-lg mr-3 animate-wiggle`}>
+                <Star className={`w-5 h-5 ${theme.status.info.text}`} />
               </div>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Key Points</h3>
             </div>
             <ul className="space-y-3">
               {lesson.keyPoints.map((point, index) => (
                 <li key={index} className={`flex items-start animate-slide-in-right stagger-${(index % 4) + 1}`}>
-                  <div className="flex-shrink-0 w-6 h-6 bg-pink-500/20 rounded-full flex items-center justify-center mt-1 mr-3 animate-glow-pulse">
-                    <CheckCircle className="w-4 h-4 text-pink-400" />
+                  <div className={`flex-shrink-0 w-6 h-6 ${theme.status.info.bg} rounded-full flex items-center justify-center mt-1 mr-3 animate-glow-pulse`}>
+                    <CheckCircle className={`w-4 h-4 ${theme.status.info.text}`} />
                   </div>
                   <span className={`${theme.textColors.secondary} font-medium`}>{point}</span>
                 </li>
@@ -353,7 +353,7 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <span className={`bg-purple-500 ${theme.textColors.primary} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>1</span>
+                    <span className={`${theme.status.info.bg} ${theme.status.info.text} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>1</span>
                     Mega Backdoor Roth Setup
                   </h4>
                   <ul className={`space-y-1 text-xs ${theme.textColors.secondary}`}>
@@ -366,7 +366,7 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <span className={`bg-green-500 ${theme.textColors.primary} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>2</span>
+                    <span className={`${theme.status.success.bg} ${theme.status.success.text} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>2</span>
                     Tax-Loss Harvesting
                   </h4>
                   <ul className={`space-y-1 text-xs ${theme.textColors.secondary}`}>

@@ -100,27 +100,27 @@ export default function HomePage() {
               
               {/* Feature badges - more compact design */}
               <div className={`hidden lg:flex items-center space-x-3 text-xs ${theme.textColors.muted}`}>
-                <div className="flex items-center space-x-1.5 px-2.5 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg backdrop-blur-sm">
-                  <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
-                  <span className="text-blue-300 font-medium text-xs">Real-time Data</span>
+                <div className={`flex items-center space-x-1.5 px-2.5 py-1 ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-lg backdrop-blur-sm`}>
+                  <div className={`w-1.5 h-1.5 ${theme.status.info.text} rounded-full animate-pulse`}></div>
+                  <span className={`${theme.status.info.text} font-medium text-xs`}>Real-time Data</span>
                 </div>
-                <div className="flex items-center space-x-1.5 px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 rounded-lg backdrop-blur-sm">
-                  <div className="w-1.5 h-1.5 bg-amber-400 rounded-full"></div>
-                  <span className="text-amber-300 font-medium text-xs">AI Learning</span>
+                <div className={`flex items-center space-x-1.5 px-2.5 py-1 ${theme.status.warning.bg}/10 border ${theme.status.warning.border} rounded-lg backdrop-blur-sm`}>
+                  <div className={`w-1.5 h-1.5 ${theme.status.warning.text} rounded-full`}></div>
+                  <span className={`${theme.status.warning.text} font-medium text-xs`}>AI Learning</span>
                 </div>
-                <div className="flex items-center space-x-1.5 px-2.5 py-1 bg-green-500/10 border border-green-500/20 rounded-lg backdrop-blur-sm">
-                  <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
-                  <span className="text-green-300 font-medium text-xs">Pro Tools</span>
+                <div className={`flex items-center space-x-1.5 px-2.5 py-1 ${theme.status.success.bg}/10 border ${theme.status.success.border} rounded-lg backdrop-blur-sm`}>
+                  <div className={`w-1.5 h-1.5 ${theme.status.success.text} rounded-full`}></div>
+                  <span className={`${theme.status.success.text} font-medium text-xs`}>Pro Tools</span>
                 </div>
               </div>
               
               {/* Compact version for medium screens */}
               <div className={`hidden md:flex lg:hidden items-center space-x-2 text-xs ${theme.textColors.muted}`}>
-                <span className="text-blue-300 text-xs">Live Data</span>
+                <span className={`${theme.status.info.text} text-xs`}>Live Data</span>
                 <div className={`w-px h-3 ${theme.borderColors.muted}`}></div>
-                <span className="text-amber-300 text-xs">AI Coaching</span>
+                <span className={`${theme.status.warning.text} text-xs`}>AI Coaching</span>
                 <div className={`w-px h-3 ${theme.borderColors.muted}`}></div>
-                <span className="text-green-300 text-xs">Tools</span>
+                <span className={`${theme.status.success.text} text-xs`}>Tools</span>
               </div>
             </div>
             
@@ -136,7 +136,7 @@ export default function HomePage() {
               
               {/* Progress display wrapper */}
               <div className="relative group">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500/20 to-amber-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-slate-500/20 to-amber-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative">
                   <ProgressDisplay />
                 </div>
@@ -148,18 +148,18 @@ export default function HomePage() {
           <div className="md:hidden mt-2.5 pt-2.5 border-t border-slate-700/30">
             <div className="flex items-center justify-center space-x-2 text-xs">
               <div className="flex items-center space-x-1">
-                <div className="w-1 h-1 bg-blue-400 rounded-full"></div>
-                <span className="text-blue-300 text-xs">Live Data</span>
+                <div className={`w-1 h-1 ${theme.status.info.text} rounded-full`}></div>
+                <span className={`${theme.status.info.text} text-xs`}>Live Data</span>
               </div>
               <span className="text-slate-600 text-xs">•</span>
               <div className="flex items-center space-x-1">
-                <div className="w-1 h-1 bg-amber-400 rounded-full"></div>
-                <span className="text-amber-300 text-xs">AI Coaching</span>
+                <div className={`w-1 h-1 ${theme.status.warning.text} rounded-full`}></div>
+                <span className={`${theme.status.warning.text} text-xs`}>AI Coaching</span>
               </div>
               <span className="text-slate-600 text-xs">•</span>
               <div className="flex items-center space-x-1">
-                <div className="w-1 h-1 bg-green-400 rounded-full"></div>
-                <span className="text-green-300 text-xs">Pro Tools</span>
+                <div className={`w-1 h-1 ${theme.status.success.text} rounded-full`}></div>
+                <span className={`${theme.status.success.text} text-xs`}>Pro Tools</span>
               </div>
             </div>
           </div>
@@ -292,17 +292,17 @@ export default function HomePage() {
           transition={{ delay: 0.3, duration: 0.8 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20"
         >
-          <InteractiveCard className={`${theme.backgrounds.card} border border-red-500/20 rounded-2xl ${theme.spacing.md} hover:border-red-400/40 transition-all duration-300`}>
+          <InteractiveCard className={`${theme.backgrounds.card} border ${theme.status.error.border} rounded-2xl ${theme.spacing.md} hover:${theme.status.error.border}/40 transition-all duration-300`}>
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-red-500/25">
                 <Target className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
-              <div className={`${theme.typography.heading1} text-navy-400 mb-2`}>
-                <AnimatedCounter end={64} suffix="%" className={`${theme.typography.heading1} text-navy-400`} />
+              <div className={`${theme.typography.heading1} ${theme.textColors.accent} mb-2`}>
+                <AnimatedCounter end={64} suffix="%" className={`${theme.typography.heading1} ${theme.textColors.accent}`} />
               </div>
               <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>of Americans can&apos;t pass a basic financial literacy test</p>
-              <div className="mt-3 px-3 py-1 bg-navy-500/20 rounded-full">
-                <p className={`${theme.typography.tiny} text-navy-300 font-medium`}>The Crisis We&apos;re Solving</p>
+              <div className={`mt-3 px-3 py-1 ${theme.backgrounds.card}/50 rounded-full`}>
+                <p className={`${theme.typography.tiny} ${theme.textColors.accent} font-medium`}>The Crisis We&apos;re Solving</p>
               </div>
             </div>
           </InteractiveCard>
@@ -322,9 +322,9 @@ export default function HomePage() {
             </div>
           </InteractiveCard>
 
-          <InteractiveCard className={`${theme.backgrounds.card} border border-blue-500/20 rounded-2xl ${theme.spacing.md} hover:border-blue-400/40 transition-all duration-300`}>
+          <InteractiveCard className={`${theme.backgrounds.card} border ${theme.status.info.border} rounded-2xl ${theme.spacing.md} hover:${theme.status.info.border}/40 transition-all duration-300`}>
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/25">
+              <div className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center shadow-lg`}>
                 <BookOpen className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
               <div className={`${theme.typography.heading1} ${theme.textColors.accent} mb-2`}>
@@ -403,11 +403,11 @@ export default function HomePage() {
                   Master your emotional relationship with money, overcome limiting beliefs, and build a wealth mindset.
                 </p>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2 px-3 py-1 bg-amber-500/20 rounded-full">
-                    <CheckCircle className="w-3 h-3 text-amber-400" />
-                    <span className="text-amber-300 text-xs font-medium">Available Now</span>
+                  <div className={`flex items-center gap-2 px-3 py-1 ${theme.status.warning.bg}/20 rounded-full`}>
+                    <CheckCircle className={`w-3 h-3 ${theme.status.warning.text}`} />
+                    <span className={`${theme.status.warning.text} text-xs font-medium`}>Available Now</span>
                   </div>
-                  <div className="text-amber-400 text-xs">6 Lessons</div>
+                  <div className={`${theme.status.warning.text} text-xs`}>6 Lessons</div>
                 </div>
                 <Link href="/chapter1">
                   <Button className={`w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25`}>
@@ -425,9 +425,9 @@ export default function HomePage() {
               transition={{ delay: 0.9, duration: 0.6 }}
             >
               {progress.userProgress.currentChapter >= 2 ? (
-                <InteractiveCard className={`${theme.backgrounds.card} border border-blue-500/20 rounded-2xl ${theme.spacing.md} hover:border-blue-400/50 transition-all duration-300`}>
+                <InteractiveCard className={`${theme.backgrounds.card} border ${theme.status.info.border} rounded-2xl ${theme.spacing.md} hover:${theme.status.info.border}/50 transition-all duration-300`}>
                   <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-blue-500/25">
+                    <div className={`w-12 h-12 bg-gradient-to-r from-slate-600 to-slate-700 rounded-xl flex items-center justify-center mr-4 shadow-lg`}>
                       <Building className={`w-6 h-6 ${theme.textColors.primary}`} />
                     </div>
                     <div>
@@ -439,14 +439,14 @@ export default function HomePage() {
                     Optimize your banking, understand fees, and set up automated financial systems.
                   </p>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2 px-3 py-1 bg-amber-500/20 rounded-full">
+                    <div className={`flex items-center gap-2 px-3 py-1 ${theme.status.warning.bg}/20 rounded-full`}>
                       <CheckCircle className={`w-3 h-3 ${theme.textColors.accent}`} />
                       <span className={`${theme.textColors.accentSecondary} text-xs font-medium`}>Unlocked!</span>
                     </div>
                     <div className={`${theme.textColors.accent} text-xs`}>6 Lessons</div>
                   </div>
                   <Link href="/chapter2">
-                    <Button className={`w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25`}>
+                    <Button className={`w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg`}>
                       Continue Learning
                       <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
@@ -589,9 +589,9 @@ export default function HomePage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                     {/* Foundation Track */}
-                    <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-2xl p-6 hover:border-blue-400/40 transition-all duration-300">
+                    <div className={`bg-gradient-to-br ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-2xl p-6 hover:${theme.status.info.border}/40 transition-all duration-300`}>
                       <div className="flex items-center mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-blue-500/25">
+                        <div className={`w-12 h-12 bg-gradient-to-r from-slate-600 to-slate-700 rounded-xl flex items-center justify-center mr-4 shadow-lg`}>
                           <BookOpen className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
@@ -609,9 +609,9 @@ export default function HomePage() {
                     </div>
 
                     {/* Credit & Lending Track */}
-                    <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300">
+                    <div className={`bg-gradient-to-br ${theme.status.warning.bg}/10 border ${theme.status.warning.border} rounded-2xl p-6 hover:${theme.status.warning.border}/40 transition-all duration-300`}>
                       <div className="flex items-center mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-amber-500/25">
+                        <div className={`w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mr-4 shadow-lg`}>
                           <CreditCard className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
@@ -629,9 +629,9 @@ export default function HomePage() {
                     </div>
 
                     {/* Investment Track */}
-                    <div className="bg-gradient-to-br from-green-500/10 to-green-600/10 border border-green-500/20 rounded-2xl p-6 hover:border-green-400/40 transition-all duration-300">
+                    <div className={`bg-gradient-to-br ${theme.status.success.bg}/10 border ${theme.status.success.border} rounded-2xl p-6 hover:${theme.status.success.border}/40 transition-all duration-300`}>
                       <div className="flex items-center mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-green-500/25">
+                        <div className={`w-12 h-12 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl flex items-center justify-center mr-4 shadow-lg`}>
                           <TrendingUp className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
@@ -649,14 +649,14 @@ export default function HomePage() {
                     </div>
 
                     {/* Protection & Planning Track */}
-                    <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-purple-500/20 rounded-2xl p-6 hover:border-purple-400/40 transition-all duration-300">
+                    <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-2xl p-6 hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
                       <div className="flex items-center mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-purple-500/25">
+                        <div className={`w-12 h-12 bg-gradient-to-r from-slate-600 to-slate-700 rounded-xl flex items-center justify-center mr-4 shadow-lg`}>
                           <Shield className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
                           <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Protection & Planning</h4>
-                          <p className="text-navy-400 text-sm">Chapters 17-20</p>
+                          <p className={`${theme.textColors.accent} text-sm`}>Chapters 17-20</p>
                         </div>
                       </div>
                       <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>
@@ -669,9 +669,9 @@ export default function HomePage() {
                     </div>
 
                     {/* Advanced Planning Track */}
-                    <div className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/10 border border-indigo-500/20 rounded-2xl p-6 hover:border-indigo-400/40 transition-all duration-300">
+                    <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-2xl p-6 hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
                       <div className="flex items-center mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-indigo-500/25">
+                        <div className={`w-12 h-12 bg-gradient-to-r from-slate-600 to-slate-700 rounded-xl flex items-center justify-center mr-4 shadow-lg`}>
                           <Building className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
@@ -689,9 +689,9 @@ export default function HomePage() {
                     </div>
 
                     {/* Economic Literacy Track */}
-                    <div className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/10 border border-cyan-500/20 rounded-2xl p-6 hover:border-cyan-400/40 transition-all duration-300">
+                    <div className={`bg-gradient-to-br ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-2xl p-6 hover:${theme.status.info.border}/40 transition-all duration-300`}>
                       <div className="flex items-center mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-cyan-500/25">
+                        <div className={`w-12 h-12 bg-gradient-to-r from-slate-600 to-slate-700 rounded-xl flex items-center justify-center mr-4 shadow-lg`}>
                           <Globe className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
@@ -727,7 +727,7 @@ export default function HomePage() {
                           <span>20+ Specialized Calculators</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 bg-navy-500 rounded-full"></div>
+                          <div className={`w-3 h-3 ${theme.textColors.accent} rounded-full`}></div>
                           <span>Real AI Coaching</span>
                         </div>
                       </div>
@@ -813,9 +813,9 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1, duration: 0.6 }}
             >
-              <InteractiveCard className="group bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-2xl p-6 hover:border-blue-400/40 transition-all duration-300">
+              <InteractiveCard className={`group bg-gradient-to-br ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-2xl p-6 hover:${theme.status.info.border}/40 transition-all duration-300`}>
                 <div className="flex items-center mb-6">
-                  <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all duration-300">
+                  <div className={`w-14 h-14 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center mr-4 shadow-lg group-hover:shadow-lg transition-all duration-300`}>
                     <BarChart3 className={`w-7 h-7 ${theme.textColors.primary}`} />
                   </div>
                   <div>
@@ -826,13 +826,13 @@ export default function HomePage() {
                 <p className={`${theme.textColors.secondary} mb-6 leading-relaxed`}>
                   Master the proven 50/30/20 budgeting framework for needs, wants, and financial goals.
                 </p>
-                <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border border-blue-500/20`}>
+                <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border ${theme.status.info.border}`}>
                   <div className={`text-xs ${theme.textColors.accent} mb-1`}>$5,000 income breakdown</div>
                   <div className={`text-2xl font-bold ${theme.textColors.primary}`}>Perfect Balance</div>
                   <div className={`text-xs ${theme.textColors.accent}`}>Needs • Wants • Savings</div>
                 </div>
                 <Link href="/calculators/budget-builder" className="block">
-                  <Button className={`w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 group-hover:-translate-y-1`}>
+                  <Button className={`w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg group-hover:-translate-y-1`}>
                     Build Your Budget
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
@@ -846,9 +846,9 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.6 }}
             >
-              <InteractiveCard className="group bg-gradient-to-br from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-2xl p-6 hover:border-orange-400/40 transition-all duration-300">
+              <InteractiveCard className={`group bg-gradient-to-br ${theme.status.error.bg}/10 border ${theme.status.error.border} rounded-2xl p-6 hover:${theme.status.error.border}/40 transition-all duration-300`}>
                 <div className="flex items-center mb-6">
-                  <div className="w-14 h-14 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mr-4 shadow-lg shadow-orange-500/25 group-hover:shadow-orange-500/40 transition-all duration-300">
+                  <div className={`w-14 h-14 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg group-hover:shadow-lg transition-all duration-300`}>
                     <CreditCard className={`w-7 h-7 ${theme.textColors.primary}`} />
                   </div>
                   <div>
@@ -859,13 +859,13 @@ export default function HomePage() {
                 <p className={`${theme.textColors.secondary} mb-6 leading-relaxed`}>
                   Compare avalanche vs snowball strategies and accelerate your path to financial freedom.
                 </p>
-                <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border border-orange-500/20`}>
+                <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border ${theme.status.error.border}`}>
                   <div className={`text-xs ${theme.textColors.warning} mb-1`}>$25k debt + $200 extra</div>
                   <div className={`text-2xl font-bold ${theme.textColors.primary}`}>5 Years Saved</div>
                   <div className={`text-xs ${theme.textColors.warning}`}>Thousands in interest!</div>
                 </div>
                 <Link href="/calculators/debt-payoff" className="block">
-                  <Button className={`w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/25 group-hover:-translate-y-1`}>
+                  <Button className={`w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg group-hover:-translate-y-1`}>
                     Destroy Your Debt
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
@@ -976,52 +976,52 @@ export default function HomePage() {
                 <div className={`text-xs ${theme.textColors.warning} font-medium`}>🚧 Soon</div>
               </div>
 
-              <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-4 text-center hover:border-amber-400/40 transition-all duration-300">
+              <div className={`bg-gradient-to-br ${theme.status.warning.bg}/10 border ${theme.status.warning.border} rounded-xl p-4 text-center hover:${theme.status.warning.border}/40 transition-all duration-300`}>
                 <Target className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.warning}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Loan Comparison</h5>
                 <div className={`text-xs ${theme.textColors.warning} font-medium`}>🚧 Soon</div>
               </div>
 
               {/* Coming Soon Calculators - Investment Track */}
-              <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-xl p-4 text-center hover:border-blue-400/40 transition-all duration-300">
+              <div className={`bg-gradient-to-br ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-xl p-4 text-center hover:${theme.status.info.border}/40 transition-all duration-300`}>
                 <BarChart3 className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Portfolio Analyzer</h5>
                 <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
               </div>
 
-              <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-xl p-4 text-center hover:border-blue-400/40 transition-all duration-300">
+              <div className={`bg-gradient-to-br ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-xl p-4 text-center hover:${theme.status.info.border}/40 transition-all duration-300`}>
                 <Timer className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Retirement Planner</h5>
                 <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
               </div>
 
               {/* Coming Soon Calculators - Advanced Track */}
-              <div className="bg-gradient-to-br from-navy-500/10 to-navy-600/10 border border-navy-500/20 rounded-xl p-4 text-center hover:border-navy-400/40 transition-all duration-300">
+              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
                 <Lightbulb className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Tax Optimizer</h5>
                 <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
               </div>
 
-              <div className="bg-gradient-to-br from-navy-500/10 to-navy-600/10 border border-navy-500/20 rounded-xl p-4 text-center hover:border-navy-400/40 transition-all duration-300">
+              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
                 <Building className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Real Estate ROI</h5>
                 <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
               </div>
 
-              <div className="bg-gradient-to-br from-navy-500/10 to-navy-600/10 border border-navy-500/20 rounded-xl p-4 text-center hover:border-navy-400/40 transition-all duration-300">
+              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
                 <Briefcase className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Business Cashflow</h5>
                 <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
               </div>
 
               {/* Protection Track */}
-              <div className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/10 border border-indigo-500/20 rounded-xl p-4 text-center hover:border-indigo-400/40 transition-all duration-300">
+              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
                 <Shield className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Insurance Needs</h5>
                 <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
               </div>
 
-              <div className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/10 border border-indigo-500/20 rounded-xl p-4 text-center hover:border-indigo-400/40 transition-all duration-300">
+              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
                 <Globe className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>FIRE Calculator</h5>
                 <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
@@ -1077,8 +1077,8 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.6 }}
             >
-              <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-blue-600/20 rounded-2xl p-6 hover:border-blue-500/40 transition-all duration-300`}>
-                <div className="w-14 h-14 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-600/25">
+              <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border ${theme.status.info.border} rounded-2xl p-6 hover:${theme.status.info.border}/40 transition-all duration-300`}>
+                <div className={`w-14 h-14 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg`}>
                   <Brain className={`w-7 h-7 ${theme.textColors.primary}`} />
                 </div>
                 <h4 className={`text-xl font-bold ${theme.textColors.primary} mb-3`}>Contextual AI Coaching</h4>

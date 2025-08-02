@@ -53,8 +53,8 @@ export default function Chapter7Page() {
                         <p className={`${theme.textColors.muted} mb-6`}>
                             Complete the previous chapters to unlock this advanced investment education.
                         </p>
-                        <div className="bg-blue-500/20 border border-blue-500/30 rounded-xl p-4 mb-6">
-                            <p className="text-blue-200 text-sm">
+                        <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-xl p-4 mb-6`}>
+                            <p className={`${theme.status.info.text} text-sm`}>
                                 <strong>Prerequisites:</strong> Complete Chapters 1-6 with 80%+ quiz scores
                             </p>
                         </div>
