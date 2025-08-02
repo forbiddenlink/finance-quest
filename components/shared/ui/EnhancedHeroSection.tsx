@@ -42,8 +42,8 @@ export default function EnhancedHeroSection() {
     <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-20">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-32 w-80 h-80 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-32 w-80 h-80 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
+        <div className={`absolute -top-40 -right-32 w-80 h-80 ${theme.status.info.bg.replace('/20', '/40')} rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse`}></div>
+        <div className={`absolute -bottom-40 -left-32 w-80 h-80 ${theme.status.info.bg.replace('/20', '/40')} rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000`}></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -139,11 +139,11 @@ export default function EnhancedHeroSection() {
                   {/* Progress Preview */}
                   <div className="space-y-4">
                     {[
-                      { name: "Money Psychology", progress: 100, color: "bg-green-500" },
-                      { name: "Banking Fundamentals", progress: 80, color: "bg-blue-500" },
-                      { name: "Income & Career", progress: 60, color: "bg-yellow-500" },
-                      { name: "Credit & Debt", progress: 20, color: "bg-gray-300" },
-                      { name: "Emergency Funds", progress: 0, color: "bg-gray-200" }
+                      { name: "Money Psychology", progress: 100, color: theme.status.success.bg.replace('/20', '') },
+                      { name: "Banking Fundamentals", progress: 80, color: theme.status.info.bg.replace('/20', '') },
+                      { name: "Income & Career", progress: 60, color: theme.status.warning.bg.replace('/20', '') },
+                      { name: "Credit & Debt", progress: 20, color: theme.backgrounds.disabled },
+                      { name: "Emergency Funds", progress: 0, color: theme.backgrounds.disabled }
                     ].map((chapter, index) => (
                       <div key={index} className="space-y-2">
                         <div className="flex justify-between text-sm">

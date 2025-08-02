@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { theme } from '@/lib/theme';
 import {
   TrendingUp,
   Users,
@@ -60,24 +61,24 @@ export default function ShadcnStatsCard() {
   const getColorClasses = (color: string) => {
     const colorMap = {
       blue: {
-        bg: 'bg-blue-500',
-        text: 'text-blue-600',
-        badge: 'bg-blue-100 text-blue-800'
+        bg: theme.status.info.bg.replace('/20', ''),
+        text: theme.status.info.text,
+        badge: theme.status.info.bg
       },
       green: {
-        bg: 'bg-blue-500',
-        text: 'text-green-600',
-        badge: 'bg-green-100 text-green-800'
+        bg: theme.status.success.bg.replace('/20', ''),
+        text: theme.status.success.text,
+        badge: theme.status.success.bg
       },
       purple: {
-        bg: 'bg-blue-500',
-        text: 'text-purple-600',
-        badge: 'bg-purple-100 text-purple-800'
+        bg: theme.status.info.bg.replace('/20', ''),
+        text: theme.status.info.text,
+        badge: theme.status.info.bg
       },
       orange: {
-        bg: 'bg-orange-500',
-        text: 'text-orange-600',
-        badge: 'bg-orange-100 text-orange-800'
+        bg: theme.status.warning.bg.replace('/20', ''),
+        text: theme.status.warning.text,
+        badge: theme.status.warning.bg
       }
     };
     return colorMap[color as keyof typeof colorMap];

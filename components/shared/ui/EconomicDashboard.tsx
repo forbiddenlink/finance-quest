@@ -102,8 +102,8 @@ export default function EconomicDashboard() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <div className="bg-blue-500/20 p-2 rounded-lg">
-            <BarChart3 className="w-6 h-6 text-blue-400" />
+          <div className={`${theme.status.info.bg} p-2 rounded-lg`}>
+            <BarChart3 className={`w-6 h-6 ${theme.status.info.text}`} />
           </div>
           <div>
             <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>Economic Dashboard</h3>
@@ -113,7 +113,7 @@ export default function EconomicDashboard() {
           </div>
         </div>
 
-        <div className={`px-3 py-1 rounded-full text-xs font-medium ${isLive ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'
+        <div className={`px-3 py-1 rounded-full text-xs font-medium ${isLive ? `${theme.status.success.bg} ${theme.status.success.text}` : `${theme.status.warning.bg} ${theme.status.warning.text}`
           }`}>
           {isLive ? '🟢 Live Data' : '🟡 Demo Mode'}
         </div>

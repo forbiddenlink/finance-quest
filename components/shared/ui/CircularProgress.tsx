@@ -112,7 +112,7 @@ export default function CircularProgress({
           {[...Array(3)].map((_, i) => (
             <div
               key={i}
-              className={`absolute w-1 h-1 bg-blue-400 rounded-full animate-particle-float opacity-60`}
+              className={`absolute w-1 h-1 ${theme.status.info.bg.replace('/20', '')} rounded-full animate-particle-float opacity-60`}
               style={{
                 left: `${50 + Math.cos(i * 2.1) * 40}%`,
                 top: `${50 + Math.sin(i * 2.1) * 40}%`,

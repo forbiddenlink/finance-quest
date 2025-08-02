@@ -232,12 +232,12 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
 
   const getGradeColor = (grade: string) => {
     switch (grade) {
-      case 'A': return 'bg-green-500';
-      case 'B': return 'bg-blue-500';
-      case 'C': return 'bg-yellow-500';
-      case 'D': return 'bg-orange-500';
-      case 'F': return 'bg-red-500';
-      default: return 'bg-gray-500';
+      case 'A': return theme.status.success.bg.replace('/20', '');
+      case 'B': return theme.status.info.bg.replace('/20', '');
+      case 'C': return theme.status.warning.bg.replace('/20', '');
+      case 'D': return theme.status.warning.bg.replace('/20', '');
+      case 'F': return theme.status.error.bg.replace('/20', '');
+      default: return theme.backgrounds.disabled;
     }
   };
 
@@ -268,9 +268,9 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
             <h3 className={`text-2xl font-bold ${theme.textColors.primary}`}>{currentCategory.category}</h3>
             <span className="text-sm text-gray-600">Step {currentStep + 1} of {questions.length}</span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
             <div
-              className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+              className={`${theme.status.info.bg.replace('/20', '')} h-2 rounded-full transition-all duration-300`}
               style={{ width: `${((currentStep + 1) / questions.length) * 100}%` }}
             ></div>
           </div>
@@ -293,8 +293,8 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                   <button
                     onClick={() => handleInputChange(q.key, true)}
                     className={`px-6 py-3 rounded-lg font-medium transition-all ${responses[q.key as keyof typeof responses] === true
-                      ? 'bg-green-500 text-white'
-                      : 'bg-gray-200 ${theme.textColors.secondary} hover:bg-gray-300'
+                      ? `${theme.status.success.bg.replace('/20', '')} text-white`
+                      : `${theme.backgrounds.disabled} ${theme.textColors.secondary} hover:${theme.backgrounds.card}`
                       }`}
                   >
                     Yes
@@ -302,8 +302,8 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                   <button
                     onClick={() => handleInputChange(q.key, false)}
                     className={`px-6 py-3 rounded-lg font-medium transition-all ${responses[q.key as keyof typeof responses] === false
-                      ? 'bg-red-500 text-white'
-                      : 'bg-gray-200 ${theme.textColors.secondary} hover:bg-gray-300'
+                      ? `${theme.status.error.bg.replace('/20', '')} text-white`
+                      : `${theme.backgrounds.disabled} ${theme.textColors.secondary} hover:${theme.backgrounds.card}`
                       }`}
                   >
                     No
@@ -372,9 +372,9 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                   </div>
                   <span className={`font-bold ${getScoreColor(score)}`}>{score}</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
                   <div
-                    className={`h-2 rounded-full transition-all duration-500 ${score >= 80 ? 'bg-green-500' : score >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                    className={`h-2 rounded-full transition-all duration-500 ${score >= 80 ? theme.status.success.bg.replace('/20', '') : score >= 60 ? theme.status.warning.bg.replace('/20', '') : theme.status.error.bg.replace('/20', '')
                       }`}
                     style={{ width: `${score}%` }}
                   ></div>
@@ -396,7 +396,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
               <ul className="space-y-3">
                 {healthScore.improvements.map((improvement, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className={`w-6 h-6 ${theme.status.error.bg.replace('/20', '')} rounded-full flex items-center justify-center flex-shrink-0 mt-0.5`}>
                       <span className="text-white text-sm font-bold">{idx + 1}</span>
                     </div>
                     <span className={`${theme.textColors.primary}`}>{improvement}</span>

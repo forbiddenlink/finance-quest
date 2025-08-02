@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { theme } from '@/lib/theme';
 import { Building, Calculator, DollarSign, TrendingUp, Target, BarChart3, PieChart } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Pie, Cell } from 'recharts';
@@ -445,10 +446,10 @@ export default function BusinessCalculator() {
                                             <div className="text-sm ${theme.textColors.secondary}">Working Capital</div>
                                             <div className="text-xs text-green-400">Should be positive</div>
                                         </div>
-                                        <div className="text-center p-4 bg-purple-500/20 rounded-lg">
-                                            <div className="text-xl font-bold text-purple-400">{debtToEquityRatio.toFixed(2)}</div>
-                                            <div className="text-sm text-purple-700">Debt-to-Equity</div>
-                                            <div className="text-xs text-purple-400">Lower is better</div>
+                                        <div className={`text-center p-4 ${theme.status.info.bg} rounded-lg`}>
+                                            <div className={`text-xl font-bold ${theme.status.info.text}`}>{debtToEquityRatio.toFixed(2)}</div>
+                                            <div className={`text-sm ${theme.textColors.secondary}`}>Debt-to-Equity</div>
+                                            <div className={`text-xs ${theme.status.info.text}`}>Lower is better</div>
                                         </div>
                                         <div className="text-center p-4 bg-orange-50 rounded-lg">
                                             <div className="text-xl font-bold text-orange-900">{grossMargin.toFixed(1)}%</div>

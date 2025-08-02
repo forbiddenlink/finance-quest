@@ -162,7 +162,7 @@ export default function MarketDashboard() {
             <p className="text-red-600 mb-4">Error loading market data: {error}</p>
             <button
               onClick={fetchMarketData}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className={`px-4 py-2 ${theme.status.info.bg.replace('/20', '')} text-white rounded-lg hover:${theme.status.info.bg.replace('/20', '/80')} transition-colors`}
             >
               Try Again
             </button>
@@ -409,7 +409,7 @@ export default function MarketDashboard() {
         <button
           onClick={fetchMarketData}
           disabled={loading}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors flex items-center gap-2 mx-auto"
+          className={`px-6 py-3 ${theme.status.info.bg.replace('/20', '')} text-white rounded-lg hover:${theme.status.info.bg.replace('/20', '/80')} disabled:opacity-50 transition-colors flex items-center gap-2 mx-auto`}
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           Refresh Market Data

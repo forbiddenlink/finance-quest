@@ -679,10 +679,10 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
       >
         <GradientCard variant="glass" gradient="purple" className="p-8">
           <div className="text-center mb-8">
-            <div className={`w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center ${simulationResult.grade === 'A' ? 'bg-green-500' :
-              simulationResult.grade === 'B' ? 'bg-blue-500' :
-                simulationResult.grade === 'C' ? 'bg-yellow-500' :
-                  simulationResult.grade === 'D' ? 'bg-orange-500' : 'bg-red-500'
+            <div className={`w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center ${simulationResult.grade === 'A' ? theme.status.success.bg.replace('/20', '') :
+              simulationResult.grade === 'B' ? theme.status.info.bg.replace('/20', '') :
+                simulationResult.grade === 'C' ? theme.status.warning.bg.replace('/20', '') :
+                  simulationResult.grade === 'D' ? theme.status.warning.bg.replace('/20', '') : theme.status.error.bg.replace('/20', '')
               }`}>
               <span className="text-3xl font-bold text-white">{simulationResult.grade}</span>
             </div>

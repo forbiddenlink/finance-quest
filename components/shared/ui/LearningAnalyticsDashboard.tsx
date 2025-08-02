@@ -322,8 +322,8 @@ export default function LearningAnalyticsDashboard() {
                   <span className="text-sm text-blue-700">Mastery Rate</span>
                   <span className="text-sm font-medium text-blue-900">87%</span>
                 </div>
-                <div className="w-full bg-blue-200 rounded-full h-2">
-                  <div className="bg-blue-600 h-2 rounded-full" style={{ width: '87%' }}></div>
+                <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
+                  <div className={`${theme.status.info.bg.replace('/20', '')} h-2 rounded-full`} style={{ width: '87%' }}></div>
                 </div>
               </div>
             </div>
