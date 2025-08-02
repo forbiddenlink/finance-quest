@@ -1,7 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
+import GradientCard from '@/components/shared/ui/GradientCard';
+import ProgressRing from '@/components/shared/ui/ProgressRing';
 import {
   Briefcase,
   TrendingUp,
@@ -14,369 +18,89 @@ import {
   Lightbulb,
   Award,
   FileText,
-  Calculator
+  Calculator,
+  ChevronLeft,
+  ChevronRight,
+  Star
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 interface IncomeCareerLessonProps {
-  onComplete: () => void;
+  onComplete?: () => void;
 }
 
-const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
+interface LessonContent {
+  title: string;
+  content: string;
+  keyPoints: string[];
+}
+
+const lessons: LessonContent[] = [
+  {
+    title: "Understanding Your Total Compensation Package",
+    content: "Your salary is just the foundation of your financial house. Understanding your complete compensation package can reveal hidden value worth $10,000-25,000+ annually that many employees never fully utilize. Smart professionals evaluate total compensation, not just base salary.",
+    keyPoints: [
+      "Base salary provides stability but benefits often equal 20-40% additional value",
+      "Health insurance saves $8,000-15,000/year vs individual market rates",
+      "Employer 401k matching is literally free money - maximize it immediately",
+      "Paid time off has monetary value: 15 days = $3,500+ for $60k salary",
+      "Total compensation evaluation prevents leaving money on the table"
+    ]
+  },
+  {
+    title: "Mastering Salary Negotiation Like a Pro",
+    content: "A single successful salary negotiation can increase your lifetime earnings by over $1 million due to compound growth of higher salaries. Yet 68% of people never negotiate. This is the most valuable conversation you'll ever have - here's how to win it.",
+    keyPoints: [
+      "Research market rates using Glassdoor, PayScale, LinkedIn - knowledge is power",
+      "Document quantifiable achievements: '23% sales increase' beats 'good at sales'",
+      "Ask for 10-20% above target salary to leave negotiation room",
+      "Negotiate total package if salary is fixed: PTO, flexible work, development budget",
+      "Practice your pitch out loud - confidence sells better than desperation"
+    ]
+  },
+  {
+    title: "Building Multiple Income Streams for Financial Security",
+    content: "The average millionaire has 7 income streams. Relying on a single job for 100% of income is like driving without insurance - risky and unnecessary. Building diverse income sources creates security, accelerates wealth building, and provides options during economic uncertainty.",
+    keyPoints: [
+      "Skill-based side hustles: $500-2,000/month from freelancing existing expertise",
+      "Digital products create passive income: create once, sell repeatedly forever",
+      "Investment income grows automatically: 4-8% annual returns while you sleep",
+      "Service businesses scale earning potential beyond hourly trading",
+      "Start with one additional stream, then systematically add more over time"
+    ]
+  }
+];
+
+export default function IncomeCareerLesson({ onComplete }: IncomeCareerLessonProps) {
+  const { userProgress, completeLesson } = useProgressStore();
   const [currentLesson, setCurrentLesson] = useState(0);
-  const [lessonProgress, setLessonProgress] = useState<number[]>([]);
+  const [completedLessons, setCompletedLessons] = useState<boolean[]>(new Array(lessons.length).fill(false));
 
-  const lessons = [
-    {
-      id: 'understanding-income',
-      title: 'Understanding Your Total Compensation',
-      icon: <FileText className="w-6 h-6" />,
-      content: (
-        <motion.div
-          className="space-y-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg">
-            <h3 className="text-2xl font-bold mb-4">Beyond Your Paycheck</h3>
-            <p className="text-lg">
-              Your salary is just the beginning. Understanding your total compensation
-              package can reveal hidden value worth thousands of dollars annually.
-            </p>
-          </div>
+  // Load completed lessons from global state
+  useEffect(() => {
+    const newCompleted = lessons.map((lesson, index) =>
+      userProgress.completedLessons.includes(`income-career-${index}`)
+    );
+    setCompletedLessons(newCompleted);
+  }, [userProgress.completedLessons]);
 
-          <div className="grid gap-4">
-            {[
-              {
-                component: 'Base Salary',
-                description: 'Your fixed annual or hourly wage',
-                valueExample: '$60,000/year',
-                tips: ['Negotiable', 'Forms tax base', 'Core income stream'],
-                impact: 'Primary financial foundation'
-              },
-              {
-                component: 'Health Benefits',
-                description: 'Medical, dental, vision insurance',
-                valueExample: '$8,000-15,000/year value',
-                tips: ['Compare premium costs', 'Consider deductibles', 'Family coverage options'],
-                impact: 'Major expense protection'
-              },
-              {
-                component: 'Retirement Matching',
-                description: 'Employer 401k/403b contributions',
-                valueExample: '3-6% salary match = $1,800-3,600',
-                tips: ['Always maximize match', 'Free money', 'Compound growth'],
-                impact: 'Long-term wealth building'
-              },
-              {
-                component: 'Paid Time Off',
-                description: 'Vacation, sick days, holidays',
-                valueExample: '15 days = $3,500 value',
-                tips: ['Factor into hourly rate', 'Work-life balance', 'Mental health'],
-                impact: 'Quality of life enhancement'
-              },
-              {
-                component: 'Bonuses & Incentives',
-                description: 'Performance, signing, retention bonuses',
-                valueExample: '10-25% of base salary',
-                tips: ['Understand criteria', 'Budget conservatively', 'Performance-based'],
-                impact: 'Income acceleration opportunity'
-              }
-            ].map((comp, index) => (
-              <motion.div
-                key={comp.component}
-                className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <h4 className="text-xl font-semibold text-gray-800">{comp.component}</h4>
-                  <span className="text-green-600 font-bold text-sm bg-green-100 px-2 py-1 rounded">
-                    {comp.valueExample}
-                  </span>
-                </div>
-                <p className="text-gray-600 mb-3">{comp.description}</p>
-                <div className="mb-3">
-                  <h5 className="font-medium text-gray-700 mb-2">Key Considerations:</h5>
-                  <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
-                    {comp.tips.map((tip, idx) => (
-                      <li key={idx}>{tip}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="text-sm text-blue-600 font-medium">
-                  💡 Impact: {comp.impact}
-                </div>
-              </motion.div>
-            ))}
-          </div>
+  const markComplete = () => {
+    const lessonId = `income-career-${currentLesson}`;
+    completeLesson(lessonId, 15);
 
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
-            <div className="flex items-center">
-              <Calculator className="w-5 h-5 text-yellow-400 mr-2" />
-              <h4 className="font-semibold text-yellow-800">Total Compensation Calculator</h4>
-            </div>
-            <p className="text-yellow-700 mt-2">
-              A $60,000 salary with full benefits, 401k match, and PTO can have a total value
-              of $75,000-85,000. Always evaluate job offers on total compensation, not just salary!
-            </p>
-          </div>
-        </motion.div>
-      )
-    },
-    {
-      id: 'salary-negotiation',
-      title: 'Mastering Salary Negotiation',
-      icon: <TrendingUp className="w-6 h-6" />,
-      content: (
-        <motion.div
-          className="space-y-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 rounded-lg">
-            <h3 className="text-2xl font-bold mb-4">The $1 Million Conversation</h3>
-            <p className="text-lg">
-              A successful salary negotiation can increase your lifetime earnings by over
-              $1 million. Yet 68% of people never negotiate their salary. Don&apos;t be one of them.
-            </p>
-          </div>
+    const newCompleted = [...completedLessons];
+    newCompleted[currentLesson] = true;
+    setCompletedLessons(newCompleted);
 
-          <div className="space-y-4">
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h4 className="text-xl font-semibold mb-4 text-gray-800 flex items-center">
-                <Target className="w-5 h-5 mr-2 text-blue-500" />
-                The Negotiation Framework
-              </h4>
+    // Show success toast
+    toast.success(`"${lesson.title}" completed!`, {
+      duration: 3000,
+      position: 'top-center',
+    });
 
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-blue-600 font-bold">1</span>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-gray-800">Research Market Rates</h5>
-                    <p className="text-gray-600 text-sm">Use Glassdoor, PayScale, LinkedIn Salary Insights. Know your worth in your market.</p>
-                    <div className="text-xs text-green-600 mt-1">💰 This step alone can justify 5-15% increases</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-green-600 font-bold">2</span>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-gray-800">Document Your Value</h5>
-                    <p className="text-gray-600 text-sm">Quantify achievements: &quot;Increased sales by 23%&quot; not &quot;good at sales&quot;</p>
-                    <div className="text-xs text-green-600 mt-1">📈 Specific metrics justify higher compensation</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-purple-600 font-bold">3</span>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-gray-800">Ask for 10-20% Above Target</h5>
-                    <p className="text-gray-600 text-sm">Negotiate down from your high anchor. Leave room for compromise.</p>
-                    <div className="text-xs text-green-600 mt-1">🎯 High anchors lead to better final outcomes</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-orange-600 font-bold">4</span>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-gray-800">Negotiate Total Package</h5>
-                    <p className="text-gray-600 text-sm">If salary is fixed, negotiate PTO, flexible work, professional development, title</p>
-                    <div className="text-xs text-green-600 mt-1">🔄 Multiple paths to increased value</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                <h5 className="font-semibold text-green-800 mb-2 flex items-center">
-                  <CheckCircle className="w-4 h-4 mr-2" />
-                  Do This
-                </h5>
-                <ul className="text-sm text-green-700 space-y-1">
-                  <li>• Practice your pitch out loud</li>
-                  <li>• Schedule when boss isn&apos;t stressed</li>
-                  <li>• Focus on future value you&apos;ll bring</li>
-                  <li>• Be specific about dollar amounts</li>
-                  <li>• Express enthusiasm for the role</li>
-                </ul>
-              </div>
-
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <h5 className="font-semibold text-red-800 mb-2 flex items-center">
-                  <AlertCircle className="w-4 h-4 mr-2" />
-                  Avoid This
-                </h5>
-                <ul className="text-sm text-red-700 space-y-1">
-                  <li>• Comparing yourself to coworkers</li>
-                  <li>• Mentioning personal financial needs</li>
-                  <li>• Negotiating over email initially</li>
-                  <li>• Being demanding or threatening</li>
-                  <li>• Accepting the first &quot;no&quot; as final</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
-            <div className="flex items-center">
-              <Award className="w-5 h-5 text-blue-400 mr-2" />
-              <h4 className="font-semibold text-blue-800">Success Story</h4>
-            </div>
-            <p className="text-blue-700 mt-2">
-              &quot;I researched my role and found I was 18% below market rate. I prepared a one-page
-              document showing my achievements and asked for a 25% increase during my review.
-              I got 20% immediately and a promise for the remaining 5% in six months.&quot; - Sarah, Marketing Manager
-            </p>
-          </div>
-        </motion.div>
-      )
-    },
-    {
-      id: 'income-streams',
-      title: 'Building Multiple Income Streams',
-      icon: <DollarSign className="w-6 h-6" />,
-      content: (
-        <motion.div
-          className="space-y-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <div className="bg-gradient-to-r from-blue-500 to-slate-600 text-white p-6 rounded-lg">
-            <h3 className="text-2xl font-bold mb-4">Financial Security Through Diversification</h3>
-            <p className="text-lg">
-              The average millionaire has 7 income streams. Building multiple income sources
-              creates financial security and accelerates wealth building.
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {[
-              {
-                type: 'Skill-Based Side Hustle',
-                icon: <Lightbulb className="w-8 h-8 text-yellow-500" />,
-                timeCommitment: '5-15 hours/week',
-                income: '$500-2,000/month',
-                examples: ['Freelance writing', 'Graphic design', 'Web development', 'Tutoring', 'Photography'],
-                startupCost: 'Low ($0-500)',
-                difficulty: 'Medium',
-                description: 'Monetize existing skills or develop new ones'
-              },
-              {
-                type: 'Digital Products',
-                icon: <Target className="w-8 h-8 text-blue-500" />,
-                timeCommitment: '10-20 hours upfront',
-                income: '$100-5,000/month',
-                examples: ['Online courses', 'Ebooks', 'Templates', 'Stock photos', 'Mobile apps'],
-                startupCost: 'Very Low ($0-200)',
-                difficulty: 'Medium-High',
-                description: 'Create once, sell repeatedly with passive income potential'
-              },
-              {
-                type: 'Investment Income',
-                icon: <TrendingUp className="w-8 h-8 text-green-500" />,
-                timeCommitment: '1-2 hours/month',
-                income: '4-8% annual returns',
-                examples: ['Dividend stocks', 'REITs', 'Index funds', 'Bonds', 'Crypto (small %)'],
-                startupCost: 'Medium ($1,000+)',
-                difficulty: 'Low-Medium',
-                description: 'Money working for you while you sleep'
-              },
-              {
-                type: 'Service Business',
-                icon: <Users className="w-8 h-8 text-purple-500" />,
-                timeCommitment: '10-40 hours/week',
-                income: '$1,000-10,000/month',
-                examples: ['Consulting', 'Coaching', 'Local services', 'Virtual assistant', 'Bookkeeping'],
-                startupCost: 'Low-Medium ($200-2,000)',
-                difficulty: 'Medium-High',
-                description: 'Leverage expertise to help others solve problems'
-              }
-            ].map((stream, index) => (
-              <motion.div
-                key={stream.type}
-                className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0">
-                    {stream.icon}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-xl font-semibold text-gray-800">{stream.type}</h4>
-                      <span className="text-green-600 font-bold text-sm">
-                        {stream.income}
-                      </span>
-                    </div>
-                    <p className="text-gray-600 mb-3">{stream.description}</p>
-
-                    <div className="grid md:grid-cols-3 gap-4 mb-3">
-                      <div>
-                        <span className="text-xs font-medium text-gray-500">TIME COMMITMENT</span>
-                        <div className="text-sm text-gray-700">{stream.timeCommitment}</div>
-                      </div>
-                      <div>
-                        <span className="text-xs font-medium text-gray-500">STARTUP COST</span>
-                        <div className="text-sm text-gray-700">{stream.startupCost}</div>
-                      </div>
-                      <div>
-                        <span className="text-xs font-medium text-gray-500">DIFFICULTY</span>
-                        <div className="text-sm text-gray-700">{stream.difficulty}</div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <h5 className="font-medium text-gray-700 mb-2">Popular Examples:</h5>
-                      <div className="flex flex-wrap gap-2">
-                        {stream.examples.map((example, idx) => (
-                          <span key={idx} className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
-                            {example}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="bg-gradient-to-r from-blue-50 to-blue-50 border border-blue-200 rounded-lg p-4">
-            <div className="flex items-center">
-              <Briefcase className="w-5 h-5 text-green-600 mr-2" />
-              <h4 className="font-semibold text-green-800">Your Income Diversification Plan</h4>
-            </div>
-            <div className="mt-3 space-y-2">
-              <p className="text-green-700 font-medium">Phase 1 (0-6 months): Master your primary income</p>
-              <p className="text-green-700 font-medium">Phase 2 (6-12 months): Start one skill-based side hustle</p>
-              <p className="text-green-700 font-medium">Phase 3 (1-2 years): Build investment income foundation</p>
-              <p className="text-green-700 font-medium">Phase 4 (2+ years): Scale successful streams, add new ones</p>
-            </div>
-          </div>
-        </motion.div>
-      )
-    }
-  ];
-
-  const handleLessonComplete = (lessonIndex: number) => {
-    if (!lessonProgress.includes(lessonIndex)) {
-      setLessonProgress([...lessonProgress, lessonIndex]);
-    }
-
-    if (lessonIndex === lessons.length - 1) {
-      setTimeout(() => onComplete(), 1000);
+    // Call parent completion callback when all lessons are done
+    if (currentLesson === lessons.length - 1) {
+      onComplete?.();
     }
   };
 
@@ -392,88 +116,222 @@ const IncomeCareerLesson = ({ onComplete }: IncomeCareerLessonProps) => {
     }
   };
 
-  const currentLessonData = lessons[currentLesson];
+  const lesson = lessons[currentLesson];
+  const progress = ((currentLesson + 1) / lessons.length) * 100;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-      {/* Progress Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
-        <div className="flex items-center justify-between mb-4">
+    <div className="max-w-4xl mx-auto">
+      {/* Enhanced Progress Ring */}
+      <div className="flex justify-center mb-6">
+        <ProgressRing
+          progress={progress}
+          size={100}
+          color="#10B981"
+          className="animate-bounce-in"
+        />
+      </div>
+
+      <GradientCard variant="glass" gradient="green" className="p-8">
+        {/* Header with Icons */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-3">
+              <div className={`${theme.status.success.bg} p-2 rounded-lg animate-float`}>
+                <Briefcase className={`w-6 h-6 ${theme.status.success.text}`} />
+              </div>
+              <span className={`text-sm font-medium ${theme.status.success.text} animate-fade-in-up`}>
+                Lesson {currentLesson + 1} of {lessons.length}
+              </span>
+            </div>
+            <span className={`text-sm ${theme.textColors.muted} animate-fade-in-up stagger-1`}>
+              Chapter 3: Income & Career Finance
+            </span>
+          </div>
+
+          <h1 className={`text-3xl font-bold ${theme.textColors.primary} mb-4 animate-fade-in-up stagger-2 gradient-text-green`}>
+            {lesson.title}
+          </h1>
+        </div>
+
+        {/* Content with Enhanced Styling */}
+        <div className="mb-8">
+          <p className={`text-lg ${theme.textColors.secondary} leading-relaxed mb-6 animate-fade-in-up stagger-3`}>
+            {lesson.content}
+          </p>
+
+          {/* Enhanced Key Points */}
+          <GradientCard variant="glass" gradient="blue" className="p-6 animate-fade-in-up stagger-4">
+            <div className="flex items-center mb-4">
+              <div className={`${theme.status.info.bg} p-2 rounded-lg mr-3 animate-wiggle`}>
+                <Star className={`w-5 h-5 ${theme.status.info.text}`} />
+              </div>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Key Points</h3>
+            </div>
+            <ul className="space-y-3">
+              {lesson.keyPoints.map((point, index) => (
+                <li key={index} className={`flex items-start animate-slide-in-right stagger-${(index % 4) + 1}`}>
+                  <div className={`flex-shrink-0 w-6 h-6 ${theme.status.info.bg} rounded-full flex items-center justify-center mt-1 mr-3 animate-glow-pulse`}>
+                    <CheckCircle className="w-4 h-4 text-white" />
+                  </div>
+                  <span className={`${theme.textColors.secondary} font-medium`}>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </GradientCard>
+        </div>
+
+        {/* Interactive Exercises for Better Retention */}
+        {currentLesson === 0 && (
+          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-lg`}>
+            <h3 className={`text-lg font-semibold ${theme.textColors.accent} mb-3 flex items-center gap-2`}>
+              <Calculator className="w-5 h-5" />
+              Total Compensation Assessment
+            </h3>
+            <div className={`${theme.textColors.secondary} space-y-3`}>
+              <p className={`font-medium ${theme.textColors.primary}`}>Calculate your true compensation value:</p>
+              <ul className={`list-disc list-inside space-y-2 ml-4 ${theme.textColors.secondary}`}>
+                <li>Base salary: $______/year</li>
+                <li>Health insurance value: $______/year (check marketplace rates)</li>
+                <li>401k match: $______/year (employer contribution)</li>
+                <li>PTO value: $______/year (days × daily salary)</li>
+                <li>Other benefits: $______/year</li>
+              </ul>
+              <p className={`mt-4 font-medium ${theme.textColors.accent}`}>
+                💡 <strong>Total Package Value:</strong> Often 25-40% higher than base salary!
+              </p>
+            </div>
+          </div>
+        )}
+
+        {currentLesson === 1 && (
+          <div className={`mb-8 p-6 ${theme.status.warning.bg} rounded-lg border-l-4 ${theme.status.warning.border}`}>
+            <h3 className={`text-lg font-semibold ${theme.status.warning.text} mb-3 flex items-center gap-2`}>
+              <Target className="w-5 h-5" />
+              Salary Negotiation Preparation Checklist
+            </h3>
+            <div className={`${theme.textColors.secondary} space-y-4`}>
+              <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
+                <p className={`font-medium ${theme.textColors.primary} mb-2`}>Before the Conversation:</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <p className={`font-medium ${theme.status.success.text} mb-2`}>✅ Research Completed:</p>
+                    <ul className={`list-disc list-inside space-y-1 ml-4 ${theme.textColors.secondary} text-sm`}>
+                      <li>Market salary range identified</li>
+                      <li>Achievement list documented</li>
+                      <li>Value proposition written</li>
+                      <li>Pitch practiced 3+ times</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className={`font-medium ${theme.status.info.text} mb-2`}>🎯 Target Numbers:</p>
+                    <ul className={`list-disc list-inside space-y-1 ml-4 ${theme.textColors.secondary} text-sm`}>
+                      <li>Current salary: $______</li>
+                      <li>Market rate: $______</li>
+                      <li>Target ask: $______ (+15-20%)</li>
+                      <li>Minimum acceptable: $______</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <p className={`mt-4 font-medium ${theme.status.warning.text}`}>
+                💡 <strong>Remember:</strong> Confidence + preparation = better outcomes!
+              </p>
+            </div>
+          </div>
+        )}
+
+        {currentLesson === 2 && (
+          <div className={`mb-8 p-6 ${theme.status.info.bg} rounded-lg border-l-4 ${theme.status.info.border}`}>
+            <h3 className={`text-lg font-semibold ${theme.status.info.text} mb-3 flex items-center gap-2`}>
+              <DollarSign className="w-5 h-5" />
+              Income Stream Builder Plan
+            </h3>
+            <div className={`${theme.textColors.secondary} space-y-4`}>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
+                  <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
+                    <Lightbulb className="w-4 h-4 text-yellow-400" />
+                    Phase 1: Skills
+                  </h4>
+                  <p className={`text-sm ${theme.textColors.secondary}`}>Freelance your existing expertise for $500-2,000/month</p>
+                </div>
+                <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
+                  <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
+                    <Target className="w-4 h-4 text-blue-400" />
+                    Phase 2: Digital
+                  </h4>
+                  <p className={`text-sm ${theme.textColors.secondary}`}>Create digital products for passive income streams</p>
+                </div>
+                <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
+                  <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
+                    <TrendingUp className="w-4 h-4 text-green-400" />
+                    Phase 3: Invest
+                  </h4>
+                  <p className={`text-sm ${theme.textColors.secondary}`}>Build investment portfolio for compound growth</p>
+                </div>
+                <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
+                  <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
+                    <Users className="w-4 h-4 text-purple-400" />
+                    Phase 4: Scale
+                  </h4>
+                  <p className={`text-sm ${theme.textColors.secondary}`}>Service business with scalable systems</p>
+                </div>
+              </div>
+              <p className={`mt-4 font-medium ${theme.status.info.text}`}>
+                💡 <strong>Start Small:</strong> Focus on one stream until profitable, then systematically add more!
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Enhanced Navigation */}
+        <div className="flex items-center justify-between animate-fade-in-up stagger-4">
+          <div className="flex space-x-3">
+            <button
+              onClick={prevLesson}
+              disabled={currentLesson === 0}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+            >
+              <ChevronLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+              Previous
+            </button>
+            <button
+              onClick={nextLesson}
+              disabled={currentLesson === lessons.length - 1}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+            >
+              Next
+              <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+
           <div className="flex items-center space-x-3">
-            {currentLessonData.icon}
-            <h2 className="text-2xl font-bold">{currentLessonData.title}</h2>
+            {!completedLessons[currentLesson] && (
+              <button
+                onClick={markComplete}
+                className={`group flex items-center px-6 py-3 ${theme.buttons.primary} rounded-xl transition-all shadow-lg hover-lift morph-button animate-glow-pulse`}
+              >
+                <CheckCircle className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                Mark Complete
+              </button>
+            )}
+            {completedLessons[currentLesson] && (
+              <div className={`flex items-center px-6 py-3 ${theme.status.success.bg} ${theme.status.success.text} rounded-xl font-medium animate-bounce-in`}>
+                <CheckCircle className="w-5 h-5 mr-2 animate-wiggle" />
+                Completed
+              </div>
+            )}
           </div>
-          <div className="text-sm bg-white/20 px-3 py-1 rounded-full">
-            {currentLesson + 1} of {lessons.length}
+        </div>
+
+        {/* Completion Status */}
+        <div className={`mt-6 pt-6 border-t ${theme.borderColors.primary}`}>
+          <div className={`flex items-center justify-between text-sm ${theme.textColors.secondary}`}>
+            <span>Progress: {completedLessons.filter(Boolean).length} of {lessons.length} lessons completed</span>
+            <span>{progress.toFixed(0)}% Complete</span>
           </div>
         </div>
-
-        <div className="w-full bg-white/20 rounded-full h-2">
-          <motion.div
-            className="bg-white h-2 rounded-full"
-            initial={{ width: '0%' }}
-            animate={{ width: `${((currentLesson + 1) / lessons.length) * 100}%` }}
-            transition={{ duration: 0.5 }}
-          />
-        </div>
-      </div>
-
-      {/* Lesson Content */}
-      <div className="p-6">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentLesson}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {currentLessonData.content}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Navigation */}
-      <div className="bg-gray-50 px-6 py-4 flex justify-between items-center">
-        <button
-          onClick={prevLesson}
-          disabled={currentLesson === 0}
-          className="px-4 py-2 text-gray-600 hover:text-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
-          Previous
-        </button>
-
-        <div className="flex space-x-2">
-          {lessons.map((_, index) => (
-            <div
-              key={index}
-              className={`w-3 h-3 rounded-full transition-colors ${index === currentLesson
-                ? 'bg-green-500'
-                : index < currentLesson
-                  ? 'bg-blue-500'
-                  : 'bg-gray-300'
-                }`}
-            />
-          ))}
-        </div>
-
-        <motion.button
-          onClick={() => {
-            handleLessonComplete(currentLesson);
-            if (currentLesson < lessons.length - 1) {
-              nextLesson();
-            }
-          }}
-          className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          {currentLesson === lessons.length - 1 ? 'Complete Lesson' : 'Next'}
-          <ArrowRight className="w-4 h-4 ml-2" />
-        </motion.button>
-      </div>
+      </GradientCard>
     </div>
   );
-};
-
-export default IncomeCareerLesson;
+}

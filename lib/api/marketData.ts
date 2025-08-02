@@ -75,8 +75,9 @@ class MarketDataService {
 
       for (const symbol of symbols) {
         try {
-          // Using demo token for Finnhub (free but rate limited)
-          const url = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=demo`;
+          // Use environment variable for Finnhub API key
+          const apiKey = process.env.FINNHUB_API_KEY || 'demo';
+          const url = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${apiKey}`;
 
           const response = await this.fetchWithTimeout(url);
 

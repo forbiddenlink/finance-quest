@@ -134,7 +134,7 @@ export default function MoneyFundamentalsQuiz() {
     const passed = percentage >= 80;
 
     // Record the quiz score
-    recordQuizScore('money-fundamentals-quiz', percentage, quizQuestions.length);
+    recordQuizScore('money-fundamentals-quiz', score, quizQuestions.length);
 
     // Show celebration for passing
     if (passed) {

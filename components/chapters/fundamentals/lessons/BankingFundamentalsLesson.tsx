@@ -1,7 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
+import GradientCard from '@/components/shared/ui/GradientCard';
+import ProgressRing from '@/components/shared/ui/ProgressRing';
 import {
   Building2,
   CreditCard,
@@ -11,278 +15,87 @@ import {
   ArrowRight,
   CheckCircle,
   AlertCircle,
-  TrendingUp
+  TrendingUp,
+  ChevronRight,
+  ChevronLeft,
+  Lightbulb,
+  Star
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 interface BankingFundamentalsLessonProps {
-  onComplete: () => void;
+  onComplete?: () => void;
 }
 
-const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProps) => {
+interface LessonContent {
+  title: string;
+  content: string;
+  keyPoints: string[];
+}
+
+const lessons: LessonContent[] = [
+  {
+    title: "Banking Account Types: Your Financial Foundation",
+    content: "Understanding different account types is like knowing the different tools in a toolbox - each one serves a specific purpose in your financial life. Choosing the right accounts can save you hundreds in fees while maximizing your earning potential.",
+    keyPoints: [
+      "Checking accounts for daily transactions - focus on low fees and convenience",
+      "Savings accounts for emergency funds - prioritize high interest rates and FDIC insurance", 
+      "Money market accounts offer higher rates with more flexibility but require higher balances",
+      "Online banks typically offer 10-100x higher interest rates than traditional banks"
+    ]
+  },
+  {
+    title: "Banking Fees: The Silent Wealth Killer",
+    content: "Banking fees cost the average American $329 per year - that's money stolen from your future. Learning to avoid these fees is like giving yourself an instant pay raise. Most fees are completely avoidable with the right knowledge and banking setup.",
+    keyPoints: [
+      "Monthly maintenance fees can cost $120-180/year - avoid with minimum balance or direct deposit",
+      "Overdraft fees average $35 per incident - set up alerts and overdraft protection to avoid",
+      "ATM fees can cost $50-100/year - use in-network ATMs or banks with fee reimbursement",
+      "Smart bank selection can save you $300+ annually in fees alone"
+    ]
+  },
+  {
+    title: "Optimizing Your Banking Strategy",
+    content: "The right banking setup works harder for you, earning more while costing less. Most successful savers use a 'banking trifecta' combining local convenience with online bank rates for maximum benefit.",
+    keyPoints: [
+      "Primary checking at local credit union for daily needs and ATM access",
+      "High-yield savings online earning 4-5% APY vs 0.01% at traditional banks",
+      "Automate transfers: 70% checking, 20% savings, 10% investments from direct deposit",
+      "A $10,000 emergency fund earns $449 more per year in high-yield vs traditional savings"
+    ]
+  }
+];
+
+export default function BankingFundamentalsLesson({ onComplete }: BankingFundamentalsLessonProps) {
+  const { userProgress, completeLesson } = useProgressStore();
   const [currentLesson, setCurrentLesson] = useState(0);
-  const [lessonProgress, setLessonProgress] = useState<number[]>([]);
+  const [completedLessons, setCompletedLessons] = useState<boolean[]>(new Array(lessons.length).fill(false));
 
-  const lessons = [
-    {
-      id: 'account-types',
-      title: 'Understanding Account Types',
-      icon: <Building2 className="w-6 h-6" />,
-      content: (
-        <motion.div
-          className="space-y-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-lg">
-            <h3 className="text-2xl font-bold mb-4">Your Banking Foundation</h3>
-            <p className="text-lg">
-              Understanding different account types is like knowing the different tools in a toolbox -
-              each one serves a specific purpose in your financial life.
-            </p>
-          </div>
+  // Load completed lessons from global state
+  useEffect(() => {
+    const newCompleted = lessons.map((lesson, index) =>
+      userProgress.completedLessons.includes(`banking-fundamentals-${index}`)
+    );
+    setCompletedLessons(newCompleted);
+  }, [userProgress.completedLessons]);
 
-          <div className="grid gap-4">
-            {[
-              {
-                type: 'Checking Account',
-                icon: <CreditCard className="w-8 h-8 text-blue-500" />,
-                purpose: 'Daily transactions and bill payments',
-                features: ['Debit card access', 'Check writing', 'Online banking', 'ATM access'],
-                bestFor: 'Everyday spending and money management'
-              },
-              {
-                type: 'Savings Account',
-                icon: <PiggyBank className="w-8 h-8 text-green-500" />,
-                purpose: 'Growing money with interest',
-                features: ['Earns interest', 'FDIC insured', 'Limited transactions', 'Emergency fund storage'],
-                bestFor: 'Emergency funds and short-term goals'
-              },
-              {
-                type: 'Money Market Account',
-                icon: <TrendingUp className="w-8 h-8 text-purple-500" />,
-                purpose: 'Higher interest with more flexibility',
-                features: ['Higher interest rates', 'Check writing ability', 'Debit card access', 'Higher minimum balance'],
-                bestFor: 'Larger emergency funds and medium-term savings'
-              }
-            ].map((account, index) => (
-              <motion.div
-                key={account.type}
-                className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0">
-                    {account.icon}
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-xl font-semibold text-gray-800 mb-2">{account.type}</h4>
-                    <p className="text-gray-600 mb-3">{account.purpose}</p>
-                    <div className="mb-3">
-                      <h5 className="font-medium text-gray-700 mb-2">Key Features:</h5>
-                      <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
-                        {account.features.map((feature, idx) => (
-                          <li key={idx}>{feature}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="text-sm text-blue-600 font-medium">
-                      Best for: {account.bestFor}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+  const markComplete = () => {
+    const lessonId = `banking-fundamentals-${currentLesson}`;
+    completeLesson(lessonId, 12);
 
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
-            <div className="flex items-center">
-              <AlertCircle className="w-5 h-5 text-yellow-400 mr-2" />
-              <h4 className="font-semibold text-yellow-800">Pro Tip</h4>
-            </div>
-            <p className="text-yellow-700 mt-2">
-              Most successful savers use a &quot;banking trifecta&quot;: one checking account for daily expenses,
-              one high-yield savings for emergencies, and one money market or CD for longer-term goals.
-            </p>
-          </div>
-        </motion.div>
-      )
-    },
-    {
-      id: 'banking-fees',
-      title: 'Avoiding Banking Fees',
-      icon: <Shield className="w-6 h-6" />,
-      content: (
-        <motion.div
-          className="space-y-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <div className="bg-gradient-to-r from-red-500 to-pink-600 text-white p-6 rounded-lg">
-            <h3 className="text-2xl font-bold mb-4">The Hidden Fee Trap</h3>
-            <p className="text-lg">
-              Banking fees can cost the average American $329 per year. Learning to avoid them
-              is like giving yourself an instant pay raise!
-            </p>
-          </div>
+    const newCompleted = [...completedLessons];
+    newCompleted[currentLesson] = true;
+    setCompletedLessons(newCompleted);
 
-          <div className="grid gap-4">
-            {[
-              {
-                fee: 'Monthly Maintenance',
-                cost: '$10-15/month',
-                howToAvoid: 'Maintain minimum balance or direct deposit',
-                impact: '$120-180/year saved'
-              },
-              {
-                fee: 'Overdraft Fees',
-                cost: '$35 per incident',
-                howToAvoid: 'Set up overdraft protection or alerts',
-                impact: 'Average person pays $245/year'
-              },
-              {
-                fee: 'ATM Fees',
-                cost: '$3-5 per transaction',
-                howToAvoid: 'Use in-network ATMs or get fee reimbursement',
-                impact: '$50-100/year saved'
-              },
-              {
-                fee: 'Minimum Balance',
-                cost: '$25/month',
-                howToAvoid: 'Choose account with low/no minimum',
-                impact: '$300/year saved'
-              }
-            ].map((feeInfo, index) => (
-              <motion.div
-                key={feeInfo.fee}
-                className="bg-white border border-gray-200 rounded-lg p-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-semibold text-gray-800">{feeInfo.fee}</h4>
-                  <span className="text-red-600 font-bold">{feeInfo.cost}</span>
-                </div>
-                <p className="text-gray-600 mb-2">{feeInfo.howToAvoid}</p>
-                <div className="text-green-600 font-medium text-sm">
-                  💰 {feeInfo.impact}
-                </div>
-              </motion.div>
-            ))}
-          </div>
+    // Show success toast
+    toast.success(`"${lesson.title}" completed!`, {
+      duration: 3000,
+      position: 'top-center',
+    });
 
-          <div className="bg-green-50 border-l-4 border-green-400 p-4">
-            <div className="flex items-center">
-              <CheckCircle className="w-5 h-5 text-green-400 mr-2" />
-              <h4 className="font-semibold text-green-800">Smart Banking Strategy</h4>
-            </div>
-            <p className="text-green-700 mt-2">
-              Choose online banks or credit unions for higher interest rates and lower fees.
-              Many offer fee-free accounts with better customer service than traditional banks.
-            </p>
-          </div>
-        </motion.div>
-      )
-    },
-    {
-      id: 'account-optimization',
-      title: 'Optimizing Your Banking Setup',
-      icon: <DollarSign className="w-6 h-6" />,
-      content: (
-        <motion.div
-          className="space-y-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg">
-            <h3 className="text-2xl font-bold mb-4">Maximize Your Banking Power</h3>
-            <p className="text-lg">
-              With the right setup, your bank accounts work harder for you, earning more while
-              costing less. Let&apos;s build your optimized banking foundation.
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h4 className="text-xl font-semibold mb-4 text-gray-800">The Optimal Banking Setup</h4>
-
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-blue-600 font-bold">1</span>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-gray-800">Primary Checking (Local Credit Union)</h5>
-                    <p className="text-gray-600">For daily expenses, ATM access, and in-person banking needs</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-green-600 font-bold">2</span>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-gray-800">High-Yield Savings (Online Bank)</h5>
-                    <p className="text-gray-600">For emergency fund - earning 4-5% APY vs 0.01% traditional banks</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-purple-600 font-bold">3</span>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-gray-800">Goal-Specific Accounts</h5>
-                    <p className="text-gray-600">Separate savings for vacation, car, home down payment, etc.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h4 className="text-xl font-semibold mb-4 text-gray-800">Automation Setup</h4>
-
-              <div className="space-y-3">
-                {[
-                  'Direct deposit: 70% checking, 20% savings, 10% investment',
-                  'Automatic emergency fund transfer: $100-500/month',
-                  'Bill pay automation for fixed expenses',
-                  'Alert systems for low balances and unusual activity'
-                ].map((tip, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                    <span className="text-gray-700">{tip}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
-            <div className="flex items-center">
-              <TrendingUp className="w-5 h-5 text-blue-400 mr-2" />
-              <h4 className="font-semibold text-blue-800">Real Impact</h4>
-            </div>
-            <p className="text-blue-700 mt-2">
-              Moving a $10,000 emergency fund from a 0.01% traditional savings to a 4.5% high-yield
-              savings account earns you an extra $449 per year - just for making one smart choice!
-            </p>
-          </div>
-        </motion.div>
-      )
-    }
-  ];
-
-  const handleLessonComplete = (lessonIndex: number) => {
-    if (!lessonProgress.includes(lessonIndex)) {
-      setLessonProgress([...lessonProgress, lessonIndex]);
-    }
-
-    if (lessonIndex === lessons.length - 1) {
-      // Mark entire lesson as complete
-      setTimeout(() => onComplete(), 1000);
+    // Call parent completion callback when all lessons are done
+    if (currentLesson === lessons.length - 1) {
+      onComplete?.();
     }
   };
 
@@ -298,88 +111,216 @@ const BankingFundamentalsLesson = ({ onComplete }: BankingFundamentalsLessonProp
     }
   };
 
-  const currentLessonData = lessons[currentLesson];
+  const lesson = lessons[currentLesson];
+  const progress = ((currentLesson + 1) / lessons.length) * 100;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-      {/* Progress Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6">
-        <div className="flex items-center justify-between mb-4">
+    <div className="max-w-4xl mx-auto">
+      {/* Enhanced Progress Ring */}
+      <div className="flex justify-center mb-6">
+        <ProgressRing
+          progress={progress}
+          size={100}
+          color="#3B82F6"
+          className="animate-bounce-in"
+        />
+      </div>
+
+      <GradientCard variant="glass" gradient="blue" className="p-8">
+        {/* Header with Icons */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-3">
+              <div className={`${theme.status.info.bg} p-2 rounded-lg animate-float`}>
+                <Building2 className={`w-6 h-6 ${theme.status.info.text}`} />
+              </div>
+              <span className={`text-sm font-medium ${theme.status.info.text} animate-fade-in-up`}>
+                Lesson {currentLesson + 1} of {lessons.length}
+              </span>
+            </div>
+            <span className={`text-sm ${theme.textColors.muted} animate-fade-in-up stagger-1`}>
+              Chapter 2: Banking Fundamentals
+            </span>
+          </div>
+
+          <h1 className={`text-3xl font-bold ${theme.textColors.primary} mb-4 animate-fade-in-up stagger-2 gradient-text-blue`}>
+            {lesson.title}
+          </h1>
+        </div>
+
+        {/* Content with Enhanced Styling */}
+        <div className="mb-8">
+          <p className={`text-lg ${theme.textColors.secondary} leading-relaxed mb-6 animate-fade-in-up stagger-3`}>
+            {lesson.content}
+          </p>
+
+          {/* Enhanced Key Points */}
+          <GradientCard variant="glass" gradient="green" className="p-6 animate-fade-in-up stagger-4">
+            <div className="flex items-center mb-4">
+              <div className={`${theme.status.success.bg} p-2 rounded-lg mr-3 animate-wiggle`}>
+                <Star className={`w-5 h-5 ${theme.status.success.text}`} />
+              </div>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Key Points</h3>
+            </div>
+            <ul className="space-y-3">
+              {lesson.keyPoints.map((point, index) => (
+                <li key={index} className={`flex items-start animate-slide-in-right stagger-${(index % 4) + 1}`}>
+                  <div className={`flex-shrink-0 w-6 h-6 ${theme.status.success.bg} rounded-full flex items-center justify-center mt-1 mr-3 animate-glow-pulse`}>
+                    <CheckCircle className="w-4 h-4 text-white" />
+                  </div>
+                  <span className={`${theme.textColors.secondary} font-medium`}>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </GradientCard>
+        </div>
+
+        {/* Interactive Exercises for Better Retention */}
+        {currentLesson === 0 && (
+          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-lg`}>
+            <h3 className={`text-lg font-semibold ${theme.textColors.accent} mb-3 flex items-center gap-2`}>
+              <Lightbulb className="w-5 h-5" />
+              Banking Account Assessment
+            </h3>
+            <div className={`${theme.textColors.secondary} space-y-3`}>
+              <p className={`font-medium ${theme.textColors.primary}`}>Think about your current banking setup:</p>
+              <ul className={`list-disc list-inside space-y-2 ml-4 ${theme.textColors.secondary}`}>
+                <li>What type of accounts do you currently have?</li>
+                <li>How much are you paying in monthly fees?</li>
+                <li>What interest rate are you earning on savings?</li>
+                <li>How convenient is your current bank for daily needs?</li>
+              </ul>
+              <p className={`mt-4 font-medium ${theme.textColors.accent}`}>
+                💡 <strong>Key Insight:</strong> The average person uses only 1-2 account types but could benefit from 3-4 specialized accounts for different purposes!
+              </p>
+            </div>
+          </div>
+        )}
+
+        {currentLesson === 1 && (
+          <div className={`mb-8 p-6 ${theme.status.warning.bg} rounded-lg border-l-4 ${theme.status.warning.border}`}>
+            <h3 className={`text-lg font-semibold ${theme.status.warning.text} mb-3 flex items-center gap-2`}>
+              <AlertCircle className="w-5 h-5" />
+              Fee Calculator Challenge
+            </h3>
+            <div className={`${theme.textColors.secondary} space-y-4`}>
+              <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
+                <p className={`font-medium ${theme.textColors.primary} mb-2`}>Scenario: Traditional Bank vs Smart Banking</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <p className={`font-medium ${theme.status.error.text} mb-2`}>❌ Traditional Bank:</p>
+                    <ul className={`list-disc list-inside space-y-1 ml-4 ${theme.textColors.secondary} text-sm`}>
+                      <li>Monthly maintenance: $15/month</li>
+                      <li>Overdraft fees: $35 × 3/year</li>
+                      <li>ATM fees: $3 × 20/year</li>
+                      <li>Savings interest: 0.01% APY</li>
+                      <li><strong>Total annual cost: $345</strong></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className={`font-medium ${theme.status.success.text} mb-2`}>✅ Smart Banking:</p>
+                    <ul className={`list-disc list-inside space-y-1 ml-4 ${theme.textColors.secondary} text-sm`}>
+                      <li>Free checking with direct deposit</li>
+                      <li>Overdraft protection (free alerts)</li>
+                      <li>Fee-free ATM network</li>
+                      <li>High-yield savings: 4.5% APY</li>
+                      <li><strong>Annual savings: $795</strong></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <p className={`mt-4 font-medium ${theme.status.warning.text}`}>
+                💡 <strong>Total Impact:</strong> Smart banking saves you $1,140+ per year - that's a week's vacation!
+              </p>
+            </div>
+          </div>
+        )}
+
+        {currentLesson === 2 && (
+          <div className={`mb-8 p-6 ${theme.status.info.bg} rounded-lg border-l-4 ${theme.status.info.border}`}>
+            <h3 className={`text-lg font-semibold ${theme.status.info.text} mb-3 flex items-center gap-2`}>
+              <TrendingUp className="w-5 h-5" />
+              Banking Optimization Plan
+            </h3>
+            <div className={`${theme.textColors.secondary} space-y-4`}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
+                  <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
+                    <CreditCard className="w-4 h-4 text-blue-400" />
+                    Step 1: Daily Banking
+                  </h4>
+                  <p className={`text-sm ${theme.textColors.secondary}`}>Local credit union or bank with free checking, good ATM network, and excellent customer service.</p>
+                </div>
+                <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
+                  <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
+                    <PiggyBank className="w-4 h-4 text-green-400" />
+                    Step 2: High-Yield Savings
+                  </h4>
+                  <p className={`text-sm ${theme.textColors.secondary}`}>Online bank offering 4-5% APY for emergency fund and short-term goals.</p>
+                </div>
+                <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
+                  <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
+                    <DollarSign className="w-4 h-4 text-amber-400" />
+                    Step 3: Goal Accounts
+                  </h4>
+                  <p className={`text-sm ${theme.textColors.secondary}`}>Separate savings for vacation, car, home down payment - makes goals visual and achievable.</p>
+                </div>
+              </div>
+              <p className={`mt-4 font-medium ${theme.status.info.text}`}>
+                💡 <strong>Pro Tip:</strong> Set up automatic transfers on payday - pay yourself first before you can spend it!
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Enhanced Navigation */}
+        <div className="flex items-center justify-between animate-fade-in-up stagger-4">
+          <div className="flex space-x-3">
+            <button
+              onClick={prevLesson}
+              disabled={currentLesson === 0}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+            >
+              <ChevronLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+              Previous
+            </button>
+            <button
+              onClick={nextLesson}
+              disabled={currentLesson === lessons.length - 1}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+            >
+              Next
+              <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+
           <div className="flex items-center space-x-3">
-            {currentLessonData.icon}
-            <h2 className="text-2xl font-bold">{currentLessonData.title}</h2>
+            {!completedLessons[currentLesson] && (
+              <button
+                onClick={markComplete}
+                className={`group flex items-center px-6 py-3 ${theme.buttons.primary} rounded-xl transition-all shadow-lg hover-lift morph-button animate-glow-pulse`}
+              >
+                <CheckCircle className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                Mark Complete
+              </button>
+            )}
+            {completedLessons[currentLesson] && (
+              <div className={`flex items-center px-6 py-3 ${theme.status.success.bg} ${theme.status.success.text} rounded-xl font-medium animate-bounce-in`}>
+                <CheckCircle className="w-5 h-5 mr-2 animate-wiggle" />
+                Completed
+              </div>
+            )}
           </div>
-          <div className="text-sm bg-white/20 px-3 py-1 rounded-full">
-            {currentLesson + 1} of {lessons.length}
+        </div>
+
+        {/* Completion Status */}
+        <div className={`mt-6 pt-6 border-t ${theme.borderColors.primary}`}>
+          <div className={`flex items-center justify-between text-sm ${theme.textColors.secondary}`}>
+            <span>Progress: {completedLessons.filter(Boolean).length} of {lessons.length} lessons completed</span>
+            <span>{progress.toFixed(0)}% Complete</span>
           </div>
         </div>
-
-        <div className="w-full bg-white/20 rounded-full h-2">
-          <motion.div
-            className="bg-white h-2 rounded-full"
-            initial={{ width: '0%' }}
-            animate={{ width: `${((currentLesson + 1) / lessons.length) * 100}%` }}
-            transition={{ duration: 0.5 }}
-          />
-        </div>
-      </div>
-
-      {/* Lesson Content */}
-      <div className="p-6">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentLesson}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {currentLessonData.content}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Navigation */}
-      <div className="bg-gray-50 px-6 py-4 flex justify-between items-center">
-        <button
-          onClick={prevLesson}
-          disabled={currentLesson === 0}
-          className="px-4 py-2 text-gray-600 hover:text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
-          Previous
-        </button>
-
-        <div className="flex space-x-2">
-          {lessons.map((_, index) => (
-            <div
-              key={index}
-              className={`w-3 h-3 rounded-full transition-colors ${index === currentLesson
-                ? 'bg-blue-500'
-                : index < currentLesson
-                  ? 'bg-green-500'
-                  : 'bg-gray-300'
-                }`}
-            />
-          ))}
-        </div>
-
-        <motion.button
-          onClick={() => {
-            handleLessonComplete(currentLesson);
-            if (currentLesson < lessons.length - 1) {
-              nextLesson();
-            }
-          }}
-          className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          {currentLesson === lessons.length - 1 ? 'Complete Lesson' : 'Next'}
-          <ArrowRight className="w-4 h-4 ml-2" />
-        </motion.button>
-      </div>
+      </GradientCard>
     </div>
   );
-};
-
-export default BankingFundamentalsLesson;
+}
