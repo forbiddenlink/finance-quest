@@ -180,7 +180,7 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
               {lesson.keyPoints.map((point, index) => (
                 <li key={index} className={`flex items-start animate-slide-in-right stagger-${(index % 4) + 1}`}>
                   <div className={`flex-shrink-0 w-6 h-6 ${theme.status.info.bg} rounded-full flex items-center justify-center mt-1 mr-3 animate-glow-pulse`}>
-                    <CheckCircle className="w-4 h-4 text-white" />
+                    <CheckCircle className={`w-4 h-4 ${theme.status.info.text}`} />
                   </div>
                   <span className={`${theme.textColors.secondary} font-medium`}>{point}</span>
                 </li>
@@ -200,22 +200,22 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
               <p className={`font-medium ${theme.textColors.primary}`}>Calculate your ideal budget breakdown:</p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
-                  <Wallet className="w-8 h-8 mx-auto mb-3 text-green-400" />
-                  <div className="text-2xl font-bold text-green-400">50%</div>
-                  <div className="text-sm text-gray-300 mb-2">Needs</div>
-                  <div className="text-xs text-gray-400">Housing, utilities, groceries, insurance</div>
+                  <Wallet className={`w-8 h-8 mx-auto mb-3 ${theme.status.success.text}`} />
+                  <div className={`text-2xl font-bold ${theme.status.success.text}`}>50%</div>
+                  <div className={`text-sm ${theme.textColors.secondary} mb-2`}>Needs</div>
+                  <div className={`text-xs ${theme.textColors.muted}`}>Housing, utilities, groceries, insurance</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
-                  <CreditCard className="w-8 h-8 mx-auto mb-3 text-blue-400" />
-                  <div className="text-2xl font-bold text-blue-400">30%</div>
-                  <div className="text-sm text-gray-300 mb-2">Wants</div>
-                  <div className="text-xs text-gray-400">Entertainment, dining out, hobbies</div>
+                  <CreditCard className={`w-8 h-8 mx-auto mb-3 ${theme.status.info.text}`} />
+                  <div className={`text-2xl font-bold ${theme.status.info.text}`}>30%</div>
+                  <div className={`text-sm ${theme.textColors.secondary} mb-2`}>Wants</div>
+                  <div className={`text-xs ${theme.textColors.muted}`}>Entertainment, dining out, hobbies</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
-                  <TrendingUp className="w-8 h-8 mx-auto mb-3 text-purple-400" />
-                  <div className="text-2xl font-bold text-purple-400">20%</div>
-                  <div className="text-sm text-gray-300 mb-2">Savings & Debt</div>
-                  <div className="text-xs text-gray-400">Emergency fund, retirement, extra payments</div>
+                  <TrendingUp className={`w-8 h-8 mx-auto mb-3 ${theme.textColors.accent}`} />
+                  <div className={`text-2xl font-bold ${theme.textColors.accent}`}>20%</div>
+                  <div className={`text-sm ${theme.textColors.secondary} mb-2`}>Savings & Debt</div>
+                  <div className={`text-xs ${theme.textColors.muted}`}>Emergency fund, retirement, extra payments</div>
                 </div>
               </div>
               <p className={`mt-4 font-medium ${theme.textColors.accent}`}>
@@ -256,9 +256,9 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
                 </div>
                 <div className="mt-4 p-3 bg-purple-500/20 border border-purple-500/30 rounded-lg">
                   <p className={`font-medium ${theme.textColors.primary} text-center`}>
-                    <span className="text-purple-400">Income - Expenses - Savings = $0</span>
+                    <span className={theme.textColors.accent}>Income - Expenses - Savings = $0</span>
                     <br />
-                    <span className="text-sm text-gray-300">Every dollar assigned before spending!</span>
+                    <span className={`text-sm ${theme.textColors.secondary}`}>Every dollar assigned before spending!</span>
                   </p>
                 </div>
               </div>
@@ -288,7 +288,7 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <p className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <DollarSign className="w-4 h-4 text-green-400" />
+                    <DollarSign className={`w-4 h-4 ${theme.status.success.text}`} />
                     Monthly Calculation
                   </p>
                   <ul className={`list-disc list-inside space-y-1 ml-4 ${theme.textColors.secondary} text-sm`}>
@@ -316,7 +316,7 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <Wallet className="w-4 h-4 text-blue-400" />
+                    <Wallet className={`w-4 h-4 ${theme.status.info.text}`} />
                     Envelope Method
                   </h4>
                   <ul className={`list-disc list-inside space-y-1 ml-4 ${theme.textColors.secondary} text-sm`}>
@@ -328,7 +328,7 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <Target className="w-4 h-4 text-purple-400" />
+                    <Target className={`w-4 h-4 ${theme.textColors.accent}`} />
                     Sinking Funds
                   </h4>
                   <ul className={`list-disc list-inside space-y-1 ml-4 ${theme.textColors.secondary} text-sm`}>
