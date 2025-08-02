@@ -21,7 +21,7 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 
 export default function Chapter7Page() {
-    const { userProgress, isChapterUnlocked } = useProgressStore();
+    const { isChapterUnlocked } = useProgressStore();
     const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
     const [lessonCompleted, setLessonCompleted] = useState(false);
 

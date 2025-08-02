@@ -8,7 +8,6 @@ import ProgressRing from '@/components/shared/ui/ProgressRing';
 import {
   TrendingUp,
   PieChart,
-  BarChart3,
   DollarSign,
   Target,
   CheckCircle,
@@ -18,7 +17,6 @@ import {
   Star,
   Lightbulb,
   Calculator,
-  Globe,
   Shield
 } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -169,7 +167,7 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
           </p>
 
           {/* Enhanced Key Points */}
-          <GradientCard variant="glass" gradient="cyan" className="p-6 animate-fade-in-up stagger-4">
+          <GradientCard variant="glass" gradient="blue" className="p-6 animate-fade-in-up stagger-4">
             <div className="flex items-center mb-4">
               <div className={`${theme.status.success.bg} p-2 rounded-lg mr-3 animate-wiggle`}>
                 <Star className={`w-5 h-5 ${theme.status.success.text}`} />

@@ -9,7 +9,6 @@ import {
   CreditCard,
   AlertTriangle,
   Target,
-  TrendingDown,
   Shield,
   CheckCircle,
   Calculator,
