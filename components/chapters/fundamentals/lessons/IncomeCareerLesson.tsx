@@ -121,7 +121,7 @@ export default function IncomeCareerLesson({ onComplete }: IncomeCareerLessonPro
         <ProgressRing
           progress={progress}
           size={100}
-          color="#10B981"
+          color="#22c55e"
           className="animate-bounce-in"
         />
       </div>
