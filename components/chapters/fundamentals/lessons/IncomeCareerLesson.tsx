@@ -166,7 +166,7 @@ export default function IncomeCareerLesson({ onComplete }: IncomeCareerLessonPro
               {lesson.keyPoints.map((point, index) => (
                 <li key={index} className={`flex items-start animate-slide-in-right stagger-${(index % 4) + 1}`}>
                   <div className={`flex-shrink-0 w-6 h-6 ${theme.status.info.bg} rounded-full flex items-center justify-center mt-1 mr-3 animate-glow-pulse`}>
-                    <CheckCircle className="w-4 h-4 text-white" />
+                    <CheckCircle className={`w-4 h-4 ${theme.status.info.text}`} />
                   </div>
                   <span className={`${theme.textColors.secondary} font-medium`}>{point}</span>
                 </li>
@@ -245,28 +245,28 @@ export default function IncomeCareerLesson({ onComplete }: IncomeCareerLessonPro
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <Lightbulb className="w-4 h-4 text-yellow-400" />
+                    <Lightbulb className={`w-4 h-4 ${theme.textColors.accent}`} />
                     Phase 1: Skills
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary}`}>Freelance your existing expertise for $500-2,000/month</p>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <Target className="w-4 h-4 text-blue-400" />
+                    <Target className={`w-4 h-4 ${theme.status.info.text}`} />
                     Phase 2: Digital
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary}`}>Create digital products for passive income streams</p>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <TrendingUp className="w-4 h-4 text-green-400" />
+                    <TrendingUp className={`w-4 h-4 ${theme.status.success.text}`} />
                     Phase 3: Invest
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary}`}>Build investment portfolio for compound growth</p>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <Users className="w-4 h-4 text-purple-400" />
+                    <Users className={`w-4 h-4 ${theme.status.error.text}`} />
                     Phase 4: Scale
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary}`}>Service business with scalable systems</p>

@@ -94,7 +94,7 @@ export default function Chapter4Page() {
           </div>
           <div className={`w-full ${theme.progress.background} rounded-full h-2`}>
             <motion.div
-              className="bg-gradient-to-r from-red-500 to-purple-500 h-2 rounded-full"
+              className={`${theme.progress.bar} h-2 rounded-full`}
               initial={{ width: '0%' }}
               animate={{
                 width: currentSection === 'lesson' ? '33%' :

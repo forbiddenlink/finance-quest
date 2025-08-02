@@ -344,8 +344,8 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
         )}
 
         {currentLesson === 3 && (
-          <div className={`mb-8 p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-lg border border-purple-500/20`}>
-            <h3 className={`text-lg font-semibold text-purple-400 mb-3 flex items-center gap-2`}>
+          <div className={`mb-8 p-6 ${theme.status.info.bg} rounded-lg border-l-4 ${theme.status.info.border}`}>
+            <h3 className={`text-lg font-semibold ${theme.status.info.text} mb-3 flex items-center gap-2`}>
               <Lightbulb className="w-5 h-5" />
               Advanced Strategy Implementation
             </h3>

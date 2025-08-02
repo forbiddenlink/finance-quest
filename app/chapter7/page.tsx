@@ -46,8 +46,8 @@ export default function Chapter7Page() {
                         transition={{ duration: 0.8 }}
                         className={`${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-2xl ${theme.spacing.lg}`}
                     >
-                        <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                            <Lock className={`w-8 h-8 ${theme.textColors.primary}`} />
+                        <div className={`w-16 h-16 ${theme.status.info.bg} rounded-2xl flex items-center justify-center mx-auto mb-6`}>
+                            <Lock className={`w-8 h-8 ${theme.status.info.text}`} />
                         </div>
                         <h1 className={`${theme.typography.heading1} ${theme.textColors.primary} mb-4`}>Chapter 7: Investment Fundamentals</h1>
                         <p className={`${theme.textColors.muted} mb-6`}>
@@ -105,13 +105,13 @@ export default function Chapter7Page() {
                     transition={{ duration: 0.8 }}
                     className="text-center mb-8"
                 >
-                    <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <TrendingUp className="w-8 h-8 text-white" />
+                    <div className={`w-16 h-16 ${theme.status.info.bg} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
+                        <TrendingUp className={`w-8 h-8 ${theme.status.info.text}`} />
                     </div>
                     <h1 className="text-4xl font-bold mb-2">
-                        <span className="text-white">Chapter 7:</span>
+                        <span className={`${theme.textColors.primary}`}>Chapter 7:</span>
                         <br />
-                        <span className="bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">
+                        <span className={`${theme.textColors.accent} gradient-text-blue`}>
                             Investment Fundamentals
                         </span>
                     </h1>

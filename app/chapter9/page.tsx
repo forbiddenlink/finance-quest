@@ -143,8 +143,8 @@ export default function Chapter9() {
                     </div>
 
                     <div className="mt-4 flex items-center space-x-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg flex items-center justify-center">
-                            <PiggyBank className={`w-6 h-6 ${theme.textColors.primary}`} />
+                        <div className={`w-12 h-12 ${theme.status.success.bg} rounded-lg flex items-center justify-center`}>
+                            <PiggyBank className={`w-6 h-6 ${theme.status.success.text}`} />
                         </div>
                         <div>
                             <h1 className={`${theme.typography.heading1} ${theme.textColors.primary}`}>Chapter 9: Retirement Planning & Long-term Wealth</h1>

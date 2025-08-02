@@ -45,8 +45,8 @@ export default function Chapter8Page() {
                         transition={{ duration: 0.8 }}
                         className={`${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-2xl ${theme.spacing.lg}`}
                     >
-                        <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                            <Lock className={`w-8 h-8 ${theme.textColors.primary}`} />
+                        <div className={`w-16 h-16 ${theme.status.error.bg} rounded-2xl flex items-center justify-center mx-auto mb-6`}>
+                            <Lock className={`w-8 h-8 ${theme.status.error.text}`} />
                         </div>
                         
                         <h1 className={`${theme.typography.heading1} ${theme.textColors.primary} mb-4`}>
@@ -95,8 +95,8 @@ export default function Chapter8Page() {
                     </div>
 
                     <div className="flex items-center space-x-6 mb-8">
-                        <div className="w-16 h-16 bg-gradient-to-r from-red-600 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
-                            <CreditCard className={`w-8 h-8 ${theme.textColors.primary}`} />
+                        <div className={`w-16 h-16 ${theme.status.error.bg} rounded-2xl flex items-center justify-center shadow-lg`}>
+                            <CreditCard className={`w-8 h-8 ${theme.status.error.text}`} />
                         </div>
                         <div>
                             <h1 className={`${theme.typography.heading1} ${theme.textColors.primary} mb-2`}>
