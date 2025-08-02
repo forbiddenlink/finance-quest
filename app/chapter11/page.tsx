@@ -135,7 +135,7 @@ export default function Chapter11Page() {
                                     </div>
 
                                     <div className="bg-slate-800/50 rounded-xl p-6">
-                                        <Target className="w-8 h-8 text-purple-400 mb-3" />
+                                        <Target className={`w-8 h-8 ${theme.textColors.accent} mb-3`} />
                                         <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Portfolio Building</h4>
                                         <p className={`${theme.textColors.secondary} text-sm`}>
                                             Construct your first investment portfolio using modern portfolio theory

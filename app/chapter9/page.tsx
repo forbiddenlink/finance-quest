@@ -260,7 +260,7 @@ export default function Chapter9() {
                                                 <Button
                                                     onClick={handleQuizComplete}
                                                     disabled={Object.keys(quizAnswers).length < quizQuestions.length}
-                                                    className="bg-purple-600 hover:bg-purple-700"
+                                                    className={theme.buttons.primary}
                                                 >
                                                     Submit Quiz
                                                 </Button>

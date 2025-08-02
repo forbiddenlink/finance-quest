@@ -143,7 +143,7 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
-              <div className="bg-purple-500/20 p-2 rounded-lg animate-float">
+              <div className={`${theme.textColors.accent}/20 p-2 rounded-lg animate-float`}>
                 <PiggyBank className={`w-6 h-6 ${theme.textColors.accent}`} />
               </div>
               <span className={`text-sm font-medium ${theme.textColors.accent} animate-fade-in-up`}>

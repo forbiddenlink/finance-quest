@@ -254,7 +254,7 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
                     </ul>
                   </div>
                 </div>
-                <div className="mt-4 p-3 bg-purple-500/20 border border-purple-500/30 rounded-lg">
+                <div className={`mt-4 p-3 ${theme.textColors.accent}/20 border ${theme.borderColors.accent} rounded-lg`}>
                   <p className={`font-medium ${theme.textColors.primary} text-center`}>
                     <span className={theme.textColors.accent}>Income - Expenses - Savings = $0</span>
                     <br />

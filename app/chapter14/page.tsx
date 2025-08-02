@@ -127,29 +127,29 @@ export default function Chapter14() {
                 <div>
                   <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>The Efficient Frontier</h3>
                   
-                  <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-lg border border-indigo-200">
+                  <div className={`bg-gradient-to-r ${theme.status.info.bg}/5 to-purple-50 p-6 rounded-lg border ${theme.status.info.border}`}>
                     <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <TrendingUp className="w-6 h-6 text-indigo-600" />
+                      <div className={`w-12 h-12 ${theme.status.info.bg}/20 rounded-lg flex items-center justify-center flex-shrink-0`}>
+                        <TrendingUp className={`w-6 h-6 ${theme.status.info.text}`} />
                       </div>
                       <div>
-                        <h4 className="font-medium text-indigo-900 mb-2">Optimal Portfolio Combinations</h4>
-                        <p className="text-indigo-800 text-sm mb-3">
+                        <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Optimal Portfolio Combinations</h4>
+                        <p className={`${theme.textColors.secondary} text-sm mb-3`}>
                           The efficient frontier represents all portfolio combinations that offer the highest 
                           expected return for each level of risk. Portfolios below this line are sub-optimal.
                         </p>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                            <span className="text-indigo-700">Conservative: 20% stocks, 80% bonds</span>
+                            <div className={`w-2 h-2 ${theme.status.success.bg} rounded-full`}></div>
+                            <span className={theme.textColors.secondary}>Conservative: 20% stocks, 80% bonds</span>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                            <span className="text-indigo-700">Moderate: 60% stocks, 40% bonds</span>
+                            <div className={`w-2 h-2 ${theme.status.warning.bg} rounded-full`}></div>
+                            <span className={theme.textColors.secondary}>Moderate: 60% stocks, 40% bonds</span>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                            <span className="text-indigo-700">Aggressive: 90% stocks, 10% bonds</span>
+                            <div className={`w-2 h-2 ${theme.status.error.bg} rounded-full`}></div>
+                            <span className={theme.textColors.secondary}>Aggressive: 90% stocks, 10% bonds</span>
                           </div>
                         </div>
                       </div>

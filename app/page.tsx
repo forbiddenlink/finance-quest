@@ -676,7 +676,7 @@ export default function HomePage() {
                         </div>
                         <div>
                           <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Advanced Planning</h4>
-                          <p className="text-indigo-400 text-sm">Chapters 21-25</p>
+                          <p className={`${theme.textColors.accent} text-sm`}>Chapters 21-25</p>
                         </div>
                       </div>
                       <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>

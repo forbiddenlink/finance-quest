@@ -156,7 +156,7 @@ export default function DebtPayoffCalculator() {
       'student_loan': '${theme.status.info.bg} ${theme.status.info.border}',
       'auto_loan': '${theme.status.success.bg} ${theme.status.success.border}',
       'personal_loan': '${theme.status.warning.bg} ${theme.status.warning.border}',
-      'mortgage': 'bg-purple-500/20 border-purple-500/30'
+      'mortgage': `${theme.backgrounds.glass} ${theme.borderColors.accent}`
     };
     return colors[type as keyof typeof colors] || '${theme.backgrounds.glass} border ${theme.borderColors.primary} ${theme.borderColors.primary}';
   };
@@ -350,12 +350,12 @@ export default function DebtPayoffCalculator() {
           ))}
 
           {/* Strategy Comparison */}
-          <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
-            <h4 className="font-semibold text-indigo-900 mb-3 flex items-center gap-2">
+          <div className={`${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-lg p-4`}>
+            <h4 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
               <Search className="w-4 h-4" />
               Strategy Comparison
             </h4>
-            <div className="text-sm text-indigo-800 space-y-2">
+            <div className={`text-sm ${theme.textColors.secondary} space-y-2`}>
               <div>
                 <strong>Debt Avalanche:</strong> Mathematically optimal - saves the most money in interest
               </div>
