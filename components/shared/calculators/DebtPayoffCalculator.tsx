@@ -263,7 +263,7 @@ export default function DebtPayoffCalculator() {
             <h3 className="${theme.typography.heading4} ${theme.textColors.primary}">Your Debts</h3>
             <button
               onClick={addDebt}
-              className="${theme.status.info.bg}0 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm"
+              className={`${theme.status.info.bg.replace('/20', '')} text-white px-4 py-2 rounded-lg hover:${theme.status.info.bg.replace('/20', '/80')} transition-colors text-sm`}
             >
               + Add Debt
             </button>

@@ -352,7 +352,7 @@ export default function PortfolioAnalyzerCalculator() {
                                         </div>
                                         <div className="text-sm ${theme.textColors.secondary}">Total Value</div>
                                     </div>
-                                    <div className="text-center p-4 bg-purple-500/20 rounded-lg">
+                                    <div className={`text-center p-4 ${theme.status.info.bg} rounded-lg`}>
                                         <div className={`${theme.typography.heading2} ${getRiskColor(portfolioMetrics.riskLevel)}`}>
                                             {portfolioMetrics.riskLevel}
                                         </div>

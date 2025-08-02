@@ -132,8 +132,8 @@ export default function ProgressNavigation() {
             <Link href="/">
               <button className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1.5 ${
                 isClient && pathname === '/' 
-                  ? 'bg-blue-600/90 text-blue-100 shadow-sm' 
-                  : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-300'
+                  ? `${theme.status.info.bg} ${theme.status.info.text} shadow-sm` 
+                  : `${theme.textColors.muted} hover:${theme.backgrounds.card}/60 hover:${theme.textColors.accent}`
               }`}>
                 <Home className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Home</span>
@@ -185,8 +185,8 @@ export default function ProgressNavigation() {
                 <Link key={item.name} href={item.href}>
                   <button className={`px-2.5 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1.5 relative ${
                     isActive 
-                      ? 'bg-blue-600/90 text-blue-100 shadow-sm' 
-                      : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-300'
+                      ? `${theme.status.info.bg} ${theme.status.info.text} shadow-sm` 
+                      : `${theme.textColors.muted} hover:${theme.backgrounds.card}/60 hover:${theme.textColors.accent}`
                   }`}>
                     <Icon className="w-3.5 h-3.5" />
                     <span className="whitespace-nowrap">{item.name}</span>
@@ -249,8 +249,8 @@ export default function ProgressNavigation() {
                 <Link key={item.name} href={item.href}>
                   <button className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1 whitespace-nowrap ${
                     isActive 
-                      ? 'bg-blue-600/80 text-blue-100' 
-                      : 'text-slate-300 hover:bg-slate-700/60'
+                      ? `${theme.status.info.bg} ${theme.status.info.text}` 
+                      : `${theme.textColors.muted} hover:${theme.backgrounds.card}/60`
                   }`}>
                     <Icon className="w-3 h-3" />
                     <span>{item.name}</span>

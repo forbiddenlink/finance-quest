@@ -457,7 +457,7 @@ export default function RetirementPlannerCalculator() {
                   <span className="${theme.textColors.primary}">Employer Match</span>
                   <span className="font-semibold">{formatCurrency((parseFloat(monthlyContribution) * parseFloat(employerMatch)) / 100)}/month</span>
                 </div>
-                <div className="flex justify-between items-center p-3 bg-purple-500/20 rounded-lg">
+                <div className={`flex justify-between items-center p-3 ${theme.status.info.bg} rounded-lg`}>
                   <span className="${theme.textColors.primary}">Total Monthly</span>
                   <span className={`font-semibold ${theme.textColors.accent}`}>
                     {formatCurrency(parseFloat(monthlyContribution) + (parseFloat(monthlyContribution) * parseFloat(employerMatch)) / 100)}/month

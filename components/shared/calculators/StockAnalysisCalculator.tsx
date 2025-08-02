@@ -470,9 +470,9 @@ export default function StockAnalysisCalculator() {
               </div>
             </div>
             
-            <div className="p-4 bg-purple-500/20 rounded-lg border border-purple-500/30">
+            <div className={`p-4 ${theme.status.info.bg} rounded-lg border ${theme.borderColors.accent}`}>
               <h4 className="font-medium ${theme.textColors.primary} mb-2">Investment Rules</h4>
-              <div className="space-y-1 text-sm text-purple-700">
+              <div className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
                 <p><span className="font-medium">Diversify:</span> Don&apos;t put all eggs in one basket</p>
                 <p><span className="font-medium">Long-term:</span> Hold quality stocks for years</p>
                 <p><span className="font-medium">Research:</span> Understand the business model</p>
