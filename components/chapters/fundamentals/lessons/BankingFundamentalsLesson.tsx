@@ -163,7 +163,7 @@ export default function BankingFundamentalsLesson({ onComplete }: BankingFundame
               {lesson.keyPoints.map((point, index) => (
                 <li key={index} className={`flex items-start animate-slide-in-right stagger-${(index % 4) + 1}`}>
                   <div className={`flex-shrink-0 w-6 h-6 ${theme.status.success.bg} rounded-full flex items-center justify-center mt-1 mr-3 animate-glow-pulse`}>
-                    <CheckCircle className="w-4 h-4 text-white" />
+                    <CheckCircle className={`w-4 h-4 ${theme.status.success.text}`} />
                   </div>
                   <span className={`${theme.textColors.secondary} font-medium`}>{point}</span>
                 </li>
@@ -243,21 +243,21 @@ export default function BankingFundamentalsLesson({ onComplete }: BankingFundame
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <CreditCard className="w-4 h-4 text-blue-400" />
+                    <CreditCard className={`w-4 h-4 ${theme.status.info.text}`} />
                     Step 1: Daily Banking
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary}`}>Local credit union or bank with free checking, good ATM network, and excellent customer service.</p>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <PiggyBank className="w-4 h-4 text-green-400" />
+                    <PiggyBank className={`w-4 h-4 ${theme.status.success.text}`} />
                     Step 2: High-Yield Savings
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary}`}>Online bank offering 4-5% APY for emergency fund and short-term goals.</p>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <DollarSign className="w-4 h-4 text-amber-400" />
+                    <DollarSign className={`w-4 h-4 ${theme.textColors.accent}`} />
                     Step 3: Goal Accounts
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary}`}>Separate savings for vacation, car, home down payment - makes goals visual and achievable.</p>

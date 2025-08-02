@@ -177,7 +177,7 @@ export default function CreditDebtLesson({ onComplete }: CreditDebtLessonProps) 
               {lesson.keyPoints.map((point, index) => (
                 <li key={index} className={`flex items-start animate-slide-in-right stagger-${(index % 4) + 1}`}>
                   <div className={`flex-shrink-0 w-6 h-6 ${theme.status.warning.bg} rounded-full flex items-center justify-center mt-1 mr-3 animate-glow-pulse`}>
-                    <CheckCircle className="w-4 h-4 text-white" />
+                    <CheckCircle className={`w-4 h-4 ${theme.status.warning.text}`} />
                   </div>
                   <span className={`${theme.textColors.secondary} font-medium`}>{point}</span>
                 </li>
@@ -263,7 +263,7 @@ export default function CreditDebtLesson({ onComplete }: CreditDebtLessonProps) 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <Brain className="w-4 h-4 text-purple-400" />
+                    <Brain className={`w-4 h-4 ${theme.status.error.text}`} />
                     Debt Snowball
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary} mb-2`}>Pay smallest balances first</p>
@@ -271,7 +271,7 @@ export default function CreditDebtLesson({ onComplete }: CreditDebtLessonProps) 
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <Calculator className="w-4 h-4 text-blue-400" />
+                    <Calculator className={`w-4 h-4 ${theme.status.info.text}`} />
                     Debt Avalanche
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary} mb-2`}>Pay highest interest rates first</p>
@@ -295,21 +295,21 @@ export default function CreditDebtLesson({ onComplete }: CreditDebtLessonProps) 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <CheckCircle className="w-4 h-4 text-blue-400" />
+                    <CheckCircle className={`w-4 h-4 ${theme.status.info.text}`} />
                     Months 1-3
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary}`}>Foundation: Open first credit account, perfect payment history</p>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <DollarSign className="w-4 h-4 text-amber-400" />
+                    <DollarSign className={`w-4 h-4 ${theme.textColors.accent}`} />
                     Months 6-12
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary}`}>Building: Add accounts, request limit increases</p>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <Target className="w-4 h-4 text-purple-400" />
+                    <Target className={`w-4 h-4 ${theme.status.success.text}`} />
                     Year 2+
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary}`}>Optimization: 700+ score, premium cards, diverse mix</p>
