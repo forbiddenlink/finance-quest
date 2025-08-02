@@ -2,112 +2,39 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useEnhancedProgress } from '@/lib/store/progressHooks';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
+import InvestmentFundamentalsLesson from '@/components/chapters/fundamentals/lessons/InvestmentFundamentalsLesson';
 import {
-    Star,
     TrendingUp,
-    AlertTriangle,
-    CheckCircle,
-    Target,
-    BarChart3,
-    FileText,
-    Eye,
+    Calculator,
+    BookOpen,
+    Trophy,
     ArrowLeft,
-    Clock,
-    CreditCard,
-    Lock
+    Lock,
+    CheckCircle
 } from 'lucide-react';
+import Link from 'next/link';
+import toast from 'react-hot-toast';
 
 export default function Chapter7Page() {
-    const progress = useEnhancedProgress();
-    const [selectedLesson, setSelectedLesson] = useState<number | null>(null);
+    const { userProgress, isChapterUnlocked } = useProgressStore();
+    const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
+    const [lessonCompleted, setLessonCompleted] = useState(false);
 
-    // Check if chapter is unlocked (user must complete first 5 chapters)
-    const isUnlocked = progress.userProgress.currentChapter >= 6;
+    // Check if chapter is unlocked (requires completing previous chapters)
+    const isUnlocked = isChapterUnlocked(7);
 
-    const lessons = [
-        {
-            id: 1,
-            title: 'FICO vs VantageScore: Understanding Credit Scoring Models',
-            description: 'Learn the differences between major credit scoring systems and how they impact your financial life',
-            icon: <BarChart3 className="w-6 h-6" />,
-            duration: '15 minutes',
-            concepts: [
-                'FICO 8 vs FICO 9 vs VantageScore 3.0 differences',
-                'How payment history affects each model differently',
-                'Credit utilization optimization strategies',
-                'Length of credit history impact variations'
-            ]
-        },
-        {
-            id: 2,
-            title: 'Credit Report Deep Dive & Analysis',
-            description: 'Master reading credit reports and identifying errors that could be costing you money',
-            icon: <FileText className="w-6 h-6" />,
-            duration: '20 minutes',
-            concepts: [
-                'Reading Experian, Equifax, and TransUnion reports',
-                'Identifying and disputing credit report errors',
-                'Understanding credit inquiries and their impact',
-                'Monitoring services vs free annual reports'
-            ]
-        },
-        {
-            id: 3,
-            title: 'Strategic Credit Building from Scratch',
-            description: 'Build excellent credit even if you&apos;re starting with no credit history',
-            icon: <TrendingUp className="w-6 h-6" />,
-            duration: '18 minutes',
-            concepts: [
-                'Secured credit cards vs student credit cards',
-                'Authorized user strategies and risks',
-                'Credit builder loans and their effectiveness',
-                'Timeline expectations for building credit'
-            ]
-        },
-        {
-            id: 4,
-            title: 'Advanced Credit Optimization Techniques',
-            description: 'Take your credit score from good to excellent with advanced strategies',
-            icon: <Star className="w-6 h-6" />,
-            duration: '22 minutes',
-            concepts: [
-                'Credit utilization timing and multiple payment strategies',
-                'Credit mix optimization without unnecessary accounts',
-                'Negotiating with creditors for goodwill deletions',
-                'Credit score plateau breaking techniques'
-            ]
-        },
-        {
-            id: 5,
-            title: 'Credit Monitoring & Long-term Maintenance',
-            description: 'Maintain excellent credit and catch problems before they become expensive',
-            icon: <Eye className="w-6 h-6" />,
-            duration: '16 minutes',
-            concepts: [
-                'Free monitoring vs paid services comparison',
-                'Identity theft protection and credit freezes',
-                'Annual credit maintenance checklist',
-                'When to be concerned about score fluctuations'
-            ]
-        },
-        {
-            id: 6,
-            title: 'Credit Score ROI & Financial Impact',
-            description: 'Calculate exactly how much good credit saves you in real dollars',
-            icon: <Target className="w-6 h-6" />,
-            duration: '14 minutes',
-            concepts: [
-                'Interest rate differences across credit score ranges',
-                'Mortgage, auto loan, and credit card savings calculations',
-                'Insurance premiums and credit score correlations',
-                'Employment and rental application impacts'
-            ]
-        }
-    ];
+    const handleLessonComplete = () => {
+        setLessonCompleted(true);
+        toast.success('Investment Fundamentals lesson completed! 🎯', {
+            duration: 4000,
+            position: 'top-center',
+        });
+    };
 
     if (!isUnlocked) {
         return (
@@ -117,18 +44,18 @@ export default function Chapter7Page() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className={`${theme.backgrounds.card} border border-amber-500/20 rounded-2xl ${theme.spacing.lg}`}
+                        className={`${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-2xl ${theme.spacing.lg}`}
                     >
-                        <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                             <Lock className={`w-8 h-8 ${theme.textColors.primary}`} />
                         </div>
-                        <h1 className={`${theme.typography.heading1} ${theme.textColors.primary} mb-4`}>Chapter 7: Credit Scores & Reports</h1>
+                        <h1 className={`${theme.typography.heading1} ${theme.textColors.primary} mb-4`}>Chapter 7: Investment Fundamentals</h1>
                         <p className={`${theme.textColors.muted} mb-6`}>
-                            This advanced chapter is part of our Credit & Lending Track. Complete the Foundation Track first to unlock.
+                            Complete the previous chapters to unlock this advanced investment education.
                         </p>
-                        <div className="bg-amber-500/20 border border-amber-500/30 rounded-xl p-4 mb-6">
-                            <p className="text-amber-200 text-sm">
-                                <strong>Prerequisites:</strong> Complete Chapters 1-5 of the Foundation Track
+                        <div className="bg-blue-500/20 border border-blue-500/30 rounded-xl p-4 mb-6">
+                            <p className="text-blue-200 text-sm">
+                                <strong>Prerequisites:</strong> Complete Chapters 1-6 with 80%+ quiz scores
                             </p>
                         </div>
                         <div className="flex items-center justify-center gap-4">
@@ -138,9 +65,9 @@ export default function Chapter7Page() {
                                     Back to Home
                                 </Button>
                             </Link>
-                            <Link href="/chapter5">
+                            <Link href="/chapter6">
                                 <Button className={theme.buttons.primary}>
-                                    Continue Foundation Track
+                                    Continue Previous Chapter
                                     <CheckCircle className="w-4 h-4 ml-2" />
                                 </Button>
                             </Link>
@@ -157,174 +84,138 @@ export default function Chapter7Page() {
             <div className="bg-slate-900/50 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-6 py-4">
                     <div className="flex items-center justify-between">
-                        <Link href="/curriculum" className="flex items-center text-white hover:text-amber-400 transition-colors">
+                        <Link href="/" className="flex items-center text-white hover:text-blue-400 transition-colors">
                             <ArrowLeft className="w-5 h-5 mr-2" />
-                            Back to Curriculum
+                            Back to Home
                         </Link>
                         <div className="flex items-center space-x-4">
-                            <div className="bg-amber-500/20 px-3 py-1 rounded-full">
-                                <span className="text-amber-400 text-sm font-medium">Credit & Lending Track</span>
+                            <div className="bg-blue-500/20 px-3 py-1 rounded-full">
+                                <span className="text-blue-400 text-sm font-medium">Chapter 7</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-6 py-12">
+            <div className="max-w-4xl mx-auto px-6 py-8">
                 {/* Chapter Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="text-center mb-16"
+                    className="text-center mb-8"
                 >
-                    <div className="w-20 h-20 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-amber-500/25">
-                        <Star className="w-10 h-10 text-white" />
+                    <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <TrendingUp className="w-8 h-8 text-white" />
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                    <h1 className="text-4xl font-bold mb-2">
                         <span className="text-white">Chapter 7:</span>
                         <br />
-                        <span className="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">
-                            Credit Scores & Reports Deep Dive
+                        <span className="bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">
+                            Investment Fundamentals
                         </span>
                     </h1>
-                    <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-                        Master the credit scoring systems that determine your financial opportunities.
-                        Learn to optimize, monitor, and leverage your credit profile for maximum benefit.
+                    <p className="text-gray-400 max-w-2xl mx-auto">
+                        Learn the fundamentals of investing, asset allocation, and building long-term wealth through smart investment strategies.
                     </p>
                 </motion.div>
 
-                {/* Learning Objectives */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.8 }}
-                    className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-amber-500/20 rounded-2xl p-8 mb-12`}
-                >
-                    <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-                        <Target className="w-6 h-6 mr-3 text-amber-400" />
-                        What You&apos;ll Master
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-3">
-                            <div className="flex items-start">
-                                <CheckCircle className="w-5 h-5 text-amber-400 mr-3 mt-1 flex-shrink-0" />
-                                <span className="text-gray-300">Understand FICO vs VantageScore differences and optimization strategies</span>
-                            </div>
-                            <div className="flex items-start">
-                                <CheckCircle className="w-5 h-5 text-amber-400 mr-3 mt-1 flex-shrink-0" />
-                                <span className="text-gray-300">Read and analyze credit reports from all three major bureaus</span>
-                            </div>
-                            <div className="flex items-start">
-                                <CheckCircle className="w-5 h-5 text-amber-400 mr-3 mt-1 flex-shrink-0" />
-                                <span className="text-gray-300">Build credit strategically from scratch or improve existing scores</span>
-                            </div>
-                        </div>
-                        <div className="space-y-3">
-                            <div className="flex items-start">
-                                <CheckCircle className="w-5 h-5 text-amber-400 mr-3 mt-1 flex-shrink-0" />
-                                <span className="text-gray-300">Implement advanced optimization techniques for excellent credit</span>
-                            </div>
-                            <div className="flex items-start">
-                                <CheckCircle className="w-5 h-5 text-amber-400 mr-3 mt-1 flex-shrink-0" />
-                                <span className="text-gray-300">Set up monitoring systems and maintenance routines</span>
-                            </div>
-                            <div className="flex items-start">
-                                <CheckCircle className="w-5 h-5 text-amber-400 mr-3 mt-1 flex-shrink-0" />
-                                <span className="text-gray-300">Calculate real dollar savings from excellent credit</span>
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
-
-                {/* Lessons Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {lessons.map((lesson, index) => (
-                        <motion.div
-                            key={lesson.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3 + index * 0.1, duration: 0.8 }}
-                            className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300 cursor-pointer`}
-                            onClick={() => setSelectedLesson(selectedLesson === lesson.id ? null : lesson.id)}
+                {/* Tab Navigation */}
+                <Tabs value={currentSection} onValueChange={(value) => setCurrentSection(value as 'lesson' | 'calculator' | 'quiz')} className="w-full">
+                    <TabsList className="grid w-full grid-cols-3 bg-slate-800/50 border border-slate-700">
+                        <TabsTrigger 
+                            value="lesson" 
+                            className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
                         >
-                            <div className="flex items-start justify-between mb-4">
-                                <div className="flex items-center">
-                                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-amber-500/25">
-                                        {lesson.icon}
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-bold text-white mb-1">Lesson {lesson.id}</h3>
-                                        <div className="flex items-center text-amber-400 text-sm">
-                                            <Clock className="w-4 h-4 mr-1" />
-                                            {lesson.duration}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="text-amber-400">
-                                    <CreditCard className="w-5 h-5" />
-                                </div>
-                            </div>
+                            <BookOpen className="w-4 h-4 mr-2" />
+                            Lesson
+                        </TabsTrigger>
+                        <TabsTrigger 
+                            value="calculator" 
+                            className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                            disabled={!lessonCompleted}
+                        >
+                            <Calculator className="w-4 h-4 mr-2" />
+                            Calculator
+                        </TabsTrigger>
+                        <TabsTrigger 
+                            value="quiz" 
+                            className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                            disabled={!lessonCompleted}
+                        >
+                            <Trophy className="w-4 h-4 mr-2" />
+                            Quiz
+                        </TabsTrigger>
+                    </TabsList>
 
-                            <h4 className="text-xl font-semibold text-white mb-3">{lesson.title}</h4>
-                            <p className="text-gray-400 mb-4">{lesson.description}</p>
+                    <TabsContent value="lesson" className="mt-6">
+                        <Card className="bg-slate-800/50 border-slate-700">
+                            <CardContent className="p-0">
+                                <InvestmentFundamentalsLesson onComplete={handleLessonComplete} />
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
 
-                            {selectedLesson === lesson.id && (
-                                <motion.div
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: 'auto' }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    className="border-t border-white/10 pt-4 mt-4"
-                                >
-                                    <h5 className="text-amber-400 font-semibold mb-3">Key Concepts:</h5>
-                                    <ul className="space-y-2">
-                                        {lesson.concepts.map((concept, idx) => (
-                                            <li key={idx} className="flex items-start text-gray-300 text-sm">
-                                                <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                                                {concept}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                    <div className="mt-4 pt-4 border-t border-white/10">
-                                        <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-xl transition-all duration-300">
-                                            Start Lesson {lesson.id}
-                                            <CheckCircle className="w-4 h-4 ml-2" />
+                    <TabsContent value="calculator" className="mt-6">
+                        <Card className="bg-slate-800/50 border-slate-700">
+                            <CardHeader>
+                                <CardTitle className="text-white flex items-center">
+                                    <Calculator className="w-6 h-6 mr-2 text-blue-400" />
+                                    Investment Calculator
+                                </CardTitle>
+                                <CardDescription className="text-gray-400">
+                                    Coming soon: Portfolio allocation and compound interest calculators
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="text-center py-12">
+                                    <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <Calculator className="w-8 h-8 text-blue-400" />
+                                    </div>
+                                    <h3 className="text-xl font-semibold text-white mb-2">Investment Calculators Coming Soon</h3>
+                                    <p className="text-gray-400 mb-6">
+                                        We&apos;re building comprehensive investment calculators including compound interest, 
+                                        portfolio allocation, and retirement planning tools.
+                                    </p>
+                                    <Link href="/calculators/compound-interest">
+                                        <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                                            Try Compound Interest Calculator
                                         </Button>
-                                    </div>
-                                </motion.div>
-                            )}
-                        </motion.div>
-                    ))}
-                </div>
+                                    </Link>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
 
-                {/* Coming Soon Notice */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8, duration: 0.8 }}
-                    className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-2xl p-8 mt-12 text-center"
-                >
-                    <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                        <AlertTriangle className="w-8 h-8 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-4">Interactive Lessons Coming Soon</h3>
-                    <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
-                        Chapter 7 is part of our comprehensive expansion plan. Interactive lessons, quizzes,
-                        and the Credit Score Simulator calculator will be available in the next update.
-                    </p>
-                    <div className="flex items-center justify-center gap-4">
-                        <Link href="/curriculum">
-                            <Button className="bg-amber-600 hover:bg-amber-700 text-white">
-                                View Full Curriculum
-                            </Button>
-                        </Link>
-                        <Link href="/chapter1">
-                            <Button variant="outline" className={`border-white/20 text-white hover:${theme.backgrounds.glass}/10`}>
-                                Continue Foundation Track
-                            </Button>
-                        </Link>
-                    </div>
-                </motion.div>
+                    <TabsContent value="quiz" className="mt-6">
+                        <Card className="bg-slate-800/50 border-slate-700">
+                            <CardHeader>
+                                <CardTitle className="text-white flex items-center">
+                                    <Trophy className="w-6 h-6 mr-2 text-blue-400" />
+                                    Investment Fundamentals Quiz
+                                </CardTitle>
+                                <CardDescription className="text-gray-400">
+                                    Test your knowledge of investment basics, asset allocation, and portfolio construction
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="text-center py-12">
+                                    <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <Trophy className="w-8 h-8 text-blue-400" />
+                                    </div>
+                                    <h3 className="text-xl font-semibold text-white mb-2">Quiz Coming Soon</h3>
+                                    <p className="text-gray-400 mb-6">
+                                        Complete the lesson first, then return here to test your investment knowledge 
+                                        and unlock the next chapter.
+                                    </p>
+                                    <Button disabled className="bg-gray-600 text-gray-400 cursor-not-allowed">
+                                        Quiz Not Available Yet
+                                    </Button>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                </Tabs>
             </div>
         </div>
     );
