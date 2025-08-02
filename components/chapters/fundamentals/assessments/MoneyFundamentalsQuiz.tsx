@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
 import { CheckCircle, XCircle, Sparkles } from 'lucide-react';
 
@@ -153,28 +154,28 @@ export default function MoneyFundamentalsQuiz() {
 
         <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8 animate-fade-in-up">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Quiz Results</h2>
-            <div className={`text-6xl font-bold mb-4 ${passed ? 'text-green-600' : 'text-red-600'}`}>
+            <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-4`}>Quiz Results</h2>
+            <div className={`text-6xl font-bold mb-4 ${passed ? theme.status.success.text : theme.status.error.text}`}>
               {percentage}%
             </div>
-            <p className="text-xl text-gray-700 mb-6">
+            <p className={`text-xl ${theme.textColors.secondary} mb-6`}>
               You got {score} out of {quizQuestions.length} questions correct
             </p>
 
             {passed ? (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
-                <h3 className="text-lg font-semibold text-green-900 mb-2 flex items-center gap-2">
+              <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-6 mb-6`}>
+                <h3 className={`text-lg font-semibold ${theme.status.success.text} mb-2 flex items-center gap-2`}>
                   <Sparkles className="w-5 h-5" />
                   Congratulations!
                 </h3>
-                <p className="text-green-800">
+                <p className={theme.status.success.text}>
                   You&apos;ve mastered the fundamentals of money! You can now proceed to Chapter 2: Budgeting Mastery.
                 </p>
               </div>
             ) : (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
-                <h3 className="text-lg font-semibold text-red-900 mb-2">Keep Learning!</h3>
-                <p className="text-red-800">
+              <div className={`${theme.status.error.bg} border ${theme.status.error.border} rounded-lg p-6 mb-6`}>
+                <h3 className={`text-lg font-semibold ${theme.status.error.text} mb-2`}>Keep Learning!</h3>
+                <p className={theme.status.error.text}>
                   You need 80% to unlock the next chapter. Review the lessons and try again when you&apos;re ready.
                 </p>
               </div>
@@ -183,12 +184,12 @@ export default function MoneyFundamentalsQuiz() {
             <div className="flex space-x-4 justify-center">
               <button
                 onClick={resetQuiz}
-                className="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                className={`px-6 py-3 ${theme.buttons.primary} rounded-md transition-colors`}
               >
                 Retake Quiz
               </button>
               {passed && (
-                <button className="px-6 py-3 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
+                <button className={`px-6 py-3 ${theme.buttons.primary} rounded-md transition-colors`}>
                   Continue to Chapter 2
                 </button>
               )}
@@ -218,14 +219,14 @@ export default function MoneyFundamentalsQuiz() {
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-purple-600">
+            <span className={`text-sm font-medium ${theme.textColors.accent}`}>
               Question {currentQuestion + 1} of {quizQuestions.length}
             </span>
-            <span className="text-sm text-gray-500">
+            <span className={`text-sm ${theme.textColors.muted}`}>
               Money Fundamentals Quiz
             </span>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900">{question.question}</h2>
+          <h2 className={`text-2xl font-bold ${theme.textColors.primary}`}>{question.question}</h2>
         </div>
 
         {/* Answer Options */}
@@ -237,10 +238,10 @@ export default function MoneyFundamentalsQuiz() {
               className={`w-full p-4 text-left rounded-lg border-2 transition-colors ${selectedAnswer === index
                 ? showExplanation
                   ? index === question.correctAnswer
-                    ? 'border-green-500 bg-green-50 text-green-900'
-                    : 'border-red-500 bg-red-50 text-red-900'
-                  : 'border-purple-500 bg-purple-50 text-purple-900'
-                : 'border-gray-200 hover:border-gray-300 text-gray-700 hover:text-gray-900'
+                    ? `border-2 ${theme.status.success.border} ${theme.status.success.bg} ${theme.status.success.text}`
+                    : `border-2 ${theme.status.error.border} ${theme.status.error.bg} ${theme.status.error.text}`
+                  : `border-2 ${theme.borderColors.accent} ${theme.backgrounds.card} ${theme.textColors.primary}`
+                : `border-2 ${theme.borderColors.primary} hover:${theme.borderColors.accent} ${theme.textColors.secondary} hover:${theme.textColors.primary}`
                 }`}
             >
               <div className="flex items-center">
@@ -255,8 +256,8 @@ export default function MoneyFundamentalsQuiz() {
 
         {/* Explanation */}
         {showExplanation && (
-          <div className={`mb-6 p-4 rounded-lg ${isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
-            <h3 className={`font-semibold mb-2 flex items-center gap-2 ${isCorrect ? 'text-green-900' : 'text-red-900'}`}>
+          <div className={`mb-6 p-4 rounded-lg ${isCorrect ? `${theme.status.success.bg} border ${theme.status.success.border}` : `${theme.status.error.bg} border ${theme.status.error.border}`}`}>
+            <h3 className={`font-semibold mb-2 flex items-center gap-2 ${isCorrect ? theme.status.success.text : theme.status.error.text}`}>
               {isCorrect ? (
                 <>
                   <CheckCircle className="w-4 h-4" />
@@ -269,7 +270,7 @@ export default function MoneyFundamentalsQuiz() {
                 </>
               )}
             </h3>
-            <p className={isCorrect ? 'text-green-800' : 'text-red-800'}>
+            <p className={isCorrect ? theme.status.success.text : theme.status.error.text}>
               {question.explanation}
             </p>
           </div>
@@ -280,7 +281,7 @@ export default function MoneyFundamentalsQuiz() {
           <button
             onClick={prevQuestion}
             disabled={currentQuestion === 0}
-            className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className={`px-4 py-2 ${theme.textColors.secondary} border ${theme.borderColors.primary} rounded-md hover:${theme.backgrounds.cardHover} disabled:opacity-50 disabled:cursor-not-allowed`}
           >
             ← Previous
           </button>

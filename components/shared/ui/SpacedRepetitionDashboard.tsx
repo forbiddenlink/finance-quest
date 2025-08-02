@@ -120,9 +120,9 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'text-red-300 bg-red-500/20';
-      case 'medium': return 'text-yellow-300 bg-yellow-500/20';
-      default: return 'text-green-300 bg-green-500/20';
+      case 'high': return `${theme.status.error.text} ${theme.status.error.bg}`;
+      case 'medium': return `${theme.status.warning.text} ${theme.status.warning.bg}`;
+      default: return `${theme.status.success.text} ${theme.status.success.bg}`;
     }
   };
 
