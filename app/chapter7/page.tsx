@@ -89,8 +89,8 @@ export default function Chapter7Page() {
                             Back to Home
                         </Link>
                         <div className="flex items-center space-x-4">
-                            <div className="bg-blue-500/20 px-3 py-1 rounded-full">
-                                <span className="text-blue-400 text-sm font-medium">Chapter 7</span>
+                        <div className={`${theme.status.info.bg} px-3 py-1 rounded-full`}>
+                                <span className={`${theme.status.info.text} text-sm font-medium`}>Chapter 7</span>
                             </div>
                         </div>
                     </div>
@@ -115,7 +115,7 @@ export default function Chapter7Page() {
                             Investment Fundamentals
                         </span>
                     </h1>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
+                    <p className={`${theme.textColors.muted} max-w-2xl mx-auto`}>
                         Learn the fundamentals of investing, asset allocation, and building long-term wealth through smart investment strategies.
                     </p>
                 </motion.div>
@@ -125,14 +125,14 @@ export default function Chapter7Page() {
                     <TabsList className="grid w-full grid-cols-3 bg-slate-800/50 border border-slate-700">
                         <TabsTrigger 
                             value="lesson" 
-                            className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text}`}
                         >
                             <BookOpen className="w-4 h-4 mr-2" />
                             Lesson
                         </TabsTrigger>
                         <TabsTrigger 
                             value="calculator" 
-                            className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text}`}
                             disabled={!lessonCompleted}
                         >
                             <Calculator className="w-4 h-4 mr-2" />
@@ -140,7 +140,7 @@ export default function Chapter7Page() {
                         </TabsTrigger>
                         <TabsTrigger 
                             value="quiz" 
-                            className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text}`}
                             disabled={!lessonCompleted}
                         >
                             <Trophy className="w-4 h-4 mr-2" />
@@ -159,26 +159,26 @@ export default function Chapter7Page() {
                     <TabsContent value="calculator" className="mt-6">
                         <Card className="bg-slate-800/50 border-slate-700">
                             <CardHeader>
-                                <CardTitle className="text-white flex items-center">
-                                    <Calculator className="w-6 h-6 mr-2 text-blue-400" />
+                                <CardTitle className={`${theme.textColors.primary} flex items-center`}>
+                                    <Calculator className={`w-6 h-6 mr-2 ${theme.status.info.text}`} />
                                     Investment Calculator
                                 </CardTitle>
-                                <CardDescription className="text-gray-400">
+                                <CardDescription className={`${theme.textColors.muted}`}>
                                     Coming soon: Portfolio allocation and compound interest calculators
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <div className="text-center py-12">
-                                    <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <Calculator className="w-8 h-8 text-blue-400" />
+                                    <div className={`w-16 h-16 ${theme.status.info.bg} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                                        <Calculator className={`w-8 h-8 ${theme.status.info.text}`} />
                                     </div>
-                                    <h3 className="text-xl font-semibold text-white mb-2">Investment Calculators Coming Soon</h3>
-                                    <p className="text-gray-400 mb-6">
+                                    <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-2`}>Investment Calculators Coming Soon</h3>
+                                    <p className={`${theme.textColors.muted} mb-6`}>
                                         We&apos;re building comprehensive investment calculators including compound interest, 
                                         portfolio allocation, and retirement planning tools.
                                     </p>
                                     <Link href="/calculators/compound-interest">
-                                        <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                                        <Button className={`${theme.buttons.primary}`}>
                                             Try Compound Interest Calculator
                                         </Button>
                                     </Link>
@@ -190,25 +190,25 @@ export default function Chapter7Page() {
                     <TabsContent value="quiz" className="mt-6">
                         <Card className="bg-slate-800/50 border-slate-700">
                             <CardHeader>
-                                <CardTitle className="text-white flex items-center">
-                                    <Trophy className="w-6 h-6 mr-2 text-blue-400" />
+                                <CardTitle className={`${theme.textColors.primary} flex items-center`}>
+                                    <Trophy className={`w-6 h-6 mr-2 ${theme.status.info.text}`} />
                                     Investment Fundamentals Quiz
                                 </CardTitle>
-                                <CardDescription className="text-gray-400">
+                                <CardDescription className={`${theme.textColors.muted}`}>
                                     Test your knowledge of investment basics, asset allocation, and portfolio construction
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <div className="text-center py-12">
-                                    <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <Trophy className="w-8 h-8 text-blue-400" />
+                                    <div className={`w-16 h-16 ${theme.status.info.bg} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                                        <Trophy className={`w-8 h-8 ${theme.status.info.text}`} />
                                     </div>
-                                    <h3 className="text-xl font-semibold text-white mb-2">Quiz Coming Soon</h3>
-                                    <p className="text-gray-400 mb-6">
+                                    <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-2`}>Quiz Coming Soon</h3>
+                                    <p className={`${theme.textColors.muted} mb-6`}>
                                         Complete the lesson first, then return here to test your investment knowledge 
                                         and unlock the next chapter.
                                     </p>
-                                    <Button disabled className="bg-gray-600 text-gray-400 cursor-not-allowed">
+                                    <Button disabled className={`${theme.backgrounds.cardDisabled} ${theme.textColors.muted} cursor-not-allowed`}>
                                         Quiz Not Available Yet
                                     </Button>
                                 </div>
