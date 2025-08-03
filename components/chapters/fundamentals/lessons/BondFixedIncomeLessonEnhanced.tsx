@@ -42,7 +42,7 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
               What Are Bonds?
             </h4>
             <p className={`${theme.textColors.secondary} mb-4`}>
-              Bonds are essentially IOUs - when you buy a bond, you're lending money to a government, 
+              Bonds are essentially IOUs - when you buy a bond, you&apos;re lending money to a government, 
               municipality, or corporation. In return, they promise to pay you back the principal 
               (face value) plus regular interest payments (coupons).
             </p>
@@ -171,7 +171,7 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
               compares a 4% municipal bond vs 6% corporate bond:<br/>
               • Corporate bond after-tax yield: 6% × (1 - 0.529) = 2.83%<br/>
               • Municipal bond yield: 4% (tax-free) = 4%<br/>
-              The "lower" yielding muni bond actually provides 42% more after-tax income!
+              The &quot;lower&quot; yielding muni bond actually provides 42% more after-tax income!
             </p>
           </div>
         </div>
@@ -198,7 +198,7 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
                 <h5 className={`font-medium ${theme.status.error.text} mb-2`}>Rising Rates Impact</h5>
                 <p className={`text-sm ${theme.status.error.text}/80 mb-2`}>
                   Your 3% bond becomes less attractive when new bonds offer 5%. 
-                  To sell early, you'd need to offer a discount.
+                  To sell early, you&apos;d need to offer a discount.
                 </p>
                 <div className={`text-xs ${theme.status.error.text} font-mono`}>
                   Example: $1,000 bond @ 3% → Market rate 5% → Bond value ~$840
@@ -223,8 +223,8 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
               <div className={`p-4 border ${theme.borderColors.primary} rounded-lg`}>
                 <h5 className={`font-medium ${theme.textColors.primary} mb-2`}>What is Duration?</h5>
                 <p className={`text-sm ${theme.textColors.secondary} mb-3`}>
-                  Duration measures a bond's price sensitivity to interest rate changes. 
-                  It's expressed in years and tells you approximately how much the bond's 
+                  Duration measures a bond&apos;s price sensitivity to interest rate changes. 
+                  It&apos;s expressed in years and tells you approximately how much the bond&apos;s 
                   price will change for each 1% move in interest rates.
                 </p>
                 <div className="grid md:grid-cols-3 gap-3">
@@ -328,7 +328,7 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
                 </div>
                 <h5 className={`font-medium ${theme.textColors.primary} mb-1`}>Premium (&gt;100)</h5>
                 <p className={`text-sm ${theme.textColors.secondary}`}>
-                  Bond's coupon rate higher than market rate
+                  Bond&apos;s coupon rate higher than market rate
                 </p>
               </div>
               <div className="text-center">
@@ -337,7 +337,7 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
                 </div>
                 <h5 className={`font-medium ${theme.textColors.primary} mb-1`}>Discount (&lt;100)</h5>
                 <p className={`text-sm ${theme.textColors.secondary}`}>
-                  Bond's coupon rate lower than market rate
+                  Bond&apos;s coupon rate lower than market rate
                 </p>
               </div>
             </div>
@@ -422,7 +422,7 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
               </div>
             </div>
             <div className={`mt-4 p-3 ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded text-sm ${theme.textColors.secondary}`}>
-              Note: Traditional "age in bonds" rule may be too conservative in today's low-rate environment. 
+              Note: Traditional &quot;age in bonds&quot; rule may be too conservative in today&apos;s low-rate environment. 
               Consider your risk tolerance, time horizon, and income needs.
             </div>
           </div>
@@ -816,7 +816,7 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
                 Congratulations! 🎉
               </h3>
               <p className={`${theme.textColors.secondary} max-w-md mx-auto`}>
-                You've mastered bond and fixed income investing. You now understand how to build 
+                You&apos;ve mastered bond and fixed income investing. You now understand how to build 
                 stable, income-generating portfolios and manage interest rate risk effectively.
               </p>
             </CardContent>
