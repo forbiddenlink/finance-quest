@@ -7,9 +7,10 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-import DebtManagementLesson from '@/components/chapters/fundamentals/lessons/DebtManagementLesson';
+import PortfolioConstructionLessonEnhanced from '@/components/chapters/fundamentals/lessons/PortfolioConstructionLessonEnhanced';
+import PortfolioConstructionQuizEnhanced from '@/components/chapters/fundamentals/quizzes/PortfolioConstructionQuizEnhanced';
 import {
-    CreditCard,
+    PieChart,
     Calculator,
     BookOpen,
     Trophy,
@@ -29,7 +30,14 @@ export default function Chapter8Page() {
 
     const handleLessonComplete = () => {
         setLessonCompleted(true);
-        toast.success('Debt Management lesson completed! 💪', {
+        toast.success('Portfolio Construction lesson completed! 🎯', {
+            duration: 4000,
+            position: 'top-center',
+        });
+    };
+
+    const handleQuizComplete = () => {
+        toast.success('Portfolio Construction mastered! Ready for Chapter 9! 🏆', {
             duration: 4000,
             position: 'top-center',
         });
@@ -96,14 +104,14 @@ export default function Chapter8Page() {
 
                     <div className="flex items-center space-x-6 mb-8">
                         <div className={`w-16 h-16 ${theme.status.error.bg} rounded-2xl flex items-center justify-center shadow-lg`}>
-                            <CreditCard className={`w-8 h-8 ${theme.status.error.text}`} />
+                            <PieChart className={`w-8 h-8 ${theme.status.error.text}`} />
                         </div>
                         <div>
                             <h1 className={`${theme.typography.heading1} ${theme.textColors.primary} mb-2`}>
-                                Chapter 8: Debt Management & Credit Optimization
+                                Chapter 8: Portfolio Construction & Asset Allocation
                             </h1>
                             <p className={`${theme.typography.body} ${theme.textColors.secondary}`}>
-                                Master debt elimination strategies and build excellent credit
+                                Master the science of building optimal investment portfolios
                             </p>
                         </div>
                     </div>
@@ -142,7 +150,7 @@ export default function Chapter8Page() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <DebtManagementLesson onComplete={handleLessonComplete} />
+                            <PortfolioConstructionLessonEnhanced onComplete={handleLessonComplete} />
                         </motion.div>
                     </TabsContent>
 
@@ -156,20 +164,27 @@ export default function Chapter8Page() {
                                 <CardHeader className="text-center">
                                     <CardTitle className="flex items-center justify-center space-x-2">
                                         <Calculator className={`w-6 h-6 ${theme.status.error.text}`} />
-                                        <span>Debt Payoff Calculator</span>
+                                        <span>Portfolio Allocation Calculator</span>
                                     </CardTitle>
                                     <CardDescription>
-                                        Calculate different debt payoff strategies and see potential savings
+                                        Calculate optimal asset allocation and rebalancing strategies
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="text-center py-12">
                                         <p className={`${theme.textColors.secondary} mb-4`}>
-                                            Interactive debt calculator coming soon!
+                                            Interactive portfolio calculator coming soon!
                                         </p>
                                         <p className={`text-sm ${theme.textColors.muted}`}>
-                                            This will help you compare avalanche vs snowball methods
+                                            This will help you optimize asset allocation and track rebalancing needs
                                         </p>
+                                        <div className="mt-6">
+                                            <Link href="/calculators/portfolio-analyzer">
+                                                <Button className={theme.buttons.primary}>
+                                                    Try Portfolio Analyzer
+                                                </Button>
+                                            </Link>
+                                        </div>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -182,27 +197,7 @@ export default function Chapter8Page() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <Card className="max-w-4xl mx-auto">
-                                <CardHeader className="text-center">
-                                    <CardTitle className="flex items-center justify-center space-x-2">
-                                        <Trophy className={`w-6 h-6 ${theme.status.error.text}`} />
-                                        <span>Debt Management Quiz</span>
-                                    </CardTitle>
-                                    <CardDescription>
-                                        Test your knowledge of debt strategies and credit optimization
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="text-center py-12">
-                                        <p className={`${theme.textColors.secondary} mb-4`}>
-                                            Quiz questions coming soon!
-                                        </p>
-                                        <p className={`text-sm ${theme.textColors.muted}`}>
-                                            Score 80%+ to unlock Chapter 9: Retirement Planning
-                                        </p>
-                                    </div>
-                                </CardContent>
-                            </Card>
+                            <PortfolioConstructionQuizEnhanced onComplete={handleQuizComplete} />
                         </motion.div>
                     </TabsContent>
                 </Tabs>
