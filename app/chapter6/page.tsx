@@ -1,118 +1,198 @@
 'use client';
 
-import React, { useState } from 'react';
-import BudgetBuilderCalculator from '@/components/shared/calculators/BudgetBuilderCalculator';
-import BudgetingMasteryQuiz from '@/components/chapters/fundamentals/assessments/BudgetingMasteryQuiz';
-import BudgetingMasteryLesson from '@/components/chapters/fundamentals/lessons/BudgetingMasteryLesson';
-import QASystem from '@/components/shared/QASystem';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
+import Link from 'next/link';
+import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-import { BookOpen, Calculator, FileText, Bot } from 'lucide-react';
-
-type TabType = 'lesson' | 'calculator' | 'quiz' | 'assistant';
+import CreditDebtLesson from '@/components/chapters/fundamentals/lessons/CreditDebtLesson';
+import DebtPayoffCalculator from '@/components/shared/calculators/DebtPayoffCalculator';
 
 export default function Chapter6Page() {
-    const [activeTab, setActiveTab] = useState<TabType>('lesson');
+  const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
+  const [lessonCompleted, setLessonCompleted] = useState(false);
+  const { userProgress, completeLesson } = useProgressStore();
 
-    const tabs = [
-        { id: 'lesson' as TabType, label: 'Lessons', icon: BookOpen },
-        { id: 'calculator' as TabType, label: 'Calculator', icon: Calculator },
-        { id: 'quiz' as TabType, label: 'Quiz', icon: FileText },
-        { id: 'assistant' as TabType, label: 'AI Coach', icon: Bot }
-    ];
+  const pageVariants = {
+    initial: { opacity: 0, x: 20 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -20 }
+  };
 
-    return (
-        <div className={theme.backgrounds.primary}>
-            {/* Header */}
-            <header className={`${theme.backgrounds.header} ${theme.borderColors.primary} border-b`}>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                            <button
-                                onClick={() => window.history.back()}
-                                className={`${theme.textColors.primary} hover:${theme.textColors.primary} font-medium transition-colors`}
-                            >
-                                ← Back to Home
-                            </button>
-                            <h1 className={`${theme.typography.heading2} ${theme.textColors.primary}`}>Chapter 6: Budgeting Mastery & Cash Flow</h1>
-                        </div>
-                        <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} ${theme.spacing.xs} rounded-full backdrop-blur-sm`}>
-                            <span className={`${theme.typography.small} font-medium ${theme.status.warning.text}`}>Foundation Track Complete</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
+  const sectionVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -20 }
+  };
 
-            {/* Tab Navigation */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div className={`${theme.tabs.container} rounded-lg p-1 mb-6`}>
-                    <nav className="flex space-x-1">
-                        {tabs.map((tab) => (
-                            <button
-                                key={tab.id}
-                                onClick={() => setActiveTab(tab.id)}
-                                className={`flex items-center px-6 py-3 rounded-md font-medium transition-all duration-200 ${activeTab === tab.id
-                                    ? theme.tabs.active
-                                    : theme.tabs.inactive
-                                    }`}
-                            >
-                                <tab.icon className="w-4 h-4 mr-2" />
-                                {tab.label}
-                            </button>
-                        ))}
-                    </nav>
-                </div>
+  const handleLessonComplete = () => {
+    setLessonCompleted(true);
+    completeLesson('chapter4-lesson', 20);
+  };
 
-                {/* Content */}
-                <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl ${theme.shadows.xl} overflow-hidden`}>
-                    {activeTab === 'lesson' && (
-                        <div className={theme.spacing.lg}>
-                            <BudgetingMasteryLesson onComplete={() => {
-                                // Handle lesson completion - could trigger achievement unlock
-                                console.log('Chapter 6 lesson completed!');
-                            }} />
-                        </div>
-                    )}
+  return (
+    <motion.div
+      className={theme.backgrounds.primary}
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      transition={{ duration: 0.5 }}
+    >
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* Header */}
+        <motion.div
+          className="mb-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <Link
+            href="/"
+            className={`inline-flex items-center ${theme.textColors.primary} hover:${theme.textColors.secondary} mb-4 transition-colors`}
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Dashboard
+          </Link>
 
-                    {activeTab === 'calculator' && (
-                        <div className={theme.spacing.lg}>
-                            <div className="mb-6">
-                                <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>Advanced Budget Builder</h2>
-                                <p className={theme.textColors.secondary}>
-                                    Use our professional-grade budget calculator with zero-based methodology and automation features.
-                                </p>
-                            </div>
-                            <BudgetBuilderCalculator />
-                        </div>
-                    )}
-
-                    {activeTab === 'quiz' && (
-                        <div className={theme.spacing.lg}>
-                            <div className="mb-6">
-                                <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>Budgeting Mastery Assessment</h2>
-                                <p className={theme.textColors.secondary}>
-                                    Complete this assessment to unlock the Credit & Lending Track and advance your financial education.
-                                </p>
-                            </div>
-
-                            <BudgetingMasteryQuiz onComplete={(score, total) => {
-                                console.log(`Quiz completed with score: ${score}/${total}`);
-                            }} />
-                        </div>
-                    )}
-
-                    {activeTab === 'assistant' && (
-                        <div className={theme.spacing.lg}>
-                            <div className="mb-6">
-                                <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>AI Budgeting Coach</h2>
-                                <p className={theme.textColors.secondary}>
-                                    Get personalized guidance on budgeting strategies, cash flow optimization, and automated savings systems.
-                                </p>
-                            </div>
-                            <QASystem />
-                        </div>
-                    )}
-                </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className={`text-4xl font-bold ${theme.textColors.primary} mb-2`}>
+                Chapter 4: Credit & Debt Management
+              </h1>
+              <p className={`text-xl ${theme.textColors.secondary}`}>
+                Master credit building and debt elimination strategies for financial freedom
+              </p>
             </div>
-        </div>
-    );
+
+            {userProgress.completedLessons.includes('chapter4-lesson') && (
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className={`${theme.status.success.text}`}
+              >
+                <CheckCircle className="w-12 h-12" />
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
+
+        {/* Progress Bar */}
+        <motion.div
+          className={`mb-8 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl ${theme.spacing.sm} shadow-lg`}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          <div className="flex justify-between items-center mb-2">
+            <span className={`${theme.typography.small} font-medium ${theme.textColors.primary}`}>Chapter Progress</span>
+            <span className={`${theme.typography.small} ${theme.textColors.secondary}`}>
+              {currentSection === 'lesson' ? '1/3' :
+                currentSection === 'calculator' ? '2/3' : '3/3'}
+            </span>
+          </div>
+          <div className={`w-full ${theme.progress.background} rounded-full h-2`}>
+            <motion.div
+              className={`${theme.progress.bar} h-2 rounded-full`}
+              initial={{ width: '0%' }}
+              animate={{
+                width: currentSection === 'lesson' ? '33%' :
+                  currentSection === 'calculator' ? '66%' : '100%'
+              }}
+              transition={{ duration: 0.5 }}
+            />
+          </div>
+        </motion.div>
+
+        {/* Navigation Tabs */}
+        <motion.div
+          className={`flex space-x-1 ${theme.backgrounds.card} border ${theme.borderColors.primary} p-1 rounded-xl shadow-lg mb-8`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          {[
+            { key: 'lesson', label: 'Learn', icon: '🎯' },
+            { key: 'calculator', label: 'Practice', icon: '🧮' },
+            { key: 'quiz', label: 'Test', icon: '✅' }
+          ].map((tab) => (
+            <motion.button
+              key={tab.key}
+              onClick={() => setCurrentSection(tab.key as 'lesson' | 'calculator' | 'quiz')}
+              className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${currentSection === tab.key
+                ? `${theme.buttons.primary}`
+                : `${theme.textColors.muted} hover:${theme.textColors.primary} hover:${theme.backgrounds.cardHover}`
+                }`}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              disabled={tab.key === 'calculator' && !lessonCompleted}
+            >
+              <span className="mr-2">{tab.icon}</span>
+              {tab.label}
+            </motion.button>
+          ))}
+        </motion.div>
+
+        {/* Content Sections */}
+        <motion.div
+          key={currentSection}
+          variants={sectionVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: 0.3 }}
+        >
+          {currentSection === 'lesson' && (
+            <CreditDebtLesson onComplete={handleLessonComplete} />
+          )}
+
+          {currentSection === 'calculator' && (
+            <DebtPayoffCalculator />
+          )}
+
+          {currentSection === 'quiz' && (
+            <div>
+              <div className={`mb-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
+                <h3 className={`font-semibold ${theme.textColors.secondary} mb-2`}>Knowledge Check</h3>
+                <p className={theme.textColors.muted}>
+                  Test your understanding of credit and debt management. You need 80% to unlock Chapter 5.
+                </p>
+              </div>
+              <div className={`${theme.backgrounds.card} border ${theme.borderColors.muted} rounded-lg p-8 text-center`}>
+                <p className={`${theme.textColors.muted} mb-4`}>Chapter 4 Quiz coming soon!</p>
+                <p className={`text-sm ${theme.textColors.muted}`}>Complete the lesson to prepare for the assessment.</p>
+              </div>
+            </div>
+          )}
+        </motion.div>
+
+        {/* Navigation */}
+        <motion.div
+          className="flex justify-between items-center mt-12"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          <Link
+            href="/chapter3"
+            className={`inline-flex items-center px-6 py-3 ${theme.buttons.secondary} rounded-lg transition-colors`}
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Previous Chapter
+          </Link>
+
+          {userProgress.currentChapter > 4 && (
+            <Link
+              href="/chapter5"
+              className={`inline-flex items-center px-6 py-3 ${theme.buttons.primary} rounded-lg transition-colors shadow-lg`}
+            >
+              Next Chapter
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Link>
+          )}
+        </motion.div>
+      </div>
+    </motion.div>
+  );
 }

@@ -6,13 +6,14 @@ import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-import EmergencyFundsLesson from '@/components/chapters/fundamentals/lessons/EmergencyFundsLesson';
-import EmergencyFundCalculator from '@/components/shared/calculators/EmergencyFundCalculator';
+import IncomeCareerLessonEnhanced from '@/components/chapters/fundamentals/lessons/IncomeCareerLessonEnhanced';
+import IncomeCareerQuizEnhanced from '@/components/chapters/fundamentals/quizzes/IncomeCareerQuizEnhanced';
+import SalaryNegotiationCalculator from '@/components/chapters/fundamentals/calculators/SalaryNegotiationCalculator';
 
 export default function Chapter5Page() {
   const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
   const [lessonCompleted, setLessonCompleted] = useState(false);
-  const { userProgress, completeLesson } = useProgressStore();
+  const { userProgress, completeLesson, recordQuizScore } = useProgressStore();
 
   const pageVariants = {
     initial: { opacity: 0, x: 20 },
@@ -28,7 +29,12 @@ export default function Chapter5Page() {
 
   const handleLessonComplete = () => {
     setLessonCompleted(true);
-    completeLesson('chapter5-lesson', 20);
+    completeLesson('chapter3-lesson', 20);
+  };
+
+  const handleQuizComplete = (score: number) => {
+    recordQuizScore('chapter3-quiz', score, 10);
+    // Quiz completion advances chapter automatically in Zustand store
   };
 
   return (
@@ -59,10 +65,10 @@ export default function Chapter5Page() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className={`text-4xl font-bold ${theme.textColors.primary} mb-2`}>
-                Chapter 5: Emergency Funds & Financial Safety
+                Chapter 5: Income & Career Growth
               </h1>
               <p className={`text-xl ${theme.textColors.secondary}`}>
-                Build your financial fortress against life&apos;s uncertainties and unexpected challenges
+                Maximize your earning potential and career financial strategy
               </p>
             </div>
 
@@ -70,7 +76,7 @@ export default function Chapter5Page() {
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className={`${theme.status.success.text}`}
+                className="text-amber-400"
               >
                 <CheckCircle className="w-12 h-12" />
               </motion.div>
@@ -94,7 +100,7 @@ export default function Chapter5Page() {
           </div>
           <div className={`w-full ${theme.progress.background} rounded-full h-2`}>
             <motion.div
-              className={`${theme.progress.bar} h-2 rounded-full`}
+              className={theme.progress.bar}
               initial={{ width: '0%' }}
               animate={{
                 width: currentSection === 'lesson' ? '33%' :
@@ -113,9 +119,9 @@ export default function Chapter5Page() {
           transition={{ delay: 0.4 }}
         >
           {[
-            { key: 'lesson', label: 'Learn', icon: '🛡️' },
-            { key: 'calculator', label: 'Practice', icon: '🧮' },
-            { key: 'quiz', label: 'Test', icon: '✅' }
+            { key: 'lesson', label: 'Learn', icon: '💼' },
+            { key: 'calculator', label: 'Practice', icon: '💰' },
+            { key: 'quiz', label: 'Test', icon: '🎯' }
           ].map((tab) => (
             <motion.button
               key={tab.key}
@@ -144,26 +150,15 @@ export default function Chapter5Page() {
           transition={{ duration: 0.3 }}
         >
           {currentSection === 'lesson' && (
-            <EmergencyFundsLesson onComplete={handleLessonComplete} />
+            <IncomeCareerLessonEnhanced onComplete={handleLessonComplete} />
           )}
 
           {currentSection === 'calculator' && (
-            <EmergencyFundCalculator />
+            <SalaryNegotiationCalculator />
           )}
 
           {currentSection === 'quiz' && (
-            <div>
-              <div className={`mb-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
-                <h3 className={`font-semibold ${theme.textColors.secondary} mb-2`}>Knowledge Check</h3>
-                <p className={theme.textColors.muted}>
-                  Test your understanding of emergency funds and financial safety. You need 80% to unlock Chapter 6.
-                </p>
-              </div>
-              <div className={`${theme.backgrounds.card} border ${theme.borderColors.muted} rounded-lg p-8 text-center`}>
-                <p className={`${theme.textColors.muted} mb-4`}>Chapter 5 Quiz coming soon!</p>
-                <p className={`text-sm ${theme.textColors.muted}`}>Complete the lesson to prepare for the assessment.</p>
-              </div>
-            </div>
+            <IncomeCareerQuizEnhanced onComplete={handleQuizComplete} />
           )}
         </motion.div>
 
@@ -175,16 +170,16 @@ export default function Chapter5Page() {
           transition={{ delay: 0.6 }}
         >
           <Link
-            href="/chapter4"
+            href="/chapter2"
             className={`inline-flex items-center px-6 py-3 ${theme.buttons.secondary} rounded-lg transition-colors`}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Previous Chapter
           </Link>
 
-          {userProgress.currentChapter > 5 && (
+          {userProgress.currentChapter > 3 && (
             <Link
-              href="/chapter6"
+              href="/chapter4"
               className={`inline-flex items-center px-6 py-3 ${theme.buttons.primary} rounded-lg transition-colors shadow-lg`}
             >
               Next Chapter

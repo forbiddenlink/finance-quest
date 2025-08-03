@@ -6,9 +6,9 @@ import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-import IncomeCareerLessonEnhanced from '@/components/chapters/fundamentals/lessons/IncomeCareerLessonEnhanced';
-import IncomeCareerQuizEnhanced from '@/components/chapters/fundamentals/quizzes/IncomeCareerQuizEnhanced';
-import SalaryNegotiationCalculator from '@/components/chapters/fundamentals/calculators/SalaryNegotiationCalculator';
+import BudgetBuilderCalculator from '@/components/shared/calculators/BudgetBuilderCalculator';
+import BudgetingMasteryQuiz from '@/components/chapters/fundamentals/assessments/BudgetingMasteryQuiz';
+import BudgetingMasteryLesson from '@/components/chapters/fundamentals/lessons/BudgetingMasteryLesson';
 
 export default function Chapter3Page() {
   const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
@@ -65,10 +65,10 @@ export default function Chapter3Page() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className={`text-4xl font-bold ${theme.textColors.primary} mb-2`}>
-                Chapter 3: Income & Career Finance
+                Chapter 3: Budgeting & Cash Flow Mastery
               </h1>
               <p className={`text-xl ${theme.textColors.secondary}`}>
-                Maximize your earning potential and career financial strategy
+                Master your money flow and build sustainable spending habits
               </p>
             </div>
 
@@ -150,15 +150,15 @@ export default function Chapter3Page() {
           transition={{ duration: 0.3 }}
         >
           {currentSection === 'lesson' && (
-            <IncomeCareerLessonEnhanced onComplete={handleLessonComplete} />
+            <BudgetingMasteryLesson onComplete={handleLessonComplete} />
           )}
 
           {currentSection === 'calculator' && (
-            <SalaryNegotiationCalculator />
+            <BudgetBuilderCalculator />
           )}
 
           {currentSection === 'quiz' && (
-            <IncomeCareerQuizEnhanced onComplete={handleQuizComplete} />
+            <BudgetingMasteryQuiz onComplete={handleQuizComplete} />
           )}
         </motion.div>
 

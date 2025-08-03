@@ -6,8 +6,8 @@ import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-import CreditDebtLesson from '@/components/chapters/fundamentals/lessons/CreditDebtLesson';
-import DebtPayoffCalculator from '@/components/shared/calculators/DebtPayoffCalculator';
+import EmergencyFundsLesson from '@/components/chapters/fundamentals/lessons/EmergencyFundsLesson';
+import EmergencyFundCalculator from '@/components/shared/calculators/EmergencyFundCalculator';
 
 export default function Chapter4Page() {
   const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
@@ -28,7 +28,7 @@ export default function Chapter4Page() {
 
   const handleLessonComplete = () => {
     setLessonCompleted(true);
-    completeLesson('chapter4-lesson', 20);
+    completeLesson('chapter5-lesson', 20);
   };
 
   return (
@@ -59,10 +59,10 @@ export default function Chapter4Page() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className={`text-4xl font-bold ${theme.textColors.primary} mb-2`}>
-                Chapter 4: Credit & Debt Management
+                Chapter 4: Emergency Funds & Financial Safety
               </h1>
               <p className={`text-xl ${theme.textColors.secondary}`}>
-                Master credit building and debt elimination strategies for financial freedom
+                Build your financial fortress against life&apos;s uncertainties and unexpected challenges
               </p>
             </div>
 
@@ -113,7 +113,7 @@ export default function Chapter4Page() {
           transition={{ delay: 0.4 }}
         >
           {[
-            { key: 'lesson', label: 'Learn', icon: '🎯' },
+            { key: 'lesson', label: 'Learn', icon: '🛡️' },
             { key: 'calculator', label: 'Practice', icon: '🧮' },
             { key: 'quiz', label: 'Test', icon: '✅' }
           ].map((tab) => (
@@ -144,11 +144,11 @@ export default function Chapter4Page() {
           transition={{ duration: 0.3 }}
         >
           {currentSection === 'lesson' && (
-            <CreditDebtLesson onComplete={handleLessonComplete} />
+            <EmergencyFundsLesson onComplete={handleLessonComplete} />
           )}
 
           {currentSection === 'calculator' && (
-            <DebtPayoffCalculator />
+            <EmergencyFundCalculator />
           )}
 
           {currentSection === 'quiz' && (
@@ -156,11 +156,11 @@ export default function Chapter4Page() {
               <div className={`mb-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
                 <h3 className={`font-semibold ${theme.textColors.secondary} mb-2`}>Knowledge Check</h3>
                 <p className={theme.textColors.muted}>
-                  Test your understanding of credit and debt management. You need 80% to unlock Chapter 5.
+                  Test your understanding of emergency funds and financial safety. You need 80% to unlock Chapter 6.
                 </p>
               </div>
               <div className={`${theme.backgrounds.card} border ${theme.borderColors.muted} rounded-lg p-8 text-center`}>
-                <p className={`${theme.textColors.muted} mb-4`}>Chapter 4 Quiz coming soon!</p>
+                <p className={`${theme.textColors.muted} mb-4`}>Chapter 5 Quiz coming soon!</p>
                 <p className={`text-sm ${theme.textColors.muted}`}>Complete the lesson to prepare for the assessment.</p>
               </div>
             </div>
@@ -175,16 +175,16 @@ export default function Chapter4Page() {
           transition={{ delay: 0.6 }}
         >
           <Link
-            href="/chapter3"
+            href="/chapter4"
             className={`inline-flex items-center px-6 py-3 ${theme.buttons.secondary} rounded-lg transition-colors`}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Previous Chapter
           </Link>
 
-          {userProgress.currentChapter > 4 && (
+          {userProgress.currentChapter > 5 && (
             <Link
-              href="/chapter5"
+              href="/chapter6"
               className={`inline-flex items-center px-6 py-3 ${theme.buttons.primary} rounded-lg transition-colors shadow-lg`}
             >
               Next Chapter
