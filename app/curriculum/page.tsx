@@ -14,7 +14,7 @@ export default function CurriculumPage() {
             <div className={`${theme.backgrounds.header} border-b ${theme.borderColors.primary} sticky top-0 z-50`}>
                 <div className="max-w-7xl mx-auto px-6 py-4">
                     <div className="flex items-center justify-between">
-                        <Link href="/" className={`flex items-center ${theme.textColors.primary} hover:${theme.textColors.accent} transition-colors`}>
+                        <Link href="/" className={`flex items-center ${theme.textColors.primary} hover:${theme.textColors.primary} transition-colors`}>
                             <ArrowLeft className="w-5 h-5 mr-2" />
                             Back to Home
                         </Link>
@@ -82,10 +82,10 @@ export default function CurriculumPage() {
                                 </div>
                                 <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Foundation Track</h3>
                                 <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>Master psychology, banking, income, and debt fundamentals</p>
-                                <div className={`mt-3 ${theme.textColors.accent} ${theme.typography.tiny} font-medium`}>✅ 5 Chapters Available</div>
+                                <div className={`mt-3 ${theme.textColors.primary} ${theme.typography.tiny} font-medium`}>✅ 5 Chapters Available</div>
                             </div>
 
-                            <div className={`${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-2xl ${theme.spacing.md}`}>
+                            <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.md}`}>
                                 <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mx-auto mb-4">
                                     <Target className={`w-6 h-6 ${theme.textColors.primary}`} />
                                 </div>
@@ -94,13 +94,13 @@ export default function CurriculumPage() {
                                 <div className={`mt-3 ${theme.textColors.warning} ${theme.typography.tiny} font-medium`}>🚧 25 Chapters Coming Soon</div>
                             </div>
 
-                            <div className={`${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-2xl ${theme.spacing.md}`}>
+                            <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.md}`}>
                                 <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mx-auto mb-4">
                                     <Star className={`w-6 h-6 ${theme.textColors.primary}`} />
                                 </div>
                                 <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Complete Mastery</h3>
                                 <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>Professional-level financial literacy with certification</p>
-                                <div className={`mt-3 ${theme.textColors.accent} ${theme.typography.tiny} font-medium`}>🎯 Industry Recognition</div>
+                                <div className={`mt-3 ${theme.textColors.primary} ${theme.typography.tiny} font-medium`}>🎯 Industry Recognition</div>
                             </div>
                         </div>
                     </motion.div>

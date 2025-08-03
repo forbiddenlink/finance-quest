@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import { Heart, TrendingUp, AlertTriangle, CheckCircle, Target, Shield, PiggyBank, CreditCard, Brain } from 'lucide-react';
+;
 import { theme } from '@/lib/theme';
 
 interface FinancialHealthMetrics {
@@ -251,7 +252,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
         </p>
         <button
           onClick={handleStartAssessment}
-          className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+          className={`bg-gradient-to-r from-slate-900 to-blue-900 ${theme.textColors.primary} px-8 py-4 rounded-xl font-semibold text-lg hover:from-slate-900 hover:to-blue-900 transition-all shadow-lg hover:shadow-xl transform hover:scale-105`}
         >
           Start Assessment (2 minutes)
         </button>
@@ -293,7 +294,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                   <button
                     onClick={() => handleInputChange(q.key, true)}
                     className={`px-6 py-3 rounded-lg font-medium transition-all ${responses[q.key as keyof typeof responses] === true
-                      ? `${theme.status.success.bg.replace('/20', '')} text-white`
+                      ? `${theme.status.success.bg.replace('/20', '')} ${theme.textColors.primary}`
                       : `${theme.backgrounds.disabled} ${theme.textColors.secondary} hover:${theme.backgrounds.card}`
                       }`}
                   >
@@ -302,7 +303,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                   <button
                     onClick={() => handleInputChange(q.key, false)}
                     className={`px-6 py-3 rounded-lg font-medium transition-all ${responses[q.key as keyof typeof responses] === false
-                      ? `${theme.status.error.bg.replace('/20', '')} text-white`
+                      ? `${theme.status.error.bg.replace('/20', '')} ${theme.textColors.primary}`
                       : `${theme.backgrounds.disabled} ${theme.textColors.secondary} hover:${theme.backgrounds.card}`
                       }`}
                   >
@@ -324,7 +325,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
           </button>
           <button
             onClick={handleNextStep}
-            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-medium hover:from-blue-600 hover:to-blue-700 transition-all"
+            className={`px-6 py-3 bg-gradient-to-r from-slate-900 to-blue-900 ${theme.textColors.primary} rounded-lg font-medium hover:from-slate-900 hover:to-blue-900 transition-all`}
           >
             {currentStep === questions.length - 1 ? 'Calculate Score' : 'Next'}
           </button>
@@ -339,7 +340,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
         {/* Overall Score */}
         <GradientCard variant="glass" gradient="purple" className="p-8 text-center">
           <div className={`w-24 h-24 ${getGradeColor(healthScore.grade)} rounded-full flex items-center justify-center mx-auto mb-6`}>
-            <span className="text-4xl font-bold text-white">{healthScore.grade}</span>
+            <span className={`text-4xl font-bold ${theme.textColors.primary}`}>{healthScore.grade}</span>
           </div>
           <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>Your Financial Health Score</h2>
           <div className={`text-6xl font-bold ${theme.status.info.text} mb-4`}>{healthScore.overallScore}</div>
@@ -397,7 +398,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                 {healthScore.improvements.map((improvement, idx) => (
                   <li key={idx} className="flex items-start gap-3">
                     <div className={`w-6 h-6 ${theme.status.error.bg.replace('/20', '')} rounded-full flex items-center justify-center flex-shrink-0 mt-0.5`}>
-                      <span className="text-white text-sm font-bold">{idx + 1}</span>
+                      <span className={`${theme.textColors.primary} text-sm font-bold`}>{idx + 1}</span>
                     </div>
                     <span className={`${theme.textColors.primary}`}>{improvement}</span>
                   </li>
@@ -447,7 +448,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                 reviewsFinancesRegularly: false
               });
             }}
-            className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-all"
+            className={`bg-gradient-to-r from-slate-900 to-blue-900 ${theme.textColors.primary} px-6 py-3 rounded-lg font-semibold hover:from-slate-900 hover:to-blue-900 transition-all`}
           >
             Retake Assessment
           </button>

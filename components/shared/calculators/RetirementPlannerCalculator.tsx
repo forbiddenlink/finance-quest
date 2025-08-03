@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { useProgressStore } from '@/lib/store/progressStore';
-import { theme } from '@/lib/theme';
+;
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { PiggyBank, Target, Calendar, DollarSign, TrendingUp, Shield } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface RetirementScenario {
   age: number;
@@ -197,7 +198,7 @@ export default function RetirementPlannerCalculator() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   Retirement Age
                 </label>
                 <Input
@@ -211,7 +212,7 @@ export default function RetirementPlannerCalculator() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   Current Balance ($)
                 </label>
                 <Input
@@ -222,7 +223,7 @@ export default function RetirementPlannerCalculator() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   Monthly Contribution ($)
                 </label>
                 <Input
@@ -236,7 +237,7 @@ export default function RetirementPlannerCalculator() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   Employer Match (%)
                 </label>
                 <Input
@@ -248,7 +249,7 @@ export default function RetirementPlannerCalculator() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   Current Income ($)
                 </label>
                 <Input
@@ -262,7 +263,7 @@ export default function RetirementPlannerCalculator() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   Expected Return (%)
                 </label>
                 <Input
@@ -274,7 +275,7 @@ export default function RetirementPlannerCalculator() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   Inflation Rate (%)
                 </label>
                 <Input
@@ -288,7 +289,7 @@ export default function RetirementPlannerCalculator() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                 Income Replacement (%)
               </label>
               <Input
@@ -298,7 +299,7 @@ export default function RetirementPlannerCalculator() {
                 onChange={(e) => setDesiredReplacement(e.target.value)}
                 placeholder="80"
               />
-              <p className="text-xs ${theme.textColors.muted} mt-1">
+              <p className={`text-xs ${theme.textColors.muted} mt-1`}>
                 Percentage of pre-retirement income needed in retirement
               </p>
             </div>
@@ -313,7 +314,7 @@ export default function RetirementPlannerCalculator() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Target className={`w-5 h-5 ${theme.textColors.accent}`} />
+              <Target className={`w-5 h-5 ${theme.textColors.primary}`} />
               Retirement Projection
             </CardTitle>
             <CardDescription>
@@ -325,17 +326,17 @@ export default function RetirementPlannerCalculator() {
               <div className="space-y-6">
                 {/* Key Metrics */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-4 ${theme.status.info.bg} rounded-lg">
+                  <div className={`text-center p-4 ${theme.status.info.bg} rounded-lg`}>
                     <div className={`${theme.typography.heading2} ${theme.status.info.text}`}>
                       {formatCurrency(results.finalBalance)}
                     </div>
-                    <div className="text-sm ${theme.textColors.secondary}">Retirement Balance</div>
+                    <div className={`text-sm ${theme.textColors.secondary}`}>Retirement Balance</div>
                   </div>
-                  <div className="text-center p-4 ${theme.status.success.bg} rounded-lg">
+                  <div className={`text-center p-4 ${theme.status.success.bg} rounded-lg`}>
                     <div className={`${theme.typography.heading2} ${theme.status.success.text}`}>
                       {formatCurrency(results.monthlyRetirementIncome)}
                     </div>
-                    <div className="text-sm ${theme.textColors.secondary}">Monthly Income</div>
+                    <div className={`text-sm ${theme.textColors.secondary}`}>Monthly Income</div>
                   </div>
                 </div>
 
@@ -346,13 +347,13 @@ export default function RetirementPlannerCalculator() {
                       {results.isOnTrack ? '✅ On Track!' : '⚠️ Needs Adjustment'}
                     </div>
                     {!results.isOnTrack && (
-                      <div className="text-sm ${theme.textColors.secondary}">
+                      <div className={`text-sm ${theme.textColors.secondary}`}>
                         Shortfall: {formatCurrency(results.shortfall)}/year
                       </div>
                     )}
                   </div>
                   {!results.isOnTrack && (
-                    <div className="mt-2 text-sm ${theme.textColors.primary}">
+                    <div className={`mt-2 text-sm ${theme.textColors.primary}`}>
                       <strong>Recommended:</strong> Increase monthly contribution to{' '}
                       <span className={`font-semibold ${theme.status.info.text}`}>
                         {formatCurrency(results.recommendedContribution)}
@@ -386,7 +387,7 @@ export default function RetirementPlannerCalculator() {
                 </div>
               </div>
             ) : (
-              <div className="text-center py-8 ${theme.textColors.muted}">
+              <div className={`text-center py-8 ${theme.textColors.muted}`}>
                 <Calendar className="w-12 h-12 mx-auto mb-3 opacity-50" />
                 <p>Enter your information to see your retirement projection</p>
               </div>
@@ -449,21 +450,21 @@ export default function RetirementPlannerCalculator() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 ${theme.status.info.bg} rounded-lg">
+                <div className={`flex justify-between items-center p-3 ${theme.status.info.bg} rounded-lg`}>
                   <span className={`${theme.textColors.primary}`}>Your Contribution</span>
                   <span className="font-semibold">{formatCurrency(parseFloat(monthlyContribution))}/month</span>
                 </div>
-                <div className="flex justify-between items-center p-3 ${theme.status.success.bg} rounded-lg">
+                <div className={`flex justify-between items-center p-3 ${theme.status.success.bg} rounded-lg`}>
                   <span className={`${theme.textColors.primary}`}>Employer Match</span>
                   <span className="font-semibold">{formatCurrency((parseFloat(monthlyContribution) * parseFloat(employerMatch)) / 100)}/month</span>
                 </div>
                 <div className={`flex justify-between items-center p-3 ${theme.status.info.bg} rounded-lg`}>
                   <span className={`${theme.textColors.primary}`}>Total Monthly</span>
-                  <span className={`font-semibold ${theme.textColors.accent}`}>
+                  <span className={`font-semibold ${theme.textColors.primary}`}>
                     {formatCurrency(parseFloat(monthlyContribution) + (parseFloat(monthlyContribution) * parseFloat(employerMatch)) / 100)}/month
                   </span>
                 </div>
-                <div className="flex justify-between items-center p-3 ${theme.status.warning.bg} rounded-lg">
+                <div className={`flex justify-between items-center p-3 ${theme.status.warning.bg} rounded-lg`}>
                   <span className={`${theme.textColors.primary}`}>Annual Total</span>
                   <span className={`font-semibold ${theme.status.warning.text}`}>
                     {formatCurrency((parseFloat(monthlyContribution) + (parseFloat(monthlyContribution) * parseFloat(employerMatch)) / 100) * 12)}/year
@@ -476,7 +477,7 @@ export default function RetirementPlannerCalculator() {
       )}
 
       {/* Educational Content */}
-      <Card className="bg-gradient-to-r from-blue-50 to-purple-50">
+      <Card className="bg-gradient-to-r from-slate-50 to-violet-50">
         <CardContent className="p-6">
           <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
             <Shield className={`w-5 h-5 ${theme.status.info.text}`} />
@@ -484,21 +485,21 @@ export default function RetirementPlannerCalculator() {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div>
-              <h4 className="font-medium ${theme.textColors.primary} mb-2">The Power of Time</h4>
+              <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>The Power of Time</h4>
               <p className={`${theme.textColors.primary}`}>
                 Starting early is the most powerful factor in retirement savings. Even small 
                 contributions in your 20s and 30s can grow dramatically due to compound interest.
               </p>
             </div>
             <div>
-              <h4 className="font-medium ${theme.textColors.primary} mb-2">Employer Match</h4>
+              <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Employer Match</h4>
               <p className={`${theme.textColors.primary}`}>
                 Always contribute enough to get your full employer match - it&apos;s free money! 
                 A 50% match on 6% contribution gives you an immediate 50% return.
               </p>
             </div>
             <div>
-              <h4 className="font-medium ${theme.textColors.primary} mb-2">4% Withdrawal Rule</h4>
+              <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>4% Withdrawal Rule</h4>
               <p className={`${theme.textColors.primary}`}>
                 The 4% rule suggests you can safely withdraw 4% of your retirement balance 
                 annually. This calculator uses this rule to estimate your retirement income.

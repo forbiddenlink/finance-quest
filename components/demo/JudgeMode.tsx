@@ -15,6 +15,7 @@ import {
   EyeOff
 } from 'lucide-react';
 import GradientCard from '@/components/shared/ui/GradientCard';
+;
 import { theme } from '@/lib/theme';
 
 interface JudgeModeProps {
@@ -36,7 +37,7 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
       title: 'Measurable Impact',
       description: '64% Financial Illiteracy Crisis Solution',
       metric: '40%+ Knowledge Improvement',
-      icon: <Target className="w-6 h-6 text-red-500" />,
+      icon: <Target className={`w-6 h-6 ${theme.status.error.text}`} />,
       color: 'red'
     },
     {
@@ -44,7 +45,7 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
       title: 'Technical Innovation',
       description: 'Real AI Integration vs Simulated Chatbots',
       metric: 'OpenAI GPT-4o-mini + Live APIs',
-      icon: <Brain className="w-6 h-6 text-purple-500" />,
+      icon: <Brain className={`w-6 h-6 ${theme.textColors.primary}`} />,
       color: 'purple'
     },
     {
@@ -52,7 +53,7 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
       title: 'Accessibility First',
       description: 'Voice Interface + Zero-Knowledge Design',
       metric: 'WCAG 2.1 AA Compliant',
-      icon: <Mic className="w-6 h-6 text-green-500" />,
+      icon: <Mic className={`w-6 h-6 ${theme.status.success.text}`} />,
       color: 'green'
     },
     {
@@ -60,7 +61,7 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
       title: 'Technical Excellence',
       description: 'Real Market Data + Robust Fallbacks',
       metric: '99.9% Demo Reliability',
-      icon: <BarChart3 className="w-6 h-6 text-blue-500" />,
+      icon: <BarChart3 className={`w-6 h-6 ${theme.textColors.primary}`} />,
       color: 'blue'
     }
   ];
@@ -108,7 +109,7 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
         <motion.button
           onClick={() => onToggle?.(!isActive)}
           className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg transition-all ${isActive
-              ? 'bg-gradient-to-r from-blue-600 to-slate-600 text-white'
+              ? 'bg-gradient-to-r from-slate-900 to-slate-600 ${theme.textColors.primary}'
               : `${theme.backgrounds.glass} ${theme.textColors.secondary} border ${theme.borderColors.primary} hover:${theme.backgrounds.card}`
             }`}
           whileHover={{ scale: 1.05 }}
@@ -128,23 +129,23 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="fixed top-0 left-0 right-0 z-30 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 text-white p-4 shadow-2xl"
+          className={`fixed top-0 left-0 right-0 z-30 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 ${theme.textColors.primary} p-4 shadow-2xl`}
         >
           <div className="max-w-7xl mx-auto">
             {/* Contest Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="bg-yellow-500 p-2 rounded-lg">
-                  <Trophy className="w-6 h-6 text-white" />
+                <div className={`${theme.status.warning.bg.replace("/20", "")} p-2 rounded-lg`}>
+                  <Trophy className={`w-6 h-6 ${theme.textColors.primary}`} />
                 </div>
                 <div>
                   <h2 className="text-xl font-bold">Contest Demo Mode</h2>
-                  <p className="text-purple-200 text-sm">Hack the Economy - Financial Literacy Track</p>
+                  <p className={`${theme.textColors.primary} text-sm`}>Hack the Economy - Financial Literacy Track</p>
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-2xl font-bold text-yellow-400">Finance Quest</div>
-                <div className="text-sm text-purple-200">Solving 64% Financial Illiteracy Crisis</div>
+                <div className={`text-2xl font-bold ${theme.status.warning.text}`}>Finance Quest</div>
+                <div className={`text-sm ${theme.textColors.primary}`}>Solving 64% Financial Illiteracy Crisis</div>
               </div>
             </div>
 
@@ -155,15 +156,15 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
                   key={highlight.id}
                   onHoverStart={() => setActiveHighlight(highlight.id)}
                   onHoverEnd={() => setActiveHighlight(null)}
-                  className={`${theme.backgrounds.glass} bg-opacity-10 backdrop-blur-sm rounded-lg p-4 border border-white border-opacity-20 hover:bg-opacity-20 transition-all cursor-pointer`}
+                  className={`${theme.backgrounds.glass} bg-opacity-10 backdrop-blur-sm rounded-lg p-4 border ${theme.borderColors.muted} border-opacity-20 hover:bg-opacity-20 transition-all cursor-pointer`}
                   whileHover={{ scale: 1.02 }}
                 >
                   <div className="flex items-center gap-2 mb-2">
                     {highlight.icon}
                     <h3 className="font-semibold text-sm">{highlight.title}</h3>
                   </div>
-                  <p className="text-xs text-purple-100 mb-1">{highlight.description}</p>
-                  <p className="text-xs font-bold text-yellow-300">{highlight.metric}</p>
+                  <p className={`text-xs ${theme.textColors.primary} mb-1`}>{highlight.description}</p>
+                  <p className={`text-xs font-bold ${theme.status.warning.text}`}>{highlight.metric}</p>
                 </motion.div>
               ))}
             </div>
@@ -172,12 +173,12 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
             <div className="bg-black bg-opacity-30 rounded-lg p-3">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-semibold flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-yellow-400" />
+                  <Zap className={`w-4 h-4 ${theme.status.warning.text}`} />
                   Live Technical Status
                 </h3>
                 <div className="flex items-center gap-1">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-xs text-green-300">All Systems Operational</span>
+                  <div className={`w-2 h-2 ${theme.status.success.bg.replace("/20", "")} rounded-full animate-pulse`}></div>
+                  <span className={`text-xs ${theme.status.success.text}`}>All Systems Operational</span>
                 </div>
               </div>
 
@@ -185,10 +186,10 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
                 {technicalAchievements.map((achievement, index) => (
                   <div key={index} className="text-xs">
                     <div className="flex items-center gap-1 mb-1">
-                      <div className={`w-2 h-2 rounded-full ${achievement.live ? 'bg-green-400' : 'bg-yellow-400'}`}></div>
-                      <span className="font-medium text-white">{achievement.feature}</span>
+                      <div className={`w-2 h-2 rounded-full ${achievement.live ? `${theme.status.success.bg.replace("/20", "")}` : `${theme.status.warning.bg.replace("/20", "")}`}`}></div>
+                      <span className={`font-medium ${theme.textColors.primary}`}>{achievement.feature}</span>
                     </div>
-                    <p className="text-purple-200 text-xs">{achievement.status}</p>
+                    <p className={`${theme.textColors.primary} text-xs`}>{achievement.status}</p>
                   </div>
                 ))}
               </div>
@@ -206,16 +207,16 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
           className="fixed right-4 top-32 z-35 w-80 max-h-96 overflow-y-auto"
         >
           <GradientCard variant="glass" gradient="purple" className="p-4">
-            <h3 className="font-bold text-purple-900 mb-3 flex items-center gap-2">
+            <h3 className={`font-bold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
               <Award className="w-5 h-5" />
               Competitive Advantages
             </h3>
             <div className="space-y-3">
               {competitiveAdvantages.map((advantage, index) => (
-                <div key={index} className="border-l-2 border-purple-300 pl-3">
-                  <h4 className="font-semibold text-purple-800 text-sm">{advantage.title}</h4>
-                  <p className="text-xs text-purple-700 mb-1">{advantage.description}</p>
-                  <p className="text-xs font-medium text-purple-900">{advantage.advantage}</p>
+                <div key={index} className={`border-l-2 ${theme.borderColors.primary} pl-3`}>
+                  <h4 className={`font-semibold ${theme.textColors.primary} text-sm`}>{advantage.title}</h4>
+                  <p className={`text-xs ${theme.textColors.primary} mb-1`}>{advantage.description}</p>
+                  <p className={`text-xs font-medium ${theme.textColors.primary}`}>{advantage.advantage}</p>
                 </div>
               ))}
             </div>
@@ -231,30 +232,30 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
           className="fixed bottom-4 left-4 z-35"
         >
           <GradientCard variant="glass" gradient="blue" className="p-4 w-64">
-            <h3 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
+            <h3 className={`font-bold ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
               <TrendingUp className="w-4 h-4" />
               Real-Time Metrics
             </h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-blue-700">Response Time:</span>
-                <span className="font-medium text-blue-900">&lt;2s</span>
+                <span className={`${theme.textColors.primary}`}>Response Time:</span>
+                <span className={`font-medium ${theme.textColors.primary}`}>&lt;2s</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-blue-700">AI Accuracy:</span>
-                <span className="font-medium text-blue-900">95%+</span>
+                <span className={`${theme.textColors.primary}`}>AI Accuracy:</span>
+                <span className={`font-medium ${theme.textColors.primary}`}>95%+</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-blue-700">Market Data:</span>
-                <span className="font-medium text-blue-900">Live</span>
+                <span className={`${theme.textColors.primary}`}>Market Data:</span>
+                <span className={`font-medium ${theme.textColors.primary}`}>Live</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-blue-700">Demo Reliability:</span>
-                <span className="font-medium text-blue-900">100%</span>
+                <span className={`${theme.textColors.primary}`}>Demo Reliability:</span>
+                <span className={`font-medium ${theme.textColors.primary}`}>100%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-blue-700">User Engagement:</span>
-                <span className="font-medium text-blue-900">45+ min</span>
+                <span className={`${theme.textColors.primary}`}>User Engagement:</span>
+                <span className={`font-medium ${theme.textColors.primary}`}>45+ min</span>
               </div>
             </div>
           </GradientCard>

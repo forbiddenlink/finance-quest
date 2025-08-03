@@ -23,13 +23,13 @@ export default function Chapter6Page() {
     return (
         <div className={theme.backgrounds.primary}>
             {/* Header */}
-            <header className={`${theme.backgrounds.header} ${theme.borderColors.accent} border-b`}>
+            <header className={`${theme.backgrounds.header} ${theme.borderColors.primary} border-b`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                             <button
                                 onClick={() => window.history.back()}
-                                className={`${theme.textColors.accent} hover:${theme.textColors.primary} font-medium transition-colors`}
+                                className={`${theme.textColors.primary} hover:${theme.textColors.primary} font-medium transition-colors`}
                             >
                                 ← Back to Home
                             </button>

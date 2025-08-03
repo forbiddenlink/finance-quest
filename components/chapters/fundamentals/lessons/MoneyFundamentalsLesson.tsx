@@ -163,8 +163,8 @@ export default function MoneyFundamentalsLesson() {
 
         {/* Interactive Exercises for Better Retention */}
         {currentLesson === 0 && (
-          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-lg`}>
-            <h3 className={`text-lg font-semibold ${theme.textColors.accent} mb-3 flex items-center gap-2`}>
+          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
               <Lightbulb className="w-5 h-5" />
               Reflect on Your Money Story
             </h3>
@@ -176,7 +176,7 @@ export default function MoneyFundamentalsLesson() {
                 <li>Do you tend to spend when stressed or save when stressed?</li>
                 <li>What financial decision are you most proud of? Most regretful of?</li>
               </ul>
-              <p className={`mt-4 font-medium ${theme.textColors.accent}`}>
+              <p className={`mt-4 font-medium ${theme.textColors.primary}`}>
                 💡 <strong>Key Insight:</strong> Most of our money patterns were set by age 7. Recognizing them is the first step to changing them!
               </p>
             </div>
@@ -256,7 +256,7 @@ export default function MoneyFundamentalsLesson() {
             <button
               onClick={prevLesson}
               disabled={currentLesson === 0}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               <ChevronLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Previous
@@ -264,7 +264,7 @@ export default function MoneyFundamentalsLesson() {
             <button
               onClick={nextLesson}
               disabled={currentLesson === lessons.length - 1}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               Next
               <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

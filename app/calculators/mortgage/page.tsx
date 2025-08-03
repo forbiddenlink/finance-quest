@@ -9,11 +9,11 @@ export default function MortgageCalculatorPage() {
   return (
     <div className={`min-h-screen ${theme.backgrounds.primary}`}>
       {/* Header */}
-      <div className={`${theme.backgrounds.header} border-b ${theme.borderColors.accent}`}>
+      <div className={`${theme.backgrounds.header} border-b ${theme.borderColors.primary}`}>
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex items-center gap-3 mb-4">
             <div className={`p-3 ${theme.status.warning.bg} rounded-xl`}>
-              <Home className={`w-8 h-8 ${theme.textColors.accent}`} />
+              <Home className={`w-8 h-8 ${theme.textColors.primary}`} />
             </div>
             <div>
               <h1 className="text-3xl font-bold text-white">Mortgage Calculator</h1>

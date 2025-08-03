@@ -68,7 +68,7 @@ export default function DemoPage() {
       />
 
       {/* Header */}
-      <header className={`${theme.backgrounds.header} border-b ${theme.borderColors.accent} shadow-sm relative z-10`}>
+      <header className={`${theme.backgrounds.header} border-b ${theme.borderColors.primary} shadow-sm relative z-10`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
@@ -82,7 +82,7 @@ export default function DemoPage() {
             </div>
 
             <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4 mb-6 inline-block backdrop-blur-sm`}>
-              <p className={`${theme.textColors.accentSecondary} font-semibold flex items-center gap-2`}>
+              <p className={`${theme.textColors.secondary} font-semibold flex items-center gap-2`}>
                 <Target className="w-5 h-5" />
                 Solving the 64% Financial Illiteracy Crisis
               </p>
@@ -118,7 +118,7 @@ export default function DemoPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {impactMetrics.map((metric, index) => (
               <GradientCard key={index} variant="glass" gradient="blue" className={`p-6 text-center ${theme.backgrounds.card} border ${theme.borderColors.primary}`}>
-                <div className={`text-3xl font-bold ${theme.textColors.accent} mb-2`}>{metric.value}</div>
+                <div className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>{metric.value}</div>
                 <div className={`font-semibold ${theme.textColors.primary} mb-1`}>{metric.label}</div>
                 <div className={`text-sm ${theme.textColors.secondary}`}>{metric.subtitle}</div>
               </GradientCard>

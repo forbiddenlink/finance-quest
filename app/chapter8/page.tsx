@@ -43,7 +43,7 @@ export default function Chapter8Page() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className={`${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-2xl ${theme.spacing.lg}`}
+                        className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.lg}`}
                     >
                         <div className={`w-16 h-16 ${theme.status.error.bg} rounded-2xl flex items-center justify-center mx-auto mb-6`}>
                             <Lock className={`w-8 h-8 ${theme.status.error.text}`} />
@@ -67,7 +67,7 @@ export default function Chapter8Page() {
                         <Link href="/">
                             <Button 
                                 variant="outline" 
-                                className={`${theme.buttons.secondary} border-2 hover:${theme.borderColors.accent}`}
+                                className={`${theme.buttons.secondary} border-2 hover:${theme.borderColors.primary}`}
                             >
                                 <ArrowLeft className="w-4 h-4 mr-2" />
                                 Return to Dashboard

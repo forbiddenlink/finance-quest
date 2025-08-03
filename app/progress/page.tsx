@@ -44,7 +44,7 @@ export default function ProgressPage() {
       description: 'Completed your first lesson',
       unlocked: progress.totalLessonsCompleted >= 1,
       icon: BookOpen,
-      color: theme.textColors.accent
+      color: theme.textColors.primary
     },
     {
       id: 'quiz-master',
@@ -52,7 +52,7 @@ export default function ProgressPage() {
       description: 'Passed 3 quizzes with 80%+',
       unlocked: progress.totalQuizzesTaken >= 3 && progress.averageQuizScore >= 80,
       icon: Brain,
-      color: theme.textColors.accent
+      color: theme.textColors.primary
     },
     {
       id: 'calculator-pro',
@@ -76,7 +76,7 @@ export default function ProgressPage() {
       description: 'Financial Literacy Score over 500',
       unlocked: progress.userProgress.financialLiteracyScore >= 500,
       icon: Star,
-      color: theme.textColors.accent
+      color: theme.textColors.primary
     }
   ];
 
@@ -106,7 +106,7 @@ export default function ProgressPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Financial Literacy Score</p>
-                <p className={`text-3xl font-bold ${theme.textColors.accent}`}>
+                <p className={`text-3xl font-bold ${theme.textColors.primary}`}>
                   <AnimatedCounter end={progress.userProgress.financialLiteracyScore} />
                 </p>
                 <p className={`text-xs ${theme.textColors.muted}`}>out of 1000</p>
@@ -121,13 +121,13 @@ export default function ProgressPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Lessons Completed</p>
-                <p className={`text-3xl font-bold ${theme.textColors.accent}`}>
+                <p className={`text-3xl font-bold ${theme.textColors.primary}`}>
                   <AnimatedCounter end={progress.totalLessonsCompleted} />
                 </p>
                 <p className={`text-xs ${theme.textColors.muted}`}>out of 20 available</p>
               </div>
               <div className={`p-3 ${theme.status.warning.bg} rounded-lg`}>
-                <BookOpen className={`w-8 h-8 ${theme.textColors.accent}`} />
+                <BookOpen className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
             </div>
           </div>
@@ -151,13 +151,13 @@ export default function ProgressPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Current Streak</p>
-                <p className={`text-3xl font-bold ${theme.textColors.accent}`}>
+                <p className={`text-3xl font-bold ${theme.textColors.primary}`}>
                   <AnimatedCounter end={progress.currentStreak} />
                 </p>
                 <p className={`text-xs ${theme.textColors.muted}`}>days active</p>
               </div>
               <div className={`p-3 ${theme.status.warning.bg} rounded-lg`}>
-                <Zap className={`w-8 h-8 ${theme.textColors.accent}`} />
+                <Zap className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
             </div>
           </div>
@@ -214,7 +214,7 @@ export default function ProgressPage() {
                   <div className={`text-sm ${theme.textColors.secondary}`}>Total Time</div>
                 </div>
                 <div className="text-center">
-                  <TrendingUp className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+                  <TrendingUp className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
                   <div className={`text-2xl font-bold ${theme.textColors.primary}`}>{learningVelocity}</div>
                   <div className={`text-sm ${theme.textColors.secondary}`}>Lessons/Week</div>
                 </div>
@@ -226,7 +226,7 @@ export default function ProgressPage() {
                   <div className={`text-sm ${theme.textColors.secondary}`}>Tools Used</div>
                 </div>
                 <div className="text-center">
-                  <Award className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+                  <Award className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
                   <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
                     {achievements.filter(a => a.unlocked).length}/{achievements.length}
                   </div>
@@ -247,7 +247,7 @@ export default function ProgressPage() {
             >
               <h3 className="text-lg font-bold mb-4">Next Recommended Action</h3>
               <div className="flex items-start gap-3">
-                <Target className={`w-6 h-6 mt-1 flex-shrink-0 ${theme.textColors.accent}`} />
+                <Target className={`w-6 h-6 mt-1 flex-shrink-0 ${theme.textColors.primary}`} />
                 <div>
                   <p className={`font-medium mb-1 ${theme.textColors.primary}`}>{nextAction.message}</p>
                   <p className={`text-sm ${theme.textColors.secondary}`}>{nextAction.action}</p>
@@ -279,7 +279,7 @@ export default function ProgressPage() {
                     >
                       <div className={`p-2 rounded-lg ${achievement.unlocked ? theme.status.warning.bg : theme.backgrounds.disabled
                         }`}>
-                        <Icon className={`w-5 h-5 ${achievement.unlocked ? theme.textColors.accent : theme.textColors.muted}
+                        <Icon className={`w-5 h-5 ${achievement.unlocked ? theme.textColors.primary : theme.textColors.muted}
                           }`} />
                       </div>
                       <div className="flex-1">
@@ -293,7 +293,7 @@ export default function ProgressPage() {
                         </p>
                       </div>
                       {achievement.unlocked && (
-                        <CheckCircle className={`w-5 h-5 ${theme.textColors.accent}`} />
+                        <CheckCircle className={`w-5 h-5 ${theme.textColors.primary}`} />
                       )}
                     </motion.div>
                   );

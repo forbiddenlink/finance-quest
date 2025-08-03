@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import GradientCard from '@/components/shared/ui/GradientCard';
+;
 import { theme } from '@/lib/theme';
 
 interface ImpactMetric {
@@ -159,13 +160,13 @@ export default function ContestMetricsDashboard() {
   const overallScore = contestJudgingCriteria.reduce((sum, item) => sum + item.score, 0) / contestJudgingCriteria.length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-emerald-50 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="bg-gradient-to-r from-yellow-500 to-orange-500 p-3 rounded-2xl">
-              <Trophy className="w-8 h-8 text-white" />
+              <Trophy className={`w-8 h-8 ${theme.textColors.primary}`} />
             </div>
             <div>
               <h1 className={`text-4xl font-bold ${theme.textColors.primary}`}>Contest Impact Dashboard</h1>
@@ -173,8 +174,8 @@ export default function ContestMetricsDashboard() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-blue-100 to-blue-100 border border-blue-200 rounded-lg p-4 inline-block">
-            <p className="text-green-800 font-semibold flex items-center gap-2">
+          <div className={`bg-gradient-to-r from-slate-100 to-slate-100 border ${theme.borderColors.primary} rounded-lg p-4 inline-block`}>
+            <p className={`${theme.status.success.text} font-semibold flex items-center gap-2`}>
               <Target className="w-5 h-5" />
               Overall Contest Score: {overallScore.toFixed(1)}/100
             </p>
@@ -194,14 +195,14 @@ export default function ContestMetricsDashboard() {
               <GradientCard variant="glass" gradient="blue" className="p-6 relative overflow-hidden">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
-                    {metric.trend === 'up' && <TrendingUp className="w-5 h-5 text-green-500" />}
-                    {metric.trend === 'down' && <TrendingUp className="w-5 h-5 text-red-500 rotate-180" />}
-                    {metric.trend === 'stable' && <CheckCircle className="w-5 h-5 text-blue-500" />}
+                    {metric.trend === 'up' && <TrendingUp className={`w-5 h-5 ${theme.status.success.text}`} />}
+                    {metric.trend === 'down' && <TrendingUp className={`w-5 h-5 ${theme.status.error.text} rotate-180`} />}
+                    {metric.trend === 'stable' && <CheckCircle className={`w-5 h-5 ${theme.textColors.primary}`} />}
                     <h3 className={`font-semibold ${theme.textColors.primary}`}>{metric.label}</h3>
                   </div>
                   <div className={`px-2 py-1 rounded-full text-xs font-medium ${metric.value >= metric.target
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-yellow-100 text-yellow-800'
+                    ? '${theme.status.success.bg} ${theme.status.success.text}'
+                    : '${theme.status.warning.bg} ${theme.status.warning.text}'
                     }`}>
                     {metric.value >= metric.target ? 'Target Met' : 'In Progress'}
                   </div>
@@ -218,17 +219,17 @@ export default function ContestMetricsDashboard() {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-blue-50 p-3 rounded-lg border border-blue-200"
+                    className={`${theme.backgrounds.card} p-3 rounded-lg border ${theme.borderColors.primary}`}
                   >
-                    <p className="text-xs font-medium text-blue-800">Contest Relevance:</p>
-                    <p className="text-xs text-blue-700">{metric.contestRelevance}</p>
+                    <p className={`text-xs font-medium ${theme.textColors.primary}`}>Contest Relevance:</p>
+                    <p className={`text-xs ${theme.textColors.primary}`}>{metric.contestRelevance}</p>
                   </motion.div>
                 )}
 
                 {/* Progress Bar */}
                 <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2 mt-3`}>
                   <motion.div
-                    className={`h-2 rounded-full ${metric.value >= metric.target ? 'bg-green-500' : 'bg-blue-500'
+                    className={`h-2 rounded-full ${metric.value >= metric.target ? '${theme.status.success.bg.replace("/20", "")}' : '${theme.backgrounds.primary}'
                       }`}
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.min((metric.value / metric.target) * 100, 100)}%` }}
@@ -244,7 +245,7 @@ export default function ContestMetricsDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <GradientCard variant="glass" gradient="purple" className="p-6">
             <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-              <Brain className="w-6 h-6 text-purple-600" />
+              <Brain className={`w-6 h-6 ${theme.textColors.primary}`} />
               Learning Outcome Improvements
             </h3>
             <ResponsiveContainer width="100%" height={300}>
@@ -261,7 +262,7 @@ export default function ContestMetricsDashboard() {
 
           <GradientCard variant="glass" gradient="green" className="p-6">
             <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-              <Users className="w-6 h-6 text-green-600" />
+              <Users className={`w-6 h-6 ${theme.status.success.text}`} />
               User Engagement Growth
             </h3>
             <ResponsiveContainer width="100%" height={300}>
@@ -281,7 +282,7 @@ export default function ContestMetricsDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <GradientCard variant="glass" gradient="yellow" className="p-6">
             <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-              <Zap className="w-6 h-6 text-yellow-600" />
+              <Zap className={`w-6 h-6 ${theme.status.warning.text}`} />
               Feature Adoption Rates
             </h3>
             <ResponsiveContainer width="100%" height={300}>
@@ -307,7 +308,7 @@ export default function ContestMetricsDashboard() {
 
           <GradientCard variant="glass" gradient="red" className="p-6">
             <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-              <Award className="w-6 h-6 text-red-600" />
+              <Award className={`w-6 h-6 ${theme.status.error.text}`} />
               Contest Judging Criteria
             </h3>
             <div className="space-y-4">
@@ -315,12 +316,12 @@ export default function ContestMetricsDashboard() {
                 <div key={criterion.criterion} className={`border-b ${theme.borderColors.primary} pb-3`}>
                   <div className="flex items-center justify-between mb-2">
                     <h4 className={`font-semibold ${theme.textColors.primary}`}>{criterion.criterion}</h4>
-                    <span className="text-lg font-bold text-red-600">{criterion.score}/100</span>
+                    <span className={`text-lg font-bold ${theme.status.error.text}`}>{criterion.score}/100</span>
                   </div>
                   <p className={`text-sm ${theme.textColors.secondary} mb-2`}>{criterion.evidence}</p>
                   <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2`}>
                     <motion.div
-                      className="bg-red-500 h-2 rounded-full"
+                      className={`${theme.status.error.bg.replace("/20", "")} h-2 rounded-full`}
                       initial={{ width: 0 }}
                       animate={{ width: `${criterion.score}%` }}
                       transition={{ duration: 1, delay: index * 0.2 }}
@@ -335,34 +336,34 @@ export default function ContestMetricsDashboard() {
         {/* Technical Achievements Summary */}
         <GradientCard variant="glass" gradient="blue" className="p-8">
           <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-6 flex items-center gap-2`}>
-            <Star className="w-8 h-8 text-blue-600" />
+            <Star className={`w-8 h-8 ${theme.textColors.primary}`} />
             Contest-Winning Technical Achievements
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="bg-blue-100 p-4 rounded-lg mb-3">
-                <Brain className="w-8 h-8 text-blue-600 mx-auto" />
+              <div className={`${theme.backgrounds.cardHover} p-4 rounded-lg mb-3`}>
+                <Brain className={`w-8 h-8 ${theme.textColors.primary} mx-auto`} />
               </div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Real AI Integration</h4>
               <p className={`text-sm ${theme.textColors.secondary}`}>OpenAI GPT-4o-mini with contextual responses, not simulated chatbots</p>
             </div>
             <div className="text-center">
-              <div className="bg-green-100 p-4 rounded-lg mb-3">
-                <Mic className="w-8 h-8 text-green-600 mx-auto" />
+              <div className={`${theme.status.success.bg} p-4 rounded-lg mb-3`}>
+                <Mic className={`w-8 h-8 ${theme.status.success.text} mx-auto`} />
               </div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Voice Accessibility</h4>
               <p className={`text-sm ${theme.textColors.secondary}`}>Web Speech API integration for inclusive financial education</p>
             </div>
             <div className="text-center">
-              <div className="bg-purple-100 p-4 rounded-lg mb-3">
-                <BarChart3 className="w-8 h-8 text-purple-600 mx-auto" />
+              <div className={`${theme.backgrounds.cardHover} p-4 rounded-lg mb-3`}>
+                <BarChart3 className={`w-8 h-8 ${theme.textColors.primary} mx-auto`} />
               </div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Live Market Data</h4>
               <p className={`text-sm ${theme.textColors.secondary}`}>Real-time Yahoo Finance & FRED API integration with fallbacks</p>
             </div>
             <div className="text-center">
-              <div className="bg-yellow-100 p-4 rounded-lg mb-3">
-                <Target className="w-8 h-8 text-yellow-600 mx-auto" />
+              <div className={`${theme.status.warning.bg} p-4 rounded-lg mb-3`}>
+                <Target className={`w-8 h-8 ${theme.status.warning.text} mx-auto`} />
               </div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Measurable Impact</h4>
               <p className={`text-sm ${theme.textColors.secondary}`}>42% knowledge improvement with quantifiable learning outcomes</p>

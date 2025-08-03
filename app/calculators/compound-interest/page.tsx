@@ -9,20 +9,20 @@ export default function CompoundInterestPage() {
   return (
     <div className={`min-h-screen ${theme.backgrounds.primary}`}>
       {/* Header */}
-      <header className={`${theme.backgrounds.header} border-b ${theme.borderColors.accent}`}>
+      <header className={`${theme.backgrounds.header} border-b ${theme.borderColors.primary}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => window.history.back()}
-                className={`${theme.textColors.accent} hover:${theme.textColors.accentSecondary} font-medium transition-colors`}
+                className={`${theme.textColors.primary} hover:${theme.textColors.secondary} font-medium transition-colors`}
               >
                 ← Back
               </button>
               <h1 className={`${theme.typography.heading3} ${theme.textColors.primary}`}>Compound Interest Calculator</h1>
             </div>
             <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} px-3 py-1 rounded-full backdrop-blur-sm`}>
-              <span className={`${theme.typography.small} font-medium ${theme.textColors.accentSecondary} flex items-center gap-1`}>
+              <span className={`${theme.typography.small} font-medium ${theme.textColors.secondary} flex items-center gap-1`}>
                 <DollarSign className="w-4 h-4" />
                 Wealth Builder
               </span>
@@ -34,17 +34,17 @@ export default function CompoundInterestPage() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className={`mb-6 ${theme.status.warning.bg} border ${theme.status.warning.border} backdrop-blur-xl rounded-lg ${theme.spacing.md}`}>
-          <h2 className={`${theme.typography.heading4} ${theme.textColors.accentSecondary} mb-2 flex items-center gap-2`}>
+          <h2 className={`${theme.typography.heading4} ${theme.textColors.secondary} mb-2 flex items-center gap-2`}>
             <Sprout className="w-5 h-5" />
             The Eighth Wonder of the World
           </h2>
-          <p className={`${theme.textColors.accentSecondary} mb-4`}>
+          <p className={`${theme.textColors.secondary} mb-4`}>
             &quot;Compound interest is the most powerful force in the universe.&quot; - Albert Einstein
           </p>
           <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 ${theme.typography.small}`}>
             <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.primary} rounded-lg p-3`}>
               <h3 className={`font-semibold ${theme.textColors.primary} flex items-center gap-2`}>
-                <Clock className={`w-4 h-4 ${theme.textColors.accent}`} />
+                <Clock className={`w-4 h-4 ${theme.textColors.primary}`} />
                 Time Advantage
               </h3>
               <p className={theme.textColors.secondary}>Starting 10 years earlier can double your final balance</p>

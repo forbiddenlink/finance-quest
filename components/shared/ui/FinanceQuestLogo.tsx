@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { theme } from '@/lib/theme';
 
 interface FinanceQuestLogoProps {
     size?: 'sm' | 'md' | 'lg';
@@ -34,7 +35,7 @@ export default function FinanceQuestLogo({
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
                 {/* Background gradient circle */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500 via-yellow-500 to-amber-600 rounded-xl shadow-lg shadow-amber-500/25"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-500 via-yellow-500 to-yellow-600 rounded-xl shadow-lg shadow-amber-500/25"></div>
 
                 {/* Logo content */}
                 <div className="relative w-full h-full flex items-center justify-center rounded-xl overflow-hidden">
@@ -95,10 +96,10 @@ export default function FinanceQuestLogo({
             {/* Text */}
             {showText && (
                 <div className="flex flex-col">
-                    <h1 className={`${textSizeClasses[size]} font-bold text-white leading-tight`}>
+                    <h1 className={`${textSizeClasses[size]} font-bold ${theme.textColors.primary} leading-tight`}>
                         Finance Quest
                     </h1>
-                    <p className={`text-xs text-amber-300 leading-tight ${size === 'sm' ? 'hidden' : ''}`}>
+                    <p className={`text-xs ${theme.status.warning.text} leading-tight ${size === 'sm' ? 'hidden' : ''}`}>
                         Master Your Future
                     </p>
                 </div>

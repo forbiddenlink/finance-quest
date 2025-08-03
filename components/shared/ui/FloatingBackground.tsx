@@ -14,6 +14,7 @@ import {
   Briefcase,
   Lightbulb
 } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 const floatingIcons = [
   { icon: DollarSign, delay: 0, x: '10%', y: '20%' },
@@ -45,7 +46,7 @@ export default function FloatingBackground() {
               animationDelay: `${item.delay}s`,
             }}
           >
-            <IconComponent size={48} className="text-blue-500" />
+            <IconComponent size={48} className={`${theme.textColors.primary}`} />
           </div>
         );
       })}

@@ -56,7 +56,7 @@ export default function Chapter3Page() {
         >
           <Link
             href="/"
-            className={`inline-flex items-center ${theme.textColors.accent} hover:${theme.textColors.accentSecondary} mb-4 transition-colors`}
+            className={`inline-flex items-center ${theme.textColors.primary} hover:${theme.textColors.secondary} mb-4 transition-colors`}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard

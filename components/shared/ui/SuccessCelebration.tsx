@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { CheckCircle, Trophy, Star } from 'lucide-react';
+;
 import { theme } from '@/lib/theme';
 
 interface SuccessCelebrationProps {
@@ -45,8 +46,8 @@ export default function SuccessCelebration({
 
   const getColors = () => {
     switch (type) {
-      case 'quiz': return 'from-blue-400 to-blue-600';
-      case 'lesson': return 'from-blue-400 to-indigo-600';
+      case 'quiz': return 'from-blue-400 to-blue-900';
+      case 'lesson': return 'from-blue-400 to-slate-600';
       default: return 'from-yellow-400 to-orange-600';
     }
   };
@@ -64,7 +65,7 @@ export default function SuccessCelebration({
         </div>
 
         {/* Success Card */}
-        <div className={`bg-gradient-to-br ${getColors()} p-8 rounded-2xl shadow-2xl text-white text-center animate-fade-in-up glass max-w-md mx-4`}>
+        <div className={`bg-gradient-to-br ${getColors()} p-8 rounded-2xl shadow-2xl ${theme.textColors.primary} text-center animate-fade-in-up glass max-w-md mx-4`}>
           <div className="animate-float mb-4">
             {getIcon()}
           </div>
@@ -82,7 +83,7 @@ export default function SuccessCelebration({
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`w-6 h-6 ${theme.textColors.accentSecondary} animate-pulse`}
+                  className={`w-6 h-6 ${theme.textColors.secondary} animate-pulse`}
                   style={{ animationDelay: `${i * 0.2}s` }}
                   fill="currentColor"
                 />

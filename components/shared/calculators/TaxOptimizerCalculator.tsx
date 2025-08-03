@@ -5,9 +5,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useProgressStore } from '@/lib/store/progressStore';
-import { theme } from '@/lib/theme';
+;
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Calculator, DollarSign, Target, TrendingDown, Shield, FileText, Zap } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface TaxOptimizationResult {
   currentTaxes: number;
@@ -280,7 +281,7 @@ export default function TaxOptimizerCalculator() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   Annual Income ($)
                 </label>
                 <Input
@@ -291,11 +292,11 @@ export default function TaxOptimizerCalculator() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   Filing Status
                 </label>
                 <select
-                  className="w-full p-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-amber-500"
+                  className={`w-full p-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500`}
                   value={filingStatus}
                   onChange={(e) => setFilingStatus(e.target.value)}
                 >
@@ -309,7 +310,7 @@ export default function TaxOptimizerCalculator() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   Current Deductions ($)
                 </label>
                 <Input
@@ -320,7 +321,7 @@ export default function TaxOptimizerCalculator() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   Dependents
                 </label>
                 <Input
@@ -334,7 +335,7 @@ export default function TaxOptimizerCalculator() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   401(k) Contributions ($)
                 </label>
                 <Input
@@ -345,7 +346,7 @@ export default function TaxOptimizerCalculator() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   IRA Contributions ($)
                 </label>
                 <Input
@@ -359,7 +360,7 @@ export default function TaxOptimizerCalculator() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   HSA Contributions ($)
                 </label>
                 <Input
@@ -370,7 +371,7 @@ export default function TaxOptimizerCalculator() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                   State Income Tax (%)
                 </label>
                 <Input
@@ -384,7 +385,7 @@ export default function TaxOptimizerCalculator() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                 Student Loan Interest ($)
               </label>
               <Input
@@ -417,21 +418,21 @@ export default function TaxOptimizerCalculator() {
               <div className="space-y-6">
                 {/* Key Metrics */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-4 ${theme.status.error.bg} rounded-lg">
+                  <div className={`text-center p-4 ${theme.status.error.bg} rounded-lg`}>
                     <div className={`${theme.typography.heading2} ${theme.status.error.text}`}>
                       {formatCurrency(results.currentTaxes)}
                     </div>
-                    <div className="text-sm ${theme.textColors.secondary}">Current Taxes</div>
-                    <div className="text-xs ${theme.textColors.muted}">
+                    <div className={`text-sm ${theme.textColors.secondary}`}>Current Taxes</div>
+                    <div className={`text-xs ${theme.textColors.muted}`}>
                       {formatPercentage(results.effectiveRate)} effective rate
                     </div>
                   </div>
-                  <div className="text-center p-4 ${theme.status.success.bg} rounded-lg">
+                  <div className={`text-center p-4 ${theme.status.success.bg} rounded-lg`}>
                     <div className={`${theme.typography.heading2} ${theme.status.success.text}`}>
                       {formatCurrency(results.taxSavings)}
                     </div>
-                    <div className="text-sm ${theme.textColors.secondary}">Potential Savings</div>
-                    <div className="text-xs ${theme.textColors.muted}">
+                    <div className={`text-sm ${theme.textColors.secondary}`}>Potential Savings</div>
+                    <div className={`text-xs ${theme.textColors.muted}`}>
                       {formatPercentage(results.optimizedRate)} optimized rate
                     </div>
                   </div>
@@ -439,13 +440,13 @@ export default function TaxOptimizerCalculator() {
 
                 {/* Top Strategies */}
                 <div>
-                  <h4 className="font-medium ${theme.textColors.primary} mb-3">Top Tax Strategies</h4>
+                  <h4 className={`font-medium ${theme.textColors.primary} mb-3`}>Top Tax Strategies</h4>
                   <div className="space-y-2">
                     {results.strategies.slice(0, 3).map((strategy, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 ${theme.status.info.bg} rounded-lg">
+                      <div key={index} className={`flex items-center justify-between p-3 ${theme.status.info.bg} rounded-lg`}>
                         <div className="flex-1">
-                          <div className="font-medium ${theme.textColors.primary}">{strategy.name}</div>
-                          <div className="text-sm ${theme.textColors.secondary}">{strategy.description}</div>
+                          <div className={`font-medium ${theme.textColors.primary}`}>{strategy.name}</div>
+                          <div className={`text-sm ${theme.textColors.secondary}`}>{strategy.description}</div>
                           <div className={`inline-block px-2 py-1 rounded text-xs font-medium ${getDifficultyColor(strategy.difficulty)}`}>
                             {strategy.difficulty}
                           </div>
@@ -460,11 +461,11 @@ export default function TaxOptimizerCalculator() {
 
                 {/* Recommendations */}
                 <div>
-                  <h4 className="font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2">
+                  <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
                     <Zap className={`w-4 h-4 ${theme.status.warning.text}`} />
                     Key Recommendations
                   </h4>
-                  <ul className="space-y-1 text-sm ${theme.textColors.secondary}">
+                  <ul className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
                     {results.recommendations.slice(0, 4).map((rec, index) => (
                       <li key={index} className="flex items-start gap-2">
                         <span className={`${theme.status.info.text} mt-1`}>•</span>
@@ -475,7 +476,7 @@ export default function TaxOptimizerCalculator() {
                 </div>
               </div>
             ) : (
-              <div className="text-center py-8 ${theme.textColors.muted}">
+              <div className={`text-center py-8 ${theme.textColors.muted}`}>
                 <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
                 <p>Enter your tax information to see optimization strategies</p>
               </div>
@@ -512,7 +513,7 @@ export default function TaxOptimizerCalculator() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <DollarSign className={`w-5 h-5 ${theme.textColors.accent}`} />
+                <DollarSign className={`w-5 h-5 ${theme.textColors.primary}`} />
                 Strategy Savings Breakdown
               </CardTitle>
             </CardHeader>
@@ -542,7 +543,7 @@ export default function TaxOptimizerCalculator() {
       )}
 
       {/* Educational Content */}
-      <Card className="bg-gradient-to-r from-blue-50 to-green-50">
+      <Card className="bg-gradient-to-r from-slate-50 to-emerald-50">
         <CardContent className="p-6">
           <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
             <Shield className={`w-5 h-5 ${theme.status.info.text}`} />
@@ -550,21 +551,21 @@ export default function TaxOptimizerCalculator() {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div>
-              <h4 className="font-medium ${theme.textColors.primary} mb-2">Pre-Tax Contributions</h4>
+              <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Pre-Tax Contributions</h4>
               <p className={`${theme.textColors.primary}`}>
                 401(k), Traditional IRA, and HSA contributions reduce your taxable income dollar-for-dollar. 
                 Maximize these accounts first for immediate tax savings.
               </p>
             </div>
             <div>
-              <h4 className="font-medium ${theme.textColors.primary} mb-2">Tax-Loss Harvesting</h4>
+              <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Tax-Loss Harvesting</h4>
               <p className={`${theme.textColors.primary}`}>
                 Realize investment losses to offset capital gains. You can deduct up to $3,000 
                 in net losses against ordinary income annually.
               </p>
             </div>
             <div>
-              <h4 className="font-medium ${theme.textColors.primary} mb-2">Strategic Timing</h4>
+              <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Strategic Timing</h4>
               <p className={`${theme.textColors.primary}`}>
                 Time income and deductions strategically. Consider accelerating deductions into 
                 high-income years and deferring income when possible.

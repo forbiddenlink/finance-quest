@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useProgress } from '@/lib/context/ProgressContext';
 import { Lightbulb, DollarSign, Rocket, Brain, Sparkles } from 'lucide-react';
+;
 import { theme } from '@/lib/theme';
 
 interface CompoundData {
@@ -96,7 +97,7 @@ export default function CompoundInterestCalculator() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg p-6">
+    <div className={`max-w-6xl mx-auto ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg p-6`}>
       <div className="mb-6">
         <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>
           Compound Interest Calculator
@@ -110,7 +111,7 @@ export default function CompoundInterestCalculator() {
         {/* Input Controls */}
         <div className="space-y-6">
           <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4`}>
-            <h3 className="font-semibold ${theme.status.info.text} mb-3 flex items-center gap-2">
+            <h3 className={`font-semibold ${theme.status.info.text} mb-3 flex items-center gap-2`}>
               <Lightbulb className="w-5 h-5" />
               The Magic of Compound Interest
             </h3>
@@ -122,49 +123,49 @@ export default function CompoundInterestCalculator() {
 
           {/* Initial Investment */}
           <div>
-            <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
+            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
               Initial Investment
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}">$</span>
+              <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
               <input
                 type="number"
                 value={principal}
                 onChange={(e) => setPrincipal(Number(e.target.value))}
-                className="w-full pl-8 pr-4 py-2 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                className={`w-full pl-8 pr-4 py-2 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500`}
                 min="0"
                 step="100"
               />
             </div>
-            <p className="text-xs ${theme.textColors.muted} mt-1">
+            <p className={`text-xs ${theme.textColors.muted} mt-1`}>
               The amount you&apos;re starting with today
             </p>
           </div>
 
           {/* Monthly Contribution */}
           <div>
-            <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
+            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
               Monthly Contribution
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}">$</span>
+              <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
               <input
                 type="number"
                 value={monthlyContribution}
                 onChange={(e) => setMonthlyContribution(Number(e.target.value))}
-                className="w-full pl-8 pr-4 py-2 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                className={`w-full pl-8 pr-4 py-2 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500`}
                 min="0"
                 step="25"
               />
             </div>
-            <p className="text-xs ${theme.textColors.muted} mt-1">
+            <p className={`text-xs ${theme.textColors.muted} mt-1`}>
               How much you&apos;ll add each month
             </p>
           </div>
 
           {/* Interest Rate */}
           <div>
-            <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
+            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
               Annual Interest Rate
             </label>
             <div className="relative">
@@ -172,21 +173,21 @@ export default function CompoundInterestCalculator() {
                 type="number"
                 value={interestRate}
                 onChange={(e) => setInterestRate(Number(e.target.value))}
-                className="w-full pl-4 pr-8 py-2 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                className={`w-full pl-4 pr-8 py-2 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500`}
                 min="0"
                 max="20"
                 step="0.1"
               />
-              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}">%</span>
+              <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>%</span>
             </div>
-            <p className="text-xs ${theme.textColors.muted} mt-1">
+            <p className={`text-xs ${theme.textColors.muted} mt-1`}>
               Average stock market return is ~7-10% annually
             </p>
           </div>
 
           {/* Time Period */}
           <div>
-            <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
+            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
               Time Period (Years)
             </label>
             <input
@@ -199,34 +200,34 @@ export default function CompoundInterestCalculator() {
             />
             <div className={`flex justify-between text-xs ${theme.textColors.muted} mt-1`}>
               <span>1 year</span>
-              <span className="font-medium text-blue-400">{years} years</span>
+              <span className={`font-medium ${theme.textColors.primary}`}>{years} years</span>
               <span>50 years</span>
             </div>
           </div>
 
           {/* Compound Frequency */}
           <div>
-            <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
+            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
               Compounding Frequency
             </label>
             <select
               value={compoundFrequency}
               onChange={(e) => setCompoundFrequency(Number(e.target.value))}
-              className="w-full px-4 py-2 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+              className={`w-full px-4 py-2 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500`}
             >
               <option value={1}>Annually</option>
               <option value={4}>Quarterly</option>
               <option value={12}>Monthly</option>
               <option value={365}>Daily</option>
             </select>
-            <p className="text-xs ${theme.textColors.muted} mt-1">
+            <p className={`text-xs ${theme.textColors.muted} mt-1`}>
               How often interest is calculated and added
             </p>
           </div>
 
           {/* Quick Presets */}
           <div>
-            <p className="text-sm font-medium ${theme.textColors.primary} mb-2">Quick Scenarios:</p>
+            <p className={`text-sm font-medium ${theme.textColors.primary} mb-2`}>Quick Scenarios:</p>
             <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={() => {
@@ -235,7 +236,7 @@ export default function CompoundInterestCalculator() {
                   setInterestRate(7);
                   setYears(30);
                 }}
-                className="p-2 text-xs bg-green-100 hover:bg-green-200 rounded transition-colors flex items-center gap-1"
+                className={`p-2 text-xs ${theme.status.success.bg} hover:${theme.status.success.bg} rounded transition-colors flex items-center gap-1`}
               >
                 <DollarSign className="w-3 h-3" />
                 Conservative Saver
@@ -247,7 +248,7 @@ export default function CompoundInterestCalculator() {
                   setInterestRate(8);
                   setYears(25);
                 }}
-                className="p-2 text-xs bg-blue-100 hover:bg-blue-200 rounded transition-colors flex items-center gap-1"
+                className={`p-2 text-xs ${theme.backgrounds.cardHover} hover:${theme.backgrounds.cardHover} rounded transition-colors flex items-center gap-1`}
               >
                 <Rocket className="w-3 h-3" />
                 Aggressive Investor
@@ -261,22 +262,22 @@ export default function CompoundInterestCalculator() {
           {/* Summary Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4 text-center`}>
-              <p className="text-sm text-green-400 font-medium">Final Balance</p>
+              <p className={`text-sm ${theme.status.success.text} font-medium`}>Final Balance</p>
               <p className={`${theme.typography.heading2} ${theme.textColors.primary}`}>{formatCurrency(finalBalance)}</p>
             </div>
             <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4 text-center`}>
-              <p className="text-sm text-blue-400 font-medium">Total Invested</p>
+              <p className={`text-sm ${theme.textColors.primary} font-medium`}>Total Invested</p>
               <p className={`${theme.typography.heading2} ${theme.textColors.secondary}`}>{formatCurrency(totalPrincipal)}</p>
             </div>
-            <div className="bg-purple-500/20 border border-purple-500/30 rounded-lg p-4 text-center">
-              <p className="text-sm text-purple-400 font-medium">Interest Earned</p>
+            <div className={`${theme.backgrounds.card}/20 border ${theme.borderColors.primary}/30 rounded-lg p-4 text-center`}>
+              <p className={`text-sm ${theme.textColors.primary} font-medium`}>Interest Earned</p>
               <p className={`${theme.typography.heading2} ${theme.textColors.primary}`}>{formatCurrency(totalInterest)}</p>
             </div>
           </div>
 
           {/* Motivational Message */}
-          <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border ${theme.status.warning.border} rounded-lg p-4">
-            <p className="text-sm font-medium text-orange-800 flex items-center gap-2">
+          <div className={`bg-gradient-to-r from-yellow-50 to-orange-50 border ${theme.status.warning.border} rounded-lg p-4`}>
+            <p className={`text-sm font-medium ${theme.status.warning.text} flex items-center gap-2`}>
               <Sparkles className="w-4 h-4" />
               {getMotivationalMessage()}
             </p>
@@ -284,7 +285,7 @@ export default function CompoundInterestCalculator() {
 
           {/* Chart */}
           <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} border ${theme.borderColors.primary} rounded-lg p-4`}>
-            <h4 className="font-semibold ${theme.textColors.primary} mb-4">Growth Over Time</h4>
+            <h4 className={`font-semibold ${theme.textColors.primary} mb-4`}>Growth Over Time</h4>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={chartData}>
@@ -334,12 +335,12 @@ export default function CompoundInterestCalculator() {
           </div>
 
           {/* Key Insights */}
-          <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
-            <h4 className="font-semibold text-indigo-900 mb-2 flex items-center gap-2">
+          <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
+            <h4 className={`font-semibold ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
               <Brain className="w-4 h-4" />
               Key Insights:
             </h4>
-            <ul className="text-sm text-indigo-800 space-y-1">
+            <ul className={`text-sm ${theme.textColors.primary} space-y-1`}>
               <li>• <strong>Time is your best friend:</strong> Starting early beats starting with more money</li>
               <li>• <strong>Consistency matters:</strong> Regular contributions create steady growth</li>
               <li>• <strong>Rate impact:</strong> Even 1% difference compounds dramatically over time</li>

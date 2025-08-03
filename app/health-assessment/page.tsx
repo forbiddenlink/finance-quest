@@ -13,25 +13,25 @@ export default function HealthAssessmentPage() {
   return (
     <div className={`min-h-screen ${theme.backgrounds.primary}`}>
       {/* Header */}
-      <header className={`${theme.backgrounds.header} border-b ${theme.borderColors.accent}`}>
+      <header className={`${theme.backgrounds.header} border-b ${theme.borderColors.primary}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => window.history.back()}
-                className={`${theme.textColors.accent} hover:${theme.textColors.accentSecondary} font-medium flex items-center gap-2 transition-colors`}
+                className={`${theme.textColors.primary} hover:${theme.textColors.secondary} font-medium flex items-center gap-2 transition-colors`}
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back to Home
               </button>
               <div className="flex items-center space-x-3">
-                <Heart className={`w-6 h-6 ${theme.textColors.accent}`} />
+                <Heart className={`w-6 h-6 ${theme.textColors.primary}`} />
                 <h1 className={`${theme.typography.heading3} ${theme.textColors.primary}`}>Financial Health Center</h1>
               </div>
             </div>
             <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} px-3 py-1 rounded-full flex items-center gap-2 backdrop-blur-sm`}>
-              <Heart className={`w-4 h-4 ${theme.textColors.accent}`} />
-              <span className={`${theme.typography.small} font-medium ${theme.textColors.accentSecondary}`}>Complete Assessment</span>
+              <Heart className={`w-4 h-4 ${theme.textColors.primary}`} />
+              <span className={`${theme.typography.small} font-medium ${theme.textColors.secondary}`}>Complete Assessment</span>
             </div>
           </div>
         </div>
@@ -45,14 +45,14 @@ export default function HealthAssessmentPage() {
           </h2>
           <p className={`${theme.typography.heading4} ${theme.textColors.secondary} max-w-3xl mx-auto leading-relaxed`}>
             Get your personalized Financial Health Score and discover exactly which areas
-            to focus on for maximum financial improvement. <span className={`${theme.textColors.accent} font-medium`}>Takes just 2 minutes!</span>
+            to focus on for maximum financial improvement. <span className={`${theme.textColors.primary} font-medium`}>Takes just 2 minutes!</span>
           </p>
         </div>
 
         {/* Key Features */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-          <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl shadow-lg ${theme.spacing.md} text-center hover:shadow-xl hover:${theme.borderColors.accent} transition-all ${theme.interactive.hover}`}>
-            <Target className={`w-12 h-12 ${theme.textColors.accent} mx-auto mb-4`} />
+          <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl shadow-lg ${theme.spacing.md} text-center hover:shadow-xl hover:${theme.borderColors.primary} transition-all ${theme.interactive.hover}`}>
+            <Target className={`w-12 h-12 ${theme.textColors.primary} mx-auto mb-4`} />
             <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Instant Scoring</h3>
             <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>Get your grade (A-F) and detailed breakdown immediately</p>
           </div>
@@ -69,8 +69,8 @@ export default function HealthAssessmentPage() {
             <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>Prioritized recommendations for maximum impact</p>
           </div>
 
-          <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl shadow-lg ${theme.spacing.md} text-center hover:shadow-xl hover:${theme.borderColors.accent} transition-all ${theme.interactive.hover}`}>
-            <Award className={`w-12 h-12 ${theme.textColors.accent} mx-auto mb-4`} />
+          <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl shadow-lg ${theme.spacing.md} text-center hover:shadow-xl hover:${theme.borderColors.primary} transition-all ${theme.interactive.hover}`}>
+            <Award className={`w-12 h-12 ${theme.textColors.primary} mx-auto mb-4`} />
             <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Track Progress</h3>
             <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>Monitor improvements over time with retakes</p>
           </div>
@@ -90,7 +90,7 @@ export default function HealthAssessmentPage() {
             </h3>
             <p className={`${theme.typography.heading4} ${theme.textColors.secondary} max-w-2xl mx-auto`}>
               Understand how current economic conditions affect your financial decisions.
-              <span className={`${theme.textColors.accent} font-medium`}> Real data from Federal Reserve and financial markets.</span>
+              <span className={`${theme.textColors.primary} font-medium`}> Real data from Federal Reserve and financial markets.</span>
             </p>
           </div>
           <EconomicDashboard />
@@ -118,7 +118,7 @@ export default function HealthAssessmentPage() {
           <h3 className={`${theme.typography.heading3} ${theme.textColors.primary} mb-6 text-center`}>Why Financial Health Assessment Matters</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.primary} rounded-lg ${theme.spacing.md} text-center`}>
-              <Target className={`w-12 h-12 ${theme.textColors.accent} mx-auto mb-4`} />
+              <Target className={`w-12 h-12 ${theme.textColors.primary} mx-auto mb-4`} />
               <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Targeted Learning</h4>
               <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>
                 Focus your learning efforts on the areas that will have the biggest impact

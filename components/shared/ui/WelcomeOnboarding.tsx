@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
-import { theme } from '@/lib/theme';
+;
 import {
   Rocket,
   Target,
@@ -16,6 +16,7 @@ import {
   Award
 } from 'lucide-react';
 import Link from 'next/link';
+import { theme } from '@/lib/theme';
 
 interface WelcomeOnboardingProps {
   onComplete?: () => void;
@@ -42,7 +43,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
       content: (
         <div className="text-center space-y-6">
           <div className={`w-24 h-24 mx-auto ${theme.buttons.primary} rounded-full flex items-center justify-center`}>
-            <Rocket className="w-12 h-12 text-white" />
+            <Rocket className={`w-12 h-12 ${theme.textColors.primary}`} />
           </div>
           <div>
             <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-2`}>Ready to Transform Your Financial Future?</h3>
@@ -53,15 +54,15 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
           </div>
           <div className="grid grid-cols-3 gap-4 text-sm">
             <div className="text-center">
-              <div className={`text-2xl font-bold ${theme.textColors.accent}`}>20+</div>
+              <div className={`text-2xl font-bold ${theme.textColors.primary}`}>20+</div>
               <div className={theme.textColors.secondary}>Interactive Lessons</div>
             </div>
             <div className="text-center">
-              <div className={`text-2xl font-bold ${theme.textColors.accent}`}>6</div>
+              <div className={`text-2xl font-bold ${theme.textColors.primary}`}>6</div>
               <div className={theme.textColors.secondary}>Financial Calculators</div>
             </div>
             <div className="text-center">
-              <div className={`text-2xl font-bold ${theme.textColors.accent}`}>100%</div>
+              <div className={`text-2xl font-bold ${theme.textColors.primary}`}>100%</div>
               <div className={theme.textColors.secondary}>Free Forever</div>
             </div>
           </div>
@@ -75,21 +76,21 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
         <div className="space-y-6">
           <div className="space-y-4">
             <div className={`flex items-center gap-4 p-3 ${theme.status.info.bg} rounded-lg ${theme.status.info.border} border`}>
-              <div className={`w-8 h-8 ${theme.buttons.primary} rounded-full flex items-center justify-center text-white font-bold text-sm`}>1</div>
+              <div className={`w-8 h-8 ${theme.buttons.primary} rounded-full flex items-center justify-center ${theme.textColors.primary} font-bold text-sm`}>1</div>
               <div>
                 <p className={`font-semibold ${theme.status.info.text}`}>Foundation Chapters</p>
                 <p className={`text-sm ${theme.textColors.secondary}`}>Money psychology, banking, budgeting basics</p>
               </div>
             </div>
             <div className={`flex items-center gap-4 p-3 ${theme.status.info.bg} rounded-lg ${theme.status.info.border} border`}>
-              <div className={`w-8 h-8 ${theme.buttons.primary} rounded-full flex items-center justify-center text-white font-bold text-sm`}>2</div>
+              <div className={`w-8 h-8 ${theme.buttons.primary} rounded-full flex items-center justify-center ${theme.textColors.primary} font-bold text-sm`}>2</div>
               <div>
                 <p className={`font-semibold ${theme.status.info.text}`}>Interactive Tools</p>
                 <p className={`text-sm ${theme.textColors.secondary}`}>Hands-on calculators for real scenarios</p>
               </div>
             </div>
             <div className={`flex items-center gap-4 p-3 ${theme.status.info.bg} rounded-lg ${theme.status.info.border} border`}>
-              <div className={`w-8 h-8 ${theme.buttons.primary} rounded-full flex items-center justify-center text-white font-bold text-sm`}>3</div>
+              <div className={`w-8 h-8 ${theme.buttons.primary} rounded-full flex items-center justify-center ${theme.textColors.primary} font-bold text-sm`}>3</div>
               <div>
                 <p className={`font-semibold ${theme.status.info.text}`}>Advanced Topics</p>
                 <p className={`text-sm ${theme.textColors.secondary}`}>Investing, retirement, wealth building</p>
@@ -127,7 +128,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
                 className={`flex items-center gap-3 p-3 ${theme.backgrounds.card} ${theme.interactive.hover} rounded-lg ${theme.borderColors.primary} border cursor-pointer transition-all`}
                 onClick={() => {
                   // Could track user's goal selection here
-                  console.log('User selected goal:', goal.title);
+                  // Goal tracking could be implemented here for analytics
                 }}
               >
                 <div className={`w-8 h-8 ${theme.status.info.bg} rounded-lg flex items-center justify-center flex-shrink-0`}>
@@ -222,7 +223,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
           className={`${theme.backgrounds.card} rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-hidden flex flex-col`}
         >
           {/* Header */}
-          <div className={`${theme.backgrounds.primary} text-white p-4`}>
+          <div className={`${theme.backgrounds.primary} ${theme.textColors.primary} p-4`}>
             <div className="flex items-center justify-between mb-3">
               <div className={`text-sm ${theme.textColors.secondary}`}>
                 Step {currentStep + 1} of {steps.length}

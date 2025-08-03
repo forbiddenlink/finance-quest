@@ -3,8 +3,9 @@
 import React from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
-import { theme } from '@/lib/theme';
+;
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LineChart, Line, Legend } from 'recharts';
+import { theme } from '@/lib/theme';
 import {
   BarChart3,
   FileText,
@@ -101,7 +102,7 @@ export default function ProgressDashboard() {
       {/* Key Metrics Overview */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4 text-center`}>
-          <div className={`text-3xl font-bold ${theme.textColors.accent}`}>{completionPercentage}%</div>
+          <div className={`text-3xl font-bold ${theme.textColors.primary}`}>{completionPercentage}%</div>
           <p className={`text-sm ${theme.textColors.secondary} font-medium`}>Course Completion</p>
           <p className={`text-xs ${theme.textColors.muted}`}>Chapter {userProgress.currentChapter} of {totalChapters}</p>
         </div>
@@ -113,7 +114,7 @@ export default function ProgressDashboard() {
         </div>
 
         <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4 text-center`}>
-          <div className={`text-3xl font-bold ${theme.textColors.accent}`}>{averageQuizScore}%</div>
+          <div className={`text-3xl font-bold ${theme.textColors.primary}`}>{averageQuizScore}%</div>
           <p className={`text-sm ${theme.textColors.secondary} font-medium`}>Avg Quiz Score</p>
           <p className={`text-xs ${theme.textColors.muted}`}>{Object.keys(userProgress.quizScores).length} quizzes taken</p>
         </div>
@@ -217,7 +218,7 @@ export default function ProgressDashboard() {
             {userProgress.achievements.length > 0 ? (
               userProgress.achievements.map((achievement: string, index: number) => (
                 <div key={index} className={`${theme.backgrounds.card} rounded-lg p-3 flex items-center`}>
-                  <div className={`${theme.buttons.accent} text-white p-2 rounded-full mr-3`}>
+                  <div className={`${theme.buttons.accent} ${theme.textColors.primary} p-2 rounded-full mr-3`}>
                     <Medal className="w-4 h-4" />
                   </div>
                   <div>
@@ -228,7 +229,7 @@ export default function ProgressDashboard() {
               ))
             ) : (
               <div className={`text-center ${theme.textColors.secondary} py-8`}>
-                <Target className={`w-12 h-12 mx-auto mb-2 ${theme.textColors.accent}`} />
+                <Target className={`w-12 h-12 mx-auto mb-2 ${theme.textColors.primary}`} />
                 <p>No achievements yet</p>
                 <p className="text-sm">Complete lessons and quizzes to earn badges!</p>
               </div>
@@ -361,7 +362,7 @@ export default function ProgressDashboard() {
       {totalLessonsCompleted > 0 && (
         <div className="mt-8">
           <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-            <Brain className={`w-5 h-5 ${theme.textColors.accent}`} />
+            <Brain className={`w-5 h-5 ${theme.textColors.primary}`} />
             Learning Retention System
           </h3>
           <SpacedRepetitionDashboard />

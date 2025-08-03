@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { useProgressStore } from '@/lib/store/progressStore';
-import { theme } from '@/lib/theme';
+;
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { PieChart as PieChartIcon, BarChart3, Target, DollarSign, Shield, Zap } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface Holding {
     symbol: string;
@@ -229,7 +230,7 @@ export default function PortfolioAnalyzerCalculator() {
                     <CardContent className="space-y-4">
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                                     Symbol/Ticker
                                 </label>
                                 <Input
@@ -239,7 +240,7 @@ export default function PortfolioAnalyzerCalculator() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                                     Name (Optional)
                                 </label>
                                 <Input
@@ -252,7 +253,7 @@ export default function PortfolioAnalyzerCalculator() {
 
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                                     Shares/Units
                                 </label>
                                 <Input
@@ -263,7 +264,7 @@ export default function PortfolioAnalyzerCalculator() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                                     Current Price ($)
                                 </label>
                                 <Input
@@ -277,11 +278,11 @@ export default function PortfolioAnalyzerCalculator() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                                 Asset Category
                             </label>
                             <select
-                                className="w-full p-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-amber-500"
+                                className={`w-full p-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500`}
                                 value={newHolding.category}
                                 onChange={(e) => setNewHolding({ ...newHolding, category: e.target.value })}
                             >
@@ -303,16 +304,16 @@ export default function PortfolioAnalyzerCalculator() {
                         {/* Holdings List */}
                         {holdings.length > 0 && (
                             <div className="space-y-2">
-                                <h4 className="font-medium ${theme.textColors.primary}">Current Holdings:</h4>
+                                <h4 className={`font-medium ${theme.textColors.primary}`}>Current Holdings:</h4>
                                 <div className="max-h-40 overflow-y-auto space-y-2">
                                     {holdings.map((holding, index) => (
-                                        <div key={index} className="flex items-center justify-between p-2 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded">
+                                        <div key={index} className={`flex items-center justify-between p-2 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded`}>
                                             <div className="flex-1">
                                                 <span className="font-medium">{holding.symbol}</span>
-                                                <span className="text-sm ${theme.textColors.secondary} ml-2">
+                                                <span className={`text-sm ${theme.textColors.secondary} ml-2`}>
                                                     {holding.amount} × ${holding.currentPrice} = ${(holding.amount * holding.currentPrice).toLocaleString()}
                                                 </span>
-                                                <div className="text-xs ${theme.textColors.muted}">{holding.category}</div>
+                                                <div className={`text-xs ${theme.textColors.muted}`}>{holding.category}</div>
                                             </div>
                                             <Button
                                                 variant="outline"
@@ -334,7 +335,7 @@ export default function PortfolioAnalyzerCalculator() {
                 <Card>
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
-                            <Target className={`w-5 h-5 ${theme.textColors.accent}`} />
+                            <Target className={`w-5 h-5 ${theme.textColors.primary}`} />
                             Portfolio Analysis
                         </CardTitle>
                         <CardDescription>
@@ -346,17 +347,17 @@ export default function PortfolioAnalyzerCalculator() {
                             <div className="space-y-6">
                                 {/* Key Metrics */}
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="text-center p-4 ${theme.status.info.bg} rounded-lg">
+                                    <div className={`text-center p-4 ${theme.status.info.bg} rounded-lg`}>
                                         <div className={`${theme.typography.heading2} ${theme.status.info.text}`}>
                                             ${portfolioMetrics.totalValue.toLocaleString()}
                                         </div>
-                                        <div className="text-sm ${theme.textColors.secondary}">Total Value</div>
+                                        <div className={`text-sm ${theme.textColors.secondary}`}>Total Value</div>
                                     </div>
                                     <div className={`text-center p-4 ${theme.status.info.bg} rounded-lg`}>
                                         <div className={`${theme.typography.heading2} ${getRiskColor(portfolioMetrics.riskLevel)}`}>
                                             {portfolioMetrics.riskLevel}
                                         </div>
-                                        <div className="text-sm ${theme.textColors.secondary}">Risk Level</div>
+                                        <div className={`text-sm ${theme.textColors.secondary}`}>Risk Level</div>
                                     </div>
                                 </div>
 
@@ -369,7 +370,7 @@ export default function PortfolioAnalyzerCalculator() {
                                         </span>
                                     </div>
                                     <Progress value={portfolioMetrics.diversificationScore} className="h-2" />
-                                    <div className="text-xs ${theme.textColors.muted} mt-1">
+                                    <div className={`text-xs ${theme.textColors.muted} mt-1`}>
                                         {portfolioMetrics.diversificationScore >= 80 ? 'Excellent' :
                                             portfolioMetrics.diversificationScore >= 60 ? 'Good' : 'Needs Improvement'}
                                     </div>
@@ -378,13 +379,13 @@ export default function PortfolioAnalyzerCalculator() {
                                 {/* Recommendations */}
                                 {portfolioMetrics.recommendedChanges.length > 0 && (
                                     <div>
-                                        <h4 className="font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2">
+                                        <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
                                             <Zap className={`w-4 h-4 ${theme.status.warning.text}`} />
                                             Recommendations
                                         </h4>
                                         <ul className="space-y-1">
                                             {portfolioMetrics.recommendedChanges.map((rec, index) => (
-                                                <li key={index} className="text-sm ${theme.textColors.secondary} flex items-start gap-2">
+                                                <li key={index} className={`text-sm ${theme.textColors.secondary} flex items-start gap-2`}>
                                                     <span className={`${theme.status.warning.text} mt-1`}>•</span>
                                                     {rec}
                                                 </li>
@@ -394,7 +395,7 @@ export default function PortfolioAnalyzerCalculator() {
                                 )}
                             </div>
                         ) : (
-                            <div className="text-center py-8 ${theme.textColors.muted}">
+                            <div className={`text-center py-8 ${theme.textColors.muted}`}>
                                 <PieChartIcon className="w-12 h-12 mx-auto mb-3 opacity-50" />
                                 <p>Add holdings to analyze your portfolio</p>
                             </div>
@@ -466,7 +467,7 @@ export default function PortfolioAnalyzerCalculator() {
             <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                        <Target className={`w-5 h-5 ${theme.textColors.accent}`} />
+                        <Target className={`w-5 h-5 ${theme.textColors.primary}`} />
                         Target Allocation Settings
                     </CardTitle>
                     <CardDescription>
@@ -477,7 +478,7 @@ export default function PortfolioAnalyzerCalculator() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {ASSET_CATEGORIES.map(category => (
                             <div key={category}>
-                                <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+                                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                                     {category}
                                 </label>
                                 <div className="flex items-center gap-2">
@@ -492,19 +493,19 @@ export default function PortfolioAnalyzerCalculator() {
                                         })}
                                         className="w-16"
                                     />
-                                    <span className="text-sm ${theme.textColors.muted}">%</span>
+                                    <span className={`text-sm ${theme.textColors.muted}`}>%</span>
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <div className="mt-4 text-sm ${theme.textColors.secondary}">
+                    <div className={`mt-4 text-sm ${theme.textColors.secondary}`}>
                         Total: {Object.values(targetAllocation).reduce((sum, val) => sum + val, 0)}%
                     </div>
                 </CardContent>
             </Card>
 
             {/* Educational Content */}
-            <Card className="bg-gradient-to-r from-blue-50 to-purple-50">
+            <Card className="bg-gradient-to-r from-slate-50 to-violet-50">
                 <CardContent className="p-6">
                     <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
                         <Shield className={`w-5 h-5 ${theme.status.info.text}`} />
@@ -512,21 +513,21 @@ export default function PortfolioAnalyzerCalculator() {
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                         <div>
-                            <h4 className="font-medium ${theme.textColors.primary} mb-2">Diversification Benefits</h4>
+                            <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Diversification Benefits</h4>
                             <p className={`${theme.textColors.primary}`}>
                                 Spreading investments across different asset classes and sectors reduces risk
                                 while maintaining growth potential. Aim for 8+ different holdings across 4+ categories.
                             </p>
                         </div>
                         <div>
-                            <h4 className="font-medium ${theme.textColors.primary} mb-2">Risk Management</h4>
+                            <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Risk Management</h4>
                             <p className={`${theme.textColors.primary}`}>
                                 Conservative portfolios (30-50% stocks) offer stability, while aggressive portfolios
                                 (70%+ stocks) provide higher growth potential with increased volatility.
                             </p>
                         </div>
                         <div>
-                            <h4 className="font-medium ${theme.textColors.primary} mb-2">Rebalancing Strategy</h4>
+                            <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Rebalancing Strategy</h4>
                             <p className={`${theme.textColors.primary}`}>
                                 Review your allocation quarterly and rebalance when any category drifts more than
                                 5% from your target. This maintains your desired risk level and captures gains.

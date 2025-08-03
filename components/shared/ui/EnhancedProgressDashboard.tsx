@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import EconomicDashboard from './EconomicDashboard';
+;
 import { theme } from '@/lib/theme';
 
 interface FeatureStatus {
@@ -106,8 +107,8 @@ export default function EnhancedProgressDashboard() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'text-green-600 bg-green-100';
-      case 'in-progress': return 'text-yellow-600 bg-yellow-100';
+      case 'completed': return '${theme.status.success.text} ${theme.status.success.bg}';
+      case 'in-progress': return '${theme.status.warning.text} ${theme.status.warning.bg}';
       case 'planned': return `${theme.textColors.secondary} ${theme.backgrounds.cardHover}`;
       default: return `${theme.textColors.secondary} ${theme.backgrounds.cardHover}`;
     }
@@ -123,23 +124,23 @@ export default function EnhancedProgressDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-emerald-50">
       {/* Header */}
       <header className={`${theme.backgrounds.glass}/80 backdrop-blur-md shadow-sm`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Link href="/" className="text-blue-600 hover:text-blue-800 font-medium">
+              <Link href="/" className={`${theme.textColors.primary} hover:${theme.textColors.primary} font-medium`}>
                 ← Back to Home
               </Link>
               <div className="flex items-center space-x-3">
-                <TrendingUp className="w-6 h-6 text-blue-600" />
+                <TrendingUp className={`w-6 h-6 ${theme.textColors.primary}`} />
                 <h1 className={`text-2xl font-bold ${theme.textColors.primary}`}>Development Progress</h1>
               </div>
             </div>
-            <div className="bg-green-100 px-3 py-1 rounded-full flex items-center gap-2">
-              <Award className="w-4 h-4 text-green-600" />
-              <span className="text-sm font-medium text-green-800">Phase 2 Complete</span>
+            <div className={`${theme.status.success.bg} px-3 py-1 rounded-full flex items-center gap-2`}>
+              <Award className={`w-4 h-4 ${theme.status.success.text}`} />
+              <span className={`text-sm font-medium ${theme.status.success.text}`}>Phase 2 Complete</span>
             </div>
           </div>
         </div>
@@ -164,7 +165,7 @@ export default function EnhancedProgressDashboard() {
         {/* Implementation Statistics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
           <motion.div
-            className={`${theme.backgrounds.glass} rounded-xl shadow-lg p-6 border-l-4 border-green-500`}
+            className={`${theme.backgrounds.glass} rounded-xl shadow-lg p-6 border-l-4 ${theme.status.success.border}`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -172,14 +173,14 @@ export default function EnhancedProgressDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Features Complete</p>
-                <p className="text-3xl font-bold text-green-600">{implementedFeatures.length}</p>
+                <p className={`text-3xl font-bold ${theme.status.success.text}`}>{implementedFeatures.length}</p>
               </div>
-              <CheckCircle className="w-12 h-12 text-green-500" />
+              <CheckCircle className={`w-12 h-12 ${theme.status.success.text}`} />
             </div>
           </motion.div>
 
           <motion.div
-            className={`${theme.backgrounds.glass} rounded-xl shadow-lg p-6 border-l-4 border-blue-500`}
+            className={`${theme.backgrounds.glass} rounded-xl shadow-lg p-6 border-l-4 ${theme.borderColors.primary}`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -187,14 +188,14 @@ export default function EnhancedProgressDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Chapters Available</p>
-                <p className="text-3xl font-bold text-blue-600">{userProgress.currentChapter}</p>
+                <p className={`text-3xl font-bold ${theme.textColors.primary}`}>{userProgress.currentChapter}</p>
               </div>
-              <Brain className="w-12 h-12 text-blue-500" />
+              <Brain className={`w-12 h-12 ${theme.textColors.primary}`} />
             </div>
           </motion.div>
 
           <motion.div
-            className={`${theme.backgrounds.glass} rounded-xl shadow-lg p-6 border-l-4 border-purple-500`}
+            className={`${theme.backgrounds.glass} rounded-xl shadow-lg p-6 border-l-4 ${theme.borderColors.primary}`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -202,14 +203,14 @@ export default function EnhancedProgressDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className={`text-sm font-medium ${theme.textColors.secondary}`}>AI Integration</p>
-                <p className="text-3xl font-bold text-purple-600">Real</p>
+                <p className={`text-3xl font-bold ${theme.textColors.primary}`}>Real</p>
               </div>
-              <Sparkles className="w-12 h-12 text-purple-500" />
+              <Sparkles className={`w-12 h-12 ${theme.textColors.primary}`} />
             </div>
           </motion.div>
 
           <motion.div
-            className={`${theme.backgrounds.glass} rounded-xl shadow-lg p-6 border-l-4 border-orange-500`}
+            className={`${theme.backgrounds.glass} rounded-xl shadow-lg p-6 border-l-4 ${theme.status.warning.border}`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
@@ -217,9 +218,9 @@ export default function EnhancedProgressDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Market Data</p>
-                <p className="text-3xl font-bold text-orange-600">Live</p>
+                <p className={`text-3xl font-bold ${theme.status.warning.text}`}>Live</p>
               </div>
-              <DollarSign className="w-12 h-12 text-orange-500" />
+              <DollarSign className={`w-12 h-12 ${theme.status.warning.text}`} />
             </div>
           </motion.div>
         </div>
@@ -232,7 +233,7 @@ export default function EnhancedProgressDashboard() {
           transition={{ delay: 0.5 }}
         >
           <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-6 flex items-center gap-3`}>
-            <CheckCircle className="w-8 h-8 text-green-600" />
+            <CheckCircle className={`w-8 h-8 ${theme.status.success.text}`} />
             Recently Implemented Features
           </h3>
 
@@ -269,7 +270,7 @@ export default function EnhancedProgressDashboard() {
 
                   {feature.link && (
                     <Link href={feature.link}>
-                      <button className={`w-full bg-${feature.color}-500 hover:bg-${feature.color}-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors`}>
+                      <button className={`w-full bg-${feature.color}-500 hover:bg-${feature.color}-600 ${theme.textColors.primary} px-4 py-2 rounded-lg text-sm font-medium transition-colors`}>
                         Try Feature
                       </button>
                     </Link>
@@ -288,7 +289,7 @@ export default function EnhancedProgressDashboard() {
           transition={{ delay: 0.8 }}
         >
           <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-6 flex items-center gap-3`}>
-            <Clock className="w-8 h-8 text-blue-600" />
+            <Clock className={`w-8 h-8 ${theme.textColors.primary}`} />
             Next Phase Development
           </h3>
 
@@ -335,7 +336,7 @@ export default function EnhancedProgressDashboard() {
           transition={{ delay: 1.1 }}
         >
           <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-6 flex items-center gap-3`}>
-            <Sparkles className="w-8 h-8 text-purple-600" />
+            <Sparkles className={`w-8 h-8 ${theme.textColors.primary}`} />
             Live Feature Demonstrations
           </h3>
 
@@ -349,31 +350,31 @@ export default function EnhancedProgressDashboard() {
             {/* Financial Health Score Demo */}
             <div>
               <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>AI Financial Health Assessment</h4>
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border border-blue-200">
+              <div className={`bg-gradient-to-r from-slate-50 to-violet-50 rounded-xl p-6 border ${theme.borderColors.primary}`}>
                 <p className={`${theme.textColors.secondary} mb-4`}>
                   The AI Financial Health Score Calculator provides instant assessment with personalized recommendations.
-                  <Link href="/health-assessment" className="text-blue-600 hover:text-blue-700 font-medium ml-2">
+                  <Link href="/health-assessment" className={`${theme.textColors.primary} hover:${theme.textColors.primary} font-medium ml-2`}>
                     Try the full assessment →
                   </Link>
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div className={`${theme.backgrounds.glass} rounded-lg p-4 text-center`}>
-                    <Heart className="w-8 h-8 mx-auto mb-2 text-green-600" />
+                    <Heart className={`w-8 h-8 mx-auto mb-2 ${theme.status.success.text}`} />
                     <p className={`font-semibold ${theme.textColors.primary}`}>Emergency Fund</p>
                     <p className={`text-sm ${theme.textColors.secondary}`}>0-25 points</p>
                   </div>
                   <div className={`${theme.backgrounds.glass} rounded-lg p-4 text-center`}>
-                    <TrendingUp className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                    <TrendingUp className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
                     <p className={`font-semibold ${theme.textColors.primary}`}>Debt Management</p>
                     <p className={`text-sm ${theme.textColors.secondary}`}>0-25 points</p>
                   </div>
                   <div className={`${theme.backgrounds.glass} rounded-lg p-4 text-center`}>
-                    <Target className="w-8 h-8 mx-auto mb-2 text-purple-600" />
+                    <Target className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
                     <p className={`font-semibold ${theme.textColors.primary}`}>Savings Rate</p>
                     <p className={`text-sm ${theme.textColors.secondary}`}>0-25 points</p>
                   </div>
                   <div className={`${theme.backgrounds.glass} rounded-lg p-4 text-center`}>
-                    <Brain className="w-8 h-8 mx-auto mb-2 text-orange-600" />
+                    <Brain className={`w-8 h-8 mx-auto mb-2 ${theme.status.warning.text}`} />
                     <p className={`font-semibold ${theme.textColors.primary}`}>Knowledge Level</p>
                     <p className={`text-sm ${theme.textColors.secondary}`}>0-25 points</p>
                   </div>
@@ -385,7 +386,7 @@ export default function EnhancedProgressDashboard() {
 
         {/* Technical Achievements */}
         <motion.div
-          className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl p-8"
+          className="bg-gradient-to-r from-slate-50 to-slate-50 rounded-2xl p-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2 }}
@@ -393,8 +394,8 @@ export default function EnhancedProgressDashboard() {
           <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-6 text-center`}>Technical Implementation Highlights</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className={`${theme.backgrounds.glass}/60 rounded-lg p-6`}>
-              <div className="bg-green-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <CheckCircle className="w-6 h-6 text-green-600" />
+              <div className={`${theme.status.success.bg} w-12 h-12 rounded-lg flex items-center justify-center mb-4`}>
+                <CheckCircle className={`w-6 h-6 ${theme.status.success.text}`} />
               </div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>API Integration</h4>
               <p className={`text-sm ${theme.textColors.secondary}`}>
@@ -403,8 +404,8 @@ export default function EnhancedProgressDashboard() {
             </div>
 
             <div className={`${theme.backgrounds.glass}/60 rounded-lg p-6`}>
-              <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <Mic className="w-6 h-6 text-blue-600" />
+              <div className={`${theme.backgrounds.cardHover} w-12 h-12 rounded-lg flex items-center justify-center mb-4`}>
+                <Mic className={`w-6 h-6 ${theme.textColors.primary}`} />
               </div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Speech Integration</h4>
               <p className={`text-sm ${theme.textColors.secondary}`}>
@@ -413,8 +414,8 @@ export default function EnhancedProgressDashboard() {
             </div>
 
             <div className={`${theme.backgrounds.glass}/60 rounded-lg p-6`}>
-              <div className="bg-purple-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <Sparkles className="w-6 h-6 text-purple-600" />
+              <div className={`${theme.backgrounds.cardHover} w-12 h-12 rounded-lg flex items-center justify-center mb-4`}>
+                <Sparkles className={`w-6 h-6 ${theme.textColors.primary}`} />
               </div>
               <h4 className={`font-semibent ${theme.textColors.primary} mb-2`}>Premium Animations</h4>
               <p className={`text-sm ${theme.textColors.secondary}`}>

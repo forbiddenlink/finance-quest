@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEnhancedProgress } from '@/lib/store/progressHooks';
+;
 import { theme } from '@/lib/theme';
 import {
     BookOpen,
@@ -404,12 +405,12 @@ const ComprehensiveNavigation = () => {
 
     const getColorClasses = (color: string, variant: 'bg' | 'border' | 'text') => {
         const colorMap = {
-            blue: { bg: 'from-navy-600/10 to-navy-700/10', border: 'border-navy-500/20 hover:border-navy-400/40', text: 'text-navy-400' },
-            amber: { bg: 'from-amber-500/10 to-amber-600/10', border: 'border-amber-500/20 hover:border-amber-400/40', text: 'text-amber-400' },
-            green: { bg: 'from-navy-600/10 to-amber-600/10', border: 'border-amber-500/20 hover:border-amber-400/40', text: 'text-amber-400' },
-            purple: { bg: 'from-navy-600/10 to-navy-700/10', border: 'border-navy-500/20 hover:border-navy-400/40', text: 'text-navy-400' },
-            indigo: { bg: 'from-navy-600/10 to-navy-700/10', border: 'border-navy-500/20 hover:border-navy-400/40', text: 'text-navy-400' },
-            cyan: { bg: 'from-navy-600/10 to-amber-600/10', border: 'border-amber-500/20 hover:border-amber-400/40', text: 'text-amber-400' },
+            blue: { bg: `${theme.backgrounds.primary}`, border: `${theme.borderColors.primary}`, text: `${theme.textColors.primary}` },
+            amber: { bg: `${theme.status.warning.bg}`, border: `${theme.status.warning.border}`, text: `${theme.status.warning.text}` },
+            green: { bg: `${theme.status.success.bg}`, border: `${theme.status.success.border}`, text: `${theme.status.success.text}` },
+            purple: { bg: `${theme.backgrounds.card}`, border: `${theme.borderColors.primary}`, text: `${theme.textColors.primary}` },
+            indigo: { bg: `${theme.backgrounds.card}`, border: `${theme.borderColors.primary}`, text: `${theme.textColors.primary}` },
+            cyan: { bg: `${theme.backgrounds.primary}`, border: `${theme.borderColors.primary}`, text: `${theme.textColors.primary}` },
         };
         return colorMap[color as keyof typeof colorMap][variant];
     };
@@ -417,7 +418,7 @@ const ComprehensiveNavigation = () => {
     return (
         <div className="max-w-7xl mx-auto p-6">
             <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold text-white mb-4">Comprehensive Financial Education</h2>
+                <h2 className={`text-4xl font-bold ${theme.textColors.primary} mb-4`}>Comprehensive Financial Education</h2>
                 <p className={`${theme.textColors.muted} text-lg max-w-3xl mx-auto`}>
                     Master every aspect of personal finance through 30 specialized chapters across 6 learning tracks
                 </p>
@@ -443,7 +444,7 @@ const ComprehensiveNavigation = () => {
                                         {track.icon}
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-bold text-white">{track.title}</h3>
+                                        <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>{track.title}</h3>
                                         <p className={`text-sm ${getColorClasses(track.color, 'text')}`}>
                                             {track.totalLessons} Lessons • {track.chapters.length} Chapters
                                         </p>
@@ -451,7 +452,7 @@ const ComprehensiveNavigation = () => {
                                 </div>
                                 <div className="flex items-center">
                                     {track.status === 'available' ? (
-                                        <span className="text-amber-400 text-xs font-medium bg-amber-400/20 px-3 py-1 rounded-full mr-3">
+                                        <span className={`${theme.status.warning.text} text-xs font-medium ${theme.status.warning.bg.replace("/20", "")}/20 px-3 py-1 rounded-full mr-3`}>
                                             ✅ Available
                                         </span>
                                     ) : (
@@ -481,7 +482,7 @@ const ComprehensiveNavigation = () => {
                                     {track.chapters.map((chapter) => (
                                         <div
                                             key={chapter.id}
-                                            className={`${theme.backgrounds.glass}/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 ${chapter.isAvailable ? 'hover:border-white/20 cursor-pointer' : 'opacity-60'
+                                            className={`${theme.backgrounds.glass}/5 backdrop-blur-sm border ${theme.borderColors.muted}/10 rounded-xl p-4 ${chapter.isAvailable ? 'hover:${theme.borderColors.muted}/20 cursor-pointer' : 'opacity-60'
                                                 } transition-all duration-300`}
                                         >
                                             {chapter.route && chapter.isAvailable ? (
@@ -501,24 +502,24 @@ const ComprehensiveNavigation = () => {
             </div>
 
             {/* Overall Progress Summary */}
-            <div className={`mt-12 ${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8`}>
+            <div className={`mt-12 ${theme.backgrounds.glass}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-2xl p-8`}>
                 <div className="text-center">
-                    <h3 className="text-2xl font-bold text-white mb-6">Your Learning Journey</h3>
+                    <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-6`}>Your Learning Journey</h3>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-blue-400 mb-2">
+                            <div className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>
                                 {progress.userProgress.currentChapter - 1}
                             </div>
                             <p className={`${theme.textColors.muted} text-sm`}>Chapters Completed</p>
                         </div>
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-amber-400 mb-2">
+                            <div className={`text-3xl font-bold ${theme.status.warning.text} mb-2`}>
                                 {progress.userProgress.completedLessons.length}
                             </div>
                             <p className={`${theme.textColors.muted} text-sm`}>Lessons Completed</p>
                         </div>
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-amber-400 mb-2">
+                            <div className={`text-3xl font-bold ${theme.status.warning.text} mb-2`}>
                                 {Math.round(((progress.userProgress.currentChapter - 1) / 5) * 100)}%
                             </div>
                             <p className={`${theme.textColors.muted} text-sm`}>Foundation Track</p>
@@ -541,14 +542,14 @@ const ChapterContent = ({ chapter }: { chapter: Chapter }) => (
                 {chapter.icon}
             </div>
             <div>
-                <h4 className="font-semibold text-white text-sm">Chapter {chapter.id}: {chapter.title}</h4>
+                <h4 className={`font-semibold ${theme.textColors.primary} text-sm`}>Chapter {chapter.id}: {chapter.title}</h4>
                 <p className={`${theme.textColors.muted} text-xs`}>{chapter.description}</p>
             </div>
         </div>
         <div className="flex items-center">
             <span className={`${theme.textColors.muted} text-xs mr-3`}>{chapter.lessons} Lessons</span>
             {chapter.isCompleted ? (
-                <CheckCircle className="w-4 h-4 text-amber-400" />
+                <CheckCircle className={`w-4 h-4 ${theme.status.warning.text}`} />
             ) : chapter.isAvailable ? (
                 <ChevronRight className={`w-4 h-4 ${theme.textColors.muted}`} />
             ) : (

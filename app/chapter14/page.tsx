@@ -40,7 +40,7 @@ export default function Chapter14() {
                 <p className={theme.textColors.secondary}>Master diversification, risk management, and optimal allocation</p>
               </div>
             </div>
-            <Badge variant="outline" className={`${theme.textColors.accent} ${theme.backgrounds.card} ${theme.borderColors.accent}`}>
+            <Badge variant="outline" className={`${theme.textColors.primary} ${theme.backgrounds.card} ${theme.borderColors.primary}`}>
               Investment Track
             </Badge>
           </div>
@@ -238,7 +238,7 @@ export default function Chapter14() {
                   <div className="space-y-4">
                     <div className="flex items-start space-x-3">
                       <div className={`w-8 h-8 ${theme.backgrounds.card} rounded-full flex items-center justify-center flex-shrink-0`}>
-                        <span className={`${theme.textColors.accent} font-medium text-sm`}>1</span>
+                        <span className={`${theme.textColors.primary} font-medium text-sm`}>1</span>
                       </div>
                       <div>
                         <h4 className={`font-medium ${theme.textColors.primary}`}>Correlation Analysis</h4>
@@ -251,7 +251,7 @@ export default function Chapter14() {
                     
                     <div className="flex items-start space-x-3">
                       <div className={`w-8 h-8 ${theme.backgrounds.card} rounded-full flex items-center justify-center flex-shrink-0`}>
-                        <span className={`${theme.textColors.accent} font-medium text-sm`}>2</span>
+                        <span className={`${theme.textColors.primary} font-medium text-sm`}>2</span>
                       </div>
                       <div>
                         <h4 className={`font-medium ${theme.textColors.primary}`}>Geographic Diversification</h4>
@@ -264,7 +264,7 @@ export default function Chapter14() {
                     
                     <div className="flex items-start space-x-3">
                       <div className={`w-8 h-8 ${theme.backgrounds.card} rounded-full flex items-center justify-center flex-shrink-0`}>
-                        <span className={`${theme.textColors.accent} font-medium text-sm`}>3</span>
+                        <span className={`${theme.textColors.primary} font-medium text-sm`}>3</span>
                       </div>
                       <div>
                         <h4 className={`font-medium ${theme.textColors.primary}`}>Sector Diversification</h4>
@@ -277,7 +277,7 @@ export default function Chapter14() {
                     
                     <div className="flex items-start space-x-3">
                       <div className={`w-8 h-8 ${theme.backgrounds.card} rounded-full flex items-center justify-center flex-shrink-0`}>
-                        <span className={`${theme.textColors.accent} font-medium text-sm`}>4</span>
+                        <span className={`${theme.textColors.primary} font-medium text-sm`}>4</span>
                       </div>
                       <div>
                         <h4 className={`font-medium ${theme.textColors.primary}`}>Rebalancing Strategy</h4>
@@ -357,7 +357,7 @@ export default function Chapter14() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
-                  <Calculator className={`w-5 h-5 ${theme.textColors.accent}`} />
+                  <Calculator className={`w-5 h-5 ${theme.textColors.primary}`} />
                   <span>Stock Analysis Calculator</span>
                 </CardTitle>
                 <CardDescription>
@@ -374,7 +374,7 @@ export default function Chapter14() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
-                  <Award className={`w-5 h-5 ${theme.textColors.accent}`} />
+                  <Award className={`w-5 h-5 ${theme.textColors.primary}`} />
                   <span>Test Your Portfolio Theory Knowledge</span>
                 </CardTitle>
                 <CardDescription>

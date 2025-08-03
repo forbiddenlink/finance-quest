@@ -9,13 +9,13 @@ export default function DebtPayoffPage() {
   return (
     <div className={`min-h-screen ${theme.backgrounds.primary}`}>
       {/* Header */}
-      <header className={`${theme.backgrounds.header} border-b ${theme.borderColors.accent}`}>
+      <header className={`${theme.backgrounds.header} border-b ${theme.borderColors.primary}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => window.history.back()}
-                className={`${theme.textColors.accent} hover:${theme.textColors.accentSecondary} font-medium transition-colors`}
+                className={`${theme.textColors.primary} hover:${theme.textColors.secondary} font-medium transition-colors`}
               >
                 ← Back
               </button>

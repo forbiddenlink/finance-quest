@@ -179,7 +179,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
           className={`${theme.backgrounds.card} rounded-2xl shadow-2xl max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] flex flex-col overflow-hidden border ${theme.borderColors.primary}`}
         >
           {/* Header */}
-          <div className={`${theme.backgrounds.header} p-4 sm:p-6 flex-shrink-0 border-b ${theme.borderColors.accent}`}>
+          <div className={`${theme.backgrounds.header} p-4 sm:p-6 flex-shrink-0 border-b ${theme.borderColors.primary}`}>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2 sm:gap-3">
                 <div>
@@ -189,7 +189,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
               </div>
               <button
                 onClick={skipTour}
-                className={`${theme.textColors.primary} hover:${theme.textColors.accent} transition-colors p-1`}
+                className={`${theme.textColors.primary} hover:${theme.textColors.primary} transition-colors p-1`}
               >
                 <X className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
@@ -198,7 +198,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
             {/* Progress Bar */}
             <div className={`w-full ${theme.backgrounds.cardHover} rounded-full h-2`}>
               <motion.div
-                className="bg-amber-400 h-2 rounded-full"
+                className={`${theme.status.warning.bg.replace("/20", "")} h-2 rounded-full`}
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.5 }}
@@ -213,7 +213,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
               <div className="flex flex-col">
                 <GradientCard variant="glass" gradient="blue" className="p-6 mb-6 flex-shrink-0">
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="bg-amber-500/20 p-2 rounded-lg">
+                    <div className={`${theme.status.warning.bg} p-2 rounded-lg`}>
                       <Star className={`w-5 h-5 ${theme.status.warning.text}`} />
                     </div>
                     <div>
@@ -254,9 +254,9 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
                       onClick={() => goToStep(index)}
                       className={`w-full text-left p-3 rounded-lg transition-all flex items-center gap-6 ${
                         index === currentStep
-                          ? `${theme.backgrounds.cardHover} border-2 ${theme.borderColors.accent}`
+                          ? `${theme.backgrounds.cardHover} border-2 ${theme.borderColors.primary}`
                           : completedSteps.includes(step.id)
-                          ? 'bg-amber-500/20 border border-amber-500/30'
+                          ? '${theme.status.warning.bg} border ${theme.status.warning.border}'
                           : `${theme.backgrounds.card} border ${theme.borderColors.primary} hover:${theme.backgrounds.cardHover}`
                       }`}
                     >

@@ -124,11 +124,11 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
       >
         <div className="flex items-center gap-2">
           <div className={`${theme.status.warning.bg} ${theme.spacing.xs} rounded-full`}>
-            <Sparkles className={`w-4 h-4 ${theme.textColors.accent}`} />
+            <Sparkles className={`w-4 h-4 ${theme.textColors.primary}`} />
           </div>
           <h3 className={`font-semibold ${theme.textColors.primary}`}>AI Financial Q&A Assistant</h3>
         </div>
-        <button className={`${theme.typography.small} ${theme.textColors.accent} hover:${theme.textColors.accentSecondary}`}>
+        <button className={`${theme.typography.small} ${theme.textColors.primary} hover:${theme.textColors.secondary}`}>
           {isExpanded ? 'Minimize' : 'Expand'}
         </button>
       </div>
@@ -141,7 +141,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
               onClick={() => setActiveTab('text')}
               className={`flex-1 flex items-center justify-center gap-2 ${theme.spacing.xs} ${theme.typography.small} font-medium transition-colors ${activeTab === 'text'
                 ? `${theme.status.info.bg} ${theme.status.info.text} border-b-2 ${theme.status.info.border}`
-                : `${theme.textColors.secondary} hover:${theme.textColors.accent}`
+                : `${theme.textColors.secondary} hover:${theme.textColors.primary}`
                 }`}
             >
               <Sparkles className="w-4 h-4" />
@@ -151,7 +151,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
               onClick={() => setActiveTab('voice')}
               className={`flex-1 flex items-center justify-center gap-2 ${theme.spacing.xs} ${theme.typography.small} font-medium transition-colors ${activeTab === 'voice'
                 ? `${theme.status.info.bg} ${theme.status.info.text} border-b-2 ${theme.status.info.border}`
-                : `${theme.textColors.secondary} hover:${theme.textColors.accent}`
+                : `${theme.textColors.secondary} hover:${theme.textColors.primary}`
                 }`}
             >
               <Mic className="w-4 h-4" />
@@ -200,11 +200,11 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
 
                 {isLoading && (
                   <div className="flex justify-start">
-                    <div className={`${theme.backgrounds.card} ${theme.textColors.primary} ${theme.spacing.sm} rounded-lg border ${theme.borderColors.accent}`}>
+                    <div className={`${theme.backgrounds.card} ${theme.textColors.primary} ${theme.spacing.sm} rounded-lg border ${theme.borderColors.primary}`}>
                       <LoadingSpinner
                         size="sm"
                         text="AI is thinking..."
-                        className={theme.textColors.accent}
+                        className={theme.textColors.primary}
                       />
                     </div>
                   </div>
@@ -238,7 +238,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Ask about budgeting, investing, credit scores..."
-                    className={`flex-1 ${theme.spacing.xs} border ${theme.borderColors.muted} rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500/50 ${theme.typography.small} ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                    className={`flex-1 ${theme.spacing.xs} border ${theme.borderColors.muted} rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500/50 ${theme.typography.small} ${theme.backgrounds.card} ${theme.textColors.primary}`}
                     disabled={isLoading}
                   />
                   <button

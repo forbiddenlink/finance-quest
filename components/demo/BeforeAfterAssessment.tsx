@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import GradientCard from '@/components/shared/ui/GradientCard';
+;
 import { theme } from '@/lib/theme';
 
 interface AssessmentQuestion {
@@ -249,7 +250,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
     : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-emerald-50">
       <div className="max-w-4xl mx-auto p-6">
         <AnimatePresence mode="wait">
           {phase === 'intro' && (
@@ -261,8 +262,8 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
             >
               <GradientCard variant="glass" gradient="blue" className="p-8">
                 <div className="flex items-center justify-center gap-3 mb-6">
-                  <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-3 rounded-2xl">
-                    <Target className="w-8 h-8 text-white" />
+                  <div className={`bg-gradient-to-r from-slate-900 to-amber-600 p-3 rounded-2xl`}>
+                    <Target className={`w-8 h-8 ${theme.textColors.primary}`} />
                   </div>
                   <div>
                     <h1 className={`text-3xl font-bold ${theme.textColors.primary}`}>Before & After Assessment</h1>
@@ -270,8 +271,8 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-r from-yellow-100 to-orange-100 border border-yellow-200 rounded-lg p-4 mb-6">
-                  <p className="text-yellow-800 font-semibold flex items-center justify-center gap-2">
+                <div className={`bg-gradient-to-r from-yellow-100 to-yellow-100 border ${theme.status.warning.border} rounded-lg p-4 mb-6`}>
+                  <p className={`${theme.status.warning.text} font-semibold flex items-center justify-center gap-2`}>
                     <Award className="w-5 h-5" />
                     Contest Impact: Quantifiable Learning Outcomes
                   </p>
@@ -283,27 +284,27 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <Brain className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-                    <h3 className="font-semibold text-blue-900">8 Questions</h3>
-                    <p className="text-sm text-blue-700">Core financial concepts</p>
+                  <div className={`text-center p-4 ${theme.backgrounds.card} rounded-lg`}>
+                    <Brain className={`w-8 h-8 ${theme.textColors.primary} mx-auto mb-2`} />
+                    <h3 className={`font-semibold ${theme.textColors.primary}`}>8 Questions</h3>
+                    <p className={`text-sm ${theme.textColors.primary}`}>Core financial concepts</p>
                   </div>
-                  <div className="text-center p-4 bg-green-50 rounded-lg">
-                    <Timer className="w-8 h-8 text-green-600 mx-auto mb-2" />
-                    <h3 className="font-semibold text-green-900">5 Minutes</h3>
-                    <p className="text-sm text-green-700">Quick assessment</p>
+                  <div className={`text-center p-4 ${theme.status.success.bg} rounded-lg`}>
+                    <Timer className={`w-8 h-8 ${theme.status.success.text} mx-auto mb-2`} />
+                    <h3 className={`font-semibold ${theme.status.success.text}`}>5 Minutes</h3>
+                    <p className={`text-sm ${theme.status.success.text}`}>Quick assessment</p>
                   </div>
-                  <div className="text-center p-4 bg-purple-50 rounded-lg">
-                    <BarChart3 className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-                    <h3 className="font-semibold text-purple-900">Detailed Results</h3>
-                    <p className="text-sm text-purple-700">Category breakdown</p>
+                  <div className={`text-center p-4 ${theme.backgrounds.card} rounded-lg`}>
+                    <BarChart3 className={`w-8 h-8 ${theme.textColors.primary} mx-auto mb-2`} />
+                    <h3 className={`font-semibold ${theme.textColors.primary}`}>Detailed Results</h3>
+                    <p className={`text-sm ${theme.textColors.primary}`}>Category breakdown</p>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-center gap-4">
                   <button
                     onClick={() => setPhase('before')}
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold flex items-center gap-2 hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg"
+                    className={`bg-gradient-to-r from-slate-900 to-amber-600 ${theme.textColors.primary} px-8 py-3 rounded-full font-semibold flex items-center gap-2 hover:from-blue-700 hover:to-violet-700 transition-all shadow-lg`}
                   >
                     <Star className="w-5 h-5" />
                     Start Assessment
@@ -343,7 +344,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                     <div className={`text-sm ${theme.textColors.muted}`}>Time: {Math.floor(timeSpent / 60)}:{(timeSpent % 60).toString().padStart(2, '0')}</div>
                     <div className={`w-32 ${theme.backgrounds.cardDisabled} rounded-full h-2 mt-1`}>
                       <div
-                        className="bg-purple-500 h-2 rounded-full transition-all duration-300"
+                        className={`${theme.backgrounds.card} h-2 rounded-full transition-all duration-300`}
                         style={{ width: `${((currentQuestion) / assessmentQuestions.length) * 100}%` }}
                       />
                     </div>
@@ -360,13 +361,13 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                       <motion.button
                         key={index}
                         onClick={() => handleAnswer(index)}
-                        className={`w-full text-left p-4 rounded-lg border ${theme.borderColors.primary} hover:border-purple-300 hover:bg-purple-50 transition-all`}
+                        className={`w-full text-left p-4 rounded-lg border ${theme.borderColors.primary} hover:${theme.borderColors.primary} hover:${theme.backgrounds.card} transition-all`}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
                         <div className="flex items-center gap-3">
                           <div className={`w-6 h-6 rounded-full border ${theme.borderColors.primary} flex items-center justify-center`}>
-                            <div className="w-3 h-3 rounded-full bg-purple-500 opacity-0 transition-opacity hover:opacity-100" />
+                            <div className={`w-3 h-3 rounded-full ${theme.backgrounds.card} opacity-0 transition-opacity hover:opacity-100`} />
                           </div>
                           <span className={`${theme.textColors.primary}`}>{option}</span>
                         </div>
@@ -387,8 +388,8 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
             >
               <GradientCard variant="glass" gradient="green" className="p-8">
                 <div className="flex items-center justify-center gap-3 mb-6">
-                  <div className="bg-gradient-to-r from-blue-600 to-blue-600 p-3 rounded-2xl">
-                    <Brain className="w-8 h-8 text-white" />
+                  <div className={`bg-gradient-to-r from-slate-900 to-blue-900 p-3 rounded-2xl`}>
+                    <Brain className={`w-8 h-8 ${theme.textColors.primary}`} />
                   </div>
                   <div>
                     <h2 className={`text-3xl font-bold ${theme.textColors.primary}`}>Learning Phase Complete!</h2>
@@ -398,9 +399,9 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
 
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
                   {beforeScores.map((score, index) => (
-                    <div key={index} className="text-center p-4 bg-green-50 rounded-lg">
-                      <div className="text-2xl font-bold text-green-900">{score.afterScore}%</div>
-                      <div className="text-sm text-green-700">{score.category}</div>
+                    <div key={index} className={`text-center p-4 ${theme.status.success.bg} rounded-lg`}>
+                      <div className={`text-2xl font-bold ${theme.status.success.text}`}>{score.afterScore}%</div>
+                      <div className={`text-sm ${theme.status.success.text}`}>{score.category}</div>
                     </div>
                   ))}
                 </div>
@@ -413,7 +414,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                 <div className="flex items-center justify-center gap-4">
                   <button
                     onClick={() => setPhase('after')}
-                    className="bg-gradient-to-r from-blue-600 to-blue-600 text-white px-8 py-3 rounded-full font-semibold flex items-center gap-2 hover:from-blue-700 hover:to-blue-700 transition-all shadow-lg"
+                    className={`bg-gradient-to-r from-slate-900 to-blue-900 ${theme.textColors.primary} px-8 py-3 rounded-full font-semibold flex items-center gap-2 hover:from-blue-700 hover:to-blue-900 transition-all shadow-lg`}
                   >
                     <ArrowRight className="w-5 h-5" />
                     Take After Assessment
@@ -439,7 +440,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <div className="bg-gradient-to-r from-yellow-500 to-orange-500 p-3 rounded-2xl">
-                    <Award className="w-8 h-8 text-white" />
+                    <Award className={`w-8 h-8 ${theme.textColors.primary}`} />
                   </div>
                   <div>
                     <h2 className={`text-4xl font-bold ${theme.textColors.primary}`}>Remarkable Improvement!</h2>
@@ -447,8 +448,8 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-r from-blue-100 to-blue-100 border border-blue-200 rounded-lg p-4 inline-block mb-8">
-                  <p className="text-green-800 font-semibold flex items-center gap-2">
+                <div className={`bg-gradient-to-r from-slate-100 to-slate-100 border ${theme.borderColors.primary} rounded-lg p-4 inline-block mb-8`}>
+                  <p className={`${theme.status.success.text} font-semibold flex items-center gap-2`}>
                     <TrendingUp className="w-5 h-5" />
                     Average Improvement: +{averageImprovement} percentage points
                   </p>
@@ -474,14 +475,14 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4`}>Improvement Breakdown</h3>
                   <div className="space-y-4">
                     {afterScores.map((score, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                      <div key={index} className={`flex items-center justify-between p-3 ${theme.status.success.bg} rounded-lg`}>
                         <div>
-                          <h4 className="font-semibold text-green-900">{score.category}</h4>
-                          <p className="text-sm text-green-700">{score.beforeScore}% → {score.afterScore}%</p>
+                          <h4 className={`font-semibold ${theme.status.success.text}`}>{score.category}</h4>
+                          <p className={`text-sm ${theme.status.success.text}`}>{score.beforeScore}% → {score.afterScore}%</p>
                         </div>
                         <div className="text-right">
-                          <div className="text-lg font-bold text-green-600">+{score.improvement}</div>
-                          <div className="text-xs text-green-500">points</div>
+                          <div className={`text-lg font-bold ${theme.status.success.text}`}>+{score.improvement}</div>
+                          <div className={`text-xs ${theme.status.success.text}`}>points</div>
                         </div>
                       </div>
                     ))}
@@ -493,15 +494,15 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                 <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-4`}>Contest Impact Demonstrated</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <div className="text-3xl font-bold text-purple-600 mb-2">{averageImprovement}%</div>
+                    <div className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>{averageImprovement}%</div>
                     <div className={`text-sm ${theme.textColors.secondary}`}>Average Knowledge Gain</div>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold text-blue-600 mb-2">64%</div>
+                    <div className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>64%</div>
                     <div className={`text-sm ${theme.textColors.secondary}`}>Financial Illiteracy Crisis</div>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold text-green-600 mb-2">100%</div>
+                    <div className={`text-3xl font-bold ${theme.status.success.text} mb-2`}>100%</div>
                     <div className={`text-sm ${theme.textColors.secondary}`}>Measurable Improvement</div>
                   </div>
                 </div>

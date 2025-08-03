@@ -14,6 +14,7 @@ import {
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import GradientCard from './GradientCard';
 import { useProgressStore } from '@/lib/store/progressStore';
+;
 import { theme } from '@/lib/theme';
 
 interface LearningMetrics {
@@ -119,7 +120,7 @@ export default function LearningAnalyticsDashboard() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className={`animate-spin rounded-full h-32 w-32 border-b-2 ${theme.borderColors.accent}`}></div>
+        <div className={`animate-spin rounded-full h-32 w-32 border-b-2 ${theme.borderColors.primary}`}></div>
       </div>
     );
   }
@@ -377,14 +378,14 @@ export default function LearningAnalyticsDashboard() {
       >
         <GradientCard variant="glass" gradient="purple" className="p-6">
           <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center`}>
-            <Brain className="w-5 h-5 mr-2 text-purple-600" />
+            <Brain className={`w-5 h-5 mr-2 ${theme.textColors.primary}`} />
             AI-Powered Learning Insights
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className={`${theme.backgrounds.glass} bg-opacity-50 rounded-lg p-4`}>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2 flex items-center`}>
-                <Award className="w-4 h-4 mr-2 text-yellow-500" />
+                <Award className={`w-4 h-4 mr-2 ${theme.status.warning.text}`} />
                 Strengths Identified
               </h4>
               <ul className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
@@ -396,7 +397,7 @@ export default function LearningAnalyticsDashboard() {
 
             <div className={`${theme.backgrounds.glass} bg-opacity-50 rounded-lg p-4`}>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2 flex items-center`}>
-                <Target className="w-4 h-4 mr-2 text-blue-500" />
+                <Target className={`w-4 h-4 mr-2 ${theme.textColors.primary}`} />
                 Recommended Focus Areas
               </h4>
               <ul className={`space-y-1 text-sm ${theme.textColors.secondary}`}>

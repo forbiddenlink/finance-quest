@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+;
 import { theme } from '@/lib/theme';
 import {
   Calculator,
@@ -25,8 +26,8 @@ export default function EnhancedCalculatorGrid() {
       title: "Compound Interest",
       description: "See your money grow exponentially over time with the power of compound interest",
       icon: TrendingUp,
-      color: "from-blue-500 to-blue-600",
-      bgGradient: "from-blue-50 to-blue-50",
+      color: "from-slate-900 to-blue-900",
+      bgGradient: "from-slate-50 to-slate-50",
       href: "/calculators/compound-interest",
       features: ["Investment Growth", "Monthly Contributions", "Time Value of Money"],
       popularity: "Most Popular",
@@ -37,8 +38,8 @@ export default function EnhancedCalculatorGrid() {
       title: "Budget Builder",
       description: "Create a personalized budget using the proven 50/30/20 rule for financial success",
       icon: PieChart,
-      color: "from-blue-500 to-cyan-600",
-      bgGradient: "from-blue-50 to-cyan-50",
+      color: "from-slate-900 to-sky-600",
+      bgGradient: "from-slate-50 to-sky-50",
       href: "/calculators/budget-builder",
       features: ["50/30/20 Rule", "Income Analysis", "Spending Breakdown"],
       popularity: "Essential Tool",
@@ -61,8 +62,8 @@ export default function EnhancedCalculatorGrid() {
       title: "Emergency Fund",
       description: "Calculate your ideal emergency fund size based on your unique situation",
       icon: Umbrella,
-      color: "from-blue-500 to-slate-600",
-      bgGradient: "from-blue-50 to-slate-50",
+      color: "from-slate-900 to-slate-600",
+      bgGradient: "from-slate-50 to-slate-50",
       href: "/calculators/emergency-fund",
       features: ["Risk Assessment", "Monthly Expenses", "Savings Goals"],
       popularity: "Safety First",
@@ -73,8 +74,8 @@ export default function EnhancedCalculatorGrid() {
       title: "Paycheck Analysis",
       description: "Break down your paycheck with taxes, deductions, and take-home calculations",
       icon: Calculator,
-      color: "from-orange-500 to-amber-600",
-      bgGradient: "from-orange-50 to-amber-50",
+      color: "from-orange-500 to-yellow-600",
+      bgGradient: "from-yellow-50 to-amber-50",
       href: "/calculators/paycheck",
       features: ["Tax Breakdown", "Deductions", "Net Income"],
       popularity: "Career Essential",
@@ -85,8 +86,8 @@ export default function EnhancedCalculatorGrid() {
       title: "Mortgage Calculator",
       description: "Determine your home affordability and monthly payment breakdown",
       icon: Building,
-      color: "from-indigo-500 to-blue-600",
-      bgGradient: "from-indigo-50 to-blue-50",
+      color: "from-indigo-500 to-blue-900",
+      bgGradient: "from-indigo-50 to-slate-50",
       href: "/calculators/mortgage",
       features: ["Monthly Payments", "Affordability", "Interest Analysis"],
       popularity: "Home Buyers",
@@ -99,7 +100,7 @@ export default function EnhancedCalculatorGrid() {
     <div className="space-y-8">
       {/* Section Header */}
       <div className="text-center space-y-4">
-        <Badge variant="outline" className="text-blue-600 border-blue-200">
+        <Badge variant="outline" className={`${theme.textColors.primary} ${theme.borderColors.primary}`}>
           <Calculator className="w-4 h-4 mr-2" />
           Professional Financial Tools
         </Badge>
@@ -119,14 +120,14 @@ export default function EnhancedCalculatorGrid() {
           return (
             <Card
               key={index}
-              className="group relative overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2 hover:border-blue-200"
+              className={`group relative overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2 hover:${theme.borderColors.primary}`}
             >
               {/* Background Gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${calc.bgGradient} opacity-40 group-hover:opacity-60 transition-opacity`} />
 
               <CardHeader className="relative">
                 <div className="flex items-start justify-between">
-                  <div className={`p-3 rounded-xl bg-gradient-to-r ${calc.color} text-white shadow-lg`}>
+                  <div className={`p-3 rounded-xl bg-gradient-to-r ${calc.color} ${theme.textColors.primary} shadow-lg`}>
                     <Icon className="w-6 h-6" />
                   </div>
                   <div className="text-right space-y-1">
@@ -137,7 +138,7 @@ export default function EnhancedCalculatorGrid() {
                 </div>
 
                 <div className="space-y-2">
-                  <CardTitle className={`text-xl font-bold ${theme.textColors.primary} group-hover:text-blue-700 transition-colors`}>
+                  <CardTitle className={`text-xl font-bold ${theme.textColors.primary} group-hover:${theme.textColors.primary} transition-colors`}>
                     {calc.title}
                   </CardTitle>
                   <p className={`text-sm ${theme.textColors.secondary} leading-relaxed`}>
@@ -150,7 +151,7 @@ export default function EnhancedCalculatorGrid() {
                 {/* Features */}
                 <div className="space-y-2">
                   <h4 className={`text-sm font-semibold ${theme.textColors.secondary} flex items-center`}>
-                    <Zap className="w-4 h-4 mr-2 text-yellow-500" />
+                    <Zap className={`w-4 h-4 mr-2 ${theme.status.warning.text}`} />
                     Key Features
                   </h4>
                   <div className="flex flex-wrap gap-1">
@@ -191,7 +192,7 @@ export default function EnhancedCalculatorGrid() {
 
       {/* Bottom CTA */}
       <div className="text-center pt-8">
-        <Card className="max-w-2xl mx-auto bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+        <Card className={`max-w-2xl mx-auto bg-gradient-to-r from-slate-50 to-violet-50 ${theme.borderColors.primary}`}>
           <CardContent className="p-6">
             <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-2`}>
               🎯 Educational Focus
@@ -200,7 +201,7 @@ export default function EnhancedCalculatorGrid() {
               Each calculator includes detailed explanations, real-world examples, and personalized insights to enhance your financial learning.
             </p>
             <Link href="/calculators">
-              <Button variant="outline" className="border-blue-300 text-blue-600 hover:bg-blue-50">
+              <Button variant="outline" className={`${theme.borderColors.primary} ${theme.textColors.primary} hover:${theme.backgrounds.card}`}>
                 View All Calculators
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>

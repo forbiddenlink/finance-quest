@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+;
 import { theme } from '@/lib/theme';
 import {
   TrendingUp,
@@ -25,8 +26,8 @@ export default function InteractiveDashboardCards() {
       mainStat: "42%",
       description: "Average improvement in financial literacy scores",
       icon: TrendingUp,
-      color: "from-blue-500 to-blue-600",
-      bgColor: "from-blue-50 to-blue-100",
+      color: "from-slate-900 to-blue-900",
+      bgColor: "from-slate-50 to-slate-100",
       details: [
         "Pre-test average: 58%",
         "Post-test average: 82%",
@@ -40,8 +41,8 @@ export default function InteractiveDashboardCards() {
       mainStat: "10,000+",
       description: "Students actively using Finance Quest",
       icon: Users,
-      color: "from-blue-500 to-blue-600",
-      bgColor: "from-blue-50 to-blue-100",
+      color: "from-slate-900 to-blue-900",
+      bgColor: "from-slate-50 to-slate-100",
       details: [
         "New users this month: 1,847",
         "Daily active users: 3,200",
@@ -55,8 +56,8 @@ export default function InteractiveDashboardCards() {
       mainStat: "25",
       description: "Interactive lessons across 5 chapters",
       icon: BookOpen,
-      color: "from-blue-500 to-blue-600",
-      bgColor: "from-blue-50 to-blue-100",
+      color: "from-slate-900 to-blue-900",
+      bgColor: "from-slate-50 to-slate-100",
       details: [
         "5 core chapters",
         "25 interactive lessons",
@@ -71,7 +72,7 @@ export default function InteractiveDashboardCards() {
       description: "Students who complete the full curriculum",
       icon: Award,
       color: "from-orange-500 to-orange-600",
-      bgColor: "from-orange-50 to-orange-100",
+      bgColor: "from-yellow-50 to-yellow-100",
       details: [
         "Chapter 1 completion: 94%",
         "Chapter 2 completion: 87%",
@@ -102,7 +103,7 @@ export default function InteractiveDashboardCards() {
 
             <CardHeader className="relative pb-2">
               <div className="flex items-center justify-between">
-                <div className={`p-3 rounded-lg bg-gradient-to-r ${card.color} text-white`}>
+                <div className={`p-3 rounded-lg bg-gradient-to-r ${card.color} ${theme.textColors.primary}`}>
                   <Icon className="w-6 h-6" />
                 </div>
                 <div className="text-right">
@@ -127,7 +128,7 @@ export default function InteractiveDashboardCards() {
                 {isExpanded && (
                   <div className="mt-4 space-y-3 animate-in slide-in-from-top-2 duration-300">
                     <div className={`flex items-center text-sm font-medium ${theme.textColors.secondary}`}>
-                      <Zap className="w-4 h-4 mr-2 text-yellow-500" />
+                      <Zap className={`w-4 h-4 mr-2 ${theme.status.warning.text}`} />
                       Detailed Breakdown
                     </div>
 
@@ -137,7 +138,7 @@ export default function InteractiveDashboardCards() {
                           key={detailIndex}
                           className={`flex items-center p-3 ${theme.backgrounds.glass}/70 rounded-lg border ${theme.borderColors.primary}`}
                         >
-                          <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mr-3 flex-shrink-0" />
+                          <div className={`w-2 h-2 bg-gradient-to-r from-slate-900 to-violet-600 rounded-full mr-3 flex-shrink-0`} />
                           <span className={`text-sm ${theme.textColors.secondary}`}>{detail}</span>
                         </div>
                       ))}
@@ -146,7 +147,7 @@ export default function InteractiveDashboardCards() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className={`w-full mt-3 ${theme.status.info.text} hover:text-blue-700 hover:bg-blue-50`}
+                      className={`w-full mt-3 ${theme.status.info.text} hover:${theme.textColors.primary} hover:${theme.backgrounds.card}`}
                     >
                       View Full Analytics
                       <ArrowRight className="w-4 h-4 ml-2" />

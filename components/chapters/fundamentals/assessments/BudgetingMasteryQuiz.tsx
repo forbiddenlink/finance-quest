@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, ArrowRight, Target, TrendingUp, PiggyBank } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
+;
 import { theme } from '@/lib/theme';
 
 interface QuizQuestion {
@@ -255,7 +256,7 @@ export default function BudgetingMasteryQuiz({ onComplete }: BudgetingMasteryQui
       <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6 mb-6`}>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <PiggyBank className={`w-6 h-6 ${theme.textColors.accent}`} />
+            <PiggyBank className={`w-6 h-6 ${theme.textColors.primary}`} />
             <h2 className={`${theme.typography.heading3} ${theme.textColors.primary}`}>
               Budgeting Mastery Assessment
             </h2>
@@ -320,9 +321,9 @@ export default function BudgetingMasteryQuiz({ onComplete }: BudgetingMasteryQui
               >
                 <div className="flex items-center gap-3">
                   <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                    showExplanation && isCorrectOption ? `border-green-400 ${theme.status.success.bg}` :
+                    showExplanation && isCorrectOption ? `${theme.status.success.border} ${theme.status.success.bg}` :
                     showExplanation && isSelected && !isCorrectOption ? `border-red-400 ${theme.status.error.bg}` :
-                    isSelected ? `border-blue-400 ${theme.status.info.bg}` : `${theme.borderColors.muted}`
+                    isSelected ? `${theme.borderColors.primary} ${theme.status.info.bg}` : `${theme.borderColors.muted}`
                   }`}>
                     {(showExplanation && isCorrectOption) || (isSelected && (!showExplanation || isCorrectOption)) ? (
                       <CheckCircle className={`w-4 h-4 ${theme.textColors.primary}`} />

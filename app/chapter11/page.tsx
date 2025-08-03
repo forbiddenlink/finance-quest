@@ -27,7 +27,7 @@ export default function Chapter11Page() {
                         <div className="flex items-center space-x-4">
                             <button
                                 onClick={() => window.history.back()}
-                                className={`${theme.textColors.accent} hover:${theme.textColors.primary} font-medium transition-colors`}
+                                className={`${theme.textColors.primary} hover:${theme.textColors.primary} font-medium transition-colors`}
                             >
                                 ← Back to Home
                             </button>
@@ -106,7 +106,7 @@ export default function Chapter11Page() {
                                         <p className={`${theme.textColors.secondary}`}>
                                             Interactive lessons are in development! This chapter will include:
                                         </p>
-                                        <ul className={`mt-3 space-y-1 text-sm ${theme.textColors.accent}`}>
+                                        <ul className={`mt-3 space-y-1 text-sm ${theme.textColors.primary}`}>
                                             <li>• Asset class deep dives with real examples</li>
                                             <li>• Risk assessment and portfolio construction</li>
                                             <li>• Investment account types (401k, IRA, taxable)</li>
@@ -135,7 +135,7 @@ export default function Chapter11Page() {
                                     </div>
 
                                     <div className={`${theme.backgrounds.card} rounded-xl p-6`}>
-                                        <Target className={`w-8 h-8 ${theme.textColors.accent} mb-3`} />
+                                        <Target className={`w-8 h-8 ${theme.textColors.primary} mb-3`} />
                                         <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Portfolio Building</h4>
                                         <p className={`${theme.textColors.secondary} text-sm`}>
                                             Construct your first investment portfolio using modern portfolio theory

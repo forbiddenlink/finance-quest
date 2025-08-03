@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
-import { theme } from '@/lib/theme';
+;
 import { Bot, Lightbulb } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface Message {
   id: number;
@@ -135,9 +136,9 @@ export default function AITeachingAssistant() {
   const progressSummary = getProgressSummary();
 
   return (
-    <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className={`max-w-2xl mx-auto ${theme.backgrounds.card} rounded-lg shadow-lg overflow-hidden`}>
       {/* Header with Progress Context */}
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4">
+      <div className={`bg-gradient-to-r from-slate-900 to-amber-600 ${theme.textColors.primary} p-4`}>
         <h3 className="text-lg font-semibold flex items-center gap-2">
           <Bot className="w-5 h-5" />
           AI Financial Coach
@@ -175,7 +176,7 @@ export default function AITeachingAssistant() {
           >
             <div
               className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.isUser
-                ? `${theme.status.info.bg.replace('/20', '')} text-white`
+                ? `${theme.status.info.bg.replace('/20', '')} ${theme.textColors.primary}`
                 : `${theme.backgrounds.disabled} ${theme.textColors.primary}`
                 }`}
             >
@@ -191,7 +192,7 @@ export default function AITeachingAssistant() {
               ) : (
                 <>
                   <p className="text-sm whitespace-pre-wrap">{message.text}</p>
-                  <p className={`text-xs mt-1 ${message.isUser ? theme.textColors.accent : theme.textColors.muted
+                  <p className={`text-xs mt-1 ${message.isUser ? theme.textColors.primary : theme.textColors.muted
                     }`}>
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
@@ -216,7 +217,7 @@ export default function AITeachingAssistant() {
           <button
             type="submit"
             disabled={!inputText.trim() || isTyping}
-            className={`px-6 py-2 ${theme.status.info.bg.replace('/20', '')} text-white rounded-lg hover:${theme.status.info.bg.replace('/20', '/80')} transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
+            className={`px-6 py-2 ${theme.status.info.bg.replace('/20', '')} ${theme.textColors.primary} rounded-lg hover:${theme.status.info.bg.replace('/20', '/80')} transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
           >
             {isTyping ? '...' : 'Send'}
           </button>

@@ -174,8 +174,8 @@ export default function BankingFundamentalsLesson({ onComplete }: BankingFundame
 
         {/* Interactive Exercises for Better Retention */}
         {currentLesson === 0 && (
-          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-lg`}>
-            <h3 className={`text-lg font-semibold ${theme.textColors.accent} mb-3 flex items-center gap-2`}>
+          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
               <Lightbulb className="w-5 h-5" />
               Banking Account Assessment
             </h3>
@@ -187,7 +187,7 @@ export default function BankingFundamentalsLesson({ onComplete }: BankingFundame
                 <li>What interest rate are you earning on savings?</li>
                 <li>How convenient is your current bank for daily needs?</li>
               </ul>
-              <p className={`mt-4 font-medium ${theme.textColors.accent}`}>
+              <p className={`mt-4 font-medium ${theme.textColors.primary}`}>
                 💡 <strong>Key Insight:</strong> The average person uses only 1-2 account types but could benefit from 3-4 specialized accounts for different purposes!
               </p>
             </div>
@@ -257,7 +257,7 @@ export default function BankingFundamentalsLesson({ onComplete }: BankingFundame
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <DollarSign className={`w-4 h-4 ${theme.textColors.accent}`} />
+                    <DollarSign className={`w-4 h-4 ${theme.textColors.primary}`} />
                     Step 3: Goal Accounts
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary}`}>Separate savings for vacation, car, home down payment - makes goals visual and achievable.</p>
@@ -276,7 +276,7 @@ export default function BankingFundamentalsLesson({ onComplete }: BankingFundame
             <button
               onClick={prevLesson}
               disabled={currentLesson === 0}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               <ChevronLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Previous
@@ -284,7 +284,7 @@ export default function BankingFundamentalsLesson({ onComplete }: BankingFundame
             <button
               onClick={nextLesson}
               disabled={currentLesson === lessons.length - 1}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               Next
               <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

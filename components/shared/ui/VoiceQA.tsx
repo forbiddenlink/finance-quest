@@ -208,7 +208,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
           <div className={`${theme.status.info.bg} p-2 rounded-lg`}>
-            <Mic className={`w-6 h-6 ${theme.textColors.accent}`} />
+            <Mic className={`w-6 h-6 ${theme.textColors.primary}`} />
           </div>
           <div>
             <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>Voice Financial Q&A</h3>
@@ -301,7 +301,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className={`${theme.textColors.accent} font-medium flex items-center justify-center space-x-2`}
+              className={`${theme.textColors.primary} font-medium flex items-center justify-center space-x-2`}
             >
               <Brain className="w-5 h-5 animate-spin" />
               <span>AI is thinking...</span>
@@ -313,7 +313,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className={`${theme.textColors.accent} font-medium flex items-center justify-center space-x-2`}
+              className={`${theme.textColors.primary} font-medium flex items-center justify-center space-x-2`}
             >
               <Volume2 className="w-5 h-5" />
               <span>AI is speaking...</span>
@@ -345,7 +345,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
             <div className={`${theme.backgrounds.card} rounded-lg p-4 border ${theme.borderColors.primary}`}>
               <div className="flex items-start space-x-3">
                 <div className={`${theme.status.info.bg} p-2 rounded-full`}>
-                  <MessageCircle className={`w-4 h-4 ${theme.textColors.accent}`} />
+                  <MessageCircle className={`w-4 h-4 ${theme.textColors.primary}`} />
                 </div>
                 <div>
                   <p className={`text-sm font-medium ${theme.textColors.secondary} mb-1`}>You asked:</p>
@@ -362,10 +362,10 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
           >
-            <div className={`${theme.backgrounds.cardHover} rounded-lg p-4 border ${theme.borderColors.accent}`}>
+            <div className={`${theme.backgrounds.cardHover} rounded-lg p-4 border ${theme.borderColors.primary}`}>
               <div className="flex items-start space-x-3">
                 <div className={`${theme.status.info.bg} p-2 rounded-full`}>
-                  <Brain className={`w-4 h-4 ${theme.textColors.accent}`} />
+                  <Brain className={`w-4 h-4 ${theme.textColors.primary}`} />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-2">
@@ -380,7 +380,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
                           {[1, 2, 3].map((i) => (
                             <motion.div
                               key={i}
-                              className={`w-1 h-4 ${theme.textColors.accent} rounded-full`}
+                              className={`w-1 h-4 ${theme.textColors.primary} rounded-full`}
                               animate={{ scaleY: [1, 2, 1] }}
                               transition={{
                                 repeat: Infinity,
@@ -395,7 +395,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
                         onClick={isSpeaking ? stopSpeaking : speakResponse}
                         className={`p-1 rounded transition-colors ${isSpeaking
                           ? `${theme.textColors.error} hover:${theme.textColors.error}`
-                          : `${theme.textColors.accent} hover:${theme.textColors.accentSecondary}`
+                          : `${theme.textColors.primary} hover:${theme.textColors.secondary}`
                           }`}
                       >
                         {isSpeaking ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}

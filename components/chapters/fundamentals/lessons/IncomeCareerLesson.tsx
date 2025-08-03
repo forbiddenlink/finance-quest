@@ -177,8 +177,8 @@ export default function IncomeCareerLesson({ onComplete }: IncomeCareerLessonPro
 
         {/* Interactive Exercises for Better Retention */}
         {currentLesson === 0 && (
-          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-lg`}>
-            <h3 className={`text-lg font-semibold ${theme.textColors.accent} mb-3 flex items-center gap-2`}>
+          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
               <Calculator className="w-5 h-5" />
               Total Compensation Assessment
             </h3>
@@ -191,7 +191,7 @@ export default function IncomeCareerLesson({ onComplete }: IncomeCareerLessonPro
                 <li>PTO value: $______/year (days × daily salary)</li>
                 <li>Other benefits: $______/year</li>
               </ul>
-              <p className={`mt-4 font-medium ${theme.textColors.accent}`}>
+              <p className={`mt-4 font-medium ${theme.textColors.primary}`}>
                 💡 <strong>Total Package Value:</strong> Often 25-40% higher than base salary!
               </p>
             </div>
@@ -245,7 +245,7 @@ export default function IncomeCareerLesson({ onComplete }: IncomeCareerLessonPro
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <Lightbulb className={`w-4 h-4 ${theme.textColors.accent}`} />
+                    <Lightbulb className={`w-4 h-4 ${theme.textColors.primary}`} />
                     Phase 1: Skills
                   </h4>
                   <p className={`text-sm ${theme.textColors.secondary}`}>Freelance your existing expertise for $500-2,000/month</p>
@@ -285,7 +285,7 @@ export default function IncomeCareerLesson({ onComplete }: IncomeCareerLessonPro
             <button
               onClick={prevLesson}
               disabled={currentLesson === 0}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               <ChevronLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Previous
@@ -293,7 +293,7 @@ export default function IncomeCareerLesson({ onComplete }: IncomeCareerLessonPro
             <button
               onClick={nextLesson}
               disabled={currentLesson === lessons.length - 1}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               Next
               <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

@@ -150,7 +150,7 @@ export default function Chapter9() {
                             <h1 className={`${theme.typography.heading1} ${theme.textColors.primary}`}>Chapter 9: Retirement Planning & Long-term Wealth</h1>
                             <p className={`${theme.textColors.muted}`}>Build a comprehensive retirement strategy for financial independence</p>
                         </div>
-                        <Badge variant="outline" className={`${theme.textColors.accent} ${theme.backgrounds.card} ${theme.borderColors.accent}`}>
+                        <Badge variant="outline" className={`${theme.textColors.primary} ${theme.backgrounds.card} ${theme.borderColors.primary}`}>
                             Wealth Track
                         </Badge>
                     </div>
@@ -216,7 +216,7 @@ export default function Chapter9() {
                             <Card>
                                 <CardHeader>
                                     <CardTitle className="flex items-center space-x-2">
-                                        <Award className={`w-5 h-5 ${theme.textColors.accent}`} />
+                                        <Award className={`w-5 h-5 ${theme.textColors.primary}`} />
                                         <span>Retirement Planning Quiz</span>
                                     </CardTitle>
                                     <CardDescription>

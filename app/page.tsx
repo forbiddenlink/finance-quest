@@ -82,7 +82,7 @@ export default function HomePage() {
       <ParticleSystem particleCount={30} />
 
       {/* Enhanced Header */}
-      <header className={`${theme.backgrounds.header} ${theme.borderColors.accent} border-b relative z-10 bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl`}>
+      <header className={`${theme.backgrounds.header} ${theme.borderColors.primary} border-b relative z-10 bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between">
             {/* Left side - Platform info */}
@@ -90,11 +90,11 @@ export default function HomePage() {
               <div className="flex items-center space-x-2 group">
                 <div className="w-2.5 h-2.5 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full animate-pulse shadow-sm shadow-amber-400/50"></div>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
-                  <span className={`text-sm font-semibold tracking-wide ${theme.textColors.accentSecondary}`}>
+                  <span className={`text-sm font-semibold tracking-wide ${theme.textColors.secondary}`}>
                     Financial Literacy Platform
                   </span>
                   <span className={`hidden sm:block ${theme.textColors.muted} text-xs`}>•</span>
-                  <span className={`text-xs ${theme.textColors.accent} font-medium`}>Live Learning Experience</span>
+                  <span className={`text-xs ${theme.textColors.primary} font-medium`}>Live Learning Experience</span>
                 </div>
               </div>
               
@@ -182,8 +182,8 @@ export default function HomePage() {
             transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-navy-900/20 to-navy-800/20 border border-navy-700/30 backdrop-blur-sm mb-8"
           >
-            <Target className={`w-4 h-4 ${theme.textColors.accent}`} />
-            <span className={`${theme.textColors.accent} text-sm font-medium`}>Solving the 64% Financial Illiteracy Crisis</span>
+            <Target className={`w-4 h-4 ${theme.textColors.primary}`} />
+            <span className={`${theme.textColors.primary} text-sm font-medium`}>Solving the 64% Financial Illiteracy Crisis</span>
           </motion.div>
 
           {/* Main Headline */}
@@ -211,9 +211,9 @@ export default function HomePage() {
             className={`text-xl md:text-2xl ${theme.textColors.secondary} max-w-4xl mx-auto leading-relaxed mb-12 font-light`}
           >
             Transform from financial novice to money master through{' '}
-            <span className={`${theme.textColors.accent} font-medium`}>AI-powered coaching</span>,{' '}
-            <span className={`${theme.textColors.accentSecondary} font-medium`}>interactive tools</span>, and{' '}
-            <span className={`${theme.textColors.accentSecondary} font-medium`}>real-world scenarios</span>.
+            <span className={`${theme.textColors.primary} font-medium`}>AI-powered coaching</span>,{' '}
+            <span className={`${theme.textColors.secondary} font-medium`}>interactive tools</span>, and{' '}
+            <span className={`${theme.textColors.secondary} font-medium`}>real-world scenarios</span>.
             <br />
             <span className={`text-lg ${theme.textColors.muted} mt-2 block`}>No prior knowledge required!</span>
           </motion.p>
@@ -264,22 +264,22 @@ export default function HomePage() {
             className={`flex flex-wrap items-center justify-center gap-8 ${theme.typography.small} ${theme.textColors.muted}`}
           >
             <div className="flex items-center gap-2">
-              <Users className={`w-4 h-4 ${theme.textColors.accent}`} />
+              <Users className={`w-4 h-4 ${theme.textColors.primary}`} />
               <span>10,000+ Learners</span>
             </div>
             <div className={`w-px h-4 ${theme.borderColors.muted}`}></div>
             <div className="flex items-center gap-2">
-              <Award className={`w-4 h-4 ${theme.textColors.accent}`} />
+              <Award className={`w-4 h-4 ${theme.textColors.primary}`} />
               <span>89% Success Rate</span>
             </div>
             <div className={`w-px h-4 ${theme.borderColors.muted}`}></div>
             <div className="flex items-center gap-2">
-              <Brain className={`w-4 h-4 ${theme.textColors.accent}`} />
+              <Brain className={`w-4 h-4 ${theme.textColors.primary}`} />
               <span>Real AI Coaching</span>
             </div>
             <div className={`w-px h-4 ${theme.borderColors.muted}`}></div>
             <div className="flex items-center gap-2">
-              <Globe className={`w-4 h-4 ${theme.textColors.accent}`} />
+              <Globe className={`w-4 h-4 ${theme.textColors.primary}`} />
               <span>47 Countries</span>
             </div>
           </motion.div>
@@ -297,23 +297,23 @@ export default function HomePage() {
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-red-500/25">
                 <Target className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
-              <div className={`${theme.typography.heading1} ${theme.textColors.accent} mb-2`}>
-                <AnimatedCounter end={64} suffix="%" className={`${theme.typography.heading1} ${theme.textColors.accent}`} />
+              <div className={`${theme.typography.heading1} ${theme.textColors.primary} mb-2`}>
+                <AnimatedCounter end={64} suffix="%" className={`${theme.typography.heading1} ${theme.textColors.primary}`} />
               </div>
               <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>of Americans can&apos;t pass a basic financial literacy test</p>
               <div className={`mt-3 px-3 py-1 ${theme.backgrounds.card}/50 rounded-full`}>
-                <p className={`${theme.typography.tiny} ${theme.textColors.accent} font-medium`}>The Crisis We&apos;re Solving</p>
+                <p className={`${theme.typography.tiny} ${theme.textColors.primary} font-medium`}>The Crisis We&apos;re Solving</p>
               </div>
             </div>
           </InteractiveCard>
 
-          <InteractiveCard className={`${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-2xl ${theme.spacing.md} hover:${theme.borderColors.accentHover} transition-all duration-300`}>
+          <InteractiveCard className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.md} hover:${theme.borderColors.primary} transition-all duration-300`}>
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-500/25">
                 <Award className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
-              <div className={`${theme.typography.heading1} ${theme.textColors.accent} mb-2`}>
-                <AnimatedCounter end={89} suffix="%" className={`${theme.typography.heading1} ${theme.textColors.accent}`} />
+              <div className={`${theme.typography.heading1} ${theme.textColors.primary} mb-2`}>
+                <AnimatedCounter end={89} suffix="%" className={`${theme.typography.heading1} ${theme.textColors.primary}`} />
               </div>
               <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>completion rate with measurable learning outcomes</p>
               <div className={`mt-3 px-3 py-1 ${theme.status.warning.bg} rounded-full`}>
@@ -327,12 +327,12 @@ export default function HomePage() {
               <div className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center shadow-lg`}>
                 <BookOpen className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
-              <div className={`${theme.typography.heading1} ${theme.textColors.accent} mb-2`}>
-                <AnimatedCounter end={180} suffix="+" className={`${theme.typography.heading1} ${theme.textColors.accent}`} />
+              <div className={`${theme.typography.heading1} ${theme.textColors.primary} mb-2`}>
+                <AnimatedCounter end={180} suffix="+" className={`${theme.typography.heading1} ${theme.textColors.primary}`} />
               </div>
               <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>specialized lessons across 30 comprehensive chapters</p>
               <div className={`mt-3 px-3 py-1 ${theme.status.warning.bg} rounded-full`}>
-                <p className={`${theme.typography.tiny} ${theme.textColors.accentSecondary} font-medium`}>6 Learning Tracks</p>
+                <p className={`${theme.typography.tiny} ${theme.textColors.secondary} font-medium`}>6 Learning Tracks</p>
               </div>
             </div>
           </InteractiveCard>
@@ -389,14 +389,14 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
-              <InteractiveCard className={`${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-2xl ${theme.spacing.md} hover:${theme.borderColors.accentHover} transition-all duration-300`}>
+              <InteractiveCard className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.md} hover:${theme.borderColors.primary} transition-all duration-300`}>
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-amber-500/25">
                     <Brain className={`w-6 h-6 ${theme.textColors.primary}`} />
                   </div>
                   <div>
                     <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Chapter 1</h4>
-                    <p className={`${theme.textColors.accent} ${theme.typography.small}`}>Money Psychology</p>
+                    <p className={`${theme.textColors.primary} ${theme.typography.small}`}>Money Psychology</p>
                   </div>
                 </div>
                 <p className={`${theme.textColors.secondary} mb-4 ${theme.typography.small} leading-relaxed`}>
@@ -432,7 +432,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Chapter 2</h4>
-                      <p className={`${theme.textColors.accent} ${theme.typography.small}`}>Banking Fundamentals</p>
+                      <p className={`${theme.textColors.primary} ${theme.typography.small}`}>Banking Fundamentals</p>
                     </div>
                   </div>
                   <p className={`${theme.textColors.secondary} mb-4 ${theme.typography.small} leading-relaxed`}>
@@ -440,10 +440,10 @@ export default function HomePage() {
                   </p>
                   <div className="flex items-center justify-between mb-4">
                     <div className={`flex items-center gap-2 px-3 py-1 ${theme.status.warning.bg}/20 rounded-full`}>
-                      <CheckCircle className={`w-3 h-3 ${theme.textColors.accent}`} />
-                      <span className={`${theme.textColors.accentSecondary} text-xs font-medium`}>Unlocked!</span>
+                      <CheckCircle className={`w-3 h-3 ${theme.textColors.primary}`} />
+                      <span className={`${theme.textColors.secondary} text-xs font-medium`}>Unlocked!</span>
                     </div>
-                    <div className={`${theme.textColors.accent} text-xs`}>6 Lessons</div>
+                    <div className={`${theme.textColors.primary} text-xs`}>6 Lessons</div>
                   </div>
                   <Link href="/chapter2">
                     <Button className={`w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg`}>
@@ -596,14 +596,14 @@ export default function HomePage() {
                         </div>
                         <div>
                           <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Foundation Track</h4>
-                          <p className={`${theme.textColors.accent} text-sm`}>Chapters 1-6</p>
+                          <p className={`${theme.textColors.primary} text-sm`}>Chapters 1-6</p>
                         </div>
                       </div>
                       <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>
                         Master the psychological and practical foundations of personal finance.
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className={`${theme.textColors.accent} text-xs font-medium`}>✅ Available Now</span>
+                        <span className={`${theme.textColors.primary} text-xs font-medium`}>✅ Available Now</span>
                         <span className={`${theme.textColors.muted} text-xs`}>36 Lessons</span>
                       </div>
                     </div>
@@ -616,7 +616,7 @@ export default function HomePage() {
                         </div>
                         <div>
                           <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Credit & Lending</h4>
-                          <p className={`${theme.textColors.accentSecondary} text-sm`}>Chapters 7-10</p>
+                          <p className={`${theme.textColors.secondary} text-sm`}>Chapters 7-10</p>
                         </div>
                       </div>
                       <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>
@@ -636,47 +636,47 @@ export default function HomePage() {
                         </div>
                         <div>
                           <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Investment Track</h4>
-                          <p className={`${theme.textColors.accentSecondary} text-sm`}>Chapters 11-16</p>
+                          <p className={`${theme.textColors.secondary} text-sm`}>Chapters 11-16</p>
                         </div>
                       </div>
                       <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>
                         Build wealth through stocks, bonds, retirement accounts, and advanced strategies.
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className={`${theme.textColors.accent} text-xs font-medium`}>🚧 Coming Soon</span>
+                        <span className={`${theme.textColors.primary} text-xs font-medium`}>🚧 Coming Soon</span>
                         <span className={`${theme.textColors.muted} text-xs`}>36 Lessons</span>
                       </div>
                     </div>
 
                     {/* Protection & Planning Track */}
-                    <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-2xl p-6 hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
+                    <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-2xl p-6 hover:${theme.borderColors.primary}/40 transition-all duration-300`}>
                       <div className="flex items-center mb-4">
                         <div className={`w-12 h-12 bg-gradient-to-r from-slate-600 to-slate-700 rounded-xl flex items-center justify-center mr-4 shadow-lg`}>
                           <Shield className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
                           <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Protection & Planning</h4>
-                          <p className={`${theme.textColors.accent} text-sm`}>Chapters 17-20</p>
+                          <p className={`${theme.textColors.primary} text-sm`}>Chapters 17-20</p>
                         </div>
                       </div>
                       <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>
                         Protect your wealth with insurance, healthcare planning, and risk management.
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className={`${theme.textColors.accent} text-xs font-medium`}>🚧 Coming Soon</span>
+                        <span className={`${theme.textColors.primary} text-xs font-medium`}>🚧 Coming Soon</span>
                         <span className={`${theme.textColors.muted} text-xs`}>24 Lessons</span>
                       </div>
                     </div>
 
                     {/* Advanced Planning Track */}
-                    <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-2xl p-6 hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
+                    <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-2xl p-6 hover:${theme.borderColors.primary}/40 transition-all duration-300`}>
                       <div className="flex items-center mb-4">
                         <div className={`w-12 h-12 bg-gradient-to-r from-slate-600 to-slate-700 rounded-xl flex items-center justify-center mr-4 shadow-lg`}>
                           <Building className={`w-6 h-6 ${theme.textColors.primary}`} />
                         </div>
                         <div>
                           <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Advanced Planning</h4>
-                          <p className={`${theme.textColors.accent} text-sm`}>Chapters 21-25</p>
+                          <p className={`${theme.textColors.primary} text-sm`}>Chapters 21-25</p>
                         </div>
                       </div>
                       <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>
@@ -696,7 +696,7 @@ export default function HomePage() {
                         </div>
                         <div>
                           <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Economic Literacy</h4>
-                          <p className={`${theme.textColors.accent} text-sm`}>Chapters 26-30</p>
+                          <p className={`${theme.textColors.primary} text-sm`}>Chapters 26-30</p>
                         </div>
                       </div>
                       <p className={`${theme.textColors.secondary} text-sm mb-4 leading-relaxed`}>
@@ -715,19 +715,19 @@ export default function HomePage() {
                       <h4 className={`text-xl font-bold ${theme.textColors.primary} mb-4`}>Complete Financial Mastery Path</h4>
                       <div className={`flex flex-wrap items-center justify-center gap-8 text-sm ${theme.textColors.muted}`}>
                         <div className="flex items-center gap-2">
-                          <div className={`w-3 h-3 ${theme.textColors.accent} rounded-full`}></div>
+                          <div className={`w-3 h-3 ${theme.textColors.primary} rounded-full`}></div>
                           <span>30 Comprehensive Chapters</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <div className={`w-3 h-3 ${theme.textColors.accentSecondary} rounded-full`}></div>
+                          <div className={`w-3 h-3 ${theme.textColors.secondary} rounded-full`}></div>
                           <span>180+ Interactive Lessons</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <div className={`w-3 h-3 ${theme.textColors.accentSecondary} rounded-full`}></div>
+                          <div className={`w-3 h-3 ${theme.textColors.secondary} rounded-full`}></div>
                           <span>20+ Specialized Calculators</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <div className={`w-3 h-3 ${theme.textColors.accent} rounded-full`}></div>
+                          <div className={`w-3 h-3 ${theme.textColors.primary} rounded-full`}></div>
                           <span>Real AI Coaching</span>
                         </div>
                       </div>
@@ -787,14 +787,14 @@ export default function HomePage() {
                   </div>
                   <div>
                     <h4 className={`text-xl font-bold ${theme.textColors.primary}`}>Compound Interest</h4>
-                    <p className={`${theme.textColors.accent} text-sm`}>The 8th Wonder</p>
+                    <p className={`${theme.textColors.primary} text-sm`}>The 8th Wonder</p>
                   </div>
                 </div>
                 <p className={`${theme.textColors.secondary} mb-6 leading-relaxed`}>
                   Discover how your money grows exponentially over time through the magic of compound interest.
                 </p>
-                <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border ${theme.borderColors.accent}`}>
-                  <div className={`text-xs ${theme.textColors.accent} mb-1`}>$100/month × 30 years @ 7%</div>
+                <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border ${theme.borderColors.primary}`}>
+                  <div className={`text-xs ${theme.textColors.primary} mb-1`}>$100/month × 30 years @ 7%</div>
                   <div className={`text-2xl font-bold ${theme.textColors.primary}`}>$303,219</div>
                   <div className={`text-xs ${theme.textColors.warning}`}>From just $36k invested!</div>
                 </div>
@@ -820,16 +820,16 @@ export default function HomePage() {
                   </div>
                   <div>
                     <h4 className={`text-xl font-bold ${theme.textColors.primary}`}>Budget Builder</h4>
-                    <p className={`${theme.textColors.accent} text-sm`}>50/30/20 Rule</p>
+                    <p className={`${theme.textColors.primary} text-sm`}>50/30/20 Rule</p>
                   </div>
                 </div>
                 <p className={`${theme.textColors.secondary} mb-6 leading-relaxed`}>
                   Master the proven 50/30/20 budgeting framework for needs, wants, and financial goals.
                 </p>
                 <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border ${theme.status.info.border}`}>
-                  <div className={`text-xs ${theme.textColors.accent} mb-1`}>$5,000 income breakdown</div>
+                  <div className={`text-xs ${theme.textColors.primary} mb-1`}>$5,000 income breakdown</div>
                   <div className={`text-2xl font-bold ${theme.textColors.primary}`}>Perfect Balance</div>
-                  <div className={`text-xs ${theme.textColors.accent}`}>Needs • Wants • Savings</div>
+                  <div className={`text-xs ${theme.textColors.primary}`}>Needs • Wants • Savings</div>
                 </div>
                 <Link href="/calculators/budget-builder" className="block">
                   <Button className={`w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg group-hover:-translate-y-1`}>
@@ -892,10 +892,10 @@ export default function HomePage() {
               </Link>
               <Link href="/calculators/emergency-fund" className="group">
                 <div className={`${theme.backgrounds.glass}/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center hover:border-white/20 transition-all duration-300 group-hover:-translate-y-1`}>
-                  <Umbrella className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+                  <Umbrella className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
                   <h4 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Emergency Fund</h4>
                   <p className={`text-xs ${theme.textColors.muted}`}>Safety net planning</p>
-                  <div className={`mt-2 text-xs ${theme.textColors.accent}`}>✨ Available</div>
+                  <div className={`mt-2 text-xs ${theme.textColors.primary}`}>✨ Available</div>
                 </div>
               </Link>
               <Link href="/calculators/paycheck" className="group">
@@ -984,54 +984,54 @@ export default function HomePage() {
 
               {/* Coming Soon Calculators - Investment Track */}
               <div className={`bg-gradient-to-br ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-xl p-4 text-center hover:${theme.status.info.border}/40 transition-all duration-300`}>
-                <BarChart3 className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+                <BarChart3 className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Portfolio Analyzer</h5>
-                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
+                <div className={`text-xs ${theme.textColors.primary} font-medium`}>🚧 Soon</div>
               </div>
 
               <div className={`bg-gradient-to-br ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-xl p-4 text-center hover:${theme.status.info.border}/40 transition-all duration-300`}>
-                <Timer className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+                <Timer className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Retirement Planner</h5>
-                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
+                <div className={`text-xs ${theme.textColors.primary} font-medium`}>🚧 Soon</div>
               </div>
 
               {/* Coming Soon Calculators - Advanced Track */}
-              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
-                <Lightbulb className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.primary}/40 transition-all duration-300`}>
+                <Lightbulb className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Tax Optimizer</h5>
-                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
+                <div className={`text-xs ${theme.textColors.primary} font-medium`}>🚧 Soon</div>
               </div>
 
-              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
-                <Building className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.primary}/40 transition-all duration-300`}>
+                <Building className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Real Estate ROI</h5>
-                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
+                <div className={`text-xs ${theme.textColors.primary} font-medium`}>🚧 Soon</div>
               </div>
 
-              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
-                <Briefcase className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.primary}/40 transition-all duration-300`}>
+                <Briefcase className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Business Cashflow</h5>
-                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
+                <div className={`text-xs ${theme.textColors.primary} font-medium`}>🚧 Soon</div>
               </div>
 
               {/* Protection Track */}
-              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
-                <Shield className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.primary}/40 transition-all duration-300`}>
+                <Shield className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>Insurance Needs</h5>
-                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
+                <div className={`text-xs ${theme.textColors.primary} font-medium`}>🚧 Soon</div>
               </div>
 
-              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.accent}/40 transition-all duration-300`}>
-                <Globe className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+              <div className={`bg-gradient-to-br ${theme.backgrounds.card}/50 border ${theme.borderColors.muted} rounded-xl p-4 text-center hover:${theme.borderColors.primary}/40 transition-all duration-300`}>
+                <Globe className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
                 <h5 className={`font-semibold ${theme.textColors.primary} text-sm mb-1`}>FIRE Calculator</h5>
-                <div className={`text-xs ${theme.textColors.accent} font-medium`}>🚧 Soon</div>
+                <div className={`text-xs ${theme.textColors.primary} font-medium`}>🚧 Soon</div>
               </div>
             </div>
 
             <div className="text-center mt-8">
               <p className={`${theme.textColors.secondary} text-sm`}>
                 <span className={`${theme.textColors.warning} font-semibold`}>6 Available Now</span> •
-                <span className={`${theme.textColors.accent} font-semibold`}> 14+ Coming Soon</span> •
+                <span className={`${theme.textColors.primary} font-semibold`}> 14+ Coming Soon</span> •
                 <span className={`${theme.textColors.primary} font-semibold`}>Complete Financial Toolkit</span>
               </p>
             </div>
@@ -1066,7 +1066,7 @@ export default function HomePage() {
               className={`text-lg ${theme.textColors.secondary} max-w-3xl mx-auto`}
             >
               Unlike other platforms with simulated chatbots, we use real{' '}
-              <span className={`${theme.textColors.accent} font-medium`}>OpenAI GPT-4o-mini</span>{' '}
+              <span className={`${theme.textColors.primary} font-medium`}>OpenAI GPT-4o-mini</span>{' '}
               for personalized financial coaching that adapts to your learning journey
             </motion.p>
           </div>
@@ -1085,7 +1085,7 @@ export default function HomePage() {
                 <p className={`${theme.textColors.secondary} text-sm leading-relaxed mb-4`}>
                   Our AI knows your learning progress, quiz scores, and struggling topics to provide personalized guidance exactly when you need it.
                 </p>
-                <div className={`flex items-center gap-2 text-xs ${theme.textColors.accent}`}>
+                <div className={`flex items-center gap-2 text-xs ${theme.textColors.primary}`}>
                   <Zap className="w-3 h-3" />
                   <span>Real-time adaptation</span>
                 </div>
@@ -1117,7 +1117,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.4, duration: 0.6 }}
             >
-              <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border ${theme.borderColors.accent} rounded-2xl p-6 hover:${theme.borderColors.accentHover} transition-all duration-300`}>
+              <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border ${theme.borderColors.primary} rounded-2xl p-6 hover:${theme.borderColors.primary} transition-all duration-300`}>
                 <div className="w-14 h-14 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-amber-500/25">
                   <Lightbulb className={`w-7 h-7 ${theme.textColors.primary}`} />
                 </div>
@@ -1142,7 +1142,7 @@ export default function HomePage() {
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
-                <div className={`text-2xl font-bold ${theme.textColors.accent} mb-1`}>42%</div>
+                <div className={`text-2xl font-bold ${theme.textColors.primary} mb-1`}>42%</div>
                 <div className={`text-xs ${theme.textColors.muted}`}>Average Knowledge Improvement</div>
               </div>
               <div>
@@ -1150,7 +1150,7 @@ export default function HomePage() {
                 <div className={`text-xs ${theme.textColors.muted}`}>Average Session Duration</div>
               </div>
               <div>
-                <div className={`text-2xl font-bold ${theme.textColors.accent} mb-1`}>94%</div>
+                <div className={`text-2xl font-bold ${theme.textColors.primary} mb-1`}>94%</div>
                 <div className={`text-xs ${theme.textColors.muted}`}>30-Day Retention Rate</div>
               </div>
               <div>

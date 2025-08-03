@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
-import { theme } from '@/lib/theme';
+;
 import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
 import { CheckCircle, XCircle, Sparkles } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface QuizQuestion {
   id: number;
@@ -152,7 +153,7 @@ export default function MoneyFundamentalsQuiz() {
           type="quiz"
         />
 
-        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8 animate-fade-in-up">
+        <div className={`max-w-2xl mx-auto ${theme.backgrounds.card} rounded-lg shadow-lg p-8 animate-fade-in-up`}>
           <div className="text-center">
             <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-4`}>Quiz Results</h2>
             <div className={`text-6xl font-bold mb-4 ${passed ? theme.status.success.text : theme.status.error.text}`}>
@@ -219,7 +220,7 @@ export default function MoneyFundamentalsQuiz() {
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
-            <span className={`text-sm font-medium ${theme.textColors.accent}`}>
+            <span className={`text-sm font-medium ${theme.textColors.primary}`}>
               Question {currentQuestion + 1} of {quizQuestions.length}
             </span>
             <span className={`text-sm ${theme.textColors.muted}`}>
@@ -240,8 +241,8 @@ export default function MoneyFundamentalsQuiz() {
                   ? index === question.correctAnswer
                     ? `border-2 ${theme.status.success.border} ${theme.status.success.bg} ${theme.status.success.text}`
                     : `border-2 ${theme.status.error.border} ${theme.status.error.bg} ${theme.status.error.text}`
-                  : `border-2 ${theme.borderColors.accent} ${theme.backgrounds.card} ${theme.textColors.primary}`
-                : `border-2 ${theme.borderColors.primary} hover:${theme.borderColors.accent} ${theme.textColors.secondary} hover:${theme.textColors.primary}`
+                  : `border-2 ${theme.borderColors.primary} ${theme.backgrounds.card} ${theme.textColors.primary}`
+                : `border-2 ${theme.borderColors.primary} hover:${theme.borderColors.primary} ${theme.textColors.secondary} hover:${theme.textColors.primary}`
                 }`}
             >
               <div className="flex items-center">

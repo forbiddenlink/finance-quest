@@ -165,17 +165,17 @@ export default function CalculatorsPage() {
   return (
     <div className={theme.backgrounds.primary}>
       {/* Header */}
-      <header className={`${theme.backgrounds.header} ${theme.borderColors.accent} border-b backdrop-blur-xl`}>
+      <header className={`${theme.backgrounds.header} ${theme.borderColors.primary} border-b backdrop-blur-xl`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Link href="/" className={`${theme.textColors.accent} hover:${theme.textColors.accentSecondary} font-medium transition-colors`}>
+              <Link href="/" className={`${theme.textColors.primary} hover:${theme.textColors.secondary} font-medium transition-colors`}>
                 ← Back to Home
               </Link>
               <h1 className={`text-2xl font-bold ${theme.textColors.primary}`}>Financial Calculators</h1>
             </div>
             <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} px-3 py-1 rounded-full backdrop-blur-sm`}>
-              <span className={`text-sm font-medium ${theme.textColors.accentSecondary} flex items-center gap-1`}>
+              <span className={`text-sm font-medium ${theme.textColors.secondary} flex items-center gap-1`}>
                 <Calculator className="w-4 h-4" />
                 Interactive Tools
               </span>
@@ -192,7 +192,7 @@ export default function CalculatorsPage() {
           </h2>
           <p className={`text-xl ${theme.textColors.secondary} max-w-3xl mx-auto leading-relaxed`}>
             Master your money with hands-on calculators that show you exactly how financial decisions impact your future.
-            <strong className={theme.textColors.accent}> No guessing, just clear numbers and actionable insights.</strong>
+            <strong className={theme.textColors.primary}> No guessing, just clear numbers and actionable insights.</strong>
           </p>
         </div>
 
@@ -201,11 +201,11 @@ export default function CalculatorsPage() {
           {calculators.map((calc) => (
             <div
               key={calc.id}
-              className={`group ${theme.backgrounds.card} backdrop-blur-xl border ${theme.borderColors.primary} rounded-xl p-6 hover:shadow-xl hover:${theme.borderColors.accent} transition-all transform hover:scale-105`}
+              className={`group ${theme.backgrounds.card} backdrop-blur-xl border ${theme.borderColors.primary} rounded-xl p-6 hover:shadow-xl hover:${theme.borderColors.primary} transition-all transform hover:scale-105`}
             >
               <div className="flex items-center mb-4">
                 <div className={`${theme.status.warning.bg} p-3 rounded-lg mr-4 group-hover:${theme.status.warning.bg} transition-all`}>
-                  <calc.icon className={`w-8 h-8 ${theme.textColors.accent}`} />
+                  <calc.icon className={`w-8 h-8 ${theme.textColors.primary}`} />
                 </div>
                 <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>
                   {calc.title}
@@ -218,7 +218,7 @@ export default function CalculatorsPage() {
 
               <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm rounded-lg p-3 mb-6 border ${theme.borderColors.muted}`}>
                 <p className={`text-sm font-medium ${theme.textColors.secondary} mb-1`}>Example Result:</p>
-                <p className={`text-sm ${theme.textColors.accent} font-semibold`}>
+                <p className={`text-sm ${theme.textColors.primary} font-semibold`}>
                   {calc.example}
                 </p>
               </div>
@@ -236,7 +236,7 @@ export default function CalculatorsPage() {
         <div className={`${theme.backgrounds.card} backdrop-blur-xl border ${theme.borderColors.primary} rounded-2xl p-8`}>
           <div className="text-center mb-8">
             <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-4 flex items-center justify-center gap-2`}>
-              <Zap className={`w-6 h-6 ${theme.textColors.accent}`} />
+              <Zap className={`w-6 h-6 ${theme.textColors.primary}`} />
               More Tools Coming Soon
             </h3>
             <p className={`${theme.textColors.secondary} max-w-2xl mx-auto`}>
@@ -245,23 +245,23 @@ export default function CalculatorsPage() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.muted} rounded-lg p-4 text-center hover:${theme.borderColors.accent} transition-all`}>
-              <Home className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+            <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.muted} rounded-lg p-4 text-center hover:${theme.borderColors.primary} transition-all`}>
+              <Home className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
               <h4 className={`font-semibold ${theme.textColors.primary} text-sm`}>Mortgage Calculator</h4>
               <p className={`text-xs ${theme.textColors.secondary} mt-1`}>Monthly payments & amortization</p>
             </div>
-            <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.muted} rounded-lg p-4 text-center hover:${theme.borderColors.accent} transition-all`}>
-              <Umbrella className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+            <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.muted} rounded-lg p-4 text-center hover:${theme.borderColors.primary} transition-all`}>
+              <Umbrella className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
               <h4 className={`font-semibold ${theme.textColors.primary} text-sm`}>Retirement Planner</h4>
               <p className={`text-xs ${theme.textColors.secondary} mt-1`}>How much you need to retire</p>
             </div>
-            <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.muted} rounded-lg p-4 text-center hover:${theme.borderColors.accent} transition-all`}>
-              <Car className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+            <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.muted} rounded-lg p-4 text-center hover:${theme.borderColors.primary} transition-all`}>
+              <Car className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
               <h4 className={`font-semibold ${theme.textColors.primary} text-sm`}>Auto Loan Calculator</h4>
               <p className={`text-xs ${theme.textColors.secondary} mt-1`}>Car payments & total costs</p>
             </div>
-            <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.muted} rounded-lg p-4 text-center hover:${theme.borderColors.accent} transition-all`}>
-              <Target className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
+            <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.muted} rounded-lg p-4 text-center hover:${theme.borderColors.primary} transition-all`}>
+              <Target className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
               <h4 className={`font-semibold ${theme.textColors.primary} text-sm`}>Savings Goal Tracker</h4>
               <p className={`text-xs ${theme.textColors.secondary} mt-1`}>Timeline to reach your goals</p>
             </div>
@@ -271,13 +271,13 @@ export default function CalculatorsPage() {
         {/* Educational Value */}
         <div className={`mt-12 ${theme.backgrounds.card} backdrop-blur-xl border ${theme.borderColors.primary} rounded-2xl p-8`}>
           <h3 className={`text-2xl font-bold ${theme.textColors.primary} text-center mb-6 flex items-center justify-center gap-2`}>
-            <Brain className={`w-6 h-6 ${theme.textColors.accent}`} />
+            <Brain className={`w-6 h-6 ${theme.textColors.primary}`} />
             Why Interactive Calculators Work
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className={`${theme.status.info.bg} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4`}>
-                <Target className={`w-8 h-8 ${theme.textColors.accent}`} />
+                <Target className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Visual Learning</h4>
               <p className={`${theme.textColors.secondary} text-sm`}>
@@ -286,7 +286,7 @@ export default function CalculatorsPage() {
             </div>
             <div className="text-center">
               <div className={`${theme.status.warning.bg} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4`}>
-                <Zap className={`w-8 h-8 ${theme.textColors.accent}`} />
+                <Zap className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Immediate Feedback</h4>
               <p className={`${theme.textColors.secondary} text-sm`}>
@@ -295,7 +295,7 @@ export default function CalculatorsPage() {
             </div>
             <div className="text-center">
               <div className={`${theme.backgrounds.cardHover} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4`}>
-                <Gamepad2 className={`w-8 h-8 ${theme.textColors.accent}`} />
+                <Gamepad2 className={`w-8 h-8 ${theme.textColors.primary}`} />
               </div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Hands-On Practice</h4>
               <p className={`${theme.textColors.secondary} text-sm`}>

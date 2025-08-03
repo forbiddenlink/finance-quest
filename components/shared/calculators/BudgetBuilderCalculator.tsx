@@ -163,7 +163,7 @@ export default function BudgetBuilderCalculator() {
                         type="number"
                         value={monthlyIncome}
                         onChange={(e) => setMonthlyIncome(Number(e.target.value))}
-                        className={`w-full pl-10 pr-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 ${theme.textColors.primary} ${theme.typography.heading4} transition-all`}
+                        className={`w-full pl-10 pr-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 ${theme.textColors.primary} ${theme.typography.heading4} transition-all`}
                         min="0"
                         step="100"
                     />
@@ -177,7 +177,7 @@ export default function BudgetBuilderCalculator() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
                 <div className={`${budgetHealth.bg.replace('bg-', theme.status.info.bg + ' ')} border ${theme.borderColors.primary} rounded-lg p-4 text-center`}>
                     <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Budget Status</p>
-                    <p className={`text-lg font-bold ${budgetHealth.color.replace('text-', theme.textColors.accent + ' ')}`}>{budgetHealth.status}</p>
+                    <p className={`text-lg font-bold ${budgetHealth.color.replace('text-', theme.textColors.primary + ' ')}`}>{budgetHealth.status}</p>
                 </div>
                 <div className={`${theme.status.error.bg} border ${theme.status.error.border} rounded-lg p-4 text-center`}>
                     <p className={`text-sm font-medium ${theme.status.error.text}`}>Needs ({needsPercentage}%)</p>
@@ -203,7 +203,7 @@ export default function BudgetBuilderCalculator() {
 
                     {/* Needs Section */}
                     <div className={`${theme.status.error.bg} rounded-lg p-4`}>
-                        <h4 className="font-semibold ${theme.status.error.text} mb-3 flex items-center">
+                        <h4 className={`font-semibold ${theme.status.error.text} mb-3 flex items-center`}>
                             <Home className="mr-2 w-5 h-5" />
                             Needs (Essential Expenses)
                         </h4>
@@ -211,34 +211,34 @@ export default function BudgetBuilderCalculator() {
                             {categories.filter(cat => cat.type === 'need').map(category => (
                                 <div key={category.id} className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-3`}>
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="font-medium ${theme.textColors.primary} flex items-center">
+                                        <span className={`font-medium ${theme.textColors.primary} flex items-center`}>
                                             <category.icon className="mr-2 w-4 h-4" style={{ color: category.color }} />
                                             {category.name}
                                         </span>
                                     </div>
                                     <div className="grid grid-cols-2 gap-2">
                                         <div>
-                                            <label className="text-xs ${theme.textColors.secondary}">Budgeted</label>
+                                            <label className={`text-xs ${theme.textColors.secondary}`}>Budgeted</label>
                                             <div className="relative">
-                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs">$</span>
+                                                <span className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>$</span>
                                                 <input
                                                     type="number"
                                                     value={category.budgeted}
                                                     onChange={(e) => updateCategory(category.id, 'budgeted', Number(e.target.value))}
-                                                    className="w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm"
+                                                    className={`w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
                                                     min="0"
                                                 />
                                             </div>
                                         </div>
                                         <div>
-                                            <label className="text-xs ${theme.textColors.secondary}">Actual</label>
+                                            <label className={`text-xs ${theme.textColors.secondary}`}>Actual</label>
                                             <div className="relative">
-                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs">$</span>
+                                                <span className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>$</span>
                                                 <input
                                                     type="number"
                                                     value={category.actual}
                                                     onChange={(e) => updateCategory(category.id, 'actual', Number(e.target.value))}
-                                                    className="w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm"
+                                                    className={`w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
                                                     min="0"
                                                 />
                                             </div>
@@ -259,34 +259,34 @@ export default function BudgetBuilderCalculator() {
                             {categories.filter(cat => cat.type === 'want').map(category => (
                                 <div key={category.id} className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-3`}>
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="font-medium ${theme.textColors.primary} flex items-center">
+                                        <span className={`font-medium ${theme.textColors.primary} flex items-center`}>
                                             <category.icon className="mr-2 w-4 h-4" style={{ color: category.color }} />
                                             {category.name}
                                         </span>
                                     </div>
                                     <div className="grid grid-cols-2 gap-2">
                                         <div>
-                                            <label className="text-xs ${theme.textColors.secondary}">Budgeted</label>
+                                            <label className={`text-xs ${theme.textColors.secondary}`}>Budgeted</label>
                                             <div className="relative">
-                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs">$</span>
+                                                <span className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>$</span>
                                                 <input
                                                     type="number"
                                                     value={category.budgeted}
                                                     onChange={(e) => updateCategory(category.id, 'budgeted', Number(e.target.value))}
-                                                    className="w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm"
+                                                    className={`w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
                                                     min="0"
                                                 />
                                             </div>
                                         </div>
                                         <div>
-                                            <label className="text-xs ${theme.textColors.secondary}">Actual</label>
+                                            <label className={`text-xs ${theme.textColors.secondary}`}>Actual</label>
                                             <div className="relative">
-                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs">$</span>
+                                                <span className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>$</span>
                                                 <input
                                                     type="number"
                                                     value={category.actual}
                                                     onChange={(e) => updateCategory(category.id, 'actual', Number(e.target.value))}
-                                                    className="w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm"
+                                                    className={`w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
                                                     min="0"
                                                 />
                                             </div>
@@ -299,7 +299,7 @@ export default function BudgetBuilderCalculator() {
 
                     {/* Savings Section */}
                     <div className={`${theme.status.success.bg} rounded-lg p-4`}>
-                        <h4 className="font-semibold ${theme.status.success.text} mb-3 flex items-center">
+                        <h4 className={`font-semibold ${theme.status.success.text} mb-3 flex items-center`}>
                             <TrendingUp className="mr-2 w-5 h-5" />
                             Savings & Investments
                         </h4>
@@ -307,34 +307,34 @@ export default function BudgetBuilderCalculator() {
                             {categories.filter(cat => cat.type === 'savings').map(category => (
                                 <div key={category.id} className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-3`}>
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="font-medium ${theme.textColors.primary} flex items-center">
+                                        <span className={`font-medium ${theme.textColors.primary} flex items-center`}>
                                             <category.icon className="mr-2 w-4 h-4" style={{ color: category.color }} />
                                             {category.name}
                                         </span>
                                     </div>
                                     <div className="grid grid-cols-2 gap-2">
                                         <div>
-                                            <label className="text-xs ${theme.textColors.secondary}">Budgeted</label>
+                                            <label className={`text-xs ${theme.textColors.secondary}`}>Budgeted</label>
                                             <div className="relative">
-                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs">$</span>
+                                                <span className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>$</span>
                                                 <input
                                                     type="number"
                                                     value={category.budgeted}
                                                     onChange={(e) => updateCategory(category.id, 'budgeted', Number(e.target.value))}
-                                                    className="w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm"
+                                                    className={`w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
                                                     min="0"
                                                 />
                                             </div>
                                         </div>
                                         <div>
-                                            <label className="text-xs ${theme.textColors.secondary}">Actual</label>
+                                            <label className={`text-xs ${theme.textColors.secondary}`}>Actual</label>
                                             <div className="relative">
-                                                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs">$</span>
+                                                <span className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>$</span>
                                                 <input
                                                     type="number"
                                                     value={category.actual}
                                                     onChange={(e) => updateCategory(category.id, 'actual', Number(e.target.value))}
-                                                    className="w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm"
+                                                    className={`w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
                                                     min="0"
                                                 />
                                             </div>
@@ -352,7 +352,7 @@ export default function BudgetBuilderCalculator() {
 
                     {/* Budget Breakdown Pie Chart */}
                     <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4`}>
-                        <h4 className="font-semibold ${theme.textColors.primary} mb-4">Spending Breakdown</h4>
+                        <h4 className={`font-semibold ${theme.textColors.primary} mb-4`}>Spending Breakdown</h4>
                         <div className="h-64">
                             <ResponsiveContainer width="100%" height="100%">
                                 <PieChart>
@@ -378,7 +378,7 @@ export default function BudgetBuilderCalculator() {
 
                     {/* Budget vs Actual Comparison */}
                     <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4`}>
-                        <h4 className="font-semibold ${theme.textColors.primary} mb-4">Budget vs Actual</h4>
+                        <h4 className={`font-semibold ${theme.textColors.primary} mb-4`}>Budget vs Actual</h4>
                         <div className="h-64">
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart data={comparisonData}>
@@ -422,11 +422,11 @@ export default function BudgetBuilderCalculator() {
 
                     {/* Tips and Insights */}
                     <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4`}>
-                        <h4 className="font-semibold ${theme.status.info.text} mb-3 flex items-center gap-2">
+                        <h4 className={`font-semibold ${theme.status.info.text} mb-3 flex items-center gap-2`}>
                             <Lightbulb className="w-4 h-4" />
                             Budgeting Tips
                         </h4>
-                        <ul className="text-sm ${theme.textColors.secondary} space-y-2">
+                        <ul className={`text-sm ${theme.textColors.secondary} space-y-2`}>
                             <li>• <strong>Track everything:</strong> Use apps or spreadsheets to monitor actual spending</li>
                             <li>• <strong>Pay yourself first:</strong> Set aside savings before spending on wants</li>
                             <li>• <strong>Review monthly:</strong> Adjust categories based on actual spending patterns</li>

@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
+;
 import { theme } from '@/lib/theme';
 import {
   TrendingUp,
@@ -39,7 +40,7 @@ export default function EnhancedHeroSection() {
   ];
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-20">
+    <div className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-slate-50 to-violet-50 py-20">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className={`absolute -top-40 -right-32 w-80 h-80 ${theme.status.info.bg.replace('/20', '/40')} rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse`}></div>
@@ -59,7 +60,7 @@ export default function EnhancedHeroSection() {
             <div className="space-y-4">
               <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
                 Master Your{' '}
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <span className={`bg-gradient-to-r from-slate-900 to-amber-600 bg-clip-text text-transparent`}>
                   Financial Future
                 </span>
               </h1>
@@ -74,9 +75,9 @@ export default function EnhancedHeroSection() {
               {features.map((feature, index) => {
                 const Icon = feature.icon;
                 return (
-                  <Card key={index} className="border-2 hover:border-blue-200 transition-colors">
+                  <Card key={index} className={`border-2 hover:${theme.borderColors.primary} transition-colors`}>
                     <CardContent className="p-4 text-center">
-                      <Icon className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                      <Icon className={`w-8 h-8 ${theme.textColors.primary} mx-auto mb-2`} />
                       <h3 className="font-semibold text-sm">{feature.title}</h3>
                       <p className={`text-xs ${theme.textColors.muted} mt-1`}>{feature.description}</p>
                     </CardContent>
@@ -88,7 +89,7 @@ export default function EnhancedHeroSection() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/chapter1">
-                <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                <Button size="lg" className={`w-full sm:w-auto bg-gradient-to-r from-slate-900 to-amber-600 hover:from-blue-700 hover:to-violet-700`}>
                   <Play className="w-5 h-5 mr-2" />
                   Start Your Journey
                   <ChevronRight className="w-5 h-5 ml-2" />
@@ -160,8 +161,8 @@ export default function EnhancedHeroSection() {
                     ))}
                   </div>
 
-                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 text-center">
-                    <p className="text-sm font-medium text-blue-900">
+                  <div className="bg-gradient-to-r from-slate-50 to-violet-50 rounded-lg p-4 text-center">
+                    <p className={`text-sm font-medium ${theme.textColors.primary}`}>
                       🎯 80% mastery required to unlock next chapter
                     </p>
                   </div>

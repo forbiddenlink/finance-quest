@@ -136,7 +136,7 @@ export default function BondCalculator() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                 Face Value
               </label>
               <Input
@@ -145,11 +145,11 @@ export default function BondCalculator() {
                 onChange={(e) => setFaceValue(e.target.value)}
                 placeholder="1000"
               />
-              <p className="text-xs ${theme.textColors.muted} mt-1">Par value at maturity</p>
+              <p className={`text-xs ${theme.textColors.muted} mt-1`}>Par value at maturity</p>
             </div>
             
             <div>
-              <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                 Coupon Rate (%)
               </label>
               <Input
@@ -159,11 +159,11 @@ export default function BondCalculator() {
                 onChange={(e) => setCouponRate(e.target.value)}
                 placeholder="5.0"
               />
-              <p className="text-xs ${theme.textColors.muted} mt-1">Annual interest rate</p>
+              <p className={`text-xs ${theme.textColors.muted} mt-1`}>Annual interest rate</p>
             </div>
             
             <div>
-              <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                 Years to Maturity
               </label>
               <Input
@@ -172,11 +172,11 @@ export default function BondCalculator() {
                 onChange={(e) => setYearsToMaturity(e.target.value)}
                 placeholder="10"
               />
-              <p className="text-xs ${theme.textColors.muted} mt-1">Time until bond matures</p>
+              <p className={`text-xs ${theme.textColors.muted} mt-1`}>Time until bond matures</p>
             </div>
             
             <div>
-              <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                 Current Market Price
               </label>
               <Input
@@ -185,24 +185,24 @@ export default function BondCalculator() {
                 onChange={(e) => setCurrentPrice(e.target.value)}
                 placeholder="950"
               />
-              <p className="text-xs ${theme.textColors.muted} mt-1">What you pay to buy the bond</p>
+              <p className={`text-xs ${theme.textColors.muted} mt-1`}>What you pay to buy the bond</p>
             </div>
             
             <div>
-              <label className="block text-sm font-medium ${theme.textColors.primary} mb-1">
+              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                 Payment Frequency
               </label>
               <select 
                 value={paymentFrequency}
                 onChange={(e) => setPaymentFrequency(e.target.value)}
-                className="w-full p-2 border ${theme.borderColors.primary} rounded-md"
+                className={`w-full p-2 border ${theme.borderColors.primary} rounded-md`}
               >
                 <option value="1">Annual</option>
                 <option value="2">Semi-Annual</option>
                 <option value="4">Quarterly</option>
                 <option value="12">Monthly</option>
               </select>
-              <p className="text-xs ${theme.textColors.muted} mt-1">How often coupons are paid</p>
+              <p className={`text-xs ${theme.textColors.muted} mt-1`}>How often coupons are paid</p>
             </div>
             
             <Button onClick={calculateBondMetrics} className="w-full">
@@ -224,22 +224,22 @@ export default function BondCalculator() {
             {results ? (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="p-3 ${theme.status.info.bg} rounded-lg">
+                  <div className={`p-3 ${theme.status.info.bg} rounded-lg`}>
                     <div className="flex items-center space-x-2 mb-1">
                       <Percent className={`w-4 h-4 ${theme.status.info.text}`} />
-                      <span className="text-sm font-medium ${theme.textColors.secondary}">Current Yield</span>
+                      <span className={`text-sm font-medium ${theme.textColors.secondary}`}>Current Yield</span>
                     </div>
-                    <p className="text-lg font-bold ${theme.status.info.text}">
+                    <p className={`text-lg font-bold ${theme.status.info.text}`}>
                       {formatPercentage(results.currentYield)}
                     </p>
                   </div>
                   
-                  <div className="p-3 ${theme.status.success.bg} rounded-lg">
+                  <div className={`p-3 ${theme.status.success.bg} rounded-lg`}>
                     <div className="flex items-center space-x-2 mb-1">
                       <TrendingUp className={`w-4 h-4 ${theme.status.success.text}`} />
-                      <span className="text-sm font-medium ${theme.textColors.primary}">Yield to Maturity</span>
+                      <span className={`text-sm font-medium ${theme.textColors.primary}`}>Yield to Maturity</span>
                     </div>
-                    <p className="text-lg font-bold ${theme.status.success.text}">
+                    <p className={`text-lg font-bold ${theme.status.success.text}`}>
                       {formatPercentage(results.yieldToMaturity)}
                     </p>
                   </div>
@@ -249,12 +249,12 @@ export default function BondCalculator() {
                       <DollarSign className={`w-4 h-4 ${theme.status.info.text}`} />
                       <span className={`text-sm font-medium ${theme.textColors.primary}`}>Annual Income</span>
                     </div>
-                    <p className={`text-lg font-bold ${theme.textColors.accent}`}>
+                    <p className={`text-lg font-bold ${theme.textColors.primary}`}>
                       {formatCurrency(results.annualIncome)}
                     </p>
                   </div>
                   
-                  <div className="p-3 bg-orange-50 rounded-lg">
+                  <div className={`p-3 ${theme.status.warning.bg} rounded-lg`}>
                     <div className="flex items-center space-x-2 mb-1">
                       <Calendar className={`w-4 h-4 ${theme.status.warning.text}`} />
                       <span className={`text-sm font-medium ${theme.status.warning.text}`}>Total Return</span>
@@ -268,8 +268,8 @@ export default function BondCalculator() {
                 <Separator />
                 
                 <div className="space-y-2">
-                  <h4 className="font-medium ${theme.textColors.primary}">Key Insights</h4>
-                  <div className="space-y-2 text-sm ${theme.textColors.secondary}">
+                  <h4 className={`font-medium ${theme.textColors.primary}`}>Key Insights</h4>
+                  <div className={`space-y-2 text-sm ${theme.textColors.secondary}`}>
                     <p>
                       • <span className="font-medium">Duration Risk:</span> ~{results.interestRateSensitivity.toFixed(1)} years 
                       (1% rate increase = ~{results.interestRateSensitivity.toFixed(1)}% price decrease)
@@ -291,7 +291,7 @@ export default function BondCalculator() {
                 </div>
               </div>
             ) : (
-              <div className="text-center py-8 ${theme.textColors.muted}">
+              <div className={`text-center py-8 ${theme.textColors.muted}`}>
                 <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
                 <p>Enter bond details and click calculate to see results</p>
               </div>
@@ -344,9 +344,9 @@ export default function BondCalculator() {
               </ResponsiveContainer>
             </div>
             
-            <div className="mt-4 p-4 ${theme.status.warning.bg} rounded-lg border ${theme.status.warning.border}">
-              <h4 className="font-medium ${theme.status.warning.text} mb-2">Understanding the Chart</h4>
-              <p className="${theme.textColors.secondary} text-sm">
+            <div className={`mt-4 p-4 ${theme.status.warning.bg} rounded-lg border ${theme.status.warning.border}`}>
+              <h4 className={`font-medium ${theme.status.warning.text} mb-2`}>Understanding the Chart</h4>
+              <p className={`${theme.textColors.secondary} text-sm`}>
                 This chart shows how your bond&apos;s price would change if market interest rates move up or down. 
                 Notice the inverse relationship: when rates rise (right side), bond prices fall. When rates fall (left side), 
                 bond prices rise. Longer-term bonds are more sensitive to rate changes.
@@ -363,23 +363,23 @@ export default function BondCalculator() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid md:grid-cols-3 gap-4">
-            <div className="p-4 ${theme.status.info.bg} rounded-lg border ${theme.status.info.border}">
-              <h4 className="font-medium ${theme.textColors.secondary} mb-2">For Income Investors</h4>
-              <p className="${theme.textColors.secondary} text-sm">
+            <div className={`p-4 ${theme.status.info.bg} rounded-lg border ${theme.status.info.border}`}>
+              <h4 className={`font-medium ${theme.textColors.secondary} mb-2`}>For Income Investors</h4>
+              <p className={`${theme.textColors.secondary} text-sm`}>
                 Bonds provide predictable income streams. Consider laddering bonds with different maturity dates 
                 to manage interest rate risk and ensure steady cash flow.
               </p>
             </div>
             
-            <div className="p-4 ${theme.status.success.bg} rounded-lg border ${theme.status.success.border}">
-              <h4 className="font-medium ${theme.textColors.primary} mb-2">For Risk Management</h4>
-              <p className="${theme.textColors.secondary} text-sm">
+            <div className={`p-4 ${theme.status.success.bg} rounded-lg border ${theme.status.success.border}`}>
+              <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>For Risk Management</h4>
+              <p className={`${theme.textColors.secondary} text-sm`}>
                 Bonds typically move opposite to stocks, providing portfolio balance. Government bonds are safest, 
                 while corporate bonds offer higher yields with more risk.
               </p>
             </div>
             
-            <div className={`p-4 ${theme.status.info.bg} rounded-lg border ${theme.borderColors.accent}`}>
+            <div className={`p-4 ${theme.status.info.bg} rounded-lg border ${theme.borderColors.primary}`}>
               <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Timing Considerations</h4>
               <p className={`${theme.textColors.secondary} text-sm`}>
                 In rising rate environments, consider shorter-term bonds or bond funds. In falling rate environments, 
@@ -388,9 +388,9 @@ export default function BondCalculator() {
             </div>
           </div>
           
-          <div className="p-4 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg">
-            <h4 className="font-medium ${theme.textColors.primary} mb-2">Pro Tip: Bond Laddering Strategy</h4>
-            <p className="${theme.textColors.primary} text-sm">
+          <div className={`p-4 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
+            <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Pro Tip: Bond Laddering Strategy</h4>
+            <p className={`${theme.textColors.primary} text-sm`}>
               Instead of buying one large bond, consider spreading your investment across bonds with different maturity dates. 
               For example, buy bonds maturing in 1, 3, 5, 7, and 10 years. As each bond matures, reinvest at current rates. 
               This strategy provides regular access to your principal and reduces interest rate risk.

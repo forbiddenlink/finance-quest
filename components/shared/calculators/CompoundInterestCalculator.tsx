@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { Lightbulb, Sparkles } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
+;
 import { theme } from '@/lib/theme';
 interface CompoundData {
   year: number;
@@ -103,13 +104,13 @@ export default function CompoundInterestCalculator() {
       return (
         <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg p-4`}>
           <p className={`font-semibold ${theme.textColors.primary}`}>{`Year ${label}`}</p>
-          <p className="text-blue-400">
+          <p className={`${theme.textColors.primary}`}>
             {`Total Contributions: ${formatCurrency(payload[0].payload.principal)}`}
           </p>
-          <p className="text-green-400">
+          <p className={`${theme.status.success.text}`}>
             {`Interest Earned: ${formatCurrency(payload[0].payload.interest)}`}
           </p>
-          <p className={`${theme.textColors.accent} font-semibold`}>
+          <p className={`${theme.textColors.primary} font-semibold`}>
             {`Total Value: ${formatCurrency(payload[0].payload.total)}`}
           </p>
         </div>
@@ -138,7 +139,7 @@ export default function CompoundInterestCalculator() {
                 type="number"
                 value={principal}
                 onChange={(e) => setPrincipal(e.target.value)}
-                className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500 ${theme.textColors.primary} text-lg transition-all`}
+                className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 ${theme.textColors.primary} text-lg transition-all`}
                 placeholder="10000"
               />
             </div>
@@ -154,7 +155,7 @@ export default function CompoundInterestCalculator() {
                 type="number"
                 value={monthlyContribution}
                 onChange={(e) => setMonthlyContribution(e.target.value)}
-                className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500 ${theme.textColors.primary} text-lg transition-all`}
+                className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 ${theme.textColors.primary} text-lg transition-all`}
                 placeholder="500"
               />
             </div>
@@ -170,7 +171,7 @@ export default function CompoundInterestCalculator() {
                 step="0.1"
                 value={rate}
                 onChange={(e) => setRate(e.target.value)}
-                className={`w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500 ${theme.textColors.primary} text-lg transition-all`}
+                className={`w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 ${theme.textColors.primary} text-lg transition-all`}
                 placeholder="7"
               />
               <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.secondary}`}>%</span>
@@ -187,7 +188,7 @@ export default function CompoundInterestCalculator() {
                 type="number"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
-                className={`w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-amber-500 focus:border-amber-500 ${theme.textColors.primary} text-lg transition-all`}
+                className={`w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 ${theme.textColors.primary} text-lg transition-all`}
                 placeholder="30"
               />
               <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.secondary}`}>years</span>
@@ -195,20 +196,20 @@ export default function CompoundInterestCalculator() {
           </div>
 
           {/* Key Statistics */}
-          <div className={`${theme.backgrounds.glass} border ${theme.borderColors.accent} rounded-lg p-6 space-y-4`}>
+          <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6 space-y-4`}>
             <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Final Results</h3>
             <div className="grid grid-cols-1 gap-3">
               <div className="flex justify-between">
                 <span className={theme.textColors.secondary}>Total Contributed:</span>
-                <span className="font-semibold text-blue-400">{formatCurrency(totalContributed)}</span>
+                <span className={`font-semibold ${theme.textColors.primary}`}>{formatCurrency(totalContributed)}</span>
               </div>
               <div className="flex justify-between">
                 <span className={theme.textColors.secondary}>Interest Earned:</span>
-                <span className="font-semibold text-green-400">{formatCurrency(totalInterest)}</span>
+                <span className={`font-semibold ${theme.status.success.text}`}>{formatCurrency(totalInterest)}</span>
               </div>
               <div className={`flex justify-between pt-2 border-t ${theme.borderColors.primary}`}>
                 <span className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Final Amount:</span>
-                <span className={`text-xl font-bold ${theme.textColors.accent}`}>{formatCurrency(finalAmount)}</span>
+                <span className={`text-xl font-bold ${theme.textColors.primary}`}>{formatCurrency(finalAmount)}</span>
               </div>
             </div>
 

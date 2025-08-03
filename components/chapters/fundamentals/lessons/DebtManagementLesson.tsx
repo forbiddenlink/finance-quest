@@ -190,8 +190,8 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
 
         {/* Interactive Exercises for Better Retention */}
         {currentLesson === 0 && (
-          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-lg`}>
-            <h3 className={`text-lg font-semibold ${theme.textColors.accent} mb-3 flex items-center gap-2`}>
+          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
               <Calculator className="w-5 h-5" />
               Debt Assessment Worksheet
             </h3>
@@ -225,7 +225,7 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
                   <div className={`mt-3 text-xs ${theme.status.error.text}`}>Eliminate ASAP</div>
                 </div>
               </div>
-              <p className={`mt-4 font-medium ${theme.textColors.accent}`}>
+              <p className={`mt-4 font-medium ${theme.textColors.primary}`}>
                 💡 <strong>Priority:</strong> Focus elimination efforts on bad debt with highest interest rates!
               </p>
             </div>
@@ -445,7 +445,7 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
             <button
               onClick={prevLesson}
               disabled={currentLesson === 0}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               <ChevronLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Previous
@@ -453,7 +453,7 @@ export default function DebtManagementLesson({ onComplete }: DebtManagementLesso
             <button
               onClick={nextLesson}
               disabled={currentLesson === lessons.length - 1}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               Next
               <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

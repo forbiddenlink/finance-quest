@@ -143,10 +143,10 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
-              <div className={`${theme.textColors.accent}/20 p-2 rounded-lg animate-float`}>
-                <PiggyBank className={`w-6 h-6 ${theme.textColors.accent}`} />
+              <div className={`${theme.textColors.primary}/20 p-2 rounded-lg animate-float`}>
+                <PiggyBank className={`w-6 h-6 ${theme.textColors.primary}`} />
               </div>
-              <span className={`text-sm font-medium ${theme.textColors.accent} animate-fade-in-up`}>
+              <span className={`text-sm font-medium ${theme.textColors.primary} animate-fade-in-up`}>
                 Lesson {currentLesson + 1} of {lessons.length}
               </span>
             </div>
@@ -189,8 +189,8 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
 
         {/* Interactive Exercises for Better Retention */}
         {currentLesson === 0 && (
-          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-lg`}>
-            <h3 className={`text-lg font-semibold ${theme.textColors.accent} mb-3 flex items-center gap-2`}>
+          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
               <Calculator className="w-5 h-5" />
               Retirement Account Optimization Worksheet
             </h3>
@@ -199,7 +199,7 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                    <Award className={`w-4 h-4 ${theme.textColors.accent}`} />
+                    <Award className={`w-4 h-4 ${theme.textColors.primary}`} />
                     Employer Sponsored (2024 Limits)
                   </h4>
                   <ul className={`space-y-2 ${theme.textColors.secondary} text-sm`}>
@@ -222,7 +222,7 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
                   </ul>
                 </div>
               </div>
-              <p className={`mt-4 font-medium ${theme.textColors.accent}`}>
+              <p className={`mt-4 font-medium ${theme.textColors.primary}`}>
                 💡 <strong>Max Strategy:</strong> Aim to contribute at least 15-20% of income to retirement!
               </p>
             </div>
@@ -362,7 +362,7 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
                     <li>• Convert to Roth: Tax-free growth</li>
                     <li>• Total possible: $69,000/year</li>
                   </ul>
-                  <div className={`mt-2 text-xs ${theme.textColors.accent}`}>Requires employer plan support</div>
+                  <div className={`mt-2 text-xs ${theme.textColors.primary}`}>Requires employer plan support</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
@@ -398,7 +398,7 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
                   </div>
                 </div>
               </div>
-              <p className={`mt-4 font-medium ${theme.textColors.accent}`}>
+              <p className={`mt-4 font-medium ${theme.textColors.primary}`}>
                 💡 <strong>Advanced strategies:</strong> Can add $500K-1M+ to retirement wealth over 30 years!
               </p>
             </div>
@@ -411,7 +411,7 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
             <button
               onClick={prevLesson}
               disabled={currentLesson === 0}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               <ChevronLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Previous
@@ -419,7 +419,7 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
             <button
               onClick={nextLesson}
               disabled={currentLesson === lessons.length - 1}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               Next
               <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

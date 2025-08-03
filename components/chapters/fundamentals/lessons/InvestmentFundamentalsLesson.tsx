@@ -189,8 +189,8 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
 
         {/* Interactive Exercises for Better Retention */}
         {currentLesson === 0 && (
-          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-lg`}>
-            <h3 className={`text-lg font-semibold ${theme.textColors.accent} mb-3 flex items-center gap-2`}>
+          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
               <Calculator className="w-5 h-5" />
               Compound Interest Power Demo
             </h3>
@@ -198,7 +198,7 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
               <p className={`font-medium ${theme.textColors.primary}`}>See the magic of compound growth:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
-                  <DollarSign className={`w-8 h-8 mx-auto mb-3 ${theme.textColors.accent}`} />
+                  <DollarSign className={`w-8 h-8 mx-auto mb-3 ${theme.textColors.primary}`} />
                   <div className={`text-xl font-bold ${theme.status.success.text}`}>Starting at 25</div>
                   <div className={`text-sm ${theme.textColors.muted} mb-2`}>$200/month for 10 years</div>
                   <div className={`text-xs ${theme.textColors.muted}`}>Total invested: $24,000</div>
@@ -212,7 +212,7 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
                   <div className={`text-lg font-bold ${theme.status.warning.text} mt-2`}>Result at 65: $394,000</div>
                 </div>
               </div>
-              <p className={`mt-4 font-medium ${theme.textColors.accent} text-center`}>
+              <p className={`mt-4 font-medium ${theme.textColors.primary} text-center`}>
                 💡 <strong>Time beats timing:</strong> Starting early with less money wins!
               </p>
             </div>
@@ -300,7 +300,7 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>REITs</span>
-                      <span className={`${theme.textColors.accent} font-medium`}>5%</span>
+                      <span className={`${theme.textColors.primary} font-medium`}>5%</span>
                     </div>
                   </div>
                   <div className={`mt-3 text-xs ${theme.textColors.muted}`}>Aggressive Growth</div>
@@ -322,7 +322,7 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>REITs</span>
-                      <span className={`${theme.textColors.accent} font-medium`}>5%</span>
+                      <span className={`${theme.textColors.primary} font-medium`}>5%</span>
                     </div>
                   </div>
                   <div className={`mt-3 text-xs ${theme.textColors.muted}`}>Balanced Growth</div>
@@ -344,7 +344,7 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>REITs</span>
-                      <span className={`${theme.textColors.accent} font-medium`}>5%</span>
+                      <span className={`${theme.textColors.primary} font-medium`}>5%</span>
                     </div>
                   </div>
                   <div className={`mt-3 text-xs ${theme.textColors.muted}`}>Conservative Growth</div>
@@ -392,10 +392,10 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <div className="flex items-center justify-between mb-2">
                     <h4 className={`font-medium ${theme.textColors.primary} flex items-center gap-2`}>
-                      <span className={`${theme.textColors.accent} ${theme.backgrounds.card} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>3</span>
+                      <span className={`${theme.textColors.primary} ${theme.backgrounds.card} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>3</span>
                       Roth IRA
                     </h4>
-                    <span className={`${theme.textColors.accent} font-medium`}>Tax-Free Growth</span>
+                    <span className={`${theme.textColors.primary} font-medium`}>Tax-Free Growth</span>
                   </div>
                   <p className={`text-sm ${theme.textColors.secondary}`}>
                     $7,000/year limit. Tax-free growth and withdrawals in retirement.
@@ -427,7 +427,7 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
             <button
               onClick={prevLesson}
               disabled={currentLesson === 0}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               <ChevronLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Previous
@@ -435,7 +435,7 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
             <button
               onClick={nextLesson}
               disabled={currentLesson === lessons.length - 1}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               Next
               <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

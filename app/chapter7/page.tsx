@@ -44,7 +44,7 @@ export default function Chapter7Page() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className={`${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-2xl ${theme.spacing.lg}`}
+                        className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.lg}`}
                     >
                         <div className={`w-16 h-16 ${theme.status.info.bg} rounded-2xl flex items-center justify-center mx-auto mb-6`}>
                             <Lock className={`w-8 h-8 ${theme.status.info.text}`} />
@@ -84,7 +84,7 @@ export default function Chapter7Page() {
             <div className={`${theme.backgrounds.header} border-b ${theme.borderColors.primary} sticky top-0 z-50`}>
                 <div className="max-w-7xl mx-auto px-6 py-4">
                     <div className="flex items-center justify-between">
-                        <Link href="/" className={`flex items-center ${theme.textColors.primary} hover:${theme.textColors.accent} transition-colors`}>
+                        <Link href="/" className={`flex items-center ${theme.textColors.primary} hover:${theme.textColors.primary} transition-colors`}>
                             <ArrowLeft className="w-5 h-5 mr-2" />
                             Back to Home
                         </Link>
@@ -111,7 +111,7 @@ export default function Chapter7Page() {
                     <h1 className="text-4xl font-bold mb-2">
                         <span className={`${theme.textColors.primary}`}>Chapter 7:</span>
                         <br />
-                        <span className={`${theme.textColors.accent} gradient-text-blue`}>
+                        <span className={`${theme.textColors.primary} gradient-text-blue`}>
                             Investment Fundamentals
                         </span>
                     </h1>

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { TrendingUp, TrendingDown, DollarSign, Activity, AlertCircle, RefreshCw, Globe, BarChart3, Target, Clock } from 'lucide-react';
+;
 import { theme } from '@/lib/theme';
 
 interface StockQuote {
@@ -162,7 +163,7 @@ export default function MarketDashboard() {
             <p className={`${theme.status.error.text} mb-4`}>Error loading market data: {error}</p>
             <button
               onClick={fetchMarketData}
-              className={`px-4 py-2 ${theme.status.info.bg.replace('/20', '')} text-white rounded-lg hover:${theme.status.info.bg.replace('/20', '/80')} transition-colors`}
+              className={`px-4 py-2 ${theme.status.info.bg.replace('/20', '')} ${theme.textColors.primary} rounded-lg hover:${theme.status.info.bg.replace('/20', '/80')} transition-colors`}
             >
               Try Again
             </button>
@@ -348,7 +349,7 @@ export default function MarketDashboard() {
 
       {/* Selected Stock Details */}
       {selectedStock && (
-        <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6">
+        <div className="mt-8 bg-gradient-to-r from-slate-50 to-slate-50 rounded-lg p-6">
           <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
             <Target className="w-5 h-5 inline mr-2" />
             Focus Stock: {selectedStock.companyName} ({selectedStock.symbol})
@@ -409,7 +410,7 @@ export default function MarketDashboard() {
         <button
           onClick={fetchMarketData}
           disabled={loading}
-          className={`px-6 py-3 ${theme.status.info.bg.replace('/20', '')} text-white rounded-lg hover:${theme.status.info.bg.replace('/20', '/80')} disabled:opacity-50 transition-colors flex items-center gap-2 mx-auto`}
+          className={`px-6 py-3 ${theme.status.info.bg.replace('/20', '')} ${theme.textColors.primary} rounded-lg hover:${theme.status.info.bg.replace('/20', '/80')} disabled:opacity-50 transition-colors flex items-center gap-2 mx-auto`}
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           Refresh Market Data

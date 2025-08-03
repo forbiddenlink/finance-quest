@@ -139,7 +139,7 @@ export default function MarketTicker() {
   const currentStock = stockData[currentIndex];
   if (!currentStock) {
     return (
-      <div className={`${theme.backgrounds.primary} ${theme.textColors.primary} rounded-xl shadow-lg border ${theme.borderColors.accent} min-w-[280px] max-w-[320px] animate-pulse`}>
+      <div className={`${theme.backgrounds.primary} ${theme.textColors.primary} rounded-xl shadow-lg border ${theme.borderColors.primary} min-w-[280px] max-w-[320px] animate-pulse`}>
         <div className="p-3">
           <div className={`h-4 ${theme.backgrounds.card} rounded mb-2`}></div>
           <div className={`h-6 ${theme.backgrounds.card} rounded`}></div>
@@ -151,22 +151,22 @@ export default function MarketTicker() {
   const isPositive = (currentStock.change || 0) >= 0;
 
   return (
-    <div className={`${theme.backgrounds.primary} ${theme.textColors.primary} rounded-xl shadow-lg overflow-hidden relative border ${theme.borderColors.accent} min-w-[280px] max-w-[320px]`}>
+    <div className={`${theme.backgrounds.primary} ${theme.textColors.primary} rounded-xl shadow-lg overflow-hidden relative border ${theme.borderColors.primary} min-w-[280px] max-w-[320px]`}>
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 opacity-5">
-        <div className="w-full h-full bg-gradient-to-r from-amber-500/30 to-blue-500/30"></div>
+        <div className="w-full h-full bg-gradient-to-r from-yellow-500/30 to-blue-500/30"></div>
       </div>
 
       <div className="relative z-10 p-3">
         {/* Header Row */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-2">
-            <div className={`w-2 h-2 ${theme.textColors.accent} rounded-full animate-pulse`}></div>
-            <span className={`${theme.typography.tiny} ${theme.textColors.accentSecondary} font-semibold`}>Market Pulse</span>
+            <div className={`w-2 h-2 ${theme.textColors.primary} rounded-full animate-pulse`}></div>
+            <span className={`${theme.typography.tiny} ${theme.textColors.secondary} font-semibold`}>Market Pulse</span>
             {isLive ? (
-              <Wifi className={`w-3 h-3 ${theme.textColors.accent}`} />
+              <Wifi className={`w-3 h-3 ${theme.textColors.primary}`} />
             ) : (
-              <WifiOff className={`w-3 h-3 ${theme.textColors.accent}/60`} />
+              <WifiOff className={`w-3 h-3 ${theme.textColors.primary}/60`} />
             )}
           </div>
           <div className={`${theme.typography.tiny} ${theme.textColors.muted}`}>
@@ -209,7 +209,7 @@ export default function MarketTicker() {
             <div
               key={index}
               className={`h-1 rounded-full transition-all duration-300 ${index === currentIndex
-                ? `${theme.textColors.accent} w-4`
+                ? `${theme.textColors.primary} w-4`
                 : `${theme.backgrounds.disabled} w-2`
                 }`}
             />

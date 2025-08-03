@@ -194,7 +194,7 @@ export default function BusinessCalculator() {
                                             placeholder="10000"
                                         />
                                     </div>
-                                    <p className="text-xs ${theme.textColors.secondary}">Rent, salaries, insurance, etc.</p>
+                                    <p className={`text-xs ${theme.textColors.secondary}`}>Rent, salaries, insurance, etc.</p>
                                 </div>
 
                                 <div className="space-y-2">
@@ -225,7 +225,7 @@ export default function BusinessCalculator() {
                                             placeholder="15"
                                         />
                                     </div>
-                                    <p className="text-xs ${theme.textColors.secondary}">Materials, labor, shipping, etc.</p>
+                                    <p className={`text-xs ${theme.textColors.secondary}`}>Materials, labor, shipping, etc.</p>
                                 </div>
 
                                 <Button 
@@ -266,9 +266,9 @@ export default function BusinessCalculator() {
                                         <div className={`${theme.typography.heading2} text-navy-900`}>{Math.round(breakEvenUnits).toLocaleString()}</div>
                                         <div className="text-sm text-navy-700">Units to Break Even</div>
                                     </div>
-                                    <div className="text-center p-4 ${theme.status.success.bg} rounded-lg">
+                                    <div className={`text-center p-4 ${theme.status.success.bg} rounded-lg`}>
                                         <div className={`${theme.typography.heading2} ${theme.status.success.text}`}>${breakEvenRevenue.toLocaleString()}</div>
-                                        <div className="text-sm ${theme.textColors.secondary}">Break-even Revenue</div>
+                                        <div className={`text-sm ${theme.textColors.secondary}`}>Break-even Revenue</div>
                                     </div>
                                 </div>
 
@@ -441,9 +441,9 @@ export default function BusinessCalculator() {
                                             <div className="text-sm text-navy-700">Current Ratio</div>
                                             <div className="text-xs text-navy-600">Should be &gt; 1.5</div>
                                         </div>
-                                        <div className="text-center p-4 ${theme.status.success.bg} rounded-lg">
-                                            <div className="text-xl font-bold ${theme.status.success.text}">${workingCapital.toLocaleString()}</div>
-                                            <div className="text-sm ${theme.textColors.secondary}">Working Capital</div>
+                                        <div className={`text-center p-4 ${theme.status.success.bg} rounded-lg`}>
+                                            <div className={`text-xl font-bold ${theme.status.success.text}`}>${workingCapital.toLocaleString()}</div>
+                                            <div className={`text-sm ${theme.textColors.secondary}`}>Working Capital</div>
                                             <div className={`text-xs ${theme.status.success.text}`}>Should be positive</div>
                                         </div>
                                         <div className={`text-center p-4 ${theme.status.info.bg} rounded-lg`}>
@@ -451,10 +451,10 @@ export default function BusinessCalculator() {
                                             <div className={`text-sm ${theme.textColors.secondary}`}>Debt-to-Equity</div>
                                             <div className={`text-xs ${theme.status.info.text}`}>Lower is better</div>
                                         </div>
-                                        <div className="text-center p-4 bg-orange-50 rounded-lg">
-                                            <div className="text-xl font-bold text-orange-900">{grossMargin.toFixed(1)}%</div>
-                                            <div className="text-sm text-orange-700">Gross Margin</div>
-                                            <div className="text-xs text-orange-600">Industry varies</div>
+                                        <div className={`text-center p-4 ${theme.status.warning.bg} rounded-lg`}>
+                                            <div className={`text-xl font-bold ${theme.status.warning.text}`}>{grossMargin.toFixed(1)}%</div>
+                                            <div className={`text-sm ${theme.status.warning.text}`}>Gross Margin</div>
+                                            <div className={`text-xs ${theme.status.warning.text}`}>Industry varies</div>
                                         </div>
                                     </div>
 
@@ -498,7 +498,7 @@ export default function BusinessCalculator() {
                                                     }}
                                                 />
                                             </div>
-                                            <div className="text-xs ${theme.textColors.secondary}">
+                                            <div className={`text-xs ${theme.textColors.secondary}`}>
                                                 Current: {indicator.name === 'Profitability' ? `${indicator.value.toFixed(1)}%` : indicator.value.toFixed(2)}
                                             </div>
                                         </div>
@@ -679,17 +679,17 @@ export default function BusinessCalculator() {
                                 </div>
 
                                 <div className="mt-4 grid grid-cols-2 gap-4">
-                                    <div className="text-center p-3 ${theme.status.success.bg} rounded-lg">
-                                        <div className="text-lg font-bold ${theme.status.success.text}">
+                                    <div className={`text-center p-3 ${theme.status.success.bg} rounded-lg`}>
+                                        <div className={`text-lg font-bold ${theme.status.success.text}`}>
                                             ${Math.max(...cashFlowData.map(d => d.cumulativeCash)).toLocaleString()}
                                         </div>
-                                        <div className="text-sm ${theme.textColors.secondary}">Peak Cash Balance</div>
+                                        <div className={`text-sm ${theme.textColors.secondary}`}>Peak Cash Balance</div>
                                     </div>
-                                    <div className="text-center p-3 bg-orange-50 rounded-lg">
-                                        <div className="text-lg font-bold text-orange-900">
+                                    <div className={`text-center p-3 ${theme.status.warning.bg} rounded-lg`}>
+                                        <div className={`text-lg font-bold ${theme.status.warning.text}`}>
                                             ${Math.min(...cashFlowData.map(d => d.cumulativeCash)).toLocaleString()}
                                         </div>
-                                        <div className="text-sm text-orange-700">Lowest Cash Balance</div>
+                                        <div className={`text-sm ${theme.status.warning.text}`}>Lowest Cash Balance</div>
                                     </div>
                                 </div>
                             </CardContent>

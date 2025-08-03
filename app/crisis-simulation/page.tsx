@@ -52,7 +52,7 @@ export default function CrisisSimulationPage() {
             className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12"
           >
             <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg ${theme.spacing.md}`}>
-              <Shield className={`w-8 h-8 ${theme.textColors.accent} mx-auto mb-3`} />
+              <Shield className={`w-8 h-8 ${theme.textColors.primary} mx-auto mb-3`} />
               <h3 className={`font-bold ${theme.textColors.primary} mb-2`}>Safe Practice</h3>
               <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>
                 Learn from mistakes without real financial consequences

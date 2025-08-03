@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
+;
 import { theme } from '@/lib/theme';
 
 interface GradientCardProps {
@@ -13,19 +14,19 @@ interface GradientCardProps {
 
 const gradients = {
   blue: {
-    solid: 'bg-gradient-to-br from-blue-500 to-blue-600',
-    border: 'bg-gradient-to-r from-blue-500 to-blue-600',
+    solid: 'bg-gradient-to-br from-slate-900 to-blue-900',
+    border: 'bg-gradient-to-r from-slate-900 to-blue-900',
     glass: `${theme.status.info.bg} ${theme.status.info.border}`
   },
   green: {
-    solid: 'bg-gradient-to-br from-green-500 to-green-600',
-    border: 'bg-gradient-to-r from-green-500 to-green-600',
+    solid: 'bg-gradient-to-br ${theme.status.success.bg.replace("/20", "")} ${theme.status.success.bg.replace("/20", "/80")}',
+    border: 'bg-gradient-to-r ${theme.status.success.bg.replace("/20", "")} ${theme.status.success.bg.replace("/20", "/80")}',
     glass: `${theme.status.success.bg} ${theme.status.success.border}`
   },
   purple: {
-    solid: 'bg-gradient-to-br from-purple-500 to-purple-600',
-    border: 'bg-gradient-to-r from-purple-500 to-purple-600',
-    glass: `${theme.backgrounds.card} ${theme.borderColors.accent}`
+    solid: 'bg-gradient-to-br from-amber-500 to-amber-600',
+    border: 'bg-gradient-to-r from-amber-500 to-amber-600',
+    glass: `${theme.backgrounds.card} ${theme.borderColors.primary}`
   },
   red: {
     solid: 'bg-gradient-to-br from-red-500 to-red-600',
@@ -33,14 +34,14 @@ const gradients = {
     glass: `${theme.status.error.bg} ${theme.status.error.border}`
   },
   yellow: {
-    solid: 'bg-gradient-to-br from-yellow-500 to-amber-600',
-    border: 'bg-gradient-to-r from-yellow-500 to-amber-600',
+    solid: 'bg-gradient-to-br from-yellow-500 to-yellow-600',
+    border: 'bg-gradient-to-r from-yellow-500 to-yellow-600',
     glass: `${theme.status.warning.bg} ${theme.status.warning.border}`
   },
   pink: {
     solid: 'bg-gradient-to-br from-pink-500 to-pink-600',
     border: 'bg-gradient-to-r from-pink-500 to-pink-600',
-    glass: `${theme.backgrounds.card} ${theme.borderColors.accent}`
+    glass: `${theme.backgrounds.card} ${theme.borderColors.primary}`
   }
 };
 
@@ -76,7 +77,7 @@ export default function GradientCard({
 
   // Solid variant
   return (
-    <div className={`${baseClasses} ${gradients[gradient].solid} text-white ${hoverClasses} ${className}`}>
+    <div className={`${baseClasses} ${gradients[gradient].solid} ${theme.textColors.primary} ${hoverClasses} ${className}`}>
       {children}
     </div>
   );

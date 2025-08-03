@@ -15,6 +15,7 @@ import {
   Brain
 } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
+;
 import { theme } from '@/lib/theme';
 
 interface HealthScoreData {
@@ -202,10 +203,10 @@ export default function FinancialHealthScoreCalculator() {
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600';
-    if (score >= 60) return 'text-blue-600';
-    if (score >= 40) return 'text-yellow-600';
-    return 'text-red-600';
+    if (score >= 80) return '${theme.status.success.text}';
+    if (score >= 60) return '${theme.textColors.primary}';
+    if (score >= 40) return '${theme.status.warning.text}';
+    return '${theme.status.error.text}';
   };
 
   const getScoreIcon = (score: number) => {
@@ -232,8 +233,8 @@ export default function FinancialHealthScoreCalculator() {
     >
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="bg-amber-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-          <Brain className="w-8 h-8 text-amber-400" />
+        <div className={`${theme.status.warning.bg.replace("/20", "")}/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4`}>
+          <Brain className={`w-8 h-8 ${theme.status.warning.text}`} />
         </div>
         <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>
           AI Financial Health Score
@@ -264,7 +265,7 @@ export default function FinancialHealthScoreCalculator() {
               </div>
               <div className={`w-full ${theme.backgrounds.cardHover} rounded-full h-3`}>
                 <motion.div
-                  className="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full"
+                  className={`bg-gradient-to-r from-slate-900 to-blue-900 h-3 rounded-full`}
                   initial={{ width: 0 }}
                   animate={{ width: `${((currentQuestion + 1) / assessmentQuestions.length) * 100}%` }}
                   transition={{ duration: 0.5 }}
@@ -288,15 +289,15 @@ export default function FinancialHealthScoreCalculator() {
                   <motion.button
                     key={index}
                     onClick={() => handleAnswer(option.points)}
-                    className={`w-full text-left p-4 rounded-lg border ${theme.borderColors.primary} hover:${theme.borderColors.accent} ${theme.interactive.hover} transition-all group`}
+                    className={`w-full text-left p-4 rounded-lg border ${theme.borderColors.primary} hover:${theme.borderColors.primary} ${theme.interactive.hover} transition-all group`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
                     <div className="flex items-center justify-between">
-                      <span className={`${theme.textColors.primary} group-hover:text-amber-300`}>
+                      <span className={`${theme.textColors.primary} group-hover:${theme.status.warning.text}`}>
                         {option.text}
                       </span>
-                      <div className={`text-sm ${theme.textColors.secondary} group-hover:text-amber-400`}>
+                      <div className={`text-sm ${theme.textColors.secondary} group-hover:${theme.status.warning.text}`}>
                         {option.points} pts
                       </div>
                     </div>
@@ -326,10 +327,10 @@ export default function FinancialHealthScoreCalculator() {
                 <div className={`text-2xl font-semibold ${theme.textColors.secondary} mb-2`}>
                   Grade: {healthScore!.grade}
                 </div>
-                <div className={`text-lg font-medium px-6 py-2 rounded-full inline-block ${healthScore!.category === 'Excellent' ? 'bg-green-100 text-green-800' :
-                  healthScore!.category === 'Good' ? 'bg-blue-100 text-blue-800' :
-                    healthScore!.category === 'Fair' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-red-100 text-red-800'
+                <div className={`text-lg font-medium px-6 py-2 rounded-full inline-block ${healthScore!.category === 'Excellent' ? '${theme.status.success.bg} ${theme.status.success.text}' :
+                  healthScore!.category === 'Good' ? '${theme.backgrounds.cardHover} ${theme.textColors.primary}' :
+                    healthScore!.category === 'Fair' ? '${theme.status.warning.bg} ${theme.status.warning.text}' :
+                      '${theme.status.error.bg} ${theme.status.error.text}'
                   }`}>
                   {healthScore!.category}
                 </div>
@@ -404,17 +405,17 @@ export default function FinancialHealthScoreCalculator() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className={`${theme.backgrounds.cardHover} rounded-lg p-6 border ${theme.borderColors.accent}`}
+              className={`${theme.backgrounds.cardHover} rounded-lg p-6 border ${theme.borderColors.primary}`}
             >
               <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center`}>
-                <Sparkles className="w-6 h-6 mr-2 text-amber-400" />
+                <Sparkles className={`w-6 h-6 mr-2 ${theme.status.warning.text}`} />
                 Your Personalized Action Plan
               </h3>
 
               <div className="space-y-4">
                 {healthScore!.emergencyFund < 20 && (
                   <div className={`flex items-start space-x-3 ${theme.backgrounds.card} p-4 rounded-lg border ${theme.borderColors.primary}`}>
-                    <Shield className="w-5 h-5 text-blue-400 mt-0.5" />
+                    <Shield className={`w-5 h-5 ${theme.textColors.primary} mt-0.5`} />
                     <div>
                       <h4 className={`font-semibold ${theme.textColors.primary}`}>Build Your Emergency Fund</h4>
                       <p className={`text-sm ${theme.textColors.secondary}`}>
@@ -426,7 +427,7 @@ export default function FinancialHealthScoreCalculator() {
 
                 {healthScore!.debtToIncome < 18 && (
                   <div className={`flex items-start space-x-3 ${theme.backgrounds.card} p-4 rounded-lg border ${theme.borderColors.primary}`}>
-                    <CreditCard className="w-5 h-5 text-purple-400 mt-0.5" />
+                    <CreditCard className={`w-5 h-5 ${theme.textColors.primary} mt-0.5`} />
                     <div>
                       <h4 className={`font-semibold ${theme.textColors.primary}`}>Optimize Debt Payments</h4>
                       <p className={`text-sm ${theme.textColors.secondary}`}>
@@ -438,7 +439,7 @@ export default function FinancialHealthScoreCalculator() {
 
                 {healthScore!.savingsRate < 15 && (
                   <div className={`flex items-start space-x-3 ${theme.backgrounds.card} p-4 rounded-lg border ${theme.borderColors.primary}`}>
-                    <TrendingUp className="w-5 h-5 text-green-400 mt-0.5" />
+                    <TrendingUp className={`w-5 h-5 ${theme.status.success.text} mt-0.5`} />
                     <div>
                       <h4 className={`font-semibold ${theme.textColors.primary}`}>Increase Your Savings Rate</h4>
                       <p className={`text-sm ${theme.textColors.secondary}`}>
@@ -450,7 +451,7 @@ export default function FinancialHealthScoreCalculator() {
 
                 {healthScore!.financialKnowledge < 20 && (
                   <div className={`flex items-start space-x-3 ${theme.backgrounds.card} p-4 rounded-lg border ${theme.borderColors.primary}`}>
-                    <Brain className="w-5 h-5 text-orange-400 mt-0.5" />
+                    <Brain className={`w-5 h-5 ${theme.status.warning.text} mt-0.5`} />
                     <div>
                       <h4 className={`font-semibold ${theme.textColors.primary}`}>Continue Learning</h4>
                       <p className={`text-sm ${theme.textColors.secondary}`}>
@@ -475,7 +476,7 @@ export default function FinancialHealthScoreCalculator() {
 
               <motion.button
                 onClick={() => window.location.href = '/calculators'}
-                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-colors"
+                className={`px-6 py-3 bg-gradient-to-r from-slate-900 to-blue-900 ${theme.textColors.primary} rounded-lg font-semibold hover:from-slate-900 hover:to-blue-900 transition-colors`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

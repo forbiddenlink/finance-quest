@@ -24,20 +24,20 @@ export default function Chapter1Page() {
   return (
     <div className={theme.backgrounds.primary}>
       {/* Header */}
-      <header className={`${theme.backgrounds.header} ${theme.borderColors.accent} border-b`}>
+      <header className={`${theme.backgrounds.header} ${theme.borderColors.primary} border-b`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => window.history.back()}
-                className={`${theme.textColors.accent} hover:${theme.textColors.accentSecondary} font-medium transition-colors`}
+                className={`${theme.textColors.primary} hover:${theme.textColors.secondary} font-medium transition-colors`}
               >
                 ← Back to Home
               </button>
               <h1 className={`text-2xl font-bold ${theme.textColors.primary}`}>Chapter 1: Money Psychology & Mindset</h1>
             </div>
             <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} px-3 py-1 rounded-full backdrop-blur-sm`}>
-              <span className={`text-sm font-medium ${theme.textColors.accentSecondary}`}>Progress: 25%</span>
+              <span className={`text-sm font-medium ${theme.textColors.secondary}`}>Progress: 25%</span>
             </div>
           </div>
         </div>
@@ -68,11 +68,11 @@ export default function Chapter1Page() {
           {activeTab === 'lesson' && (
             <div>
               <div className={`mb-6 ${theme.status.info.bg} border ${theme.status.info.border} backdrop-blur-sm rounded-lg p-4`}>
-                <h3 className={`font-semibold ${theme.textColors.accentSecondary} mb-2 flex items-center gap-2`}>
+                <h3 className={`font-semibold ${theme.textColors.secondary} mb-2 flex items-center gap-2`}>
                   <Lightbulb className="w-4 h-4" />
                   Learning Path
                 </h3>
-                <p className={theme.textColors.accentSecondary}>
+                <p className={theme.textColors.secondary}>
                   Complete all lessons, try the calculator, then take the quiz to unlock Chapter 2!
                 </p>
               </div>
@@ -93,7 +93,7 @@ export default function Chapter1Page() {
                   <Calculator className="w-4 h-4" />
                   Practice Tool
                 </h3>
-                <p className={theme.textColors.accentSecondary}>
+                <p className={theme.textColors.secondary}>
                   Use this calculator to understand how taxes affect your paycheck. Try different amounts!
                 </p>
               </div>
@@ -130,8 +130,8 @@ export default function Chapter1Page() {
 
           {activeTab === 'assistant' && (
             <div>
-              <div className={`mb-6 ${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-lg p-4`}>
-                <h3 className={`font-semibold ${theme.textColors.accent} mb-2 flex items-center gap-2`}>
+              <div className={`mb-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
+                <h3 className={`font-semibold ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
                   <Bot className="w-4 h-4" />
                   AI Financial Coach
                 </h3>

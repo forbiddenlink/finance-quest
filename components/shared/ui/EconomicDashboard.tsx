@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, DollarSign, BarChart3, PieChart, Activity } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+;
 import { theme } from '@/lib/theme';
 
 interface EconomicData {
@@ -128,10 +129,10 @@ export default function EconomicDashboard() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-blue-300">Fed Funds Rate</p>
+              <p className={`text-sm font-medium ${theme.textColors.primary}`}>Fed Funds Rate</p>
               <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{currentFedRate.toFixed(2)}%</p>
             </div>
-            <DollarSign className="w-8 h-8 text-blue-400" />
+            <DollarSign className={`w-8 h-8 ${theme.textColors.primary}`} />
           </div>
         </motion.div>
 
@@ -142,10 +143,10 @@ export default function EconomicDashboard() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-red-300">Inflation Rate</p>
+              <p className={`text-sm font-medium ${theme.status.error.text}`}>Inflation Rate</p>
               <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{currentInflation.toFixed(1)}%</p>
             </div>
-            <TrendingUp className="w-8 h-8 text-red-400" />
+            <TrendingUp className={`w-8 h-8 ${theme.status.error.text}`} />
           </div>
         </motion.div>
 
@@ -156,10 +157,10 @@ export default function EconomicDashboard() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-green-300">S&P 500</p>
+              <p className={`text-sm font-medium ${theme.status.success.text}`}>S&P 500</p>
               <p className={`text-2xl font-bold ${theme.textColors.primary}`}>${(economicData?.indices?.sp500 || 0).toFixed(0)}</p>
             </div>
-            <Activity className="w-8 h-8 text-green-400" />
+            <Activity className={`w-8 h-8 ${theme.status.success.text}`} />
           </div>
         </motion.div>
       </div>
@@ -175,8 +176,8 @@ export default function EconomicDashboard() {
             key={tab.key}
             onClick={() => setActiveTab(tab.key as 'interest' | 'inflation' | 'markets')}
             className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md font-medium transition-all ${activeTab === tab.key
-                ? `${theme.backgrounds.cardHover} text-blue-400 shadow-sm`
-                : `${theme.textColors.secondary} hover:text-blue-400`
+                ? `${theme.backgrounds.cardHover} ${theme.textColors.primary} shadow-sm`
+                : `${theme.textColors.secondary} hover:${theme.textColors.primary}`
               }`}
           >
             <tab.icon className="w-4 h-4" />
@@ -266,24 +267,24 @@ export default function EconomicDashboard() {
                 className={`text-center ${theme.backgrounds.cardHover} p-6 rounded-lg border ${theme.borderColors.primary}`}
                 whileHover={{ scale: 1.05 }}
               >
-                <PieChart className="w-8 h-8 mx-auto mb-2 text-blue-400" />
-                <p className={`text-sm font-medium text-blue-300 mb-1`}>S&P 500</p>
+                <PieChart className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
+                <p className={`text-sm font-medium ${theme.textColors.primary} mb-1`}>S&P 500</p>
                 <p className={`text-xl font-bold ${theme.textColors.primary}`}>${(economicData?.indices?.sp500 || 0).toFixed(0)}</p>
               </motion.div>
               <motion.div
                 className={`text-center ${theme.backgrounds.cardHover} p-6 rounded-lg border ${theme.borderColors.primary}`}
                 whileHover={{ scale: 1.05 }}
               >
-                <BarChart3 className="w-8 h-8 mx-auto mb-2 text-purple-400" />
-                <p className={`text-sm font-medium text-purple-300 mb-1`}>NASDAQ</p>
+                <BarChart3 className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.primary}`} />
+                <p className={`text-sm font-medium ${theme.textColors.primary} mb-1`}>NASDAQ</p>
                 <p className={`text-xl font-bold ${theme.textColors.primary}`}>${(economicData?.indices?.nasdaq || 0).toFixed(0)}</p>
               </motion.div>
               <motion.div
                 className={`text-center ${theme.backgrounds.cardHover} p-6 rounded-lg border ${theme.borderColors.primary}`}
                 whileHover={{ scale: 1.05 }}
               >
-                <TrendingUp className="w-8 h-8 mx-auto mb-2 text-green-400" />
-                <p className={`text-sm font-medium text-green-300 mb-1`}>Dow Jones</p>
+                <TrendingUp className={`w-8 h-8 mx-auto mb-2 ${theme.status.success.text}`} />
+                <p className={`text-sm font-medium ${theme.status.success.text} mb-1`}>Dow Jones</p>
                 <p className={`text-xl font-bold ${theme.textColors.primary}`}>${(economicData?.indices?.dow || 0).toFixed(0)}</p>
               </motion.div>
             </div>
@@ -292,7 +293,7 @@ export default function EconomicDashboard() {
       </div>
 
       {/* Educational Note */}
-      <div className={`mt-6 ${theme.backgrounds.cardHover} border ${theme.borderColors.accent} rounded-lg p-4`}>
+      <div className={`mt-6 ${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4`}>
         <p className={`text-sm ${theme.textColors.primary}`}>
           <strong>Educational Context:</strong> These economic indicators directly impact your personal finances.
           Higher interest rates affect loan costs and savings returns, while inflation erodes purchasing power.

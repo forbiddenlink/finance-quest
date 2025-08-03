@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, XCircle, ArrowRight, RotateCcw, Trophy } from 'lucide-react';
 import { useProgressActions } from '@/lib/context/ProgressContext';
+;
 import { theme } from '@/lib/theme';
 
 interface Question {
@@ -148,10 +149,10 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 0.9) return 'text-green-600';
-    if (score >= 0.8) return 'text-blue-600';
-    if (score >= 0.7) return 'text-yellow-600';
-    return 'text-red-600';
+    if (score >= 0.9) return '${theme.status.success.text}';
+    if (score >= 0.8) return '${theme.textColors.primary}';
+    if (score >= 0.7) return '${theme.status.warning.text}';
+    return '${theme.status.error.text}';
   };
 
   const getScoreMessage = (score: number) => {
@@ -167,11 +168,11 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
 
     return (
       <motion.div
-        className="bg-white rounded-lg shadow-lg overflow-hidden"
+        className={`${theme.backgrounds.card} rounded-lg shadow-lg overflow-hidden`}
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
       >
-        <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6">
+        <div className={`bg-gradient-to-r from-slate-900 to-slate-600 ${theme.textColors.primary} p-6`}>
           <div className="flex items-center space-x-3">
             <Trophy className="w-8 h-8" />
             <h2 className="text-3xl font-bold">
@@ -203,7 +204,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
               return (
                 <motion.div
                   key={question.id}
-                  className={`border rounded-lg p-4 ${isCorrect ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'
+                  className={`border rounded-lg p-4 ${isCorrect ? '${theme.status.success.border} ${theme.status.success.bg}' : '${theme.status.error.border} ${theme.status.error.bg}'
                     }`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -211,9 +212,9 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
                 >
                   <div className="flex items-start space-x-3 mb-3">
                     {isCorrect ? (
-                      <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0 mt-1" />
+                      <CheckCircle className={`w-6 h-6 ${theme.status.success.text} flex-shrink-0 mt-1`} />
                     ) : (
-                      <XCircle className="w-6 h-6 text-red-500 flex-shrink-0 mt-1" />
+                      <XCircle className={`w-6 h-6 ${theme.status.error.text} flex-shrink-0 mt-1`} />
                     )}
                     <div className="flex-1">
                       <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>{question.question}</h4>
@@ -223,11 +224,11 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
                         </div>
                       )}
                       {!isCorrect && (
-                        <div className="text-sm text-green-700 mb-2">
+                        <div className={`text-sm ${theme.status.success.text} mb-2`}>
                           <span className="font-medium">Correct answer:</span> {question.options[question.correctAnswer]}
                         </div>
                       )}
-                      <div className={`text-sm ${theme.textColors.primary} bg-white p-3 rounded border`}>
+                      <div className={`text-sm ${theme.textColors.primary} ${theme.backgrounds.card} p-3 rounded border`}>
                         <span className="font-medium">Explanation:</span> {question.explanation}
                       </div>
                     </div>
@@ -252,7 +253,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
             {score >= 0.85 && (
               <motion.button
                 onClick={() => window.location.href = '/chapter3'}
-                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-colors flex items-center justify-center"
+                className={`px-6 py-3 bg-gradient-to-r from-slate-900 to-slate-600 ${theme.textColors.primary} rounded-lg hover:from-slate-900 hover:to-slate-700 transition-colors flex items-center justify-center`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -263,8 +264,8 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
           </div>
 
           {score < 0.85 && (
-            <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-              <p className="text-yellow-800 text-center">
+            <div className={`mt-6 ${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4`}>
+              <p className={`${theme.status.warning.text} text-center`}>
                 <strong>Almost there!</strong> You need 85% or higher to unlock the next chapter.
                 Review the explanations above and try again!
               </p>
@@ -280,22 +281,22 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
 
   return (
     <motion.div
-      className="bg-white rounded-lg shadow-lg overflow-hidden"
+      className={`${theme.backgrounds.card} rounded-lg shadow-lg overflow-hidden`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
     >
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6">
+      <div className={`bg-gradient-to-r from-slate-900 to-slate-600 ${theme.textColors.primary} p-6`}>
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">Banking Fundamentals Quiz</h2>
-          <div className="text-sm bg-white/20 px-3 py-1 rounded-full">
+          <div className={`text-sm ${theme.backgrounds.card}/20 px-3 py-1 rounded-full`}>
             Question {currentQuestion + 1} of {questions.length}
           </div>
         </div>
 
-        <div className="w-full bg-white/20 rounded-full h-2">
+        <div className={`w-full ${theme.backgrounds.card}/20 rounded-full h-2`}>
           <motion.div
-            className="bg-white h-2 rounded-full"
+            className={`${theme.backgrounds.card} h-2 rounded-full`}
             initial={{ width: '0%' }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.5 }}
@@ -314,7 +315,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
             transition={{ duration: 0.3 }}
           >
             <div className="mb-6">
-              <div className="text-sm text-blue-600 font-medium mb-2">{currentQ.category}</div>
+              <div className={`text-sm ${theme.textColors.primary} font-medium mb-2`}>{currentQ.category}</div>
               <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-6`}>{currentQ.question}</h3>
             </div>
 
@@ -324,19 +325,19 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
                   key={index}
                   onClick={() => handleAnswerSelect(index)}
                   className={`w-full text-left p-4 rounded-lg border-2 transition-all ${selectedAnswers[currentQuestion] === index
-                    ? 'border-blue-500 bg-blue-50 text-blue-800'
-                    : `border ${theme.borderColors.primary} hover:${theme.borderColors.accent} hover:${theme.backgrounds.card}`
+                    ? '${theme.borderColors.primary} ${theme.backgrounds.card} ${theme.textColors.primary}'
+                    : `border ${theme.borderColors.primary} hover:${theme.borderColors.primary} hover:${theme.backgrounds.card}`
                     }`}
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                 >
                   <div className="flex items-center">
                     <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${selectedAnswers[currentQuestion] === index
-                      ? 'border-blue-500 bg-blue-500'
+                      ? '${theme.borderColors.primary} ${theme.backgrounds.primary}'
                       : `border ${theme.borderColors.muted}`
                       }`}>
                       {selectedAnswers[currentQuestion] === index && (
-                        <div className="w-2 h-2 rounded-full bg-white"></div>
+                        <div className={`w-2 h-2 rounded-full ${theme.backgrounds.card}`}></div>
                       )}
                     </div>
                     <span className="font-medium">{String.fromCharCode(65 + index)}.</span>
@@ -358,7 +359,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
         <motion.button
           onClick={nextQuestion}
           disabled={selectedAnswers[currentQuestion] === null}
-          className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
+          className={`px-6 py-2 ${theme.backgrounds.primary} ${theme.textColors.primary} rounded-lg hover:${theme.backgrounds.cardHover} disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center`}
           whileHover={{ scale: selectedAnswers[currentQuestion] !== null ? 1.05 : 1 }}
           whileTap={{ scale: selectedAnswers[currentQuestion] !== null ? 0.95 : 1 }}
         >

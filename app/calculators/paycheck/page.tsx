@@ -9,20 +9,20 @@ export default function PaycheckCalculatorPage() {
   return (
     <div className={`min-h-screen ${theme.backgrounds.primary}`}>
       {/* Header */}
-      <header className={`${theme.backgrounds.header} border-b ${theme.borderColors.accent}`}>
+      <header className={`${theme.backgrounds.header} border-b ${theme.borderColors.primary}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => window.history.back()}
-                className={`${theme.textColors.accent} hover:${theme.textColors.accentSecondary} font-medium`}
+                className={`${theme.textColors.primary} hover:${theme.textColors.secondary} font-medium`}
               >
                 ← Back
               </button>
               <h1 className={`${theme.typography.heading3} ${theme.textColors.primary}`}>Paycheck Calculator</h1>
             </div>
             <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} px-3 py-1 rounded-full backdrop-blur-sm`}>
-              <span className={`${theme.typography.small} font-medium ${theme.textColors.accentSecondary} flex items-center gap-1`}>
+              <span className={`${theme.typography.small} font-medium ${theme.textColors.secondary} flex items-center gap-1`}>
                 <Calculator className="w-4 h-4" />
                 Take-Home Pay
               </span>
@@ -35,7 +35,7 @@ export default function PaycheckCalculatorPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className={`mb-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl ${theme.spacing.md}`}>
           <h2 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-            <DollarSign className={`w-5 h-5 ${theme.textColors.accent}`} />
+            <DollarSign className={`w-5 h-5 ${theme.textColors.primary}`} />
             Understand Your Take-Home Pay
           </h2>
           <p className={`${theme.textColors.secondary} mb-4`}>
@@ -43,7 +43,7 @@ export default function PaycheckCalculatorPage() {
           </p>
           <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 ${theme.typography.small}`}>
             <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-3 backdrop-blur-sm`}>
-              <h3 className={`font-semibold ${theme.textColors.accentSecondary} flex items-center gap-2`}>
+              <h3 className={`font-semibold ${theme.textColors.secondary} flex items-center gap-2`}>
                 <DollarSign className="w-4 h-4" />
                 Gross Pay
               </h3>
@@ -77,12 +77,12 @@ export default function PaycheckCalculatorPage() {
         {/* Learning Objectives */}
         <div className={`mt-8 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl ${theme.spacing.md}`}>
           <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-            <Target className={`w-5 h-5 ${theme.textColors.accent}`} />
+            <Target className={`w-5 h-5 ${theme.textColors.primary}`} />
             What You&apos;ll Learn
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <h4 className={`font-semibold ${theme.textColors.accentSecondary} mb-2`}>Paycheck Basics:</h4>
+              <h4 className={`font-semibold ${theme.textColors.secondary} mb-2`}>Paycheck Basics:</h4>
               <ul className={`${theme.textColors.secondary} space-y-1 ${theme.typography.small}`}>
                 <li>• Difference between gross and net pay</li>
                 <li>• Common payroll deductions and their purposes</li>
@@ -91,7 +91,7 @@ export default function PaycheckCalculatorPage() {
               </ul>
             </div>
             <div>
-              <h4 className={`font-semibold ${theme.textColors.accentSecondary} mb-2`}>Financial Planning:</h4>
+              <h4 className={`font-semibold ${theme.textColors.secondary} mb-2`}>Financial Planning:</h4>
               <ul className={`${theme.textColors.secondary} space-y-1 ${theme.typography.small}`}>
                 <li>• Budget based on actual take-home pay</li>
                 <li>• Optimize tax withholdings</li>
@@ -105,18 +105,18 @@ export default function PaycheckCalculatorPage() {
         {/* Paycheck Tips */}
         <div className={`mt-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl ${theme.spacing.md}`}>
           <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-            <Lightbulb className={`w-5 h-5 ${theme.textColors.accent}`} />
+            <Lightbulb className={`w-5 h-5 ${theme.textColors.primary}`} />
             Paycheck Optimization Tips
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4 backdrop-blur-sm`}>
-              <h4 className={`font-semibold ${theme.textColors.accentSecondary} mb-2`}>Max Out Pre-Tax Benefits</h4>
+              <h4 className={`font-semibold ${theme.textColors.secondary} mb-2`}>Max Out Pre-Tax Benefits</h4>
               <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>
                 Contribute to 401k, HSA, and flexible spending accounts to reduce taxable income and save on taxes.
               </p>
             </div>
             <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4 backdrop-blur-sm`}>
-              <h4 className={`font-semibold ${theme.textColors.accentSecondary} mb-2`}>Review Your W-4</h4>
+              <h4 className={`font-semibold ${theme.textColors.secondary} mb-2`}>Review Your W-4</h4>
               <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>
                 Adjust tax withholdings annually to avoid big refunds (you&apos;re lending money to the government interest-free).
               </p>

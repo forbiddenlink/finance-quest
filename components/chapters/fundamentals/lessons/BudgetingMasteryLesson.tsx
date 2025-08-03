@@ -191,8 +191,8 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
 
         {/* Interactive Exercises for Better Retention */}
         {currentLesson === 0 && (
-          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-lg`}>
-            <h3 className={`text-lg font-semibold ${theme.textColors.accent} mb-3 flex items-center gap-2`}>
+          <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
               <Calculator className="w-5 h-5" />
               50/30/20 Budget Calculator
             </h3>
@@ -212,13 +212,13 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
                   <div className={`text-xs ${theme.textColors.muted}`}>Entertainment, dining out, hobbies</div>
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg text-center`}>
-                  <TrendingUp className={`w-8 h-8 mx-auto mb-3 ${theme.textColors.accent}`} />
-                  <div className={`text-2xl font-bold ${theme.textColors.accent}`}>20%</div>
+                  <TrendingUp className={`w-8 h-8 mx-auto mb-3 ${theme.textColors.primary}`} />
+                  <div className={`text-2xl font-bold ${theme.textColors.primary}`}>20%</div>
                   <div className={`text-sm ${theme.textColors.secondary} mb-2`}>Savings & Debt</div>
                   <div className={`text-xs ${theme.textColors.muted}`}>Emergency fund, retirement, extra payments</div>
                 </div>
               </div>
-              <p className={`mt-4 font-medium ${theme.textColors.accent}`}>
+              <p className={`mt-4 font-medium ${theme.textColors.primary}`}>
                 💡 <strong>Monthly Income:</strong> $______ | <strong>Needs:</strong> $______ | <strong>Wants:</strong> $______ | <strong>Savings:</strong> $______
               </p>
             </div>
@@ -254,9 +254,9 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
                     </ul>
                   </div>
                 </div>
-                <div className={`mt-4 p-3 ${theme.textColors.accent}/20 border ${theme.borderColors.accent} rounded-lg`}>
+                <div className={`mt-4 p-3 ${theme.textColors.primary}/20 border ${theme.borderColors.primary} rounded-lg`}>
                   <p className={`font-medium ${theme.textColors.primary} text-center`}>
-                    <span className={theme.textColors.accent}>Income - Expenses - Savings = $0</span>
+                    <span className={theme.textColors.primary}>Income - Expenses - Savings = $0</span>
                     <br />
                     <span className={`text-sm ${theme.textColors.secondary}`}>Every dollar assigned before spending!</span>
                   </p>
@@ -328,7 +328,7 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
                 </div>
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
-                    <Target className={`w-4 h-4 ${theme.textColors.accent}`} />
+                    <Target className={`w-4 h-4 ${theme.textColors.primary}`} />
                     Sinking Funds
                   </h4>
                   <ul className={`list-disc list-inside space-y-1 ml-4 ${theme.textColors.secondary} text-sm`}>
@@ -359,7 +359,7 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
             <button
               onClick={prevLesson}
               disabled={currentLesson === 0}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               <ChevronLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Previous
@@ -367,7 +367,7 @@ export default function BudgetingMasteryLesson({ onComplete }: BudgetingMasteryL
             <button
               onClick={nextLesson}
               disabled={currentLesson === lessons.length - 1}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.accent} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
+              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all morph-button`}
             >
               Next
               <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

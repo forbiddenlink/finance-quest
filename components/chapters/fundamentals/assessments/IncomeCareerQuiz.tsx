@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useProgress, useProgressActions } from '@/lib/context/ProgressContext';
 import { CheckCircle, XCircle, ArrowRight, TrendingUp, Target, Award } from 'lucide-react';
 import CelebrationConfetti from '@/components/shared/ui/CelebrationConfetti';
+;
 import { theme } from '@/lib/theme';
 
 interface Question {
@@ -202,7 +203,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
     if (showResult) {
         return (
             <motion.div
-                className="bg-white rounded-lg shadow-lg p-8"
+                className={`${theme.backgrounds.card} rounded-lg shadow-lg p-8`}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
@@ -216,11 +217,11 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                         transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
                     >
                         {score >= 85 ? (
-                            <Award className="w-20 h-20 text-yellow-500 mx-auto mb-4" />
+                            <Award className={`w-20 h-20 ${theme.status.warning.text} mx-auto mb-4`} />
                         ) : score >= 70 ? (
                             <Target className={`w-20 h-20 ${theme.status.info.text} mx-auto mb-4`} />
                         ) : (
-                            <TrendingUp className="w-20 h-20 text-orange-500 mx-auto mb-4" />
+                            <TrendingUp className={`w-20 h-20 ${theme.status.warning.text} mx-auto mb-4`} />
                         )}
                     </motion.div>
 
@@ -241,7 +242,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                     </p>
 
                     {score >= 85 ? (
-                        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+                        <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4 mb-6`}>
                             <h3 className={`font-semibold ${theme.status.success.text} mb-2`}>🎉 Chapter 3 Mastered!</h3>
                             <p className={theme.status.success.text}>
                                 You&apos;ve unlocked advanced income strategies and can now access Chapter 4: Budgeting Mastery & Cash Flow.
@@ -249,7 +250,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                             </p>
                         </div>
                     ) : (
-                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                        <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4 mb-6`}>
                             <h3 className={`font-semibold ${theme.status.info.text} mb-2`}>Keep Building Your Skills</h3>
                             <p className={theme.status.info.text}>
                                 Review the lesson materials, especially topics you missed. Strong income and career
@@ -260,11 +261,11 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-center">
-                    <div className="bg-blue-50 rounded-lg p-4">
+                    <div className={`${theme.backgrounds.card} rounded-lg p-4`}>
                         <div className={`text-2xl font-bold ${theme.status.info.text}`}>{selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length}</div>
                         <div className={theme.status.info.text}>Correct</div>
                     </div>
-                    <div className="bg-red-50 rounded-lg p-4">
+                    <div className={`${theme.status.error.bg} rounded-lg p-4`}>
                         <div className={`text-2xl font-bold ${theme.status.error.text}`}>{questions.length - selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length}</div>
                         <div className={theme.status.error.text}>Incorrect</div>
                     </div>
@@ -288,7 +289,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.5 }}
                         >
-                            <button className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center">
+                            <button className={`px-6 py-3 ${theme.status.success.bg.replace("/20", "")} ${theme.textColors.primary} rounded-lg hover:${theme.status.success.bg.replace("/20", "/80")} transition-colors flex items-center`}>
                                 Continue to Chapter 4
                                 <ArrowRight className="w-4 h-4 ml-2" />
                             </button>
@@ -301,30 +302,30 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
 
     return (
         <motion.div
-            className="bg-white rounded-lg shadow-lg overflow-hidden"
+            className={`${theme.backgrounds.card} rounded-lg shadow-lg overflow-hidden`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
         >
             {/* Progress Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
+            <div className={`bg-gradient-to-r from-slate-900 to-blue-900 ${theme.textColors.primary} p-6`}>
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-bold">Income & Career Finance Quiz</h2>
                     <div className="flex items-center space-x-4">
-                        <div className="text-sm bg-white/20 px-3 py-1 rounded-full">
+                        <div className={`text-sm ${theme.backgrounds.card}/20 px-3 py-1 rounded-full`}>
                             Question {currentQuestion + 1} of {questions.length}
                         </div>
                         {state.userProgress.currentChapter > 2 && (
-                            <div className="text-xs bg-white/10 px-2 py-1 rounded">
+                            <div className={`text-xs ${theme.backgrounds.card}/10 px-2 py-1 rounded`}>
                                 Chapter {state.userProgress.currentChapter}
                             </div>
                         )}
                     </div>
                 </div>
 
-                <div className="w-full bg-white/20 rounded-full h-2">
+                <div className={`w-full ${theme.backgrounds.card}/20 rounded-full h-2`}>
                     <motion.div
-                        className="bg-white h-2 rounded-full"
+                        className={`${theme.backgrounds.card} h-2 rounded-full`}
                         initial={{ width: '0%' }}
                         animate={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
                         transition={{ duration: 0.5 }}
@@ -352,19 +353,19 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                                         key={index}
                                         onClick={() => handleAnswerSelect(index)}
                                         className={`w-full text-left p-4 rounded-lg border-2 transition-all ${selectedAnswers[currentQuestion] === index
-                                            ? 'border-green-500 bg-green-50 text-green-900'
-                                            : `border-${theme.borderColors.primary} hover:border-green-300 hover:${theme.backgrounds.cardHover} ${theme.textColors.secondary} hover:${theme.textColors.primary}`
+                                            ? '${theme.status.success.border} ${theme.status.success.bg} ${theme.status.success.text}'
+                                            : `border-${theme.borderColors.primary} hover:${theme.status.success.border} hover:${theme.backgrounds.cardHover} ${theme.textColors.secondary} hover:${theme.textColors.primary}`
                                             }`}
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
                                     >
                                         <div className="flex items-center">
                                             <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${selectedAnswers[currentQuestion] === index
-                                                ? 'border-green-500 bg-green-500'
+                                                ? '${theme.status.success.border} ${theme.status.success.bg.replace("/20", "")}'
                                                 : `border-${theme.borderColors.muted}`
                                                 }`}>
                                                 {selectedAnswers[currentQuestion] === index && (
-                                                    <div className="w-2 h-2 bg-white rounded-full" />
+                                                    <div className={`w-2 h-2 ${theme.backgrounds.card} rounded-full`} />
                                                 )}
                                             </div>
                                             <span>{option}</span>
@@ -383,8 +384,8 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                         >
                             <div className="mb-6">
                                 <div className={`flex items-center mb-4 ${selectedAnswers[currentQuestion] === currentQ.correctAnswer
-                                    ? 'text-green-600'
-                                    : 'text-red-600'
+                                    ? '${theme.status.success.text}'
+                                    : '${theme.status.error.text}'
                                     }`}>
                                     {selectedAnswers[currentQuestion] === currentQ.correctAnswer ? (
                                         <CheckCircle className="w-6 h-6 mr-2" />
@@ -398,9 +399,9 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                                     </span>
                                 </div>
 
-                                <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
-                                    <h4 className="font-semibold text-blue-800 mb-2">Explanation:</h4>
-                                    <p className="text-blue-700">{currentQ.explanation}</p>
+                                <div className={`${theme.backgrounds.card} border-l-4 ${theme.borderColors.primary} p-4 rounded`}>
+                                    <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Explanation:</h4>
+                                    <p className={`${theme.textColors.primary}`}>{currentQ.explanation}</p>
                                 </div>
                             </div>
                         </motion.div>
@@ -417,7 +418,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                 <motion.button
                     onClick={handleNext}
                     disabled={!showExplanation && selectedAnswers[currentQuestion] === undefined}
-                    className={`px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:${theme.backgrounds.cardDisabled} disabled:${theme.textColors.muted} disabled:cursor-not-allowed transition-colors flex items-center`}
+                    className={`px-6 py-2 ${theme.status.success.bg.replace("/20", "")} ${theme.textColors.primary} rounded-lg hover:${theme.status.success.bg.replace("/20", "/80")} disabled:${theme.backgrounds.cardDisabled} disabled:${theme.textColors.muted} disabled:cursor-not-allowed transition-colors flex items-center`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                 >

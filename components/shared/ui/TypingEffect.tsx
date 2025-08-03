@@ -55,7 +55,7 @@ export default function TypingEffect({
         <span className={className}>
             {displayText}
             {!isComplete && (
-                <span className={`animate-pulse ${theme.textColors.accent}`}>|</span>
+                <span className={`animate-pulse ${theme.textColors.primary}`}>|</span>
             )}
         </span>
     );

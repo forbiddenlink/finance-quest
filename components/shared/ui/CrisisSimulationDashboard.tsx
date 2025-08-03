@@ -21,6 +21,7 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import GradientCard from '@/components/shared/ui/GradientCard';
 
 import { LucideIcon } from 'lucide-react';
+;
 import { theme } from '@/lib/theme';
 
 interface CrisisScenario {
@@ -684,7 +685,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
                 simulationResult.grade === 'C' ? theme.status.warning.bg.replace('/20', '') :
                   simulationResult.grade === 'D' ? theme.status.warning.bg.replace('/20', '') : theme.status.error.bg.replace('/20', '')
               }`}>
-              <span className="text-3xl font-bold text-white">{simulationResult.grade}</span>
+              <span className={`text-3xl font-bold ${theme.textColors.primary}`}>{simulationResult.grade}</span>
             </div>
             <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>Crisis Simulation Complete!</h2>
             <p className={`text-lg ${theme.textColors.secondary}`}>{activeScenario?.title}</p>
@@ -734,15 +735,15 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
             )}
 
             {simulationResult.improvements.length > 0 && (
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
-                <h3 className="font-bold text-orange-900 mb-3 flex items-center gap-2">
+              <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-6`}>
+                <h3 className={`font-bold ${theme.status.warning.text} mb-3 flex items-center gap-2`}>
                   <AlertTriangle className="w-5 h-5" />
                   Areas for Improvement
                 </h3>
                 <ul className="space-y-2">
                   {simulationResult.improvements.map((improvement, index) => (
-                    <li key={index} className="text-orange-800 text-sm flex items-start gap-2">
-                      <span className="text-orange-500 mt-1">!</span>
+                    <li key={index} className={`${theme.status.warning.text} text-sm flex items-start gap-2`}>
+                      <span className={`${theme.status.warning.text} mt-1`}>!</span>
                       {improvement}
                     </li>
                   ))}
@@ -761,7 +762,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
             </button>
             <button
               onClick={() => window.location.href = '/chapter' + (userProgress.currentChapter)}
-              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-colors flex items-center gap-2"
+              className={`px-6 py-3 bg-gradient-to-r from-slate-900 to-blue-900 ${theme.textColors.primary} rounded-lg font-semibold hover:from-slate-900 hover:to-blue-900 transition-colors flex items-center gap-2`}
             >
               <Brain className="w-4 h-4" />
               Continue Learning
@@ -826,13 +827,13 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
                 disabled={hasAnswered}
                 className={`w-full text-left p-4 rounded-lg border-2 transition-all ${hasAnswered && index === userAnswer
                   ? index === currentSimulationStep.correctAnswer
-                    ? `border-green-500 ${theme.status.success.bg}`
-                    : `border-red-500 ${theme.status.error.bg}`
+                    ? `${theme.status.success.border} ${theme.status.success.bg}`
+                    : `${theme.status.error.border} ${theme.status.error.bg}`
                   : hasAnswered && index === currentSimulationStep.correctAnswer
-                    ? `border-green-500 ${theme.status.success.bg}`
+                    ? `${theme.status.success.border} ${theme.status.success.bg}`
                     : hasAnswered
                       ? `${theme.borderColors.primary} ${theme.backgrounds.cardHover} opacity-60`
-                      : `${theme.borderColors.primary} hover:border-red-300 hover:${theme.status.error.bg}`
+                      : `${theme.borderColors.primary} hover:${theme.status.error.border} hover:${theme.status.error.bg}`
                   } ${hasAnswered ? 'cursor-default' : 'cursor-pointer'}`}
                 whileHover={!hasAnswered ? { scale: 1.02 } : {}}
                 whileTap={!hasAnswered ? { scale: 0.98 } : {}}
@@ -869,11 +870,11 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
               <p className={`${theme.status.info.text} mb-4`}>{currentSimulationStep.explanation}</p>
 
               <div className={`${theme.backgrounds.glass} bg-opacity-60 rounded p-4`}>
-                <h5 className="font-semibold text-blue-900 mb-2">Consequences:</h5>
-                <ul className="text-sm text-blue-800 space-y-1">
+                <h5 className={`font-semibold ${theme.textColors.primary} mb-2`}>Consequences:</h5>
+                <ul className={`text-sm ${theme.textColors.primary} space-y-1`}>
                   {currentSimulationStep.consequences.map((consequence, index) => (
                     <li key={index} className="flex items-start gap-2">
-                      <span className="text-blue-600 mt-0.5">•</span>
+                      <span className={`${theme.textColors.primary} mt-0.5`}>•</span>
                       {consequence}
                     </li>
                   ))}
@@ -890,7 +891,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
   return (
     <div className={`space-y-6 ${className}`}>
       <GradientCard variant="glass" gradient="red" className="p-8 text-center">
-        <AlertTriangle className="w-16 h-16 text-red-600 mx-auto mb-4" />
+        <AlertTriangle className={`w-16 h-16 ${theme.status.error.text} mx-auto mb-4`} />
         <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-4`}>Crisis Simulation Training</h2>
         <p className={`text-lg ${theme.textColors.secondary} max-w-3xl mx-auto`}>
           Practice handling financial emergencies in a safe environment. Learn to make sound decisions under pressure
@@ -913,12 +914,12 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
             >
               <div className="flex items-start justify-between mb-4">
                 <Icon className={`w-8 h-8 ${!scenario.unlocked ? theme.textColors.muted :
-                  scenario.urgency === 'critical' ? 'text-red-600' :
-                    scenario.urgency === 'high' ? 'text-orange-600' :
-                      scenario.urgency === 'medium' ? 'text-yellow-600' : 'text-blue-600'
+                  scenario.urgency === 'critical' ? '${theme.status.error.text}' :
+                    scenario.urgency === 'high' ? '${theme.status.warning.text}' :
+                      scenario.urgency === 'medium' ? '${theme.status.warning.text}' : '${theme.textColors.primary}'
                   }`} />
                 {isCompleted && (
-                  <Award className="w-6 h-6 text-green-600" />
+                  <Award className={`w-6 h-6 ${theme.status.success.text}`} />
                 )}
               </div>
 

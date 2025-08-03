@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, ReactNode } from 'react';
+import { theme } from '@/lib/theme';
 
 interface InteractiveCardProps {
   children: ReactNode;
@@ -109,7 +110,7 @@ export default function InteractiveCard({
       {/* Border Highlight */}
       {isHovered && (
         <div
-          className="absolute inset-0 rounded-lg border-2 border-white/20 pointer-events-none transition-all duration-300"
+          className={`absolute inset-0 rounded-lg border-2 ${theme.borderColors.muted}/20 pointer-events-none transition-all duration-300`}
           style={{
             boxShadow: `0 0 20px ${glowColor}`
           }}
