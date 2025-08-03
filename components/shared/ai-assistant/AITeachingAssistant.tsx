@@ -150,15 +150,15 @@ export default function AITeachingAssistant() {
       </div>
 
       {/* Quick Help Topics */}
-      <div className="p-4 bg-gray-50 border-b">
-        <p className="text-sm text-gray-600 mb-3">Ask me about:</p>
+      <div className={`p-4 ${theme.backgrounds.cardHover} border-b`}>
+        <p className={`text-sm ${theme.textColors.secondary} mb-3`}>Ask me about:</p>
         <div className="flex flex-wrap gap-2">
           {quickHelpTopics.map((help, index) => (
             <button
               key={index}
               onClick={() => handleQuickHelp(help)}
               disabled={isTyping}
-              className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full hover:bg-blue-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className={`text-xs ${theme.status.info.bg} ${theme.status.info.text} px-3 py-1 rounded-full hover:${theme.status.info.bg}/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               {help.question}
             </button>
@@ -182,16 +182,16 @@ export default function AITeachingAssistant() {
               {message.isLoading ? (
                 <div className="flex items-center space-x-2">
                   <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div className={`w-2 h-2 ${theme.textColors.muted} rounded-full animate-bounce`}></div>
+                    <div className={`w-2 h-2 ${theme.textColors.muted} rounded-full animate-bounce`} style={{ animationDelay: '0.1s' }}></div>
+                    <div className={`w-2 h-2 ${theme.textColors.muted} rounded-full animate-bounce`} style={{ animationDelay: '0.2s' }}></div>
                   </div>
-                  <span className="text-sm text-gray-600">AI is thinking...</span>
+                  <span className={`text-sm ${theme.textColors.secondary}`}>AI is thinking...</span>
                 </div>
               ) : (
                 <>
                   <p className="text-sm whitespace-pre-wrap">{message.text}</p>
-                  <p className={`text-xs mt-1 ${message.isUser ? 'text-blue-100' : 'text-gray-500'
+                  <p className={`text-xs mt-1 ${message.isUser ? theme.textColors.accent : theme.textColors.muted
                     }`}>
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
@@ -210,7 +210,7 @@ export default function AITeachingAssistant() {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="Ask me anything about money and finance..."
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={`flex-1 px-4 py-2 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
             disabled={isTyping}
           />
           <button
@@ -221,7 +221,7 @@ export default function AITeachingAssistant() {
             {isTyping ? '...' : 'Send'}
           </button>
         </div>
-        <p className="text-xs text-gray-500 mt-2 flex items-center gap-1">
+        <p className={`text-xs ${theme.textColors.muted} mt-2 flex items-center gap-1`}>
           <Lightbulb className="w-3 h-3" />
           This AI knows your current progress and can give personalized advice!
         </p>

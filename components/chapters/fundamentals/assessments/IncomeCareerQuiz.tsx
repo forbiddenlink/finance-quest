@@ -268,16 +268,16 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                         <div className={`text-2xl font-bold ${theme.status.error.text}`}>{questions.length - selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length}</div>
                         <div className={theme.status.error.text}>Incorrect</div>
                     </div>
-                    <div className="bg-gray-50 rounded-lg p-4">
-                        <div className="text-2xl font-bold text-gray-600">{questions.length}</div>
-                        <div className="text-gray-800">Total</div>
+                    <div className={`${theme.backgrounds.cardHover} rounded-lg p-4`}>
+                        <div className={`text-2xl font-bold ${theme.textColors.muted}`}>{questions.length}</div>
+                        <div className={`${theme.textColors.primary}`}>Total</div>
                     </div>
                 </div>
 
                 <div className="flex justify-center space-x-4">
                     <button
                         onClick={resetQuiz}
-                        className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                        className={`px-6 py-3 ${theme.backgrounds.cardDisabled} ${theme.textColors.primary} rounded-lg hover:${theme.backgrounds.cardHover} transition-colors`}
                     >
                         Retake Quiz
                     </button>
@@ -353,7 +353,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                                         onClick={() => handleAnswerSelect(index)}
                                         className={`w-full text-left p-4 rounded-lg border-2 transition-all ${selectedAnswers[currentQuestion] === index
                                             ? 'border-green-500 bg-green-50 text-green-900'
-                                            : 'border-gray-200 hover:border-green-300 hover:bg-gray-50 text-gray-700 hover:text-gray-900'
+                                            : `border-${theme.borderColors.primary} hover:border-green-300 hover:${theme.backgrounds.cardHover} ${theme.textColors.secondary} hover:${theme.textColors.primary}`
                                             }`}
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
@@ -361,7 +361,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                                         <div className="flex items-center">
                                             <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${selectedAnswers[currentQuestion] === index
                                                 ? 'border-green-500 bg-green-500'
-                                                : 'border-gray-300'
+                                                : `border-${theme.borderColors.muted}`
                                                 }`}>
                                                 {selectedAnswers[currentQuestion] === index && (
                                                     <div className="w-2 h-2 bg-white rounded-full" />
@@ -409,15 +409,15 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
             </div>
 
             {/* Navigation */}
-            <div className="bg-gray-50 px-8 py-4 flex justify-between items-center">
-                <div className="text-sm text-gray-500">
+            <div className={`${theme.backgrounds.cardHover} px-8 py-4 flex justify-between items-center`}>
+                <div className={`text-sm ${theme.textColors.secondary}`}>
                     {!showExplanation ? 'Select an answer to continue' : 'Review the explanation'}
                 </div>
 
                 <motion.button
                     onClick={handleNext}
                     disabled={!showExplanation && selectedAnswers[currentQuestion] === undefined}
-                    className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed transition-colors flex items-center"
+                    className={`px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:${theme.backgrounds.cardDisabled} disabled:${theme.textColors.muted} disabled:cursor-not-allowed transition-colors flex items-center`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                 >

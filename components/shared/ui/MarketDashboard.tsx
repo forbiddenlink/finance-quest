@@ -298,7 +298,7 @@ export default function MarketDashboard() {
         </div>
 
         {/* Market Cap Distribution */}
-        <div className="bg-gray-50 rounded-lg p-6">
+        <div className={`${theme.backgrounds.cardHover} rounded-lg p-6`}>
           <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>Market Cap Distribution</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -326,7 +326,7 @@ export default function MarketDashboard() {
         </div>
 
         {/* Economic Indicators */}
-        <div className="xl:col-span-2 bg-gray-50 rounded-lg p-6">
+        <div className={`xl:col-span-2 ${theme.backgrounds.cardHover} rounded-lg p-6`}>
           <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>Economic Indicators</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -356,23 +356,23 @@ export default function MarketDashboard() {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center">
-              <p className="text-sm text-gray-600">Current Price</p>
+              <p className={`text-sm ${theme.textColors.secondary}`}>Current Price</p>
               <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{formatCurrency(selectedStock.latestPrice)}</p>
             </div>
             <div className="text-center">
-              <p className="text-sm text-gray-600">Daily Change</p>
+              <p className={`text-sm ${theme.textColors.secondary}`}>Daily Change</p>
               <p className={`text-2xl font-bold ${getChangeColor(selectedStock.change)}`}>
                 {selectedStock.change >= 0 ? '+' : ''}{formatCurrency(selectedStock.change)}
               </p>
             </div>
             <div className="text-center">
-              <p className="text-sm text-gray-600">Percentage Change</p>
+              <p className={`text-sm ${theme.textColors.secondary}`}>Percentage Change</p>
               <p className={`text-2xl font-bold ${getChangeColor(selectedStock.changePercent)}`}>
                 {selectedStock.changePercent >= 0 ? '+' : ''}{formatPercent(selectedStock.changePercent)}
               </p>
             </div>
             <div className="text-center">
-              <p className="text-sm text-gray-600">Market Cap</p>
+              <p className={`text-sm ${theme.textColors.secondary}`}>Market Cap</p>
               <p className={`text-2xl font-bold ${theme.textColors.primary}`}>
                 {formatCurrency(selectedStock.marketCap, true)}
               </p>
@@ -382,9 +382,9 @@ export default function MarketDashboard() {
       )}
 
       {/* Educational Tips */}
-      <div className="mt-8 bg-yellow-50 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-yellow-900 mb-4">💡 Market Insights</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-yellow-800">
+      <div className={`mt-8 ${theme.status.warning.bg} rounded-lg p-6`}>
+        <h3 className={`text-lg font-semibold ${theme.status.warning.text} mb-4`}>💡 Market Insights</h3>
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 text-sm ${theme.status.warning.text}`}>
           <div>
             <h4 className="font-semibold mb-2">Understanding Market Trends</h4>
             <p>Market trends reflect overall investor sentiment. Bullish markets indicate optimism and rising prices, while bearish markets show pessimism and declining prices.</p>

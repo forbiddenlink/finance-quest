@@ -150,7 +150,7 @@ export default function EnhancedHeroSection() {
                           <span className="font-medium">{chapter.name}</span>
                           <span className="text-gray-500">{chapter.progress}%</span>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2`}>
                           <div
                             className={`h-2 rounded-full transition-all duration-500 ${chapter.color}`}
                             style={{ width: `${chapter.progress}%` }}

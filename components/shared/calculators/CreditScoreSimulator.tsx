@@ -197,14 +197,14 @@ export default function CreditScoreSimulator() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
             {/* Header */}
-            <div className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
+            <div className={`${theme.backgrounds.glass} backdrop-blur-xl border-b ${theme.borderColors.accent}`}>
                 <div className="max-w-7xl mx-auto px-4 py-6">
                     <div className="text-center">
-                        <h2 className="${theme.typography.heading2} text-white mb-2 flex items-center justify-center gap-3">
-                            <CreditCard className="w-8 h-8 text-amber-400" />
+                        <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2 flex items-center justify-center gap-3`}>
+                            <CreditCard className={`w-8 h-8 ${theme.textColors.accent}`} />
                             Credit Score Simulator
                         </h2>
-                        <p className="text-gray-300">
+                        <p className={`${theme.textColors.secondary}`}>
                             Model credit score improvements and create your optimization strategy
                         </p>
                     </div>
@@ -216,12 +216,12 @@ export default function CreditScoreSimulator() {
                     {/* Input Controls */}
                     <div className="xl:col-span-1 space-y-6">
                         {/* Current Credit Profile */}
-                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="${theme.typography.heading4} text-white mb-4">Current Credit Profile</h3>
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
+                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Current Credit Profile</h3>
 
                             <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                                         Payment History (35% weight)
                                     </label>
                                     <div className="relative">
@@ -231,15 +231,15 @@ export default function CreditScoreSimulator() {
                                             onChange={(e) => setPaymentHistory(e.target.value)}
                                             min="0"
                                             max="100"
-                                            className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            className={`w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                         />
-                                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">%</span>
+                                        <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>%</span>
                                     </div>
-                                    <p className="text-xs text-gray-400 mt-1">% of payments made on time</p>
+                                    <p className={`text-xs ${theme.textColors.muted} mt-1`}>% of payments made on time</p>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                                         Credit Utilization (30% weight)
                                     </label>
                                     <div className="relative">
@@ -249,15 +249,15 @@ export default function CreditScoreSimulator() {
                                             onChange={(e) => setCreditUtilization(e.target.value)}
                                             min="0"
                                             max="100"
-                                            className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            className={`w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                         />
-                                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">%</span>
+                                        <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>%</span>
                                     </div>
-                                    <p className="text-xs text-gray-400 mt-1">% of credit limits used</p>
+                                    <p className={`text-xs ${theme.textColors.muted} mt-1`}>% of credit limits used</p>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                                         Credit History Length (15% weight)
                                     </label>
                                     <div className="relative">
@@ -268,32 +268,32 @@ export default function CreditScoreSimulator() {
                                             min="0"
                                             max="30"
                                             step="0.5"
-                                            className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            className={`w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                         />
-                                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">years</span>
+                                        <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>years</span>
                                     </div>
-                                    <p className="text-xs text-gray-400 mt-1">Average age of accounts</p>
+                                    <p className={`text-xs ${theme.textColors.muted} mt-1`}>Average age of accounts</p>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                                         Credit Mix (10% weight)
                                     </label>
                                     <select
                                         value={creditMix}
                                         onChange={(e) => setCreditMix(e.target.value)}
-                                        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                        className={`w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                     >
                                         <option value="1">1 type (credit cards only)</option>
                                         <option value="2">2 types (cards + loan)</option>
                                         <option value="3">3 types (cards + auto + mortgage)</option>
                                         <option value="4">4+ types (diverse mix)</option>
                                     </select>
-                                    <p className="text-xs text-gray-400 mt-1">Types of credit accounts</p>
+                                    <p className={`text-xs ${theme.textColors.muted} mt-1`}>Types of credit accounts</p>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                                         New Credit (10% weight)
                                     </label>
                                     <input
@@ -302,20 +302,20 @@ export default function CreditScoreSimulator() {
                                         onChange={(e) => setNewCredit(e.target.value)}
                                         min="0"
                                         max="10"
-                                        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                        className={`w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                     />
-                                    <p className="text-xs text-gray-400 mt-1">Hard inquiries in last 2 years</p>
+                                    <p className={`text-xs ${theme.textColors.muted} mt-1`}>Hard inquiries in last 2 years</p>
                                 </div>
                             </div>
                         </div>
 
                         {/* Target Profile */}
-                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="${theme.typography.heading4} text-white mb-4">Target Improvements</h3>
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
+                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Target Improvements</h3>
 
                             <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">Payment History Goal</label>
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>Payment History Goal</label>
                                     <div className="relative">
                                         <input
                                             type="number"
@@ -323,14 +323,14 @@ export default function CreditScoreSimulator() {
                                             onChange={(e) => setTargetPaymentHistory(e.target.value)}
                                             min="0"
                                             max="100"
-                                            className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+                                            className={`w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all`}
                                         />
-                                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">%</span>
+                                        <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>%</span>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">Target Utilization</label>
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>Target Utilization</label>
                                     <div className="relative">
                                         <input
                                             type="number"
@@ -338,14 +338,14 @@ export default function CreditScoreSimulator() {
                                             onChange={(e) => setTargetUtilization(e.target.value)}
                                             min="0"
                                             max="100"
-                                            className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+                                            className={`w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all`}
                                         />
-                                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">%</span>
+                                        <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>%</span>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">Credit Age Goal</label>
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>Credit Age Goal</label>
                                     <div className="relative">
                                         <input
                                             type="number"
@@ -354,18 +354,18 @@ export default function CreditScoreSimulator() {
                                             min="0"
                                             max="30"
                                             step="0.5"
-                                            className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+                                            className={`w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all`}
                                         />
-                                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">years</span>
+                                        <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>years</span>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">Target Credit Mix</label>
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>Target Credit Mix</label>
                                     <select
                                         value={targetCreditMix}
                                         onChange={(e) => setTargetCreditMix(e.target.value)}
-                                        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+                                        className={`w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all`}
                                     >
                                         <option value="1">1 type</option>
                                         <option value="2">2 types</option>
@@ -375,14 +375,14 @@ export default function CreditScoreSimulator() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">Target Inquiries</label>
+                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>Target Inquiries</label>
                                     <input
                                         type="number"
                                         value={targetNewCredit}
                                         onChange={(e) => setTargetNewCredit(e.target.value)}
                                         min="0"
                                         max="10"
-                                        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+                                        className={`w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all`}
                                     />
                                 </div>
                             </div>
@@ -393,31 +393,31 @@ export default function CreditScoreSimulator() {
                     <div className="xl:col-span-2 space-y-8">
                         {/* Score Comparison */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center">
+                            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center`}>
                                 <Target className="w-8 h-8 mx-auto mb-3 text-amber-400" />
-                                <h3 className="${theme.typography.heading4} text-white">Current Score</h3>
+                                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Current Score</h3>
                                 <p className={`${theme.typography.heading2} ${getScoreColor(currentScore)}`}>{currentScore}</p>
-                                <p className="text-sm text-gray-300">{getScoreGrade(currentScore)}</p>
+                                <p className={`text-sm ${theme.textColors.secondary}`}>{getScoreGrade(currentScore)}</p>
                             </div>
 
-                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center">
+                            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center`}>
                                 <TrendingUp className="w-8 h-8 mx-auto mb-3 text-blue-400" />
-                                <h3 className="${theme.typography.heading4} text-white">Projected Score</h3>
+                                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Projected Score</h3>
                                 <p className={`${theme.typography.heading2} ${getScoreColor(projectedScore)}`}>{projectedScore}</p>
-                                <p className="text-sm text-gray-300">{getScoreGrade(projectedScore)}</p>
+                                <p className={`text-sm ${theme.textColors.secondary}`}>{getScoreGrade(projectedScore)}</p>
                             </div>
 
-                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center">
-                                <Calendar className="w-8 h-8 mx-auto mb-3 text-slate-400" />
-                                <h3 className="${theme.typography.heading4} text-white">Time to Goal</h3>
-                                <p className="${theme.typography.heading2} text-slate-300">{timeToTarget}</p>
-                                <p className="text-sm text-gray-300">months</p>
+                            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center`}>
+                                <Calendar className={`w-8 h-8 mx-auto mb-3 ${theme.textColors.muted}`} />
+                                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Time to Goal</h3>
+                                <p className={`${theme.typography.heading2} ${theme.textColors.secondary}`}>{timeToTarget}</p>
+                                <p className={`text-sm ${theme.textColors.secondary}`}>months</p>
                             </div>
                         </div>
 
                         {/* Score Improvement Chart */}
-                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="${theme.typography.heading4} text-white mb-4">Credit Score Projection</h3>
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
+                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Credit Score Projection</h3>
                             <div className="h-64">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <LineChart data={monthlyProjections}>
@@ -454,8 +454,8 @@ export default function CreditScoreSimulator() {
                         </div>
 
                         {/* Factor Impact Analysis */}
-                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="${theme.typography.heading4} text-white mb-4">Impact by Factor</h3>
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
+                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Impact by Factor</h3>
                             <div className="h-64">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={creditFactors}>
@@ -490,32 +490,32 @@ export default function CreditScoreSimulator() {
 
                 {/* Action Steps */}
                 <div className="mt-8 ${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                    <h3 className="${theme.typography.heading4} text-white mb-4">🎯 Optimization Strategy</h3>
+                    <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>🎯 Optimization Strategy</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {scoreIncrease > 0 && (
                             <>
                                 {parseFloat(targetUtilization) < parseFloat(creditUtilization) && (
-                                    <div className="${theme.status.info.bg}0/20 border border-blue-500/30 rounded-lg p-4">
+                                    <div className={`${theme.status.info.bg}/20 border border-blue-500/30 rounded-lg p-4`}>
                                         <h4 className="font-semibold text-blue-300 mb-2">💳 Reduce Credit Utilization</h4>
-                                        <p className="text-sm text-gray-300">
+                                        <p className={`text-sm ${theme.textColors.secondary}`}>
                                             Pay down balances to {targetUtilization}% utilization. This is often the fastest way to improve your score.
                                         </p>
                                     </div>
                                 )}
 
                                 {parseFloat(targetPaymentHistory) > parseFloat(paymentHistory) && (
-                                    <div className="${theme.status.success.bg}0/20 border border-green-500/30 rounded-lg p-4">
+                                    <div className={`${theme.status.success.bg}/20 border border-green-500/30 rounded-lg p-4`}>
                                         <h4 className="font-semibold text-green-300 mb-2">✅ Perfect Payment History</h4>
-                                        <p className="text-sm text-gray-300">
+                                        <p className={`text-sm ${theme.textColors.secondary}`}>
                                             Set up automatic payments to ensure 100% on-time payment history going forward.
                                         </p>
                                     </div>
                                 )}
 
                                 {parseFloat(targetNewCredit) < parseFloat(newCredit) && (
-                                    <div className="bg-amber-500/20 border border-amber-500/30 rounded-lg p-4">
+                                    <div className={`${theme.status.warning.bg}/20 border border-amber-500/30 rounded-lg p-4`}>
                                         <h4 className="font-semibold text-amber-300 mb-2">🛑 Limit New Credit</h4>
-                                        <p className="text-sm text-gray-300">
+                                        <p className={`text-sm ${theme.textColors.secondary}`}>
                                             Avoid new credit applications for the next 12-24 months to let inquiries age off.
                                         </p>
                                     </div>
