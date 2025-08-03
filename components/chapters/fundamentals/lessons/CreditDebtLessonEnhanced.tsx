@@ -293,6 +293,11 @@ export default function CreditDebtLessonEnhanced({ onComplete }: CreditDebtLesso
               <p className={`mt-4 text-center font-bold ${theme.textColors.primary}`}>
                 💡 Difference on $400k mortgage: Poor credit costs $200k+ more in interest!
               </p>
+              <div className={`mt-4 p-3 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg text-center`}>
+                <p className={`text-sm ${theme.status.info.text} font-medium`}>
+                  📊 Use our <strong>Credit Score Improvement Calculator</strong> in the Calculator tab to track your progress!
+                </p>
+              </div>
             </div>
           )}
 
@@ -339,6 +344,11 @@ export default function CreditDebtLessonEnhanced({ onComplete }: CreditDebtLesso
                   <p className={`${theme.textColors.secondary} text-sm`}>$1,000 limit, $50 balance = Maximum score benefit, excellent standing</p>
                 </div>
               </div>
+              <div className={`mt-4 p-3 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg text-center`}>
+                <p className={`text-sm ${theme.status.info.text} font-medium`}>
+                  🔧 Try our <strong>Credit Utilization Calculator</strong> in the Calculator tab to optimize your card payments!
+                </p>
+              </div>
             </div>
           )}
 
@@ -367,6 +377,11 @@ export default function CreditDebtLessonEnhanced({ onComplete }: CreditDebtLesso
                     <li>🎯 Best for: Disciplined savers</li>
                   </ul>
                 </div>
+              </div>
+              <div className={`mt-4 p-3 ${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg text-center`}>
+                <p className={`text-sm ${theme.status.warning.text} font-medium`}>
+                  💰 Use our <strong>Debt Payoff Calculator</strong> to compare strategies and see your debt-free date!
+                </p>
               </div>
             </div>
           )}

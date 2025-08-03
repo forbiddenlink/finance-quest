@@ -2,7 +2,7 @@
 
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
 import CreditDebtLessonEnhanced from '@/components/chapters/fundamentals/lessons/CreditDebtLessonEnhanced';
-import DebtPayoffCalculator from '@/components/shared/calculators/DebtPayoffCalculator';
+import CreditDebtCalculatorEnhanced from '@/components/shared/calculators/CreditDebtCalculatorEnhanced';
 import CreditDebtQuizEnhanced from '@/components/chapters/fundamentals/quizzes/CreditDebtQuizEnhanced';
 import { CreditCard } from 'lucide-react';
 
@@ -15,10 +15,10 @@ export default function Chapter6Page() {
             icon={CreditCard}
             iconColor="text-red-400"
             lessonComponent={<CreditDebtLessonEnhanced />}
-            calculatorComponent={<DebtPayoffCalculator />}
+            calculatorComponent={<CreditDebtCalculatorEnhanced />}
             quizComponent={<CreditDebtQuizEnhanced />}
-            calculatorTitle="Debt Payoff Calculator"
-            calculatorDescription="Calculate optimal debt repayment strategies and save thousands in interest"
+            calculatorTitle="Credit & Debt Suite"
+            calculatorDescription="Comprehensive credit optimization and debt elimination tools"
             quizTitle="Credit & Debt Quiz"
             quizDescription="Test your credit knowledge! You need 80% to unlock Chapter 7."
         />

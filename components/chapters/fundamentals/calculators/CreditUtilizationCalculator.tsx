@@ -1,0 +1,545 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
+import {
+  CreditCard,
+  Percent,
+  Target,
+  AlertCircle,
+  CheckCircle,
+  Calculator,
+  Calendar,
+  DollarSign,
+  Zap,
+  Shield,
+  Plus,
+  Trash2
+} from 'lucide-react';
+
+interface CreditCard {
+  id: string;
+  name: string;
+  currentBalance: number;
+  creditLimit: number;
+  minimumPayment: number;
+  interestRate: number;
+  statementDate: number; // Day of month
+}
+
+interface UtilizationStrategy {
+  name: string;
+  description: string;
+  targetUtilization: number;
+  impact: 'high' | 'medium' | 'low';
+  timeframe: string;
+  scoreImprovement: number;
+}
+
+export default function CreditUtilizationCalculator() {
+  const { recordCalculatorUsage } = useProgressStore();
+  
+  const [cards, setCards] = useState<CreditCard[]>([
+    {
+      id: '1',
+      name: 'Main Credit Card',
+      currentBalance: 2500,
+      creditLimit: 5000,
+      minimumPayment: 75,
+      interestRate: 18.99,
+      statementDate: 15
+    },
+    {
+      id: '2', 
+      name: 'Rewards Card',
+      currentBalance: 800,
+      creditLimit: 3000,
+      minimumPayment: 25,
+      interestRate: 22.99,
+      statementDate: 28
+    }
+  ]);
+
+  const [availableExtraPayment, setAvailableExtraPayment] = useState(300);
+  const [selectedStrategy, setSelectedStrategy] = useState('balanced');
+
+  useEffect(() => {
+    recordCalculatorUsage('credit-utilization-calculator');
+  }, [recordCalculatorUsage]);
+
+  const addCard = () => {
+    const newCard: CreditCard = {
+      id: Date.now().toString(),
+      name: 'New Card',
+      currentBalance: 0,
+      creditLimit: 1000,
+      minimumPayment: 25,
+      interestRate: 18.99,
+      statementDate: 15
+    };
+    setCards([...cards, newCard]);
+  };
+
+  const updateCard = (id: string, field: keyof CreditCard, value: string | number) => {
+    setCards(prev => prev.map(card =>
+      card.id === id ? { ...card, [field]: value } : card
+    ));
+  };
+
+  const removeCard = (id: string) => {
+    setCards(prev => prev.filter(card => card.id !== id));
+  };
+
+  const calculateUtilization = (balance: number, limit: number) => {
+    return limit > 0 ? (balance / limit) * 100 : 0;
+  };
+
+  const calculateTotalUtilization = () => {
+    const totalBalance = cards.reduce((sum, card) => sum + card.currentBalance, 0);
+    const totalLimit = cards.reduce((sum, card) => sum + card.creditLimit, 0);
+    return calculateUtilization(totalBalance, totalLimit);
+  };
+
+  const getUtilizationColor = (utilization: number) => {
+    if (utilization <= 10) return 'text-green-400';
+    if (utilization <= 30) return 'text-yellow-400';
+    if (utilization <= 50) return 'text-orange-400';
+    return 'text-red-400';
+  };
+
+  const getUtilizationStatus = (utilization: number) => {
+    if (utilization <= 10) return 'Excellent';
+    if (utilization <= 30) return 'Good';
+    if (utilization <= 50) return 'Fair';
+    return 'Poor';
+  };
+
+  const optimizeUtilization = () => {
+    const totalPayment = availableExtraPayment;
+    
+    const optimizedCards = [...cards];
+    let remainingPayment = totalPayment;
+
+    if (selectedStrategy === 'highest_utilization') {
+      // Pay down highest utilization cards first
+      optimizedCards.sort((a, b) => calculateUtilization(b.currentBalance, b.creditLimit) - calculateUtilization(a.currentBalance, a.creditLimit));
+    } else if (selectedStrategy === 'highest_balance') {
+      // Pay down highest balance cards first
+      optimizedCards.sort((a, b) => b.currentBalance - a.currentBalance);
+    } else if (selectedStrategy === 'balanced') {
+      // Spread payments to balance utilization across cards
+      const targetUtilization = 10; // Target 10% on all cards
+      
+      return optimizedCards.map(card => {
+        const targetBalance = (card.creditLimit * targetUtilization) / 100;
+        const reduction = Math.max(0, card.currentBalance - targetBalance);
+        const payment = Math.min(reduction, card.currentBalance);
+        
+        return {
+          ...card,
+          optimizedBalance: Math.max(0, card.currentBalance - payment),
+          payment: payment
+        };
+      });
+    }
+
+    // Apply payments for highest_utilization and highest_balance strategies
+    return optimizedCards.map(card => {
+      const payment = Math.min(remainingPayment, card.currentBalance);
+      remainingPayment -= payment;
+      
+      return {
+        ...card,
+        optimizedBalance: card.currentBalance - payment,
+        payment: payment
+      };
+    });
+  };
+
+  const optimizedCards = optimizeUtilization();
+  const currentTotalUtilization = calculateTotalUtilization();
+  const optimizedTotalUtilization = optimizedCards.reduce((total, card) => {
+    const cardUtil = calculateUtilization(card.optimizedBalance || card.currentBalance, card.creditLimit);
+    return total + (cardUtil * (card.creditLimit / cards.reduce((sum, c) => sum + c.creditLimit, 0)));
+  }, 0);
+
+  const utilizationStrategies: UtilizationStrategy[] = [
+    {
+      name: 'Under 10% (Excellent)',
+      description: 'Keep all cards under 10% utilization for maximum score benefit',
+      targetUtilization: 10,
+      impact: 'high',
+      timeframe: '1-2 months',
+      scoreImprovement: 50
+    },
+    {
+      name: 'Under 30% (Good)',
+      description: 'Standard recommendation - avoid score damage',
+      targetUtilization: 30,
+      impact: 'medium',
+      timeframe: '1 month',
+      scoreImprovement: 30
+    },
+    {
+      name: 'Zero Balance (Advanced)',
+      description: 'Pay before statement date to report 0% (keep 1 card with small balance)',
+      targetUtilization: 0,
+      impact: 'high',
+      timeframe: '1 month',
+      scoreImprovement: 30
+    }
+  ];
+
+  const estimateScoreImprovement = () => {
+    const currentUtil = currentTotalUtilization;
+    const optimizedUtil = optimizedTotalUtilization;
+    
+    let improvement = 0;
+    if (currentUtil > 50 && optimizedUtil <= 30) improvement = 40;
+    else if (currentUtil > 30 && optimizedUtil <= 10) improvement = 30;
+    else if (currentUtil > 10 && optimizedUtil <= 10) improvement = 20;
+    else improvement = Math.max(0, (currentUtil - optimizedUtil) * 0.5);
+    
+    return Math.round(improvement);
+  };
+
+  return (
+    <div className={`max-w-7xl mx-auto ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg p-6`}>
+      <div className="mb-6">
+        <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2 flex items-center gap-3`}>
+          <div className={`${theme.status.info.bg} p-2 rounded-lg`}>
+            <Percent className={`w-6 h-6 ${theme.status.info.text}`} />
+          </div>
+          Credit Utilization Optimizer
+        </h2>
+        <p className={`${theme.textColors.secondary}`}>
+          Optimize your credit card utilization to maximize your credit score impact
+        </p>
+      </div>
+
+      {/* Current vs Optimized Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className={`${getUtilizationColor(currentTotalUtilization).includes('green') ? theme.status.success.bg : theme.status.error.bg} border ${getUtilizationColor(currentTotalUtilization).includes('green') ? theme.status.success.border : theme.status.error.border} rounded-lg p-6 text-center`}>
+          <h3 className={`font-semibold ${getUtilizationColor(currentTotalUtilization).includes('green') ? theme.status.success.text : theme.status.error.text} mb-3`}>Current Utilization</h3>
+          <div className={`text-4xl font-bold ${getUtilizationColor(currentTotalUtilization)} mb-2`}>
+            {currentTotalUtilization.toFixed(1)}%
+          </div>
+          <p className={`${theme.textColors.secondary} text-sm`}>
+            {getUtilizationStatus(currentTotalUtilization)} Status
+          </p>
+        </div>
+
+        <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-6 text-center`}>
+          <h3 className={`font-semibold ${theme.status.info.text} mb-3`}>After Optimization</h3>
+          <div className={`text-4xl font-bold ${getUtilizationColor(optimizedTotalUtilization)} mb-2`}>
+            {optimizedTotalUtilization.toFixed(1)}%
+          </div>
+          <p className={`${theme.textColors.secondary} text-sm`}>
+            {getUtilizationStatus(optimizedTotalUtilization)} Status
+          </p>
+        </div>
+
+        <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-6 text-center`}>
+          <h3 className={`font-semibold ${theme.status.success.text} mb-3`}>Score Improvement</h3>
+          <div className={`text-4xl font-bold text-green-400 mb-2`}>
+            +{estimateScoreImprovement()}
+          </div>
+          <p className={`${theme.textColors.secondary} text-sm`}>
+            Estimated Points
+          </p>
+        </div>
+      </div>
+
+      {/* Payment Strategy Selection */}
+      <div className="mb-8">
+        <h3 className={`${theme.typography.heading3} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+          <Target className="w-5 h-5" />
+          Optimization Strategy
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
+            <h4 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
+              <DollarSign className="w-5 h-5" />
+              Available Extra Payment
+            </h4>
+            <div className="relative">
+              <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+              <input
+                type="number"
+                value={availableExtraPayment}
+                onChange={(e) => setAvailableExtraPayment(Number(e.target.value))}
+                className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500`}
+                min="0"
+                step="50"
+              />
+            </div>
+            <p className={`text-sm ${theme.textColors.secondary} mt-2`}>
+              Additional payment beyond minimums to optimize utilization
+            </p>
+          </div>
+
+          <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
+            <h4 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
+              <Calculator className="w-5 h-5" />
+              Payment Strategy
+            </h4>
+            <select
+              value={selectedStrategy}
+              onChange={(e) => setSelectedStrategy(e.target.value)}
+              className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500`}
+            >
+              <option value="balanced">Balanced Utilization</option>
+              <option value="highest_utilization">Highest Utilization First</option>
+              <option value="highest_balance">Highest Balance First</option>
+            </select>
+            <p className={`text-sm ${theme.textColors.secondary} mt-2`}>
+              Choose how to distribute your extra payments
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Credit Cards */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className={`${theme.typography.heading3} ${theme.textColors.primary} flex items-center gap-2`}>
+            <CreditCard className="w-5 h-5" />
+            Your Credit Cards
+          </h3>
+          <button
+            onClick={addCard}
+            className={`${theme.status.info.bg.replace('/20', '')} ${theme.textColors.primary} px-4 py-2 rounded-lg hover:opacity-80 transition-opacity text-sm flex items-center gap-2`}
+          >
+            <Plus className="w-4 h-4" />
+            Add Card
+          </button>
+        </div>
+
+        <div className="space-y-4">
+          {optimizedCards.map((card) => {
+            const currentUtil = calculateUtilization(card.currentBalance, card.creditLimit);
+            const optimizedUtil = calculateUtilization(card.optimizedBalance || card.currentBalance, card.creditLimit);
+            
+            return (
+              <div key={card.id} className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                  {/* Card Details */}
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <input
+                        type="text"
+                        value={card.name}
+                        onChange={(e) => updateCard(card.id, 'name', e.target.value)}
+                        className={`font-medium ${theme.textColors.primary} bg-transparent border-none focus:outline-none focus:ring-1 focus:ring-blue-500 rounded px-2 py-1`}
+                      />
+                      <button
+                        onClick={() => removeCard(card.id)}
+                        className={`${theme.status.error.text} hover:${theme.status.error.bg} p-1 rounded transition-colors`}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div>
+                        <label className={`text-xs ${theme.textColors.secondary}`}>Credit Limit</label>
+                        <div className="relative">
+                          <span className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>$</span>
+                          <input
+                            type="number"
+                            value={card.creditLimit}
+                            onChange={(e) => updateCard(card.id, 'creditLimit', Number(e.target.value))}
+                            className={`w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
+                            min="0"
+                            step="100"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label className={`text-xs ${theme.textColors.secondary}`}>Statement Date</label>
+                        <input
+                          type="number"
+                          value={card.statementDate}
+                          onChange={(e) => updateCard(card.id, 'statementDate', Number(e.target.value))}
+                          className={`w-full px-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
+                          min="1"
+                          max="31"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Current Status */}
+                  <div>
+                    <h5 className={`font-medium ${theme.textColors.primary} mb-3`}>Current Status</h5>
+                    <div className="space-y-2">
+                      <div>
+                        <label className={`text-xs ${theme.textColors.secondary}`}>Balance</label>
+                        <div className="relative">
+                          <span className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>$</span>
+                          <input
+                            type="number"
+                            value={card.currentBalance}
+                            onChange={(e) => updateCard(card.id, 'currentBalance', Number(e.target.value))}
+                            className={`w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
+                            min="0"
+                            step="10"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div className={`p-2 ${currentUtil <= 10 ? theme.status.success.bg : currentUtil <= 30 ? theme.status.warning.bg : theme.status.error.bg} rounded text-center`}>
+                        <div className={`text-lg font-bold ${getUtilizationColor(currentUtil)}`}>
+                          {currentUtil.toFixed(1)}%
+                        </div>
+                        <p className={`text-xs ${theme.textColors.secondary}`}>
+                          Utilization
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Optimization */}
+                  <div>
+                    <h5 className={`font-medium ${theme.textColors.primary} mb-3`}>After Optimization</h5>
+                    <div className="space-y-2">
+                      <div className={`p-2 ${theme.status.info.bg} border ${theme.status.info.border} rounded text-center`}>
+                        <div className={`text-sm font-bold ${theme.textColors.primary}`}>
+                          ${(card.payment || 0).toFixed(0)}
+                        </div>
+                        <p className={`text-xs ${theme.textColors.secondary}`}>
+                          Extra Payment
+                        </p>
+                      </div>
+                      
+                      <div className={`p-2 ${theme.status.success.bg} border ${theme.status.success.border} rounded text-center`}>
+                        <div className={`text-lg font-bold ${getUtilizationColor(optimizedUtil)}`}>
+                          {optimizedUtil.toFixed(1)}%
+                        </div>
+                        <p className={`text-xs ${theme.textColors.secondary}`}>
+                          New Utilization
+                        </p>
+                      </div>
+                      
+                      <div className={`text-center text-xs ${theme.textColors.secondary}`}>
+                        Balance: ${(card.optimizedBalance || card.currentBalance).toFixed(0)}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Impact */}
+                  <div>
+                    <h5 className={`font-medium ${theme.textColors.primary} mb-3`}>Impact</h5>
+                    <div className="space-y-2">
+                      {currentUtil !== optimizedUtil && (
+                        <div className={`p-2 ${theme.status.success.bg} border ${theme.status.success.border} rounded text-center`}>
+                          <CheckCircle className={`w-4 h-4 ${theme.status.success.text} mx-auto mb-1`} />
+                          <p className={`text-xs ${theme.status.success.text} font-medium`}>
+                            -{(currentUtil - optimizedUtil).toFixed(1)}% utilization
+                          </p>
+                        </div>
+                      )}
+                      
+                      <div className={`text-center text-xs ${theme.textColors.secondary}`}>
+                        {optimizedUtil <= 10 ? '✅ Excellent range' :
+                         optimizedUtil <= 30 ? '✅ Good range' :
+                         '⚠️ Needs improvement'}
+                      </div>
+                      
+                      <div className={`text-center text-xs ${theme.textColors.muted}`}>
+                        Available: ${(card.creditLimit - (card.optimizedBalance || card.currentBalance)).toFixed(0)}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Utilization Strategies */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-6`}>
+          <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+            <Shield className="w-5 h-5" />
+            Utilization Targets
+          </h3>
+          
+          <div className="space-y-4">
+            {utilizationStrategies.map((strategy, index) => (
+              <div key={index} className={`p-4 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className={`font-medium ${theme.textColors.primary}`}>{strategy.name}</h4>
+                  <span className={`text-sm ${theme.status.success.text} font-bold`}>
+                    +{strategy.scoreImprovement} pts
+                  </span>
+                </div>
+                <p className={`text-sm ${theme.textColors.secondary} mb-2`}>
+                  {strategy.description}
+                </p>
+                <div className="flex items-center justify-between text-xs">
+                  <span className={`${theme.textColors.muted} flex items-center gap-1`}>
+                    <Calendar className="w-3 h-3" />
+                    {strategy.timeframe}
+                  </span>
+                  <span className={`px-2 py-1 ${strategy.impact === 'high' ? theme.status.error.bg : strategy.impact === 'medium' ? theme.status.warning.bg : theme.status.info.bg} rounded text-white text-xs`}>
+                    {strategy.impact} impact
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-6`}>
+          <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+            <Zap className="w-5 h-5" />
+            Pro Tips & Timing
+          </h3>
+          
+          <div className="space-y-4">
+            <div className={`p-4 ${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg`}>
+              <h4 className={`font-medium ${theme.status.warning.text} mb-2 flex items-center gap-2`}>
+                <AlertCircle className="w-4 h-4" />
+                Statement Date Strategy
+              </h4>
+              <p className={`text-sm ${theme.textColors.secondary} mb-2`}>
+                Pay balances 2-3 days before statement dates to report lower utilization
+              </p>
+              <ul className={`text-xs ${theme.textColors.secondary} space-y-1`}>
+                <li>• Statement balance = reported utilization</li>
+                <li>• Pay early, not just by due date</li>
+                <li>• Keep 1 card with small balance ($5-20)</li>
+                <li>• Don&apos;t let all cards report zero</li>
+              </ul>
+            </div>
+
+            <div className={`p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`}>
+              <h4 className={`font-medium ${theme.status.info.text} mb-2`}>Quick Wins</h4>
+              <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
+                <li>• Request credit limit increases</li>
+                <li>• Spread balances across cards</li>
+                <li>• Pay twice monthly</li>
+                <li>• Use balance transfer cards strategically</li>
+              </ul>
+            </div>
+
+            <div className={`p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg text-center`}>
+              <h4 className={`font-medium ${theme.status.success.text} mb-2`}>Monthly Savings Potential</h4>
+              <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                ${Math.round(estimateScoreImprovement() * 5)}/month
+              </div>
+              <p className={`text-xs ${theme.textColors.secondary}`}>
+                From better credit products and rates
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
