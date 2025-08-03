@@ -6,14 +6,14 @@ import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-import BankingFundamentalsLesson from '@/components/chapters/fundamentals/lessons/BankingFundamentalsLesson';
-import BankingFundamentalsQuiz from '@/components/chapters/fundamentals/assessments/BankingFundamentalsQuiz';
+import BankingFundamentalsLessonEnhanced from '@/components/chapters/fundamentals/lessons/BankingFundamentalsLessonEnhanced';
+import BankingFundamentalsQuizEnhanced from '@/components/chapters/fundamentals/assessments/BankingFundamentalsQuizEnhanced';
 import SavingsCalculator from '@/components/chapters/fundamentals/calculators/SavingsCalculator';
 
 export default function Chapter2Page() {
   const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
   const [lessonCompleted, setLessonCompleted] = useState(false);
-  const { userProgress, completeLesson, recordQuizScore } = useProgressStore();
+  const { userProgress, completeLesson } = useProgressStore();
 
   const pageVariants = {
     initial: { opacity: 0, x: 20 },
@@ -30,11 +30,6 @@ export default function Chapter2Page() {
   const handleLessonComplete = () => {
     setLessonCompleted(true);
     completeLesson('chapter2-lesson', 15);
-  };
-
-  const handleQuizComplete = (score: number) => {
-    recordQuizScore('chapter2-quiz', score, 10);
-    // Quiz completion advances chapter automatically in Zustand store
   };
 
   return (
@@ -150,7 +145,7 @@ export default function Chapter2Page() {
           transition={{ duration: 0.3 }}
         >
           {currentSection === 'lesson' && (
-            <BankingFundamentalsLesson onComplete={handleLessonComplete} />
+            <BankingFundamentalsLessonEnhanced onComplete={handleLessonComplete} />
           )}
 
           {currentSection === 'calculator' && (
@@ -158,7 +153,7 @@ export default function Chapter2Page() {
           )}
 
           {currentSection === 'quiz' && (
-            <BankingFundamentalsQuiz onComplete={handleQuizComplete} />
+            <BankingFundamentalsQuizEnhanced />
           )}
         </motion.div>
 

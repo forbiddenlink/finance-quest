@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import MoneyFundamentalsLesson from '@/components/chapters/fundamentals/lessons/MoneyFundamentalsLesson';
+import MoneyFundamentalsLessonEnhanced from '@/components/chapters/fundamentals/lessons/MoneyFundamentalsLessonEnhanced';
 import PaycheckCalculator from '@/components/chapters/fundamentals/calculators/PaycheckCalculator';
-import MoneyFundamentalsQuiz from '@/components/chapters/fundamentals/assessments/MoneyFundamentalsQuiz';
+import MoneyFundamentalsQuizEnhanced from '@/components/chapters/fundamentals/assessments/MoneyFundamentalsQuizEnhanced';
 import AITeachingAssistant from '@/components/shared/ai-assistant/AITeachingAssistant';
 import QASystem from '@/components/shared/QASystem';
 import { theme } from '@/lib/theme';
@@ -76,7 +76,7 @@ export default function Chapter1Page() {
                   Complete all lessons, try the calculator, then take the quiz to unlock Chapter 2!
                 </p>
               </div>
-              <MoneyFundamentalsLesson />
+              <MoneyFundamentalsLessonEnhanced />
 
               {/* Q&A System for Lesson Tab */}
               <QASystem
@@ -118,7 +118,7 @@ export default function Chapter1Page() {
                   Test your understanding! You need 80% to unlock the next chapter.
                 </p>
               </div>
-              <MoneyFundamentalsQuiz />
+              <MoneyFundamentalsQuizEnhanced />
 
               {/* Q&A System DISABLED during quiz */}
               <QASystem
