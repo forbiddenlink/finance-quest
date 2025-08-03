@@ -6,8 +6,8 @@ import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-import IncomeCareerLesson from '@/components/chapters/fundamentals/lessons/IncomeCareerLesson';
-import IncomeCareerQuiz from '@/components/chapters/fundamentals/assessments/IncomeCareerQuiz';
+import IncomeCareerLessonEnhanced from '@/components/chapters/fundamentals/lessons/IncomeCareerLessonEnhanced';
+import IncomeCareerQuizEnhanced from '@/components/chapters/fundamentals/quizzes/IncomeCareerQuizEnhanced';
 import SalaryNegotiationCalculator from '@/components/chapters/fundamentals/calculators/SalaryNegotiationCalculator';
 
 export default function Chapter3Page() {
@@ -150,7 +150,7 @@ export default function Chapter3Page() {
           transition={{ duration: 0.3 }}
         >
           {currentSection === 'lesson' && (
-            <IncomeCareerLesson onComplete={handleLessonComplete} />
+            <IncomeCareerLessonEnhanced onComplete={handleLessonComplete} />
           )}
 
           {currentSection === 'calculator' && (
@@ -158,7 +158,7 @@ export default function Chapter3Page() {
           )}
 
           {currentSection === 'quiz' && (
-            <IncomeCareerQuiz onComplete={handleQuizComplete} />
+            <IncomeCareerQuizEnhanced onComplete={handleQuizComplete} />
           )}
         </motion.div>
 
