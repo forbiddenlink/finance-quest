@@ -6,12 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { CheckCircle, Calculator, Award, FileText, PiggyBank, Shield, Target, ArrowLeft } from 'lucide-react';
+import { Calculator, Award, FileText, PiggyBank, Shield, Target, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
 import RetirementPlannerCalculator from '@/components/shared/calculators/RetirementPlannerCalculator';
 import QASystem from '@/components/shared/QASystem';
-import RetirementPlanningLesson from '@/components/chapters/fundamentals/lessons/RetirementPlanningLesson';
+import RetirementPlanningLessonEnhanced from '@/components/chapters/fundamentals/lessons/RetirementPlanningLessonEnhanced';
+import RetirementPlanningQuizEnhanced from '@/components/chapters/fundamentals/quizzes/RetirementPlanningQuizEnhanced';
 import Link from 'next/link';
 import { theme } from '@/lib/theme';
 
@@ -21,89 +22,19 @@ export default function Chapter9() {
     const [currentSection, setCurrentSection] = useState<TabType>('lesson');
     const [lessonCompleted, setLessonCompleted] = useState(false);
     const [quizCompleted, setQuizCompleted] = useState(false);
-    const [quizAnswers, setQuizAnswers] = useState<Record<number, string>>({});
 
-    const { completeLesson, recordQuizScore, isChapterUnlocked } = useProgressStore();
+    const { completeLesson, isChapterUnlocked } = useProgressStore();
 
     const isUnlocked = isChapterUnlocked(9);
 
     const handleLessonComplete = () => {
-        completeLesson('chapter9-retirement-planning', 45);
+        completeLesson('chapter9-retirement-planning-enhanced', 45);
         setLessonCompleted(true);
     };
 
-    const handleQuizAnswer = (questionIndex: number, answer: string) => {
-        setQuizAnswers(prev => ({ ...prev, [questionIndex]: answer }));
-    };
-
     const handleQuizComplete = () => {
-        const totalQuestions = 10;
-        const correctAnswers = Object.values(quizAnswers).filter((answer, index) => {
-            return answer === quizQuestions[index]?.correct;
-        }).length;
-
-        const score = Math.round((correctAnswers / totalQuestions) * 100);
-        recordQuizScore('chapter9-quiz', score, totalQuestions);
         setQuizCompleted(true);
-
-        if (score >= 80) {
-            // Quiz passed, user can advance
-            console.log('Quiz passed! User can advance to next chapter.');
-        }
     };
-
-    const quizQuestions = [
-        {
-            question: "What is the traditional retirement account contribution limit for 2024 (under age 50)?",
-            options: ["$6,500", "$7,000", "$7,500", "$8,000"],
-            correct: "$7,000"
-        },
-        {
-            question: "According to the 4% rule, how much can you safely withdraw annually from a $1M portfolio?",
-            options: ["$30,000", "$35,000", "$40,000", "$45,000"],
-            correct: "$40,000"
-        },
-        {
-            question: "What is the maximum 401(k) contribution limit for 2024 (including catch-up for 50+)?",
-            options: ["$23,000", "$30,500", "$69,000", "$76,500"],
-            correct: "$30,500"
-        },
-        {
-            question: "What is the main advantage of a Roth IRA over a traditional IRA?",
-            options: ["Higher contribution limits", "Tax-free withdrawals in retirement", "Immediate tax deduction", "No income restrictions"],
-            correct: "Tax-free withdrawals in retirement"
-        },
-        {
-            question: "What is the 25x rule for retirement planning?",
-            options: ["Save 25% of income", "Retire at 25", "Need 25x annual expenses", "Invest for 25 years"],
-            correct: "Need 25x annual expenses"
-        },
-        {
-            question: "What is the main risk with early retirement withdrawals from 401(k) accounts?",
-            options: ["10% penalty before age 59½", "Loss of employer match", "Reduced Social Security", "Higher tax rates"],
-            correct: "10% penalty before age 59½"
-        },
-        {
-            question: "What strategy allows high earners to contribute up to $69,000 annually to retirement accounts?",
-            options: ["Roth conversion", "Backdoor Roth", "Mega backdoor Roth", "401(k) loans"],
-            correct: "Mega backdoor Roth"
-        },
-        {
-            question: "What percentage of pre-retirement income do most experts recommend for retirement?",
-            options: ["50-60%", "70-90%", "100%", "110-120%"],
-            correct: "70-90%"
-        },
-        {
-            question: "What is sequence of returns risk?",
-            options: ["Risk of low returns", "Risk of poor early retirement returns", "Risk of inflation", "Risk of market volatility"],
-            correct: "Risk of poor early retirement returns"
-        },
-        {
-            question: "Which has the 'triple tax advantage' for retirement and healthcare?",
-            options: ["401(k)", "Roth IRA", "HSA", "Traditional IRA"],
-            correct: "HSA"
-        }
-    ];
 
     if (!isUnlocked) {
         return (
@@ -193,7 +124,7 @@ export default function Chapter9() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <RetirementPlanningLesson onComplete={handleLessonComplete} />
+                            <RetirementPlanningLessonEnhanced onComplete={handleLessonComplete} />
                         </motion.div>
                     </TabsContent>
 
@@ -213,87 +144,7 @@ export default function Chapter9() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle className="flex items-center space-x-2">
-                                        <Award className={`w-5 h-5 ${theme.textColors.primary}`} />
-                                        <span>Retirement Planning Quiz</span>
-                                    </CardTitle>
-                                    <CardDescription>
-                                        Test your knowledge of retirement strategies. Score 80% or higher to advance to Chapter 10.
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    {!quizCompleted ? (
-                                        <div className="space-y-6">
-                                            <div className="mb-4">
-                                                <div className={`flex justify-between text-sm ${theme.textColors.secondary} mb-2`}>
-                                                    <span>Progress</span>
-                                                    <span>{Object.keys(quizAnswers).length} / {quizQuestions.length}</span>
-                                                </div>
-                                                <Progress value={(Object.keys(quizAnswers).length / quizQuestions.length) * 100} />
-                                            </div>
-
-                                            {quizQuestions.map((question, index) => (
-                                                <div key={index} className="space-y-3">
-                                                    <h3 className={`font-medium ${theme.textColors.primary}`}>
-                                                        {index + 1}. {question.question}
-                                                    </h3>
-                                                    <div className="space-y-2">
-                                                        {question.options.map((option) => (
-                                                            <label key={option} className={`flex items-center space-x-3 p-3 border rounded-lg hover:${theme.backgrounds.cardHover} cursor-pointer`}>
-                                                                <input
-                                                                    type="radio"
-                                                                    name={`question-${index}`}
-                                                                    value={option}
-                                                                    onChange={() => handleQuizAnswer(index, option)}
-                                                                    className={theme.status.error.text}
-                                                                />
-                                                                <span className={theme.textColors.secondary}>{option}</span>
-                                                            </label>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            ))}
-
-                                            <div className="flex justify-center pt-6">
-                                                <Button
-                                                    onClick={handleQuizComplete}
-                                                    disabled={Object.keys(quizAnswers).length < quizQuestions.length}
-                                                    className={theme.buttons.primary}
-                                                >
-                                                    Submit Quiz
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div className="text-center space-y-4">
-                                            <CheckCircle className={`w-16 h-16 ${theme.status.success.text} mx-auto`} />
-                                            <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>Quiz Completed!</h3>
-                                            <p className={theme.textColors.secondary}>
-                                                You scored {Math.round((Object.values(quizAnswers).filter((answer, index) =>
-                                                    answer === quizQuestions[index]?.correct).length / quizQuestions.length) * 100)}%
-                                            </p>
-                                            {Math.round((Object.values(quizAnswers).filter((answer, index) =>
-                                                answer === quizQuestions[index]?.correct).length / quizQuestions.length) * 100) >= 80 ? (
-                                                <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4`}>
-                                                    <p className={`${theme.status.success.text} font-medium`}>Congratulations! You can now advance to Chapter 10.</p>
-                                                    <Link href="/chapter10" className="inline-block mt-3">
-                                                        <Button className={theme.buttons.primary}>
-                                                            Continue to Chapter 10
-                                                            <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-                                                        </Button>
-                                                    </Link>
-                                                </div>
-                                            ) : (
-                                                <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4`}>
-                                                    <p className={theme.status.warning.text}>You need 80% or higher to advance. Review the lesson and try again!</p>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
-                                </CardContent>
-                            </Card>
+                            <RetirementPlanningQuizEnhanced onComplete={handleQuizComplete} />
                         </motion.div>
                     </TabsContent>
 
