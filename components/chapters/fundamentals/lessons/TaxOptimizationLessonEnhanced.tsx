@@ -39,11 +39,11 @@ const enhancedLessons: LessonContent[] = [
     icon: Building2,
     content: 'Tax-advantaged accounts are your most powerful wealth-building tools. Traditional 401(k)s and IRAs provide immediate tax deductions, reducing current income taxes while building retirement wealth. Roth accounts use after-tax dollars but provide tax-free growth and withdrawals. HSAs offer triple tax advantages: deductible contributions, tax-free growth, and tax-free qualified withdrawals.',
     keyPoints: [
-      'Traditional 401(k): Immediate tax deduction, taxed in retirement ($23,000 limit + $7,500 catch-up)',
+      'Traditional 401(k): Immediate tax deduction, taxed in retirement ($23,500 limit + $7,500 catch-up)',
       'Roth 401(k): After-tax contributions, tax-free retirement withdrawals (same limits)',
       'Traditional IRA: Tax deduction if eligible, $7,000 limit + $1,000 catch-up',
       'Roth IRA: After-tax contributions, tax-free growth ($7,000 limit, income restrictions)',
-      'HSA: Triple tax advantage, $4,150 individual/$8,300 family limits'
+      'HSA: Triple tax advantage, $4,300 individual/$8,550 family limits'
     ],
     practicalAction: 'Maximize employer 401(k) match first (free money), then HSA if available, then Roth IRA up to limits. Young workers: prioritize Roth accounts for tax-free growth. High earners: use traditional accounts for immediate tax savings. Calculate your tax savings: multiply contribution by marginal tax rate.',
     realMoneyExample: 'Sarah earns $85,000 (22% tax bracket). She contributes $10,000 to traditional 401(k): saves $2,200 in taxes immediately. Her husband maxes Roth IRA at $7,000. After 30 years at 8% returns: 401(k) = $100,000 (taxable), Roth IRA = $70,000 (tax-free). Total tax savings at retirement: $15,400+ on Roth alone.',
@@ -86,7 +86,7 @@ const enhancedLessons: LessonContent[] = [
     keyPoints: [
       'Home office deduction: Simplified ($5/sq ft up to $1,500) or actual expense method',
       'Business mileage: $0.655 per business mile (2023 rate), keep detailed logs',
-      'Solo 401(k): Contribute as employee ($23,000) plus employer (25% of compensation)',
+      'Solo 401(k): Contribute as employee ($23,500) plus employer (25% of compensation)',
       'Health insurance: 100% deductible for self-employed individuals',
       'Equipment purchases: Section 179 allows immediate expensing up to $1.16M'
     ],

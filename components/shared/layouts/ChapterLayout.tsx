@@ -9,6 +9,9 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import AITeachingAssistant from '@/components/shared/ai-assistant/AITeachingAssistant';
 import QASystem from '@/components/shared/QASystem';
+import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
+import VoiceQA from '@/components/shared/ui/VoiceQA';
+import LearningAnalyticsDashboard from '@/components/shared/ui/LearningAnalyticsDashboard';
 import {
     Calculator,
     BookOpen,
@@ -17,7 +20,11 @@ import {
     Lock,
     CheckCircle,
     Bot,
-    LucideIcon
+    LucideIcon,
+    Brain,
+    BarChart3,
+    Volume2,
+    Star
 } from 'lucide-react';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -57,20 +64,44 @@ export default function ChapterLayout({
     onQuizComplete,
     requiresPreviousChapters = true
 }: ChapterLayoutProps) {
-    const { isChapterUnlocked, completeLesson } = useProgressStore();
-    const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz' | 'assistant'>('lesson');
+    const { isChapterUnlocked, completeLesson, userProgress } = useProgressStore();
+    const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz' | 'assistant' | 'analytics' | 'review'>('lesson');
     const [lessonCompleted, setLessonCompleted] = useState(false);
 
     // Check if chapter is unlocked (skip for Chapter 1)
     const isUnlocked = chapterNumber === 1 || !requiresPreviousChapters || isChapterUnlocked(chapterNumber);
 
+    // Check if user has completed content to show advanced features
+    const hasCompletedContent = userProgress.completedLessons.length > 2;
+    const hasQuizScores = Object.keys(userProgress.quizScores).length > 0;
+
     const handleLessonComplete = () => {
         setLessonCompleted(true);
         completeLesson(`chapter${chapterNumber}-lesson`, 15);
-        toast.success(`${title} completed! 🎯`, {
-            duration: 4000,
-            position: 'top-center',
-        });
+        
+        // Progressive enhancement notifications
+        if (chapterNumber === 1) {
+            toast.success(`🎯 ${title} completed! Welcome to Finance Quest! New features will unlock as you progress.`, {
+                duration: 5000,
+                position: 'top-center',
+            });
+        } else if (userProgress.completedLessons.length === 2) {
+            toast.success(`🧠 Great progress! Review tab now available for spaced repetition learning!`, {
+                duration: 6000,
+                position: 'top-center',
+            });
+        } else if (hasQuizScores && !userProgress.completedLessons.includes(`chapter${chapterNumber}-lesson`)) {
+            toast.success(`📊 Analytics tab unlocked! See your learning insights and patterns.`, {
+                duration: 6000,
+                position: 'top-center',
+            });
+        } else {
+            toast.success(`${title} completed! 🎯`, {
+                duration: 4000,
+                position: 'top-center',
+            });
+        }
+        
         onLessonComplete?.();
     };
 
@@ -138,11 +169,31 @@ export default function ChapterLayout({
                             Back to Home
                         </Link>
                         <div className="flex items-center space-x-4">
+                            {/* Progress Indicator */}
+                            <div className={`${theme.backgrounds.cardHover} px-3 py-2 rounded-lg border ${theme.borderColors.primary}`}>
+                                <div className="flex items-center space-x-2">
+                                    <div className={`w-2 h-2 rounded-full ${lessonCompleted ? theme.status.success.bg : theme.status.warning.bg}`}></div>
+                                    <span className={`${theme.textColors.secondary} text-sm`}>
+                                        {lessonCompleted ? 'Ready for Quiz' : 'In Progress'}
+                                    </span>
+                                </div>
+                            </div>
+                            
                             <div className={`${theme.status.info.bg} px-3 py-1 rounded-full`}>
                                 <span className={`${theme.status.info.text} text-sm font-medium`}>
                                     Chapter {chapterNumber}
                                 </span>
                             </div>
+                            
+                            {/* Advanced Features Badge */}
+                            {hasCompletedContent && (
+                                <div className={`${theme.status.warning.bg} px-3 py-1 rounded-full`}>
+                                    <span className={`${theme.status.warning.text} text-xs font-medium flex items-center`}>
+                                        <Star className="w-3 h-3 mr-1" />
+                                        Pro Features
+                                    </span>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -171,9 +222,9 @@ export default function ChapterLayout({
                     </p>
                 </motion.div>
 
-                {/* Tab Navigation */}
-                <Tabs value={currentSection} onValueChange={(value) => setCurrentSection(value as 'lesson' | 'calculator' | 'quiz' | 'assistant')} className="w-full">
-                    <TabsList className={`grid w-full grid-cols-4 ${theme.backgrounds.header} border ${theme.borderColors.primary}`}>
+                {/* Tab Navigation - Dynamic based on user progress */}
+                <Tabs value={currentSection} onValueChange={(value) => setCurrentSection(value as 'lesson' | 'calculator' | 'quiz' | 'assistant' | 'analytics' | 'review')} className="w-full">
+                    <TabsList className={`grid w-full ${hasCompletedContent ? 'grid-cols-6' : 'grid-cols-4'} ${theme.backgrounds.header} border ${theme.borderColors.primary}`}>
                         <TabsTrigger 
                             value="lesson" 
                             className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text}`}
@@ -203,6 +254,31 @@ export default function ChapterLayout({
                             <Bot className="w-4 h-4 mr-2" />
                             AI Coach
                         </TabsTrigger>
+                        
+                        {/* Advanced Features - Only show after user has some progress */}
+                        {hasCompletedContent && (
+                            <>
+                                <TabsTrigger 
+                                    value="review" 
+                                    className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text}`}
+                                >
+                                    <Brain className="w-4 h-4 mr-2" />
+                                    <span className="hidden sm:inline">Review</span>
+                                    <span className="sm:hidden">Review</span>
+                                </TabsTrigger>
+                                
+                                {hasQuizScores && (
+                                    <TabsTrigger 
+                                        value="analytics" 
+                                        className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text}`}
+                                    >
+                                        <BarChart3 className="w-4 h-4 mr-2" />
+                                        <span className="hidden sm:inline">Analytics</span>
+                                        <span className="sm:hidden">Stats</span>
+                                    </TabsTrigger>
+                                )}
+                            </>
+                        )}
                     </TabsList>
 
                     <TabsContent value="lesson" className="mt-6">
@@ -264,10 +340,62 @@ export default function ChapterLayout({
                             </CardHeader>
                             <CardContent className="space-y-6">
                                 <AITeachingAssistant />
+                                
+                                {/* Voice QA Integration */}
+                                <div className={`${theme.backgrounds.cardHover} rounded-lg p-6 border ${theme.borderColors.primary}`}>
+                                    <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center`}>
+                                        <Volume2 className={`w-5 h-5 mr-2 ${theme.status.info.text}`} />
+                                        Voice Assistant
+                                    </h3>
+                                    <VoiceQA />
+                                </div>
+                                
                                 <QASystem />
                             </CardContent>
                         </Card>
                     </TabsContent>
+
+                    {/* Spaced Repetition Review Tab */}
+                    {hasCompletedContent && (
+                        <TabsContent value="review" className="mt-6">
+                            <Card className={`${theme.backgrounds.header} ${theme.borderColors.primary}`}>
+                                <CardHeader>
+                                    <CardTitle className={`${theme.textColors.primary} flex items-center`}>
+                                        <Brain className={`w-6 h-6 mr-2 ${theme.status.info.text}`} />
+                                        Learning Review System
+                                        <Star className={`w-5 h-5 ml-2 ${theme.status.warning.text}`} />
+                                    </CardTitle>
+                                    <CardDescription className={`${theme.textColors.muted}`}>
+                                        Scientifically-designed spaced repetition to maximize retention. Review concepts at optimal intervals.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <SpacedRepetitionDashboard />
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+                    )}
+
+                    {/* Learning Analytics Tab */}
+                    {hasQuizScores && (
+                        <TabsContent value="analytics" className="mt-6">
+                            <Card className={`${theme.backgrounds.header} ${theme.borderColors.primary}`}>
+                                <CardHeader>
+                                    <CardTitle className={`${theme.textColors.primary} flex items-center`}>
+                                        <BarChart3 className={`w-6 h-6 mr-2 ${theme.status.info.text}`} />
+                                        Learning Analytics
+                                        <Star className={`w-5 h-5 ml-2 ${theme.status.warning.text}`} />
+                                    </CardTitle>
+                                    <CardDescription className={`${theme.textColors.muted}`}>
+                                        Deep insights into your learning patterns, strengths, and areas for improvement
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <LearningAnalyticsDashboard />
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+                    )}
                 </Tabs>
             </div>
         </div>

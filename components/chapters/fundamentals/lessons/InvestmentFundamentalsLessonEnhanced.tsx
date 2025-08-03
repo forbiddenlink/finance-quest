@@ -49,7 +49,7 @@ const enhancedLessons: LessonContent[] = [
       "Dollar-cost averaging: Systematic investing reduces timing risk and builds discipline"
     ],
     practicalAction: "Open an investment account (Fidelity, Vanguard, or Schwab) and set up automatic transfers this week",
-    moneyExample: "Sarah invests $500/month starting at 25. At 10% returns: $1.3 million by 65. Tom waits until 35: same contribution = $680,000. Sarah's 10-year head start = $620,000 difference!",
+    moneyExample: "Sarah invests $500/month starting at 25. At 10% returns: $3.16 million by 65. Tom waits until 35: same contribution = $1.13 million. Sarah's 10-year head start = $2.03 million difference!",
     warningTip: "Never invest money you need within 5 years—market volatility can devastate short-term goals"
   },
   {
@@ -98,7 +98,7 @@ const enhancedLessons: LessonContent[] = [
     title: "Index Fund Investing: Passive Strategy That Beats Most Professionals",
     content: "Index funds consistently outperform 80-90% of actively managed funds over long periods while charging significantly lower fees. They provide instant diversification, professional management, and market returns without requiring stock-picking expertise. This passive approach builds wealth systematically.",
     keyPoints: [
-      "Low fees matter: 0.03% index fund vs 1.5% active fund = $300,000 more over 30 years on $500k",
+      "Low fees matter: 0.03% index fund vs 1.5% active fund = $1.68 million more over 30 years on $500k",
       "Diversification benefits: S&P 500 index owns 500 companies across all sectors automatically",
       "Consistent outperformance: 90% of active funds underperform index funds over 15+ years",
       "Total Stock Market index: Own every public US company in proportion to market value",

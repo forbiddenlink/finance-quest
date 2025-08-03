@@ -3,7 +3,7 @@
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
 import MoneyFundamentalsLessonEnhanced from '@/components/chapters/fundamentals/lessons/MoneyFundamentalsLessonEnhanced';
 import PaycheckCalculator from '@/components/chapters/fundamentals/calculators/PaycheckCalculator';
-import MoneyFundamentalsQuizEnhanced from '@/components/chapters/fundamentals/assessments/MoneyFundamentalsQuizEnhanced';
+import MoneyFundamentalsQuizEnhanced from '@/components/chapters/fundamentals/quizzes/MoneyFundamentalsQuizEnhanced';
 import { Brain } from 'lucide-react';
 
 export default function Chapter1Page() {

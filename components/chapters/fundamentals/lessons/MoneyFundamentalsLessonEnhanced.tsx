@@ -7,6 +7,7 @@ import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
 import { CheckCircle, Star, ChevronRight, ChevronLeft, Brain, DollarSign, TrendingUp, Shield, Target } from 'lucide-react';
 import toast from 'react-hot-toast';
+import MoneyPersonalityAssessment from './MoneyPersonalityAssessment';
 
 interface LessonContent {
   title: string;
@@ -216,6 +217,19 @@ export default function MoneyFundamentalsLessonEnhanced() {
           </div>
 
           {/* Additional Interactive Content Based on Lesson */}
+          {currentLesson === 2 && (
+            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                <Brain className="w-5 h-5" />
+                Discover Your Financial Personality
+              </h3>
+              <p className={`${theme.textColors.secondary} mb-6`}>
+                Take our interactive assessment to understand your unique financial personality type and get personalized advice.
+              </p>
+              <MoneyPersonalityAssessment />
+            </div>
+          )}
+          
           {currentLesson === 3 && (
             <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
@@ -287,7 +301,7 @@ export default function MoneyFundamentalsLessonEnhanced() {
             <span>Progress: {completedLessons.filter(Boolean).length} of {enhancedLessons.length} lessons completed</span>
             <span>{progress.toFixed(0)}% Complete</span>
           </div>
-          
+
           {completedLessons.filter(Boolean).length === enhancedLessons.length && (
             <div className={`mt-4 p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg text-center`}>
               <p className={`font-bold ${theme.status.success.text} flex items-center justify-center gap-2`}>

@@ -3,7 +3,7 @@
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
 import BankingFundamentalsLessonEnhanced from '@/components/chapters/fundamentals/lessons/BankingFundamentalsLessonEnhanced';
 import SavingsCalculator from '@/components/chapters/fundamentals/calculators/SavingsCalculator';
-import BankingFundamentalsQuizEnhanced from '@/components/chapters/fundamentals/assessments/BankingFundamentalsQuizEnhanced';
+import BankingFundamentalsQuizEnhanced from '@/components/chapters/fundamentals/quizzes/BankingFundamentalsQuizEnhanced';
 import { Building2 } from 'lucide-react';
 
 export default function Chapter2Page() {

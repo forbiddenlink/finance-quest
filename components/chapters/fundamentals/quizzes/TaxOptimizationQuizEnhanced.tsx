@@ -33,15 +33,15 @@ interface QuizQuestion {
 const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "What is the maximum contribution to a Traditional 401(k) for someone under 50 in 2024?",
+    question: "What is the maximum contribution to a Traditional 401(k) for someone under 50 in 2025?",
     options: [
       "$6,500",
-      "$23,000", 
-      "$30,500",
+      "$23,500", 
+      "$31,000",
       "$7,000"
     ],
     correctAnswer: 1,
-    explanation: "The 2024 contribution limit for 401(k) plans is $23,000 for those under 50, with an additional $7,500 catch-up contribution allowed for those 50 and older.",
+    explanation: "The 2025 contribution limit for 401(k) plans is $23,500 for those under 50, with an additional $7,500 catch-up contribution allowed for those 50 and older.",
     category: "Tax-Advantaged Accounts"
   },
   {

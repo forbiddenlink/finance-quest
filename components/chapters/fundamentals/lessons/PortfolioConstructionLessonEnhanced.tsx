@@ -50,7 +50,7 @@ const enhancedLessons: LessonContent[] = [
     icon: BarChart3,
     content: 'Asset allocation determines 90% of your investment returns over time—more than stock picking, market timing, or fund selection. Your age, goals, and risk tolerance should drive your stock/bond split. The foundational rule: 120 minus your age in stocks, with adjustments for personal circumstances.',
     practicalAction: 'Calculate your target allocation: Age 25 = 95% stocks/5% bonds, Age 35 = 85% stocks/15% bonds, Age 45 = 75% stocks/25% bonds. Use a target-date fund (like VTTSX) that automatically adjusts this mix as you age, or manually rebalance annually.',
-    realMoneyExample: 'Conservative 30-year-old (60% stocks) vs Aggressive 30-year-old (90% stocks) over 35 years: $500/month invested. Conservative: $1.2M final value. Aggressive: $1.8M final value. Extra risk generated $600,000 more wealth by retirement.',
+    realMoneyExample: 'Conservative 30-year-old (60% stocks) vs Aggressive 30-year-old (90% stocks) over 35 years: $500/month invested. Conservative: $1.15M final value. Aggressive: $1.67M final value. Extra risk generated $523,000 more wealth by retirement.',
     warningTip: 'The biggest allocation mistake: becoming more conservative after market crashes when you should be more aggressive. Young investors who shifted to bonds after 2008 missed the 2009-2020 bull market.'
   },
   {
@@ -74,7 +74,7 @@ const enhancedLessons: LessonContent[] = [
     icon: Target,
     content: 'Rebalancing forces disciplined "buy low, sell high" behavior by trimming winners and adding to losers. This contrarian action feels wrong but drives long-term returns. Rebalance when allocations drift 5+ percentage points from targets, or annually—whichever comes first.',
     practicalAction: 'Set calendar reminder for annual rebalancing (suggest December). Check each asset class against target allocation. If US stocks are 70% but target is 60%, sell 10% and buy underweight assets. Use new contributions to buy underweight assets before selling.',
-    realMoneyExample: 'From 1970-2020: Annual rebalancing added 0.5% per year to returns. On $500,000 portfolio over 30 years, this "rebalancing bonus" generated an extra $200,000 through disciplined profit-taking and contrarian investing.',
+    realMoneyExample: 'From 1970-2020: Annual rebalancing added 0.5% per year to returns. On $500,000 portfolio over 30 years, this "rebalancing bonus" generated an extra $748,000 through disciplined profit-taking and contrarian investing.',
     warningTip: 'The hardest rebalancing decision: selling your best performers to buy assets that have disappointed. This feels like selling winners to buy losers, but it\'s actually selling high to buy low—the essence of successful investing.'
   },
   {

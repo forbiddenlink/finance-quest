@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
-import { CheckCircle, XCircle, Sparkles, Building2, DollarSign, TrendingUp, Shield } from 'lucide-react';
+import { CheckCircle, XCircle, Sparkles, Brain, DollarSign, TrendingUp } from 'lucide-react';
 import { theme } from '@/lib/theme';
 
 interface QuizQuestion {
@@ -12,143 +12,147 @@ interface QuizQuestion {
   options: string[];
   correctAnswer: number;
   explanation: string;
-  category: 'account-types' | 'fees' | 'optimization' | 'security' | 'calculation';
+  category: 'psychology' | 'practical' | 'calculation' | 'application';
 }
 
 const enhancedQuizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "You have $10,000 for an emergency fund. What's the best account setup?",
+    question: "Sarah says 'I can't afford that $100 financial course.' Which mindset shift would be most empowering?",
     options: [
-      "Keep it all in checking for easy access",
-      "Put it in a traditional bank savings account at 0.01% APY",
-      "High-yield savings account online at 4.5% APY",
-      "Split between checking ($5,000) and regular savings ($5,000)"
+      "Accept that she can't afford it and move on",
+      "Put it on a credit card since education is important",
+      "Ask 'How could I create an extra $100 this month to invest in skills?'",
+      "Wait until she has more money saved up"
     ],
     correctAnswer: 2,
-    explanation: "High-yield savings accounts offer FDIC protection with much higher returns. Your $10,000 earns $450/year vs $1/year at traditional banks - a $449 difference annually.",
-    category: 'optimization'
+    explanation: "Abundance thinking reframes limitations as challenges to solve. This opens up creative solutions like freelancing, selling items, or finding ways to increase income rather than staying stuck in scarcity.",
+    category: 'psychology'
   },
   {
     id: 2,
-    question: "Sarah pays $15/month in bank fees. How much is this costing her over 20 years if she invested that money at 7% return?",
+    question: "You see a jacket 'marked down' from $300 to $150. Which cognitive bias should you be most aware of?",
     options: [
-      "$3,600 (just the fees)",
-      "$7,200 (double the fees)",
-      "$9,500",
-      "$12,000+"
+      "Loss aversion - fear of missing the sale",
+      "Anchoring bias - the $300 'original price' influences your perception of value",
+      "Confirmation bias - seeking reasons to justify the purchase",
+      "Present bias - wanting immediate gratification"
     ],
-    correctAnswer: 3,
-    explanation: "$15/month = $180/year in fees. Over 20 years with 7% compound growth, this becomes over $12,000 in lost wealth. Banking fees are a major wealth destroyer.",
-    category: 'calculation'
+    correctAnswer: 1,
+    explanation: "Anchoring bias occurs when the first number you see ($300) becomes the reference point, making $150 seem like a great deal even if the jacket was never actually sold at $300.",
+    category: 'psychology'
   },
   {
     id: 3,
-    question: "What's the maximum FDIC insurance coverage for one person at one bank?",
+    question: "If you save $5 per day instead of buying coffee and invest it at 7% annual return, how much would you have after 20 years?",
     options: [
-      "$100,000 per account",
-      "$250,000 per depositor per bank",
-      "$500,000 total",
-      "$1,000,000 for premium accounts"
+      "About $36,500 ($5 × 365 × 20)",
+      "About $50,000",
+      "About $66,000", 
+      "About $78,139"
     ],
-    correctAnswer: 1,
-    explanation: "FDIC insures up to $250,000 per depositor, per insured bank, per ownership category. For amounts over $250,000, spread across multiple banks for full protection.",
-    category: 'security'
-  },
-  {
-    id: 4,
-    question: "Which banking setup demonstrates the optimal 'banking trifecta' strategy?",
-    options: [
-      "All accounts at one big national bank for convenience",
-      "Local checking + online high-yield savings + investment account",
-      "Multiple checking accounts at different banks",
-      "Cash only, no banks needed"
-    ],
-    correctAnswer: 1,
-    explanation: "The banking trifecta combines local convenience (checking/ATMs) with online rates (savings) and investment growth, maximizing both earnings and accessibility.",
-    category: 'optimization'
-  },
-  {
-    id: 5,
-    question: "You're choosing between Bank A (0.01% APY, no fees) and Bank B (4.5% APY, $5/month fee). For $5,000 savings, which is better annually?",
-    options: [
-      "Bank A: earn $0.50, pay $0 = $0.50 net",
-      "Bank B: earn $225, pay $60 = $165 net",
-      "They're about the same",
-      "Need more information to decide"
-    ],
-    correctAnswer: 1,
-    explanation: "Bank B nets $165 vs Bank A's $0.50 - a $164.50 annual difference. Even with fees, high-yield accounts usually beat no-fee low-yield accounts for meaningful balances.",
+    correctAnswer: 3,
+    explanation: "Saving $5/day = $150/month. With compound interest at 7% annually, this becomes approximately $78,139 after 20 years. This shows the power of compound growth over time.",
     category: 'calculation'
   },
   {
-    id: 6,
-    question: "What's the most effective way to avoid overdraft fees?",
+    id: 4,
+    question: "What's the most important difference between SMART and PACT goal setting for financial success?",
     options: [
-      "Opt into overdraft protection from the bank",
-      "Set up low-balance alerts and account monitoring",
-      "Keep a large buffer in checking always",
-      "Use credit cards for everything instead"
+      "SMART goals are more specific and measurable",
+      "PACT goals focus on process and continuous actions rather than just outcomes",
+      "SMART goals are better for short-term planning",
+      "PACT goals require less planning and effort"
     ],
     correctAnswer: 1,
-    explanation: "Low-balance alerts (like at $100) give you time to transfer money or modify spending before overdrafts occur. Prevention is better than paying $35 fees.",
-    category: 'fees'
+    explanation: "PACT goals focus on the process (continuous actions you can control) rather than just outcomes. This builds sustainable habits that compound over time, leading to better long-term results.",
+    category: 'application'
+  },
+  {
+    id: 5,
+    question: "Which money personality type needs automatic savings systems the most?",
+    options: [
+      "Savers - they need help growing their money",
+      "Investors - they need more security",
+      "Spenders - they need to save before they see the money",
+      "Avoiders - they need simpler decisions"
+    ],
+    correctAnswer: 2,
+    explanation: "Spenders enjoy purchasing and experiences, so they benefit most from automatic systems that save money before they have a chance to spend it. This works WITH their nature rather than against it.",
+    category: 'practical'
+  },
+  {
+    id: 6,
+    question: "Your gross monthly pay is $6,000. Approximately what should you expect your net pay to be?",
+    options: [
+      "$6,000 (same as gross)",
+      "$4,200-$4,800 (70-80% of gross)",
+      "$3,600 (60% of gross)",
+      "$5,400 (90% of gross)"
+    ],
+    correctAnswer: 1,
+    explanation: "Most people take home about 70-80% of gross pay after federal taxes, state taxes, Social Security, Medicare, and other deductions. This varies by location and deductions.",
+    category: 'practical'
   },
   {
     id: 7,
-    question: "For someone with $300,000 to protect, what's the best FDIC strategy?",
+    question: "What protects your deposits in FDIC-insured banks?",
     options: [
-      "Keep it all at one bank - FDIC covers everything",
-      "Split: $250,000 at Bank A, $50,000 at Bank B",
-      "Use only credit unions instead",
-      "Keep $50,000 in cash, rest in banks"
+      "The bank's private insurance",
+      "Federal government insurance up to $250,000 per depositor per bank",
+      "State government insurance up to $100,000",
+      "No protection - deposits are at risk"
     ],
     correctAnswer: 1,
-    explanation: "FDIC covers up to $250,000 per bank. Splitting $250K at Bank A and $50K at Bank B ensures full $300,000 protection across both institutions.",
-    category: 'security'
+    explanation: "FDIC (Federal Deposit Insurance Corporation) provides federal government backing for deposits up to $250,000 per depositor, per bank. This means your money is protected even if the bank fails.",
+    category: 'practical'
   },
   {
     id: 8,
-    question: "Which account type is best for money you need in 6-12 months for a car down payment?",
+    question: "Which approach demonstrates the compound effect principle best?",
     options: [
-      "High-yield savings account",
-      "Stock market investment",
-      "Certificate of deposit (CD)",
-      "Checking account"
+      "Saving $1,000 once per year",
+      "Saving $83 every month consistently",
+      "Saving $20 every week consistently", 
+      "Saving random amounts when you remember"
     ],
-    correctAnswer: 0,
-    explanation: "High-yield savings provides liquidity with decent returns for short-term goals. CDs lock up money, stocks are risky for short timeframes, checking earns nothing.",
-    category: 'account-types'
+    correctAnswer: 2,
+    explanation: "Smaller, more frequent actions ($20/week = $1,040/year) create better habits and compound more effectively than larger, less frequent actions. Consistency beats perfection.",
+    category: 'application'
   },
   {
     id: 9,
-    question: "What's a major red flag when choosing a bank?",
+    question: "You want to save $5,000 for an emergency fund. Which is the better PACT goal structure?",
     options: [
-      "No physical branch locations",
-      "Offers high interest rates",
-      "Not FDIC insured",
-      "Requires minimum balance"
+      "'Save $5,000 by December 31st'",
+      "'Save more money for emergencies'",
+      "'Transfer $200 to savings every Friday after payday because financial security reduces stress and lets me take career risks'",
+      "'Put any extra money into savings when possible'"
     ],
     correctAnswer: 2,
-    explanation: "No FDIC insurance means your deposits aren't protected if the bank fails. Always verify FDIC insurance before depositing money. Online-only banks can be excellent if FDIC insured.",
-    category: 'security'
+    explanation: "PACT goals are Purposeful (includes the 'why'), Actionable (specific action), Continuous (regular habit), and Trackable (clear amount and timing).",
+    category: 'application'
   },
   {
     id: 10,
-    question: "Digital banking alerts should be set for which scenarios to maximize financial benefit?",
+    question: "Loss aversion bias means you feel losses about twice as strongly as gains. How does this hurt wealth building?",
     options: [
-      "Only when account balance hits zero",
-      "Low balance ($100), large transactions ($500+), monthly transfer confirmations",
-      "Just monthly statements",
-      "Every single transaction"
+      "It makes you spend more money on insurance",
+      "It makes you avoid good investments due to fear of short-term losses",
+      "It makes you save too much money in low-return accounts",
+      "It makes you focus too much on budgeting"
     ],
     correctAnswer: 1,
-    explanation: "Strategic alerts prevent overdrafts (low balance), catch fraud (large transactions), and confirm automatic savings (transfers). This prevents fees and builds awareness.",
-    category: 'optimization'
+    explanation: "Loss aversion causes people to avoid investments with short-term volatility (like stocks) even when they offer better long-term returns. This fear of paper losses prevents wealth building through compound growth.",
+    category: 'psychology'
   }
 ];
 
-export default function BankingFundamentalsQuizEnhanced() {
+interface MoneyFundamentalsQuizProps {
+  onComplete?: (score: number, totalQuestions: number) => void;
+}
+
+export default function MoneyFundamentalsQuizEnhanced({ onComplete }: MoneyFundamentalsQuizProps) {
   const { recordQuizScore } = useProgressStore();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(enhancedQuizQuestions.length).fill(-1));
@@ -194,7 +198,7 @@ export default function BankingFundamentalsQuizEnhanced() {
   };
 
   const getCategoryBreakdown = () => {
-    const breakdown = { 'account-types': 0, 'fees': 0, 'optimization': 0, 'security': 0, 'calculation': 0 };
+    const breakdown = { psychology: 0, practical: 0, calculation: 0, application: 0 };
     selectedAnswers.forEach((answer, index) => {
       if (answer === enhancedQuizQuestions[index].correctAnswer) {
         breakdown[enhancedQuizQuestions[index].category]++;
@@ -217,7 +221,12 @@ export default function BankingFundamentalsQuizEnhanced() {
     const breakdown = getCategoryBreakdown();
 
     // Record the quiz score
-    recordQuizScore('banking-fundamentals-enhanced-quiz', score, enhancedQuizQuestions.length);
+    recordQuizScore('money-fundamentals-enhanced-quiz', score, enhancedQuizQuestions.length);
+
+    // Call completion callback if provided
+    if (onComplete) {
+      onComplete(score, enhancedQuizQuestions.length);
+    }
 
     if (passed) {
       setShowCelebration(true);
@@ -227,15 +236,15 @@ export default function BankingFundamentalsQuizEnhanced() {
       <>
         <SuccessCelebration
           show={showCelebration}
-          title="Banking Mastery Achieved!"
-          message={`Excellent! You scored ${percentage}% and unlocked Chapter 3: Income & Career!`}
+          title="Money Fundamentals Mastered!"
+          message={`Outstanding! You scored ${percentage}% and unlocked Chapter 2: Banking & Savings!`}
           onComplete={() => setShowCelebration(false)}
           type="quiz"
         />
 
         <div className={`max-w-2xl mx-auto ${theme.backgrounds.card} rounded-lg shadow-lg p-8`}>
           <div className="text-center">
-            <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-4`}>Banking Quiz Results</h2>
+            <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-4`}>Enhanced Quiz Results</h2>
             <div className={`text-6xl font-bold mb-4 ${passed ? theme.status.success.text : theme.status.error.text}`}>
               {percentage}%
             </div>
@@ -245,42 +254,35 @@ export default function BankingFundamentalsQuizEnhanced() {
 
             {/* Category Breakdown */}
             <div className={`mb-6 p-4 ${theme.backgrounds.cardDisabled} rounded-lg`}>
-              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>Banking Skill Breakdown</h3>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>Skill Breakdown</h3>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="flex items-center justify-between">
                   <span className={`flex items-center gap-2 ${theme.textColors.secondary}`}>
-                    <Building2 className="w-4 h-4" />
-                    Account Types
+                    <Brain className="w-4 h-4" />
+                    Psychology
                   </span>
-                  <span className={`font-bold ${theme.textColors.primary}`}>{breakdown['account-types']}/2</span>
+                  <span className={`font-bold ${theme.textColors.primary}`}>{breakdown.psychology}/4</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className={`flex items-center gap-2 ${theme.textColors.secondary}`}>
                     <DollarSign className="w-4 h-4" />
-                    Fee Avoidance
+                    Practical
                   </span>
-                  <span className={`font-bold ${theme.textColors.primary}`}>{breakdown.fees}/1</span>
+                  <span className={`font-bold ${theme.textColors.primary}`}>{breakdown.practical}/3</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className={`flex items-center gap-2 ${theme.textColors.secondary}`}>
                     <TrendingUp className="w-4 h-4" />
-                    Optimization
+                    Calculation
                   </span>
-                  <span className={`font-bold ${theme.textColors.primary}`}>{breakdown.optimization}/4</span>
+                  <span className={`font-bold ${theme.textColors.primary}`}>{breakdown.calculation}/1</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className={`flex items-center gap-2 ${theme.textColors.secondary}`}>
-                    <Shield className="w-4 h-4" />
-                    Security & FDIC
-                  </span>
-                  <span className={`font-bold ${theme.textColors.primary}`}>{breakdown.security}/3</span>
-                </div>
-                <div className="flex items-center justify-between col-span-2">
-                  <span className={`flex items-center gap-2 ${theme.textColors.secondary}`}>
                     <CheckCircle className="w-4 h-4" />
-                    Financial Calculations
+                    Application
                   </span>
-                  <span className={`font-bold ${theme.textColors.primary}`}>{breakdown.calculation}/2</span>
+                  <span className={`font-bold ${theme.textColors.primary}`}>{breakdown.application}/2</span>
                 </div>
               </div>
             </div>
@@ -289,17 +291,17 @@ export default function BankingFundamentalsQuizEnhanced() {
               <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-6 mb-6`}>
                 <h3 className={`text-lg font-semibold ${theme.status.success.text} mb-2 flex items-center gap-2 justify-center`}>
                   <Sparkles className="w-5 h-5" />
-                  Banking Foundation Solid!
+                  Foundation Mastered!
                 </h3>
                 <p className={theme.status.success.text}>
-                  You understand account types, fee avoidance, optimization strategies, and FDIC protection. Ready for Chapter 3: Income & Career Growth!
+                  You&apos;ve demonstrated strong understanding of money psychology, practical basics, and goal setting. You&apos;re ready for Chapter 2: Banking Fundamentals!
                 </p>
               </div>
             ) : (
               <div className={`${theme.status.error.bg} border ${theme.status.error.border} rounded-lg p-6 mb-6`}>
-                <h3 className={`text-lg font-semibold ${theme.status.error.text} mb-2`}>Keep Building Your Banking Knowledge!</h3>
+                <h3 className={`text-lg font-semibold ${theme.status.error.text} mb-2`}>Almost There!</h3>
                 <p className={theme.status.error.text}>
-                  You need 80% to unlock Chapter 3. Focus on the categories where you scored lower, review the lessons, then try again.
+                  You need 80% to unlock Chapter 2. Review the enhanced lessons focusing on areas where you scored lower, then try again.
                 </p>
               </div>
             )}
@@ -313,7 +315,7 @@ export default function BankingFundamentalsQuizEnhanced() {
               </button>
               {passed && (
                 <button className={`px-6 py-3 ${theme.buttons.primary} rounded-md transition-colors`}>
-                  Continue to Chapter 3
+                  Continue to Chapter 2
                 </button>
               )}
             </div>
@@ -330,11 +332,10 @@ export default function BankingFundamentalsQuizEnhanced() {
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'account-types': return <Building2 className="w-4 h-4" />;
-      case 'fees': return <DollarSign className="w-4 h-4" />;
-      case 'optimization': return <TrendingUp className="w-4 h-4" />;
-      case 'security': return <Shield className="w-4 h-4" />;
-      case 'calculation': return <CheckCircle className="w-4 h-4" />;
+      case 'psychology': return <Brain className="w-4 h-4" />;
+      case 'practical': return <DollarSign className="w-4 h-4" />;
+      case 'calculation': return <TrendingUp className="w-4 h-4" />;
+      case 'application': return <CheckCircle className="w-4 h-4" />;
       default: return <CheckCircle className="w-4 h-4" />;
     }
   };
@@ -344,7 +345,7 @@ export default function BankingFundamentalsQuizEnhanced() {
       {/* Progress Bar */}
       <div className={`${theme.backgrounds.disabled} rounded-t-lg`}>
         <div
-          className={`${theme.status.success.bg} h-3 rounded-t-lg transition-all duration-300`}
+          className={`${theme.status.info.bg} h-3 rounded-t-lg transition-all duration-300`}
           style={{ width: `${progress}%` }}
         ></div>
       </div>
@@ -358,7 +359,7 @@ export default function BankingFundamentalsQuizEnhanced() {
             </span>
             <div className={`flex items-center gap-2 text-sm ${theme.textColors.muted}`}>
               {getCategoryIcon(question.category)}
-              <span className="capitalize">{question.category.replace('-', ' ')}</span>
+              <span className="capitalize">{question.category}</span>
             </div>
           </div>
           <h2 className={`text-2xl font-bold ${theme.textColors.primary}`}>{question.question}</h2>
@@ -403,12 +404,12 @@ export default function BankingFundamentalsQuizEnhanced() {
               {isCorrect ? (
                 <>
                   <CheckCircle className="w-4 h-4" />
-                  Perfect!
+                  Excellent!
                 </>
               ) : (
                 <>
                   <XCircle className="w-4 h-4" />
-                  Not quite - here&apos;s the insight:
+                  Not quite - here&apos;s why:
                 </>
               )}
             </h3>
