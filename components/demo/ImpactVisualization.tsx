@@ -103,7 +103,7 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
             </div>
             <div>
               <h1 className={`text-4xl font-bold ${theme.textColors.primary}`}>Live Impact Dashboard</h1>
-              <p className="text-lg text-gray-600">Real-time financial literacy improvement metrics</p>
+              <p className={`text-lg ${theme.textColors.secondary}`}>Real-time financial literacy improvement metrics</p>
             </div>
           </div>
 
@@ -248,20 +248,20 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
                     </span>
                   </div>
                   <div className="flex items-center gap-4 mb-2">
-                    <div className="text-sm text-gray-600">
+                    <div className={`text-sm ${theme.textColors.secondary}`}>
                       {category.before}% → {category.after}%
                     </div>
                     <div className="text-sm font-medium text-green-600">
                       +{category.after - category.before} points
                     </div>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2`}>
                     <div
                       className="bg-purple-500 h-2 rounded-full transition-all duration-1000"
                       style={{ width: `${category.after}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-600 mt-1">{category.impact}</p>
+                  <p className={`text-xs ${theme.textColors.secondary} mt-1`}>{category.impact}</p>
                 </div>
               ))}
             </div>
@@ -316,23 +316,23 @@ export default function ImpactVisualization({ simulateRealTime = true }: ImpactV
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div>
               <div className="text-3xl font-bold text-blue-600 mb-2">42%</div>
-              <div className="text-sm text-gray-600">Knowledge Improvement</div>
-              <div className="text-xs text-gray-500">Exceeds 40% target</div>
+              <div className={`text-sm ${theme.textColors.secondary}`}>Knowledge Improvement</div>
+              <div className={`text-xs ${theme.textColors.muted}`}>Exceeds 40% target</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-green-600 mb-2">850+</div>
-              <div className="text-sm text-gray-600">Active Users</div>
-              <div className="text-xs text-gray-500">Growing daily</div>
+              <div className={`text-sm ${theme.textColors.secondary}`}>Active Users</div>
+              <div className={`text-xs ${theme.textColors.muted}`}>Growing daily</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-purple-600 mb-2">100%</div>
-              <div className="text-sm text-gray-600">Reliability</div>
-              <div className="text-xs text-gray-500">Demo-ready platform</div>
+              <div className={`text-sm ${theme.textColors.secondary}`}>Reliability</div>
+              <div className={`text-xs ${theme.textColors.muted}`}>Demo-ready platform</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-red-600 mb-2">64%</div>
-              <div className="text-sm text-gray-600">Crisis Addressed</div>
-              <div className="text-xs text-gray-500">Financial illiteracy</div>
+              <div className={`text-sm ${theme.textColors.secondary}`}>Crisis Addressed</div>
+              <div className={`text-xs ${theme.textColors.muted}`}>Financial illiteracy</div>
             </div>
           </div>
 

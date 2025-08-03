@@ -169,7 +169,7 @@ export default function ContestMetricsDashboard() {
             </div>
             <div>
               <h1 className={`text-4xl font-bold ${theme.textColors.primary}`}>Contest Impact Dashboard</h1>
-              <p className="text-lg text-gray-600">Measurable Outcomes for Hack the Economy Judges</p>
+              <p className={`text-lg ${theme.textColors.secondary}`}>Measurable Outcomes for Hack the Economy Judges</p>
             </div>
           </div>
 
@@ -209,10 +209,10 @@ export default function ContestMetricsDashboard() {
 
                 <div className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>
                   {metric.value}{metric.unit}
-                  <span className="text-sm text-gray-500 ml-1">/ {metric.target}{metric.unit}</span>
+                  <span className={`text-sm ${theme.textColors.muted} ml-1`}>/ {metric.target}{metric.unit}</span>
                 </div>
 
-                <p className="text-sm text-gray-600 mb-3">{metric.description}</p>
+                <p className={`text-sm ${theme.textColors.secondary} mb-3`}>{metric.description}</p>
 
                 {activeMetric === metric.label && (
                   <motion.div
@@ -226,7 +226,7 @@ export default function ContestMetricsDashboard() {
                 )}
 
                 {/* Progress Bar */}
-                <div className="w-full bg-gray-200 rounded-full h-2 mt-3">
+                <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2 mt-3`}>
                   <motion.div
                     className={`h-2 rounded-full ${metric.value >= metric.target ? 'bg-green-500' : 'bg-blue-500'
                       }`}
@@ -317,8 +317,8 @@ export default function ContestMetricsDashboard() {
                     <h4 className={`font-semibold ${theme.textColors.primary}`}>{criterion.criterion}</h4>
                     <span className="text-lg font-bold text-red-600">{criterion.score}/100</span>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">{criterion.evidence}</p>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <p className={`text-sm ${theme.textColors.secondary} mb-2`}>{criterion.evidence}</p>
+                  <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2`}>
                     <motion.div
                       className="bg-red-500 h-2 rounded-full"
                       initial={{ width: 0 }}
@@ -344,28 +344,28 @@ export default function ContestMetricsDashboard() {
                 <Brain className="w-8 h-8 text-blue-600 mx-auto" />
               </div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Real AI Integration</h4>
-              <p className="text-sm text-gray-600">OpenAI GPT-4o-mini with contextual responses, not simulated chatbots</p>
+              <p className={`text-sm ${theme.textColors.secondary}`}>OpenAI GPT-4o-mini with contextual responses, not simulated chatbots</p>
             </div>
             <div className="text-center">
               <div className="bg-green-100 p-4 rounded-lg mb-3">
                 <Mic className="w-8 h-8 text-green-600 mx-auto" />
               </div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Voice Accessibility</h4>
-              <p className="text-sm text-gray-600">Web Speech API integration for inclusive financial education</p>
+              <p className={`text-sm ${theme.textColors.secondary}`}>Web Speech API integration for inclusive financial education</p>
             </div>
             <div className="text-center">
               <div className="bg-purple-100 p-4 rounded-lg mb-3">
                 <BarChart3 className="w-8 h-8 text-purple-600 mx-auto" />
               </div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Live Market Data</h4>
-              <p className="text-sm text-gray-600">Real-time Yahoo Finance & FRED API integration with fallbacks</p>
+              <p className={`text-sm ${theme.textColors.secondary}`}>Real-time Yahoo Finance & FRED API integration with fallbacks</p>
             </div>
             <div className="text-center">
               <div className="bg-yellow-100 p-4 rounded-lg mb-3">
                 <Target className="w-8 h-8 text-yellow-600 mx-auto" />
               </div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Measurable Impact</h4>
-              <p className="text-sm text-gray-600">42% knowledge improvement with quantifiable learning outcomes</p>
+              <p className={`text-sm ${theme.textColors.secondary}`}>42% knowledge improvement with quantifiable learning outcomes</p>
             </div>
           </div>
         </GradientCard>

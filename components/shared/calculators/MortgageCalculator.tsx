@@ -88,10 +88,10 @@ export default function MortgageCalculator() {
                     animate={{ opacity: 1, x: 0 }}
                     className="space-y-6"
                 >
-                    <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6">
+                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6`}>
                         <div className="flex items-center gap-3 mb-6">
                             <Calculator className={`w-6 h-6 ${theme.status.info.text}`} />
-                            <h2 className="${theme.typography.heading4} ${theme.textColors.primary}">Mortgage Details</h2>
+                            <h2 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Mortgage Details</h2>
                         </div>
 
                         <div className="space-y-4">
@@ -164,8 +164,8 @@ export default function MortgageCalculator() {
                     </div>
 
                     {/* Additional Costs */}
-                    <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6">
-                        <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4">Additional Monthly Costs</h3>
+                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6`}>
+                        <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Additional Monthly Costs</h3>
 
                         <div className="space-y-4">
                             <div>
@@ -248,10 +248,10 @@ export default function MortgageCalculator() {
                 >
                     {result && (
                         <>
-                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6">
+                            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6`}>
                                 <div className="flex items-center gap-3 mb-6">
                                     <Home className={`w-6 h-6 ${theme.status.success.text}`} />
-                                    <h2 className="${theme.typography.heading4} ${theme.textColors.primary}">Payment Breakdown</h2>
+                                    <h2 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Payment Breakdown</h2>
                                 </div>
 
                                 <div className="space-y-4">
@@ -263,14 +263,14 @@ export default function MortgageCalculator() {
                                     </div>
 
                                     <div className="flex justify-between items-center p-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg">
-                                        <span className="${theme.textColors.secondary}">Total Interest Over Life of Loan</span>
+                                        <span className={`${theme.textColors.secondary}`}>Total Interest Over Life of Loan</span>
                                         <span className="font-semibold ${theme.textColors.primary}">
                                             ${result.totalInterest.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                                         </span>
                                     </div>
 
                                     <div className="flex justify-between items-center p-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg">
-                                        <span className="${theme.textColors.secondary}">Total Cost of Home</span>
+                                        <span className={`${theme.textColors.secondary}`}>Total Cost of Home</span>
                                         <span className="font-semibold ${theme.textColors.primary}">
                                             ${result.totalCost.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                                         </span>
@@ -279,10 +279,10 @@ export default function MortgageCalculator() {
                             </div>
 
                             {/* Affordability Analysis */}
-                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6">
+                            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6`}>
                                 <div className="flex items-center gap-3 mb-4">
                                     <TrendingUp className={`w-6 h-6 ${theme.textColors.accent}`} />
-                                    <h3 className="${theme.typography.heading4} ${theme.textColors.primary}">Affordability Analysis</h3>
+                                    <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Affordability Analysis</h3>
                                 </div>
 
                                 <div className="space-y-4">
@@ -326,7 +326,7 @@ export default function MortgageCalculator() {
 
                             {/* Tips */}
                             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6">
-                                <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4">💡 Smart Home Buying Tips</h3>
+                                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>💡 Smart Home Buying Tips</h3>
                                 <div className="space-y-2 text-sm ${theme.textColors.primary}">
                                     <p>• Aim for 20% down payment to avoid PMI</p>
                                     <p>• Get pre-approved before house hunting</p>

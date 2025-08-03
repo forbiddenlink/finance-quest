@@ -135,7 +135,7 @@ export default function InteractiveDashboardCards() {
                       {card.details.map((detail, detailIndex) => (
                         <div
                           key={detailIndex}
-                          className={`flex items-center p-3 ${theme.backgrounds.glass}/70 rounded-lg border border-gray-100`}
+                          className={`flex items-center p-3 ${theme.backgrounds.glass}/70 rounded-lg border ${theme.borderColors.primary}`}
                         >
                           <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mr-3 flex-shrink-0" />
                           <span className={`text-sm ${theme.textColors.secondary}`}>{detail}</span>

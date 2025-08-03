@@ -263,11 +263,11 @@ export default function BusinessCalculator() {
                             <CardContent className="space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="text-center p-4 bg-navy-50 rounded-lg">
-                                        <div className="${theme.typography.heading2} text-navy-900">{Math.round(breakEvenUnits).toLocaleString()}</div>
+                                        <div className={`${theme.typography.heading2} text-navy-900`}>{Math.round(breakEvenUnits).toLocaleString()}</div>
                                         <div className="text-sm text-navy-700">Units to Break Even</div>
                                     </div>
                                     <div className="text-center p-4 ${theme.status.success.bg} rounded-lg">
-                                        <div className="${theme.typography.heading2} ${theme.status.success.text}">${breakEvenRevenue.toLocaleString()}</div>
+                                        <div className={`${theme.typography.heading2} ${theme.status.success.text}`}>${breakEvenRevenue.toLocaleString()}</div>
                                         <div className="text-sm ${theme.textColors.secondary}">Break-even Revenue</div>
                                     </div>
                                 </div>

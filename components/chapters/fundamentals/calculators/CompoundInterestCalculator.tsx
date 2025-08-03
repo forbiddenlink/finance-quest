@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useProgress } from '@/lib/context/ProgressContext';
 import { Lightbulb, DollarSign, Rocket, Brain, Sparkles } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface CompoundData {
   year: number;
@@ -97,10 +98,10 @@ export default function CompoundInterestCalculator() {
   return (
     <div className="max-w-6xl mx-auto ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg p-6">
       <div className="mb-6">
-        <h2 className="${theme.typography.heading2} ${theme.textColors.primary} mb-2">
+        <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>
           Compound Interest Calculator
         </h2>
-        <p className="${theme.textColors.secondary}">
+        <p className={`${theme.textColors.secondary}`}>
           See how your money grows over time with the power of compound interest!
         </p>
       </div>
@@ -108,12 +109,12 @@ export default function CompoundInterestCalculator() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Controls */}
         <div className="space-y-6">
-          <div className="${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4">
+          <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4`}>
             <h3 className="font-semibold ${theme.status.info.text} mb-3 flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
               The Magic of Compound Interest
             </h3>
-            <p className="${theme.textColors.secondary} text-sm">
+            <p className={`${theme.textColors.secondary} text-sm`}>
               Einstein called it the &quot;eighth wonder of the world.&quot; Those who understand it, earn it.
               Those who don&apos;t, pay it. Watch your money grow exponentially!
             </p>
@@ -192,11 +193,11 @@ export default function CompoundInterestCalculator() {
               type="range"
               value={years}
               onChange={(e) => setYears(Number(e.target.value))}
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              className={`w-full h-2 ${theme.backgrounds.cardDisabled} rounded-lg appearance-none cursor-pointer`}
               min="1"
               max="50"
             />
-            <div className="flex justify-between text-xs ${theme.textColors.muted} mt-1">
+            <div className={`flex justify-between text-xs ${theme.textColors.muted} mt-1`}>
               <span>1 year</span>
               <span className="font-medium text-blue-400">{years} years</span>
               <span>50 years</span>
@@ -259,17 +260,17 @@ export default function CompoundInterestCalculator() {
         <div className="space-y-6">
           {/* Summary Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4 text-center">
+            <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4 text-center`}>
               <p className="text-sm text-green-400 font-medium">Final Balance</p>
-              <p className="${theme.typography.heading2} ${theme.textColors.primary}">{formatCurrency(finalBalance)}</p>
+              <p className={`${theme.typography.heading2} ${theme.textColors.primary}`}>{formatCurrency(finalBalance)}</p>
             </div>
-            <div className="${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4 text-center">
+            <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4 text-center`}>
               <p className="text-sm text-blue-400 font-medium">Total Invested</p>
-              <p className="${theme.typography.heading2} ${theme.textColors.secondary}">{formatCurrency(totalPrincipal)}</p>
+              <p className={`${theme.typography.heading2} ${theme.textColors.secondary}`}>{formatCurrency(totalPrincipal)}</p>
             </div>
             <div className="bg-purple-500/20 border border-purple-500/30 rounded-lg p-4 text-center">
               <p className="text-sm text-purple-400 font-medium">Interest Earned</p>
-              <p className="${theme.typography.heading2} ${theme.textColors.primary}">{formatCurrency(totalInterest)}</p>
+              <p className={`${theme.typography.heading2} ${theme.textColors.primary}`}>{formatCurrency(totalInterest)}</p>
             </div>
           </div>
 
@@ -282,7 +283,7 @@ export default function CompoundInterestCalculator() {
           </div>
 
           {/* Chart */}
-          <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} border ${theme.borderColors.primary} rounded-lg p-4">
+          <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} border ${theme.borderColors.primary} rounded-lg p-4`}>
             <h4 className="font-semibold ${theme.textColors.primary} mb-4">Growth Over Time</h4>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">

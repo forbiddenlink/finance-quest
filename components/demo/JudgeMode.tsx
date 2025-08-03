@@ -109,7 +109,7 @@ export default function JudgeMode({ isActive = false, onToggle }: JudgeModeProps
           onClick={() => onToggle?.(!isActive)}
           className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg transition-all ${isActive
               ? 'bg-gradient-to-r from-blue-600 to-slate-600 text-white'
-              : '${theme.backgrounds.glass} ${theme.textColors.secondary} border ${theme.borderColors.primary} hover:bg-gray-50'
+              : `${theme.backgrounds.glass} ${theme.textColors.secondary} border ${theme.borderColors.primary} hover:${theme.backgrounds.card}`
             }`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

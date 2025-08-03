@@ -199,17 +199,17 @@ export default function BudgetBuilderCalculator() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Budget Categories */}
                 <div className="space-y-6">
-                    <h3 className="${theme.typography.heading4} ${theme.textColors.primary}">Monthly Budget Categories</h3>
+                    <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Monthly Budget Categories</h3>
 
                     {/* Needs Section */}
-                    <div className="${theme.status.error.bg} rounded-lg p-4">
+                    <div className={`${theme.status.error.bg} rounded-lg p-4`}>
                         <h4 className="font-semibold ${theme.status.error.text} mb-3 flex items-center">
                             <Home className="mr-2 w-5 h-5" />
                             Needs (Essential Expenses)
                         </h4>
                         <div className="space-y-3">
                             {categories.filter(cat => cat.type === 'need').map(category => (
-                                <div key={category.id} className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-3">
+                                <div key={category.id} className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-3`}>
                                     <div className="flex items-center justify-between mb-2">
                                         <span className="font-medium ${theme.textColors.primary} flex items-center">
                                             <category.icon className="mr-2 w-4 h-4" style={{ color: category.color }} />
@@ -257,7 +257,7 @@ export default function BudgetBuilderCalculator() {
                         </h4>
                         <div className="space-y-3">
                             {categories.filter(cat => cat.type === 'want').map(category => (
-                                <div key={category.id} className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-3">
+                                <div key={category.id} className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-3`}>
                                     <div className="flex items-center justify-between mb-2">
                                         <span className="font-medium ${theme.textColors.primary} flex items-center">
                                             <category.icon className="mr-2 w-4 h-4" style={{ color: category.color }} />
@@ -298,14 +298,14 @@ export default function BudgetBuilderCalculator() {
                     </div>
 
                     {/* Savings Section */}
-                    <div className="${theme.status.success.bg} rounded-lg p-4">
+                    <div className={`${theme.status.success.bg} rounded-lg p-4`}>
                         <h4 className="font-semibold ${theme.status.success.text} mb-3 flex items-center">
                             <TrendingUp className="mr-2 w-5 h-5" />
                             Savings & Investments
                         </h4>
                         <div className="space-y-3">
                             {categories.filter(cat => cat.type === 'savings').map(category => (
-                                <div key={category.id} className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-3">
+                                <div key={category.id} className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-3`}>
                                     <div className="flex items-center justify-between mb-2">
                                         <span className="font-medium ${theme.textColors.primary} flex items-center">
                                             <category.icon className="mr-2 w-4 h-4" style={{ color: category.color }} />
@@ -348,10 +348,10 @@ export default function BudgetBuilderCalculator() {
 
                 {/* Charts and Analysis */}
                 <div className="space-y-6">
-                    <h3 className="${theme.typography.heading4} ${theme.textColors.primary}">Budget Analysis</h3>
+                    <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Budget Analysis</h3>
 
                     {/* Budget Breakdown Pie Chart */}
-                    <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4">
+                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4`}>
                         <h4 className="font-semibold ${theme.textColors.primary} mb-4">Spending Breakdown</h4>
                         <div className="h-64">
                             <ResponsiveContainer width="100%" height="100%">
@@ -377,7 +377,7 @@ export default function BudgetBuilderCalculator() {
                     </div>
 
                     {/* Budget vs Actual Comparison */}
-                    <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4">
+                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4`}>
                         <h4 className="font-semibold ${theme.textColors.primary} mb-4">Budget vs Actual</h4>
                         <div className="h-64">
                             <ResponsiveContainer width="100%" height="100%">
@@ -421,7 +421,7 @@ export default function BudgetBuilderCalculator() {
                     </div>
 
                     {/* Tips and Insights */}
-                    <div className="${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4">
+                    <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4`}>
                         <h4 className="font-semibold ${theme.status.info.text} mb-3 flex items-center gap-2">
                             <Lightbulb className="w-4 h-4" />
                             Budgeting Tips

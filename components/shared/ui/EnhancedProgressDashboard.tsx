@@ -108,8 +108,8 @@ export default function EnhancedProgressDashboard() {
     switch (status) {
       case 'completed': return 'text-green-600 bg-green-100';
       case 'in-progress': return 'text-yellow-600 bg-yellow-100';
-      case 'planned': return 'text-gray-600 bg-gray-100';
-      default: return 'text-gray-600 bg-gray-100';
+      case 'planned': return `${theme.textColors.secondary} ${theme.backgrounds.cardHover}`;
+      default: return `${theme.textColors.secondary} ${theme.backgrounds.cardHover}`;
     }
   };
 
@@ -155,7 +155,7 @@ export default function EnhancedProgressDashboard() {
           <h2 className={`text-4xl font-bold ${theme.textColors.primary} mb-4`}>
             Finance Quest: Development Achievements
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className={`text-xl ${theme.textColors.secondary} max-w-3xl mx-auto leading-relaxed`}>
             Advanced educational platform with real market data, AI-powered assessments,
             and voice interaction capabilities. Professional-grade implementation complete.
           </p>
@@ -171,7 +171,7 @@ export default function EnhancedProgressDashboard() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Features Complete</p>
+                <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Features Complete</p>
                 <p className="text-3xl font-bold text-green-600">{implementedFeatures.length}</p>
               </div>
               <CheckCircle className="w-12 h-12 text-green-500" />
@@ -186,7 +186,7 @@ export default function EnhancedProgressDashboard() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Chapters Available</p>
+                <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Chapters Available</p>
                 <p className="text-3xl font-bold text-blue-600">{userProgress.currentChapter}</p>
               </div>
               <Brain className="w-12 h-12 text-blue-500" />
@@ -201,7 +201,7 @@ export default function EnhancedProgressDashboard() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">AI Integration</p>
+                <p className={`text-sm font-medium ${theme.textColors.secondary}`}>AI Integration</p>
                 <p className="text-3xl font-bold text-purple-600">Real</p>
               </div>
               <Sparkles className="w-12 h-12 text-purple-500" />
@@ -216,7 +216,7 @@ export default function EnhancedProgressDashboard() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Market Data</p>
+                <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Market Data</p>
                 <p className="text-3xl font-bold text-orange-600">Live</p>
               </div>
               <DollarSign className="w-12 h-12 text-orange-500" />
@@ -263,7 +263,7 @@ export default function EnhancedProgressDashboard() {
                   <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>
                     {feature.name}
                   </h4>
-                  <p className="text-gray-600 text-sm mb-4">
+                  <p className={`${theme.textColors.secondary} text-sm mb-4`}>
                     {feature.description}
                   </p>
 
@@ -318,7 +318,7 @@ export default function EnhancedProgressDashboard() {
                   <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>
                     {feature.name}
                   </h4>
-                  <p className="text-gray-600 text-sm">
+                  <p className={`${theme.textColors.secondary} text-sm`}>
                     {feature.description}
                   </p>
                 </motion.div>
@@ -360,22 +360,22 @@ export default function EnhancedProgressDashboard() {
                   <div className={`${theme.backgrounds.glass} rounded-lg p-4 text-center`}>
                     <Heart className="w-8 h-8 mx-auto mb-2 text-green-600" />
                     <p className={`font-semibold ${theme.textColors.primary}`}>Emergency Fund</p>
-                    <p className="text-sm text-gray-600">0-25 points</p>
+                    <p className={`text-sm ${theme.textColors.secondary}`}>0-25 points</p>
                   </div>
                   <div className={`${theme.backgrounds.glass} rounded-lg p-4 text-center`}>
                     <TrendingUp className="w-8 h-8 mx-auto mb-2 text-blue-600" />
                     <p className={`font-semibold ${theme.textColors.primary}`}>Debt Management</p>
-                    <p className="text-sm text-gray-600">0-25 points</p>
+                    <p className={`text-sm ${theme.textColors.secondary}`}>0-25 points</p>
                   </div>
                   <div className={`${theme.backgrounds.glass} rounded-lg p-4 text-center`}>
                     <Target className="w-8 h-8 mx-auto mb-2 text-purple-600" />
                     <p className={`font-semibold ${theme.textColors.primary}`}>Savings Rate</p>
-                    <p className="text-sm text-gray-600">0-25 points</p>
+                    <p className={`text-sm ${theme.textColors.secondary}`}>0-25 points</p>
                   </div>
                   <div className={`${theme.backgrounds.glass} rounded-lg p-4 text-center`}>
                     <Brain className="w-8 h-8 mx-auto mb-2 text-orange-600" />
                     <p className={`font-semibold ${theme.textColors.primary}`}>Knowledge Level</p>
-                    <p className="text-sm text-gray-600">0-25 points</p>
+                    <p className={`text-sm ${theme.textColors.secondary}`}>0-25 points</p>
                   </div>
                 </div>
               </div>

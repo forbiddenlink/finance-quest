@@ -384,9 +384,9 @@ export default function FinancialHealthScoreCalculator() {
                       <span className={`text-2xl font-bold ${getScoreColor(category.score)}`}>
                         {category.score}
                       </span>
-                      <span className="text-sm text-gray-500">/25</span>
+                      <span className={`text-sm ${theme.textColors.muted}`}>/25</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                    <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2 mt-2`}>
                       <motion.div
                         className={`bg-${category.color}-500 h-2 rounded-full`}
                         initial={{ width: 0 }}

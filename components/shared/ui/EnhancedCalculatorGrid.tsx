@@ -106,7 +106,7 @@ export default function EnhancedCalculatorGrid() {
         <h2 className={`text-4xl font-bold ${theme.textColors.primary}`}>
           Interactive Financial Calculators
         </h2>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        <p className={`text-xl ${theme.textColors.secondary} max-w-3xl mx-auto`}>
           Professional-grade tools powered by Finance.js with real-time calculations and educational insights
         </p>
       </div>
@@ -140,7 +140,7 @@ export default function EnhancedCalculatorGrid() {
                   <CardTitle className={`text-xl font-bold ${theme.textColors.primary} group-hover:text-blue-700 transition-colors`}>
                     {calc.title}
                   </CardTitle>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <p className={`text-sm ${theme.textColors.secondary} leading-relaxed`}>
                     {calc.description}
                   </p>
                 </div>
@@ -163,7 +163,7 @@ export default function EnhancedCalculatorGrid() {
                 </div>
 
                 {/* Usage Stats */}
-                <div className="flex items-center justify-between text-xs text-gray-500">
+                <div className={`flex items-center justify-between text-xs ${theme.textColors.muted}`}>
                   <div className="flex items-center">
                     <Users className="w-3 h-3 mr-1" />
                     {calc.usage}
@@ -196,7 +196,7 @@ export default function EnhancedCalculatorGrid() {
             <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-2`}>
               🎯 Educational Focus
             </h3>
-            <p className="text-gray-600 mb-4">
+            <p className={`${theme.textColors.secondary} mb-4`}>
               Each calculator includes detailed explanations, real-world examples, and personalized insights to enhance your financial learning.
             </p>
             <Link href="/calculators">

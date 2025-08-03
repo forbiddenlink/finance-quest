@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, Target } from 'lucide-react';
 import { useProgressActions } from '@/lib/context/ProgressContext';
+import { theme } from '@/lib/theme';
 
 interface NegotiationAnalysis {
     currentSalary: number;
@@ -165,21 +166,21 @@ export default function SalaryNegotiationCalculator() {
                         </div>
                     </div>
 
-                    <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4 mb-4">
-                        <h4 className="font-medium ${theme.textColors.primary} mb-2">Confidence Score</h4>
+                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4 mb-4`}>
+                        <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Confidence Score</h4>
                         <div className="flex items-center gap-3">
-                            <div className="flex-1 bg-gray-200 rounded-full h-3">
+                            <div className={`flex-1 ${theme.backgrounds.cardDisabled} rounded-full h-3`}>
                                 <div
                                     className={`h-3 rounded-full ${analysis.confidenceScore >= 70
-                                        ? '${theme.status.success.bg}0'
+                                        ? 'bg-green-500'
                                         : analysis.confidenceScore >= 50
-                                            ? '${theme.status.warning.bg}0'
-                                            : '${theme.status.error.bg}0'
+                                            ? 'bg-yellow-500'
+                                            : 'bg-red-500'
                                         }`}
                                     style={{ width: `${analysis.confidenceScore}%` }}
                                 ></div>
                             </div>
-                            <span className="font-semibold ${theme.textColors.primary}">
+                            <span className={`font-semibold ${theme.textColors.primary}`}>
                                 {analysis.confidenceScore}%
                             </span>
                         </div>

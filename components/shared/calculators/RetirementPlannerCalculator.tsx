@@ -364,11 +364,11 @@ export default function RetirementPlannerCalculator() {
                 {/* Breakdown */}
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="${theme.textColors.secondary}">Total Contributions:</span>
+                    <span className={`${theme.textColors.secondary}`}>Total Contributions:</span>
                     <div className="font-semibold">{formatCurrency(results.totalContributions)}</div>
                   </div>
                   <div>
-                    <span className="${theme.textColors.secondary}">Interest Earned:</span>
+                    <span className={`${theme.textColors.secondary}`}>Interest Earned:</span>
                     <div className="font-semibold">{formatCurrency(results.totalInterest)}</div>
                   </div>
                 </div>
@@ -450,21 +450,21 @@ export default function RetirementPlannerCalculator() {
             <CardContent>
               <div className="space-y-4">
                 <div className="flex justify-between items-center p-3 ${theme.status.info.bg} rounded-lg">
-                  <span className="${theme.textColors.primary}">Your Contribution</span>
+                  <span className={`${theme.textColors.primary}`}>Your Contribution</span>
                   <span className="font-semibold">{formatCurrency(parseFloat(monthlyContribution))}/month</span>
                 </div>
                 <div className="flex justify-between items-center p-3 ${theme.status.success.bg} rounded-lg">
-                  <span className="${theme.textColors.primary}">Employer Match</span>
+                  <span className={`${theme.textColors.primary}`}>Employer Match</span>
                   <span className="font-semibold">{formatCurrency((parseFloat(monthlyContribution) * parseFloat(employerMatch)) / 100)}/month</span>
                 </div>
                 <div className={`flex justify-between items-center p-3 ${theme.status.info.bg} rounded-lg`}>
-                  <span className="${theme.textColors.primary}">Total Monthly</span>
+                  <span className={`${theme.textColors.primary}`}>Total Monthly</span>
                   <span className={`font-semibold ${theme.textColors.accent}`}>
                     {formatCurrency(parseFloat(monthlyContribution) + (parseFloat(monthlyContribution) * parseFloat(employerMatch)) / 100)}/month
                   </span>
                 </div>
                 <div className="flex justify-between items-center p-3 ${theme.status.warning.bg} rounded-lg">
-                  <span className="${theme.textColors.primary}">Annual Total</span>
+                  <span className={`${theme.textColors.primary}`}>Annual Total</span>
                   <span className={`font-semibold ${theme.status.warning.text}`}>
                     {formatCurrency((parseFloat(monthlyContribution) + (parseFloat(monthlyContribution) * parseFloat(employerMatch)) / 100) * 12)}/year
                   </span>
@@ -478,28 +478,28 @@ export default function RetirementPlannerCalculator() {
       {/* Educational Content */}
       <Card className="bg-gradient-to-r from-blue-50 to-purple-50">
         <CardContent className="p-6">
-          <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2">
+          <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
             <Shield className={`w-5 h-5 ${theme.status.info.text}`} />
             Retirement Planning Insights
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div>
               <h4 className="font-medium ${theme.textColors.primary} mb-2">The Power of Time</h4>
-              <p className="${theme.textColors.primary}">
+              <p className={`${theme.textColors.primary}`}>
                 Starting early is the most powerful factor in retirement savings. Even small 
                 contributions in your 20s and 30s can grow dramatically due to compound interest.
               </p>
             </div>
             <div>
               <h4 className="font-medium ${theme.textColors.primary} mb-2">Employer Match</h4>
-              <p className="${theme.textColors.primary}">
+              <p className={`${theme.textColors.primary}`}>
                 Always contribute enough to get your full employer match - it&apos;s free money! 
                 A 50% match on 6% contribution gives you an immediate 50% return.
               </p>
             </div>
             <div>
               <h4 className="font-medium ${theme.textColors.primary} mb-2">4% Withdrawal Rule</h4>
-              <p className="${theme.textColors.primary}">
+              <p className={`${theme.textColors.primary}`}>
                 The 4% rule suggests you can safely withdraw 4% of your retirement balance 
                 annually. This calculator uses this rule to estimate your retirement income.
               </p>

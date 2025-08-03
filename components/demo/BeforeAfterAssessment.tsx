@@ -266,7 +266,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   </div>
                   <div>
                     <h1 className={`text-3xl font-bold ${theme.textColors.primary}`}>Before & After Assessment</h1>
-                    <p className="text-gray-600">Measure your financial literacy improvement</p>
+                    <p className={`${theme.textColors.secondary}`}>Measure your financial literacy improvement</p>
                   </div>
                 </div>
 
@@ -312,7 +312,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   {isDemo && (
                     <button
                       onClick={startDemo}
-                      className={`${theme.backgrounds.glass} ${theme.textColors.secondary} px-6 py-3 rounded-full font-semibold border ${theme.borderColors.primary} hover:bg-gray-50 transition-all flex items-center gap-2`}
+                      className={`${theme.backgrounds.glass} ${theme.textColors.secondary} px-6 py-3 rounded-full font-semibold border ${theme.borderColors.primary} hover:${theme.backgrounds.card} transition-all flex items-center gap-2`}
                     >
                       <Zap className="w-5 h-5" />
                       Demo Mode
@@ -335,13 +335,13 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                     <h2 className={`text-2xl font-bold ${theme.textColors.primary}`}>
                       {phase === 'before' ? 'Before Assessment' : 'After Assessment'}
                     </h2>
-                    <p className="text-gray-600">
+                    <p className={`${theme.textColors.secondary}`}>
                       Question {currentQuestion + 1} of {assessmentQuestions.length}
                     </p>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm text-gray-500">Time: {Math.floor(timeSpent / 60)}:{(timeSpent % 60).toString().padStart(2, '0')}</div>
-                    <div className="w-32 bg-gray-200 rounded-full h-2 mt-1">
+                    <div className={`text-sm ${theme.textColors.muted}`}>Time: {Math.floor(timeSpent / 60)}:{(timeSpent % 60).toString().padStart(2, '0')}</div>
+                    <div className={`w-32 ${theme.backgrounds.cardDisabled} rounded-full h-2 mt-1`}>
                       <div
                         className="bg-purple-500 h-2 rounded-full transition-all duration-300"
                         style={{ width: `${((currentQuestion) / assessmentQuestions.length) * 100}%` }}
@@ -392,7 +392,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   </div>
                   <div>
                     <h2 className={`text-3xl font-bold ${theme.textColors.primary}`}>Learning Phase Complete!</h2>
-                    <p className="text-gray-600">Your baseline has been established</p>
+                    <p className={`${theme.textColors.secondary}`}>Your baseline has been established</p>
                   </div>
                 </div>
 
@@ -421,7 +421,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
 
                   <button
                     onClick={simulateAfterScores}
-                    className={`${theme.backgrounds.glass} ${theme.textColors.secondary} px-6 py-3 rounded-full font-semibold border ${theme.borderColors.primary} hover:bg-gray-50 transition-all`}
+                    className={`${theme.backgrounds.glass} ${theme.textColors.secondary} px-6 py-3 rounded-full font-semibold border ${theme.borderColors.primary} hover:${theme.backgrounds.card} transition-all`}
                   >
                     Simulate Results
                   </button>
@@ -443,7 +443,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                   </div>
                   <div>
                     <h2 className={`text-4xl font-bold ${theme.textColors.primary}`}>Remarkable Improvement!</h2>
-                    <p className="text-lg text-gray-600">Your financial literacy has measurably increased</p>
+                    <p className={`text-lg ${theme.textColors.secondary}`}>Your financial literacy has measurably increased</p>
                   </div>
                 </div>
 
@@ -494,15 +494,15 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
                     <div className="text-3xl font-bold text-purple-600 mb-2">{averageImprovement}%</div>
-                    <div className="text-sm text-gray-600">Average Knowledge Gain</div>
+                    <div className={`text-sm ${theme.textColors.secondary}`}>Average Knowledge Gain</div>
                   </div>
                   <div>
                     <div className="text-3xl font-bold text-blue-600 mb-2">64%</div>
-                    <div className="text-sm text-gray-600">Financial Illiteracy Crisis</div>
+                    <div className={`text-sm ${theme.textColors.secondary}`}>Financial Illiteracy Crisis</div>
                   </div>
                   <div>
                     <div className="text-3xl font-bold text-green-600 mb-2">100%</div>
-                    <div className="text-sm text-gray-600">Measurable Improvement</div>
+                    <div className={`text-sm ${theme.textColors.secondary}`}>Measurable Improvement</div>
                   </div>
                 </div>
                 <p className={`${theme.textColors.secondary} mt-6`}>

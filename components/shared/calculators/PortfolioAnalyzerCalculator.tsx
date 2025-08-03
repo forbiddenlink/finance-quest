@@ -207,8 +207,8 @@ export default function PortfolioAnalyzerCalculator() {
         <div className="space-y-6">
             {/* Header */}
             <div className="text-center mb-8">
-                <h2 className="${theme.typography.heading2} ${theme.textColors.primary} mb-2">Portfolio Analyzer</h2>
-                <p className="${theme.textColors.secondary} max-w-2xl mx-auto">
+                <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>Portfolio Analyzer</h2>
+                <p className={`${theme.textColors.secondary} max-w-2xl mx-auto`}>
                     Analyze your investment portfolio&apos;s allocation, diversification, and risk profile.
                     Get personalized recommendations to optimize your investment strategy.
                 </p>
@@ -506,28 +506,28 @@ export default function PortfolioAnalyzerCalculator() {
             {/* Educational Content */}
             <Card className="bg-gradient-to-r from-blue-50 to-purple-50">
                 <CardContent className="p-6">
-                    <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2">
+                    <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
                         <Shield className={`w-5 h-5 ${theme.status.info.text}`} />
                         Portfolio Analysis Insights
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                         <div>
                             <h4 className="font-medium ${theme.textColors.primary} mb-2">Diversification Benefits</h4>
-                            <p className="${theme.textColors.primary}">
+                            <p className={`${theme.textColors.primary}`}>
                                 Spreading investments across different asset classes and sectors reduces risk
                                 while maintaining growth potential. Aim for 8+ different holdings across 4+ categories.
                             </p>
                         </div>
                         <div>
                             <h4 className="font-medium ${theme.textColors.primary} mb-2">Risk Management</h4>
-                            <p className="${theme.textColors.primary}">
+                            <p className={`${theme.textColors.primary}`}>
                                 Conservative portfolios (30-50% stocks) offer stability, while aggressive portfolios
                                 (70%+ stocks) provide higher growth potential with increased volatility.
                             </p>
                         </div>
                         <div>
                             <h4 className="font-medium ${theme.textColors.primary} mb-2">Rebalancing Strategy</h4>
-                            <p className="${theme.textColors.primary}">
+                            <p className={`${theme.textColors.primary}`}>
                                 Review your allocation quarterly and rebalance when any category drifts more than
                                 5% from your target. This maintains your desired risk level and captures gains.
                             </p>

@@ -258,8 +258,8 @@ export default function TaxOptimizerCalculator() {
     <div className="space-y-6">
       {/* Header */}
       <div className="text-center mb-8">
-        <h2 className="${theme.typography.heading2} ${theme.textColors.primary} mb-2">Tax Optimizer</h2>
-        <p className="${theme.textColors.secondary} max-w-2xl mx-auto">
+        <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>Tax Optimizer</h2>
+        <p className={`${theme.textColors.secondary} max-w-2xl mx-auto`}>
           Minimize your tax burden with personalized strategies. Discover legal ways to reduce taxes 
           and keep more of your hard-earned money working for you.
         </p>
@@ -544,28 +544,28 @@ export default function TaxOptimizerCalculator() {
       {/* Educational Content */}
       <Card className="bg-gradient-to-r from-blue-50 to-green-50">
         <CardContent className="p-6">
-          <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2">
+          <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
             <Shield className={`w-5 h-5 ${theme.status.info.text}`} />
             Tax Optimization Strategies
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div>
               <h4 className="font-medium ${theme.textColors.primary} mb-2">Pre-Tax Contributions</h4>
-              <p className="${theme.textColors.primary}">
+              <p className={`${theme.textColors.primary}`}>
                 401(k), Traditional IRA, and HSA contributions reduce your taxable income dollar-for-dollar. 
                 Maximize these accounts first for immediate tax savings.
               </p>
             </div>
             <div>
               <h4 className="font-medium ${theme.textColors.primary} mb-2">Tax-Loss Harvesting</h4>
-              <p className="${theme.textColors.primary}">
+              <p className={`${theme.textColors.primary}`}>
                 Realize investment losses to offset capital gains. You can deduct up to $3,000 
                 in net losses against ordinary income annually.
               </p>
             </div>
             <div>
               <h4 className="font-medium ${theme.textColors.primary} mb-2">Strategic Timing</h4>
-              <p className="${theme.textColors.primary}">
+              <p className={`${theme.textColors.primary}`}>
                 Time income and deductions strategically. Consider accelerating deductions into 
                 high-income years and deferring income when possible.
               </p>

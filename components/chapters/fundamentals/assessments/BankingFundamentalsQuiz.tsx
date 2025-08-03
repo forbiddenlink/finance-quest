@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, XCircle, ArrowRight, RotateCcw, Trophy } from 'lucide-react';
 import { useProgressActions } from '@/lib/context/ProgressContext';
+import { theme } from '@/lib/theme';
 
 interface Question {
   id: string;
@@ -184,17 +185,17 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
             <div className={`text-6xl font-bold mb-4 ${getScoreColor(score)}`}>
               {Math.round(score * 100)}%
             </div>
-            <div className="text-xl text-gray-600 mb-2">
+            <div className={`text-xl ${theme.textColors.secondary} mb-2`}>
               {correctAnswers} out of {questions.length} correct
             </div>
-            <div className="text-lg text-gray-700">
+            <div className={`text-lg ${theme.textColors.primary}`}>
               {getScoreMessage(score)}
             </div>
           </div>
 
           {/* Detailed Results */}
           <div className="space-y-4 mb-8">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Review Your Answers</h3>
+            <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-4`}>Review Your Answers</h3>
             {questions.map((question, index) => {
               const isCorrect = selectedAnswers[index] === question.correctAnswer;
               const userAnswer = selectedAnswers[index];
@@ -215,9 +216,9 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
                       <XCircle className="w-6 h-6 text-red-500 flex-shrink-0 mt-1" />
                     )}
                     <div className="flex-1">
-                      <h4 className="font-medium text-gray-800 mb-2">{question.question}</h4>
+                      <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>{question.question}</h4>
                       {userAnswer !== null && (
-                        <div className="text-sm text-gray-600 mb-2">
+                        <div className={`text-sm ${theme.textColors.secondary} mb-2`}>
                           <span className="font-medium">Your answer:</span> {question.options[userAnswer]}
                         </div>
                       )}
@@ -226,7 +227,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
                           <span className="font-medium">Correct answer:</span> {question.options[question.correctAnswer]}
                         </div>
                       )}
-                      <div className="text-sm text-gray-700 bg-white p-3 rounded border">
+                      <div className={`text-sm ${theme.textColors.primary} bg-white p-3 rounded border`}>
                         <span className="font-medium">Explanation:</span> {question.explanation}
                       </div>
                     </div>
@@ -240,7 +241,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <motion.button
               onClick={restartQuiz}
-              className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center"
+              className={`px-6 py-3 ${theme.buttons.secondary} rounded-lg transition-colors flex items-center justify-center`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -314,7 +315,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
           >
             <div className="mb-6">
               <div className="text-sm text-blue-600 font-medium mb-2">{currentQ.category}</div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-6">{currentQ.question}</h3>
+              <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-6`}>{currentQ.question}</h3>
             </div>
 
             <div className="space-y-3 mb-8">
@@ -324,7 +325,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
                   onClick={() => handleAnswerSelect(index)}
                   className={`w-full text-left p-4 rounded-lg border-2 transition-all ${selectedAnswers[currentQuestion] === index
                     ? 'border-blue-500 bg-blue-50 text-blue-800'
-                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                    : `border ${theme.borderColors.primary} hover:${theme.borderColors.accent} hover:${theme.backgrounds.card}`
                     }`}
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
@@ -332,7 +333,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
                   <div className="flex items-center">
                     <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${selectedAnswers[currentQuestion] === index
                       ? 'border-blue-500 bg-blue-500'
-                      : 'border-gray-300'
+                      : `border ${theme.borderColors.muted}`
                       }`}>
                       {selectedAnswers[currentQuestion] === index && (
                         <div className="w-2 h-2 rounded-full bg-white"></div>
@@ -349,8 +350,8 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
       </div>
 
       {/* Navigation */}
-      <div className="bg-gray-50 px-6 py-4 flex justify-between items-center">
-        <div className="text-sm text-gray-500">
+      <div className={`${theme.backgrounds.cardDisabled} px-6 py-4 flex justify-between items-center`}>
+        <div className={`text-sm ${theme.textColors.muted}`}>
           {selectedAnswers[currentQuestion] !== null ? 'Answer selected' : 'Select an answer to continue'}
         </div>
 

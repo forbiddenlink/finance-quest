@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { PiggyBank, TrendingUp, DollarSign, Calendar, Target } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { theme } from '@/lib/theme';
 
 interface SavingsResults {
   futureValue: number;
@@ -120,7 +121,7 @@ const SavingsCalculator = () => {
 
   return (
     <motion.div
-      className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg overflow-hidden"
+      className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg overflow-hidden`}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -132,7 +133,7 @@ const SavingsCalculator = () => {
       >
         <div className="flex items-center space-x-3 mb-4">
           <PiggyBank className="w-8 h-8" />
-          <h2 className="${theme.typography.heading2}">Savings Growth Calculator</h2>
+          <h2 className={`${theme.typography.heading2}`}>Savings Growth Calculator</h2>
         </div>
         <p className="text-lg opacity-90">
           See how your money grows with compound interest and regular savings
@@ -143,20 +144,20 @@ const SavingsCalculator = () => {
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Input Section */}
           <motion.div variants={itemVariants} className="space-y-6">
-            <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4">Your Savings Plan</h3>
+            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Your Savings Plan</h3>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Initial Deposit
                 </label>
                 <div className="relative">
-                  <DollarSign className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                  <DollarSign className={`absolute left-3 top-3 w-5 h-5 ${theme.textColors.muted}`} />
                   <input
                     type="number"
                     value={initialDeposit}
                     onChange={(e) => setInitialDeposit(Number(e.target.value))}
-                    className="w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className={`w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent`}
                     min="0"
                     step="100"
                   />
@@ -164,16 +165,16 @@ const SavingsCalculator = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Monthly Deposit
                 </label>
                 <div className="relative">
-                  <DollarSign className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                  <DollarSign className={`absolute left-3 top-3 w-5 h-5 ${theme.textColors.muted}`} />
                   <input
                     type="number"
                     value={monthlyDeposit}
                     onChange={(e) => setMonthlyDeposit(Number(e.target.value))}
-                    className="w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className={`w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent`}
                     min="0"
                     step="25"
                   />
@@ -181,37 +182,37 @@ const SavingsCalculator = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Annual Interest Rate (%)
                 </label>
                 <div className="relative">
-                  <TrendingUp className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                  <TrendingUp className={`absolute left-3 top-3 w-5 h-5 ${theme.textColors.muted}`} />
                   <input
                     type="number"
                     value={interestRate}
                     onChange={(e) => setInterestRate(Number(e.target.value))}
-                    className="w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className={`w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent`}
                     min="0"
                     max="20"
                     step="0.1"
                   />
                 </div>
-                <p className="text-xs ${theme.textColors.muted} mt-1">
+                <p className={`text-xs ${theme.textColors.muted} mt-1`}>
                   High-yield savings: 4-5%, Traditional savings: 0.01-0.5%
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium ${theme.textColors.primary} mb-2">
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Time Period (Years)
                 </label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                  <Calendar className={`absolute left-3 top-3 w-5 h-5 ${theme.textColors.muted}`} />
                   <input
                     type="number"
                     value={timeYears}
                     onChange={(e) => setTimeYears(Number(e.target.value))}
-                    className="w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className={`w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent`}
                     min="1"
                     max="50"
                     step="1"
@@ -221,8 +222,8 @@ const SavingsCalculator = () => {
             </div>
 
             {/* Quick Presets */}
-            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} p-4 rounded-lg">
-              <h4 className="font-medium ${theme.textColors.primary} mb-3">Quick Scenarios</h4>
+            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} p-4 rounded-lg`}>
+              <h4 className={`font-medium ${theme.textColors.primary} mb-3`}>Quick Scenarios</h4>
               <div className="grid grid-cols-2 gap-2">
                 {[
                   { label: 'Emergency Fund', initial: 0, monthly: 200, rate: 4.5, years: 2 },
@@ -251,7 +252,7 @@ const SavingsCalculator = () => {
           <motion.div variants={itemVariants} className="space-y-6">
             {results && (
               <>
-                <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4">Your Results</h3>
+                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Your Results</h3>
 
                 <div className="grid grid-cols-2 gap-4">
                   <motion.div
@@ -262,7 +263,7 @@ const SavingsCalculator = () => {
                       <Target className="w-5 h-5 text-green-400" />
                       <span className="text-xs text-green-400 font-medium">FUTURE VALUE</span>
                     </div>
-                    <div className="${theme.typography.heading2} ${theme.textColors.secondary}">
+                    <div className={`${theme.typography.heading2} ${theme.textColors.secondary}`}>
                       {formatCurrency(results.futureValue)}
                     </div>
                   </motion.div>
@@ -275,7 +276,7 @@ const SavingsCalculator = () => {
                       <DollarSign className="w-5 h-5 text-blue-400" />
                       <span className="text-xs text-blue-400 font-medium">TOTAL DEPOSITED</span>
                     </div>
-                    <div className="${theme.typography.heading2} ${theme.textColors.secondary}">
+                    <div className={`${theme.typography.heading2} ${theme.textColors.secondary}`}>
                       {formatCurrency(results.totalDeposited)}
                     </div>
                   </motion.div>
@@ -288,7 +289,7 @@ const SavingsCalculator = () => {
                       <TrendingUp className="w-5 h-5 text-purple-400" />
                       <span className="text-xs text-purple-400 font-medium">INTEREST EARNED</span>
                     </div>
-                    <div className="${theme.typography.heading2} text-purple-700">
+                    <div className={`${theme.typography.heading2} text-purple-700`}>
                       {formatCurrency(results.interestEarned)}
                     </div>
                   </motion.div>
@@ -301,7 +302,7 @@ const SavingsCalculator = () => {
                       <TrendingUp className="w-5 h-5 text-orange-600" />
                       <span className="text-xs text-orange-600 font-medium">EFFECTIVE RATE</span>
                     </div>
-                    <div className="${theme.typography.heading2} text-orange-700">
+                    <div className={`${theme.typography.heading2} text-orange-700`}>
                       {results.effectiveRate.toFixed(1)}%
                     </div>
                   </motion.div>
@@ -327,7 +328,7 @@ const SavingsCalculator = () => {
             variants={itemVariants}
             className="mt-8 ${theme.backgrounds.glass} border ${theme.borderColors.primary} p-6 rounded-lg"
           >
-            <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4">Growth Over Time</h3>
+            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Growth Over Time</h3>
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={chartData}>
