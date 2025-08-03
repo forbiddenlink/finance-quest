@@ -2,7 +2,7 @@
 
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
 import IncomeCareerLessonEnhanced from '@/components/chapters/fundamentals/lessons/IncomeCareerLessonEnhanced';
-import SalaryNegotiationCalculator from '@/components/chapters/fundamentals/calculators/SalaryNegotiationCalculator';
+import IncomeCareerCalculatorEnhanced from '@/components/shared/calculators/IncomeCareerCalculatorEnhanced';
 import IncomeCareerQuizEnhanced from '@/components/chapters/fundamentals/quizzes/IncomeCareerQuizEnhanced';
 import { TrendingUp } from 'lucide-react';
 
@@ -15,7 +15,7 @@ export default function Chapter5Page() {
             icon={TrendingUp}
             iconColor="text-yellow-400"
             lessonComponent={<IncomeCareerLessonEnhanced />}
-            calculatorComponent={<SalaryNegotiationCalculator />}
+            calculatorComponent={<IncomeCareerCalculatorEnhanced />}
             quizComponent={<IncomeCareerQuizEnhanced />}
             calculatorTitle="Salary Negotiation Calculator"
             calculatorDescription="Calculate the lifetime value of salary increases and career moves"

@@ -275,6 +275,11 @@ export default function IncomeCareerLessonEnhanced({ onComplete }: IncomeCareerL
               <p className={`mt-4 text-center font-bold ${theme.textColors.primary}`}>
                 💡 One conversation can literally change your financial life!
               </p>
+              <div className={`mt-6 p-4 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
+                <p className={`text-sm ${theme.textColors.secondary} text-center`}>
+                  💼 <strong>Use the Calculator tab&apos;s &quot;Salary Negotiation&quot;</strong> tool to model your specific situation and see the lifetime impact of different increase scenarios.
+                </p>
+              </div>
             </div>
           )}
 
@@ -297,6 +302,39 @@ export default function IncomeCareerLessonEnhanced({ onComplete }: IncomeCareerL
                   <h4 className={`font-bold ${theme.status.success.text} mb-2`}>Year 2+: Scale or Transition</h4>
                   <p className={`${theme.textColors.secondary} text-sm`}>Either scale business or transition to full-time entrepreneurship</p>
                 </div>
+              </div>
+              <div className={`mt-6 p-4 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
+                <p className={`text-sm ${theme.textColors.secondary} text-center`}>
+                  🎓 <strong>Use the Calculator tab&apos;s &quot;Skill Investment&quot;</strong> tool to calculate the ROI of developing side hustle skills vs other career investments.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {currentLesson === 3 && (
+            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                <TrendingUp className="w-5 h-5" />
+                Career Path Comparison
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className={`p-4 ${theme.status.warning.bg} rounded-lg`}>
+                  <h4 className={`font-bold ${theme.status.warning.text} mb-2`}>Stay & Grow Strategy</h4>
+                  <p className={`${theme.textColors.secondary} text-sm mb-2`}>3-5% annual raises</p>
+                  <p className={`text-lg font-bold ${theme.status.warning.text}`}>$70k → $85k (5 years)</p>
+                  <p className={`${theme.textColors.secondary} text-xs`}>21% total increase</p>
+                </div>
+                <div className={`p-4 ${theme.status.success.bg} rounded-lg`}>
+                  <h4 className={`font-bold ${theme.status.success.text} mb-2`}>Strategic Job Hopping</h4>
+                  <p className={`${theme.textColors.secondary} text-sm mb-2`}>10-20% per move</p>
+                  <p className={`text-lg font-bold ${theme.status.success.text}`}>$70k → $120k (5 years)</p>
+                  <p className={`${theme.textColors.secondary} text-xs`}>71% total increase</p>
+                </div>
+              </div>
+              <div className={`mt-6 p-4 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
+                <p className={`text-sm ${theme.textColors.secondary} text-center`}>
+                  📊 <strong>Use the Calculator tab&apos;s &quot;Career Value&quot;</strong> tool to compare different career paths and see the long-term financial impact of your decisions.
+                </p>
               </div>
             </div>
           )}
