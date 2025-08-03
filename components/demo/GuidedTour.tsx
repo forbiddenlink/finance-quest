@@ -155,7 +155,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
   const navigateToTarget = () => {
     const step = demoSteps[currentStep];
     if (step.targetUrl) {
-      window.open(step.targetUrl, '_blank');
+      window.open(step.targetUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
