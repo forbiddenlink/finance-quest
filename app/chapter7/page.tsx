@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-import InvestmentFundamentalsLesson from '@/components/chapters/fundamentals/lessons/InvestmentFundamentalsLesson';
+import InvestmentFundamentalsLessonEnhanced from '@/components/chapters/fundamentals/lessons/InvestmentFundamentalsLessonEnhanced';
+import InvestmentFundamentalsQuizEnhanced from '@/components/chapters/fundamentals/quizzes/InvestmentFundamentalsQuizEnhanced';
 import {
     TrendingUp,
     Calculator,
@@ -31,6 +32,13 @@ export default function Chapter7Page() {
     const handleLessonComplete = () => {
         setLessonCompleted(true);
         toast.success('Investment Fundamentals lesson completed! 🎯', {
+            duration: 4000,
+            position: 'top-center',
+        });
+    };
+
+    const handleQuizComplete = () => {
+        toast.success('Investment Fundamentals mastered! Ready for Chapter 8! 🎯', {
             duration: 4000,
             position: 'top-center',
         });
@@ -151,7 +159,7 @@ export default function Chapter7Page() {
                     <TabsContent value="lesson" className="mt-6">
                         <Card className={`${theme.backgrounds.header} ${theme.borderColors.primary}`}>
                             <CardContent className="p-0">
-                                <InvestmentFundamentalsLesson onComplete={handleLessonComplete} />
+                                <InvestmentFundamentalsLessonEnhanced onComplete={handleLessonComplete} />
                             </CardContent>
                         </Card>
                     </TabsContent>
@@ -198,20 +206,8 @@ export default function Chapter7Page() {
                                     Test your knowledge of investment basics, asset allocation, and portfolio construction
                                 </CardDescription>
                             </CardHeader>
-                            <CardContent>
-                                <div className="text-center py-12">
-                                    <div className={`w-16 h-16 ${theme.status.info.bg} rounded-full flex items-center justify-center mx-auto mb-4`}>
-                                        <Trophy className={`w-8 h-8 ${theme.status.info.text}`} />
-                                    </div>
-                                    <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-2`}>Quiz Coming Soon</h3>
-                                    <p className={`${theme.textColors.muted} mb-6`}>
-                                        Complete the lesson first, then return here to test your investment knowledge 
-                                        and unlock the next chapter.
-                                    </p>
-                                    <Button disabled className={`${theme.backgrounds.cardDisabled} ${theme.textColors.muted} cursor-not-allowed`}>
-                                        Quiz Not Available Yet
-                                    </Button>
-                                </div>
+                            <CardContent className="p-0">
+                                <InvestmentFundamentalsQuizEnhanced onComplete={handleQuizComplete} />
                             </CardContent>
                         </Card>
                     </TabsContent>

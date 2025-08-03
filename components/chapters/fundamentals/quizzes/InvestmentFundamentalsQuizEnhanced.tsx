@@ -6,19 +6,20 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import {
-  Shield,
+  TrendingUp,
   CheckCircle,
   XCircle,
   AlertCircle,
   Target,
   Award,
-  TrendingUp,
+  BarChart3,
   DollarSign,
-  PiggyBank
+  PieChart,
+  Shield
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-interface EmergencyFundsQuizProps {
+interface InvestmentFundamentalsQuizProps {
   onComplete?: () => void;
 }
 
@@ -28,154 +29,154 @@ interface QuizQuestion {
   options: string[];
   correctAnswer: number;
   explanation: string;
-  category: 'sizing' | 'placement' | 'building' | 'protection' | 'psychology';
+  category: 'fundamentals' | 'asset-classes' | 'portfolio-construction' | 'accounts' | 'psychology';
   difficulty: 'basic' | 'intermediate' | 'advanced';
 }
 
 const enhancedQuizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "What is the primary purpose of a $1,000 starter emergency fund?",
+    question: "What is the historical average annual return of the S&P 500 over the past 100 years?",
     options: [
-      "To invest in the stock market for higher returns",
-      "To cover 80% of small emergencies while building your full fund",
-      "To pay off credit card debt faster",
-      "To use for vacation savings"
+      "6-7%",
+      "8-9%",
+      "10-11%",
+      "12-13%"
     ],
-    correctAnswer: 1,
-    explanation: "A starter emergency fund prevents small crises from becoming debt disasters while you build your full emergency fund.",
-    category: 'building',
+    correctAnswer: 2,
+    explanation: "The S&P 500 has averaged approximately 10% annual returns over the past century, though returns vary significantly year to year.",
+    category: 'fundamentals',
     difficulty: 'basic'
   },
   {
     id: 2,
-    question: "For someone with variable freelance income, what emergency fund size is recommended?",
+    question: "According to the compound interest demonstration, how much more does someone who starts investing at 25 vs 35 end up with?",
     options: [
-      "3 months of expenses",
-      "6 months of expenses", 
-      "10-12 months of expenses",
-      "1 month of expenses"
+      "$100,000 more",
+      "$240,000 more", 
+      "$500,000 more",
+      "$1,000,000 more"
     ],
-    correctAnswer: 2,
-    explanation: "Variable income requires larger emergency funds (10-12 months) to smooth out income fluctuations and provide stability during low-earning periods.",
-    category: 'sizing',
+    correctAnswer: 1,
+    explanation: "Starting 10 years earlier (age 25 vs 35) with the same monthly contribution results in approximately $240,000 more despite investing $120,000 less total.",
+    category: 'fundamentals',
     difficulty: 'intermediate'
   },
   {
     id: 3,
-    question: "Where should you NOT keep your emergency fund?",
+    question: "Which asset class typically provides the best inflation hedge?",
     options: [
-      "High-yield savings account earning 4.5%",
-      "FDIC-insured money market account",
-      "Stock market index funds for growth",
-      "Online bank with instant transfer capability"
+      "Government bonds",
+      "Cash savings accounts",
+      "Real Estate Investment Trusts (REITs)",
+      "Corporate bonds"
     ],
     correctAnswer: 2,
-    explanation: "Emergency funds should never be invested in stocks due to volatility risk. You need guaranteed access to the full amount when emergencies strike.",
-    category: 'placement',
+    explanation: "REITs typically provide excellent inflation protection because property values and rents tend to rise with inflation, maintaining purchasing power.",
+    category: 'asset-classes',
     difficulty: 'basic'
   },
   {
     id: 4,
-    question: "What percentage of Americans cannot cover a $400 emergency without borrowing money?",
+    question: "What percentage of actively managed funds underperform index funds over 15+ year periods?",
     options: [
-      "20%",
-      "30%",
-      "40%",
-      "50%"
+      "60%",
+      "75%",
+      "90%",
+      "95%"
     ],
     correctAnswer: 2,
-    explanation: "40% of Americans can't cover a $400 emergency, highlighting the critical need for emergency funds to avoid debt cycles.",
-    category: 'psychology',
-    difficulty: 'basic'
+    explanation: "Approximately 90% of actively managed funds underperform index funds over long periods, primarily due to higher fees and inability to consistently beat the market.",
+    category: 'asset-classes',
+    difficulty: 'advanced'
   },
   {
     id: 5,
-    question: "When calculating emergency fund size, which expenses should you include?",
+    question: "According to the age-based allocation rule, what percentage should a 30-year-old have in stocks?",
     options: [
-      "All current monthly expenses including entertainment and dining out",
-      "Only housing, food, utilities, minimum debt payments, and insurance",
-      "Just housing and food costs",
-      "All expenses plus 20% buffer for inflation"
+      "70%",
+      "80%",
+      "90%",
+      "100%"
     ],
-    correctAnswer: 1,
-    explanation: "Emergency mode spending focuses on essential expenses only - housing, food, utilities, minimum debt payments, and insurance. Non-essentials are cut during crises.",
-    category: 'sizing',
-    difficulty: 'intermediate'
+    correctAnswer: 2,
+    explanation: "The rule of '120 minus your age' suggests a 30-year-old should have 90% in stocks (120 - 30 = 90%), allowing for aggressive growth over their long investment horizon.",
+    category: 'portfolio-construction',
+    difficulty: 'basic'
   },
   {
     id: 6,
-    question: "Which scenario qualifies as a legitimate emergency fund use?",
+    question: "What is the primary benefit of rebalancing your portfolio annually?",
     options: [
-      "Black Friday sale on electronics you've wanted",
-      "Friend's wedding gift and travel expenses",
-      "Major car transmission repair needed for work commute",
-      "Down payment opportunity on investment property"
+      "It guarantees higher returns",
+      "It forces you to buy low and sell high",
+      "It eliminates all investment risk",
+      "It allows you to time the market perfectly"
     ],
-    correctAnswer: 2,
-    explanation: "True emergencies are unexpected, necessary, and urgent. Car repairs needed for work qualify - they're unplanned, essential for income, and time-sensitive.",
-    category: 'protection',
+    correctAnswer: 1,
+    explanation: "Rebalancing forces disciplined 'buy low, sell high' behavior by selling assets that have performed well and buying those that have underperformed, maintaining target allocation.",
+    category: 'portfolio-construction',
     difficulty: 'intermediate'
   },
   {
     id: 7,
-    question: "How much more income can people with emergency funds expect to earn over their lifetime?",
+    question: "What is the top priority in the investment account hierarchy?",
     options: [
-      "5-10% more",
-      "15-20% more", 
-      "20%+ more",
-      "No significant difference"
+      "Maxing out your 401(k)",
+      "Building an emergency fund",
+      "Contributing enough to get full employer 401(k) match",
+      "Opening a Roth IRA"
     ],
     correctAnswer: 2,
-    explanation: "Emergency funds provide peace of mind and negotiating power, allowing better career decisions and smart risk-taking that leads to 20%+ higher lifetime earnings.",
-    category: 'psychology',
-    difficulty: 'advanced'
+    explanation: "Getting the full employer 401(k) match is priority #1 because it provides an instant 50-100% return on investment - guaranteed money you can't get anywhere else.",
+    category: 'accounts',
+    difficulty: 'basic'
   },
   {
     id: 8,
-    question: "What's the optimal automation strategy for building an emergency fund?",
+    question: "How much can low investment fees save you over 30 years on a $500,000 portfolio?",
     options: [
-      "Transfer money only when you remember each month",
-      "Save whatever is left over at month-end",
-      "Automate transfers on payday before spending temptation hits",
-      "Only save windfall money like tax refunds"
+      "$100,000",
+      "$200,000",
+      "$300,000",
+      "$500,000"
     ],
     correctAnswer: 2,
-    explanation: "Automation on payday follows the 'pay yourself first' principle, ensuring consistent progress before spending decisions can interfere with saving goals.",
-    category: 'building',
-    difficulty: 'intermediate'
-  },
-  {
-    id: 9,
-    question: "For a dual-income household where both partners work in stable tech jobs, what emergency fund size is appropriate?",
-    options: [
-      "1-2 months expenses (very low risk)",
-      "3-4 months expenses (stable employment)",
-      "6-8 months expenses (moderate risk)",
-      "10-12 months expenses (high risk)"
-    ],
-    correctAnswer: 1,
-    explanation: "Stable tech employment with dual incomes provides high job security and income diversification, requiring only 3-4 months of essential expenses for adequate protection.",
-    category: 'sizing',
+    explanation: "Low-cost index funds (0.03%) vs high-cost active funds (1.5%) can save approximately $300,000 over 30 years on a $500,000 portfolio due to compound fee impact.",
+    category: 'accounts',
     difficulty: 'advanced'
   },
   {
-    id: 10,
-    question: "What's the annual earning difference between a traditional savings account (0.01%) and high-yield savings (4.5%) on a $15,000 emergency fund?",
+    id: 9,
+    question: "What is the biggest risk to long-term investment success?",
     options: [
-      "$150",
-      "$450",
-      "$673",
-      "$900"
+      "Market crashes and volatility",
+      "Inflation eroding purchasing power",
+      "Emotional reactions to market movements",
+      "Government policy changes"
     ],
     correctAnswer: 2,
-    explanation: "Traditional savings: $15,000 × 0.01% = $1.50/year. High-yield savings: $15,000 × 4.5% = $675/year. Difference: $673 in free money annually.",
-    category: 'placement',
+    explanation: "Emotional reactions (panic selling during crashes, greed buying at peaks) cause more investment losses than market volatility itself. Psychology trumps strategy.",
+    category: 'psychology',
+    difficulty: 'intermediate'
+  },
+  {
+    id: 10,
+    question: "During the 2020 COVID market crash, what happened to disciplined investors who stayed the course?",
+    options: [
+      "They lost money permanently",
+      "They barely broke even after 2 years",
+      "The market recovered in 5 months and hit new highs",
+      "They switched to bonds and missed the recovery"
+    ],
+    correctAnswer: 2,
+    explanation: "Despite a 35% crash in 5 weeks, the market recovered within 5 months and went on to new highs. Disciplined investors who stayed invested or bought more were rewarded.",
+    category: 'psychology',
     difficulty: 'advanced'
   }
 ];
 
-export default function EmergencyFundsQuizEnhanced({ onComplete }: EmergencyFundsQuizProps) {
+export default function InvestmentFundamentalsQuizEnhanced({ onComplete }: InvestmentFundamentalsQuizProps) {
   const { recordQuizScore } = useProgressStore();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -223,11 +224,11 @@ export default function EmergencyFundsQuizEnhanced({ onComplete }: EmergencyFund
 
     // Calculate category scores for detailed feedback
     const categories = {
-      sizing: { correct: 0, total: 0 },
-      placement: { correct: 0, total: 0 },
-      building: { correct: 0, total: 0 },
-      protection: { correct: 0, total: 0 },
-      psychology: { correct: 0, total: 0 }
+      'fundamentals': { correct: 0, total: 0 },
+      'asset-classes': { correct: 0, total: 0 },
+      'portfolio-construction': { correct: 0, total: 0 },
+      'accounts': { correct: 0, total: 0 },
+      'psychology': { correct: 0, total: 0 }
     };
 
     enhancedQuizQuestions.forEach((q, index) => {
@@ -238,11 +239,11 @@ export default function EmergencyFundsQuizEnhanced({ onComplete }: EmergencyFund
     });
 
     // Record detailed progress with category breakdown
-    recordQuizScore('emergency-funds-enhanced-quiz', finalScore, enhancedQuizQuestions.length);
+    recordQuizScore('investment-fundamentals-enhanced-quiz', finalScore, enhancedQuizQuestions.length);
 
     // Show appropriate feedback
     if (finalScore >= 80) {
-      toast.success(`Outstanding! ${finalScore}% - Emergency Fund Mastery Achieved! 🛡️`, {
+      toast.success(`Outstanding! ${finalScore}% - Investment Mastery Achieved! 📈`, {
         duration: 4000,
         position: 'top-center',
       });
@@ -257,22 +258,22 @@ export default function EmergencyFundsQuizEnhanced({ onComplete }: EmergencyFund
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'sizing': return Target;
-      case 'placement': return TrendingUp;
-      case 'building': return PiggyBank;
-      case 'protection': return Shield;
-      case 'psychology': return AlertCircle;
+      case 'fundamentals': return Target;
+      case 'asset-classes': return BarChart3;
+      case 'portfolio-construction': return PieChart;
+      case 'accounts': return Shield;
+      case 'psychology': return TrendingUp;
       default: return DollarSign;
     }
   };
 
   const getCategoryTitle = (category: string) => {
     switch (category) {
-      case 'sizing': return 'Fund Sizing';
-      case 'placement': return 'Optimal Placement';
-      case 'building': return 'Building Strategy';
-      case 'protection': return 'Fund Protection';
-      case 'psychology': return 'Financial Psychology';
+      case 'fundamentals': return 'Investment Fundamentals';
+      case 'asset-classes': return 'Asset Classes';
+      case 'portfolio-construction': return 'Portfolio Construction';
+      case 'accounts': return 'Investment Accounts';
+      case 'psychology': return 'Investment Psychology';
       default: return 'General';
     }
   };
@@ -284,7 +285,7 @@ export default function EmergencyFundsQuizEnhanced({ onComplete }: EmergencyFund
         animate={{ opacity: 1, y: 0 }}
         className="max-w-4xl mx-auto"
       >
-        <GradientCard variant="glass" gradient="red" className="p-8 text-center">
+        <GradientCard variant="glass" gradient="green" className="p-8 text-center">
           <div className={`w-24 h-24 ${score >= 80 ? theme.status.success.bg : theme.status.error.bg} rounded-full flex items-center justify-center mx-auto mb-6`}>
             {score >= 80 ? (
               <Award className={`w-12 h-12 ${theme.status.success.text}`} />
@@ -299,7 +300,7 @@ export default function EmergencyFundsQuizEnhanced({ onComplete }: EmergencyFund
 
           <p className={`text-lg ${theme.textColors.secondary} mb-8`}>
             {score >= 80 
-              ? "🎉 Excellent! You've mastered emergency fund fundamentals and earned chapter advancement!"
+              ? "🎉 Excellent! You've mastered investment fundamentals and earned chapter advancement!"
               : "📚 Good effort! Review the lesson materials and retake the quiz to advance to the next chapter."
             }
           </p>
@@ -307,11 +308,11 @@ export default function EmergencyFundsQuizEnhanced({ onComplete }: EmergencyFund
           {/* Category Breakdown */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             {Object.entries({
-              sizing: { correct: 0, total: 0 },
-              placement: { correct: 0, total: 0 },
-              building: { correct: 0, total: 0 },
-              protection: { correct: 0, total: 0 },
-              psychology: { correct: 0, total: 0 }
+              'fundamentals': { correct: 0, total: 0 },
+              'asset-classes': { correct: 0, total: 0 },
+              'portfolio-construction': { correct: 0, total: 0 },
+              'accounts': { correct: 0, total: 0 },
+              'psychology': { correct: 0, total: 0 }
             }).map(([category]) => {
               // Calculate actual stats
               const actualStats = enhancedQuizQuestions.reduce((acc, q, index) => {
@@ -364,7 +365,7 @@ export default function EmergencyFundsQuizEnhanced({ onComplete }: EmergencyFund
             {score >= 80 && (
               <div className={`p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg`}>
                 <p className={`font-bold ${theme.status.success.text} text-center`}>
-                  🎯 Chapter 4 Complete! Proceed to Chapter 5: Income & Career Growth
+                  🎯 Chapter 7 Complete! Proceed to Chapter 8: Portfolio Construction & Asset Allocation
                 </p>
               </div>
             )}
@@ -376,7 +377,7 @@ export default function EmergencyFundsQuizEnhanced({ onComplete }: EmergencyFund
 
   return (
     <div className="max-w-4xl mx-auto">
-      <GradientCard variant="glass" gradient="red" className="p-8">
+      <GradientCard variant="glass" gradient="green" className="p-8">
         {/* Progress */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
@@ -392,7 +393,7 @@ export default function EmergencyFundsQuizEnhanced({ onComplete }: EmergencyFund
           
           <div className={`w-full bg-slate-800/50 rounded-full h-2`}>
             <div
-              className={`h-2 ${theme.status.error.bg} rounded-full transition-all duration-300`}
+              className={`h-2 ${theme.status.success.bg} rounded-full transition-all duration-300`}
               style={{ width: `${((currentQuestion + 1) / enhancedQuizQuestions.length) * 100}%` }}
             />
           </div>
@@ -401,8 +402,8 @@ export default function EmergencyFundsQuizEnhanced({ onComplete }: EmergencyFund
         {/* Question */}
         <div className="mb-8">
           <div className="flex items-start mb-6">
-            <div className={`flex-shrink-0 w-8 h-8 ${theme.status.error.bg} rounded-full flex items-center justify-center mr-4 mt-1`}>
-              <span className={`font-bold ${theme.status.error.text}`}>
+            <div className={`flex-shrink-0 w-8 h-8 ${theme.status.success.bg} rounded-full flex items-center justify-center mr-4 mt-1`}>
+              <span className={`font-bold ${theme.status.success.text}`}>
                 {currentQuestion + 1}
               </span>
             </div>
@@ -431,7 +432,7 @@ export default function EmergencyFundsQuizEnhanced({ onComplete }: EmergencyFund
                         ? `${theme.status.error.bg} ${theme.status.error.border} ${theme.status.error.text}`
                         : `${theme.backgrounds.card} ${theme.borderColors.muted} ${theme.textColors.secondary}`
                       : isSelected
-                      ? `${theme.status.info.bg} ${theme.status.info.border} ${theme.status.info.text}`
+                      ? `${theme.status.success.bg} ${theme.status.success.border} ${theme.status.success.text}`
                       : `${theme.backgrounds.card} ${theme.borderColors.muted} ${theme.textColors.secondary} hover:${theme.borderColors.primary} hover:${theme.textColors.primary}`
                   }`}
                 >

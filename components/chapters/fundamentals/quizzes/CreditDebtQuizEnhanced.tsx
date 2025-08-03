@@ -313,7 +313,7 @@ export default function CreditDebtQuizEnhanced({ onComplete }: CreditDebtQuizPro
               'utilization': { correct: 0, total: 0 },
               'debt-elimination': { correct: 0, total: 0 },
               'debt-types': { correct: 0, total: 0 }
-            }).map(([category, stats]) => {
+            }).map(([category]) => {
               // Calculate actual stats
               const actualStats = enhancedQuizQuestions.reduce((acc, q, index) => {
                 if (q.category === category) {
