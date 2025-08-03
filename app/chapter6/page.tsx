@@ -6,13 +6,14 @@ import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-import CreditDebtLesson from '@/components/chapters/fundamentals/lessons/CreditDebtLesson';
+import CreditDebtLessonEnhanced from '@/components/chapters/fundamentals/lessons/CreditDebtLessonEnhanced';
 import DebtPayoffCalculator from '@/components/shared/calculators/DebtPayoffCalculator';
+import CreditDebtQuizEnhanced from '@/components/chapters/fundamentals/quizzes/CreditDebtQuizEnhanced';
 
 export default function Chapter6Page() {
   const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
   const [lessonCompleted, setLessonCompleted] = useState(false);
-  const { userProgress, completeLesson } = useProgressStore();
+  const { userProgress, completeLesson, isChapterUnlocked } = useProgressStore();
 
   const pageVariants = {
     initial: { opacity: 0, x: 20 },
@@ -28,7 +29,7 @@ export default function Chapter6Page() {
 
   const handleLessonComplete = () => {
     setLessonCompleted(true);
-    completeLesson('chapter4-lesson', 20);
+    completeLesson('chapter6-lesson', 20);
   };
 
   return (
@@ -59,14 +60,14 @@ export default function Chapter6Page() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className={`text-4xl font-bold ${theme.textColors.primary} mb-2`}>
-                Chapter 4: Credit & Debt Management
+                Chapter 6: Credit & Debt Fundamentals
               </h1>
               <p className={`text-xl ${theme.textColors.secondary}`}>
                 Master credit building and debt elimination strategies for financial freedom
               </p>
             </div>
 
-            {userProgress.completedLessons.includes('chapter4-lesson') && (
+            {userProgress.completedLessons.includes('chapter6-lesson') && (
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -126,7 +127,7 @@ export default function Chapter6Page() {
                 }`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              disabled={tab.key === 'calculator' && !lessonCompleted}
+              disabled={tab.key === 'quiz' && !lessonCompleted}
             >
               <span className="mr-2">{tab.icon}</span>
               {tab.label}
@@ -144,7 +145,7 @@ export default function Chapter6Page() {
           transition={{ duration: 0.3 }}
         >
           {currentSection === 'lesson' && (
-            <CreditDebtLesson onComplete={handleLessonComplete} />
+            <CreditDebtLessonEnhanced onComplete={handleLessonComplete} />
           )}
 
           {currentSection === 'calculator' && (
@@ -152,18 +153,7 @@ export default function Chapter6Page() {
           )}
 
           {currentSection === 'quiz' && (
-            <div>
-              <div className={`mb-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
-                <h3 className={`font-semibold ${theme.textColors.secondary} mb-2`}>Knowledge Check</h3>
-                <p className={theme.textColors.muted}>
-                  Test your understanding of credit and debt management. You need 80% to unlock Chapter 5.
-                </p>
-              </div>
-              <div className={`${theme.backgrounds.card} border ${theme.borderColors.muted} rounded-lg p-8 text-center`}>
-                <p className={`${theme.textColors.muted} mb-4`}>Chapter 4 Quiz coming soon!</p>
-                <p className={`text-sm ${theme.textColors.muted}`}>Complete the lesson to prepare for the assessment.</p>
-              </div>
-            </div>
+            <CreditDebtQuizEnhanced onComplete={() => {}} />
           )}
         </motion.div>
 
@@ -175,16 +165,16 @@ export default function Chapter6Page() {
           transition={{ delay: 0.6 }}
         >
           <Link
-            href="/chapter3"
+            href="/chapter5"
             className={`inline-flex items-center px-6 py-3 ${theme.buttons.secondary} rounded-lg transition-colors`}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Previous Chapter
           </Link>
 
-          {userProgress.currentChapter > 4 && (
+          {isChapterUnlocked(7) && (
             <Link
-              href="/chapter5"
+              href="/chapter7"
               className={`inline-flex items-center px-6 py-3 ${theme.buttons.primary} rounded-lg transition-colors shadow-lg`}
             >
               Next Chapter
