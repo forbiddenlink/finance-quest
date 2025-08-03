@@ -132,7 +132,7 @@ function EmergencyFundOverview() {
         >
           <div className="text-3xl font-bold text-red-400 mb-2">40%</div>
           <p className={theme.textColors.secondary}>
-            of Americans can't cover a $400 emergency expense
+            of Americans can&apos;t cover a $400 emergency expense
           </p>
         </motion.div>
         

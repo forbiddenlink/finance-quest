@@ -342,7 +342,7 @@ export default function EmergencyFundsLessonEnhanced({ onComplete }: EmergencyFu
               </div>
               <div className={`mt-6 p-4 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
                 <p className={`text-sm ${theme.textColors.secondary} text-center`}>
-                  📅 <strong>Use the Calculator tab's "Building Plan"</strong> to create your personalized emergency fund timeline with realistic monthly savings targets and milestone tracking.
+                  📅 <strong>Use the Calculator tab&apos;s &quot;Building Plan&quot;</strong> to create your personalized emergency fund timeline with realistic monthly savings targets and milestone tracking.
                 </p>
               </div>
             </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Calendar, Target, TrendingUp, DollarSign, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { Calendar, Target, Clock, CheckCircle } from 'lucide-react';
 import { theme } from '@/lib/theme';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { motion } from 'framer-motion';

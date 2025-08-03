@@ -253,7 +253,7 @@ export default function EmergencyFundScenarioAnalyzer() {
                 </label>
                 <select
                   value={profile.jobStability}
-                  onChange={(e) => setProfile({...profile, jobStability: e.target.value as any})}
+                  onChange={(e) => setProfile({...profile, jobStability: e.target.value as PersonalProfile['jobStability']})}
                   className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 >
                   <option value="stable">Stable (government, tenured, large corp)</option>
@@ -268,7 +268,7 @@ export default function EmergencyFundScenarioAnalyzer() {
                 </label>
                 <select
                   value={profile.incomeType}
-                  onChange={(e) => setProfile({...profile, incomeType: e.target.value as any})}
+                  onChange={(e) => setProfile({...profile, incomeType: e.target.value as PersonalProfile['incomeType']})}
                   className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 >
                   <option value="single">Single income earner</option>
@@ -297,7 +297,7 @@ export default function EmergencyFundScenarioAnalyzer() {
                 </label>
                 <select
                   value={profile.homeOwnership}
-                  onChange={(e) => setProfile({...profile, homeOwnership: e.target.value as any})}
+                  onChange={(e) => setProfile({...profile, homeOwnership: e.target.value as PersonalProfile['homeOwnership']})}
                   className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 >
                   <option value="rent">Renting</option>
@@ -325,7 +325,7 @@ export default function EmergencyFundScenarioAnalyzer() {
                 </label>
                 <select
                   value={profile.debtLevel}
-                  onChange={(e) => setProfile({...profile, debtLevel: e.target.value as any})}
+                  onChange={(e) => setProfile({...profile, debtLevel: e.target.value as PersonalProfile['debtLevel']})}
                   className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 >
                   <option value="low">Low (&lt;20% of income)</option>
