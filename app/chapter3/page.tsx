@@ -7,8 +7,8 @@ import Link from 'next/link';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import BudgetBuilderCalculator from '@/components/shared/calculators/BudgetBuilderCalculator';
-import BudgetingMasteryQuiz from '@/components/chapters/fundamentals/assessments/BudgetingMasteryQuiz';
-import BudgetingMasteryLesson from '@/components/chapters/fundamentals/lessons/BudgetingMasteryLesson';
+import BudgetingMasteryQuizEnhanced from '@/components/chapters/fundamentals/quizzes/BudgetingMasteryQuizEnhanced';
+import BudgetingMasteryLessonEnhanced from '@/components/chapters/fundamentals/lessons/BudgetingMasteryLessonEnhanced';
 
 export default function Chapter3Page() {
   const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
@@ -150,7 +150,7 @@ export default function Chapter3Page() {
           transition={{ duration: 0.3 }}
         >
           {currentSection === 'lesson' && (
-            <BudgetingMasteryLesson onComplete={handleLessonComplete} />
+            <BudgetingMasteryLessonEnhanced onComplete={handleLessonComplete} />
           )}
 
           {currentSection === 'calculator' && (
@@ -158,7 +158,7 @@ export default function Chapter3Page() {
           )}
 
           {currentSection === 'quiz' && (
-            <BudgetingMasteryQuiz onComplete={handleQuizComplete} />
+            <BudgetingMasteryQuizEnhanced onComplete={handleQuizComplete} />
           )}
         </motion.div>
 
