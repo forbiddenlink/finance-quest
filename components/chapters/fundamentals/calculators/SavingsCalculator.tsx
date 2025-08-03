@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { PiggyBank, TrendingUp, DollarSign, Calendar, Target } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-;
+import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 
 interface SavingsResults {
@@ -22,12 +22,18 @@ interface ChartDataPoint {
 }
 
 const SavingsCalculator = () => {
+  const { recordCalculatorUsage } = useProgressStore();
   const [initialDeposit, setInitialDeposit] = useState<number>(1000);
   const [monthlyDeposit, setMonthlyDeposit] = useState<number>(100);
   const [interestRate, setInterestRate] = useState<number>(4.5);
   const [timeYears, setTimeYears] = useState<number>(5);
   const [results, setResults] = useState<SavingsResults | null>(null);
   const [chartData, setChartData] = useState<ChartDataPoint[]>([]);
+
+  // Record calculator usage for analytics
+  useEffect(() => {
+    recordCalculatorUsage('banking-savings-calculator');
+  }, [recordCalculatorUsage]);
 
   const calculateSavings = useCallback(() => {
     try {
@@ -227,10 +233,10 @@ const SavingsCalculator = () => {
               <h4 className={`font-medium ${theme.textColors.primary} mb-3`}>Quick Scenarios</h4>
               <div className="grid grid-cols-2 gap-2">
                 {[
-                  { label: 'Emergency Fund', initial: 0, monthly: 200, rate: 4.5, years: 2 },
-                  { label: 'Vacation Fund', initial: 500, monthly: 150, rate: 4.0, years: 1 },
-                  { label: 'House Down Payment', initial: 5000, monthly: 500, rate: 4.5, years: 5 },
-                  { label: 'Car Purchase', initial: 1000, monthly: 300, rate: 4.0, years: 3 }
+                  { label: 'Big Bank (0.01%)', initial: 1000, monthly: 200, rate: 0.01, years: 5 },
+                  { label: 'Credit Union (2.5%)', initial: 1000, monthly: 200, rate: 2.5, years: 5 },
+                  { label: 'Online Bank (4.5%)', initial: 1000, monthly: 200, rate: 4.5, years: 5 },
+                  { label: 'Emergency Fund Goal', initial: 0, monthly: 400, rate: 4.5, years: 2 }
                 ].map((preset, index) => (
                   <button
                     key={index}
@@ -311,11 +317,12 @@ const SavingsCalculator = () => {
 
                 {/* Insights */}
                 <div className={`bg-gradient-to-r from-slate-50 to-slate-50 p-4 rounded-lg border ${theme.status.info.border}`}>
-                  <h4 className={`font-semibold ${theme.textColors.secondary} mb-2`}>💡 Key Insights</h4>
+                  <h4 className={`font-semibold ${theme.textColors.secondary} mb-2`}>💡 Banking Optimization Insights</h4>
                   <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
                     <li>• Your money will grow by {((results.futureValue / results.totalDeposited - 1) * 100).toFixed(1)}% over {timeYears} years</li>
                     <li>• Interest will earn you {formatCurrency(results.interestEarned)} - that&apos;s {(results.interestEarned / results.totalDeposited * 100).toFixed(1)}% of your deposits!</li>
                     <li>• Monthly deposits of {formatCurrency(monthlyDeposit)} grow to {formatCurrency(results.futureValue / (timeYears * 12))} per month</li>
+                    <li>• <strong>Banking Impact:</strong> At 0.01% (big bank), you&apos;d only earn {formatCurrency(results.totalDeposited * 0.0001 * timeYears)} vs {formatCurrency(results.interestEarned)} with smart banking!</li>
                   </ul>
                 </div>
               </>

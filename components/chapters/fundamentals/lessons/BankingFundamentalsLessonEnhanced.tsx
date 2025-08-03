@@ -18,6 +18,7 @@ import {
   Calculator
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import BankComparisonTool from './BankComparisonTool';
 
 interface BankingFundamentalsLessonProps {
   onComplete?: () => void;
@@ -35,16 +36,16 @@ interface LessonContent {
 const enhancedLessons: LessonContent[] = [
   {
     title: "Banking Account Types: Your Financial Foundation",
-    content: "Understanding different account types is like knowing the tools in a toolbox - each serves a specific purpose. The right account setup can save you hundreds in fees while maximizing your earning potential. Most people use the wrong accounts and lose money unnecessarily.",
+    content: "Think of banking accounts as the tools in your financial toolbox - each serves a specific purpose that can either accelerate or sabotage your wealth building. Most people use the wrong accounts and lose hundreds annually in missed opportunities and fees. This lesson reveals the strategic account setup that separates successful savers from those who struggle.",
     keyPoints: [
-      "Checking accounts: Daily transactions, bill payments, debit card access",
-      "Savings accounts: Emergency funds, short-term goals, FDIC protection up to $250,000",
-      "High-yield savings: 4-5% APY vs 0.01% at traditional banks (50x-500x more earnings)",
-      "Money market accounts: Higher rates with check-writing, but require higher balances ($2,500+)"
+      "Checking accounts: Your financial command center for daily transactions, bill payments, and cash access",
+      "Traditional savings: FDIC-protected but typically earn 0.01-0.5% - barely keeping up with inflation",
+      "High-yield savings: 4-5% APY vs 0.01% at big banks = 50x-500x more earnings on every dollar",
+      "Money market accounts: Hybrid option with check-writing and higher rates, but require $2,500+ minimums"
     ],
-    practicalAction: "Open a high-yield savings account this week and transfer at least $100 to start earning real interest",
-    moneyExample: "A $5,000 emergency fund earns $2.50/year at big banks vs $250/year at online banks - that's $247 in free money!",
-    warningTip: "Avoid savings accounts with less than 2% APY - you're losing money to inflation"
+    practicalAction: "This week: Open a high-yield savings account online and transfer at least $500 to start earning real interest immediately",
+    moneyExample: "Emma moved her $5,000 emergency fund from Bank of America (0.01% APY) to Marcus Online (4.5% APY). Annual earnings jumped from $0.50 to $225 - that's $224 in free money for 5 minutes of work!",
+    warningTip: "Banks make billions in profits by paying you almost nothing while lending your money at 6-20%+ rates - don't let them profit off your ignorance"
   },
   {
     title: "Banking Fees: The $300+ Annual Wealth Leak",
@@ -97,6 +98,19 @@ const enhancedLessons: LessonContent[] = [
     practicalAction: "Set up 3 alerts this week: low balance warning ($100), large transaction alert ($500), and monthly transfer confirmation",
     moneyExample: "Balance alerts saved Maria from 6 overdraft fees last year = $210 savings. Bill pay automation prevented 3 late fees = $90 savings. Total digital banking benefit: $300",
     warningTip: "Use strong, unique passwords and enable two-factor authentication - financial accounts are prime targets for hackers"
+  },
+  {
+    title: "Banking Relationship Strategy: Building Your Financial Foundation",
+    content: "Your banking relationships are the foundation of your financial life. Strong relationships with financial institutions can unlock better rates, waived fees, and preferential treatment. This lesson teaches you how to optimize these relationships for maximum benefit while maintaining financial security.",
+    keyPoints: [
+      "Primary banking relationship: Choose one main bank for most services (better rates, relationship discounts)",
+      "Banking trifecta: Primary checking + high-yield savings online + investment account linkage",
+      "Relationship benefits: Higher credit limits, loan pre-approvals, fee waivers, dedicated support",
+      "Regular optimization: Review banking setup annually, negotiate better terms based on relationship"
+    ],
+    practicalAction: "Schedule a meeting with your bank manager to discuss relationship benefits and optimize your account structure",
+    moneyExample: "Marcus consolidated his accounts with one credit union and online bank combo: saved $400/year in fees, got 0.5% rate reduction on auto loan = $1,200 savings, plus $300 bonus for new account relationship",
+    warningTip: "Don't be overly loyal - banks profit from customer inertia. Always compare rates and fees annually"
   }
 ];
 
@@ -172,7 +186,7 @@ export default function BankingFundamentalsLessonEnhanced({ onComplete }: Bankin
               </span>
             </div>
             <span className={`text-sm ${theme.textColors.muted}`}>
-              Chapter 2: Banking Fundamentals & Optimization
+              Chapter 2: Banking Optimization & Wealth Foundation
             </span>
           </div>
 
@@ -243,6 +257,62 @@ export default function BankingFundamentalsLessonEnhanced({ onComplete }: Bankin
           </div>
 
           {/* Interactive Content */}
+          {currentLesson === 5 && (
+            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                <CheckCircle className="w-5 h-5" />
+                Optimize Your Banking Setup Checklist
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h4 className={`font-bold ${theme.status.info.text} mb-3`}>Primary Banking Setup</h4>
+                  <div className="space-y-2">
+                    {[
+                      'Open high-yield savings (4%+ APY)',
+                      'Set up automatic transfers to savings',
+                      'Enable account alerts and notifications',
+                      'Link checking and savings for overdraft protection',
+                      'Review and eliminate unnecessary fees'
+                    ].map((item, index) => (
+                      <label key={index} className="flex items-center space-x-3 cursor-pointer">
+                        <input type="checkbox" className="w-4 h-4 text-blue-600 rounded" />
+                        <span className={`text-sm ${theme.textColors.secondary}`}>{item}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className={`font-bold ${theme.status.success.text} mb-3`}>Relationship Optimization</h4>
+                  <div className="space-y-2">
+                    {[
+                      'Calculate total banking costs annually',
+                      'Negotiate better rates based on relationship',
+                      'Set up direct deposit for fee waivers',
+                      'Explore investment account linkage benefits',
+                      'Schedule annual banking review meeting'
+                    ].map((item, index) => (
+                      <label key={index} className="flex items-center space-x-3 cursor-pointer">
+                        <input type="checkbox" className="w-4 h-4 text-green-600 rounded" />
+                        <span className={`text-sm ${theme.textColors.secondary}`}>{item}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className={`mt-4 p-3 ${theme.status.success.bg} rounded-lg text-center`}>
+                <p className={`text-sm font-bold ${theme.status.success.text}`}>
+                  💡 Complete this checklist to optimize your banking and save $300-500 annually!
+                </p>
+              </div>
+            </div>
+          )}
+
+          {currentLesson === 2 && (
+            <div className={`mb-8`}>
+              <BankComparisonTool />
+            </div>
+          )}
+
           {currentLesson === 1 && (
             <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>

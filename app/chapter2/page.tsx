@@ -11,16 +11,16 @@ export default function Chapter2Page() {
         <ChapterLayout
             chapterNumber={2}
             title="Banking & Account Fundamentals"
-            subtitle="Master the basics of banking, account types, and financial institution relationships."
+            subtitle="Master the banking strategies that save $300-500 annually and build your financial foundation."
             icon={Building2}
             iconColor="text-green-400"
             lessonComponent={<BankingFundamentalsLessonEnhanced />}
             calculatorComponent={<SavingsCalculator />}
             quizComponent={<BankingFundamentalsQuizEnhanced />}
-            calculatorTitle="Savings Calculator"
-            calculatorDescription="Use this savings calculator to see how your banking optimization can accelerate your wealth building!"
-            quizTitle="Banking Fundamentals Quiz"
-            quizDescription="Test your banking knowledge! You need 80% to unlock Chapter 3."
+            calculatorTitle="Smart Banking Savings Calculator"
+            calculatorDescription="Compare how different banking choices impact your wealth over time - see the power of high-yield accounts!"
+            quizTitle="Banking Optimization Quiz"
+            quizDescription="Test your banking knowledge and unlock advanced money management strategies! You need 80% to unlock Chapter 3."
         />
     );
 }
