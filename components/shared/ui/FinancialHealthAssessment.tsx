@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import { Heart, TrendingUp, AlertTriangle, CheckCircle, Target, Shield, PiggyBank, CreditCard, Brain } from 'lucide-react';
-;
 import { theme } from '@/lib/theme';
 
 interface FinancialHealthMetrics {

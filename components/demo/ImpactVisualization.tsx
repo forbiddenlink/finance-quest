@@ -18,7 +18,6 @@ import {
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import AnimatedCounter from '@/components/shared/ui/AnimatedCounter';
-;
 import { theme } from '@/lib/theme';
 
 interface ImpactVisualizationProps {

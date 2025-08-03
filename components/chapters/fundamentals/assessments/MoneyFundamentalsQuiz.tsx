@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
-;
 import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
 import { CheckCircle, XCircle, Sparkles } from 'lucide-react';
 import { theme } from '@/lib/theme';

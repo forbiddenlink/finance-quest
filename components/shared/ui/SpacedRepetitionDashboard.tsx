@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { spacedRepetitionSystem, ReviewItem, ReviewResponse } from '@/lib/algorithms/spacedRepetition';
 import GradientCard from '@/components/shared/ui/GradientCard';
-;
 import { Brain, Clock, CheckCircle, AlertTriangle, Star, RefreshCw } from 'lucide-react';
 import { theme } from '@/lib/theme';
 

@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
-;
 import { Calculator, Home, TrendingUp, AlertTriangle, CheckCircle } from 'lucide-react';
 import { theme } from '@/lib/theme';
 
@@ -288,10 +287,10 @@ export default function MortgageCalculator() {
 
                                 <div className="space-y-4">
                                     <div className={`p-4 rounded-lg border-2 ${result.affordabilityRatio <= 28
-                                            ? '${theme.status.success.border} ${theme.status.success.bg}'
-                                            : result.affordabilityRatio <= 36
-                                                ? '${theme.status.warning.border} ${theme.status.warning.bg}'
-                                                : '${theme.status.error.border} ${theme.status.error.bg}'
+                                        ? '${theme.status.success.border} ${theme.status.success.bg}'
+                                        : result.affordabilityRatio <= 36
+                                            ? '${theme.status.warning.border} ${theme.status.warning.bg}'
+                                            : '${theme.status.error.border} ${theme.status.error.bg}'
                                         }`}>
                                         <div className="flex items-center gap-2 mb-2">
                                             {result.affordabilityRatio <= 28 ? (
@@ -304,10 +303,10 @@ export default function MortgageCalculator() {
                                             </span>
                                         </div>
                                         <p className={`text-sm ${result.affordabilityRatio <= 28
+                                            ? '${theme.textColors.secondary}'
+                                            : result.affordabilityRatio <= 36
                                                 ? '${theme.textColors.secondary}'
-                                                : result.affordabilityRatio <= 36
-                                                    ? '${theme.textColors.secondary}'
-                                                    : '${theme.textColors.secondary}'
+                                                : '${theme.textColors.secondary}'
                                             }`}>
                                             {result.affordabilityRatio <= 28
                                                 ? 'Excellent! Well within recommended limits.'

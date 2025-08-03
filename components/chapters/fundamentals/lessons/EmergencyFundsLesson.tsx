@@ -37,7 +37,7 @@ interface LessonContent {
 const lessons: LessonContent[] = [
   {
     title: "Why Emergency Funds Are Your Financial Fortress",
-    content: "40% of Americans can't cover a $400 emergency, leading to debt cycles that trap families for decades. Emergency funds aren't just savings—they're peace of mind, freedom from financial stress, and the foundation that allows every other financial goal to succeed. Without this safety net, one crisis can destroy years of progress.",
+    content: "40% of Americans can&apos;t cover a $400 emergency, leading to debt cycles that trap families for decades. Emergency funds aren&apos;t just savings—they&apos;re peace of mind, freedom from financial stress, and the foundation that allows every other financial goal to succeed. Without this safety net, one crisis can destroy years of progress.",
     keyPoints: [
       "Emergency funds break the debt cycle by preventing credit card reliance during crises",
       "Financial stress reduces productivity, health, and decision-making quality significantly",

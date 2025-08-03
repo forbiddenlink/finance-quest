@@ -40,7 +40,7 @@ const lessons: LessonContent[] = [
       "Good debt: Mortgages, student loans, business loans - investments in your future",
       "Bad debt: Credit cards, payday loans, auto loans - depreciating assets or consumption",
       "Tax-deductible debt provides additional benefits through reduced tax liability",
-      "Interest rates below inflation mean you're essentially borrowing for free",
+      "Interest rates below inflation mean you&apos;re essentially borrowing for free",
       "Debt-to-income ratio under 36% is considered healthy by most lenders"
     ]
   },

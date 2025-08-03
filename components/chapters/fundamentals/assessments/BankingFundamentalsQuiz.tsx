@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, XCircle, ArrowRight, RotateCcw, Trophy } from 'lucide-react';
-import { useProgressActions } from '@/lib/context/ProgressContext';
-;
+import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 
 interface Question {
@@ -25,7 +24,8 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
   const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [quizComplete, setQuizComplete] = useState(false);
-  const { recordQuizScore, addStrugglingTopic } = useProgressActions();
+
+  const recordQuizScore = useProgressStore(state => state.recordQuizScore);
 
   const questions: Question[] = [
     {
@@ -113,20 +113,12 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
     setShowResults(true);
     setQuizComplete(true);
     const score = calculateScore();
-    const scorePercentage = Math.round(score * 100);
+    const correctAnswers = Math.round(score * questions.length);
 
-    // Record quiz score in progress tracking
-    recordQuizScore('banking-fundamentals', scorePercentage);
+    // Record quiz score in progress tracking (requires score, total questions)
+    recordQuizScore('banking-fundamentals', correctAnswers, questions.length);
 
-    // Track struggling topics for scores below 80%
-    if (scorePercentage < 80) {
-      const incorrectQuestions = questions.filter((question, index) =>
-        selectedAnswers[index] !== question.correctAnswer
-      );
-      incorrectQuestions.forEach(question => {
-        addStrugglingTopic(question.category);
-      });
-    }
+    // Note: Struggling topics are automatically tracked by the store based on quiz performance
 
     onComplete(score);
   };
@@ -149,10 +141,10 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 0.9) return '${theme.status.success.text}';
-    if (score >= 0.8) return '${theme.textColors.primary}';
-    if (score >= 0.7) return '${theme.status.warning.text}';
-    return '${theme.status.error.text}';
+    if (score >= 0.9) return theme.status.success.text;
+    if (score >= 0.8) return theme.textColors.primary;
+    if (score >= 0.7) return theme.status.warning.text;
+    return theme.status.error.text;
   };
 
   const getScoreMessage = (score: number) => {
@@ -204,7 +196,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
               return (
                 <motion.div
                   key={question.id}
-                  className={`border rounded-lg p-4 ${isCorrect ? '${theme.status.success.border} ${theme.status.success.bg}' : '${theme.status.error.border} ${theme.status.error.bg}'
+                  className={`border rounded-lg p-4 ${isCorrect ? `${theme.status.success.border} ${theme.status.success.bg}` : `${theme.status.error.border} ${theme.status.error.bg}`
                     }`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -325,7 +317,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
                   key={index}
                   onClick={() => handleAnswerSelect(index)}
                   className={`w-full text-left p-4 rounded-lg border-2 transition-all ${selectedAnswers[currentQuestion] === index
-                    ? '${theme.borderColors.primary} ${theme.backgrounds.card} ${theme.textColors.primary}'
+                    ? `${theme.borderColors.primary} ${theme.backgrounds.card} ${theme.textColors.primary}`
                     : `border ${theme.borderColors.primary} hover:${theme.borderColors.primary} hover:${theme.backgrounds.card}`
                     }`}
                   whileHover={{ scale: 1.01 }}
@@ -333,7 +325,7 @@ const BankingFundamentalsQuiz = ({ onComplete }: BankingFundamentalsQuizProps) =
                 >
                   <div className="flex items-center">
                     <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${selectedAnswers[currentQuestion] === index
-                      ? '${theme.borderColors.primary} ${theme.backgrounds.primary}'
+                      ? `${theme.borderColors.primary} ${theme.backgrounds.primary}`
                       : `border ${theme.borderColors.muted}`
                       }`}>
                       {selectedAnswers[currentQuestion] === index && (

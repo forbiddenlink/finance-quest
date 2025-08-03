@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { useProgressStore } from '@/lib/store/progressStore';
-;
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { PieChart as PieChartIcon, BarChart3, Target, DollarSign, Shield, Zap } from 'lucide-react';
 import { theme } from '@/lib/theme';
@@ -450,8 +449,8 @@ export default function PortfolioAnalyzerCalculator() {
                             <ResponsiveContainer width="100%" height={300}>
                                 <BarChart data={targetVsActualData}>
                                     <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
-                                    <XAxis dataKey="category" angle={-45} textAnchor="end" height={80}  tick={{ fill: "#94a3b8" }} />
-                                    <YAxis  tick={{ fill: "#94a3b8" }} />
+                                    <XAxis dataKey="category" angle={-45} textAnchor="end" height={80} tick={{ fill: "#94a3b8" }} />
+                                    <YAxis tick={{ fill: "#94a3b8" }} />
                                     <Tooltip formatter={(value) => `${Number(value).toFixed(1)}%`} />
                                     <Legend />
                                     <Bar dataKey="target" fill="#8884d8" name="Target %" />

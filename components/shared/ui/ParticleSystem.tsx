@@ -121,7 +121,7 @@ export default function ParticleSystem({
     };
   }, [mounted, particleCount, colors, speed]);
 
-  // Don't render canvas until mounted to prevent hydration mismatch
+  // Don&apos;t render canvas until mounted to prevent hydration mismatch
   if (!mounted) {
     return null;
   }

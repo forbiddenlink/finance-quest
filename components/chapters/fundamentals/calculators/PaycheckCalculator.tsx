@@ -430,7 +430,7 @@ export default function PaycheckCalculator() {
             <div>
               <h4 className="font-semibold mb-2">401(k) Benefits</h4>
               <p>{breakdown.retirement401k && breakdown.retirement401k > 0
-                ? `Great job! You're saving ${formatCurrency(breakdown.retirement401k * 12)} annually for retirement.`
+                ? `Great job! You&apos;re saving ${formatCurrency(breakdown.retirement401k * 12)} annually for retirement.`
                 : 'Consider contributing to your 401(k) to reduce taxes and build retirement savings.'}</p>
             </div>
             <div>

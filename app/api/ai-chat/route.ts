@@ -7,7 +7,7 @@ const openai = new OpenAI({
 
 const FINANCIAL_COACH_SYSTEM_PROMPT = `You are an expert financial literacy coach for Finance Quest, an educational platform teaching money management from zero to advanced levels.
 
-CONTEXT: You're helping users learn through:
+CONTEXT: You&apos;re helping users learn through:
 - Interactive lessons (income, banking, paycheck basics)
 - Hands-on calculators (paycheck, compound interest)  
 - Mastery-based quizzes (80% required to advance)
@@ -111,5 +111,5 @@ function generateFallbackResponse(message: string): string {
     return "An emergency fund is your financial safety net! Aim for 3-6 months of living expenses in a high-yield savings account. Start small - even $500 makes a huge difference when unexpected expenses arise!";
   }
 
-  return "Thanks for your question! I'm here to help you master money management. Feel free to ask about any financial topic, and don't forget to explore our interactive lessons and calculators to practice what you learn. You're doing great by asking questions - that's how financial literacy grows! 💪";
+  return "Thanks for your question! I&apos;m here to help you master money management. Feel free to ask about any financial topic, and don&apos;t forget to explore our interactive lessons and calculators to practice what you learn. You&apos;re doing great by asking questions - that&apos;s how financial literacy grows! 💪";
 }

@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { TrendingUp, TrendingDown, DollarSign, Activity, AlertCircle, RefreshCw, Globe, BarChart3, Target, Clock } from 'lucide-react';
-;
 import { theme } from '@/lib/theme';
 
 interface StockQuote {

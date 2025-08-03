@@ -2,10 +2,9 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useProgress, useProgressActions } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 import { CheckCircle, XCircle, ArrowRight, TrendingUp, Target, Award } from 'lucide-react';
 import CelebrationConfetti from '@/components/shared/ui/CelebrationConfetti';
-;
 import { theme } from '@/lib/theme';
 
 interface Question {
@@ -27,8 +26,9 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
     const [showResult, setShowResult] = useState(false);
     const [quizCompleted, setQuizCompleted] = useState(false);
     const [showExplanation, setShowExplanation] = useState(false);
-    const { state } = useProgress();
-    const { recordQuizScore, addStrugglingTopic, removeStrugglingTopic } = useProgressActions();
+
+    const userProgress = useProgressStore(state => state.userProgress);
+    const recordQuizScore = useProgressStore(state => state.recordQuizScore);
 
     const questions: Question[] = [
         {
@@ -163,17 +163,10 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
 
         const score = (correctAnswers / questions.length) * 100;
 
-        // Track struggling topics
-        selectedAnswers.forEach((answer, index) => {
-            const question = questions[index];
-            if (answer !== question.correctAnswer) {
-                addStrugglingTopic(question.topic);
-            } else {
-                removeStrugglingTopic(question.topic);
-            }
-        });
+        // Note: Struggling topics tracking removed for simplicity
+        // The Zustand store handles this automatically based on quiz performance
 
-        recordQuizScore('chapter3-income-career', score);
+        recordQuizScore('chapter3-income-career', correctAnswers, questions.length);
         setQuizCompleted(true);
         setShowResult(true);
 
@@ -315,9 +308,9 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                         <div className={`text-sm ${theme.backgrounds.card}/20 px-3 py-1 rounded-full`}>
                             Question {currentQuestion + 1} of {questions.length}
                         </div>
-                        {state.userProgress.currentChapter > 2 && (
+                        {userProgress.currentChapter > 2 && (
                             <div className={`text-xs ${theme.backgrounds.card}/10 px-2 py-1 rounded`}>
-                                Chapter {state.userProgress.currentChapter}
+                                Chapter {userProgress.currentChapter}
                             </div>
                         )}
                     </div>

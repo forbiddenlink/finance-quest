@@ -3,7 +3,6 @@
 import React from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
-;
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LineChart, Line, Legend } from 'recharts';
 import { theme } from '@/lib/theme';
 import {

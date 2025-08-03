@@ -159,7 +159,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
     }
   };
 
-  // Since the tour starts automatically, we don't need the floating button
+  // Since the tour starts automatically, we don&apos;t need the floating button
   // Just return the tour modal directly
   const currentStepData = demoSteps[currentStep];
   const progress = ((currentStep + 1) / demoSteps.length) * 100;

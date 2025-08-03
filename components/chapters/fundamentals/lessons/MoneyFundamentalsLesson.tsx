@@ -27,17 +27,17 @@ const lessons: LessonContent[] = [
   },
   {
     title: "Scarcity vs Abundance: Rewiring Your Money Mindset",
-    content: "Your brain is wired to focus on scarcity - it's a survival mechanism. But in modern finances, scarcity thinking often creates the very problems it tries to avoid. An abundance mindset doesn't mean being reckless; it means making decisions from a place of possibility rather than fear.",
+    content: "Your brain is wired to focus on scarcity - it&apos;s a survival mechanism. But in modern finances, scarcity thinking often creates the very problems it tries to avoid. An abundance mindset doesn&apos;t mean being reckless; it means making decisions from a place of possibility rather than fear.",
     keyPoints: [
       "Scarcity mindset: 'There's never enough money' - leads to hoarding or panic spending",
       "Abundance mindset: 'There are always opportunities to create value' - leads to strategic thinking",
       "Growth mindset applied to money: Skills and income can be developed over time",
-      "Shifting from 'I can't afford it' to 'How can I afford it?' opens new possibilities"
+      "Shifting from &apos;I can&apos;t afford it&apos; to &apos;How can I afford it?&apos; opens new possibilities"
     ]
   },
   {
     title: "Cognitive Biases: The Hidden Forces Affecting Your Money Decisions",
-    content: "Your brain uses mental shortcuts (biases) to make quick decisions, but these can sabotage your financial success. Understanding these biases helps you recognize when they're influencing your choices and make more rational financial decisions.",
+    content: "Your brain uses mental shortcuts (biases) to make quick decisions, but these can sabotage your financial success. Understanding these biases helps you recognize when they&apos;re influencing your choices and make more rational financial decisions.",
     keyPoints: [
       "Loss aversion: We feel losses twice as strongly as gains - leads to avoiding good investments",
       "Anchoring bias: Over-relying on first information - affects salary negotiations and purchases",
@@ -47,7 +47,7 @@ const lessons: LessonContent[] = [
   },
   {
     title: "Goal Setting Psychology: Turning Dreams into Financial Reality",
-    content: "Most financial goals fail not because of lack of money, but because of how they're set. Psychology research shows that the way you frame and structure your goals dramatically impacts your success rate. Learn the science-based approach to financial goal achievement.",
+    content: "Most financial goals fail not because of lack of money, but because of how they&apos;re set. Psychology research shows that the way you frame and structure your goals dramatically impacts your success rate. Learn the science-based approach to financial goal achievement.",
     keyPoints: [
       "SMART goals vs PACT goals: Process and context matter more than just outcomes",
       "Intrinsic motivation (personal values) creates lasting change vs extrinsic (external rewards)",

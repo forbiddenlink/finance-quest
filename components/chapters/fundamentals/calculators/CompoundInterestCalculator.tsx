@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { useProgress } from '@/lib/context/ProgressContext';
+import { useProgressStore } from '@/lib/store/progressStore';
 import { Lightbulb, DollarSign, Rocket, Brain, Sparkles } from 'lucide-react';
-;
 import { theme } from '@/lib/theme';
 
 interface CompoundData {
@@ -26,7 +25,7 @@ export default function CompoundInterestCalculator() {
   const [totalPrincipal, setTotalPrincipal] = useState(0);
   const [totalInterest, setTotalInterest] = useState(0);
 
-  const { dispatch } = useProgress();
+  const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
 
   // Calculate compound interest with monthly contributions
   const calculateCompoundInterest = useCallback(() => {
@@ -36,10 +35,7 @@ export default function CompoundInterestCalculator() {
     let cumulativePrincipal = principal;
 
     // Track calculator usage
-    dispatch({
-      type: 'USE_CALCULATOR',
-      payload: 'CompoundInterestCalculator'
-    });
+    recordCalculatorUsage('compound-interest-fundamentals');
 
     for (let year = 0; year <= years; year++) {
       if (year > 0) {
@@ -68,7 +64,7 @@ export default function CompoundInterestCalculator() {
     setFinalBalance(Math.round(balance));
     setTotalPrincipal(Math.round(cumulativePrincipal));
     setTotalInterest(Math.round(balance - cumulativePrincipal));
-  }, [principal, monthlyContribution, interestRate, years, compoundFrequency, dispatch]);
+  }, [principal, monthlyContribution, interestRate, years, compoundFrequency, recordCalculatorUsage]);
 
   useEffect(() => {
     calculateCompoundInterest();

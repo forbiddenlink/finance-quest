@@ -32,7 +32,7 @@ export default function TypingText({
     setMounted(true);
   }, []);
 
-  // Don't run typing animation until mounted
+  // Don&apos;t run typing animation until mounted
   useEffect(() => {
     if (!mounted) return;
     

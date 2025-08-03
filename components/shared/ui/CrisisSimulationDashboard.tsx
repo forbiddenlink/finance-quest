@@ -21,7 +21,6 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import GradientCard from '@/components/shared/ui/GradientCard';
 
 import { LucideIcon } from 'lucide-react';
-;
 import { theme } from '@/lib/theme';
 
 interface CrisisScenario {

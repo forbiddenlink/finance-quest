@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from 'recharts';
 import { useProgressStore } from '@/lib/store/progressStore';
-;
 import { theme } from '@/lib/theme';
 import {
   CreditCard,

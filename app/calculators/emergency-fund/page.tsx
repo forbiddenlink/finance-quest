@@ -446,7 +446,7 @@ export default function EmergencyFundCalculator() {
             <p className={`text-sm ${incomeAfterExpenses > 0 ? 'text-green-400' : 'text-red-400'}`}>
               {incomeAfterExpenses > 0
                 ? `Great! You have ${formatCurrency(incomeAfterExpenses)} left after essential expenses.`
-                : `Warning: You're spending ${formatCurrency(Math.abs(incomeAfterExpenses))} more than you earn.`
+                : `Warning: You&apos;re spending ${formatCurrency(Math.abs(incomeAfterExpenses))} more than you earn.`
               }
             </p>
           </div>

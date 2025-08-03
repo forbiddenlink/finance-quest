@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { CreditCard, Star, Zap, ShoppingCart, Car, Plane, DollarSign, Award, Trophy } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
-;
 import { theme } from '@/lib/theme';
 
 interface SpendingCategory {

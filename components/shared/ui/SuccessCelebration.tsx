@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { CheckCircle, Trophy, Star } from 'lucide-react';
-;
 import { theme } from '@/lib/theme';
 
 interface SuccessCelebrationProps {

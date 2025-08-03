@@ -17,7 +17,6 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import GradientCard from '@/components/shared/ui/GradientCard';
-;
 import { theme } from '@/lib/theme';
 
 interface ImpactMetric {

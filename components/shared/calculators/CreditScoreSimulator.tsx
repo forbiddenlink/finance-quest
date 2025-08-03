@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { TrendingUp, Target, CreditCard, Calendar } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
-;
 import { theme } from '@/lib/theme';
 
 interface CreditFactor {

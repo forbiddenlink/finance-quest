@@ -15,7 +15,6 @@ import {
   Brain
 } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
-;
 import { theme } from '@/lib/theme';
 
 interface HealthScoreData {
@@ -81,7 +80,7 @@ const assessmentQuestions: AssessmentQuestion[] = [
     question: 'How well do you understand investing and compound interest?',
     category: 'knowledge',
     options: [
-      { text: "I don't understand investing at all", value: 0, points: 0 },
+      { text: "I don&apos;t understand investing at all", value: 0, points: 0 },
       { text: 'I understand the basics but feel uncertain', value: 1, points: 8 },
       { text: 'I understand most concepts and invest regularly', value: 2, points: 15 },
       { text: 'I understand advanced concepts and optimize my portfolio', value: 3, points: 20 },

@@ -178,7 +178,7 @@ export default function ProgressNavigation() {
               
               if (!item.isAvailable) return null;
 
-              // Don't show badge for calculators
+              // Don&apos;t show badge for calculators
               const shouldShowBadge = item.name !== 'Calculators' && item.badge && item.badge > 0;
 
               return (

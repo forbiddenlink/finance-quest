@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/shared/ui/ToastProvider";
 import ProgressNavigation from "@/components/shared/ui/ProgressNavigation";
+import ErrorBoundary from "@/components/shared/ui/ErrorBoundary";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,12 +34,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ToastProvider>
-          <ProgressNavigation />
-          <main>
-            {children}
-          </main>
-        </ToastProvider>
+        <ErrorBoundary>
+          <ToastProvider>
+            <ProgressNavigation />
+            <main>
+              {children}
+            </main>
+          </ToastProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

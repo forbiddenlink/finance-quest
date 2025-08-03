@@ -19,7 +19,6 @@ import {
 } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import EconomicDashboard from './EconomicDashboard';
-;
 import { theme } from '@/lib/theme';
 
 interface FeatureStatus {

@@ -43,7 +43,7 @@ const lessons: LessonContent[] = [
   },
   {
     title: "Banking Fees: The Silent Wealth Killer",
-    content: "Banking fees cost the average American $329 per year - that's money stolen from your future. Learning to avoid these fees is like giving yourself an instant pay raise. Most fees are completely avoidable with the right knowledge and banking setup.",
+    content: "Banking fees cost the average American $329 per year - that&apos;s money stolen from your future. Learning to avoid these fees is like giving yourself an instant pay raise. Most fees are completely avoidable with the right knowledge and banking setup.",
     keyPoints: [
       "Monthly maintenance fees can cost $120-180/year - avoid with minimum balance or direct deposit",
       "Overdraft fees average $35 per incident - set up alerts and overdraft protection to avoid",

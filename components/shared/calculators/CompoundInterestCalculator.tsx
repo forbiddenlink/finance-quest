@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { Lightbulb, Sparkles } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
-;
 import { theme } from '@/lib/theme';
 interface CompoundData {
   year: number;

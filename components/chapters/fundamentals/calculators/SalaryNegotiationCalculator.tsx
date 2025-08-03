@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, Target } from 'lucide-react';
-import { useProgressActions } from '@/lib/context/ProgressContext';
-;
+import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 
 interface NegotiationAnalysis {
@@ -21,12 +20,13 @@ export default function SalaryNegotiationCalculator() {
     const [yearsOfService, setYearsOfService] = useState<string>('');
     const [marketResearch, setMarketResearch] = useState<boolean>(false);
     const [analysis, setAnalysis] = useState<NegotiationAnalysis | null>(null);
-    const progressActions = useProgressActions();
+
+    const recordCalculatorUsage = useProgressStore(state => state.recordCalculatorUsage);
 
     useEffect(() => {
         // Track calculator usage when component mounts
-        progressActions.useCalculator('salary-negotiation-calculator');
-    }, [progressActions]);
+        recordCalculatorUsage('salary-negotiation-calculator');
+    }, [recordCalculatorUsage]);
 
     const calculateNegotiation = () => {
         const current = parseFloat(currentSalary);

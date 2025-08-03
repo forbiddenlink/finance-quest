@@ -64,7 +64,7 @@ export const useEnhancedProgress = () => {
         return {
           type: 'continue',
           message: `Continue Chapter ${userProgress.currentChapter}`,
-          action: `You're ${currentChapterProgress}% done`
+          action: `You&apos;re ${currentChapterProgress}% done`
         };
       }
       

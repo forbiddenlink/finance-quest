@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { useProgressStore } from '@/lib/store/progressStore';
-;
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { PiggyBank, Target, Calendar, DollarSign, TrendingUp, Shield } from 'lucide-react';
 import { theme } from '@/lib/theme';
@@ -33,7 +32,7 @@ interface RetirementResults {
 
 export default function RetirementPlannerCalculator() {
   const { recordCalculatorUsage } = useProgressStore();
-  
+
   // Input states
   const [currentAge, setCurrentAge] = useState<string>('30');
   const [retirementAge, setRetirementAge] = useState<string>('67');
@@ -44,7 +43,7 @@ export default function RetirementPlannerCalculator() {
   const [expectedReturn, setExpectedReturn] = useState<string>('7');
   const [inflationRate, setInflationRate] = useState<string>('3');
   const [desiredReplacement, setDesiredReplacement] = useState<string>('80');
-  
+
   // Results state
   const [results, setResults] = useState<RetirementResults | null>(null);
 
@@ -71,8 +70,8 @@ export default function RetirementPlannerCalculator() {
     const yearsToRetirement = retirementAgeNum - currentAgeNum;
     const monthsToRetirement = yearsToRetirement * 12;
     const monthlyReturn = expectedReturnNum / 12;
-    
-    // Calculate employer match (assuming it's a percentage of contribution)
+
+    // Calculate employer match (assuming it&apos;s a percentage of contribution)
     const monthlyEmployerMatch = (monthlyContributionNum * employerMatchNum) / 100;
     const totalMonthlyContribution = monthlyContributionNum + monthlyEmployerMatch;
 
@@ -83,7 +82,7 @@ export default function RetirementPlannerCalculator() {
 
     for (let year = 0; year <= yearsToRetirement; year++) {
       const age = currentAgeNum + year;
-      
+
       if (year > 0) {
         // Add monthly contributions for the year
         for (let month = 0; month < 12; month++) {
@@ -121,13 +120,13 @@ export default function RetirementPlannerCalculator() {
     if (!isOnTrack) {
       // Calculate needed final balance
       const neededBalance = desiredMonthlyIncome * 12 / 0.04;
-      
+
       // Work backwards to find required monthly contribution
       // Using future value of annuity formula: FV = PMT * [((1 + r)^n - 1) / r]
       const futureValueFactor = (Math.pow(1 + monthlyReturn, monthsToRetirement) - 1) / monthlyReturn;
       const currentBalanceFutureValue = currentBalanceNum * Math.pow(1 + monthlyReturn, monthsToRetirement);
       const neededFromContributions = neededBalance - currentBalanceFutureValue;
-      
+
       recommendedContribution = neededFromContributions / futureValueFactor;
       recommendedContribution = Math.max(0, recommendedContribution - monthlyEmployerMatch);
     }
@@ -167,7 +166,7 @@ export default function RetirementPlannerCalculator() {
       <div className="text-center mb-8">
         <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>Retirement Planner</h2>
         <p className={`${theme.textColors.secondary} max-w-2xl mx-auto`}>
-          Plan your retirement with confidence. Calculate how much you need to save, project your future balance, 
+          Plan your retirement with confidence. Calculate how much you need to save, project your future balance,
           and get personalized recommendations to reach your retirement goals.
         </p>
       </div>
@@ -378,10 +377,10 @@ export default function RetirementPlannerCalculator() {
                 <div>
                   <div className="flex justify-between text-sm mb-2">
                     <span>Retirement Readiness</span>
-                    <span>{results.isOnTrack ? '100%' : Math.round((results.monthlyRetirementIncome / (results.monthlyRetirementIncome + results.shortfall/12)) * 100)}%</span>
+                    <span>{results.isOnTrack ? '100%' : Math.round((results.monthlyRetirementIncome / (results.monthlyRetirementIncome + results.shortfall / 12)) * 100)}%</span>
                   </div>
-                  <Progress 
-                    value={results.isOnTrack ? 100 : (results.monthlyRetirementIncome / (results.monthlyRetirementIncome + results.shortfall/12)) * 100} 
+                  <Progress
+                    value={results.isOnTrack ? 100 : (results.monthlyRetirementIncome / (results.monthlyRetirementIncome + results.shortfall / 12)) * 100}
                     className="h-3"
                   />
                 </div>
@@ -413,7 +412,7 @@ export default function RetirementPlannerCalculator() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
                   <XAxis dataKey="age" tick={{ fill: "#94a3b8" }} />
                   <YAxis tickFormatter={(value: number) => `$${(value / 1000).toFixed(1)}k`} tick={{ fill: "#94a3b8" }} />
-                  <Tooltip 
+                  <Tooltip
                     formatter={(value: number) => [formatCurrency(value), '']}
                     labelFormatter={(label) => `Age ${label}`}
                   />
@@ -487,21 +486,21 @@ export default function RetirementPlannerCalculator() {
             <div>
               <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>The Power of Time</h4>
               <p className={`${theme.textColors.primary}`}>
-                Starting early is the most powerful factor in retirement savings. Even small 
+                Starting early is the most powerful factor in retirement savings. Even small
                 contributions in your 20s and 30s can grow dramatically due to compound interest.
               </p>
             </div>
             <div>
               <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Employer Match</h4>
               <p className={`${theme.textColors.primary}`}>
-                Always contribute enough to get your full employer match - it&apos;s free money! 
+                Always contribute enough to get your full employer match - it&apos;s free money!
                 A 50% match on 6% contribution gives you an immediate 50% return.
               </p>
             </div>
             <div>
               <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>4% Withdrawal Rule</h4>
               <p className={`${theme.textColors.primary}`}>
-                The 4% rule suggests you can safely withdraw 4% of your retirement balance 
+                The 4% rule suggests you can safely withdraw 4% of your retirement balance
                 annually. This calculator uses this rule to estimate your retirement income.
               </p>
             </div>

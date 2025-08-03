@@ -67,7 +67,10 @@ class MarketDataService {
 
   // Finnhub API - Free tier available
   private async getFinnhubData(): Promise<StockQuote[]> {
-    console.log('Attempting Finnhub API...');
+    // Log only in development
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Attempting Finnhub API...');
+    }
 
     try {
       const symbols = this.educationalStocks;
@@ -82,14 +85,18 @@ class MarketDataService {
           const response = await this.fetchWithTimeout(url);
 
           if (!response.ok) {
-            console.log(`Finnhub API error for ${symbol}: ${response.status}`);
+            if (process.env.NODE_ENV === 'development') {
+              console.log(`Finnhub API error for ${symbol}: ${response.status}`);
+            }
             continue;
           }
 
           const data: { c: number; h: number; l: number; o: number; pc: number; d: number; dp: number; error?: string } = await response.json();
 
           if (data.error) {
-            console.log(`Finnhub error for ${symbol}: ${data.error}`);
+            if (process.env.NODE_ENV === 'development') {
+              console.log(`Finnhub error for ${symbol}: ${data.error}`);
+            }
             continue;
           }
 
@@ -112,13 +119,17 @@ class MarketDataService {
 
           stocks.push(stock);
         } catch (error) {
-          console.log(`Error fetching ${symbol} from Finnhub:`, error);
+          if (process.env.NODE_ENV === 'development') {
+            console.log(`Error fetching ${symbol} from Finnhub:`, error);
+          }
           continue;
         }
       }
 
       if (stocks.length > 0) {
-        console.log(`✅ Finnhub success: ${stocks.length} stocks`);
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`✅ Finnhub success: ${stocks.length} stocks`);
+        }
         return stocks;
       } else {
         throw new Error('No valid stock data from Finnhub');
@@ -130,19 +141,25 @@ class MarketDataService {
   }
 
   async getStockQuotes(): Promise<StockQuote[]> {
-    console.log('Getting stock quotes...');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Getting stock quotes...');
+    }
 
     // Check cache first
     const cacheKey = 'stock-quotes';
     const cached = this.cache.get(cacheKey);
     if (cached && Date.now() - cached.timestamp < cached.ttl) {
-      console.log('Returning cached stock data');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Returning cached stock data');
+      }
       return cached.data as StockQuote[];
     }
 
     // Try one fast API, then fallback quickly
     try {
-      console.log('Trying Finnhub (Free)...');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Trying Finnhub (Free)...');
+      }
       const data = await this.getFinnhubData();
 
       if (data && data.length > 0) {
@@ -153,7 +170,9 @@ class MarketDataService {
           ttl: 30000
         });
 
-        console.log(`✅ Finnhub successful: ${data.length} stocks`);
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`✅ Finnhub successful: ${data.length} stocks`);
+        }
         return data;
       }
     } catch (error) {
@@ -162,7 +181,9 @@ class MarketDataService {
     }
 
     // All APIs failed, use fallback data
-    console.log('All APIs failed, using fallback data');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('All APIs failed, using fallback data');
+    }
     const fallbackData = this.getFallbackStockData();
 
     // Cache fallback data for a shorter time

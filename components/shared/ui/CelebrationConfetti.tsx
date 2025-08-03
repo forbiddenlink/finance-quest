@@ -23,13 +23,13 @@ interface Particle {
   maxLife: number;
 }
 
-const CelebrationConfetti: React.FC<CelebrationConfettiProps> = ({
+const CelebrationConfetti = ({
   isActive,
   onComplete,
   colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8'],
   particleCount = 50,
   duration = 3000
-}) => {
+}: CelebrationConfettiProps) => {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [animationId, setAnimationId] = useState<number | null>(null);
 

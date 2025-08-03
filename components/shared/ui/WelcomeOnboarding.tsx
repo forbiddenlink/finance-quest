@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
-;
 import {
   Rocket,
   Target,
@@ -29,7 +28,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
   const completeLesson = useProgressStore(state => state.completeLesson);
   const completeOnboarding = useProgressStore(state => state.completeOnboarding);
 
-  // Only show onboarding if it hasn't been completed yet
+  // Only show onboarding if it hasn&apos;t been completed yet
   useEffect(() => {
     if (!userProgress.onboardingCompleted) {
       setIsVisible(true);
@@ -145,7 +144,7 @@ export default function WelcomeOnboarding({ onComplete }: WelcomeOnboardingProps
       )
     },
     {
-      title: "You're All Set! 🚀",
+      title: "You&apos;re All Set! 🚀",
       subtitle: "Ready to start your financial transformation",
       content: (
         <div className="text-center space-y-6">

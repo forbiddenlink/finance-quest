@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useProgressStore } from '@/lib/store/progressStore';
-;
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Calculator, DollarSign, Target, TrendingDown, Shield, FileText, Zap } from 'lucide-react';
 import { theme } from '@/lib/theme';
@@ -42,7 +41,7 @@ const COLORS = ['#3B82F6', '#10b981', '#F59E0B', '#ef4444', '#8b5cf6', '#06B6D4'
 
 export default function TaxOptimizerCalculator() {
   const { recordCalculatorUsage } = useProgressStore();
-  
+
   // Input states
   const [income, setIncome] = useState<string>('75000');
   const [filingStatus, setFilingStatus] = useState<string>('single');
@@ -53,7 +52,7 @@ export default function TaxOptimizerCalculator() {
   const [studentLoanInterest, setStudentLoanInterest] = useState<string>('1500');
   const [stateIncomeTax, setStateIncomeTax] = useState<string>('5');
   const [dependents, setDependents] = useState<string>('0');
-  
+
   // Results state
   const [results, setResults] = useState<TaxOptimizationResult | null>(null);
 
@@ -191,23 +190,23 @@ export default function TaxOptimizerCalculator() {
 
     // Generate recommendations
     const recommendations: string[] = [];
-    
+
     if (retirement401kNum < max401k) {
       recommendations.push('Increase 401(k) contributions to reduce taxable income');
     }
-    
+
     if (retirementIraNum < maxIra) {
       recommendations.push('Consider maxing out Traditional IRA for tax deduction');
     }
-    
+
     if (hsaContributionNum < maxHsa) {
       recommendations.push('HSA contributions offer triple tax advantage - deductible, growth tax-free, withdrawals tax-free for medical expenses');
     }
-    
+
     if (incomeNum > 75000) {
       recommendations.push('Consider Roth conversion strategies for tax diversification');
     }
-    
+
     recommendations.push('Track all deductible expenses throughout the year');
     recommendations.push('Review tax strategy quarterly, not just at year-end');
 
@@ -261,7 +260,7 @@ export default function TaxOptimizerCalculator() {
       <div className="text-center mb-8">
         <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>Tax Optimizer</h2>
         <p className={`${theme.textColors.secondary} max-w-2xl mx-auto`}>
-          Minimize your tax burden with personalized strategies. Discover legal ways to reduce taxes 
+          Minimize your tax burden with personalized strategies. Discover legal ways to reduce taxes
           and keep more of your hard-earned money working for you.
         </p>
       </div>
@@ -525,7 +524,7 @@ export default function TaxOptimizerCalculator() {
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={({name, value}) => `${name}: ${formatCurrency(value || 0)}`}
+                    label={({ name, value }) => `${name}: ${formatCurrency(value || 0)}`}
                     outerRadius={80}
                     fill="#8884d8"
                     dataKey="savings"
@@ -553,21 +552,21 @@ export default function TaxOptimizerCalculator() {
             <div>
               <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Pre-Tax Contributions</h4>
               <p className={`${theme.textColors.primary}`}>
-                401(k), Traditional IRA, and HSA contributions reduce your taxable income dollar-for-dollar. 
+                401(k), Traditional IRA, and HSA contributions reduce your taxable income dollar-for-dollar.
                 Maximize these accounts first for immediate tax savings.
               </p>
             </div>
             <div>
               <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Tax-Loss Harvesting</h4>
               <p className={`${theme.textColors.primary}`}>
-                Realize investment losses to offset capital gains. You can deduct up to $3,000 
+                Realize investment losses to offset capital gains. You can deduct up to $3,000
                 in net losses against ordinary income annually.
               </p>
             </div>
             <div>
               <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Strategic Timing</h4>
               <p className={`${theme.textColors.primary}`}>
-                Time income and deductions strategically. Consider accelerating deductions into 
+                Time income and deductions strategically. Consider accelerating deductions into
                 high-income years and deferring income when possible.
               </p>
             </div>

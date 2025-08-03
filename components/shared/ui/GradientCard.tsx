@@ -1,7 +1,6 @@
 'use client';
 
 import { ReactNode } from 'react';
-;
 import { theme } from '@/lib/theme';
 
 interface GradientCardProps {
