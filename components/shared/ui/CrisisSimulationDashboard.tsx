@@ -892,7 +892,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
       <GradientCard variant="glass" gradient="red" className="p-8 text-center">
         <AlertTriangle className="w-16 h-16 text-red-600 mx-auto mb-4" />
         <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-4`}>Crisis Simulation Training</h2>
-        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+        <p className={`text-lg ${theme.textColors.secondary} max-w-3xl mx-auto`}>
           Practice handling financial emergencies in a safe environment. Learn to make sound decisions under pressure
           and build confidence for real-world crisis situations.
         </p>
@@ -912,7 +912,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
               onClick={() => scenario.unlocked && startSimulation(scenario)}
             >
               <div className="flex items-start justify-between mb-4">
-                <Icon className={`w-8 h-8 ${!scenario.unlocked ? 'text-gray-400' :
+                <Icon className={`w-8 h-8 ${!scenario.unlocked ? theme.textColors.muted :
                   scenario.urgency === 'critical' ? 'text-red-600' :
                     scenario.urgency === 'high' ? 'text-orange-600' :
                       scenario.urgency === 'medium' ? 'text-yellow-600' : 'text-blue-600'
@@ -930,14 +930,14 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
                   <span className={`px-2 py-1 rounded ${getDifficultyColor(scenario.difficulty)}`}>
                     {scenario.difficulty}
                   </span>
-                  <span className="text-gray-600 flex items-center gap-1">
+                  <span className={`${theme.textColors.secondary} flex items-center gap-1`}>
                     <Timer className="w-3 h-3" />
                     {scenario.estimatedTime} min
                   </span>
                 </div>
 
                 {!scenario.unlocked && (
-                  <div className="text-gray-500 text-center pt-2">
+                  <div className={`${theme.textColors.muted} text-center pt-2`}>
                     Complete Chapter {scenario.requiredChapter} to unlock
                   </div>
                 )}

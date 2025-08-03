@@ -224,7 +224,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                         )}
                     </motion.div>
 
-                    <h2 className="text-3xl font-bold text-gray-800 mb-2">
+                    <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>
                         Quiz Complete!
                     </h2>
 
@@ -234,7 +234,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                         </span>
                     </div>
 
-                    <p className="text-xl text-gray-600 mb-6">
+                    <p className={`text-xl ${theme.textColors.secondary} mb-6`}>
                         {score >= 85 ? 'Outstanding! You\'ve mastered income and career finance!' :
                             score >= 70 ? 'Good job! You have a solid understanding with room for improvement.' :
                                 'Keep learning! Review the concepts and try again.'}
@@ -342,7 +342,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                             exit={{ opacity: 0, x: -20 }}
                             transition={{ duration: 0.3 }}
                         >
-                            <h3 className="text-xl font-semibold text-gray-800 mb-6">
+                            <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-6`}>
                                 {currentQ.question}
                             </h3>
 

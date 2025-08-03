@@ -5,17 +5,6 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import { spacedRepetitionSystem, ReviewItem, ReviewResponse } from '@/lib/algorithms/spacedRepetition';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import { theme } from '@/lib/theme';
-import {
-            </div>
-          </div>
-
-          <div className="text-center mb-6">
-            <h5 className="text-xl font-bold mb-2">
-              {dueItems[currentReviewIndex].topic}
-            </h5>
-            <p className={`${theme.textColors.secondary}`}>How well do you remember this concept?</p>
-          </div>/shared/ui/GradientCard';
-import { theme } from '@/lib/theme';
 import { Brain, Clock, CheckCircle, AlertTriangle, Star, RefreshCw } from 'lucide-react';
 
 interface SpacedRepetitionDashboardProps {
@@ -276,7 +265,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
             <h5 className="text-xl font-bold mb-2">
               {dueItems[currentReviewIndex]?.conceptId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
             </h5>
-            <p className="text-gray-600">How well do you remember this concept?</p>
+            <p className={`${theme.textColors.secondary}`}>How well do you remember this concept?</p>
           </div>
 
           <div className="grid grid-cols-5 gap-2 mb-4">

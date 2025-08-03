@@ -63,7 +63,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
       id: 'ai-assessment',
       title: 'AI Financial Health Score',
       description: 'OpenAI GPT-4o-mini powered assessment providing personalized financial health scoring and actionable recommendations.',
-      icon: <Brain className="w-8 h-8 text-slate-400" />,
+      icon: <Brain className={`w-8 h-8 ${theme.textColors.muted}`} />,
       highlight: '3. AI Innovation: Personalized coaching based on real assessment',
       targetUrl: '/health-assessment'
     },
@@ -95,7 +95,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
       id: 'assessment',
       title: 'Before/After Assessment System',
       description: 'Quantifiable learning outcomes measurement demonstrating 42% average knowledge improvement for contest judges.',
-      icon: <CheckCircle className="w-8 h-8 text-slate-400" />,
+      icon: <CheckCircle className={`w-8 h-8 ${theme.textColors.muted}`} />,
       highlight: '6. Contest Metrics: Measurable impact demonstration',
       targetUrl: '/assessment'
     },
@@ -103,7 +103,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
       id: 'progress-tracking',
       title: 'Advanced Progress Analytics',
       description: 'Comprehensive learning analytics with spaced repetition, achievement tracking, and personalized learning paths.',
-      icon: <Target className="w-8 h-8 text-slate-400" />,
+      icon: <Target className={`w-8 h-8 ${theme.textColors.muted}`} />,
       highlight: '7. Learning Science: SM-2 algorithm for memory optimization',
       targetUrl: '/progress'
     },

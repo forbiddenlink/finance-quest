@@ -100,7 +100,7 @@ export default function CircularProgress({
           </span>
         )}
         {label && (
-          <span className="text-sm text-gray-600 mt-1 text-center">
+          <span className={`text-sm ${theme.textColors.secondary} mt-1 text-center`}>
             {label}
           </span>
         )}

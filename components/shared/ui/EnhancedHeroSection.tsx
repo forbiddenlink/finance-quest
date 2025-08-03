@@ -63,7 +63,7 @@ export default function EnhancedHeroSection() {
                   Financial Future
                 </span>
               </h1>
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <p className={`text-xl ${theme.textColors.secondary} leading-relaxed`}>
                 Transform from financial novice to money master through AI-powered personalized coaching,
                 interactive calculators, and real-world crisis scenarios.
               </p>
@@ -78,7 +78,7 @@ export default function EnhancedHeroSection() {
                     <CardContent className="p-4 text-center">
                       <Icon className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                       <h3 className="font-semibold text-sm">{feature.title}</h3>
-                      <p className="text-xs text-gray-500 mt-1">{feature.description}</p>
+                      <p className={`text-xs ${theme.textColors.muted} mt-1`}>{feature.description}</p>
                     </CardContent>
                   </Card>
                 );
@@ -104,7 +104,7 @@ export default function EnhancedHeroSection() {
             </div>
 
             {/* Social Proof */}
-            <div className="flex items-center space-x-6 text-sm text-gray-500">
+            <div className={`flex items-center space-x-6 text-sm ${theme.textColors.muted}`}>
               <div className="flex items-center space-x-2">
                 <Users className="w-4 h-4" />
                 <span>10,000+ Active Learners</span>
@@ -131,7 +131,7 @@ export default function EnhancedHeroSection() {
                     <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>
                       Your Learning Journey
                     </h3>
-                    <p className="text-gray-600">
+                    <p className={`${theme.textColors.secondary}`}>
                       5 comprehensive chapters with real-world application
                     </p>
                   </div>
@@ -148,7 +148,7 @@ export default function EnhancedHeroSection() {
                       <div key={index} className="space-y-2">
                         <div className="flex justify-between text-sm">
                           <span className="font-medium">{chapter.name}</span>
-                          <span className="text-gray-500">{chapter.progress}%</span>
+                          <span className={`${theme.textColors.muted}`}>{chapter.progress}%</span>
                         </div>
                         <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2`}>
                           <div
