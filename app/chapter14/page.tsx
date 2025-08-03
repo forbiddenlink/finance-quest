@@ -113,7 +113,7 @@ export default function Chapter14() {
                         <Zap className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
                         Diversification Effect
                       </h4>
-                      <p className="text-sm text-gray-600">
+                      <p className={`text-sm ${theme.textColors.secondary}`}>
                         Combining uncorrelated assets can reduce overall portfolio risk without 
                         sacrificing expected returns - the only &ldquo;free lunch&rdquo; in investing.
                       </p>
@@ -164,9 +164,9 @@ export default function Chapter14() {
                   <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>Strategic Asset Allocation</h3>
                   
                   <div className="grid md:grid-cols-3 gap-4">
-                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                      <h4 className="font-medium text-green-800 mb-2">Conservative Portfolio</h4>
-                      <div className="space-y-2 text-sm text-green-700">
+                    <div className={`p-4 ${theme.status.success.bg}/10 border ${theme.status.success.border} rounded-lg`}>
+                      <h4 className={`font-medium ${theme.status.success.text} mb-2`}>Conservative Portfolio</h4>
+                      <div className={`space-y-2 text-sm ${theme.status.success.text}/80`}>
                         <div className="flex justify-between">
                           <span>Bonds:</span>
                           <span className="font-medium">70%</span>
@@ -179,15 +179,15 @@ export default function Chapter14() {
                           <span>Alternatives:</span>
                           <span className="font-medium">5%</span>
                         </div>
-                        <div className="mt-2 pt-2 border-t border-green-300">
+                        <div className={`mt-2 pt-2 border-t ${theme.status.success.border}`}>
                           <p className="text-xs">Target: 5-7% annual return, low volatility</p>
                         </div>
                       </div>
                     </div>
                     
-                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                      <h4 className="font-medium text-blue-800 mb-2">Balanced Portfolio</h4>
-                      <div className="space-y-2 text-sm text-blue-700">
+                    <div className={`p-4 ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-lg`}>
+                      <h4 className={`font-medium ${theme.status.info.text} mb-2`}>Balanced Portfolio</h4>
+                      <div className={`space-y-2 text-sm ${theme.status.info.text}/80`}>
                         <div className="flex justify-between">
                           <span>Stocks:</span>
                           <span className="font-medium">60%</span>
@@ -200,15 +200,15 @@ export default function Chapter14() {
                           <span>Alternatives:</span>
                           <span className="font-medium">10%</span>
                         </div>
-                        <div className="mt-2 pt-2 border-t border-blue-300">
+                        <div className={`mt-2 pt-2 border-t ${theme.status.info.border}`}>
                           <p className="text-xs">Target: 7-9% annual return, moderate volatility</p>
                         </div>
                       </div>
                     </div>
                     
-                    <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
-                      <h4 className="font-medium text-purple-800 mb-2">Growth Portfolio</h4>
-                      <div className="space-y-2 text-sm text-purple-700">
+                    <div className={`p-4 ${theme.status.warning.bg}/10 border ${theme.status.warning.border} rounded-lg`}>
+                      <h4 className={`font-medium ${theme.status.warning.text} mb-2`}>Growth Portfolio</h4>
+                      <div className={`space-y-2 text-sm ${theme.status.warning.text}/80`}>
                         <div className="flex justify-between">
                           <span>Stocks:</span>
                           <span className="font-medium">80%</span>
@@ -221,7 +221,7 @@ export default function Chapter14() {
                           <span>Alternatives:</span>
                           <span className="font-medium">10%</span>
                         </div>
-                        <div className="mt-2 pt-2 border-t border-purple-300">
+                        <div className={`mt-2 pt-2 border-t ${theme.status.warning.border}`}>
                           <p className="text-xs">Target: 9-11% annual return, high volatility</p>
                         </div>
                       </div>
@@ -237,12 +237,12 @@ export default function Chapter14() {
                   
                   <div className="space-y-4">
                     <div className="flex items-start space-x-3">
-                      <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-indigo-600 font-medium text-sm">1</span>
+                      <div className={`w-8 h-8 ${theme.backgrounds.card} rounded-full flex items-center justify-center flex-shrink-0`}>
+                        <span className={`${theme.textColors.accent} font-medium text-sm`}>1</span>
                       </div>
                       <div>
                         <h4 className={`font-medium ${theme.textColors.primary}`}>Correlation Analysis</h4>
-                        <p className="text-gray-600 text-sm">
+                        <p className={`${theme.textColors.secondary} text-sm`}>
                           Combine assets that move independently. When stocks fall, bonds often rise, 
                           providing portfolio stability during market turbulence.
                         </p>
@@ -250,12 +250,12 @@ export default function Chapter14() {
                     </div>
                     
                     <div className="flex items-start space-x-3">
-                      <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-indigo-600 font-medium text-sm">2</span>
+                      <div className={`w-8 h-8 ${theme.backgrounds.card} rounded-full flex items-center justify-center flex-shrink-0`}>
+                        <span className={`${theme.textColors.accent} font-medium text-sm`}>2</span>
                       </div>
                       <div>
                         <h4 className={`font-medium ${theme.textColors.primary}`}>Geographic Diversification</h4>
-                        <p className="text-gray-600 text-sm">
+                        <p className={`${theme.textColors.secondary} text-sm`}>
                           Spread investments across domestic and international markets. Include 
                           developed markets (Europe, Japan) and emerging markets for broader exposure.
                         </p>
@@ -263,12 +263,12 @@ export default function Chapter14() {
                     </div>
                     
                     <div className="flex items-start space-x-3">
-                      <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-indigo-600 font-medium text-sm">3</span>
+                      <div className={`w-8 h-8 ${theme.backgrounds.card} rounded-full flex items-center justify-center flex-shrink-0`}>
+                        <span className={`${theme.textColors.accent} font-medium text-sm`}>3</span>
                       </div>
                       <div>
                         <h4 className={`font-medium ${theme.textColors.primary}`}>Sector Diversification</h4>
-                        <p className="text-gray-600 text-sm">
+                        <p className={`${theme.textColors.secondary} text-sm`}>
                           Don&apos;t put all your money in tech stocks. Spread across sectors: healthcare, 
                           finance, energy, consumer goods, and utilities for balanced exposure.
                         </p>
@@ -276,12 +276,12 @@ export default function Chapter14() {
                     </div>
                     
                     <div className="flex items-start space-x-3">
-                      <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-indigo-600 font-medium text-sm">4</span>
+                      <div className={`w-8 h-8 ${theme.backgrounds.card} rounded-full flex items-center justify-center flex-shrink-0`}>
+                        <span className={`${theme.textColors.accent} font-medium text-sm`}>4</span>
                       </div>
                       <div>
                         <h4 className={`font-medium ${theme.textColors.primary}`}>Rebalancing Strategy</h4>
-                        <p className="text-gray-600 text-sm">
+                        <p className={`${theme.textColors.secondary} text-sm`}>
                           Regularly adjust portfolio back to target allocation. This forces you to 
                           &ldquo;sell high and buy low&rdquo; automatically, improving long-term returns.
                         </p>
@@ -296,9 +296,9 @@ export default function Chapter14() {
                 <div>
                   <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3`}>Factor-Based Investing</h3>
                   
-                  <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200 mb-4">
-                    <h4 className="font-medium text-yellow-800 mb-2">Beyond Market Cap Weighting</h4>
-                    <p className="text-yellow-700 text-sm">
+                  <div className={`${theme.status.warning.bg}/10 p-4 rounded-lg border ${theme.status.warning.border} mb-4`}>
+                    <h4 className={`font-medium ${theme.status.warning.text} mb-2`}>Beyond Market Cap Weighting</h4>
+                    <p className={`${theme.status.warning.text}/80 text-sm`}>
                       Academic research has identified specific factors that historically provide 
                       excess returns over time. Smart beta and factor ETFs allow investors to 
                       target these premiums systematically.
@@ -311,19 +311,19 @@ export default function Chapter14() {
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
                           <span className={`${theme.textColors.secondary}`}>Value</span>
-                          <span className="text-blue-600 font-medium">Cheap stocks outperform</span>
+                          <span className={`${theme.status.info.text} font-medium`}>Cheap stocks outperform</span>
                         </div>
                         <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
                           <span className={`${theme.textColors.secondary}`}>Size</span>
-                          <span className="text-blue-600 font-medium">Small-cap premium</span>
+                          <span className={`${theme.status.info.text} font-medium`}>Small-cap premium</span>
                         </div>
                         <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
                           <span className={`${theme.textColors.secondary}`}>Quality</span>
-                          <span className="text-blue-600 font-medium">Strong fundamentals</span>
+                          <span className={`${theme.status.info.text} font-medium`}>Strong fundamentals</span>
                         </div>
                         <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
                           <span className={`${theme.textColors.secondary}`}>Momentum</span>
-                          <span className="text-blue-600 font-medium">Trending stocks continue</span>
+                          <span className={`${theme.status.info.text} font-medium`}>Trending stocks continue</span>
                         </div>
                       </div>
                     </div>
@@ -357,7 +357,7 @@ export default function Chapter14() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
-                  <Calculator className="w-5 h-5 text-purple-600" />
+                  <Calculator className={`w-5 h-5 ${theme.textColors.accent}`} />
                   <span>Stock Analysis Calculator</span>
                 </CardTitle>
                 <CardDescription>
@@ -374,7 +374,7 @@ export default function Chapter14() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
-                  <Award className="w-5 h-5 text-purple-600" />
+                  <Award className={`w-5 h-5 ${theme.textColors.accent}`} />
                   <span>Test Your Portfolio Theory Knowledge</span>
                 </CardTitle>
                 <CardDescription>
@@ -385,7 +385,7 @@ export default function Chapter14() {
                 <div className="text-center py-8">
                   <Award className="w-16 h-16 text-purple-600 mx-auto mb-4" />
                   <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Quiz Coming Soon</h3>
-                  <p className="text-gray-600">
+                  <p className={theme.textColors.secondary}>
                     Interactive assessment will be available in the next update.
                     Continue practicing with the Stock Analysis Calculator!
                   </p>

@@ -179,11 +179,11 @@ export default function CreditScoreSimulator() {
     }, [calculateProjections]);
 
     const getScoreColor = (score: number) => {
-        if (score >= 800) return 'text-green-400';
-        if (score >= 740) return 'text-blue-400';
-        if (score >= 670) return 'text-yellow-400';
-        if (score >= 580) return 'text-orange-400';
-        return 'text-red-400';
+        if (score >= 800) return theme.status.success.text;
+        if (score >= 740) return theme.status.info.text;
+        if (score >= 670) return theme.status.warning.text;
+        if (score >= 580) return theme.status.warning.text;
+        return theme.status.error.text;
     };
 
     const getScoreGrade = (score: number) => {

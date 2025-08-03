@@ -176,7 +176,7 @@ export default function RetirementPlannerCalculator() {
         <Card className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}`}>
           <CardHeader>
             <CardTitle className={`flex items-center gap-2 ${theme.textColors.primary}`}>
-              <PiggyBank className="w-5 h-5 text-amber-400" />
+              <PiggyBank className={`w-5 h-5 ${theme.status.warning.text}`} />
               Retirement Planning Inputs
             </CardTitle>
             <CardDescription className={theme.textColors.secondary}>

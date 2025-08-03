@@ -225,9 +225,9 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600';
-    if (score >= 60) return 'text-yellow-600';
-    return 'text-red-600';
+    if (score >= 80) return theme.status.success.text;
+    if (score >= 60) return theme.status.warning.text;
+    return theme.status.error.text;
   };
 
   const getGradeColor = (grade: string) => {
@@ -244,9 +244,9 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
   if (!isAssessing && !healthScore) {
     return (
       <GradientCard variant="glass" gradient="green" className="p-8 text-center">
-        <Heart className="w-16 h-16 text-green-600 mx-auto mb-6" />
+        <Heart className={`w-16 h-16 ${theme.status.success.text} mx-auto mb-6`} />
         <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-4`}>Financial Health Assessment</h2>
-        <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
+        <p className={`text-lg ${theme.textColors.secondary} mb-6 max-w-2xl mx-auto`}>
           Get your personalized Financial Health Score with actionable recommendations to improve your financial well-being.
         </p>
         <button
@@ -266,7 +266,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
         <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
             <h3 className={`text-2xl font-bold ${theme.textColors.primary}`}>{currentCategory.category}</h3>
-            <span className="text-sm text-gray-600">Step {currentStep + 1} of {questions.length}</span>
+            <span className={`text-sm ${theme.textColors.secondary}`}>Step {currentStep + 1} of {questions.length}</span>
           </div>
           <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
             <div
@@ -318,7 +318,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
           <button
             onClick={handlePrevStep}
             disabled={currentStep === 0}
-            className={`px-6 py-3 bg-gray-300 ${theme.textColors.secondary} rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 transition-all`}
+            className={`px-6 py-3 ${theme.backgrounds.disabled} ${theme.textColors.secondary} rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-80 transition-all`}
           >
             Previous
           </button>
@@ -342,8 +342,8 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
             <span className="text-4xl font-bold text-white">{healthScore.grade}</span>
           </div>
           <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>Your Financial Health Score</h2>
-          <div className="text-6xl font-bold text-purple-600 mb-4">{healthScore.overallScore}</div>
-          <p className="text-lg text-gray-600">
+          <div className={`text-6xl font-bold ${theme.status.info.text} mb-4`}>{healthScore.overallScore}</div>
+          <p className={`text-lg ${theme.textColors.secondary}`}>
             {healthScore.overallScore >= 90 ? 'Excellent financial health!' :
               healthScore.overallScore >= 80 ? 'Good financial health with room for improvement' :
                 healthScore.overallScore >= 70 ? 'Fair financial health - focus on key areas' :
@@ -367,7 +367,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
               <div key={name} className={`${theme.backgrounds.glass} bg-opacity-50 rounded-lg p-4`}>
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <Icon className="w-5 h-5 text-gray-600" />
+                    <Icon className={`w-5 h-5 ${theme.textColors.secondary}`} />
                     <span className={`font-medium ${theme.textColors.primary}`}>{name}</span>
                   </div>
                   <span className={`font-bold ${getScoreColor(score)}`}>{score}</span>
@@ -390,7 +390,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
           {healthScore.improvements.length > 0 && (
             <GradientCard variant="glass" gradient="red" className="p-6">
               <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-                <AlertTriangle className="w-6 h-6 text-red-600" />
+                <AlertTriangle className={`w-6 h-6 ${theme.status.error.text}`} />
                 Priority Improvements
               </h3>
               <ul className="space-y-3">
@@ -410,13 +410,13 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
           {healthScore.strengths.length > 0 && (
             <GradientCard variant="glass" gradient="green" className="p-6">
               <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-                <CheckCircle className="w-6 h-6 text-green-600" />
+                <CheckCircle className={`w-6 h-6 ${theme.status.success.text}`} />
                 Your Strengths
               </h3>
               <ul className="space-y-3">
                 {healthScore.strengths.map((strength, idx) => (
                   <li key={idx} className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <CheckCircle className={`w-5 h-5 ${theme.status.success.text} flex-shrink-0`} />
                     <span className={`${theme.textColors.primary}`}>{strength}</span>
                   </li>
                 ))}

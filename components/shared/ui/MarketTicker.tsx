@@ -209,8 +209,8 @@ export default function MarketTicker() {
             <div
               key={index}
               className={`h-1 rounded-full transition-all duration-300 ${index === currentIndex
-                ? 'bg-amber-400 w-4'
-                : 'bg-slate-600 w-2'
+                ? `${theme.textColors.accent} w-4`
+                : `${theme.backgrounds.disabled} w-2`
                 }`}
             />
           ))}

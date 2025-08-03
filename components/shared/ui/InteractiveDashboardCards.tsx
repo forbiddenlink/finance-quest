@@ -118,7 +118,7 @@ export default function InteractiveDashboardCards() {
                   <CardTitle className={`text-lg font-semibold ${theme.textColors.primary} mb-1`}>
                     {card.title}
                   </CardTitle>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <p className={`text-sm ${theme.textColors.secondary} leading-relaxed`}>
                     {card.description}
                   </p>
                 </div>
@@ -146,7 +146,7 @@ export default function InteractiveDashboardCards() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="w-full mt-3 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                      className={`w-full mt-3 ${theme.status.info.text} hover:text-blue-700 hover:bg-blue-50`}
                     >
                       View Full Analytics
                       <ArrowRight className="w-4 h-4 ml-2" />
@@ -157,9 +157,9 @@ export default function InteractiveDashboardCards() {
                 {/* Expand/Collapse Indicator */}
                 <div className="flex justify-center pt-2">
                   {isExpanded ? (
-                    <ChevronUp className="w-5 h-5 text-gray-400" />
+                    <ChevronUp className={`w-5 h-5 ${theme.textColors.muted}`} />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-gray-400" />
+                    <ChevronDown className={`w-5 h-5 ${theme.textColors.muted}`} />
                   )}
                 </div>
               </div>

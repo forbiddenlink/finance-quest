@@ -48,14 +48,14 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
       id: 'welcome',
       title: 'Welcome to Finance Quest',
       description: 'An AI-powered platform solving the 64% financial illiteracy crisis through real market data, personalized coaching, and interactive learning.',
-      icon: <Star className="w-8 h-8 text-amber-400" />,
+      icon: <Star className={`w-8 h-8 ${theme.status.warning.text}`} />,
       highlight: '1. Contest Innovation: Real AI integration, not simulated chatbots'
     },
     {
       id: 'market-data',
       title: 'Live Market Data Integration',
       description: 'Real-time stock quotes from Yahoo Finance API and Federal Reserve economic data, with robust fallback systems for demos.',
-      icon: <BarChart3 className="w-8 h-8 text-blue-400" />,
+      icon: <BarChart3 className={`w-8 h-8 ${theme.status.info.text}`} />,
       highlight: '2. Technical Achievement: Live data with 30-second updates',
       targetUrl: '/#market-ticker'
     },
@@ -71,14 +71,14 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
       id: 'voice-interface',
       title: 'Voice Q&A Accessibility',
       description: 'Speech recognition and synthesis for inclusive learning, supporting users with different accessibility needs.',
-      icon: <Mic className="w-8 h-8 text-amber-400" />,
+      icon: <Mic className={`w-8 h-8 ${theme.status.warning.text}`} />,
       highlight: '4. Accessibility Innovation: Voice-first financial education',
       demoContent: (
-        <div className="bg-amber-500/20 p-4 rounded-lg border border-amber-500/30">
-          <p className="text-sm text-amber-300 mb-2">Try asking: &ldquo;How does compound interest work?&rdquo;</p>
+        <div className={`${theme.status.warning.bg}/20 p-4 rounded-lg border ${theme.status.warning.border}/30`}>
+          <p className={`text-sm ${theme.status.warning.text} mb-2`}>Try asking: &ldquo;How does compound interest work?&rdquo;</p>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-amber-400 rounded-full animate-pulse"></div>
-            <span className="text-xs text-amber-400">Voice recognition active in Chrome/Edge</span>
+            <div className={`w-3 h-3 ${theme.status.warning.bg} rounded-full animate-pulse`}></div>
+            <span className={`text-xs ${theme.status.warning.text}`}>Voice recognition active in Chrome/Edge</span>
           </div>
         </div>
       )
@@ -87,7 +87,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
       id: 'calculators',
       title: 'Interactive Learning Tools',
       description: 'Four specialized calculators: Paycheck, Compound Interest, Budget Builder, and Debt Payoff with real-time visualization.',
-      icon: <Calculator className="w-8 h-8 text-blue-400" />,
+      icon: <Calculator className={`w-8 h-8 ${theme.status.info.text}`} />,
       highlight: '5. Educational Tools: Immediate practical application',
       targetUrl: '/calculators'
     },
@@ -111,7 +111,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
       id: 'impact-dashboard',
       title: 'Real-Time Impact Visualization',
       description: 'Live demonstration of potential lifetime savings, knowledge improvement rates, and social impact metrics.',
-      icon: <Target className="w-8 h-8 text-amber-400" />,
+      icon: <Target className={`w-8 h-8 ${theme.status.warning.text}`} />,
       highlight: '8. Contest Impact: Real-time quantifiable results',
       targetUrl: '/impact'
     },
@@ -119,7 +119,7 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
       id: 'impact',
       title: 'Measurable Learning Outcomes',
       description: 'Before/after assessments, confidence tracking, and behavioral change measurement for demonstrable impact.',
-      icon: <Award className="w-8 h-8 text-amber-400" />,
+      icon: <Award className={`w-8 h-8 ${theme.status.warning.text}`} />,
       highlight: '9. Contest Impact: Quantifiable financial literacy improvement'
     }
   ];
@@ -214,11 +214,11 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
                 <GradientCard variant="glass" gradient="blue" className="p-6 mb-6 flex-shrink-0">
                   <div className="flex items-start gap-4 mb-4">
                     <div className="bg-amber-500/20 p-2 rounded-lg">
-                      <Star className="w-5 h-5 text-amber-400" />
+                      <Star className={`w-5 h-5 ${theme.status.warning.text}`} />
                     </div>
                     <div>
                       <h3 className={`font-semibold ${theme.textColors.primary} mb-1`}>Contest Highlight</h3>
-                      <p className="text-sm text-amber-400">{currentStepData.highlight}</p>
+                      <p className={`text-sm ${theme.status.warning.text}`}>{currentStepData.highlight}</p>
                     </div>
                   </div>
                 </GradientCard>
@@ -261,13 +261,13 @@ export default function GuidedTour({ onComplete, onSkip }: GuidedTourProps) {
                       }`}
                     >
                       {completedSteps.includes(step.id) ? (
-                        <CheckCircle className="w-5 h-5 text-amber-400 flex-shrink-0" />
+                        <CheckCircle className={`w-5 h-5 ${theme.status.warning.text} flex-shrink-0`} />
                       ) : (
                         <div className="w-5 h-5 flex-shrink-0">{step.icon}</div>
                       )}
                       <div>
                         <p className={`font-medium ${
-                          index === currentStep ? 'text-amber-400' : `${theme.textColors.primary}`
+                          index === currentStep ? theme.status.warning.text : `${theme.textColors.primary}`
                         }`}>
                           {step.title}
                         </p>

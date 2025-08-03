@@ -650,23 +650,23 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
   };
 
   const getScenarioStatusColor = (scenario: CrisisScenario) => {
-    if (!scenario.unlocked) return 'bg-gray-100 ${theme.borderColors.primary}';
-    if (completedScenarios.includes(scenario.id)) return 'bg-amber-50 border-amber-200';
+    if (!scenario.unlocked) return `${theme.backgrounds.disabled} ${theme.borderColors.primary}`;
+    if (completedScenarios.includes(scenario.id)) return `${theme.status.success.bg} ${theme.status.success.border}`;
 
     switch (scenario.urgency) {
-      case 'critical': return 'bg-navy-50 border-navy-200';
-      case 'high': return 'bg-amber-50 border-amber-200';
-      case 'medium': return 'bg-amber-50 border-amber-200';
-      default: return 'bg-navy-50 border-navy-200';
+      case 'critical': return `${theme.status.error.bg} ${theme.status.error.border}`;
+      case 'high': return `${theme.status.warning.bg} ${theme.status.warning.border}`;
+      case 'medium': return `${theme.status.warning.bg} ${theme.status.warning.border}`;
+      default: return `${theme.status.info.bg} ${theme.status.info.border}`;
     }
   };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'beginner': return 'text-amber-600 bg-amber-100';
-      case 'intermediate': return 'text-navy-600 bg-navy-100';
-      case 'advanced': return 'text-navy-600 bg-navy-100';
-      default: return 'text-gray-600 bg-gray-100';
+      case 'beginner': return `${theme.status.success.text} ${theme.status.success.bg}`;
+      case 'intermediate': return `${theme.status.warning.text} ${theme.status.warning.bg}`;
+      case 'advanced': return `${theme.status.error.text} ${theme.status.error.bg}`;
+      default: return `${theme.textColors.secondary} ${theme.backgrounds.disabled}`;
     }
   };
 
@@ -687,45 +687,45 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
               <span className="text-3xl font-bold text-white">{simulationResult.grade}</span>
             </div>
             <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>Crisis Simulation Complete!</h2>
-            <p className="text-lg text-gray-600">{activeScenario?.title}</p>
+            <p className={`text-lg ${theme.textColors.secondary}`}>{activeScenario?.title}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className={`text-center p-4 ${theme.backgrounds.glass} bg-opacity-50 rounded-lg`}>
-              <Target className="w-8 h-8 mx-auto mb-2 text-purple-600" />
+              <Target className={`w-8 h-8 mx-auto mb-2 ${theme.status.info.text}`} />
               <div className={`text-2xl font-bold ${theme.textColors.primary}`}>{simulationResult.totalScore}</div>
-              <div className="text-sm text-gray-600">Average Score</div>
+              <div className={`text-sm ${theme.textColors.secondary}`}>Average Score</div>
             </div>
             <div className={`text-center p-4 ${theme.backgrounds.glass} bg-opacity-50 rounded-lg`}>
-              <CheckCircle className="w-8 h-8 mx-auto mb-2 text-green-600" />
+              <CheckCircle className={`w-8 h-8 mx-auto mb-2 ${theme.status.success.text}`} />
               <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
                 {simulationResult.correctAnswers}/{simulationResult.totalQuestions}
               </div>
-              <div className="text-sm text-gray-600">Correct Decisions</div>
+              <div className={`text-sm ${theme.textColors.secondary}`}>Correct Decisions</div>
             </div>
             <div className={`text-center p-4 ${theme.backgrounds.glass} bg-opacity-50 rounded-lg`}>
-              <DollarSign className={`w-8 h-8 mx-auto mb-2 ${simulationResult.financialOutcome >= 0 ? 'text-green-600' : 'text-red-600'
+              <DollarSign className={`w-8 h-8 mx-auto mb-2 ${simulationResult.financialOutcome >= 0 ? theme.status.success.text : theme.status.error.text
                 }`} />
-              <div className={`text-2xl font-bold ${simulationResult.financialOutcome >= 0 ? 'text-green-600' : 'text-red-600'
+              <div className={`text-2xl font-bold ${simulationResult.financialOutcome >= 0 ? theme.status.success.text : theme.status.error.text
                 }`}>
                 {simulationResult.financialOutcome >= 0 ? '+' : ''}
                 ${Math.abs(simulationResult.financialOutcome).toLocaleString()}
               </div>
-              <div className="text-sm text-gray-600">Financial Impact</div>
+              <div className={`text-sm ${theme.textColors.secondary}`}>Financial Impact</div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             {simulationResult.strengths.length > 0 && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-                <h3 className="font-bold text-green-900 mb-3 flex items-center gap-2">
+              <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-6`}>
+                <h3 className={`font-bold ${theme.status.success.text} mb-3 flex items-center gap-2`}>
                   <CheckCircle className="w-5 h-5" />
                   Strengths
                 </h3>
                 <ul className="space-y-2">
                   {simulationResult.strengths.map((strength, index) => (
-                    <li key={index} className="text-green-800 text-sm flex items-start gap-2">
-                      <span className="text-green-500 mt-1">✓</span>
+                    <li key={index} className={`${theme.status.success.text} text-sm flex items-start gap-2`}>
+                      <span className={`${theme.status.success.text} mt-1`}>✓</span>
                       {strength}
                     </li>
                   ))}
@@ -754,7 +754,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={resetSimulation}
-              className={`px-6 py-3 bg-gray-200 ${theme.textColors.secondary} rounded-lg font-semibold hover:bg-gray-300 transition-colors flex items-center gap-2`}
+              className={`px-6 py-3 ${theme.backgrounds.cardHover} ${theme.textColors.secondary} rounded-lg font-semibold hover:${theme.backgrounds.card} transition-colors flex items-center gap-2`}
             >
               <RefreshCw className="w-4 h-4" />
               Try Another Scenario
@@ -787,15 +787,15 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <activeScenario.icon className="w-8 h-8 text-red-600" />
+              <activeScenario.icon className={`w-8 h-8 ${theme.status.error.text}`} />
               <div>
                 <h2 className={`text-2xl font-bold ${theme.textColors.primary}`}>{activeScenario.title}</h2>
-                <p className="text-gray-600">{currentSimulationStep.title}</p>
+                <p className={`${theme.textColors.secondary}`}>{currentSimulationStep.title}</p>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-sm text-gray-600">Step {currentStep + 1} of {simulationSteps.length}</div>
-              <div className="text-xs text-gray-500 flex items-center gap-1">
+              <div className={`text-sm ${theme.textColors.secondary}`}>Step {currentStep + 1} of {simulationSteps.length}</div>
+              <div className={`text-xs ${theme.textColors.muted} flex items-center gap-1`}>
                 <Timer className="w-3 h-3" />
                 ~{activeScenario.estimatedTime} min
               </div>
@@ -803,7 +803,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
           </div>
 
           {/* Progress Bar */}
-          <div className="w-full bg-gray-200 rounded-full h-2 mb-8">
+          <div className={`w-full ${theme.backgrounds.cardHover} rounded-full h-2 mb-8`}>
             <div
               className="bg-gradient-to-r from-red-500 to-orange-500 h-2 rounded-full transition-all duration-500"
               style={{ width: `${((currentStep + 1) / simulationSteps.length) * 100}%` }}
@@ -811,9 +811,9 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
           </div>
 
           {/* Situation */}
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-8">
-            <h3 className="font-bold text-red-900 mb-3">Crisis Situation</h3>
-            <p className="text-red-800 leading-relaxed">{currentSimulationStep.situation}</p>
+          <div className={`${theme.status.error.bg} border ${theme.status.error.border} rounded-lg p-6 mb-8`}>
+            <h3 className={`font-bold ${theme.status.error.text} mb-3`}>Crisis Situation</h3>
+            <p className={`${theme.status.error.text} leading-relaxed`}>{currentSimulationStep.situation}</p>
           </div>
 
           {/* Options */}
@@ -826,13 +826,13 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
                 disabled={hasAnswered}
                 className={`w-full text-left p-4 rounded-lg border-2 transition-all ${hasAnswered && index === userAnswer
                   ? index === currentSimulationStep.correctAnswer
-                    ? 'border-green-500 bg-green-50'
-                    : 'border-red-500 bg-red-50'
+                    ? `border-green-500 ${theme.status.success.bg}`
+                    : `border-red-500 ${theme.status.error.bg}`
                   : hasAnswered && index === currentSimulationStep.correctAnswer
-                    ? 'border-green-500 bg-green-50'
+                    ? `border-green-500 ${theme.status.success.bg}`
                     : hasAnswered
-                      ? '${theme.borderColors.primary} bg-gray-50 opacity-60'
-                      : '${theme.borderColors.primary} hover:border-red-300 hover:bg-red-50'
+                      ? `${theme.borderColors.primary} ${theme.backgrounds.cardHover} opacity-60`
+                      : `${theme.borderColors.primary} hover:border-red-300 hover:${theme.status.error.bg}`
                   } ${hasAnswered ? 'cursor-default' : 'cursor-pointer'}`}
                 whileHover={!hasAnswered ? { scale: 1.02 } : {}}
                 whileTap={!hasAnswered ? { scale: 0.98 } : {}}
@@ -842,15 +842,15 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
                   {hasAnswered && (
                     <div className="ml-4 flex-shrink-0">
                       {index === currentSimulationStep.correctAnswer ? (
-                        <CheckCircle className="w-5 h-5 text-green-600" />
+                        <CheckCircle className={`w-5 h-5 ${theme.status.success.text}`} />
                       ) : index === userAnswer ? (
-                        <XCircle className="w-5 h-5 text-red-600" />
+                        <XCircle className={`w-5 h-5 ${theme.status.error.text}`} />
                       ) : null}
                     </div>
                   )}
                 </div>
                 {hasAnswered && (
-                  <div className="mt-2 text-sm text-gray-600">
+                  <div className={`mt-2 text-sm ${theme.textColors.secondary}`}>
                     {option.reasoning}
                   </div>
                 )}
@@ -863,10 +863,10 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-blue-50 border border-blue-200 rounded-lg p-6"
+              className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-6`}
             >
-              <h4 className="font-bold text-blue-900 mb-3">Explanation</h4>
-              <p className="text-blue-800 mb-4">{currentSimulationStep.explanation}</p>
+              <h4 className={`font-bold ${theme.status.info.text} mb-3`}>Explanation</h4>
+              <p className={`${theme.status.info.text} mb-4`}>{currentSimulationStep.explanation}</p>
 
               <div className={`${theme.backgrounds.glass} bg-opacity-60 rounded p-4`}>
                 <h5 className="font-semibold text-blue-900 mb-2">Consequences:</h5>

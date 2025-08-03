@@ -122,7 +122,7 @@ export default function Chapter7Page() {
 
                 {/* Tab Navigation */}
                 <Tabs value={currentSection} onValueChange={(value) => setCurrentSection(value as 'lesson' | 'calculator' | 'quiz')} className="w-full">
-                    <TabsList className="grid w-full grid-cols-3 bg-slate-800/50 border border-slate-700">
+                    <TabsList className={`grid w-full grid-cols-3 ${theme.backgrounds.header} border ${theme.borderColors.primary}`}>
                         <TabsTrigger 
                             value="lesson" 
                             className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text}`}
@@ -149,7 +149,7 @@ export default function Chapter7Page() {
                     </TabsList>
 
                     <TabsContent value="lesson" className="mt-6">
-                        <Card className="bg-slate-800/50 border-slate-700">
+                        <Card className={`${theme.backgrounds.header} ${theme.borderColors.primary}`}>
                             <CardContent className="p-0">
                                 <InvestmentFundamentalsLesson onComplete={handleLessonComplete} />
                             </CardContent>
@@ -157,7 +157,7 @@ export default function Chapter7Page() {
                     </TabsContent>
 
                     <TabsContent value="calculator" className="mt-6">
-                        <Card className="bg-slate-800/50 border-slate-700">
+                        <Card className={`${theme.backgrounds.header} ${theme.borderColors.primary}`}>
                             <CardHeader>
                                 <CardTitle className={`${theme.textColors.primary} flex items-center`}>
                                     <Calculator className={`w-6 h-6 mr-2 ${theme.status.info.text}`} />
@@ -188,7 +188,7 @@ export default function Chapter7Page() {
                     </TabsContent>
 
                     <TabsContent value="quiz" className="mt-6">
-                        <Card className="bg-slate-800/50 border-slate-700">
+                        <Card className={`${theme.backgrounds.header} ${theme.borderColors.primary}`}>
                             <CardHeader>
                                 <CardTitle className={`${theme.textColors.primary} flex items-center`}>
                                     <Trophy className={`w-6 h-6 mr-2 ${theme.status.info.text}`} />

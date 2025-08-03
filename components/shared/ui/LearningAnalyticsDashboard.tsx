@@ -119,7 +119,7 @@ export default function LearningAnalyticsDashboard() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        <div className={`animate-spin rounded-full h-32 w-32 border-b-2 ${theme.borderColors.accent}`}></div>
       </div>
     );
   }
@@ -129,7 +129,7 @@ export default function LearningAnalyticsDashboard() {
       {/* Header */}
       <div className="text-center">
         <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>Learning Analytics Dashboard</h2>
-        <p className="text-gray-600">Advanced insights into your financial education journey</p>
+        <p className={`${theme.textColors.secondary}`}>Advanced insights into your financial education journey</p>
       </div>
 
       {/* Key Metrics Cards */}
@@ -142,15 +142,15 @@ export default function LearningAnalyticsDashboard() {
           <GradientCard variant="glass" gradient="blue" className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-blue-600">Session Time</p>
-                <p className="text-2xl font-bold text-blue-900">{metrics.sessionTime}min</p>
-                <p className="text-xs text-blue-500 flex items-center mt-1">
+                <p className={`text-sm font-medium ${theme.status.info.text}`}>Session Time</p>
+                <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{metrics.sessionTime}min</p>
+                <p className={`text-xs ${theme.status.info.text} flex items-center mt-1`}>
                   <TrendingUp className="w-3 h-3 mr-1" />
                   +12% vs last week
                 </p>
               </div>
-              <div className="bg-blue-100 p-3 rounded-lg">
-                <Clock className="w-6 h-6 text-blue-600" />
+              <div className={`${theme.status.info.bg} p-3 rounded-lg`}>
+                <Clock className={`w-6 h-6 ${theme.status.info.text}`} />
               </div>
             </div>
           </GradientCard>
@@ -164,15 +164,15 @@ export default function LearningAnalyticsDashboard() {
           <GradientCard variant="glass" gradient="purple" className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-purple-600">Concepts Mastered</p>
-                <p className="text-2xl font-bold text-purple-900">{metrics.conceptsMastered}</p>
-                <p className="text-xs text-purple-500 flex items-center mt-1">
+                <p className={`text-sm font-medium ${theme.status.info.text}`}>Concepts Mastered</p>
+                <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{metrics.conceptsMastered}</p>
+                <p className={`text-xs ${theme.status.info.text} flex items-center mt-1`}>
                   <Brain className="w-3 h-3 mr-1" />
                   Excellent progress
                 </p>
               </div>
-              <div className="bg-purple-100 p-3 rounded-lg">
-                <Target className="w-6 h-6 text-purple-600" />
+              <div className={`${theme.status.info.bg} p-3 rounded-lg`}>
+                <Target className={`w-6 h-6 ${theme.status.info.text}`} />
               </div>
             </div>
           </GradientCard>
@@ -186,15 +186,15 @@ export default function LearningAnalyticsDashboard() {
           <GradientCard variant="glass" gradient="green" className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-green-600">Retention Rate</p>
-                <p className="text-2xl font-bold text-green-900">{metrics.retentionRate}%</p>
-                <p className="text-xs text-green-500 flex items-center mt-1">
+                <p className={`text-sm font-medium ${theme.status.success.text}`}>Retention Rate</p>
+                <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{metrics.retentionRate}%</p>
+                <p className={`text-xs ${theme.status.success.text} flex items-center mt-1`}>
                   <Award className="w-3 h-3 mr-1" />
                   Above average
                 </p>
               </div>
-              <div className="bg-green-100 p-3 rounded-lg">
-                <BarChart3 className="w-6 h-6 text-green-600" />
+              <div className={`${theme.status.success.bg} p-3 rounded-lg`}>
+                <BarChart3 className={`w-6 h-6 ${theme.status.success.text}`} />
               </div>
             </div>
           </GradientCard>
@@ -208,15 +208,15 @@ export default function LearningAnalyticsDashboard() {
           <GradientCard variant="glass" gradient="yellow" className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-orange-600">Learning Streak</p>
-                <p className="text-2xl font-bold text-orange-900">{metrics.streakDays}</p>
-                <p className="text-xs text-orange-500 flex items-center mt-1">
+                <p className={`text-sm font-medium ${theme.status.warning.text}`}>Learning Streak</p>
+                <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{metrics.streakDays}</p>
+                <p className={`text-xs ${theme.status.warning.text} flex items-center mt-1`}>
                   <Zap className="w-3 h-3 mr-1" />
                   {metrics.streakDays > 3 ? 'On fire!' : 'Keep going!'}
                 </p>
               </div>
-              <div className="bg-orange-100 p-3 rounded-lg">
-                <Zap className="w-6 h-6 text-orange-600" />
+              <div className={`${theme.status.warning.bg} p-3 rounded-lg`}>
+                <Zap className={`w-6 h-6 ${theme.status.warning.text}`} />
               </div>
             </div>
           </GradientCard>
@@ -232,7 +232,7 @@ export default function LearningAnalyticsDashboard() {
         >
           <GradientCard variant="glass" className="p-6">
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center`}>
-              <TrendingUp className="w-5 h-5 mr-2 text-blue-600" />
+              <TrendingUp className={`w-5 h-5 mr-2 ${theme.status.info.text}`} />
               Learning Progress Trends
             </h3>
             <ResponsiveContainer width="100%" height={300}>
@@ -271,7 +271,7 @@ export default function LearningAnalyticsDashboard() {
         >
           <GradientCard variant="glass" className="p-6">
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center`}>
-              <BarChart3 className="w-5 h-5 mr-2 text-purple-600" />
+              <BarChart3 className={`w-5 h-5 mr-2 ${theme.status.info.text}`} />
               Time Distribution
             </h3>
             <ResponsiveContainer width="100%" height={300}>
@@ -305,22 +305,22 @@ export default function LearningAnalyticsDashboard() {
       >
         <GradientCard variant="glass" className="p-6">
           <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-6 flex items-center`}>
-            <Brain className="w-5 h-5 mr-2 text-green-600" />
+            <Brain className={`w-5 h-5 mr-2 ${theme.status.success.text}`} />
             Cognitive Load & Learning Efficiency
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Spaced Repetition Effectiveness */}
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-900 mb-3">Spaced Repetition</h4>
+            <div className={`bg-gradient-to-br ${theme.status.info.bg} rounded-lg p-4`}>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Spaced Repetition</h4>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-sm text-blue-700">Due Today</span>
-                  <span className="text-sm font-medium text-blue-900">3 concepts</span>
+                  <span className={`text-sm ${theme.textColors.secondary}`}>Due Today</span>
+                  <span className={`text-sm font-medium ${theme.textColors.primary}`}>3 concepts</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-blue-700">Mastery Rate</span>
-                  <span className="text-sm font-medium text-blue-900">87%</span>
+                  <span className={`text-sm ${theme.textColors.secondary}`}>Mastery Rate</span>
+                  <span className={`text-sm font-medium ${theme.textColors.primary}`}>87%</span>
                 </div>
                 <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
                   <div className={`${theme.status.info.bg.replace('/20', '')} h-2 rounded-full`} style={{ width: '87%' }}></div>
@@ -329,18 +329,18 @@ export default function LearningAnalyticsDashboard() {
             </div>
 
             {/* Learning Velocity */}
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
-              <h4 className="font-semibold text-purple-900 mb-3">Learning Velocity</h4>
+            <div className={`bg-gradient-to-br ${theme.status.warning.bg} rounded-lg p-4`}>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Learning Velocity</h4>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-sm text-purple-700">Concepts/Hour</span>
-                  <span className="text-sm font-medium text-purple-900">2.3</span>
+                  <span className={`text-sm ${theme.textColors.secondary}`}>Concepts/Hour</span>
+                  <span className={`text-sm font-medium ${theme.textColors.primary}`}>2.3</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-purple-700">Optimal Range</span>
-                  <span className="text-sm font-medium text-purple-900">2.0-2.5</span>
+                  <span className={`text-sm ${theme.textColors.secondary}`}>Optimal Range</span>
+                  <span className={`text-sm font-medium ${theme.textColors.primary}`}>2.0-2.5</span>
                 </div>
-                <div className="flex items-center text-xs text-purple-600">
+                <div className={`flex items-center text-xs ${theme.status.warning.text}`}>
                   <TrendingUp className="w-3 h-3 mr-1" />
                   Perfect pace for retention
                 </div>
@@ -348,18 +348,18 @@ export default function LearningAnalyticsDashboard() {
             </div>
 
             {/* Engagement Patterns */}
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
-              <h4 className="font-semibold text-green-900 mb-3">Peak Performance</h4>
+            <div className={`bg-gradient-to-br ${theme.status.success.bg} rounded-lg p-4`}>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Peak Performance</h4>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-sm text-green-700">Best Time</span>
-                  <span className="text-sm font-medium text-green-900">2-4 PM</span>
+                  <span className={`text-sm ${theme.textColors.secondary}`}>Best Time</span>
+                  <span className={`text-sm font-medium ${theme.textColors.primary}`}>2-4 PM</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-green-700">Focus Score</span>
-                  <span className="text-sm font-medium text-green-900">8.4/10</span>
+                  <span className={`text-sm ${theme.textColors.secondary}`}>Focus Score</span>
+                  <span className={`text-sm font-medium ${theme.textColors.primary}`}>8.4/10</span>
                 </div>
-                <div className="flex items-center text-xs text-green-600">
+                <div className={`flex items-center text-xs ${theme.status.success.text}`}>
                   <Target className="w-3 h-3 mr-1" />
                   Excellent focus levels
                 </div>

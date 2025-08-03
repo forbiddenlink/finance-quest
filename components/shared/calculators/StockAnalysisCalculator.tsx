@@ -356,7 +356,7 @@ export default function StockAnalysisCalculator() {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-lg font-bold">{results.riskScore}/100</span>
-                    <Badge variant="outline" className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/50">
+                    <Badge variant="outline" className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/50`}>
                       {results.riskScore <= 30 ? 'Low Risk' : results.riskScore <= 60 ? 'Medium Risk' : 'High Risk'}
                     </Badge>
                   </div>
@@ -411,7 +411,7 @@ export default function StockAnalysisCalculator() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <TrendingUp className="w-5 h-5 text-indigo-600" />
+              <TrendingUp className={`w-5 h-5 ${theme.status.info.text}`} />
               <span>Price Trend Analysis</span>
             </CardTitle>
             <CardDescription>
@@ -452,9 +452,9 @@ export default function StockAnalysisCalculator() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid md:grid-cols-3 gap-4">
-            <div className="p-4 ${theme.status.info.bg} rounded-lg border ${theme.status.info.border}">
-              <h4 className="font-medium ${theme.textColors.secondary} mb-2">Valuation Metrics</h4>
-              <div className="space-y-1 text-sm ${theme.textColors.secondary}">
+            <div className={`p-4 ${theme.status.info.bg} rounded-lg border ${theme.status.info.border}`}>
+              <h4 className={`font-medium ${theme.textColors.secondary} mb-2`}>Valuation Metrics</h4>
+              <div className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
                 <p><span className="font-medium">P/E Ratio:</span> Price ÷ Earnings per share</p>
                 <p><span className="font-medium">PEG Ratio:</span> P/E ÷ Growth rate</p>
                 <p><span className="font-medium">P/B Ratio:</span> Price ÷ Book value per share</p>
@@ -482,7 +482,7 @@ export default function StockAnalysisCalculator() {
           
           <div className="p-4 ${theme.status.warning.bg} rounded-lg border ${theme.status.warning.border}">
             <h4 className="font-medium ${theme.status.warning.text} mb-2">⚠️ Important Disclaimer</h4>
-            <p className="${theme.textColors.secondary} text-sm">
+            <p className={`${theme.textColors.secondary} text-sm`}>
               This calculator provides educational analysis based on simplified models. It should not be used as the sole basis 
               for investment decisions. Always conduct thorough research, consider multiple valuation methods, and consult with 
               financial professionals before investing. Past performance does not guarantee future results.

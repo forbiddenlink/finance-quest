@@ -240,7 +240,7 @@ export default function RewardsOptimizerCalculator() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
             {/* Header */}
-            <div className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
+            <div className={`${theme.backgrounds.glass} backdrop-blur-xl border-b ${theme.borderColors.accent}`}>
                 <div className="max-w-7xl mx-auto px-4 py-6">
                     <div className="text-center">
                         <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2 flex items-center justify-center gap-3`}>
@@ -273,7 +273,7 @@ export default function RewardsOptimizerCalculator() {
                                             type="number"
                                             value={groceries}
                                             onChange={(e) => setGroceries(e.target.value)}
-                                            className={`pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
+                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                             placeholder="800"
                                         />
                                     </div>
@@ -289,7 +289,7 @@ export default function RewardsOptimizerCalculator() {
                                             type="number"
                                             value={gasoline}
                                             onChange={(e) => setGasoline(e.target.value)}
-                                            className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                             placeholder="200"
                                         />
                                     </div>
@@ -305,7 +305,7 @@ export default function RewardsOptimizerCalculator() {
                                             type="number"
                                             value={dining}
                                             onChange={(e) => setDining(e.target.value)}
-                                            className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                             placeholder="400"
                                         />
                                     </div>
@@ -321,7 +321,7 @@ export default function RewardsOptimizerCalculator() {
                                             type="number"
                                             value={travel}
                                             onChange={(e) => setTravel(e.target.value)}
-                                            className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                             placeholder="300"
                                         />
                                     </div>
@@ -337,7 +337,7 @@ export default function RewardsOptimizerCalculator() {
                                             type="number"
                                             value={entertainment}
                                             onChange={(e) => setEntertainment(e.target.value)}
-                                            className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                             placeholder="200"
                                         />
                                     </div>
@@ -353,7 +353,7 @@ export default function RewardsOptimizerCalculator() {
                                             type="number"
                                             value={shopping}
                                             onChange={(e) => setShopping(e.target.value)}
-                                            className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                             placeholder="500"
                                         />
                                     </div>
@@ -369,7 +369,7 @@ export default function RewardsOptimizerCalculator() {
                                             type="number"
                                             value={utilities}
                                             onChange={(e) => setUtilities(e.target.value)}
-                                            className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                             placeholder="150"
                                         />
                                     </div>
@@ -385,7 +385,7 @@ export default function RewardsOptimizerCalculator() {
                                             type="number"
                                             value={other}
                                             onChange={(e) => setOther(e.target.value)}
-                                            className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                             placeholder="450"
                                         />
                                     </div>
@@ -394,8 +394,8 @@ export default function RewardsOptimizerCalculator() {
                         </div>
 
                         {/* Settings */}
-                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="${theme.typography.heading4} text-white mb-4">Optimization Settings</h3>
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
+                            <h3 className={`${theme.typography.heading4} text-white mb-4`}>Optimization Settings</h3>
 
                             <div className="space-y-4">
                                 <div>
@@ -403,7 +403,7 @@ export default function RewardsOptimizerCalculator() {
                                     <select
                                         value={timeHorizon}
                                         onChange={(e) => setTimeHorizon(e.target.value)}
-                                        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                        className={`w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} focus:ring-2 focus:ring-amber-500 focus:border-transparent`}
                                     >
                                         <option value="6">6 months</option>
                                         <option value="12">1 year</option>
@@ -418,7 +418,7 @@ export default function RewardsOptimizerCalculator() {
                                         id="include-fees"
                                         checked={includeAnnualFees}
                                         onChange={(e) => setIncludeAnnualFees(e.target.checked)}
-                                        className="w-4 h-4 text-amber-600 bg-slate-800 border-slate-600 rounded focus:ring-amber-500"
+                                        className={`w-4 h-4 ${theme.textColors.accent} ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded focus:ring-amber-500`}
                                     />
                                     <label htmlFor="include-fees" className={`text-sm ${theme.textColors.secondary}`}>
                                         Include annual fees in calculation
@@ -431,7 +431,7 @@ export default function RewardsOptimizerCalculator() {
                                         id="include-signup"
                                         checked={includeSignupBonus}
                                         onChange={(e) => setIncludeSignupBonus(e.target.checked)}
-                                        className="w-4 h-4 text-amber-600 bg-slate-800 border-slate-600 rounded focus:ring-amber-500"
+                                        className={`w-4 h-4 ${theme.textColors.accent} ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded focus:ring-amber-500`}
                                     />
                                     <label htmlFor="include-signup" className={`text-sm ${theme.textColors.secondary}`}>
                                         Include signup bonuses
@@ -446,7 +446,7 @@ export default function RewardsOptimizerCalculator() {
                         {/* Best Recommendation */}
                         {bestCard && (
                             <div className="bg-gradient-to-r from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-xl p-6">
-                                <h3 className="${theme.typography.heading4} text-amber-300 mb-4 flex items-center gap-2">
+                                <h3 className={`${theme.typography.heading4} text-amber-300 mb-4 flex items-center gap-2`}>
                                     <Trophy className="w-6 h-6" />
                                     Best Card for Your Spending
                                 </h3>
@@ -456,7 +456,7 @@ export default function RewardsOptimizerCalculator() {
                                         <p className={`text-sm ${theme.textColors.secondary}`}>Top recommendation</p>
                                     </div>
                                     <div>
-                                        <p className="${theme.typography.heading2} text-amber-300">
+                                        <p className={`${theme.typography.heading2} text-amber-300`}>
                                             {formatCurrency(bestCard.netValue)}
                                         </p>
                                         <p className={`text-sm ${theme.textColors.secondary}`}>Total value over {timeHorizon} months</p>
@@ -473,8 +473,8 @@ export default function RewardsOptimizerCalculator() {
 
                         {/* Spending Overview */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                                <h3 className="${theme.typography.heading4} text-white mb-4">Monthly Spending</h3>
+                            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
+                                <h3 className={`${theme.typography.heading4} text-white mb-4`}>Monthly Spending</h3>
                                 <div className="text-center">
                                     <p className={`${theme.typography.heading2} ${theme.textColors.accent}`}>{formatCurrency(totalMonthlySpend)}</p>
                                     <p className={`text-sm ${theme.textColors.secondary}`}>Total monthly spending</p>
@@ -484,8 +484,8 @@ export default function RewardsOptimizerCalculator() {
                                 </div>
                             </div>
 
-                            <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                                <h3 className="${theme.typography.heading4} text-white mb-4">Spending Breakdown</h3>
+                            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
+                                <h3 className={`${theme.typography.heading4} text-white mb-4`}>Spending Breakdown</h3>
                                 <div className="h-40">
                                     <ResponsiveContainer width="100%" height="100%">
                                         <PieChart>
@@ -510,8 +510,8 @@ export default function RewardsOptimizerCalculator() {
                         </div>
 
                         {/* Card Comparison */}
-                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="${theme.typography.heading4} text-white mb-4">Card Recommendations</h3>
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
+                            <h3 className={`${theme.typography.heading4} text-white mb-4`}>Card Recommendations</h3>
                             <div className="h-64">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={cardRecommendations}>
@@ -545,15 +545,15 @@ export default function RewardsOptimizerCalculator() {
                         </div>
 
                         {/* Detailed Comparison */}
-                        <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                            <h3 className="${theme.typography.heading4} text-white mb-4">Detailed Comparison</h3>
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
+                            <h3 className={`${theme.typography.heading4} text-white mb-4`}>Detailed Comparison</h3>
                             <div className="space-y-3">
                                 {cardRecommendations.map((card, index) => (
                                     <div
                                         key={card.cardName}
                                         className={`p-4 rounded-lg border-2 ${index === 0
                                             ? 'bg-amber-500/20 border-amber-500/30'
-                                            : 'bg-slate-800/50 border-slate-600'
+                                            : `${theme.backgrounds.card} ${theme.borderColors.primary}`
                                             }`}
                                     >
                                         <div className="flex items-center justify-between">
@@ -586,17 +586,17 @@ export default function RewardsOptimizerCalculator() {
                 </div>
 
                 {/* Optimization Tips */}
-                <div className="mt-8 ${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6">
-                    <h3 className="${theme.typography.heading4} text-white mb-4">💡 Reward Optimization Tips</h3>
+                <div className={`mt-8 ${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
+                    <h3 className={`${theme.typography.heading4} text-white mb-4`}>💡 Reward Optimization Tips</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-                        <div className="${theme.status.info.bg}0/20 border border-blue-500/30 rounded-lg p-4">
+                        <div className={`${theme.status.info.bg}/20 border ${theme.status.info.border} rounded-lg p-4`}>
                             <h4 className={`font-semibold mb-2 ${theme.status.info.text}`}>📊 Track Your Spending</h4>
                             <p className={`${theme.textColors.secondary}`}>
                                 Monitor your actual spending patterns quarterly. Your categories may change, requiring different cards for optimal rewards.
                             </p>
                         </div>
 
-                        <div className="${theme.status.success.bg}0/20 border border-green-500/30 rounded-lg p-4">
+                        <div className={`${theme.status.success.bg}/20 border ${theme.status.success.border} rounded-lg p-4`}>
                             <h4 className={`font-semibold mb-2 ${theme.status.success.text}`}>🎯 Maximize Signup Bonuses</h4>
                             <p className={`${theme.textColors.secondary}`}>
                                 Plan large purchases around new card applications to easily meet minimum spending requirements for signup bonuses.

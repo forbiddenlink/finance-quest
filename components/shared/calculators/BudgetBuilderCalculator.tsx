@@ -107,12 +107,12 @@ export default function BudgetBuilderCalculator() {
 
     // Determine budget health
     const getBudgetHealth = () => {
-        if (summary.remaining < 0) return { status: 'Over Budget', color: 'text-red-400', bg: '${theme.status.error.bg}' };
-        if (savingsPercentage < 20) return { status: 'Needs More Savings', color: 'text-yellow-600', bg: '${theme.status.warning.bg}' };
+        if (summary.remaining < 0) return { status: 'Over Budget', color: theme.status.error.text, bg: theme.status.error.bg };
+        if (savingsPercentage < 20) return { status: 'Needs More Savings', color: theme.status.warning.text, bg: theme.status.warning.bg };
         if (needsPercentage <= 50 && wantsPercentage <= 30 && savingsPercentage >= 20) {
-            return { status: 'Excellent Budget!', color: 'text-green-400', bg: '${theme.status.success.bg}' };
+            return { status: 'Excellent Budget!', color: theme.status.success.text, bg: theme.status.success.bg };
         }
-        return { status: 'Good Progress', color: 'text-blue-400', bg: '${theme.status.info.bg}' };
+        return { status: 'Good Progress', color: theme.status.info.text, bg: theme.status.info.bg };
     };
 
     const budgetHealth = getBudgetHealth();
@@ -184,8 +184,8 @@ export default function BudgetBuilderCalculator() {
                     <p className={`text-xl font-bold ${theme.textColors.primary}`}>{formatCurrency(summary.needs)}</p>
                     <p className={`text-xs ${theme.textColors.muted}`}>Target: 50%</p>
                 </div>
-                <div className={`bg-purple-500/200/20 border border-purple-500/30 rounded-lg p-4 text-center`}>
-                    <p className="text-sm font-medium text-purple-400">Wants ({wantsPercentage}%)</p>
+                <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4 text-center`}>
+                    <p className={`text-sm font-medium ${theme.status.info.text}`}>Wants ({wantsPercentage}%)</p>
                     <p className={`text-xl font-bold ${theme.textColors.primary}`}>{formatCurrency(summary.wants)}</p>
                     <p className={`text-xs ${theme.textColors.muted}`}>Target: 30%</p>
                 </div>
@@ -250,8 +250,8 @@ export default function BudgetBuilderCalculator() {
                     </div>
 
                     {/* Wants Section */}
-                    <div className="bg-purple-500/20 rounded-lg p-4">
-                        <h4 className="font-semibold text-purple-400 mb-3 flex items-center">
+                    <div className={`${theme.status.info.bg} rounded-lg p-4`}>
+                        <h4 className={`font-semibold ${theme.status.info.text} mb-3 flex items-center`}>
                             <Film className="mr-2 w-5 h-5" />
                             Wants (Lifestyle Expenses)
                         </h4>

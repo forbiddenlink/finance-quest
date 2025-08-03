@@ -169,17 +169,17 @@ export default function DebtPayoffCalculator() {
   return (
     <div className="max-w-7xl mx-auto ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg p-6">
       <div className="mb-6">
-        <h2 className="${theme.typography.heading2} ${theme.textColors.primary} mb-2">
+        <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>
           Debt Payoff Calculator
         </h2>
-        <p className="${theme.textColors.secondary}">
+        <p className={`${theme.textColors.secondary}`}>
           Compare debt avalanche vs snowball strategies and see how extra payments accelerate your freedom
         </p>
       </div>
 
       {/* Strategy Selection and Extra Payment */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4">
+        <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4`}>
           <h3 className="font-semibold ${theme.status.info.text} mb-3 flex items-center gap-2">
             <Lightbulb className="w-4 h-4" />
             Payoff Strategy
@@ -191,7 +191,7 @@ export default function DebtPayoffCalculator() {
                 value="avalanche"
                 checked={strategy === 'avalanche'}
                 onChange={(e) => setStrategy(e.target.value as 'avalanche' | 'snowball')}
-                className="text-blue-400"
+                className={theme.status.info.text}
               />
               <div>
                 <span className="font-medium ${theme.status.info.text}">Debt Avalanche</span>
@@ -204,7 +204,7 @@ export default function DebtPayoffCalculator() {
                 value="snowball"
                 checked={strategy === 'snowball'}
                 onChange={(e) => setStrategy(e.target.value as 'avalanche' | 'snowball')}
-                className="text-blue-400"
+                className={theme.status.info.text}
               />
               <div>
                 <span className="font-medium ${theme.status.info.text}">Debt Snowball</span>
@@ -214,7 +214,7 @@ export default function DebtPayoffCalculator() {
           </div>
         </div>
 
-        <div className="${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4">
+        <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4`}>
           <h3 className="font-semibold ${theme.status.success.text} mb-3 flex items-center">
             <DollarSign className="w-5 h-5 mr-2" />
             Extra Monthly Payment
@@ -225,7 +225,7 @@ export default function DebtPayoffCalculator() {
               type="number"
               value={extraPayment}
               onChange={(e) => setExtraPayment(Number(e.target.value))}
-              className="w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${theme.typography.heading4}"
+              className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${theme.typography.heading4}`}
               min="0"
               step="25"
             />
@@ -238,21 +238,21 @@ export default function DebtPayoffCalculator() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="${theme.status.error.bg} border ${theme.status.error.border} rounded-lg p-4 text-center">
+        <div className={`${theme.status.error.bg} border ${theme.status.error.border} rounded-lg p-4 text-center`}>
           <p className={`text-sm font-medium ${theme.status.error.text}`}>Total Debt</p>
-          <p className="text-xl font-bold ${theme.textColors.primary}">{formatCurrency(totalBalance)}</p>
+          <p className={`text-xl font-bold ${theme.textColors.primary}`}>{formatCurrency(totalBalance)}</p>
         </div>
-        <div className="${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4 text-center">
+        <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4 text-center`}>
           <p className={`text-sm font-medium ${theme.status.info.text}`}>Payoff Time</p>
-          <p className="text-xl font-bold ${theme.textColors.secondary}">{payoffTime} months</p>
+          <p className={`text-xl font-bold ${theme.textColors.secondary}`}>{payoffTime} months</p>
         </div>
-        <div className="${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4 text-center">
+        <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4 text-center`}>
           <p className={`text-sm font-medium ${theme.status.warning.text}`}>Interest Paid</p>
-          <p className="text-xl font-bold ${theme.status.warning.text}">{formatCurrency(totalInterestPaid)}</p>
+          <p className={`text-xl font-bold ${theme.status.warning.text}`}>{formatCurrency(totalInterestPaid)}</p>
         </div>
-        <div className="${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4 text-center">
-          <p className="text-sm font-medium text-green-400">Monthly Payment</p>
-          <p className="text-xl font-bold ${theme.textColors.primary}">{formatCurrency(totalMinimumPayments + extraPayment)}</p>
+        <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4 text-center`}>
+          <p className={`text-sm font-medium ${theme.status.success.text}`}>Monthly Payment</p>
+          <p className={`text-xl font-bold ${theme.textColors.primary}`}>{formatCurrency(totalMinimumPayments + extraPayment)}</p>
         </div>
       </div>
 
@@ -260,7 +260,7 @@ export default function DebtPayoffCalculator() {
         {/* Debt List */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="${theme.typography.heading4} ${theme.textColors.primary}">Your Debts</h3>
+            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Your Debts</h3>
             <button
               onClick={addDebt}
               className={`${theme.status.info.bg.replace('/20', '')} text-white px-4 py-2 rounded-lg hover:${theme.status.info.bg.replace('/20', '/80')} transition-colors text-sm`}
@@ -282,12 +282,12 @@ export default function DebtPayoffCalculator() {
                   />
                 </div>
                 {strategy === 'avalanche' && (
-                  <span className="text-xs bg-red-100 ${theme.textColors.primary} px-2 py-1 rounded">
+                  <span className={`text-xs ${theme.status.error.bg} ${theme.textColors.primary} px-2 py-1 rounded`}>
                     #{index + 1} Priority
                   </span>
                 )}
                 {strategy === 'snowball' && (
-                  <span className="text-xs bg-blue-100 ${theme.textColors.secondary} px-2 py-1 rounded">
+                  <span className={`text-xs ${theme.status.info.bg} ${theme.textColors.secondary} px-2 py-1 rounded`}>
                     #{index + 1} Priority
                   </span>
                 )}
@@ -340,7 +340,7 @@ export default function DebtPayoffCalculator() {
                 <div className="flex items-end">
                   <button
                     onClick={() => removeDebt(debt.id)}
-                    className="w-full bg-red-100 text-red-400 px-2 py-1 rounded text-xs hover:bg-red-200 transition-colors"
+                    className={`w-full ${theme.status.error.bg} ${theme.status.error.text} px-2 py-1 rounded text-xs hover:${theme.status.error.bg}/80 transition-colors`}
                   >
                     Remove
                   </button>
@@ -371,10 +371,10 @@ export default function DebtPayoffCalculator() {
 
         {/* Charts and Projections */}
         <div className="space-y-6">
-          <h3 className="${theme.typography.heading4} ${theme.textColors.primary}">Payoff Projection</h3>
+          <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Payoff Projection</h3>
 
           {/* Debt Balance Over Time */}
-          <div className="${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4">
+          <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4`}>
             <h4 className="font-semibold ${theme.textColors.primary} mb-4">Debt Balance Over Time</h4>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -434,7 +434,7 @@ export default function DebtPayoffCalculator() {
               </div>
               <div className="mt-3 p-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} bg-opacity-50 rounded">
                 <div className="flex items-start gap-2">
-                  <MessageCircle className="w-4 h-4 mt-0.5 text-blue-400" />
+                  <MessageCircle className={`w-4 h-4 mt-0.5 ${theme.status.info.text}`} />
                   <div>
                     <strong>Imagine:</strong> What could you do with an extra {formatCurrency((totalMinimumPayments + extraPayment) * 12)} per year?
                     Vacation? Investment? Dream purchase? Your debt-free life is closer than you think!
@@ -445,8 +445,8 @@ export default function DebtPayoffCalculator() {
           </div>
 
           {/* Tips */}
-          <div className="${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4">
-            <h4 className="font-semibold text-yellow-900 mb-3 flex items-center gap-2">
+          <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4`}>
+            <h4 className={`font-semibold ${theme.status.warning.text} mb-3 flex items-center gap-2`}>
               <Lightbulb className="w-4 h-4" />
               Debt Payoff Tips
             </h4>

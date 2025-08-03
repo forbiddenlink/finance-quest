@@ -76,7 +76,7 @@ export default function ProgressPage() {
       description: 'Financial Literacy Score over 500',
       unlocked: progress.userProgress.financialLiteracyScore >= 500,
       icon: Star,
-      color: 'text-amber-600'
+      color: theme.textColors.accent
     }
   ];
 
@@ -126,7 +126,7 @@ export default function ProgressPage() {
                 </p>
                 <p className={`text-xs ${theme.textColors.muted}`}>out of 20 available</p>
               </div>
-              <div className="p-3 bg-amber-500/20 rounded-lg">
+              <div className={`p-3 ${theme.status.warning.bg} rounded-lg`}>
                 <BookOpen className={`w-8 h-8 ${theme.textColors.accent}`} />
               </div>
             </div>
@@ -136,13 +136,13 @@ export default function ProgressPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Average Quiz Score</p>
-                <p className="text-3xl font-bold text-slate-400">
+                <p className={`text-3xl font-bold ${theme.textColors.secondary}`}>
                   <AnimatedCounter end={Math.round(progress.averageQuizScore)} />%
                 </p>
                 <p className={`text-xs ${theme.textColors.muted}`}>{progress.totalQuizzesTaken} quizzes taken</p>
               </div>
-              <div className="p-3 bg-slate-500/20 rounded-lg">
-                <Brain className="w-8 h-8 text-slate-400" />
+              <div className={`p-3 ${theme.backgrounds.disabled} rounded-lg`}>
+                <Brain className={`w-8 h-8 ${theme.textColors.secondary}`} />
               </div>
             </div>
           </div>
@@ -151,13 +151,13 @@ export default function ProgressPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className={`text-sm font-medium ${theme.textColors.secondary}`}>Current Streak</p>
-                <p className="text-3xl font-bold text-amber-400">
+                <p className={`text-3xl font-bold ${theme.textColors.accent}`}>
                   <AnimatedCounter end={progress.currentStreak} />
                 </p>
                 <p className={`text-xs ${theme.textColors.muted}`}>days active</p>
               </div>
-              <div className="p-3 bg-amber-500/20 rounded-lg">
-                <Zap className="w-8 h-8 text-amber-400" />
+              <div className={`p-3 ${theme.status.warning.bg} rounded-lg`}>
+                <Zap className={`w-8 h-8 ${theme.textColors.accent}`} />
               </div>
             </div>
           </div>
@@ -185,7 +185,7 @@ export default function ProgressPage() {
                         <span className={`text-sm font-medium ${theme.textColors.primary}`}>{chapter.name}</span>
                         <span className={`text-sm ${theme.textColors.secondary}`}>{chapter.progress}%</span>
                       </div>
-                      <div className="w-full bg-slate-700/50 rounded-full h-2">
+                      <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${chapter.progress}%` }}
@@ -214,19 +214,19 @@ export default function ProgressPage() {
                   <div className={`text-sm ${theme.textColors.secondary}`}>Total Time</div>
                 </div>
                 <div className="text-center">
-                  <TrendingUp className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                  <TrendingUp className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
                   <div className={`text-2xl font-bold ${theme.textColors.primary}`}>{learningVelocity}</div>
                   <div className={`text-sm ${theme.textColors.secondary}`}>Lessons/Week</div>
                 </div>
                 <div className="text-center">
-                  <Calculator className="w-8 h-8 mx-auto mb-2 text-slate-400" />
+                  <Calculator className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.secondary}`} />
                   <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
                     {Object.keys(progress.userProgress.calculatorUsage).length}/6
                   </div>
                   <div className={`text-sm ${theme.textColors.secondary}`}>Tools Used</div>
                 </div>
                 <div className="text-center">
-                  <Award className="w-8 h-8 mx-auto mb-2 text-amber-400" />
+                  <Award className={`w-8 h-8 mx-auto mb-2 ${theme.textColors.accent}`} />
                   <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
                     {achievements.filter(a => a.unlocked).length}/{achievements.length}
                   </div>
@@ -243,11 +243,11 @@ export default function ProgressPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className={`bg-gradient-to-r from-amber-600/20 to-blue-600/20 border border-amber-500/30 backdrop-blur-xl rounded-xl shadow-lg p-6 ${theme.textColors.primary}`}
+              className={`bg-gradient-to-r ${theme.status.warning.bg} ${theme.status.info.bg} border ${theme.status.warning.border} backdrop-blur-xl rounded-xl shadow-lg p-6 ${theme.textColors.primary}`}
             >
               <h3 className="text-lg font-bold mb-4">Next Recommended Action</h3>
               <div className="flex items-start gap-3">
-                <Target className="w-6 h-6 mt-1 flex-shrink-0 text-amber-400" />
+                <Target className={`w-6 h-6 mt-1 flex-shrink-0 ${theme.textColors.accent}`} />
                 <div>
                   <p className={`font-medium mb-1 ${theme.textColors.primary}`}>{nextAction.message}</p>
                   <p className={`text-sm ${theme.textColors.secondary}`}>{nextAction.action}</p>
@@ -273,11 +273,11 @@ export default function ProgressPage() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 + index * 0.1 }}
                       className={`flex items-center gap-3 p-3 rounded-lg ${achievement.unlocked
-                        ? 'bg-amber-500/20 border border-amber-500/30'
-                        : 'bg-slate-700/30 border border-slate-600/30'
+                        ? `${theme.status.warning.bg} border ${theme.status.warning.border}`
+                        : `${theme.backgrounds.disabled} border ${theme.borderColors.primary}`
                         }`}
                     >
-                      <div className={`p-2 rounded-lg ${achievement.unlocked ? 'bg-amber-500/30' : 'bg-slate-600/30'
+                      <div className={`p-2 rounded-lg ${achievement.unlocked ? theme.status.warning.bg : theme.backgrounds.disabled
                         }`}>
                         <Icon className={`w-5 h-5 ${achievement.unlocked ? theme.textColors.accent : theme.textColors.muted}
                           }`} />
@@ -293,7 +293,7 @@ export default function ProgressPage() {
                         </p>
                       </div>
                       {achievement.unlocked && (
-                        <CheckCircle className="w-5 h-5 text-amber-400" />
+                        <CheckCircle className={`w-5 h-5 ${theme.textColors.accent}`} />
                       )}
                     </motion.div>
                   );
@@ -307,15 +307,15 @@ export default function ProgressPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="bg-amber-500/10 border border-amber-500/20 backdrop-blur-xl rounded-xl shadow-lg p-6"
+                className={`${theme.status.warning.bg} border ${theme.status.warning.border} backdrop-blur-xl rounded-xl shadow-lg p-6`}
               >
                 <div className="flex items-center gap-2 mb-4">
-                  <AlertTriangle className="w-5 h-5 text-amber-400" />
-                  <h3 className="text-lg font-bold text-amber-300">Focus Areas</h3>
+                  <AlertTriangle className={`w-5 h-5 ${theme.status.warning.text}`} />
+                  <h3 className={`text-lg font-bold ${theme.status.warning.text}`}>Focus Areas</h3>
                 </div>
                 <div className="space-y-2">
                   {progress.userProgress.strugglingTopics.map((topic, index) => (
-                    <div key={index} className="text-sm text-amber-200 bg-amber-500/20 rounded-lg px-3 py-2">
+                    <div key={index} className={`text-sm ${theme.status.warning.text} ${theme.status.warning.bg} rounded-lg px-3 py-2`}>
                       Review: {topic.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                     </div>
                   ))}

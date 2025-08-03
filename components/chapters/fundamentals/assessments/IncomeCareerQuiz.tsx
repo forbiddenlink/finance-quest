@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useProgress, useProgressActions } from '@/lib/context/ProgressContext';
 import { CheckCircle, XCircle, ArrowRight, TrendingUp, Target, Award } from 'lucide-react';
 import CelebrationConfetti from '@/components/shared/ui/CelebrationConfetti';
+import { theme } from '@/lib/theme';
 
 interface Question {
     id: string;
@@ -217,7 +218,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                         {score >= 85 ? (
                             <Award className="w-20 h-20 text-yellow-500 mx-auto mb-4" />
                         ) : score >= 70 ? (
-                            <Target className="w-20 h-20 text-blue-500 mx-auto mb-4" />
+                            <Target className={`w-20 h-20 ${theme.status.info.text} mx-auto mb-4`} />
                         ) : (
                             <TrendingUp className="w-20 h-20 text-orange-500 mx-auto mb-4" />
                         )}
@@ -228,7 +229,7 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
                     </h2>
 
                     <div className="text-6xl font-bold mb-4">
-                        <span className={score >= 85 ? 'text-green-500' : score >= 70 ? 'text-blue-500' : 'text-orange-500'}>
+                        <span className={score >= 85 ? theme.status.success.text : score >= 70 ? theme.status.info.text : theme.status.warning.text}>
                             {Math.round(score)}%
                         </span>
                     </div>
@@ -241,16 +242,16 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
 
                     {score >= 85 ? (
                         <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                            <h3 className="font-semibold text-green-800 mb-2">🎉 Chapter 3 Mastered!</h3>
-                            <p className="text-green-700">
+                            <h3 className={`font-semibold ${theme.status.success.text} mb-2`}>🎉 Chapter 3 Mastered!</h3>
+                            <p className={theme.status.success.text}>
                                 You&apos;ve unlocked advanced income strategies and can now access Chapter 4: Budgeting Mastery & Cash Flow.
                                 Your understanding of salary negotiation, benefits valuation, and career planning will serve you well!
                             </p>
                         </div>
                     ) : (
                         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                            <h3 className="font-semibold text-blue-800 mb-2">Keep Building Your Skills</h3>
-                            <p className="text-blue-700">
+                            <h3 className={`font-semibold ${theme.status.info.text} mb-2`}>Keep Building Your Skills</h3>
+                            <p className={theme.status.info.text}>
                                 Review the lesson materials, especially topics you missed. Strong income and career
                                 management skills are the foundation of financial success!
                             </p>
@@ -260,12 +261,12 @@ const IncomeCareerQuiz = ({ onComplete }: IncomeCareerQuizProps) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-center">
                     <div className="bg-blue-50 rounded-lg p-4">
-                        <div className="text-2xl font-bold text-blue-600">{selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length}</div>
-                        <div className="text-blue-800">Correct</div>
+                        <div className={`text-2xl font-bold ${theme.status.info.text}`}>{selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length}</div>
+                        <div className={theme.status.info.text}>Correct</div>
                     </div>
                     <div className="bg-red-50 rounded-lg p-4">
-                        <div className="text-2xl font-bold text-red-600">{questions.length - selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length}</div>
-                        <div className="text-red-800">Incorrect</div>
+                        <div className={`text-2xl font-bold ${theme.status.error.text}`}>{questions.length - selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length}</div>
+                        <div className={theme.status.error.text}>Incorrect</div>
                     </div>
                     <div className="bg-gray-50 rounded-lg p-4">
                         <div className="text-2xl font-bold text-gray-600">{questions.length}</div>

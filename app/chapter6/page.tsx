@@ -29,7 +29,7 @@ export default function Chapter6Page() {
                         <div className="flex items-center space-x-4">
                             <button
                                 onClick={() => window.history.back()}
-                                className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
+                                className={`${theme.textColors.accent} hover:${theme.textColors.primary} font-medium transition-colors`}
                             >
                                 ← Back to Home
                             </button>

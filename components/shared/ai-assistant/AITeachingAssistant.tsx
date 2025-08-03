@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 import { Bot, Lightbulb } from 'lucide-react';
 
 interface Message {
@@ -174,8 +175,8 @@ export default function AITeachingAssistant() {
           >
             <div
               className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.isUser
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200 text-gray-800'
+                ? `${theme.status.info.bg.replace('/20', '')} text-white`
+                : `${theme.backgrounds.disabled} ${theme.textColors.primary}`
                 }`}
             >
               {message.isLoading ? (
@@ -215,7 +216,7 @@ export default function AITeachingAssistant() {
           <button
             type="submit"
             disabled={!inputText.trim() || isTyping}
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className={`px-6 py-2 ${theme.status.info.bg.replace('/20', '')} text-white rounded-lg hover:${theme.status.info.bg.replace('/20', '/80')} transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
           >
             {isTyping ? '...' : 'Send'}
           </button>

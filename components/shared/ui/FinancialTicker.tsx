@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface TickerItem {
   symbol: string;
@@ -23,14 +24,14 @@ export default function FinancialTicker() {
   ]);
 
   return (
-    <div className="bg-gray-900 text-white py-2 overflow-hidden relative">
+    <div className={`${theme.backgrounds.primary} ${theme.textColors.primary} py-2 overflow-hidden relative`}>
       <div className="flex items-center space-x-8 animate-marquee whitespace-nowrap">
         {tickerData.map((item, index) => (
           <div key={index} className="flex items-center space-x-2 min-w-max">
-            <DollarSign className="w-4 h-4 text-green-400" />
+            <DollarSign className={`w-4 h-4 ${theme.status.success.text}`} />
             <span className="font-semibold">{item.symbol}</span>
-            <span className="text-gray-300">${item.price.toLocaleString()}</span>
-            <div className={`flex items-center space-x-1 ${item.change >= 0 ? 'text-green-400' : 'text-red-400'
+            <span className={theme.textColors.secondary}>${item.price.toLocaleString()}</span>
+            <div className={`flex items-center space-x-1 ${item.change >= 0 ? theme.status.success.text : theme.status.error.text
               }`}>
               {item.change >= 0 ? (
                 <TrendingUp className="w-3 h-3" />

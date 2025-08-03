@@ -70,7 +70,7 @@ export default function Chapter4PageNew() {
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="text-red-400"
+                className={theme.status.success.text}
               >
                 <CheckCircle className="w-12 h-12" />
               </motion.div>

@@ -3,17 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { spacedRepetitionSystem, ReviewItem, ReviewResponse } from '@/lib/algorithms/spacedRepetition';
-import GradientCar            <div className="flex justify-between items-center mb-2">
-              <h4 className="text-lg font-semibold">Review Session</h4>
-              <span className={`text-sm ${theme.textColors.muted}`}>
-                {currentReviewIndex + 1} of {dueItems.length}
-              </span>
-            </div>
-            <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
-              <div
-                className={`${theme.status.info.bg} h-2 rounded-full transition-all duration-300`}
-                style={{ width: `${((currentReviewIndex + 1) / dueItems.length) * 100}%` }}
-              ></div>
+import GradientCard from '@/components/shared/ui/GradientCard';
+import { theme } from '@/lib/theme';
+import {
             </div>
           </div>
 
@@ -268,11 +260,11 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
           <div className="mb-4">
             <div className="flex justify-between items-center mb-2">
               <h4 className="text-lg font-semibold">Review Session</h4>
-              <span className="text-sm text-gray-600">
+              <span className={`text-sm ${theme.textColors.muted}`}>
                 {currentReviewIndex + 1} of {dueItems.length}
               </span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
               <div
                 className={`${theme.status.info.bg.replace('/20', '')} h-2 rounded-full transition-all duration-300`}
                 style={{ width: `${((currentReviewIndex + 1) / dueItems.length) * 100}%` }}

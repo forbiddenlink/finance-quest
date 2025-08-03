@@ -319,7 +319,7 @@ export default function ProgressDashboard() {
               <PieChartIcon className="w-8 h-8" />
             </div>
             <p className="text-sm font-medium">Budget Builder</p>
-            <p className="text-xs text-indigo-600 flex items-center justify-center gap-1">
+            <p className={`text-xs ${theme.status.info.text} flex items-center justify-center gap-1`}>
               {userProgress.calculatorUsage['budget-builder'] ? (
                 <>
                   <CheckCircle className="w-3 h-3" />
@@ -369,36 +369,36 @@ export default function ProgressDashboard() {
       )}
 
       {/* Contest Demo Section */}
-      <div className="mt-8 bg-gradient-to-r from-blue-50 to-slate-50 border border-blue-200 rounded-lg p-6">
+      <div className={`mt-8 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-6`}>
         <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
           <Target className="w-5 h-5" />
           Contest Judge Highlights
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className={`${theme.backgrounds.glass} bg-opacity-60 rounded-lg p-4`}>
-            <h4 className="font-semibold text-purple-800 mb-2 flex items-center gap-2">
+            <h4 className={`font-semibold ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
               <TrendingUp className="w-4 h-4" />
               Measurable Impact
             </h4>
-            <p className="text-sm text-purple-700">
+            <p className={`text-sm ${theme.textColors.secondary}`}>
               Real progress tracking with persistent data across sessions. Every interaction measured and analyzed.
             </p>
           </div>
           <div className={`${theme.backgrounds.glass} bg-opacity-60 rounded-lg p-4`}>
-            <h4 className="font-semibold text-purple-800 mb-2 flex items-center gap-2">
+            <h4 className={`font-semibold ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
               <Bot className="w-4 h-4" />
               AI Integration
             </h4>
-            <p className="text-sm text-purple-700">
+            <p className={`text-sm ${theme.textColors.secondary}`}>
               OpenAI GPT-4o-mini provides contextual coaching based on actual user progress and struggling topics.
             </p>
           </div>
           <div className={`${theme.backgrounds.glass} bg-opacity-60 rounded-lg p-4`}>
-            <h4 className="font-semibold text-purple-800 mb-2 flex items-center gap-2">
+            <h4 className={`font-semibold ${theme.textColors.primary} mb-2 flex items-center gap-2`}>
               <Zap className="w-4 h-4" />
               Educational Effectiveness
             </h4>
-            <p className="text-sm text-purple-700">
+            <p className={`text-sm ${theme.textColors.secondary}`}>
               Interactive learning with immediate feedback, practical application, and mastery-based progression.
             </p>
           </div>

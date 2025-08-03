@@ -317,7 +317,7 @@ export default function RetirementPlanningLesson({ onComplete }: RetirementPlann
                     Compound Growth Example
                   </h4>
                   <div className="space-y-2 text-sm">
-                    <div className="text-center p-3 bg-gray-800 rounded-lg">
+                    <div className={`text-center p-3 ${theme.backgrounds.header} rounded-lg`}>
                       <div className={`text-lg font-bold ${theme.status.success.text}`}>$500/month @ 7% return</div>
                       <div className={`text-xs ${theme.textColors.muted} mt-1`}>Starting at different ages:</div>
                     </div>

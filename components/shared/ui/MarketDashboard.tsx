@@ -129,9 +129,9 @@ export default function MarketDashboard() {
   };
 
   const getChangeColor = (change: number) => {
-    if (change > 0) return 'text-green-600';
-    if (change < 0) return 'text-red-600';
-    return 'text-gray-600';
+    if (change > 0) return theme.status.success.text;
+    if (change < 0) return theme.status.error.text;
+    return theme.textColors.muted;
   };
 
   const getChangeIcon = (change: number) => {
@@ -145,8 +145,8 @@ export default function MarketDashboard() {
       <div className={`max-w-7xl mx-auto ${theme.backgrounds.glass} rounded-lg shadow-lg p-8`}>
         <div className="flex items-center justify-center min-h-64">
           <div className="text-center">
-            <RefreshCw className="w-8 h-8 mx-auto mb-4 text-blue-600 animate-spin" />
-            <p className="text-gray-600">Loading real-time market data...</p>
+            <RefreshCw className={`w-8 h-8 mx-auto mb-4 ${theme.status.info.text} animate-spin`} />
+            <p className={`${theme.textColors.secondary}`}>Loading real-time market data...</p>
           </div>
         </div>
       </div>
@@ -158,8 +158,8 @@ export default function MarketDashboard() {
       <div className={`max-w-7xl mx-auto ${theme.backgrounds.glass} rounded-lg shadow-lg p-8`}>
         <div className="flex items-center justify-center min-h-64">
           <div className="text-center">
-            <AlertCircle className="w-8 h-8 mx-auto mb-4 text-red-600" />
-            <p className="text-red-600 mb-4">Error loading market data: {error}</p>
+            <AlertCircle className={`w-8 h-8 mx-auto mb-4 ${theme.status.error.text}`} />
+            <p className={`${theme.status.error.text} mb-4`}>Error loading market data: {error}</p>
             <button
               onClick={fetchMarketData}
               className={`px-4 py-2 ${theme.status.info.bg.replace('/20', '')} text-white rounded-lg hover:${theme.status.info.bg.replace('/20', '/80')} transition-colors`}
@@ -193,14 +193,14 @@ export default function MarketDashboard() {
       {/* Header */}
       <div className="text-center mb-8">
         <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2 flex items-center justify-center gap-3`}>
-          <Globe className="w-8 h-8 text-blue-600" />
+          <Globe className={`w-8 h-8 ${theme.status.info.text}`} />
           Real-Time Market Dashboard
         </h2>
-        <p className="text-gray-600">
+        <p className={`${theme.textColors.secondary}`}>
           Live market data with educational insights • Powered by Alpha Vantage & FRED APIs
         </p>
         {lastUpdated && (
-          <div className="flex items-center justify-center gap-2 mt-2 text-sm text-gray-500">
+          <div className={`flex items-center justify-center gap-2 mt-2 text-sm ${theme.textColors.muted}`}>
             <Clock className="w-4 h-4" />
             Last updated: {lastUpdated.toLocaleTimeString()}
           </div>
@@ -209,48 +209,48 @@ export default function MarketDashboard() {
 
       {/* Market Summary Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6 text-center">
-          <BarChart3 className="w-8 h-8 mx-auto mb-3 text-blue-600" />
-          <h3 className="text-lg font-semibold text-blue-900">Market Trend</h3>
-          <p className={`text-2xl font-bold ${marketSummary.marketTrend === 'bullish' ? 'text-green-600' :
-              marketSummary.marketTrend === 'bearish' ? 'text-red-600' : 'text-gray-600'
+        <div className={`bg-gradient-to-r ${theme.status.info.bg} rounded-lg p-6 text-center`}>
+          <BarChart3 className={`w-8 h-8 mx-auto mb-3 ${theme.status.info.text}`} />
+          <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Market Trend</h3>
+          <p className={`text-2xl font-bold ${marketSummary.marketTrend === 'bullish' ? theme.status.success.text :
+              marketSummary.marketTrend === 'bearish' ? theme.status.error.text : theme.textColors.muted
             }`}>
             {marketSummary.marketTrend.charAt(0).toUpperCase() + marketSummary.marketTrend.slice(1)}
           </p>
-          <p className="text-sm text-blue-600">Overall Direction</p>
+          <p className={`text-sm ${theme.status.info.text}`}>Overall Direction</p>
         </div>
 
-        <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6 text-center">
-          <TrendingUp className="w-8 h-8 mx-auto mb-3 text-green-600" />
-          <h3 className="text-lg font-semibold text-green-900">Avg Change</h3>
+        <div className={`bg-gradient-to-r ${theme.status.success.bg} rounded-lg p-6 text-center`}>
+          <TrendingUp className={`w-8 h-8 mx-auto mb-3 ${theme.status.success.text}`} />
+          <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Avg Change</h3>
           <p className={`text-2xl font-bold ${getChangeColor(marketSummary.averageChange)}`}>
             {formatPercent(marketSummary.averageChange)}
           </p>
-          <p className="text-sm text-green-600">Portfolio Average</p>
+          <p className={`text-sm ${theme.status.success.text}`}>Portfolio Average</p>
         </div>
 
-        <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6 text-center">
-          <DollarSign className="w-8 h-8 mx-auto mb-3 text-purple-600" />
-          <h3 className="text-lg font-semibold text-purple-900">Total Market Cap</h3>
-          <p className="text-2xl font-bold text-purple-700">
+        <div className={`bg-gradient-to-r ${theme.status.info.bg} rounded-lg p-6 text-center`}>
+          <DollarSign className={`w-8 h-8 mx-auto mb-3 ${theme.status.info.text}`} />
+          <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Total Market Cap</h3>
+          <p className={`text-2xl font-bold ${theme.status.info.text}`}>
             {formatCurrency(marketSummary.totalMarketCap, true)}
           </p>
-          <p className="text-sm text-purple-600">Portfolio Value</p>
+          <p className={`text-sm ${theme.status.info.text}`}>Portfolio Value</p>
         </div>
 
-        <div className="bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg p-6 text-center">
-          <Activity className="w-8 h-8 mx-auto mb-3 text-orange-600" />
-          <h3 className="text-lg font-semibold text-orange-900">Volatility</h3>
-          <p className="text-2xl font-bold text-orange-700">
+        <div className={`bg-gradient-to-r ${theme.status.warning.bg} rounded-lg p-6 text-center`}>
+          <Activity className={`w-8 h-8 mx-auto mb-3 ${theme.status.warning.text}`} />
+          <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Volatility</h3>
+          <p className={`text-2xl font-bold ${theme.status.warning.text}`}>
             {formatPercent(marketSummary.volatility)}
           </p>
-          <p className="text-sm text-orange-600">Risk Measure</p>
+          <p className={`text-sm ${theme.status.warning.text}`}>Risk Measure</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         {/* Stock Performance Table */}
-        <div className="bg-gray-50 rounded-lg p-6">
+        <div className={`${theme.backgrounds.cardHover} rounded-lg p-6`}>
           <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>Stock Performance</h3>
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -266,14 +266,14 @@ export default function MarketDashboard() {
                 {marketData.stocks.map((stock) => (
                   <tr
                     key={stock.symbol}
-                    className={`border-b border-gray-100 hover:bg-gray-100 cursor-pointer transition-colors ${selectedStock?.symbol === stock.symbol ? 'bg-blue-50' : ''
+                    className={`border-b ${theme.borderColors.muted} hover:${theme.backgrounds.cardHover} cursor-pointer transition-colors ${selectedStock?.symbol === stock.symbol ? theme.status.info.bg : ''
                       }`}
                     onClick={() => setSelectedStock(stock)}
                   >
                     <td className="py-3 px-2">
                       <div>
                         <div className={`font-semibold ${theme.textColors.primary}`}>{stock.symbol}</div>
-                        <div className="text-xs text-gray-500 truncate max-w-32">
+                        <div className={`text-xs ${theme.textColors.muted} truncate max-w-32`}>
                           {stock.companyName}
                         </div>
                       </div>

@@ -27,14 +27,14 @@ export default function Chapter11Page() {
                         <div className="flex items-center space-x-4">
                             <button
                                 onClick={() => window.history.back()}
-                                className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors"
+                                className={`${theme.textColors.accent} hover:${theme.textColors.primary} font-medium transition-colors`}
                             >
                                 ← Back to Home
                             </button>
                             <h1 className={`${theme.typography.heading2} ${theme.textColors.primary}`}>Chapter 11: Investment Fundamentals</h1>
                         </div>
-                        <div className="bg-emerald-500/20 border border-emerald-500/30 px-3 py-1 rounded-full backdrop-blur-sm">
-                            <span className="text-sm font-medium text-emerald-300">Investment Track</span>
+                        <div className={`${theme.status.success.bg} border ${theme.status.success.border} px-3 py-1 rounded-full backdrop-blur-sm`}>
+                            <span className={`text-sm font-medium ${theme.status.success.text}`}>Investment Track</span>
                         </div>
                     </div>
                 </div>
@@ -42,15 +42,15 @@ export default function Chapter11Page() {
 
             {/* Tab Navigation */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-lg p-1 mb-6">
+                <div className={`${theme.backgrounds.header} backdrop-blur-xl border ${theme.borderColors.primary} rounded-lg p-1 mb-6`}>
                     <nav className="flex space-x-1">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`flex items-center px-6 py-3 rounded-md font-medium transition-all duration-200 ${activeTab === tab.id
-                                    ? 'bg-emerald-500 text-slate-900 shadow-lg'
-                                    : `${theme.textColors.secondary} hover:${theme.textColors.primary} hover:bg-slate-700/50`
+                                    ? `${theme.status.success.bg} ${theme.textColors.primary} shadow-lg`
+                                    : `${theme.textColors.secondary} hover:${theme.textColors.primary} hover:${theme.backgrounds.cardHover}`
                                     }`}
                             >
                                 <tab.icon className="w-4 h-4 mr-2" />
@@ -66,7 +66,7 @@ export default function Chapter11Page() {
                         <div className="p-8">
                             <div className="mb-6">
                                 <div className="flex items-center gap-3 mb-4">
-                                    <TrendingUp className="w-8 h-8 text-emerald-400" />
+                                    <TrendingUp className={`w-8 h-8 ${theme.status.success.text}`} />
                                     <h2 className={`text-2xl font-bold ${theme.textColors.primary}`}>Investment Fundamentals</h2>
                                 </div>
                                 <p className={`${theme.textColors.secondary} text-lg`}>
@@ -78,7 +78,7 @@ export default function Chapter11Page() {
                             <div className="space-y-6">
                                 <div className="bg-slate-800/50 rounded-xl p-6">
                                     <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-                                        <Award className="w-6 h-6 text-emerald-400" />
+                                        <Award className={`w-6 h-6 ${theme.status.success.text}`} />
                                         🎯 Learning Objectives
                                     </h3>
                                     <ul className={`space-y-2 ${theme.textColors.secondary}`}>
@@ -92,8 +92,8 @@ export default function Chapter11Page() {
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-xl p-6">
-                                        <h3 className="text-xl font-semibold text-emerald-300 mb-4">💡 Chapter Preview</h3>
+                                    <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-xl p-6`}>
+                                        <h3 className={`text-xl font-semibold ${theme.status.success.text} mb-4`}>💡 Chapter Preview</h3>
                                         <p className={`${theme.textColors.secondary}`}>
                                             Begin the Investment Track with foundational knowledge that powers all successful investing.
                                             This chapter builds on your budgeting and debt management skills to start building
@@ -101,12 +101,12 @@ export default function Chapter11Page() {
                                         </p>
                                     </div>
 
-                                    <div className="bg-amber-500/20 border border-amber-500/30 rounded-xl p-6">
-                                        <h3 className="text-xl font-semibold text-amber-300 mb-4">🚧 Coming Soon</h3>
+                                    <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-xl p-6`}>
+                                        <h3 className={`text-xl font-semibold ${theme.status.warning.text} mb-4`}>🚧 Coming Soon</h3>
                                         <p className={`${theme.textColors.secondary}`}>
                                             Interactive lessons are in development! This chapter will include:
                                         </p>
-                                        <ul className="mt-3 space-y-1 text-sm text-amber-200">
+                                        <ul className={`mt-3 space-y-1 text-sm ${theme.textColors.accent}`}>
                                             <li>• Asset class deep dives with real examples</li>
                                             <li>• Risk assessment and portfolio construction</li>
                                             <li>• Investment account types (401k, IRA, taxable)</li>
@@ -116,8 +116,8 @@ export default function Chapter11Page() {
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                    <div className="bg-slate-800/50 rounded-xl p-6">
-                                        <PieChart className="w-8 h-8 text-blue-400 mb-3" />
+                                    <div className={`${theme.backgrounds.card} rounded-xl p-6`}>
+                                        <PieChart className={`w-8 h-8 ${theme.status.info.text} mb-3`} />
                                         <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Asset Allocation</h4>
                                         <p className={`${theme.textColors.secondary} text-sm`}>
                                             Learn how to balance stocks, bonds, and other investments based on your goals,
@@ -125,8 +125,8 @@ export default function Chapter11Page() {
                                         </p>
                                     </div>
 
-                                    <div className="bg-slate-800/50 rounded-xl p-6">
-                                        <Shield className="w-8 h-8 text-green-400 mb-3" />
+                                    <div className={`${theme.backgrounds.card} rounded-xl p-6`}>
+                                        <Shield className={`w-8 h-8 ${theme.status.success.text} mb-3`} />
                                         <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Risk Management</h4>
                                         <p className={`${theme.textColors.secondary} text-sm`}>
                                             Understand different types of investment risk and how diversification,
@@ -134,7 +134,7 @@ export default function Chapter11Page() {
                                         </p>
                                     </div>
 
-                                    <div className="bg-slate-800/50 rounded-xl p-6">
+                                    <div className={`${theme.backgrounds.card} rounded-xl p-6`}>
                                         <Target className={`w-8 h-8 ${theme.textColors.accent} mb-3`} />
                                         <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Portfolio Building</h4>
                                         <p className={`${theme.textColors.secondary} text-sm`}>
@@ -153,7 +153,7 @@ export default function Chapter11Page() {
                                     </p>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                                         <div>
-                                            <h4 className="font-medium text-emerald-300 mb-2">Foundation Chapters</h4>
+                                            <h4 className={`font-medium ${theme.status.success.text} mb-2`}>Foundation Chapters</h4>
                                             <ul className={`space-y-1 ${theme.textColors.secondary}`}>
                                                 <li>• Ch 11: Investment Fundamentals</li>
                                                 <li>• Ch 12: Stock Market Mastery</li>
@@ -161,7 +161,7 @@ export default function Chapter11Page() {
                                             </ul>
                                         </div>
                                         <div>
-                                            <h4 className="font-medium text-emerald-300 mb-2">Advanced Topics</h4>
+                                            <h4 className={`font-medium ${theme.status.success.text} mb-2`}>Advanced Topics</h4>
                                             <ul className={`space-y-1 ${theme.textColors.secondary}`}>
                                                 <li>• Ch 14: Advanced Portfolio Theory</li>
                                                 <li>• Ch 15: Alternative Investments</li>
@@ -213,7 +213,7 @@ export default function Chapter11Page() {
                             </div>
 
                             <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-xl p-6">
-                                <h3 className="text-xl font-semibold text-emerald-300 mb-4">🚧 Assessment Coming Soon</h3>
+                                <h3 className={`text-xl font-semibold ${theme.status.success.text} mb-4`}>🚧 Assessment Coming Soon</h3>
                                 <p className={`${theme.textColors.secondary}`}>
                                     The Chapter 11 assessment is in development. This comprehensive quiz will test your mastery of:
                                 </p>
@@ -226,7 +226,7 @@ export default function Chapter11Page() {
                                     <li>• Long-term investing strategies and common mistakes to avoid</li>
                                 </ul>
                                 <div className="mt-6 bg-amber-500/20 border border-amber-500/30 rounded-lg p-4">
-                                    <p className="text-amber-300 font-medium">
+                                    <p className={`${theme.status.warning.text} font-medium`}>
                                         💡 Get Ready: Practice with the Portfolio Analyzer calculator and ask our AI coach about investment concepts!
                                     </p>
                                 </div>

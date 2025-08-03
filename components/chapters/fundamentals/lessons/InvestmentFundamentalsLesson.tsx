@@ -392,7 +392,7 @@ export default function InvestmentFundamentalsLesson({ onComplete }: InvestmentF
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} p-4 rounded-lg`}>
                   <div className="flex items-center justify-between mb-2">
                     <h4 className={`font-medium ${theme.textColors.primary} flex items-center gap-2`}>
-                      <span className={`${theme.textColors.accent} bg-slate-100 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>3</span>
+                      <span className={`${theme.textColors.accent} ${theme.backgrounds.card} rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`}>3</span>
                       Roth IRA
                     </h4>
                     <span className={`${theme.textColors.accent} font-medium`}>Tax-Free Growth</span>

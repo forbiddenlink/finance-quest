@@ -110,7 +110,7 @@ export default function Chapter9() {
             <div className={`min-h-screen ${theme.backgrounds.primary} flex items-center justify-center`}>
                 <Card className="max-w-md mx-auto text-center">
                     <CardHeader>
-                        <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div className={`w-16 h-16 ${theme.backgrounds.disabled} rounded-full flex items-center justify-center mx-auto mb-4`}>
                             <Shield className={`w-8 h-8 ${theme.textColors.muted}`} />
                         </div>
                         <CardTitle>Chapter 9 Locked</CardTitle>
@@ -241,7 +241,7 @@ export default function Chapter9() {
                                                     </h3>
                                                     <div className="space-y-2">
                                                         {question.options.map((option) => (
-                                                            <label key={option} className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                                                            <label key={option} className={`flex items-center space-x-3 p-3 border rounded-lg hover:${theme.backgrounds.cardHover} cursor-pointer`}>
                                                                 <input
                                                                     type="radio"
                                                                     name={`question-${index}`}

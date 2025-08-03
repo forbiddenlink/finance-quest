@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { theme } from '@/lib/theme';
 import { Calculator, TrendingUp, DollarSign, Percent, Calendar } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useProgressStore } from '@/lib/store/progressStore';
@@ -128,7 +129,7 @@ export default function BondCalculator() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <Calculator className="w-5 h-5 text-blue-400" />
+              <Calculator className={`w-5 h-5 ${theme.status.info.text}`} />
               <span>Bond Details</span>
             </CardTitle>
             <CardDescription>Enter the bond&apos;s characteristics</CardDescription>
@@ -214,7 +215,7 @@ export default function BondCalculator() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <TrendingUp className="w-5 h-5 text-green-400" />
+              <TrendingUp className={`w-5 h-5 ${theme.status.success.text}`} />
               <span>Bond Analysis</span>
             </CardTitle>
             <CardDescription>Key metrics and returns</CardDescription>
@@ -225,7 +226,7 @@ export default function BondCalculator() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-3 ${theme.status.info.bg} rounded-lg">
                     <div className="flex items-center space-x-2 mb-1">
-                      <Percent className="w-4 h-4 text-blue-400" />
+                      <Percent className={`w-4 h-4 ${theme.status.info.text}`} />
                       <span className="text-sm font-medium ${theme.textColors.secondary}">Current Yield</span>
                     </div>
                     <p className="text-lg font-bold ${theme.status.info.text}">
@@ -235,7 +236,7 @@ export default function BondCalculator() {
                   
                   <div className="p-3 ${theme.status.success.bg} rounded-lg">
                     <div className="flex items-center space-x-2 mb-1">
-                      <TrendingUp className="w-4 h-4 text-green-400" />
+                      <TrendingUp className={`w-4 h-4 ${theme.status.success.text}`} />
                       <span className="text-sm font-medium ${theme.textColors.primary}">Yield to Maturity</span>
                     </div>
                     <p className="text-lg font-bold ${theme.status.success.text}">
@@ -243,22 +244,22 @@ export default function BondCalculator() {
                     </p>
                   </div>
                   
-                  <div className="p-3 bg-purple-500/20 rounded-lg">
+                  <div className={`p-3 ${theme.status.info.bg} rounded-lg`}>
                     <div className="flex items-center space-x-2 mb-1">
-                      <DollarSign className="w-4 h-4 text-purple-400" />
-                      <span className="text-sm font-medium ${theme.textColors.primary}">Annual Income</span>
+                      <DollarSign className={`w-4 h-4 ${theme.status.info.text}`} />
+                      <span className={`text-sm font-medium ${theme.textColors.primary}`}>Annual Income</span>
                     </div>
-                    <p className="text-lg font-bold text-purple-400">
+                    <p className={`text-lg font-bold ${theme.textColors.accent}`}>
                       {formatCurrency(results.annualIncome)}
                     </p>
                   </div>
                   
                   <div className="p-3 bg-orange-50 rounded-lg">
                     <div className="flex items-center space-x-2 mb-1">
-                      <Calendar className="w-4 h-4 text-orange-600" />
-                      <span className="text-sm font-medium text-orange-800">Total Return</span>
+                      <Calendar className={`w-4 h-4 ${theme.status.warning.text}`} />
+                      <span className={`text-sm font-medium ${theme.status.warning.text}`}>Total Return</span>
                     </div>
-                    <p className="text-lg font-bold text-orange-900">
+                    <p className={`text-lg font-bold ${theme.status.warning.text}`}>
                       {formatCurrency(results.totalReturn)}
                     </p>
                   </div>
@@ -304,7 +305,7 @@ export default function BondCalculator() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <TrendingUp className="w-5 h-5 text-indigo-600" />
+              <TrendingUp className={`w-5 h-5 ${theme.status.info.text}`} />
               <span>Interest Rate Sensitivity Analysis</span>
             </CardTitle>
             <CardDescription>
@@ -378,9 +379,9 @@ export default function BondCalculator() {
               </p>
             </div>
             
-            <div className="p-4 bg-purple-500/20 rounded-lg border border-purple-500/30">
-              <h4 className="font-medium ${theme.textColors.primary} mb-2">Timing Considerations</h4>
-              <p className="text-purple-700 text-sm">
+            <div className={`p-4 ${theme.status.info.bg} rounded-lg border ${theme.borderColors.accent}`}>
+              <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Timing Considerations</h4>
+              <p className={`${theme.textColors.secondary} text-sm`}>
                 In rising rate environments, consider shorter-term bonds or bond funds. In falling rate environments, 
                 longer-term bonds can provide capital appreciation.
               </p>

@@ -254,7 +254,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
             <>
               <MicOff className="w-8 h-8" />
               <motion.div
-                className="absolute inset-0 rounded-full border-4 border-red-300"
+                className={`absolute inset-0 rounded-full border-4 ${theme.status.error.border}`}
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ repeat: Infinity, duration: 1.5 }}
               />
@@ -290,7 +290,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-red-600 font-medium"
+              className={`${theme.status.error.text} font-medium`}
             >
               🎙️ Listening... Speak your financial question now!
             </motion.div>

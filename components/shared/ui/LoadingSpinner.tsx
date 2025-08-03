@@ -1,6 +1,7 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
+import { theme } from '@/lib/theme';
 
 interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg';
@@ -21,9 +22,9 @@ export default function LoadingSpinner({
 
   return (
     <div className={`flex items-center justify-center space-x-2 ${className}`}>
-      <Loader2 className={`${sizeClasses[size]} animate-spin text-blue-600`} />
+      <Loader2 className={`${sizeClasses[size]} animate-spin ${theme.status.info.text}`} />
       {text && (
-        <span className="text-sm text-gray-600 animate-pulse">{text}</span>
+        <span className={`text-sm ${theme.textColors.secondary} animate-pulse`}>{text}</span>
       )}
     </div>
   );

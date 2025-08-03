@@ -146,7 +146,7 @@ export default function ProgressNavigation() {
               const isActive = isClient && pathname === item.href;
               
               if (!item.isAvailable) return (
-                <div key={item.name} className="px-3 py-2 rounded-lg text-xs text-slate-500 flex items-center space-x-1.5 opacity-50">
+                <div key={item.name} className={`px-3 py-2 rounded-lg text-xs ${theme.textColors.muted} flex items-center space-x-1.5 opacity-50`}>
                   <Lock className="w-3.5 h-3.5" />
                   <span className="hidden md:inline text-xs">{item.name}</span>
                 </div>
@@ -156,8 +156,8 @@ export default function ProgressNavigation() {
                 <Link key={item.name} href={item.href}>
                   <button className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1.5 relative ${
                     isActive 
-                      ? 'bg-amber-600/90 text-amber-100 shadow-sm' 
-                      : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-300'
+                      ? `${theme.status.warning.bg} ${theme.status.warning.text} shadow-sm` 
+                      : `${theme.textColors.secondary} hover:${theme.backgrounds.cardHover} hover:${theme.textColors.accent}`
                   }`}>
                     <Icon className="w-3.5 h-3.5" />
                     <span className="hidden md:inline whitespace-nowrap">{item.name}</span>
@@ -191,7 +191,7 @@ export default function ProgressNavigation() {
                     <Icon className="w-3.5 h-3.5" />
                     <span className="whitespace-nowrap">{item.name}</span>
                     {shouldShowBadge && (
-                      <span className="absolute -top-1 -right-1 bg-amber-500 text-slate-900 text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold text-xs leading-none">
+                      <span className={`absolute -top-1 -right-1 ${theme.status.warning.bg} ${theme.textColors.primary} text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold text-xs leading-none`}>
                         {item.badge}
                       </span>
                     )}
@@ -206,14 +206,14 @@ export default function ProgressNavigation() {
             <div className="relative w-9 h-9 group flex-shrink-0">
               <svg className="w-9 h-9 transform -rotate-90 transition-transform duration-300 group-hover:scale-105" viewBox="0 0 36 36">
                 <path
-                  className="text-slate-700"
+                  className={`${theme.borderColors.primary}`}
                   stroke="currentColor"
                   strokeWidth="3"
                   fill="transparent"
                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
                 <path
-                  className="text-amber-500"
+                  className={`${theme.textColors.accent}`}
                   stroke="currentColor"
                   strokeWidth="3"
                   strokeDasharray={`${overallProgress}, 100`}
@@ -227,9 +227,9 @@ export default function ProgressNavigation() {
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
                 {overallProgress >= 80 ? (
-                  <Star className="w-3.5 h-3.5 text-amber-400" />
+                  <Star className={`w-3.5 h-3.5 ${theme.textColors.accent}`} />
                 ) : (
-                  <span className="text-xs font-bold text-amber-400">{overallProgress}%</span>
+                  <span className={`text-xs font-bold ${theme.textColors.accent}`}>{overallProgress}%</span>
                 )}
               </div>
             </div>
@@ -238,7 +238,7 @@ export default function ProgressNavigation() {
       </div>
 
       {/* Mobile Navigation Drawer */}
-      <div className="xl:hidden border-t border-slate-700/50 bg-slate-800/50 backdrop-blur-sm">
+      <div className={`xl:hidden border-t ${theme.borderColors.primary} ${theme.backgrounds.header} backdrop-blur-sm`}>
         <div className="px-3 py-2">
           <div className="flex items-center justify-center space-x-2 overflow-x-auto">
             {navigationItems.slice(4).filter(item => item.isAvailable).map((item) => {
@@ -255,7 +255,7 @@ export default function ProgressNavigation() {
                     <Icon className="w-3 h-3" />
                     <span>{item.name}</span>
                     {item.badge && item.badge > 0 && (
-                      <span className="bg-amber-400/20 text-amber-300 text-xs px-1 rounded">{item.badge}</span>
+                      <span className={`${theme.status.warning.bg} ${theme.status.warning.text} text-xs px-1 rounded`}>{item.badge}</span>
                     )}
                   </button>
                 </Link>

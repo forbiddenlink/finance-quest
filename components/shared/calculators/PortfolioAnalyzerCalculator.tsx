@@ -379,13 +379,13 @@ export default function PortfolioAnalyzerCalculator() {
                                 {portfolioMetrics.recommendedChanges.length > 0 && (
                                     <div>
                                         <h4 className="font-medium ${theme.textColors.primary} mb-2 flex items-center gap-2">
-                                            <Zap className="w-4 h-4 text-amber-500" />
+                                            <Zap className={`w-4 h-4 ${theme.status.warning.text}`} />
                                             Recommendations
                                         </h4>
                                         <ul className="space-y-1">
                                             {portfolioMetrics.recommendedChanges.map((rec, index) => (
                                                 <li key={index} className="text-sm ${theme.textColors.secondary} flex items-start gap-2">
-                                                    <span className="text-amber-500 mt-1">•</span>
+                                                    <span className={`${theme.status.warning.text} mt-1`}>•</span>
                                                     {rec}
                                                 </li>
                                             ))}
@@ -466,7 +466,7 @@ export default function PortfolioAnalyzerCalculator() {
             <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                        <Target className="w-5 h-5 text-purple-400" />
+                        <Target className={`w-5 h-5 ${theme.textColors.accent}`} />
                         Target Allocation Settings
                     </CardTitle>
                     <CardDescription>
@@ -507,7 +507,7 @@ export default function PortfolioAnalyzerCalculator() {
             <Card className="bg-gradient-to-r from-blue-50 to-purple-50">
                 <CardContent className="p-6">
                     <h3 className="${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2">
-                        <Shield className="w-5 h-5 text-blue-400" />
+                        <Shield className={`w-5 h-5 ${theme.status.info.text}`} />
                         Portfolio Analysis Insights
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">

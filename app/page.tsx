@@ -93,8 +93,8 @@ export default function HomePage() {
                   <span className={`text-sm font-semibold tracking-wide ${theme.textColors.accentSecondary}`}>
                     Financial Literacy Platform
                   </span>
-                  <span className="hidden sm:block text-slate-500 text-xs">•</span>
-                  <span className="text-xs text-amber-400 font-medium">Live Learning Experience</span>
+                  <span className={`hidden sm:block ${theme.textColors.muted} text-xs`}>•</span>
+                  <span className={`text-xs ${theme.textColors.accent} font-medium`}>Live Learning Experience</span>
                 </div>
               </div>
               
@@ -145,18 +145,18 @@ export default function HomePage() {
           </div>
           
           {/* Mobile-only feature badges - more compact */}
-          <div className="md:hidden mt-2.5 pt-2.5 border-t border-slate-700/30">
+          <div className={`md:hidden mt-2.5 pt-2.5 border-t ${theme.borderColors.muted}`}>
             <div className="flex items-center justify-center space-x-2 text-xs">
               <div className="flex items-center space-x-1">
                 <div className={`w-1 h-1 ${theme.status.info.text} rounded-full`}></div>
                 <span className={`${theme.status.info.text} text-xs`}>Live Data</span>
               </div>
-              <span className="text-slate-600 text-xs">•</span>
+              <span className={`${theme.textColors.muted} text-xs`}>•</span>
               <div className="flex items-center space-x-1">
                 <div className={`w-1 h-1 ${theme.status.warning.text} rounded-full`}></div>
                 <span className={`${theme.status.warning.text} text-xs`}>AI Coaching</span>
               </div>
-              <span className="text-slate-600 text-xs">•</span>
+              <span className={`${theme.textColors.muted} text-xs`}>•</span>
               <div className="flex items-center space-x-1">
                 <div className={`w-1 h-1 ${theme.status.success.text} rounded-full`}></div>
                 <span className={`${theme.status.success.text} text-xs`}>Pro Tools</span>
@@ -182,8 +182,8 @@ export default function HomePage() {
             transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-navy-900/20 to-navy-800/20 border border-navy-700/30 backdrop-blur-sm mb-8"
           >
-            <Target className="w-4 h-4 text-amber-400" />
-            <span className="text-amber-200 text-sm font-medium">Solving the 64% Financial Illiteracy Crisis</span>
+            <Target className={`w-4 h-4 ${theme.textColors.accent}`} />
+            <span className={`${theme.textColors.accent} text-sm font-medium`}>Solving the 64% Financial Illiteracy Crisis</span>
           </motion.div>
 
           {/* Main Headline */}
@@ -307,7 +307,7 @@ export default function HomePage() {
             </div>
           </InteractiveCard>
 
-          <InteractiveCard className={`${theme.backgrounds.card} border border-amber-500/20 rounded-2xl ${theme.spacing.md} hover:border-amber-400/40 transition-all duration-300`}>
+          <InteractiveCard className={`${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-2xl ${theme.spacing.md} hover:${theme.borderColors.accentHover} transition-all duration-300`}>
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-500/25">
                 <Award className={`w-8 h-8 ${theme.textColors.primary}`} />
@@ -337,7 +337,7 @@ export default function HomePage() {
             </div>
           </InteractiveCard>
 
-          <InteractiveCard className={`${theme.backgrounds.card} border border-slate-500/20 rounded-2xl ${theme.spacing.md} hover:border-slate-400/40 transition-all duration-300`}>
+          <InteractiveCard className={`${theme.backgrounds.card} border ${theme.borderColors.muted} rounded-2xl ${theme.spacing.md} hover:${theme.borderColors.primary} transition-all duration-300`}>
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center shadow-lg shadow-slate-500/25">
                 <Brain className={`w-8 h-8 ${theme.textColors.primary}`} />
@@ -389,7 +389,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
-              <InteractiveCard className={`${theme.backgrounds.card} border border-amber-500/30 rounded-2xl ${theme.spacing.md} hover:border-amber-400/50 transition-all duration-300`}>
+              <InteractiveCard className={`${theme.backgrounds.card} border ${theme.borderColors.accent} rounded-2xl ${theme.spacing.md} hover:${theme.borderColors.accentHover} transition-all duration-300`}>
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-amber-500/25">
                     <Brain className={`w-6 h-6 ${theme.textColors.primary}`} />
@@ -487,7 +487,7 @@ export default function HomePage() {
               transition={{ delay: 1.0, duration: 0.6 }}
             >
               {progress.userProgress.currentChapter >= 3 ? (
-                <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-slate-500/30 rounded-2xl p-6 hover:border-slate-400/50 transition-all duration-300`}>
+                <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border ${theme.borderColors.muted} rounded-2xl p-6 hover:${theme.borderColors.primary} transition-all duration-300`}>
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-slate-600 to-slate-700 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-slate-500/25">
                       <Briefcase className={`w-6 h-6 ${theme.textColors.primary}`} />
@@ -793,13 +793,13 @@ export default function HomePage() {
                 <p className={`${theme.textColors.secondary} mb-6 leading-relaxed`}>
                   Discover how your money grows exponentially over time through the magic of compound interest.
                 </p>
-                <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border border-amber-500/20`}>
+                <div className={`mb-6 ${theme.backgrounds.glass}/10 backdrop-blur-sm rounded-xl p-4 border ${theme.borderColors.accent}`}>
                   <div className={`text-xs ${theme.textColors.accent} mb-1`}>$100/month × 30 years @ 7%</div>
                   <div className={`text-2xl font-bold ${theme.textColors.primary}`}>$303,219</div>
                   <div className={`text-xs ${theme.textColors.warning}`}>From just $36k invested!</div>
                 </div>
                 <Link href="/calculators/compound-interest" className="block">
-                  <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25 group-hover:-translate-y-1">
+                  <Button className={`w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25 group-hover:-translate-y-1`}>
                     Start Building Wealth
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
@@ -1097,7 +1097,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.3, duration: 0.6 }}
             >
-              <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-slate-600/20 rounded-2xl p-6 hover:border-slate-500/40 transition-all duration-300`}>
+              <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border ${theme.borderColors.muted} rounded-2xl p-6 hover:${theme.borderColors.primary} transition-all duration-300`}>
                 <div className="w-14 h-14 bg-gradient-to-r from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-slate-600/25">
                   <BarChart3 className={`w-7 h-7 ${theme.textColors.primary}`} />
                 </div>
@@ -1117,7 +1117,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.4, duration: 0.6 }}
             >
-              <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-amber-500/20 rounded-2xl p-6 hover:border-amber-400/40 transition-all duration-300`}>
+              <InteractiveCard className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border ${theme.borderColors.accent} rounded-2xl p-6 hover:${theme.borderColors.accentHover} transition-all duration-300`}>
                 <div className="w-14 h-14 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-amber-500/25">
                   <Lightbulb className={`w-7 h-7 ${theme.textColors.primary}`} />
                 </div>

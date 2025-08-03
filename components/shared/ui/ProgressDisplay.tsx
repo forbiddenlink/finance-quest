@@ -1,6 +1,7 @@
 'use client';
 
 import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
 
 export function ProgressDisplay() {
   const userProgress = useProgressStore(state => state.userProgress);
@@ -14,8 +15,8 @@ export function ProgressDisplay() {
   }
 
   return (
-    <div className="bg-green-100 px-3 py-1 rounded-full">
-      <span className="text-sm font-medium text-green-800">
+    <div className={`${theme.status.success.bg} px-3 py-1 rounded-full`}>
+      <span className={`text-sm font-medium ${theme.status.success.text}`}>
         Progress: {overallProgress}%
       </span>
     </div>
