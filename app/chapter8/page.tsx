@@ -58,11 +58,11 @@ export default function Chapter8Page() {
                         </div>
                         
                         <h1 className={`${theme.typography.heading1} ${theme.textColors.primary} mb-4`}>
-                            Chapter 8: Debt Management
+                            Chapter 8: Portfolio Construction & Asset Allocation
                         </h1>
                         
                         <p className={`${theme.typography.body} ${theme.textColors.secondary} mb-8 leading-relaxed`}>
-                            This chapter is locked. Complete the previous chapters to access advanced debt management strategies and credit optimization techniques.
+                            This chapter is locked. Complete the previous chapters to access advanced portfolio construction strategies and optimal asset allocation techniques.
                         </p>
                         
                         <div className={`flex items-center justify-center space-x-3 ${theme.textColors.muted} mb-8`}>

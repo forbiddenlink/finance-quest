@@ -6,7 +6,7 @@ import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
 import AdvancedTaxStrategiesLessonEnhanced from '@/components/chapters/fundamentals/lessons/AdvancedTaxStrategiesLessonEnhanced';
-import AdvancedTaxStrategiesQuiz from '@/components/chapters/fundamentals/quiz/AdvancedTaxStrategiesQuiz';
+import AdvancedTaxStrategiesQuizEnhanced from '@/components/chapters/fundamentals/quizzes/AdvancedTaxStrategiesQuizEnhanced';
 import TaxOptimizationCalculator from '@/components/shared/calculators/TaxOptimizationCalculator';
 import {
   Calculator,
@@ -259,7 +259,7 @@ export default function Chapter10() {
         )}
 
         {currentSection === 'quiz' && canAccessQuiz && (
-          <AdvancedTaxStrategiesQuiz onComplete={handleQuizComplete} />
+          <AdvancedTaxStrategiesQuizEnhanced onComplete={handleQuizComplete} />
         )}
 
         {/* Chapter Stats */}
