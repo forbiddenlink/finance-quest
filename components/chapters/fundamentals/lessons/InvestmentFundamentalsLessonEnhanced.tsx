@@ -290,6 +290,11 @@ export default function InvestmentFundamentalsLessonEnhanced({ onComplete }: Inv
               <p className={`mt-4 text-center font-bold ${theme.textColors.primary}`}>
                 💡 Early starter invested $120,000 LESS but ended with $240,000 MORE!
               </p>
+              <div className={`mt-4 p-3 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg text-center`}>
+                <p className={`text-sm ${theme.status.info.text} font-medium`}>
+                  📊 Use our <strong>Compound Growth Calculator</strong> in the Calculator tab to model your investment timeline!
+                </p>
+              </div>
             </div>
           )}
 
@@ -320,6 +325,11 @@ export default function InvestmentFundamentalsLessonEnhanced({ onComplete }: Inv
                   <p className={`text-2xl font-bold ${theme.textColors.primary}`}>4.5%</p>
                   <p className={`text-xs ${theme.textColors.secondary}`}>Low volatility</p>
                 </div>
+              </div>
+              <div className={`mt-4 p-3 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg text-center`}>
+                <p className={`text-sm ${theme.status.info.text} font-medium`}>
+                  🎯 Use our <strong>Risk Tolerance Assessment</strong> in the Calculator tab to discover your optimal asset mix!
+                </p>
               </div>
             </div>
           )}
@@ -358,6 +368,11 @@ export default function InvestmentFundamentalsLessonEnhanced({ onComplete }: Inv
                     <span>REITs: 5%</span>
                   </div>
                 </div>
+              </div>
+              <div className={`mt-4 p-3 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg text-center`}>
+                <p className={`text-sm ${theme.status.info.text} font-medium`}>
+                  📊 Use our <strong>Asset Allocation Optimizer</strong> in the Calculator tab to build your personalized portfolio!
+                </p>
               </div>
             </div>
           )}

@@ -2,7 +2,7 @@
 
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
 import InvestmentFundamentalsLessonEnhanced from '@/components/chapters/fundamentals/lessons/InvestmentFundamentalsLessonEnhanced';
-import CompoundInterestCalculator from '@/components/shared/calculators/CompoundInterestCalculator';
+import InvestmentCalculatorEnhanced from '@/components/shared/calculators/InvestmentCalculatorEnhanced';
 import InvestmentFundamentalsQuizEnhanced from '@/components/chapters/fundamentals/quizzes/InvestmentFundamentalsQuizEnhanced';
 import { TrendingUp } from 'lucide-react';
 
@@ -15,10 +15,10 @@ export default function Chapter7Page() {
             icon={TrendingUp}
             iconColor="text-blue-400"
             lessonComponent={<InvestmentFundamentalsLessonEnhanced />}
-            calculatorComponent={<CompoundInterestCalculator />}
+            calculatorComponent={<InvestmentCalculatorEnhanced />}
             quizComponent={<InvestmentFundamentalsQuizEnhanced />}
-            calculatorTitle="Investment Calculator"
-            calculatorDescription="Calculate compound interest and investment growth over time"
+            calculatorTitle="Investment Suite"
+            calculatorDescription="Comprehensive investment tools for risk assessment, portfolio optimization, and growth projection"
             quizTitle="Investment Fundamentals Quiz"
             quizDescription="Test your knowledge of investment basics, asset allocation, and portfolio construction. You need 80% to unlock Chapter 8."
         />
