@@ -1,252 +1,321 @@
 'use client';
 
-import { useState } from 'react';
-import PortfolioAnalyzerCalculator from '@/components/shared/calculators/PortfolioAnalyzerCalculator';
-import QASystem from '@/components/shared/QASystem';
-import { BookOpen, Calculator, FileText, Bot, TrendingUp, PieChart, Target, Award, Shield } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
+import GradientCard from '@/components/shared/ui/GradientCard';
+import ProgressRing from '@/components/shared/ui/ProgressRing';
+import RealEstateAlternativesLessonEnhanced from '@/components/chapters/fundamentals/lessons/RealEstateAlternativesLessonEnhanced';
+import RealEstateAlternativesQuizEnhanced from '@/components/chapters/fundamentals/quizzes/RealEstateAlternativesQuizEnhanced';
+import PortfolioAnalyzerCalculator from '@/components/shared/calculators/PortfolioAnalyzerCalculator';
+import {
+  Calculator,
+  BookOpen,
+  Target,
+  Trophy,
+  Lock,
+  CheckCircle,
+  Star,
+  Home,
+  TrendingUp,
+  Building
+} from 'lucide-react';
+import toast from 'react-hot-toast';
 
-type TabType = 'lesson' | 'calculator' | 'quiz' | 'assistant';
+export default function Chapter11() {
+  const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
+  const [lessonCompleted, setLessonCompleted] = useState(false);
+  const [calculatorUsed, setCalculatorUsed] = useState(false);
+  const [quizCompleted, setQuizCompleted] = useState(false);
+  const [quizScore, setQuizScore] = useState<number>(0);
 
-export default function Chapter11Page() {
-    const [activeTab, setActiveTab] = useState<TabType>('lesson');
+  const { 
+    recordQuizScore, 
+    userProgress,
+    isChapterUnlocked,
+    markChapterComplete
+  } = useProgressStore();
 
-    const tabs = [
-        { id: 'lesson' as TabType, label: 'Lessons', icon: BookOpen },
-        { id: 'calculator' as TabType, label: 'Calculator', icon: Calculator },
-        { id: 'quiz' as TabType, label: 'Quiz', icon: FileText },
-        { id: 'assistant' as TabType, label: 'AI Coach', icon: Bot }
-    ];
+  const chapterNumber = 11;
+  const isUnlocked = isChapterUnlocked(chapterNumber);
 
+  useEffect(() => {
+    // Check if lesson was previously completed
+    if (userProgress.completedLessons.includes('real-estate-alternatives-enhanced-lesson')) {
+      setLessonCompleted(true);
+    }
+
+    // Check if quiz was previously completed
+    const quizScore = userProgress.quizScores['chapter11-real-estate-alternatives-quiz'];
+    if (quizScore && quizScore >= 80) { // 80% passing threshold
+      setQuizCompleted(true);
+      setQuizScore(Math.round(quizScore * 10 / 100)); // Convert percentage back to score out of 10
+    }
+
+    // Check if calculator was used
+    if (userProgress.calculatorUsage['portfolio-analyzer-calculator']) {
+      setCalculatorUsed(true);
+    }
+  }, [userProgress]);
+
+  const handleLessonComplete = () => {
+    setLessonCompleted(true);
+    toast.success('Real Estate & Alternative Investments lesson completed! 🏠', {
+      duration: 3000,
+      position: 'top-center',
+    });
+  };
+
+  const handleQuizComplete = (score: number, maxScore: number) => {
+    const percentage = Math.round((score / maxScore) * 100);
+    setQuizScore(score);
+    
+    recordQuizScore('chapter11-real-estate-alternatives-quiz', score, maxScore);
+    
+    if (score >= 8) { // 80% passing
+      setQuizCompleted(true);
+      markChapterComplete(11); // Mark chapter as complete
+      toast.success(`Chapter 11 completed! Score: ${percentage}% - Chapter 12 unlocked! 🚀`, {
+        duration: 4000,
+        position: 'top-center',
+      });
+    } else {
+      toast.error(`Score: ${percentage}%. Need 80% to pass. Review the material and try again! 📚`, {
+        duration: 4000,
+        position: 'top-center',
+      });
+    }
+  };
+
+  const progressPercentage = () => {
+    let completed = 0;
+    if (lessonCompleted) completed += 40;
+    if (calculatorUsed) completed += 30;
+    if (quizCompleted) completed += 30;
+    return completed;
+  };
+
+  const canAccessQuiz = lessonCompleted && calculatorUsed;
+  const canAccessCalculator = lessonCompleted;
+
+  if (!isUnlocked) {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-blue-900">
-            {/* Header */}
-            <header className={`${theme.backgrounds.header} border-b border-emerald-500/20`}>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                            <button
-                                onClick={() => window.history.back()}
-                                className={`${theme.textColors.primary} hover:${theme.textColors.primary} font-medium transition-colors`}
-                            >
-                                ← Back to Home
-                            </button>
-                            <h1 className={`${theme.typography.heading2} ${theme.textColors.primary}`}>Chapter 11: Investment Fundamentals</h1>
-                        </div>
-                        <div className={`${theme.status.success.bg} border ${theme.status.success.border} px-3 py-1 rounded-full backdrop-blur-sm`}>
-                            <span className={`text-sm font-medium ${theme.status.success.text}`}>Investment Track</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            {/* Tab Navigation */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div className={`${theme.backgrounds.header} backdrop-blur-xl border ${theme.borderColors.primary} rounded-lg p-1 mb-6`}>
-                    <nav className="flex space-x-1">
-                        {tabs.map((tab) => (
-                            <button
-                                key={tab.id}
-                                onClick={() => setActiveTab(tab.id)}
-                                className={`flex items-center px-6 py-3 rounded-md font-medium transition-all duration-200 ${activeTab === tab.id
-                                    ? `${theme.status.success.bg} ${theme.textColors.primary} shadow-lg`
-                                    : `${theme.textColors.secondary} hover:${theme.textColors.primary} hover:${theme.backgrounds.cardHover}`
-                                    }`}
-                            >
-                                <tab.icon className="w-4 h-4 mr-2" />
-                                {tab.label}
-                            </button>
-                        ))}
-                    </nav>
-                </div>
-
-                {/* Content */}
-                <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden`}>
-                    {activeTab === 'lesson' && (
-                        <div className="p-8">
-                            <div className="mb-6">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <TrendingUp className={`w-8 h-8 ${theme.status.success.text}`} />
-                                    <h2 className={`text-2xl font-bold ${theme.textColors.primary}`}>Investment Fundamentals</h2>
-                                </div>
-                                <p className={`${theme.textColors.secondary} text-lg`}>
-                                    Master the essentials of investing: from stocks and bonds to portfolio construction, risk management,
-                                    and long-term wealth building strategies that grow your money faster than inflation.
-                                </p>
-                            </div>
-
-                            <div className="space-y-6">
-                                <div className="bg-slate-800/50 rounded-xl p-6">
-                                    <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-                                        <Award className={`w-6 h-6 ${theme.status.success.text}`} />
-                                        🎯 Learning Objectives
-                                    </h3>
-                                    <ul className={`space-y-2 ${theme.textColors.secondary}`}>
-                                        <li>• Understand different investment types (stocks, bonds, ETFs, mutual funds)</li>
-                                        <li>• Learn risk vs. return fundamentals and portfolio theory</li>
-                                        <li>• Master asset allocation and diversification strategies</li>
-                                        <li>• Calculate investment returns and understand compound growth</li>
-                                        <li>• Build your first investment portfolio with proper risk management</li>
-                                        <li>• Develop long-term investing mindset and avoid common mistakes</li>
-                                    </ul>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-xl p-6`}>
-                                        <h3 className={`text-xl font-semibold ${theme.status.success.text} mb-4`}>💡 Chapter Preview</h3>
-                                        <p className={`${theme.textColors.secondary}`}>
-                                            Begin the Investment Track with foundational knowledge that powers all successful investing.
-                                            This chapter builds on your budgeting and debt management skills to start building
-                                            real wealth through intelligent investing strategies.
-                                        </p>
-                                    </div>
-
-                                    <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-xl p-6`}>
-                                        <h3 className={`text-xl font-semibold ${theme.status.warning.text} mb-4`}>🚧 Coming Soon</h3>
-                                        <p className={`${theme.textColors.secondary}`}>
-                                            Interactive lessons are in development! This chapter will include:
-                                        </p>
-                                        <ul className={`mt-3 space-y-1 text-sm ${theme.textColors.primary}`}>
-                                            <li>• Asset class deep dives with real examples</li>
-                                            <li>• Risk assessment and portfolio construction</li>
-                                            <li>• Investment account types (401k, IRA, taxable)</li>
-                                            <li>• Market dynamics and economic indicators</li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                    <div className={`${theme.backgrounds.card} rounded-xl p-6`}>
-                                        <PieChart className={`w-8 h-8 ${theme.status.info.text} mb-3`} />
-                                        <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Asset Allocation</h4>
-                                        <p className={`${theme.textColors.secondary} text-sm`}>
-                                            Learn how to balance stocks, bonds, and other investments based on your goals,
-                                            timeline, and risk tolerance for optimal returns.
-                                        </p>
-                                    </div>
-
-                                    <div className={`${theme.backgrounds.card} rounded-xl p-6`}>
-                                        <Shield className={`w-8 h-8 ${theme.status.success.text} mb-3`} />
-                                        <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Risk Management</h4>
-                                        <p className={`${theme.textColors.secondary} text-sm`}>
-                                            Understand different types of investment risk and how diversification,
-                                            time horizon, and asset allocation protect your wealth.
-                                        </p>
-                                    </div>
-
-                                    <div className={`${theme.backgrounds.card} rounded-xl p-6`}>
-                                        <Target className={`w-8 h-8 ${theme.textColors.primary} mb-3`} />
-                                        <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-2`}>Portfolio Building</h4>
-                                        <p className={`${theme.textColors.secondary} text-sm`}>
-                                            Construct your first investment portfolio using modern portfolio theory
-                                            principles and low-cost, diversified investment options.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Investment Track Overview */}
-                                <div className="bg-gradient-to-r from-emerald-500/10 to-blue-500/10 border border-emerald-500/20 rounded-xl p-6">
-                                    <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-4`}>🚀 Investment Track Journey</h3>
-                                    <p className={`${theme.textColors.secondary} mb-4`}>
-                                        This is the first chapter in the comprehensive Investment Track (Chapters 11-16).
-                                        You&apos;ll progress through increasingly sophisticated investing topics:
-                                    </p>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                        <div>
-                                            <h4 className={`font-medium ${theme.status.success.text} mb-2`}>Foundation Chapters</h4>
-                                            <ul className={`space-y-1 ${theme.textColors.secondary}`}>
-                                                <li>• Ch 11: Investment Fundamentals</li>
-                                                <li>• Ch 12: Stock Market Mastery</li>
-                                                <li>• Ch 13: Bond & Fixed Income</li>
-                                            </ul>
-                                        </div>
-                                        <div>
-                                            <h4 className={`font-medium ${theme.status.success.text} mb-2`}>Advanced Topics</h4>
-                                            <ul className={`space-y-1 ${theme.textColors.secondary}`}>
-                                                <li>• Ch 14: Advanced Portfolio Theory</li>
-                                                <li>• Ch 15: Alternative Investments</li>
-                                                <li>• Ch 16: Tax-Efficient Strategies</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Interactive Preview */}
-                                <div className="bg-gradient-to-r from-emerald-500/10 to-purple-500/10 border border-emerald-500/20 rounded-xl p-6">
-                                    <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-4`}>📊 Try the Portfolio Analyzer</h3>
-                                    <p className={`${theme.textColors.secondary} mb-4`}>
-                                        While the full lesson is in development, start analyzing investment portfolios right now!
-                                        Use our professional Portfolio Analyzer to understand asset allocation, diversification,
-                                        and get personalized recommendations for optimizing your investments.
-                                    </p>
-                                    <button
-                                        onClick={() => setActiveTab('calculator')}
-                                        className={`bg-emerald-600 hover:bg-emerald-700 ${theme.textColors.primary} px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2`}
-                                    >
-                                        <Calculator className="w-4 h-4" />
-                                        Open Portfolio Analyzer
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {activeTab === 'calculator' && (
-                        <div className="p-8">
-                            <div className="mb-6">
-                                <h2 className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>Portfolio Analyzer</h2>
-                                <p className={`${theme.textColors.secondary}`}>
-                                    Analyze your investment portfolio&apos;s allocation, diversification, and get optimization recommendations.
-                                </p>
-                            </div>
-                            <PortfolioAnalyzerCalculator />
-                        </div>
-                    )}
-
-                    {activeTab === 'quiz' && (
-                        <div className="p-8">
-                            <div className="mb-6">
-                                <h2 className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>Investment Fundamentals Assessment</h2>
-                                <p className={`${theme.textColors.secondary}`}>
-                                    Test your understanding of investment basics, portfolio construction, and risk management principles.
-                                </p>
-                            </div>
-
-                            <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-xl p-6">
-                                <h3 className={`text-xl font-semibold ${theme.status.success.text} mb-4`}>🚧 Assessment Coming Soon</h3>
-                                <p className={`${theme.textColors.secondary}`}>
-                                    The Chapter 11 assessment is in development. This comprehensive quiz will test your mastery of:
-                                </p>
-                                <ul className={`mt-4 space-y-2 ${theme.textColors.secondary}`}>
-                                    <li>• Investment types and characteristics (stocks, bonds, ETFs, mutual funds)</li>
-                                    <li>• Risk vs. return relationships and portfolio theory</li>
-                                    <li>• Asset allocation strategies by age and risk tolerance</li>
-                                    <li>• Diversification principles and implementation</li>
-                                    <li>• Investment account types and tax implications</li>
-                                    <li>• Long-term investing strategies and common mistakes to avoid</li>
-                                </ul>
-                                <div className="mt-6 bg-amber-500/20 border border-amber-500/30 rounded-lg p-4">
-                                    <p className={`${theme.status.warning.text} font-medium`}>
-                                        💡 Get Ready: Practice with the Portfolio Analyzer calculator and ask our AI coach about investment concepts!
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {activeTab === 'assistant' && (
-                        <div className="p-8">
-                            <div className="mb-6">
-                                <h2 className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>AI Investment Coach</h2>
-                                <p className={`${theme.textColors.secondary}`}>
-                                    Get expert guidance on investment fundamentals, portfolio construction, and wealth building strategies.
-                                </p>
-                            </div>
-                            <QASystem />
-                        </div>
-                    )}
-                </div>
-            </div>
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 flex items-center justify-center">
+        <GradientCard variant="glass" gradient="blue" className="max-w-md w-full p-8 text-center">
+          <Lock className={`w-16 h-16 ${theme.textColors.muted} mx-auto mb-4`} />
+          <h1 className={`text-2xl font-bold ${theme.textColors.primary} mb-4`}>
+            Chapter 11: Real Estate & Alternative Investments
+          </h1>
+          <p className={`${theme.textColors.secondary} mb-6`}>
+            Complete Chapter 10 with at least 80% on the quiz to unlock this chapter.
+          </p>
+          <div className={`text-sm ${theme.textColors.muted}`}>
+            Master advanced tax strategies first, then explore alternative investment opportunities.
+          </div>
+        </GradientCard>
+      </div>
     );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center mb-4">
+            <div className={`w-16 h-16 ${theme.status.info.bg} rounded-2xl flex items-center justify-center mr-4`}>
+              <Home className={`w-8 h-8 ${theme.status.info.text}`} />
+            </div>
+            <div className="text-left">
+              <h1 className={`text-4xl font-bold ${theme.textColors.primary}`}>
+                Chapter 11: Real Estate & Alternative Investments
+              </h1>
+              <p className={`${theme.textColors.secondary} text-lg`}>
+                Master advanced investment strategies beyond traditional stocks and bonds
+              </p>
+            </div>
+          </div>
+
+          {/* Progress Overview */}
+          <div className="flex items-center justify-center space-x-8 mb-8">
+            <div className="text-center">
+              <ProgressRing progress={progressPercentage()} size={80} strokeWidth={8} />
+              <p className={`text-sm ${theme.textColors.muted} mt-2`}>Chapter Progress</p>
+            </div>
+            <div className="grid grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-2 ${
+                  lessonCompleted ? theme.status.success.bg : theme.backgrounds.card
+                }`}>
+                  {lessonCompleted ? (
+                    <CheckCircle className={`w-6 h-6 ${theme.status.success.text}`} />
+                  ) : (
+                    <BookOpen className={`w-6 h-6 ${theme.textColors.muted}`} />
+                  )}
+                </div>
+                <p className={`text-sm ${lessonCompleted ? theme.status.success.text : theme.textColors.muted}`}>
+                  Lesson
+                </p>
+              </div>
+              <div className="text-center">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-2 ${
+                  calculatorUsed ? theme.status.success.bg : theme.backgrounds.card
+                }`}>
+                  {calculatorUsed ? (
+                    <CheckCircle className={`w-6 h-6 ${theme.status.success.text}`} />
+                  ) : (
+                    <Calculator className={`w-6 h-6 ${theme.textColors.muted}`} />
+                  )}
+                </div>
+                <p className={`text-sm ${calculatorUsed ? theme.status.success.text : theme.textColors.muted}`}>
+                  Calculator
+                </p>
+              </div>
+              <div className="text-center">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-2 ${
+                  quizCompleted ? theme.status.success.bg : theme.backgrounds.card
+                }`}>
+                  {quizCompleted ? (
+                    <Trophy className={`w-6 h-6 ${theme.status.success.text}`} />
+                  ) : (
+                    <Target className={`w-6 h-6 ${theme.textColors.muted}`} />
+                  )}
+                </div>
+                <p className={`text-sm ${quizCompleted ? theme.status.success.text : theme.textColors.muted}`}>
+                  Quiz {quizCompleted && `(${Math.round((quizScore / 10) * 100)}%)`}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Navigation Tabs */}
+        <div className="flex justify-center mb-8">
+          <div className={`flex ${theme.backgrounds.card} rounded-xl p-1 border ${theme.borderColors.primary}`}>
+            <button
+              onClick={() => setCurrentSection('lesson')}
+              className={`px-6 py-3 rounded-lg font-medium transition-all flex items-center ${
+                currentSection === 'lesson'
+                  ? `${theme.buttons.primary} text-white`
+                  : `${theme.textColors.secondary} hover:${theme.textColors.primary}`
+              }`}
+            >
+              <BookOpen className="w-4 h-4 mr-2" />
+              Lesson
+            </button>
+            <button
+              onClick={() => setCurrentSection('calculator')}
+              disabled={!canAccessCalculator}
+              className={`px-6 py-3 rounded-lg font-medium transition-all flex items-center ${
+                currentSection === 'calculator'
+                  ? `${theme.buttons.primary} text-white`
+                  : canAccessCalculator
+                  ? `${theme.textColors.secondary} hover:${theme.textColors.primary}`
+                  : `${theme.textColors.muted} cursor-not-allowed opacity-50`
+              }`}
+            >
+              <Calculator className="w-4 h-4 mr-2" />
+              Portfolio Analyzer
+              {!canAccessCalculator && <Lock className="w-3 h-3 ml-1" />}
+            </button>
+            <button
+              onClick={() => setCurrentSection('quiz')}
+              disabled={!canAccessQuiz}
+              className={`px-6 py-3 rounded-lg font-medium transition-all flex items-center ${
+                currentSection === 'quiz'
+                  ? `${theme.buttons.primary} text-white`
+                  : canAccessQuiz
+                  ? `${theme.textColors.secondary} hover:${theme.textColors.primary}`
+                  : `${theme.textColors.muted} cursor-not-allowed opacity-50`
+              }`}
+            >
+              <Target className="w-4 h-4 mr-2" />
+              Quiz
+              {!canAccessQuiz && <Lock className="w-3 h-3 ml-1" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Content Sections */}
+        {currentSection === 'lesson' && (
+          <RealEstateAlternativesLessonEnhanced onComplete={handleLessonComplete} />
+        )}
+
+        {currentSection === 'calculator' && canAccessCalculator && (
+          <PortfolioAnalyzerCalculator />
+        )}
+
+        {currentSection === 'quiz' && canAccessQuiz && (
+          <RealEstateAlternativesQuizEnhanced onComplete={handleQuizComplete} />
+        )}
+
+        {/* Chapter Stats */}
+        {(lessonCompleted || calculatorUsed || quizCompleted) && (
+          <div className="mt-12">
+            <GradientCard variant="glass" gradient="green" className="p-6">
+              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 text-center`}>
+                🏠 Chapter 11 Achievements
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="text-center">
+                  <Home className={`w-8 h-8 ${theme.status.success.text} mx-auto mb-2`} />
+                  <p className={`text-sm ${theme.textColors.secondary}`}>Real Estate</p>
+                  <p className={`font-bold ${lessonCompleted ? theme.status.success.text : theme.textColors.muted}`}>
+                    {lessonCompleted ? 'Mastered' : 'Locked'}
+                  </p>
+                </div>
+                <div className="text-center">
+                  <Building className={`w-8 h-8 ${theme.status.success.text} mx-auto mb-2`} />
+                  <p className={`text-sm ${theme.textColors.secondary}`}>REITs vs Direct</p>
+                  <p className={`font-bold ${lessonCompleted ? theme.status.success.text : theme.textColors.muted}`}>
+                    {lessonCompleted ? 'Understood' : 'Locked'}
+                  </p>
+                </div>
+                <div className="text-center">
+                  <TrendingUp className={`w-8 h-8 ${calculatorUsed ? theme.status.success.text : theme.textColors.muted} mx-auto mb-2`} />
+                  <p className={`text-sm ${theme.textColors.secondary}`}>Portfolio Analysis</p>
+                  <p className={`font-bold ${calculatorUsed ? theme.status.success.text : theme.textColors.muted}`}>
+                    {calculatorUsed ? 'Analyzed' : 'Pending'}
+                  </p>
+                </div>
+                <div className="text-center">
+                  <Star className={`w-8 h-8 ${quizCompleted ? theme.status.success.text : theme.textColors.muted} mx-auto mb-2`} />
+                  <p className={`text-sm ${theme.textColors.secondary}`}>Quiz Mastery</p>
+                  <p className={`font-bold ${quizCompleted ? theme.status.success.text : theme.textColors.muted}`}>
+                    {quizCompleted ? `${Math.round((quizScore / 10) * 100)}%` : 'Pending'}
+                  </p>
+                </div>
+              </div>
+              
+              {quizCompleted && (
+                <div className="text-center mt-6 pt-6 border-t border-green-500/20">
+                  <Trophy className={`w-12 h-12 ${theme.status.success.text} mx-auto mb-3`} />
+                  <h4 className={`text-lg font-bold ${theme.status.success.text} mb-2`}>
+                    Alternative Investment Expert Achieved! 🏆
+                  </h4>
+                  <p className={`${theme.textColors.secondary} mb-4`}>
+                    You&apos;ve mastered real estate and alternative investment strategies. Chapter 12 is now unlocked!
+                  </p>
+                  <div className="flex items-center justify-center space-x-6 text-sm">
+                    <div className="text-center">
+                      <div className={`font-bold ${theme.textColors.primary}`}>Progress</div>
+                      <div className={theme.status.success.text}>{progressPercentage()}%</div>
+                    </div>
+                    <div className="text-center">
+                      <div className={`font-bold ${theme.textColors.primary}`}>Investment Knowledge</div>
+                      <div className={theme.status.success.text}>Expert Level</div>
+                    </div>
+                    <div className="text-center">
+                      <div className={`font-bold ${theme.textColors.primary}`}>Next Chapter</div>
+                      <div className={theme.status.success.text}>Unlocked!</div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </GradientCard>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
