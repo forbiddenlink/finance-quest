@@ -163,6 +163,30 @@ export const shadows = {
     glow: 'shadow-lg shadow-amber-500/25',
 } as const;
 
+// Utility functions for common component patterns
+export const themeUtils = {
+    // Glass morphism effect
+    glass: () => 'bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl',
+    
+    // Interactive card
+    interactiveCard: () => 'bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl hover:-translate-y-1 hover:shadow-xl transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25 cursor-pointer',
+    
+    // Page background
+    pageBackground: () => 'min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden',
+    
+    // Calculator container
+    calculatorContainer: () => 'grid grid-cols-1 lg:grid-cols-2 gap-8',
+    
+    // Lesson content card
+    lessonCard: () => 'bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-8 mb-8',
+    
+    // Quiz container
+    quizContainer: () => 'bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-8',
+    
+    // Section container
+    section: () => 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 p-8',
+} as const;
+
 // Complete theme object for easy importing
 export const theme = {
     colors,
@@ -177,6 +201,7 @@ export const theme = {
     typography,
     spacing,
     shadows,
+    utils: themeUtils,
 } as const;
 
 export default theme;
