@@ -3,13 +3,13 @@
 ## Executive Summary
 **Finance Quest** is an AI-powered financial literacy platform addressing the 64% financial illiteracy crisis. Built with Next.js 15.4.4 + OpenAI GPT-4o-mini, it provides personalized learning paths through interactive calculators, real-time progress tracking, and contextual AI coaching. Unlike competitors using simulated chatbots, we deliver genuine AI-powered education with measurable learning outcomes.
 
-**Current Status**: Production-ready with 14+ complete chapters, 13+ professional calculators, real AI integration, advanced Zustand state management, and multi-API market data integration.
+**Current Status**: Production-ready with 14+ complete chapters, 13+ professional calculators, real AI integration, advanced Zustand state management, multi-API market data integration, and centralized theme system.
 
 ## Quick Start for AI Agents
 
 ### Essential Development Commands
 ```bash
-# Development server with Turbopack (faster builds)
+# Development server with Turbopack on port 3001 (faster builds)
 npm run dev
 
 # Production build validation
@@ -44,6 +44,26 @@ const isUnlocked = useProgressStore(state => state.isChapterUnlocked(4));
 - **Assessment Components**: Require 80%+ scores to unlock next chapter
 - **Expanded Calculator Suite**: 13+ professional calculators including Bond Calculator, Stock Analysis, Portfolio Analyzer, Retirement Planner
 
+#### Centralized Theme System
+**CRITICAL**: Use the centralized theme system from `@/lib/theme` for ALL styling:
+
+```typescript
+// Import the theme
+import { theme } from '@/lib/theme';
+
+// Use theme classes instead of hardcoded Tailwind
+className={`${theme.backgrounds.card} ${theme.borderColors.primary} ${theme.textColors.primary}`}
+
+// Key theme patterns:
+theme.backgrounds.primary    // Main gradient background
+theme.backgrounds.glass      // Glass morphism cards
+theme.textColors.primary     // White text
+theme.textColors.secondary   // Slate-300 text
+theme.borderColors.primary   // White/10 borders
+theme.buttons.primary        // Blue gradient buttons
+theme.status.success.bg      // Green status backgrounds
+```
+
 #### API Routes & External Integrations
 - `/api/ai-chat` - OpenAI GPT-4o-mini with contextual user progress
 - `/api/market-data` - Multi-API integration: Yahoo Finance (primary), Finnhub (free), Polygon.io, Alpha Vantage + FRED APIs with intelligent fallbacks
@@ -70,8 +90,9 @@ const handleQuizComplete = (score: number) => {
 };
 
 // Two chapter patterns exist:
-// Pattern 1: Legacy chapters (1-8) use custom tab implementation
-// Pattern 2: Advanced chapters (11-14) use Radix UI Tabs component
+// Pattern 1: Legacy chapters (1-10) use custom tab implementation
+// Pattern 2: Advanced chapters (11-14) use custom tabs with enhanced styling
+// NOTE: All chapters currently use custom tab implementations, not Radix UI Tabs
 ```
 
 #### Calculator Integration Pattern
@@ -92,8 +113,8 @@ const monthlyPayment = loanAmount *
   (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) /
   (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
 
-// Standard calculator layout pattern
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+// Standard calculator layout pattern with theme system
+<div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
   <div className="inputs-section">{/* Controls */}</div>
   <div className="results-section">{/* Results + Educational context */}</div>
 </div>
