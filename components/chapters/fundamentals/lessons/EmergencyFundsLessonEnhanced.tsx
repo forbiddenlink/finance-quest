@@ -290,6 +290,11 @@ export default function EmergencyFundsLessonEnhanced({ onComplete }: EmergencyFu
               <p className={`mt-4 text-center font-bold ${theme.textColors.primary}`}>
                 💡 Multiply your essential monthly expenses by your risk factor
               </p>
+              <div className={`mt-6 p-4 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
+                <p className={`text-sm ${theme.textColors.secondary} text-center`}>
+                  📊 <strong>Use the Calculator tab</strong> to run your personal scenario analysis and build a custom timeline based on your unique risk factors and financial situation.
+                </p>
+              </div>
             </div>
           )}
 
@@ -334,6 +339,11 @@ export default function EmergencyFundsLessonEnhanced({ onComplete }: EmergencyFu
                   <h4 className={`font-bold ${theme.status.success.text} mb-2`}>Ongoing: Maintain & Optimize</h4>
                   <p className={`${theme.textColors.secondary} text-sm`}>High-yield accounts, replenish after use, adjust for life changes</p>
                 </div>
+              </div>
+              <div className={`mt-6 p-4 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
+                <p className={`text-sm ${theme.textColors.secondary} text-center`}>
+                  📅 <strong>Use the Calculator tab's "Building Plan"</strong> to create your personalized emergency fund timeline with realistic monthly savings targets and milestone tracking.
+                </p>
               </div>
             </div>
           )}

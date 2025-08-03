@@ -2,7 +2,7 @@
 
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
 import EmergencyFundsLessonEnhanced from '@/components/chapters/fundamentals/lessons/EmergencyFundsLessonEnhanced';
-import EmergencyFundCalculator from '@/components/shared/calculators/EmergencyFundCalculator';
+import EmergencyFundCalculatorEnhanced from '@/components/shared/calculators/EmergencyFundCalculatorEnhanced';
 import EmergencyFundsQuizEnhanced from '@/components/chapters/fundamentals/quizzes/EmergencyFundsQuizEnhanced';
 import { Shield } from 'lucide-react';
 
@@ -15,7 +15,7 @@ export default function Chapter4Page() {
             icon={Shield}
             iconColor="text-green-400"
             lessonComponent={<EmergencyFundsLessonEnhanced />}
-            calculatorComponent={<EmergencyFundCalculator />}
+            calculatorComponent={<EmergencyFundCalculatorEnhanced />}
             quizComponent={<EmergencyFundsQuizEnhanced />}
             calculatorTitle="Emergency Fund Calculator"
             calculatorDescription="Calculate how much you need for financial security"
