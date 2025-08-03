@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { useProgress } from '@/lib/store/progressHooks';
+import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import {
     Home,
@@ -45,6 +46,7 @@ interface BudgetSummary {
 }
 
 export default function BudgetBuilderCalculator() {
+    const { recordCalculatorUsage } = useProgressStore();
     const [monthlyIncome, setMonthlyIncome] = useState(5000);
     const [categories, setCategories] = useState<BudgetCategory[]>([
         // Needs (50%)
@@ -66,6 +68,11 @@ export default function BudgetBuilderCalculator() {
         { id: 'investments', name: 'Investments', budgeted: 300, actual: 250, color: '#047857', type: 'savings', icon: TrendingUp },
         { id: 'goals', name: 'Financial Goals', budgeted: 200, actual: 180, color: '#065f46', type: 'savings', icon: Target },
     ]);
+
+    // Record calculator usage for analytics
+    useEffect(() => {
+        recordCalculatorUsage('budgeting-budget-builder-calculator');
+    }, [recordCalculatorUsage]);
 
     const progress = useProgress();
 

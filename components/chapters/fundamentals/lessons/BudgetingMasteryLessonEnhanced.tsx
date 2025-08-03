@@ -20,6 +20,8 @@ import {
   Zap
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import CashFlowTimingTool from './CashFlowTimingTool';
+import IrregularExpenseTracker from './IrregularExpenseTracker';
 
 interface BudgetingMasteryLessonProps {
   onComplete?: () => void;
@@ -264,6 +266,18 @@ export default function BudgetingMasteryLessonEnhanced({ onComplete }: Budgeting
           </div>
 
           {/* Interactive Content */}
+          {currentLesson === 2 && (
+            <div className={`mb-8`}>
+              <CashFlowTimingTool />
+            </div>
+          )}
+
+          {currentLesson === 4 && (
+            <div className={`mb-8`}>
+              <IrregularExpenseTracker />
+            </div>
+          )}
+
           {currentLesson === 0 && (
             <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>

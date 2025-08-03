@@ -11,16 +11,16 @@ export default function Chapter3Page() {
         <ChapterLayout
             chapterNumber={3}
             title="Budgeting & Cash Flow Mastery"
-            subtitle="Master your money flow and build sustainable spending habits."
+            subtitle="Master money flow control, eliminate budget failures, and build automated wealth systems."
             icon={Target}
             iconColor="text-purple-400"
             lessonComponent={<BudgetingMasteryLessonEnhanced />}
             calculatorComponent={<BudgetBuilderCalculator />}
             quizComponent={<BudgetingMasteryQuizEnhanced />}
-            calculatorTitle="Budget Builder"
-            calculatorDescription="Create and optimize your personal budget with advanced analysis"
-            quizTitle="Budgeting Mastery Quiz"
-            quizDescription="Test your cash flow management skills! You need 80% to unlock Chapter 4."
+            calculatorTitle="Advanced Budget Builder"
+            calculatorDescription="Build, track, and optimize your budget with interactive analysis and 50/30/20 guidance"
+            quizTitle="Cash Flow Mastery Quiz"
+            quizDescription="Prove your budgeting expertise and unlock emergency fund strategies! You need 80% to unlock Chapter 4."
         />
     );
 }
