@@ -6,13 +6,14 @@ import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-import EmergencyFundsLesson from '@/components/chapters/fundamentals/lessons/EmergencyFundsLesson';
+import EmergencyFundsLessonEnhanced from '@/components/chapters/fundamentals/lessons/EmergencyFundsLessonEnhanced';
 import EmergencyFundCalculator from '@/components/shared/calculators/EmergencyFundCalculator';
+import EmergencyFundsQuizEnhanced from '@/components/chapters/fundamentals/quizzes/EmergencyFundsQuizEnhanced';
 
 export default function Chapter4Page() {
   const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz'>('lesson');
   const [lessonCompleted, setLessonCompleted] = useState(false);
-  const { userProgress, completeLesson } = useProgressStore();
+  const { userProgress, completeLesson, isChapterUnlocked } = useProgressStore();
 
   const pageVariants = {
     initial: { opacity: 0, x: 20 },
@@ -28,7 +29,7 @@ export default function Chapter4Page() {
 
   const handleLessonComplete = () => {
     setLessonCompleted(true);
-    completeLesson('chapter5-lesson', 20);
+    completeLesson('chapter4-lesson', 20);
   };
 
   return (
@@ -126,7 +127,7 @@ export default function Chapter4Page() {
                 }`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              disabled={tab.key === 'calculator' && !lessonCompleted}
+              disabled={tab.key === 'quiz' && !lessonCompleted}
             >
               <span className="mr-2">{tab.icon}</span>
               {tab.label}
@@ -144,7 +145,7 @@ export default function Chapter4Page() {
           transition={{ duration: 0.3 }}
         >
           {currentSection === 'lesson' && (
-            <EmergencyFundsLesson onComplete={handleLessonComplete} />
+            <EmergencyFundsLessonEnhanced onComplete={handleLessonComplete} />
           )}
 
           {currentSection === 'calculator' && (
@@ -152,18 +153,7 @@ export default function Chapter4Page() {
           )}
 
           {currentSection === 'quiz' && (
-            <div>
-              <div className={`mb-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
-                <h3 className={`font-semibold ${theme.textColors.secondary} mb-2`}>Knowledge Check</h3>
-                <p className={theme.textColors.muted}>
-                  Test your understanding of emergency funds and financial safety. You need 80% to unlock Chapter 6.
-                </p>
-              </div>
-              <div className={`${theme.backgrounds.card} border ${theme.borderColors.muted} rounded-lg p-8 text-center`}>
-                <p className={`${theme.textColors.muted} mb-4`}>Chapter 5 Quiz coming soon!</p>
-                <p className={`text-sm ${theme.textColors.muted}`}>Complete the lesson to prepare for the assessment.</p>
-              </div>
-            </div>
+            <EmergencyFundsQuizEnhanced onComplete={() => {}} />
           )}
         </motion.div>
 
@@ -175,16 +165,16 @@ export default function Chapter4Page() {
           transition={{ delay: 0.6 }}
         >
           <Link
-            href="/chapter4"
+            href="/chapter3"
             className={`inline-flex items-center px-6 py-3 ${theme.buttons.secondary} rounded-lg transition-colors`}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Previous Chapter
           </Link>
 
-          {userProgress.currentChapter > 5 && (
+          {isChapterUnlocked(5) && (
             <Link
-              href="/chapter6"
+              href="/chapter5"
               className={`inline-flex items-center px-6 py-3 ${theme.buttons.primary} rounded-lg transition-colors shadow-lg`}
             >
               Next Chapter
