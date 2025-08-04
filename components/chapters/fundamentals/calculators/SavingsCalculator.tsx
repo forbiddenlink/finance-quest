@@ -1,18 +1,13 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
-import { PiggyBank, TrendingUp, DollarSign, Calendar, Target } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
+import { CurrencyInput, NumberInput } from '@/components/shared/calculators/FormFields';
+import { ResultCard } from '@/components/shared/calculators/ResultComponents';
+import { formatCurrency, formatPercentage } from '@/lib/utils/financial';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { useProgressStore } from '@/lib/store/progressStore';
+import { PiggyBank, TrendingUp, DollarSign, Target } from 'lucide-react';
 import { theme } from '@/lib/theme';
-
-interface SavingsResults {
-  futureValue: number;
-  totalDeposited: number;
-  interestEarned: number;
-  effectiveRate: number;
-}
 
 interface ChartDataPoint {
   year: number;
@@ -22,382 +17,401 @@ interface ChartDataPoint {
 }
 
 const SavingsCalculator = () => {
-  const { recordCalculatorUsage } = useProgressStore();
-  const [initialDeposit, setInitialDeposit] = useState<number>(1000);
-  const [monthlyDeposit, setMonthlyDeposit] = useState<number>(100);
-  const [interestRate, setInterestRate] = useState<number>(4.5);
-  const [timeYears, setTimeYears] = useState<number>(5);
-  const [results, setResults] = useState<SavingsResults | null>(null);
-  const [chartData, setChartData] = useState<ChartDataPoint[]>([]);
+  // Form inputs
+  const [initialDeposit, setInitialDeposit] = useState('1000');
+  const [monthlyDeposit, setMonthlyDeposit] = useState('100');
+  const [interestRate, setInterestRate] = useState('4.5');
+  const [timeYears, setTimeYears] = useState('5');
 
-  // Record calculator usage for analytics
-  useEffect(() => {
-    recordCalculatorUsage('banking-savings-calculator');
-  }, [recordCalculatorUsage]);
+  const [chartData, setChartData] = useState<ChartDataPoint[]>([]);
+  const [results, setResults] = useState({
+    futureValue: 0,
+    totalDeposited: 0,
+    interestEarned: 0,
+    effectiveRate: 0
+  });
 
   const calculateSavings = useCallback(() => {
-    try {
-      const monthlyRate = (interestRate / 100) / 12;
-      const totalMonths = timeYears * 12;
+    const initial = parseFloat(initialDeposit) || 0;
+    const monthly = parseFloat(monthlyDeposit) || 0;
+    const rate = parseFloat(interestRate) || 0;
+    const years = parseInt(timeYears) || 0;
 
-      // Calculate future value of initial deposit (lump sum)
-      const initialDepositFV = initialDeposit * Math.pow(1 + monthlyRate, totalMonths);
+    if (initial < 0 || monthly < 0 || rate < 0 || years < 0) return;
 
-      // Calculate future value of monthly deposits (annuity)
-      let monthlyDepositsFV = 0;
-      if (monthlyRate === 0) {
-        monthlyDepositsFV = monthlyDeposit * totalMonths;
-      } else {
-        monthlyDepositsFV = monthlyDeposit * (Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate;
-      }
+    const monthlyRate = rate / 100 / 12;
+    const totalMonths = years * 12;
 
-      const totalFutureValue = initialDepositFV + monthlyDepositsFV;
-      const totalDeposited = initialDeposit + (monthlyDeposit * totalMonths);
-      const totalInterestEarned = totalFutureValue - totalDeposited;
+    // Calculate future value of initial deposit (lump sum)
+    const initialDepositFV = initial * Math.pow(1 + monthlyRate, totalMonths);
 
-      setResults({
-        futureValue: totalFutureValue,
-        totalDeposited: totalDeposited,
-        interestEarned: totalInterestEarned,
-        effectiveRate: ((totalFutureValue / totalDeposited - 1) / timeYears) * 100
-      });
-
-      // Generate chart data
-      const data = [];
-      for (let year = 0; year <= timeYears; year++) {
-        const yearMonths = year * 12;
-
-        // Calculate values for this year
-        const yearInitialFV = year === 0 ? initialDeposit :
-          initialDeposit * Math.pow(1 + monthlyRate, yearMonths);
-
-        let yearMonthlyFV = 0;
-        if (year > 0) {
-          if (monthlyRate === 0) {
-            yearMonthlyFV = monthlyDeposit * yearMonths;
-          } else {
-            yearMonthlyFV = monthlyDeposit * (Math.pow(1 + monthlyRate, yearMonths) - 1) / monthlyRate;
-          }
-        }
-
-        const yearTotalDeposited = initialDeposit + (monthlyDeposit * yearMonths);
-        const yearTotalValue = yearInitialFV + yearMonthlyFV;
-
-        data.push({
-          year,
-          deposited: yearTotalDeposited,
-          total: yearTotalValue,
-          interest: yearTotalValue - yearTotalDeposited
-        });
-      }
-      setChartData(data);
-    } catch (error) {
-      console.error('Calculation error:', error);
+    // Calculate future value of monthly deposits (annuity)
+    let monthlyDepositsFV = 0;
+    if (monthlyRate === 0) {
+      monthlyDepositsFV = monthly * totalMonths;
+    } else {
+      monthlyDepositsFV = monthly * (Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate;
     }
+
+    const totalFutureValue = initialDepositFV + monthlyDepositsFV;
+    const totalDeposited = initial + (monthly * totalMonths);
+    const totalInterestEarned = totalFutureValue - totalDeposited;
+
+    setResults({
+      futureValue: totalFutureValue,
+      totalDeposited: totalDeposited,
+      interestEarned: totalInterestEarned,
+      effectiveRate: years > 0 ? ((totalFutureValue / totalDeposited - 1) / years) * 100 : 0
+    });
+
+    // Generate chart data
+    const data = [];
+    for (let year = 0; year <= years; year++) {
+      const yearMonths = year * 12;
+
+      const yearInitialFV = year === 0 ? initial :
+        initial * Math.pow(1 + monthlyRate, yearMonths);
+
+      let yearMonthlyFV = 0;
+      if (year > 0) {
+        if (monthlyRate === 0) {
+          yearMonthlyFV = monthly * yearMonths;
+        } else {
+          yearMonthlyFV = monthly * (Math.pow(1 + monthlyRate, yearMonths) - 1) / monthlyRate;
+        }
+      }
+
+      const yearTotalDeposited = initial + (monthly * yearMonths);
+      const yearTotalValue = yearInitialFV + yearMonthlyFV;
+
+      data.push({
+        year,
+        deposited: yearTotalDeposited,
+        total: yearTotalValue,
+        interest: yearTotalValue - yearTotalDeposited
+      });
+    }
+    setChartData(data);
   }, [initialDeposit, monthlyDeposit, interestRate, timeYears]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     calculateSavings();
   }, [calculateSavings]);
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
+  const handleReset = () => {
+    setInitialDeposit('1000');
+    setMonthlyDeposit('100');
+    setInterestRate('4.5');
+    setTimeYears('5');
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.1
+  const applyPreset = (preset: { initial: number; monthly: number; rate: number; years: number }) => {
+    setInitialDeposit(preset.initial.toString());
+    setMonthlyDeposit(preset.monthly.toString());
+    setInterestRate(preset.rate.toString());
+    setTimeYears(preset.years.toString());
+  };
+
+  // Generate insights based on calculations
+  const generateInsights = () => {
+    const insights = [];
+    
+    const rateNum = parseFloat(interestRate) || 0;
+    const yearNum = parseInt(timeYears) || 0;
+    const monthlyNum = parseFloat(monthlyDeposit) || 0;
+    const initialNum = parseFloat(initialDeposit) || 0;
+
+    // Low interest rate warning
+    if (rateNum < 1) {
+      insights.push({
+        type: 'warning' as const,
+        title: 'Very Low Interest Rate',
+        message: `At ${rateNum}% interest, you're barely beating inflation. Consider high-yield savings accounts offering 4-5% APY.`
+      });
+    }
+
+    // Great rate insight
+    if (rateNum >= 4) {
+      insights.push({
+        type: 'success' as const,
+        title: 'Excellent Savings Rate',
+        message: `Your ${rateNum}% rate is competitive! You're earning ${formatCurrency(results.interestEarned)} in interest over ${yearNum} years.`
+      });
+    }
+
+    // Emergency fund goal insight
+    if (monthlyNum >= 300 && yearNum <= 3) {
+      const emergencyFund = monthlyNum * 6; // 6 months of expenses
+      insights.push({
+        type: 'info' as const,
+        title: 'Emergency Fund Progress',
+        message: `At ${formatCurrency(monthlyNum)}/month, you could build a ${formatCurrency(emergencyFund)} emergency fund in ${Math.ceil(emergencyFund / monthlyNum)} months.`
+      });
+    }
+
+    // Big vs online bank comparison
+    if (rateNum > 0.5) {
+      const bigBankInterest = results.totalDeposited * 0.0001 * yearNum;
+      const savings = results.interestEarned - bigBankInterest;
+      if (savings > 100) {
+        insights.push({
+          type: 'success' as const,
+          title: 'Smart Banking Choice',
+          message: `Compared to big banks (0.01% APY), you'll earn ${formatCurrency(savings)} more with your current rate!`
+        });
       }
     }
+
+    return insights;
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
+  // Calculator metadata
+  const metadata = {
+    id: 'savings-calculator',
+    title: 'Savings Growth Calculator',
+    description: 'See how your money grows with compound interest and regular savings',
+    category: 'basic' as const,
+    icon: PiggyBank,
+    tags: ['savings', 'compound interest', 'banking', 'emergency fund'],
+    educationalNotes: [
+      {
+        title: 'Maximize Your Savings Rate',
+        content: 'The difference between a traditional bank (0.01% APY) and a high-yield online bank (4-5% APY) can mean thousands of dollars over time.',
+        tips: [
+          'Research online banks and credit unions for better rates',
+          'Consider money market accounts for higher balances',
+          'Look for accounts with no monthly fees or minimum balance requirements',
+          'Set up automatic transfers to make saving effortless'
+        ]
+      },
+      {
+        title: 'Emergency Fund Strategy',
+        content: 'Financial experts recommend saving 3-6 months of expenses in an easily accessible account. This calculator helps you plan how long it will take to reach your goal.',
+        tips: [
+          'Start with a goal of $1,000 for small emergencies',
+          'Gradually build to 3-6 months of living expenses',
+          'Keep emergency funds in high-yield, liquid accounts',
+          'Separate emergency savings from other financial goals'
+        ]
+      }
+    ]
+  };
+
+  // Results formatting for the wrapper
+  const calculatorResults = {
+    primary: {
+      label: 'Future Value',
+      value: results.futureValue,
+      format: 'currency' as const,
+      variant: 'success' as const,
+      description: `Your money after ${timeYears} years of growth`
+    },
+    secondary: [
+      {
+        label: 'Total Deposited',
+        value: results.totalDeposited,
+        format: 'currency' as const,
+        description: 'All your contributions over time'
+      },
+      {
+        label: 'Interest Earned',
+        value: results.interestEarned,
+        format: 'currency' as const,
+        variant: 'success' as const,
+        description: 'Free money from compound interest'
+      },
+      {
+        label: 'Effective Annual Return',
+        value: results.effectiveRate,
+        format: 'percentage' as const,
+        description: 'Your average yearly growth rate'
+      }
+    ]
   };
 
   return (
-    <motion.div
-      className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg overflow-hidden`}
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
+    <CalculatorWrapper
+      metadata={metadata}
+      results={calculatorResults}
+      insights={generateInsights()}
+      onReset={handleReset}
     >
-      {/* Header */}
-      <motion.div
-        className={`bg-gradient-to-r from-slate-900 to-blue-900 ${theme.textColors.primary} p-6`}
-        variants={itemVariants}
-      >
-        <div className="flex items-center space-x-3 mb-4">
-          <PiggyBank className="w-8 h-8" />
-          <h2 className={`${theme.typography.heading2}`}>Savings Growth Calculator</h2>
+      <div className="space-y-6">
+        {/* Input Section */}
+        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+          <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Your Savings Plan</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CurrencyInput
+              id="initialDeposit"
+              label="Initial Deposit"
+              value={initialDeposit}
+              onChange={setInitialDeposit}
+              min={0}
+              step={100}
+              placeholder="Enter initial deposit"
+            />
+
+            <CurrencyInput
+              id="monthlyDeposit"
+              label="Monthly Deposit"
+              value={monthlyDeposit}
+              onChange={setMonthlyDeposit}
+              min={0}
+              step={25}
+              placeholder="Enter monthly amount"
+            />
+
+            <NumberInput
+              id="interestRate"
+              label="Annual Interest Rate (%)"
+              value={interestRate}
+              onChange={setInterestRate}
+              min={0}
+              max={20}
+              step={0.1}
+              placeholder="Enter annual rate"
+            />
+            <p className={`text-xs ${theme.textColors.muted} mt-1`}>
+              High-yield savings: 4-5%, Traditional savings: 0.01-0.5%
+            </p>
+
+            <NumberInput
+              id="timeYears"
+              label="Time Period (years)"
+              value={timeYears}
+              onChange={setTimeYears}
+              min={1}
+              max={50}
+              step={1}
+              placeholder="Enter number of years"
+            />
+          </div>
+
+          {/* Quick Presets */}
+          <div className={`mt-6 ${theme.backgrounds.glass} border ${theme.borderColors.primary} p-4 rounded-lg`}>
+            <h4 className={`font-medium ${theme.textColors.primary} mb-3`}>Quick Scenarios</h4>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { label: 'Big Bank (0.01%)', initial: 1000, monthly: 200, rate: 0.01, years: 5 },
+                { label: 'Credit Union (2.5%)', initial: 1000, monthly: 200, rate: 2.5, years: 5 },
+                { label: 'Online Bank (4.5%)', initial: 1000, monthly: 200, rate: 4.5, years: 5 },
+                { label: 'Emergency Fund Goal', initial: 0, monthly: 400, rate: 4.5, years: 2 }
+              ].map((preset, index) => (
+                <button
+                  key={index}
+                  onClick={() => applyPreset(preset)}
+                  className={`text-xs p-2 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded hover:${theme.status.info.bg} transition-colors`}
+                >
+                  {preset.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-        <p className="text-lg opacity-90">
-          See how your money grows with compound interest and regular savings
-        </p>
-      </motion.div>
 
-      <div className="p-6">
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Input Section */}
-          <motion.div variants={itemVariants} className="space-y-6">
-            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Your Savings Plan</h3>
-
-            <div className="space-y-4">
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Initial Deposit
-                </label>
-                <div className="relative">
-                  <DollarSign className={`absolute left-3 top-3 w-5 h-5 ${theme.textColors.muted}`} />
-                  <input
-                    type="number"
-                    value={initialDeposit}
-                    onChange={(e) => setInitialDeposit(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent`}
-                    min="0"
-                    step="100"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Monthly Deposit
-                </label>
-                <div className="relative">
-                  <DollarSign className={`absolute left-3 top-3 w-5 h-5 ${theme.textColors.muted}`} />
-                  <input
-                    type="number"
-                    value={monthlyDeposit}
-                    onChange={(e) => setMonthlyDeposit(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent`}
-                    min="0"
-                    step="25"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Annual Interest Rate (%)
-                </label>
-                <div className="relative">
-                  <TrendingUp className={`absolute left-3 top-3 w-5 h-5 ${theme.textColors.muted}`} />
-                  <input
-                    type="number"
-                    value={interestRate}
-                    onChange={(e) => setInterestRate(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent`}
-                    min="0"
-                    max="20"
-                    step="0.1"
-                  />
-                </div>
-                <p className={`text-xs ${theme.textColors.muted} mt-1`}>
-                  High-yield savings: 4-5%, Traditional savings: 0.01-0.5%
-                </p>
-              </div>
-
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Time Period (Years)
-                </label>
-                <div className="relative">
-                  <Calendar className={`absolute left-3 top-3 w-5 h-5 ${theme.textColors.muted}`} />
-                  <input
-                    type="number"
-                    value={timeYears}
-                    onChange={(e) => setTimeYears(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent`}
-                    min="1"
-                    max="50"
-                    step="1"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Presets */}
-            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} p-4 rounded-lg`}>
-              <h4 className={`font-medium ${theme.textColors.primary} mb-3`}>Quick Scenarios</h4>
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  { label: 'Big Bank (0.01%)', initial: 1000, monthly: 200, rate: 0.01, years: 5 },
-                  { label: 'Credit Union (2.5%)', initial: 1000, monthly: 200, rate: 2.5, years: 5 },
-                  { label: 'Online Bank (4.5%)', initial: 1000, monthly: 200, rate: 4.5, years: 5 },
-                  { label: 'Emergency Fund Goal', initial: 0, monthly: 400, rate: 4.5, years: 2 }
-                ].map((preset, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      setInitialDeposit(preset.initial);
-                      setMonthlyDeposit(preset.monthly);
-                      setInterestRate(preset.rate);
-                      setTimeYears(preset.years);
-                    }}
-                    className={`text-xs p-2 ${theme.backgrounds.glass} border ${theme.borderColors.primary} border ${theme.borderColors.primary} rounded hover:${theme.status.info.bg} hover:${theme.borderColors.primary} transition-colors`}
-                  >
-                    {preset.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Results Section */}
-          <motion.div variants={itemVariants} className="space-y-6">
-            {results && (
-              <>
-                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Your Results</h3>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <motion.div
-                    className={`bg-gradient-to-br from-slate-50 to-slate-100 p-4 rounded-lg border ${theme.status.info.border}`}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <Target className={`w-5 h-5 ${theme.status.success.text}`} />
-                      <span className={`text-xs ${theme.status.success.text} font-medium`}>FUTURE VALUE</span>
-                    </div>
-                    <div className={`${theme.typography.heading2} ${theme.textColors.secondary}`}>
-                      {formatCurrency(results.futureValue)}
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    className={`bg-gradient-to-br from-slate-50 to-slate-100 p-4 rounded-lg border ${theme.status.info.border}`}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <DollarSign className={`w-5 h-5 ${theme.textColors.primary}`} />
-                      <span className={`text-xs ${theme.textColors.primary} font-medium`}>TOTAL DEPOSITED</span>
-                    </div>
-                    <div className={`${theme.typography.heading2} ${theme.textColors.secondary}`}>
-                      {formatCurrency(results.totalDeposited)}
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    className={`bg-gradient-to-br from-slate-50 to-slate-100 p-4 rounded-lg border ${theme.status.info.border}`}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <TrendingUp className={`w-5 h-5 ${theme.textColors.primary}`} />
-                      <span className={`text-xs ${theme.textColors.primary} font-medium`}>INTEREST EARNED</span>
-                    </div>
-                    <div className={`${theme.typography.heading2} ${theme.textColors.primary}`}>
-                      {formatCurrency(results.interestEarned)}
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    className={`bg-gradient-to-br from-yellow-50 to-yellow-100 p-4 rounded-lg border ${theme.status.warning.border}`}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <TrendingUp className={`w-5 h-5 ${theme.status.warning.text}`} />
-                      <span className={`text-xs ${theme.status.warning.text} font-medium`}>EFFECTIVE RATE</span>
-                    </div>
-                    <div className={`${theme.typography.heading2} ${theme.status.warning.text}`}>
-                      {results.effectiveRate.toFixed(1)}%
-                    </div>
-                  </motion.div>
-                </div>
-
-                {/* Insights */}
-                <div className={`bg-gradient-to-r from-slate-50 to-slate-50 p-4 rounded-lg border ${theme.status.info.border}`}>
-                  <h4 className={`font-semibold ${theme.textColors.secondary} mb-2`}>💡 Banking Optimization Insights</h4>
-                  <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
-                    <li>• Your money will grow by {((results.futureValue / results.totalDeposited - 1) * 100).toFixed(1)}% over {timeYears} years</li>
-                    <li>• Interest will earn you {formatCurrency(results.interestEarned)} - that&apos;s {(results.interestEarned / results.totalDeposited * 100).toFixed(1)}% of your deposits!</li>
-                    <li>• Monthly deposits of {formatCurrency(monthlyDeposit)} grow to {formatCurrency(results.futureValue / (timeYears * 12))} per month</li>
-                    <li>• <strong>Banking Impact:</strong> At 0.01% (big bank), you&apos;d only earn {formatCurrency(results.totalDeposited * 0.0001 * timeYears)} vs {formatCurrency(results.interestEarned)} with smart banking!</li>
-                  </ul>
-                </div>
-              </>
-            )}
-          </motion.div>
+        {/* Additional Key Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <ResultCard
+            icon={Target}
+            label="Future Value"
+            value={results.futureValue}
+            format="currency"
+            variant="success"
+          />
+          
+          <ResultCard
+            icon={DollarSign}
+            label="Interest Earned"
+            value={results.interestEarned}
+            format="currency"
+            variant="info"
+          />
+          
+          <ResultCard
+            icon={TrendingUp}
+            label="Growth Multiplier"
+            value={results.totalDeposited > 0 ? (results.futureValue / results.totalDeposited) : 1}
+            format="number"
+            variant="warning"
+          />
         </div>
 
         {/* Chart Section */}
         {chartData.length > 0 && (
-          <motion.div
-            variants={itemVariants}
-            className={`mt-8 ${theme.backgrounds.glass} border ${theme.borderColors.primary} p-6 rounded-lg`}
-          >
-            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Growth Over Time</h3>
+          <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+            <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Growth Over Time</h4>
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
+                  <CartesianGrid strokeDasharray="3 3" stroke={theme.colors.slate[700]} opacity={0.3} />
                   <XAxis
                     dataKey="year"
                     label={{ value: 'Years', position: 'insideBottom', offset: -10 }}
-                    tick={{ fill: "#94a3b8" }}
+                    tick={{ fill: theme.colors.slate[400] }}
                   />
                   <YAxis
                     tickFormatter={(value: number) => `$${(value / 1000).toFixed(1)}k`}
                     label={{ value: 'Amount ($)', angle: -90, position: 'insideLeft' }}
-                    tick={{ fill: "#94a3b8" }}
+                    tick={{ fill: theme.colors.slate[400] }}
                   />
                   <Tooltip
-                    formatter={(value: number, name: string) => [formatCurrency(value), name]}
+                    contentStyle={{
+                      backgroundColor: theme.colors.slate[800],
+                      border: `1px solid ${theme.colors.slate[700]}`,
+                      borderRadius: '8px',
+                      color: theme.colors.slate[100]
+                    }}
+                    formatter={(value: number, name: string) => [
+                      formatCurrency(value), 
+                      name === 'deposited' ? 'Total Deposited' : 
+                      name === 'interest' ? 'Interest Earned' : 'Total Value'
+                    ]}
                     labelFormatter={(label) => `Year ${label}`}
                   />
                   <Line
                     type="monotone"
                     dataKey="deposited"
-                    stroke="#8884d8"
+                    stroke={theme.colors.blue[400]}
                     strokeWidth={2}
-                    name="Total Deposited"
+                    name="deposited"
                   />
                   <Line
                     type="monotone"
                     dataKey="total"
-                    stroke="#82ca9d"
+                    stroke={theme.colors.emerald[400]}
                     strokeWidth={3}
-                    name="Total Value"
+                    name="total"
                   />
                   <Line
                     type="monotone"
                     dataKey="interest"
-                    stroke="#ffc658"
+                    stroke={theme.colors.amber[400]}
                     strokeWidth={2}
-                    name="Interest Earned"
+                    name="interest"
                   />
                 </LineChart>
               </ResponsiveContainer>
             </div>
 
+            {/* Chart Legend */}
             <div className="flex justify-center space-x-6 mt-4 text-sm">
               <div className="flex items-center">
-                <div className={`w-4 h-1 ${theme.status.info.bg}0 mr-2`}></div>
+                <div className="w-4 h-1 bg-blue-400 mr-2"></div>
                 <span>Total Deposited</span>
               </div>
               <div className="flex items-center">
-                <div className={`w-4 h-1 ${theme.status.success.bg}0 mr-2`}></div>
+                <div className="w-4 h-1 bg-emerald-400 mr-2"></div>
                 <span>Total Value</span>
               </div>
               <div className="flex items-center">
-                <div className={`w-4 h-1 ${theme.status.warning.bg}0 mr-2`}></div>
+                <div className="w-4 h-1 bg-amber-400 mr-2"></div>
                 <span>Interest Earned</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
-    </motion.div>
+    </CalculatorWrapper>
   );
 };
 

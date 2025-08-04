@@ -2,9 +2,11 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
+import { CurrencyInput, NumberInput } from '@/components/shared/calculators/FormFields';
+import { ResultCard } from '@/components/shared/calculators/ResultComponents';
+import { calculateCompoundInterest, formatCurrency, formatPercentage } from '@/lib/utils/financial';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Sparkles, TrendingUp } from 'lucide-react';
-import { Label } from '@/components/ui/label';
 import { theme } from '@/lib/theme';
 
 interface CompoundData {
@@ -15,20 +17,22 @@ interface CompoundData {
 }
 
 export default function CompoundInterestCalculator() {
-    // Form inputs
+    // Form inputs - keeping as strings for form fields
     const [principal, setPrincipal] = useState('10000');
     const [rate, setRate] = useState('7');
     const [time, setTime] = useState('30');
     const [monthlyContribution, setMonthlyContribution] = useState('500');
 
     const [data, setData] = useState<CompoundData[]>([]);
-    const [totalContributed, setTotalContributed] = useState(0);
-    const [totalInterest, setTotalInterest] = useState(0);
-    const [finalAmount, setFinalAmount] = useState(0);
+    const [results, setResults] = useState({
+      finalAmount: 0,
+      totalContributed: 0,
+      totalInterest: 0
+    });
 
-    const calculateCompoundInterest = useCallback(() => {
+    const calculateGrowth = useCallback(() => {
         const P = parseFloat(principal) || 0;
-        const r = (parseFloat(rate) || 0) / 100;
+        const r = parseFloat(rate) || 0;
         const t = parseInt(time) || 0;
         const monthlyAdd = parseFloat(monthlyContribution) || 0;
 
@@ -41,20 +45,15 @@ export default function CompoundInterestCalculator() {
             let yearEndValue: number;
 
             if (year === 0) {
-                // Initial year - just the principal
                 yearEndValue = P;
                 totalContributions = P;
             } else {
-                // For subsequent years, we need to account for monthly contributions
-                // Start with previous year's value
+                // Calculate year-end value with monthly contributions
                 const startValue = compoundData[year - 1]?.total || P;
-                
-                // Add monthly contributions throughout the year with compound growth
                 let runningTotal = startValue;
+                
                 for (let month = 1; month <= 12; month++) {
-                    // Add interest for the month
-                    runningTotal *= (1 + r / 12);
-                    // Add monthly contribution at end of month
+                    runningTotal *= (1 + r / 100 / 12);
                     runningTotal += monthlyAdd;
                 }
                 
@@ -76,21 +75,77 @@ export default function CompoundInterestCalculator() {
         
         if (compoundData.length > 0) {
             const finalData = compoundData[compoundData.length - 1];
-            setFinalAmount(finalData.total);
-            setTotalContributed(finalData.principal);
-            setTotalInterest(finalData.interest);
+            setResults({
+              finalAmount: finalData.total,
+              totalContributed: finalData.principal,
+              totalInterest: finalData.interest
+            });
         }
     }, [principal, rate, time, monthlyContribution]);
 
     useEffect(() => {
-        calculateCompoundInterest();
-    }, [calculateCompoundInterest]);
+        calculateGrowth();
+    }, [calculateGrowth]);
 
     const handleReset = () => {
         setPrincipal('10000');
         setRate('7');
         setTime('30');
         setMonthlyContribution('500');
+    };
+
+    // Generate insights based on calculations
+    const generateInsights = () => {
+        const insights = [];
+        
+        const rateNum = parseFloat(rate) || 0;
+        const timeNum = parseInt(time) || 0;
+        const monthlyContributionNum = parseFloat(monthlyContribution) || 0;
+        const principalNum = parseFloat(principal) || 0;
+        
+        const effectiveReturn = results.totalContributed > 0 ? 
+            ((results.finalAmount / results.totalContributed - 1) * 100) : 0;
+        
+        const interestMultiplier = results.totalContributed > 0 ? 
+            (results.totalInterest / results.totalContributed) : 0;
+
+        // High growth insight
+        if (effectiveReturn > 200) {
+            insights.push({
+                type: 'success' as const,
+                title: 'Excellent Growth Potential',
+                message: `Your investments could grow by ${effectiveReturn.toFixed(0)}% over ${timeNum} years. The power of compound interest is working strongly in your favor!`
+            });
+        }
+
+        // Time advantage insight
+        if (timeNum >= 25) {
+            insights.push({
+                type: 'info' as const,
+                title: 'Time Is Your Greatest Asset',
+                message: `With ${timeNum} years of growth, you're giving compound interest maximum power. Each extra year of investing significantly increases your wealth.`
+            });
+        }
+
+        // Regular contributions insight
+        if (monthlyContributionNum > principalNum * 0.01) {
+            insights.push({
+                type: 'success' as const,
+                title: 'Smart Contribution Strategy',
+                message: `Your monthly contributions of ${formatCurrency(monthlyContributionNum)} will add ${formatCurrency(monthlyContributionNum * 12 * timeNum)} over time, significantly boosting your final amount.`
+            });
+        }
+
+        // Low rate warning
+        if (rateNum < 4) {
+            insights.push({
+                type: 'warning' as const,
+                title: 'Consider Higher-Yield Investments',
+                message: `At ${rateNum}% annual return, consider exploring diversified index funds or other investments that historically average 7-10% annually.`
+            });
+        }
+
+        return insights;
     };
 
     // Calculator metadata
@@ -125,28 +180,34 @@ export default function CompoundInterestCalculator() {
         ]
     };
 
-    // Results formatting
-    const results = {
+    // Results formatting for the wrapper
+    const calculatorResults = {
         primary: {
             label: 'Final Amount',
-            value: finalAmount,
-            format: 'currency' as const
+            value: results.finalAmount,
+            format: 'currency' as const,
+            variant: 'success' as const,
+            description: `After ${time} years of ${rate}% annual growth`
         },
         secondary: [
             {
                 label: 'Total Contributed',
-                value: totalContributed,
-                format: 'currency' as const
+                value: results.totalContributed,
+                format: 'currency' as const,
+                description: 'Your initial investment plus monthly contributions'
             },
             {
                 label: 'Interest Earned',
-                value: totalInterest,
-                format: 'currency' as const
+                value: results.totalInterest,
+                format: 'currency' as const,
+                variant: 'success' as const,
+                description: 'Pure profit from compound growth'
             },
             {
-                label: 'Interest Rate of Return',
-                value: totalInterest > 0 ? ((totalInterest / totalContributed) * 100) : 0,
-                format: 'percentage' as const
+                label: 'Effective Return',
+                value: results.totalContributed > 0 ? ((results.finalAmount / results.totalContributed - 1) * 100) : 0,
+                format: 'percentage' as const,
+                description: 'Total return on your investment'
             }
         ]
     };
@@ -154,7 +215,8 @@ export default function CompoundInterestCalculator() {
     return (
         <CalculatorWrapper
             metadata={metadata}
-            results={results}
+            results={calculatorResults}
+            insights={generateInsights()}
             onReset={handleReset}
         >
             <div className="space-y-6">
@@ -162,79 +224,49 @@ export default function CompoundInterestCalculator() {
                 <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
                     <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Investment Parameters</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <Label htmlFor="principal" className={`${theme.textColors.primary}`}>
-                                Initial Investment
-                            </Label>
-                            <div className="relative">
-                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
-                                <input
-                                    id="principal"
-                                    type="number"
-                                    value={principal}
-                                    onChange={(e) => setPrincipal(e.target.value)}
-                                    placeholder="Enter initial amount"
-                                    min="0"
-                                    max="1000000"
-                                    step="100"
-                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
-                                />
-                            </div>
-                        </div>
+                        <CurrencyInput
+                            id="principal"
+                            label="Initial Investment"
+                            value={principal}
+                            onChange={setPrincipal}
+                            min={0}
+                            max={1000000}
+                            step={100}
+                            placeholder="Enter initial amount"
+                        />
 
-                        <div>
-                            <Label htmlFor="monthlyContribution" className={`${theme.textColors.primary}`}>
-                                Monthly Contribution
-                            </Label>
-                            <div className="relative">
-                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
-                                <input
-                                    id="monthlyContribution"
-                                    type="number"
-                                    value={monthlyContribution}
-                                    onChange={(e) => setMonthlyContribution(e.target.value)}
-                                    placeholder="Enter monthly amount"
-                                    min="0"
-                                    max="10000"
-                                    step="25"
-                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
-                                />
-                            </div>
-                        </div>
+                        <CurrencyInput
+                            id="monthlyContribution"
+                            label="Monthly Contribution"
+                            value={monthlyContribution}
+                            onChange={setMonthlyContribution}
+                            min={0}
+                            max={10000}
+                            step={25}
+                            placeholder="Enter monthly amount"
+                        />
 
-                        <div>
-                            <Label htmlFor="rate" className={`${theme.textColors.primary}`}>
-                                Annual Interest Rate (%)
-                            </Label>
-                            <input
-                                id="rate"
-                                type="number"
-                                value={rate}
-                                onChange={(e) => setRate(e.target.value)}
-                                placeholder="Enter annual rate"
-                                min="0"
-                                max="30"
-                                step="0.1"
-                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
-                            />
-                        </div>
+                        <NumberInput
+                            id="rate"
+                            label="Annual Interest Rate (%)"
+                            value={rate}
+                            onChange={setRate}
+                            min={0}
+                            max={30}
+                            step={0.1}
+                            placeholder="Enter annual rate"
+                        />
 
-                        <div>
-                            <Label htmlFor="time" className={`${theme.textColors.primary}`}>
-                                Investment Period (years)
-                            </Label>
-                            <input
-                                id="time"
-                                type="number"
-                                value={time}
-                                onChange={(e) => setTime(e.target.value)}
-                                placeholder="Enter number of years"
-                                min="1"
-                                max="50"
-                                step="1"
-                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
-                            />
-                        </div>
+                        <NumberInput
+                            id="time"
+                            label="Investment Period (years)"
+                            value={time}
+                            onChange={setTime}
+                            min={1}
+                            max={50}
+                            step={1}
+                            placeholder="Enter number of years"
+                        />
                     </div>
                 </div>
 
@@ -289,29 +321,29 @@ export default function CompoundInterestCalculator() {
                         
                         {/* Key Insights */}
                         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4 text-center`}>
-                                <TrendingUp className={`w-6 h-6 ${theme.status.info.text} mx-auto mb-2`} />
-                                <div className={`text-sm ${theme.status.info.text} mb-1`}>Effective Annual Return</div>
-                                <div className={`text-lg font-bold ${theme.textColors.primary}`}>
-                                    {totalContributed > 0 ? ((finalAmount / totalContributed - 1) * 100).toFixed(1) : 0}%
-                                </div>
-                            </div>
+                            <ResultCard
+                                icon={TrendingUp}
+                                label="Effective Annual Return"
+                                value={results.totalContributed > 0 ? ((results.finalAmount / results.totalContributed - 1) * 100) : 0}
+                                format="percentage"
+                                variant="info"
+                            />
                             
-                            <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4 text-center`}>
-                                <Sparkles className={`w-6 h-6 ${theme.status.success.text} mx-auto mb-2`} />
-                                <div className={`text-sm ${theme.status.success.text} mb-1`}>Interest Multiplier</div>
-                                <div className={`text-lg font-bold ${theme.textColors.primary}`}>
-                                    {totalContributed > 0 ? (totalInterest / totalContributed).toFixed(1) : 0}x
-                                </div>
-                            </div>
+                            <ResultCard
+                                icon={Sparkles}
+                                label="Interest Multiplier"
+                                value={results.totalContributed > 0 ? (results.totalInterest / results.totalContributed) : 0}
+                                format="number"
+                                variant="success"
+                            />
                             
-                            <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4 text-center`}>
-                                <div className={`text-sm ${theme.status.warning.text} mb-1`}>Years to Double</div>
-                                <div className={`text-lg font-bold ${theme.textColors.primary}`}>
-                                    {parseFloat(rate) > 0 ? Math.round(72 / parseFloat(rate)) : 0} years
-                                </div>
-                                <div className={`text-xs ${theme.textColors.muted}`}>Rule of 72</div>
-                            </div>
+                            <ResultCard
+                                label="Years to Double"
+                                value={parseFloat(rate) > 0 ? Math.round(72 / parseFloat(rate)) : 0}
+                                format="number"
+                                variant="warning"
+                                description="Rule of 72"
+                            />
                         </div>
                     </div>
                 )}

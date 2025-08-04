@@ -3,8 +3,9 @@
 import React, { useState, useEffect, ReactNode } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-import { Calculator, Lightbulb, Share2, Download, RotateCcw } from 'lucide-react';
+import { Calculator, Loader2, AlertCircle, CheckCircle, AlertTriangle, XCircle, Info as InfoIcon, RotateCcw, Share2, Download, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { formatCurrency, formatPercentage, validatePositiveNumber } from '@/lib/utils/financial';
 
 export interface CalculatorMetadata {
   id: string;
@@ -20,16 +21,41 @@ export interface CalculatorMetadata {
   }[];
 }
 
+export interface CalculatorResult {
+  label: string;
+  value: string | number;
+  format?: 'currency' | 'percentage' | 'number' | 'months' | 'years';
+  variant?: 'primary' | 'success' | 'warning' | 'error' | 'info';
+  description?: string;
+}
+
+export interface CalculatorInsight {
+  type: 'success' | 'warning' | 'error' | 'info';
+  title: string;
+  message: string;
+}
+
+export interface CalculatorValidation {
+  isValid: boolean;
+  errors: Array<{
+    field: string;
+    message: string;
+  }>;
+}
+
 interface CalculatorWrapperProps {
   metadata: CalculatorMetadata;
   children: ReactNode;
   results?: {
-    primary: { label: string; value: string | number; format?: 'currency' | 'percentage' | 'number' };
-    secondary?: Array<{ label: string; value: string | number; format?: 'currency' | 'percentage' | 'number' }>;
+    primary: CalculatorResult;
+    secondary?: CalculatorResult[];
   };
+  insights?: CalculatorInsight[];
+  validation?: CalculatorValidation;
   onReset?: () => void;
   onShare?: () => void;
   onExport?: () => void;
+  isLoading?: boolean;
   className?: string;
 }
 
@@ -37,9 +63,12 @@ export default function CalculatorWrapper({
   metadata,
   children,
   results,
+  insights = [],
+  validation,
   onReset,
   onShare,
   onExport,
+  isLoading = false,
   className = ''
 }: CalculatorWrapperProps) {
   const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
@@ -49,25 +78,103 @@ export default function CalculatorWrapper({
     recordCalculatorUsage(metadata.id);
   }, [recordCalculatorUsage, metadata.id]);
 
-  const formatValue = (value: string | number, format?: 'currency' | 'percentage' | 'number') => {
+  const formatValue = (value: string | number, format?: 'currency' | 'percentage' | 'number' | 'months' | 'years') => {
     const numValue = typeof value === 'string' ? parseFloat(value) : value;
     
     if (isNaN(numValue)) return value;
 
     switch (format) {
       case 'currency':
-        return new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0,
-        }).format(numValue);
+        return formatCurrency(numValue);
       case 'percentage':
-        return `${(numValue * 100).toFixed(1)}%`;
+        return formatPercentage(numValue);
       case 'number':
         return new Intl.NumberFormat('en-US').format(numValue);
+      case 'months':
+        return numValue === 1 ? '1 month' : `${Math.round(numValue)} months`;
+      case 'years':
+        const years = Math.floor(numValue);
+        const months = Math.round((numValue - years) * 12);
+        if (years === 0) return months === 1 ? '1 month' : `${months} months`;
+        if (months === 0) return years === 1 ? '1 year' : `${years} years`;
+        return `${years}y ${months}m`;
       default:
         return value;
+    }
+  };
+
+  // Utility functions for styling variants
+  const getResultVariantStyles = (variant: string) => {
+    switch (variant) {
+      case 'success':
+        return {
+          bg: theme.status.success.bg,
+          border: theme.status.success.border,
+          text: theme.status.success.text
+        };
+      case 'warning':
+        return {
+          bg: theme.status.warning.bg,
+          border: theme.status.warning.border,
+          text: theme.status.warning.text
+        };
+      case 'danger':
+        return {
+          bg: theme.status.error.bg,
+          border: theme.status.error.border,
+          text: theme.status.error.text
+        };
+      case 'info':
+      default:
+        return {
+          bg: theme.backgrounds.cardHover,
+          border: theme.borderColors.primary,
+          text: theme.textColors.primary
+        };
+    }
+  };
+
+  const getInsightVariantStyles = (type: string) => {
+    switch (type) {
+      case 'success':
+        return {
+          bg: theme.status.success.bg,
+          border: theme.status.success.border,
+          text: theme.status.success.text
+        };
+      case 'warning':
+        return {
+          bg: theme.status.warning.bg,
+          border: theme.status.warning.border,
+          text: theme.status.warning.text
+        };
+      case 'danger':
+        return {
+          bg: theme.status.error.bg,
+          border: theme.status.error.border,
+          text: theme.status.error.text
+        };
+      case 'info':
+      default:
+        return {
+          bg: 'bg-blue-950/20',
+          border: 'border-blue-500/20',
+          text: 'text-blue-400'
+        };
+    }
+  };
+
+  const getInsightIcon = (type: string) => {
+    switch (type) {
+      case 'success':
+        return CheckCircle;
+      case 'warning':
+        return AlertTriangle;
+      case 'danger':
+        return XCircle;
+      case 'info':
+      default:
+        return InfoIcon;
     }
   };
 
@@ -151,11 +258,34 @@ export default function CalculatorWrapper({
 
       {/* Main Content Area */}
       <div className="p-6">
+        {/* Validation Errors */}
+        {validation && !validation.isValid && (
+          <div className={`mb-6 ${theme.status.error.bg} border ${theme.status.error.border} rounded-lg p-4`}>
+            <div className="flex items-center gap-2 mb-3">
+              <AlertCircle className={`w-5 h-5 ${theme.status.error.text}`} />
+              <h4 className={`font-semibold ${theme.status.error.text}`}>Please correct the following errors:</h4>
+            </div>
+            <ul className="space-y-1">
+              {validation.errors.map((error, index) => (
+                <li key={index} className={`text-sm ${theme.status.error.text}`}>
+                  • {error.message}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <div className={`grid grid-cols-1 ${results ? 'lg:grid-cols-2' : ''} gap-8`}>
           {/* Input Section */}
           <div className="space-y-6">
             <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Calculator Inputs</h3>
-            {children}
+            {isLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-500"></div>
+              </div>
+            ) : (
+              children
+            )}
           </div>
 
           {/* Results Section */}
@@ -164,38 +294,81 @@ export default function CalculatorWrapper({
               <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Results</h3>
               
               {/* Primary Result */}
-              <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-xl p-6`}>
-                <div className={`text-sm font-medium ${theme.status.success.text} mb-2`}>
+              <div className={`${getResultVariantStyles(results.primary.variant || 'primary').bg} border ${getResultVariantStyles(results.primary.variant || 'primary').border} rounded-xl p-6`}>
+                <div className={`text-sm font-medium ${getResultVariantStyles(results.primary.variant || 'primary').text} mb-2`}>
                   {results.primary.label}
                 </div>
                 <div className={`text-3xl font-bold ${theme.textColors.primary}`}>
                   {formatValue(results.primary.value, results.primary.format)}
                 </div>
+                {results.primary.description && (
+                  <div className={`text-sm ${theme.textColors.muted} mt-2`}>
+                    {results.primary.description}
+                  </div>
+                )}
               </div>
 
               {/* Secondary Results */}
               {results.secondary && results.secondary.length > 0 && (
                 <div className="space-y-3">
-                  {results.secondary.map((result, index) => (
-                    <div
-                      key={index}
-                      className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4`}
-                    >
-                      <div className="flex justify-between items-center">
-                        <span className={`${theme.textColors.secondary} font-medium`}>
-                          {result.label}
-                        </span>
-                        <span className={`${theme.textColors.primary} font-semibold`}>
-                          {formatValue(result.value, result.format)}
-                        </span>
+                  {results.secondary.map((result, index) => {
+                    const variantStyles = getResultVariantStyles(result.variant || 'info');
+                    return (
+                      <div
+                        key={index}
+                        className={`${variantStyles.bg} border ${variantStyles.border} rounded-lg p-4`}
+                      >
+                        <div className="flex justify-between items-center">
+                          <span className={`${theme.textColors.secondary} font-medium`}>
+                            {result.label}
+                          </span>
+                          <span className={`${theme.textColors.primary} font-semibold`}>
+                            {formatValue(result.value, result.format)}
+                          </span>
+                        </div>
+                        {result.description && (
+                          <div className={`text-xs ${theme.textColors.muted} mt-1`}>
+                            {result.description}
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
           )}
         </div>
+
+        {/* Insights Section */}
+        {insights && insights.length > 0 && (
+          <div className="mt-8 space-y-4">
+            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Insights & Recommendations</h3>
+            {insights.map((insight, index) => {
+              const InsightIcon = getInsightIcon(insight.type);
+              const variantStyles = getInsightVariantStyles(insight.type);
+              
+              return (
+                <div
+                  key={index}
+                  className={`${variantStyles.bg} border ${variantStyles.border} rounded-lg p-4`}
+                >
+                  <div className="flex items-start gap-3">
+                    <InsightIcon className={`w-5 h-5 ${variantStyles.text} mt-0.5 flex-shrink-0`} />
+                    <div>
+                      <h4 className={`font-semibold ${theme.textColors.primary} mb-1`}>
+                        {insight.title}
+                      </h4>
+                      <p className={`text-sm ${theme.textColors.secondary}`}>
+                        {insight.message}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Educational Notes Section */}
