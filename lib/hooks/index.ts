@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 
 // Type definitions for better type safety
@@ -9,6 +9,57 @@ interface CalculatorInputs {
 interface CalculatorResults {
   [key: string]: string | number | boolean | CalculatorResults;
 }
+
+// Enhanced financial calculation utilities
+export const financialUtils = {
+  // Common financial calculation helpers
+  calculateCompoundInterest: (principal: number, rate: number, time: number, compoundingFrequency = 12) => {
+    return principal * Math.pow(1 + rate / compoundingFrequency, compoundingFrequency * time);
+  },
+  
+  calculatePMT: (rate: number, nper: number, pv: number, fv = 0, type = 0) => {
+    if (rate === 0) return -(pv + fv) / nper;
+    const pvif = Math.pow(1 + rate, nper);
+    return -rate * (pv * pvif + fv) / (pvif - 1) * (1 + rate * type);
+  },
+  
+  calculateFutureValue: (rate: number, nper: number, pmt: number, pv = 0, type = 0) => {
+    if (rate === 0) return -(pv + pmt * nper);
+    const pvif = Math.pow(1 + rate, nper);
+    return -(pv * pvif + pmt * (pvif - 1) / rate * (1 + rate * type));
+  },
+  
+  calculatePresentValue: (rate: number, nper: number, pmt: number, fv = 0, type = 0) => {
+    if (rate === 0) return -(fv + pmt * nper);
+    const pvif = Math.pow(1 + rate, nper);
+    return -(fv / pvif + pmt * (1 - 1 / pvif) / rate * (1 + rate * type));
+  },
+  
+  formatCurrency: (value: number, locale = 'en-US', currency = 'USD') => {
+    return new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  },
+  
+  formatPercentage: (value: number, decimals = 2) => {
+    return `${(value * 100).toFixed(decimals)}%`;
+  },
+  
+  parseNumericInput: (value: string): number => {
+    const cleaned = value.replace(/[^0-9.-]/g, '');
+    const parsed = parseFloat(cleaned);
+    return isNaN(parsed) ? 0 : parsed;
+  },
+  
+  validateNumericRange: (value: number, min?: number, max?: number): boolean => {
+    if (min !== undefined && value < min) return false;
+    if (max !== undefined && value > max) return false;
+    return true;
+  },
+};
 
 // Hook for calculator state management
 export function useCalculatorState(calculatorId: string, initialInputs: CalculatorInputs) {
@@ -309,4 +360,126 @@ export function useAsyncData<T>(
   }, [fetch]);
 
   return { data, loading, error, refetch };
+}
+
+// Enhanced hook for input validation with debouncing
+export function useInputValidation(
+  initialValue: string,
+  validationRules: {
+    required?: boolean;
+    min?: number;
+    max?: number;
+    type?: 'number' | 'email' | 'text';
+    pattern?: RegExp;
+    custom?: (value: string) => string | null;
+  },
+  debounceMs = 300
+) {
+  const [value, setValue] = useState(initialValue);
+  const [error, setError] = useState<string | null>(null);
+  const [isValidating, setIsValidating] = useState(false);
+  const [hasBeenTouched, setHasBeenTouched] = useState(false);
+
+  const validateValue = useCallback((val: string): string | null => {
+    if (validationRules.required && (!val || val.trim() === '')) {
+      return 'This field is required';
+    }
+
+    if (val && validationRules.type === 'number') {
+      const numVal = parseFloat(val);
+      if (isNaN(numVal)) return 'Must be a valid number';
+      if (validationRules.min !== undefined && numVal < validationRules.min) {
+        return `Must be at least ${validationRules.min}`;
+      }
+      if (validationRules.max !== undefined && numVal > validationRules.max) {
+        return `Must be no more than ${validationRules.max}`;
+      }
+    }
+
+    if (val && validationRules.type === 'email') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(val)) return 'Must be a valid email address';
+    }
+
+    if (val && validationRules.pattern && !validationRules.pattern.test(val)) {
+      return 'Invalid format';
+    }
+
+    if (val && validationRules.custom) {
+      const customError = validationRules.custom(val);
+      if (customError) return customError;
+    }
+
+    return null;
+  }, [validationRules]);
+
+  // Debounced validation
+  useEffect(() => {
+    if (!hasBeenTouched) return;
+
+    setIsValidating(true);
+    const timeoutId = setTimeout(() => {
+      const validationError = validateValue(value);
+      setError(validationError);
+      setIsValidating(false);
+    }, debounceMs);
+
+    return () => clearTimeout(timeoutId);
+  }, [value, validateValue, debounceMs, hasBeenTouched]);
+
+  const handleChange = useCallback((newValue: string) => {
+    setValue(newValue);
+    if (!hasBeenTouched) setHasBeenTouched(true);
+  }, [hasBeenTouched]);
+
+  const handleBlur = useCallback(() => {
+    if (!hasBeenTouched) setHasBeenTouched(true);
+    const validationError = validateValue(value);
+    setError(validationError);
+  }, [validateValue, value, hasBeenTouched]);
+
+  const reset = useCallback(() => {
+    setValue(initialValue);
+    setError(null);
+    setHasBeenTouched(false);
+    setIsValidating(false);
+  }, [initialValue]);
+
+  const isValid = useMemo(() => {
+    return hasBeenTouched ? error === null : true;
+  }, [error, hasBeenTouched]);
+
+  return {
+    value,
+    error,
+    isValid,
+    isValidating,
+    hasBeenTouched,
+    onChange: handleChange,
+    onBlur: handleBlur,
+    reset,
+  };
+}
+
+// Hook for managing calculator insights and recommendations
+export function useCalculatorInsights<T extends CalculatorInputs>(
+  inputs: T,
+  calculations: CalculatorResults | null
+) {
+  const insights = useMemo(() => {
+    if (!calculations) return [];
+
+    const insights: Array<{
+      type: 'success' | 'warning' | 'error' | 'info';
+      title: string;
+      message: string;
+    }> = [];
+
+    // Add insights based on common financial patterns
+    // This can be overridden by specific calculator implementations
+    
+    return insights;
+  }, [calculations]);
+
+  return insights;
 }
