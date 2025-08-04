@@ -2,7 +2,7 @@
 
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
 import PortfolioConstructionLessonEnhanced from '@/components/chapters/fundamentals/lessons/PortfolioConstructionLessonEnhanced';
-import PortfolioAnalyzerCalculator from '@/components/shared/calculators/PortfolioAnalyzerCalculator';
+import PortfolioCalculatorEnhanced from '@/components/chapters/fundamentals/calculators/PortfolioCalculatorEnhanced';
 import PortfolioConstructionQuizEnhanced from '@/components/chapters/fundamentals/quizzes/PortfolioConstructionQuizEnhanced';
 import { PieChart } from 'lucide-react';
 
@@ -15,10 +15,10 @@ export default function Chapter8Page() {
             icon={PieChart}
             iconColor="text-emerald-400"
             lessonComponent={<PortfolioConstructionLessonEnhanced />}
-            calculatorComponent={<PortfolioAnalyzerCalculator />}
+            calculatorComponent={<PortfolioCalculatorEnhanced />}
             quizComponent={<PortfolioConstructionQuizEnhanced />}
-            calculatorTitle="Portfolio Analyzer"
-            calculatorDescription="Analyze portfolio allocation, risk metrics, and diversification strategies"
+            calculatorTitle="Portfolio Construction Suite"
+            calculatorDescription="Comprehensive tools for portfolio analysis, diversification measurement, and rebalancing optimization"
             quizTitle="Portfolio Construction Quiz"
             quizDescription="Test your knowledge of asset allocation and portfolio theory. You need 80% to unlock Chapter 9."
         />

@@ -43,7 +43,7 @@ const enhancedLessons: LessonContent[] = [
     content: 'Modern Portfolio Theory, developed by Nobel Prize winner Harry Markowitz, demonstrates that you can reduce risk without sacrificing returns through proper diversification. The key insight: correlation matters more than individual asset performance. A portfolio of uncorrelated assets will have lower volatility than any individual holding while maintaining similar returns.',
     practicalAction: 'Build a core portfolio using broad market index funds: 60% US Total Stock Market (VTI), 20% International Developed Markets (VTIAX), 10% Emerging Markets (VTISX), 10% Bonds (VBTLX). This provides instant diversification across 10,000+ companies worldwide.',
     realMoneyExample: 'During 2008 financial crisis: US stocks fell 37%, but a diversified portfolio with international exposure and bonds only dropped 22%. A $100,000 diversified portfolio lost $22,000 vs $37,000 in US-only stocks. Recovery time: 3 years vs 5 years.',
-    warningTip: 'Diversification means always owning something that disappoints you. If everything in your portfolio is doing well simultaneously, you\'re not properly diversified—you\'re taking concentrated risk.'
+    warningTip: 'Diversification means always owning something that disappoints you. If everything in your portfolio is doing well simultaneously, you&apos;re not properly diversified—you&apos;re taking concentrated risk.'
   },
   {
     title: 'Asset Allocation: The 90% Solution',
@@ -265,6 +265,51 @@ export default function PortfolioConstructionLessonEnhanced({ onComplete }: Port
               {currentLessonContent.warningTip}
             </p>
           </div>
+
+          {/* Interactive Calculator References */}
+          {currentLesson === 0 && (
+            <div className={`p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`}>
+              <h4 className={`font-semibold ${theme.status.info.text} mb-2`}>
+                📊 Try It Now: Portfolio Construction Tools
+              </h4>
+              <p className={`text-sm ${theme.status.info.text}`}>
+                Use our <strong>Portfolio Overview Calculator</strong> in the Calculator tab to analyze your current portfolio allocation and see how Modern Portfolio Theory applies to your investments.
+              </p>
+            </div>
+          )}
+
+          {currentLesson === 1 && (
+            <div className={`p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`}>
+              <h4 className={`font-semibold ${theme.status.info.text} mb-2`}>
+                🎯 Try It Now: Asset Allocation Calculator
+              </h4>
+              <p className={`text-sm ${theme.status.info.text}`}>
+                Use our <strong>Portfolio Overview Calculator</strong> in the Calculator tab to find your optimal asset allocation based on your age and risk tolerance.
+              </p>
+            </div>
+          )}
+
+          {currentLesson === 2 && (
+            <div className={`p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`}>
+              <h4 className={`font-semibold ${theme.status.info.text} mb-2`}>
+                🌍 Try It Now: Diversification Analyzer
+              </h4>
+              <p className={`text-sm ${theme.status.info.text}`}>
+                Use our <strong>Diversification Calculator</strong> in the Calculator tab to measure your portfolio&apos;s diversification score across asset classes and geographic regions.
+              </p>
+            </div>
+          )}
+
+          {currentLesson === 3 && (
+            <div className={`p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`}>
+              <h4 className={`font-semibold ${theme.status.info.text} mb-2`}>
+                ⚖️ Try It Now: Rebalancing Calculator
+              </h4>
+              <p className={`text-sm ${theme.status.info.text}`}>
+                Use our <strong>Rebalancing Calculator</strong> in the Calculator tab to determine exactly when and how to rebalance your portfolio to maintain optimal allocation.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Action Button */}
