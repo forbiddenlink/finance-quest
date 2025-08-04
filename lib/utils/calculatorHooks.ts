@@ -1325,3 +1325,839 @@ export function useTaxOptimizerCalculator(): UseTaxOptimizerCalculatorResult {
     reset
   };
 }
+
+/**
+ * Portfolio Analyzer Calculator Hook
+ */
+export interface PortfolioAnalyzerInputs {
+  totalInvestment: number;
+  usStocks: number;
+  intlStocks: number;
+  bonds: number;
+  realEstate: number;
+  commodities: number;
+  cash: number;
+  crypto: number;
+  age: number;
+  riskTolerance: string;
+  investmentHorizon: number;
+}
+
+export interface AssetAllocation {
+  category: string;
+  allocation: number;
+  value: number;
+  target: number;
+  deviation: number;
+  color: string;
+}
+
+export interface PortfolioRecommendation {
+  type: 'rebalance' | 'diversify' | 'risk-adjust' | 'fee-optimize';
+  title: string;
+  description: string;
+  priority: 'High' | 'Medium' | 'Low';
+  impact: string;
+}
+
+export interface PortfolioAnalyzerResult {
+  totalValue: number;
+  riskScore: number;
+  riskLevel: string;
+  diversificationScore: number;
+  expectedReturn: number;
+  volatility: number;
+  sharpeRatio: number;
+  allocationHealthScore: number;
+  allocations: AssetAllocation[];
+  recommendations: PortfolioRecommendation[];
+  ageBasedTarget: Record<string, number>;
+  rebalanceNeeded: boolean;
+  totalAllocation: number;
+}
+
+export interface UsePortfolioAnalyzerCalculatorResult {
+  values: PortfolioAnalyzerInputs;
+  errors: Record<string, string>;
+  result: PortfolioAnalyzerResult | null;
+  isValid: boolean;
+  updateValue: (field: keyof PortfolioAnalyzerInputs, value: string) => void;
+  updateRiskTolerance: (tolerance: string) => void;
+  autoRebalance: () => void;
+  reset: () => void;
+}
+
+// Asset class expected returns and volatilities (annual)
+const ASSET_METRICS = {
+  usStocks: { expectedReturn: 0.10, volatility: 0.16, correlation: 1.0 },
+  intlStocks: { expectedReturn: 0.08, volatility: 0.18, correlation: 0.7 },
+  bonds: { expectedReturn: 0.04, volatility: 0.06, correlation: -0.2 },
+  realEstate: { expectedReturn: 0.07, volatility: 0.14, correlation: 0.3 },
+  commodities: { expectedReturn: 0.06, volatility: 0.20, correlation: 0.1 },
+  cash: { expectedReturn: 0.02, volatility: 0.01, correlation: 0.0 },
+  crypto: { expectedReturn: 0.15, volatility: 0.60, correlation: 0.2 }
+};
+
+// Age-based target allocations
+const getAgeBasedTargets = (age: number, riskTolerance: string) => {
+  const bondPercent = Math.min(Math.max(age - 20, 10), 60);
+  const stockPercent = 100 - bondPercent;
+  
+  const riskMultiplier = riskTolerance === 'conservative' ? 0.7 : 
+                        riskTolerance === 'aggressive' ? 1.3 : 1.0;
+  
+  return {
+    usStocks: Math.round(stockPercent * 0.6 * riskMultiplier),
+    intlStocks: Math.round(stockPercent * 0.3 * riskMultiplier),
+    bonds: Math.round(bondPercent),
+    realEstate: Math.round(10 * riskMultiplier),
+    commodities: Math.round(5 * riskMultiplier),
+    cash: Math.round(5),
+    crypto: riskTolerance === 'aggressive' ? 5 : 0
+  };
+};
+
+export function usePortfolioAnalyzerCalculator(): UsePortfolioAnalyzerCalculatorResult {
+  const [values, setValues] = useState<PortfolioAnalyzerInputs>({
+    totalInvestment: 100000,
+    usStocks: 50,
+    intlStocks: 20,
+    bonds: 20,
+    realEstate: 5,
+    commodities: 3,
+    cash: 2,
+    crypto: 0,
+    age: 35,
+    riskTolerance: 'moderate',
+    investmentHorizon: 25
+  });
+
+  // Validation
+  const validation = validateFields(values, CalculatorValidations.portfolioAnalyzer);
+  const errors = validation.errors;
+  const isValid = validation.isValid;
+
+  // Portfolio calculation functions
+  const calculatePortfolioMetrics = useCallback((allocations: Record<string, number>) => {
+    let expectedReturn = 0;
+    let portfolioVariance = 0;
+    
+    // Calculate expected return
+    Object.entries(allocations).forEach(([asset, allocation]) => {
+      const weight = allocation / 100;
+      const assetKey = asset as keyof typeof ASSET_METRICS;
+      if (ASSET_METRICS[assetKey]) {
+        expectedReturn += weight * ASSET_METRICS[assetKey].expectedReturn;
+      }
+    });
+
+    // Calculate portfolio variance (simplified - assumes correlations)
+    Object.entries(allocations).forEach(([asset, allocation]) => {
+      const weight = allocation / 100;
+      const assetKey = asset as keyof typeof ASSET_METRICS;
+      if (ASSET_METRICS[assetKey]) {
+        portfolioVariance += Math.pow(weight * ASSET_METRICS[assetKey].volatility, 2);
+      }
+    });
+
+    const volatility = Math.sqrt(portfolioVariance);
+    const sharpeRatio = volatility > 0 ? (expectedReturn - 0.02) / volatility : 0;
+
+    return {
+      expectedReturn,
+      volatility,
+      sharpeRatio
+    };
+  }, []);
+
+  const calculateDiversificationScore = useCallback((allocations: Record<string, number>) => {
+    const nonZeroAllocations = Object.values(allocations).filter(val => val > 0).length;
+    const maxAllocations = Object.keys(allocations).length;
+    
+    // Calculate Herfindahl-Hirschman Index (lower is better for diversification)
+    const hhi = Object.values(allocations).reduce((sum, allocation) => {
+      return sum + Math.pow(allocation / 100, 2);
+    }, 0);
+    
+    // Convert to diversification score (0-100, higher is better)
+    const diversificationScore = Math.max(0, Math.min(100, 100 * (1 - hhi) * 2));
+    
+    return Math.round(diversificationScore);
+  }, []);
+
+  const getRiskScore = useCallback((allocations: Record<string, number>) => {
+    let riskScore = 0;
+    
+    Object.entries(allocations).forEach(([asset, allocation]) => {
+      const weight = allocation / 100;
+      const assetKey = asset as keyof typeof ASSET_METRICS;
+      if (ASSET_METRICS[assetKey]) {
+        riskScore += weight * ASSET_METRICS[assetKey].volatility * 100;
+      }
+    });
+    
+    return Math.round(riskScore);
+  }, []);
+
+  // Calculate results
+  const result = useMemo((): PortfolioAnalyzerResult | null => {
+    if (!isValid) return null;
+
+    const {
+      totalInvestment, usStocks, intlStocks, bonds, realEstate,
+      commodities, cash, crypto, age, riskTolerance, investmentHorizon
+    } = values;
+
+    const totalAllocation = usStocks + intlStocks + bonds + realEstate + commodities + cash + crypto;
+    
+    const allocations: AssetAllocation[] = [
+      {
+        category: 'US Stocks',
+        allocation: usStocks,
+        value: (usStocks / 100) * totalInvestment,
+        target: 0,
+        deviation: 0,
+        color: '#3B82F6'
+      },
+      {
+        category: 'International Stocks',
+        allocation: intlStocks,
+        value: (intlStocks / 100) * totalInvestment,
+        target: 0,
+        deviation: 0,
+        color: '#10B981'
+      },
+      {
+        category: 'Bonds',
+        allocation: bonds,
+        value: (bonds / 100) * totalInvestment,
+        target: 0,
+        deviation: 0,
+        color: '#F59E0B'
+      },
+      {
+        category: 'Real Estate',
+        allocation: realEstate,
+        value: (realEstate / 100) * totalInvestment,
+        target: 0,
+        deviation: 0,
+        color: '#EF4444'
+      },
+      {
+        category: 'Commodities',
+        allocation: commodities,
+        value: (commodities / 100) * totalInvestment,
+        target: 0,
+        deviation: 0,
+        color: '#8B5CF6'
+      },
+      {
+        category: 'Cash',
+        allocation: cash,
+        value: (cash / 100) * totalInvestment,
+        target: 0,
+        deviation: 0,
+        color: '#06B6D4'
+      },
+      {
+        category: 'Cryptocurrency',
+        allocation: crypto,
+        value: (crypto / 100) * totalInvestment,
+        target: 0,
+        deviation: 0,
+        color: '#F97316'
+      }
+    ];
+
+    // Get age-based targets
+    const ageBasedTarget = getAgeBasedTargets(age, riskTolerance);
+    
+    // Update targets and deviations
+    allocations.forEach(allocation => {
+      const key = allocation.category.toLowerCase().replace(/\s+/g, '').replace('stocks', 'Stocks').replace('estate', 'Estate');
+      let targetKey = '';
+      
+      switch (allocation.category) {
+        case 'US Stocks':
+          targetKey = 'usStocks';
+          break;
+        case 'International Stocks':
+          targetKey = 'intlStocks';
+          break;
+        case 'Bonds':
+          targetKey = 'bonds';
+          break;
+        case 'Real Estate':
+          targetKey = 'realEstate';
+          break;
+        case 'Commodities':
+          targetKey = 'commodities';
+          break;
+        case 'Cash':
+          targetKey = 'cash';
+          break;
+        case 'Cryptocurrency':
+          targetKey = 'crypto';
+          break;
+      }
+      
+      if (targetKey && ageBasedTarget[targetKey as keyof typeof ageBasedTarget] !== undefined) {
+        allocation.target = ageBasedTarget[targetKey as keyof typeof ageBasedTarget];
+        allocation.deviation = allocation.allocation - allocation.target;
+      }
+    });
+
+    const portfolioAllocations = {
+      usStocks, intlStocks, bonds, realEstate, commodities, cash, crypto
+    };
+
+    const portfolioMetrics = calculatePortfolioMetrics(portfolioAllocations);
+    const diversificationScore = calculateDiversificationScore(portfolioAllocations);
+    const riskScore = getRiskScore(portfolioAllocations);
+
+    // Calculate risk level
+    const riskLevel = riskScore < 8 ? 'Conservative' : 
+                     riskScore < 15 ? 'Moderate' : 'Aggressive';
+
+    // Calculate allocation health score
+    const maxDeviation = Math.max(...allocations.map(a => Math.abs(a.deviation)));
+    const allocationHealthScore = Math.max(0, Math.round(100 - (maxDeviation * 2)));
+
+    // Generate recommendations
+    const recommendations: PortfolioRecommendation[] = [];
+
+    if (Math.abs(totalAllocation - 100) > 1) {
+      recommendations.push({
+        type: 'rebalance',
+        title: 'Portfolio Allocation Issue',
+        description: `Your total allocation is ${totalAllocation.toFixed(1)}%. Adjust allocations to total 100%.`,
+        priority: 'High',
+        impact: 'Critical for accurate analysis'
+      });
+    }
+
+    if (diversificationScore < 50) {
+      recommendations.push({
+        type: 'diversify',
+        title: 'Improve Diversification',
+        description: 'Consider spreading investments across more asset classes to reduce risk.',
+        priority: 'High',
+        impact: 'Reduces portfolio volatility'
+      });
+    }
+
+    allocations.forEach(allocation => {
+      if (Math.abs(allocation.deviation) > 10) {
+        recommendations.push({
+          type: 'rebalance',
+          title: `${allocation.category} Allocation`,
+          description: `Consider ${allocation.deviation > 0 ? 'reducing' : 'increasing'} ${allocation.category} allocation by ${Math.abs(allocation.deviation).toFixed(1)}%`,
+          priority: Math.abs(allocation.deviation) > 20 ? 'High' : 'Medium',
+          impact: 'Aligns with age-appropriate targets'
+        });
+      }
+    });
+
+    if (crypto > 10 && riskTolerance !== 'aggressive') {
+      recommendations.push({
+        type: 'risk-adjust',
+        title: 'High Cryptocurrency Allocation',
+        description: 'Consider reducing crypto allocation to 5% or less for better risk management.',
+        priority: 'Medium',
+        impact: 'Reduces portfolio volatility'
+      });
+    }
+
+    if (cash > 10) {
+      recommendations.push({
+        type: 'fee-optimize',
+        title: 'High Cash Allocation',
+        description: 'Consider investing excess cash for better long-term returns.',
+        priority: 'Low',
+        impact: 'Improves long-term growth potential'
+      });
+    }
+
+    return {
+      totalValue: totalInvestment,
+      riskScore,
+      riskLevel,
+      diversificationScore,
+      expectedReturn: portfolioMetrics.expectedReturn,
+      volatility: portfolioMetrics.volatility,
+      sharpeRatio: portfolioMetrics.sharpeRatio,
+      allocationHealthScore,
+      allocations,
+      recommendations,
+      ageBasedTarget,
+      rebalanceNeeded: recommendations.some(r => r.type === 'rebalance'),
+      totalAllocation
+    };
+  }, [values, isValid, calculatePortfolioMetrics, calculateDiversificationScore, getRiskScore]);
+
+  // Update functions
+  const updateValue = useCallback((field: keyof PortfolioAnalyzerInputs, value: string) => {
+    if (field === 'riskTolerance') {
+      setValues(prev => ({ ...prev, [field]: value }));
+    } else {
+      const numValue = parseFloat(value) || 0;
+      setValues(prev => ({ ...prev, [field]: numValue }));
+    }
+  }, []);
+
+  const updateRiskTolerance = useCallback((tolerance: string) => {
+    setValues(prev => ({ ...prev, riskTolerance: tolerance }));
+  }, []);
+
+  const autoRebalance = useCallback(() => {
+    if (!result) return;
+    
+    const targets = getAgeBasedTargets(values.age, values.riskTolerance);
+    setValues(prev => ({
+      ...prev,
+      usStocks: targets.usStocks,
+      intlStocks: targets.intlStocks,
+      bonds: targets.bonds,
+      realEstate: targets.realEstate,
+      commodities: targets.commodities,
+      cash: targets.cash,
+      crypto: targets.crypto
+    }));
+  }, [result, values.age, values.riskTolerance]);
+
+  const reset = useCallback(() => {
+    setValues({
+      totalInvestment: 100000,
+      usStocks: 50,
+      intlStocks: 20,
+      bonds: 20,
+      realEstate: 5,
+      commodities: 3,
+      cash: 2,
+      crypto: 0,
+      age: 35,
+      riskTolerance: 'moderate',
+      investmentHorizon: 25
+    });
+  }, []);
+
+  return {
+    values,
+    errors,
+    result,
+    isValid,
+    updateValue,
+    updateRiskTolerance,
+    autoRebalance,
+    reset
+  };
+}
+
+/**
+ * Cryptocurrency Allocation Calculator Hook
+ */
+export interface CryptocurrencyAllocationInputs {
+  totalPortfolio: number;
+  cryptoPercentage: number;
+  bitcoin: number;
+  ethereum: number;
+  altcoins: number;
+  defi: number;
+  stablecoins: number;
+  riskTolerance: string;
+  investmentHorizon: number;
+  rebalanceFrequency: string;
+}
+
+export interface CryptoAsset {
+  name: string;
+  allocation: number;
+  value: number;
+  riskLevel: 'Low' | 'Medium' | 'High' | 'Very High';
+  category: string;
+  color: string;
+  expectedReturn: number;
+  volatility: number;
+  correlation: number;
+}
+
+export interface CryptoRecommendation {
+  type: 'allocation' | 'diversification' | 'risk' | 'rebalancing';
+  title: string;
+  description: string;
+  priority: 'High' | 'Medium' | 'Low';
+  impact: string;
+}
+
+export interface CryptocurrencyAllocationResult {
+  totalCryptoValue: number;
+  cryptoAssets: CryptoAsset[];
+  riskScore: number;
+  riskLevel: string;
+  expectedReturn: number;
+  volatility: number;
+  sharpeRatio: number;
+  diversificationScore: number;
+  correlationScore: number;
+  maxDrawdown: number;
+  recommendations: CryptoRecommendation[];
+  allocationValid: boolean;
+  totalAllocation: number;
+}
+
+export interface UseCryptocurrencyAllocationCalculatorResult {
+  values: CryptocurrencyAllocationInputs;
+  errors: Record<string, string>;
+  result: CryptocurrencyAllocationResult | null;
+  isValid: boolean;
+  updateValue: (field: keyof CryptocurrencyAllocationInputs, value: string) => void;
+  updateRiskTolerance: (tolerance: string) => void;
+  updateRebalanceFrequency: (frequency: string) => void;
+  autoBalance: () => void;
+  reset: () => void;
+}
+
+// Crypto asset metrics (expected returns and volatilities are estimated)
+const CRYPTO_METRICS = {
+  bitcoin: { expectedReturn: 0.40, volatility: 0.80, correlation: 1.0, riskLevel: 'High' as const },
+  ethereum: { expectedReturn: 0.50, volatility: 0.90, correlation: 0.8, riskLevel: 'High' as const },
+  altcoins: { expectedReturn: 0.70, volatility: 1.20, correlation: 0.7, riskLevel: 'Very High' as const },
+  defi: { expectedReturn: 0.60, volatility: 1.10, correlation: 0.6, riskLevel: 'Very High' as const },
+  stablecoins: { expectedReturn: 0.05, volatility: 0.05, correlation: 0.1, riskLevel: 'Low' as const }
+};
+
+// Risk tolerance based allocation suggestions
+const getRiskBasedAllocation = (riskTolerance: string, cryptoPercentage: number) => {
+  const baseAllocations = {
+    conservative: {
+      bitcoin: 60,
+      ethereum: 25,
+      altcoins: 0,
+      defi: 0,
+      stablecoins: 15
+    },
+    moderate: {
+      bitcoin: 50,
+      ethereum: 30,
+      altcoins: 10,
+      defi: 5,
+      stablecoins: 5
+    },
+    aggressive: {
+      bitcoin: 40,
+      ethereum: 30,
+      altcoins: 20,
+      defi: 10,
+      stablecoins: 0
+    }
+  };
+
+  return baseAllocations[riskTolerance as keyof typeof baseAllocations] || baseAllocations.moderate;
+};
+
+export function useCryptocurrencyAllocationCalculator(): UseCryptocurrencyAllocationCalculatorResult {
+  const [values, setValues] = useState<CryptocurrencyAllocationInputs>({
+    totalPortfolio: 100000,
+    cryptoPercentage: 10,
+    bitcoin: 50,
+    ethereum: 30,
+    altcoins: 15,
+    defi: 5,
+    stablecoins: 0,
+    riskTolerance: 'moderate',
+    investmentHorizon: 5,
+    rebalanceFrequency: 'quarterly'
+  });
+
+  // Validation
+  const validation = validateFields(values, CalculatorValidations.cryptoAllocation);
+  const errors = validation.errors;
+  const isValid = validation.isValid;
+
+  // Crypto calculation functions
+  const calculateCryptoMetrics = useCallback((allocations: Record<string, number>, totalValue: number) => {
+    let expectedReturn = 0;
+    let portfolioVariance = 0;
+    let weightedCorrelation = 0;
+    let totalWeight = 0;
+
+    // Calculate portfolio metrics
+    Object.entries(allocations).forEach(([asset, allocation]) => {
+      const weight = allocation / 100;
+      const assetKey = asset as keyof typeof CRYPTO_METRICS;
+      
+      if (CRYPTO_METRICS[assetKey] && weight > 0) {
+        expectedReturn += weight * CRYPTO_METRICS[assetKey].expectedReturn;
+        portfolioVariance += Math.pow(weight * CRYPTO_METRICS[assetKey].volatility, 2);
+        weightedCorrelation += weight * CRYPTO_METRICS[assetKey].correlation;
+        totalWeight += weight;
+      }
+    });
+
+    const volatility = Math.sqrt(portfolioVariance);
+    const sharpeRatio = volatility > 0 ? (expectedReturn - 0.02) / volatility : 0;
+    const correlationScore = totalWeight > 0 ? weightedCorrelation / totalWeight : 0;
+    
+    // Calculate diversification score (lower correlation = better diversification)
+    const diversificationScore = Math.max(0, Math.min(100, (1 - correlationScore) * 100));
+    
+    // Calculate max drawdown estimate (simplified)
+    const maxDrawdown = volatility * 2; // Rough estimate
+
+    return {
+      expectedReturn,
+      volatility,
+      sharpeRatio,
+      diversificationScore,
+      correlationScore,
+      maxDrawdown
+    };
+  }, []);
+
+  const calculateRiskScore = useCallback((allocations: Record<string, number>) => {
+    let riskScore = 0;
+    
+    Object.entries(allocations).forEach(([asset, allocation]) => {
+      const weight = allocation / 100;
+      const assetKey = asset as keyof typeof CRYPTO_METRICS;
+      
+      if (CRYPTO_METRICS[assetKey]) {
+        const assetRisk = CRYPTO_METRICS[assetKey].volatility * 10; // Scale to 0-10
+        riskScore += weight * assetRisk;
+      }
+    });
+    
+    return Math.round(riskScore);
+  }, []);
+
+  // Calculate results
+  const result = useMemo((): CryptocurrencyAllocationResult | null => {
+    if (!isValid) return null;
+
+    const {
+      totalPortfolio, cryptoPercentage, bitcoin, ethereum,
+      altcoins, defi, stablecoins, riskTolerance, investmentHorizon
+    } = values;
+
+    const totalCryptoValue = (cryptoPercentage / 100) * totalPortfolio;
+    const totalAllocation = bitcoin + ethereum + altcoins + defi + stablecoins;
+    const allocationValid = Math.abs(totalAllocation - 100) <= 1;
+
+    const cryptoAssets: CryptoAsset[] = [
+      {
+        name: 'Bitcoin',
+        allocation: bitcoin,
+        value: (bitcoin / 100) * totalCryptoValue,
+        riskLevel: CRYPTO_METRICS.bitcoin.riskLevel,
+        category: 'Store of Value',
+        color: '#F7931A',
+        expectedReturn: CRYPTO_METRICS.bitcoin.expectedReturn,
+        volatility: CRYPTO_METRICS.bitcoin.volatility,
+        correlation: CRYPTO_METRICS.bitcoin.correlation
+      },
+      {
+        name: 'Ethereum',
+        allocation: ethereum,
+        value: (ethereum / 100) * totalCryptoValue,
+        riskLevel: CRYPTO_METRICS.ethereum.riskLevel,
+        category: 'Smart Contract Platform',
+        color: '#627EEA',
+        expectedReturn: CRYPTO_METRICS.ethereum.expectedReturn,
+        volatility: CRYPTO_METRICS.ethereum.volatility,
+        correlation: CRYPTO_METRICS.ethereum.correlation
+      },
+      {
+        name: 'Altcoins',
+        allocation: altcoins,
+        value: (altcoins / 100) * totalCryptoValue,
+        riskLevel: CRYPTO_METRICS.altcoins.riskLevel,
+        category: 'Alternative Cryptocurrencies',
+        color: '#8B5CF6',
+        expectedReturn: CRYPTO_METRICS.altcoins.expectedReturn,
+        volatility: CRYPTO_METRICS.altcoins.volatility,
+        correlation: CRYPTO_METRICS.altcoins.correlation
+      },
+      {
+        name: 'DeFi Tokens',
+        allocation: defi,
+        value: (defi / 100) * totalCryptoValue,
+        riskLevel: CRYPTO_METRICS.defi.riskLevel,
+        category: 'Decentralized Finance',
+        color: '#10B981',
+        expectedReturn: CRYPTO_METRICS.defi.expectedReturn,
+        volatility: CRYPTO_METRICS.defi.volatility,
+        correlation: CRYPTO_METRICS.defi.correlation
+      },
+      {
+        name: 'Stablecoins',
+        allocation: stablecoins,
+        value: (stablecoins / 100) * totalCryptoValue,
+        riskLevel: CRYPTO_METRICS.stablecoins.riskLevel,
+        category: 'Stable Value',
+        color: '#06B6D4',
+        expectedReturn: CRYPTO_METRICS.stablecoins.expectedReturn,
+        volatility: CRYPTO_METRICS.stablecoins.volatility,
+        correlation: CRYPTO_METRICS.stablecoins.correlation
+      }
+    ].filter(asset => asset.allocation > 0);
+
+    const allocations = { bitcoin, ethereum, altcoins, defi, stablecoins };
+    const cryptoMetrics = calculateCryptoMetrics(allocations, totalCryptoValue);
+    const riskScore = calculateRiskScore(allocations);
+
+    // Calculate risk level
+    const riskLevel = riskScore < 3 ? 'Conservative' : 
+                     riskScore < 6 ? 'Moderate' : 
+                     riskScore < 8 ? 'Aggressive' : 'Very High Risk';
+
+    // Generate recommendations
+    const recommendations: CryptoRecommendation[] = [];
+
+    // Check if crypto allocation is appropriate
+    if (cryptoPercentage > 20 && riskTolerance === 'conservative') {
+      recommendations.push({
+        type: 'allocation',
+        title: 'High Crypto Allocation for Conservative Profile',
+        description: 'Consider reducing cryptocurrency allocation to 5-10% for conservative risk tolerance.',
+        priority: 'High',
+        impact: 'Reduces portfolio volatility'
+      });
+    }
+
+    if (cryptoPercentage < 5 && riskTolerance === 'aggressive' && investmentHorizon > 5) {
+      recommendations.push({
+        type: 'allocation',
+        title: 'Low Crypto Allocation for Aggressive Profile',
+        description: 'Consider increasing cryptocurrency allocation to 15-25% for aggressive growth.',
+        priority: 'Medium',
+        impact: 'Increases growth potential'
+      });
+    }
+
+    // Check allocation balance
+    if (!allocationValid) {
+      recommendations.push({
+        type: 'allocation',
+        title: 'Allocation Imbalance',
+        description: `Total allocation is ${totalAllocation.toFixed(1)}%. Adjust to equal 100%.`,
+        priority: 'High',
+        impact: 'Ensures accurate analysis'
+      });
+    }
+
+    // Diversification recommendations
+    if (bitcoin > 70) {
+      recommendations.push({
+        type: 'diversification',
+        title: 'Heavy Bitcoin Concentration',
+        description: 'Consider diversifying into Ethereum and other assets to reduce concentration risk.',
+        priority: 'Medium',
+        impact: 'Improves risk-adjusted returns'
+      });
+    }
+
+    if (altcoins + defi > 40 && riskTolerance !== 'aggressive') {
+      recommendations.push({
+        type: 'risk',
+        title: 'High Alternative Asset Allocation',
+        description: 'Consider reducing exposure to altcoins and DeFi tokens for better risk management.',
+        priority: 'Medium',
+        impact: 'Reduces portfolio volatility'
+      });
+    }
+
+    if (stablecoins > 25) {
+      recommendations.push({
+        type: 'allocation',
+        title: 'High Stablecoin Allocation',
+        description: 'Consider reducing stablecoin allocation for better growth potential.',
+        priority: 'Low',
+        impact: 'Increases expected returns'
+      });
+    }
+
+    // Rebalancing recommendations
+    if (values.rebalanceFrequency === 'never') {
+      recommendations.push({
+        type: 'rebalancing',
+        title: 'No Rebalancing Strategy',
+        description: 'Consider quarterly or semi-annual rebalancing for optimal performance.',
+        priority: 'Medium',
+        impact: 'Maintains target allocation'
+      });
+    }
+
+    return {
+      totalCryptoValue,
+      cryptoAssets,
+      riskScore,
+      riskLevel,
+      expectedReturn: cryptoMetrics.expectedReturn,
+      volatility: cryptoMetrics.volatility,
+      sharpeRatio: cryptoMetrics.sharpeRatio,
+      diversificationScore: cryptoMetrics.diversificationScore,
+      correlationScore: cryptoMetrics.correlationScore,
+      maxDrawdown: cryptoMetrics.maxDrawdown,
+      recommendations,
+      allocationValid,
+      totalAllocation
+    };
+  }, [values, isValid, calculateCryptoMetrics, calculateRiskScore]);
+
+  // Update functions
+  const updateValue = useCallback((field: keyof CryptocurrencyAllocationInputs, value: string) => {
+    if (['riskTolerance', 'rebalanceFrequency'].includes(field)) {
+      setValues(prev => ({ ...prev, [field]: value }));
+    } else {
+      const numValue = parseFloat(value) || 0;
+      setValues(prev => ({ ...prev, [field]: numValue }));
+    }
+  }, []);
+
+  const updateRiskTolerance = useCallback((tolerance: string) => {
+    setValues(prev => ({ ...prev, riskTolerance: tolerance }));
+  }, []);
+
+  const updateRebalanceFrequency = useCallback((frequency: string) => {
+    setValues(prev => ({ ...prev, rebalanceFrequency: frequency }));
+  }, []);
+
+  const autoBalance = useCallback(() => {
+    const suggested = getRiskBasedAllocation(values.riskTolerance, values.cryptoPercentage);
+    setValues(prev => ({
+      ...prev,
+      bitcoin: suggested.bitcoin,
+      ethereum: suggested.ethereum,
+      altcoins: suggested.altcoins,
+      defi: suggested.defi,
+      stablecoins: suggested.stablecoins
+    }));
+  }, [values.riskTolerance, values.cryptoPercentage]);
+
+  const reset = useCallback(() => {
+    setValues({
+      totalPortfolio: 100000,
+      cryptoPercentage: 10,
+      bitcoin: 50,
+      ethereum: 30,
+      altcoins: 15,
+      defi: 5,
+      stablecoins: 0,
+      riskTolerance: 'moderate',
+      investmentHorizon: 5,
+      rebalanceFrequency: 'quarterly'
+    });
+  }, []);
+
+  return {
+    values,
+    errors,
+    result,
+    isValid,
+    updateValue,
+    updateRiskTolerance,
+    updateRebalanceFrequency,
+    autoBalance,
+    reset
+  };
+}

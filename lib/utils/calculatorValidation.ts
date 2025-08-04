@@ -294,6 +294,91 @@ export const CalculatorValidations = {
     businessExpenses: ValidationPresets.currency(0, 500000),
     childTaxCredit: ValidationPresets.currency(0, 10000),
     educationCredits: ValidationPresets.currency(0, 5000)
+  },
+
+  portfolioAnalyzer: {
+    totalInvestment: {
+      required: true,
+      min: 1,
+      message: 'Total investment must be at least $1'
+    },
+    usStocks: {
+      required: true,
+      min: 0,
+      max: 100,
+      message: 'US Stocks allocation must be between 0% and 100%'
+    },
+    intlStocks: {
+      required: true,
+      min: 0,
+      max: 100,
+      message: 'International Stocks allocation must be between 0% and 100%'
+    },
+    bonds: {
+      required: true,
+      min: 0,
+      max: 100,
+      message: 'Bonds allocation must be between 0% and 100%'
+    },
+    realEstate: {
+      required: true,
+      min: 0,
+      max: 100,
+      message: 'Real Estate allocation must be between 0% and 100%'
+    },
+    commodities: {
+      required: true,
+      min: 0,
+      max: 100,
+      message: 'Commodities allocation must be between 0% and 100%'
+    },
+    cash: {
+      required: true,
+      min: 0,
+      max: 100,
+      message: 'Cash allocation must be between 0% and 100%'
+    },
+    crypto: {
+      required: true,
+      min: 0,
+      max: 100,
+      message: 'Cryptocurrency allocation must be between 0% and 100%'
+    },
+    age: {
+      required: true,
+      min: 18,
+      max: 100,
+      message: 'Age must be between 18 and 100'
+    },
+    riskTolerance: {
+      required: true,
+      message: 'Risk tolerance is required'
+    },
+    investmentHorizon: {
+      required: true,
+      min: 1,
+      max: 50,
+      message: 'Investment horizon must be between 1 and 50 years'
+    }
+  },
+
+  cryptoAllocation: {
+    totalPortfolio: ValidationPresets.currency(1000, 100000000),
+    cryptoPercentage: ValidationPresets.percentage(0, 50),
+    bitcoin: ValidationPresets.percentage(0, 100),
+    ethereum: ValidationPresets.percentage(0, 100),
+    altcoins: ValidationPresets.percentage(0, 100),
+    defi: ValidationPresets.percentage(0, 100),
+    stablecoins: ValidationPresets.percentage(0, 100),
+    riskTolerance: {
+      required: true,
+      message: 'Risk tolerance is required'
+    },
+    investmentHorizon: ValidationPresets.years(1, 20),
+    rebalanceFrequency: {
+      required: true,
+      message: 'Rebalance frequency is required'
+    }
   }
 };
 
