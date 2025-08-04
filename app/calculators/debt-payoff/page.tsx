@@ -22,7 +22,7 @@ export default function DebtPayoffPage() {
               <h1 className={`${theme.typography.heading3} ${theme.textColors.primary}`}>Debt Payoff Calculator</h1>
             </div>
             <div className={`${theme.status.error.bg} border ${theme.status.error.border} px-3 py-1 rounded-full backdrop-blur-sm`}>
-              <span className={`${theme.typography.small} font-medium ${theme.status.error.text} flex items-center gap-1`}>
+              <span className={`${theme.typography.caption} font-medium ${theme.status.error.text} flex items-center gap-1`}>
                 <CreditCard className="w-4 h-4" />
                 Debt Destroyer
               </span>

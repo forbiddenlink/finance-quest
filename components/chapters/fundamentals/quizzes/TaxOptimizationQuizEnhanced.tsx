@@ -470,7 +470,7 @@ export default function TaxOptimizationQuizEnhanced({ onComplete }: TaxOptimizat
                         ? theme.status.success.bg
                         : index === currentQuestion
                         ? theme.status.info.bg
-                        : theme.backgrounds.disabled
+                        : theme.backgrounds.cardDisabled
                     }`}
                   />
                 ))}

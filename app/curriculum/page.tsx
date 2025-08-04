@@ -56,7 +56,7 @@ export default function CurriculumPage() {
                             From foundation concepts to advanced investment strategies and estate planning.
                         </p>
 
-                        <div className={`flex flex-wrap items-center justify-center gap-8 ${theme.typography.small} ${theme.textColors.muted} mb-12`}>
+                        <div className={`flex flex-wrap items-center justify-center gap-8 ${theme.typography.caption} ${theme.textColors.muted} mb-12`}>
                             <div className="flex items-center gap-2">
                                 <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                                 <span>17 Available Chapters</span>
@@ -81,8 +81,8 @@ export default function CurriculumPage() {
                                     <BookOpen className={`w-6 h-6 ${theme.textColors.primary}`} />
                                 </div>
                                 <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Foundation Track</h3>
-                                <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>Master psychology, banking, income, and debt fundamentals</p>
-                                <div className={`mt-3 ${theme.textColors.primary} ${theme.typography.tiny} font-medium`}>✅ 17 Chapters Available</div>
+                                <p className={`${theme.textColors.secondary} ${theme.typography.caption}`}>Master psychology, banking, income, and debt fundamentals</p>
+                                <div className={`mt-3 ${theme.textColors.primary} ${theme.typography.caption} font-medium`}>✅ 17 Chapters Available</div>
                             </div>
 
                             <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.md}`}>
@@ -90,8 +90,8 @@ export default function CurriculumPage() {
                                     <Target className={`w-6 h-6 ${theme.textColors.primary}`} />
                                 </div>
                                 <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Advanced Tracks</h3>
-                                <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>Investment, protection, tax planning, and economic literacy</p>
-                                <div className={`mt-3 ${theme.textColors.warning} ${theme.typography.tiny} font-medium`}>🚧 13+ More Coming Soon</div>
+                                <p className={`${theme.textColors.secondary} ${theme.typography.caption}`}>Investment, protection, tax planning, and economic literacy</p>
+                                <div className={`mt-3 ${theme.textColors.warning} ${theme.typography.caption} font-medium`}>🚧 13+ More Coming Soon</div>
                             </div>
 
                             <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.md}`}>
@@ -99,8 +99,8 @@ export default function CurriculumPage() {
                                     <Star className={`w-6 h-6 ${theme.textColors.primary}`} />
                                 </div>
                                 <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Complete Mastery</h3>
-                                <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>Professional-level financial literacy with certification</p>
-                                <div className={`mt-3 ${theme.textColors.primary} ${theme.typography.tiny} font-medium`}>🎯 Industry Recognition</div>
+                                <p className={`${theme.textColors.secondary} ${theme.typography.caption}`}>Professional-level financial literacy with certification</p>
+                                <div className={`mt-3 ${theme.textColors.primary} ${theme.typography.caption} font-medium`}>🎯 Industry Recognition</div>
                             </div>
                         </div>
                     </motion.div>

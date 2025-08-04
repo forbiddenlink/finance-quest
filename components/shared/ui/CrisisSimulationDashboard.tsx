@@ -650,7 +650,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
   };
 
   const getScenarioStatusColor = (scenario: CrisisScenario) => {
-    if (!scenario.unlocked) return `${theme.backgrounds.disabled} ${theme.borderColors.primary}`;
+    if (!scenario.unlocked) return `${theme.backgrounds.cardDisabled} ${theme.borderColors.primary}`;
     if (completedScenarios.includes(scenario.id)) return `${theme.status.success.bg} ${theme.status.success.border}`;
 
     switch (scenario.urgency) {
@@ -666,7 +666,7 @@ export default function CrisisSimulationDashboard({ className = '' }: CrisisSimu
       case 'beginner': return `${theme.status.success.text} ${theme.status.success.bg}`;
       case 'intermediate': return `${theme.status.warning.text} ${theme.status.warning.bg}`;
       case 'advanced': return `${theme.status.error.text} ${theme.status.error.bg}`;
-      default: return `${theme.textColors.secondary} ${theme.backgrounds.disabled}`;
+      default: return `${theme.textColors.secondary} ${theme.backgrounds.cardDisabled}`;
     }
   };
 

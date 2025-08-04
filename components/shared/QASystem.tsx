@@ -107,7 +107,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
       <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg ${theme.spacing.sm} ${className}`}>
         <div className={`flex items-center gap-2 ${theme.status.warning.text}`}>
           <HelpCircle className="w-5 h-5" />
-          <span className={`${theme.typography.small} font-medium`}>
+          <span className={`${theme.typography.caption} font-medium`}>
             Q&A System is disabled during quizzes to maintain assessment integrity.
           </span>
         </div>
@@ -128,7 +128,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
           </div>
           <h3 className={`font-semibold ${theme.textColors.primary}`}>AI Financial Q&A Assistant</h3>
         </div>
-        <button className={`${theme.typography.small} ${theme.textColors.primary} hover:${theme.textColors.secondary}`}>
+        <button className={`${theme.typography.caption} ${theme.textColors.primary} hover:${theme.textColors.secondary}`}>
           {isExpanded ? 'Minimize' : 'Expand'}
         </button>
       </div>
@@ -139,7 +139,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
           <div className={`flex border-b ${theme.borderColors.primary}`}>
             <button
               onClick={() => setActiveTab('text')}
-              className={`flex-1 flex items-center justify-center gap-2 ${theme.spacing.xs} ${theme.typography.small} font-medium transition-colors ${activeTab === 'text'
+              className={`flex-1 flex items-center justify-center gap-2 ${theme.spacing.xs} ${theme.typography.caption} font-medium transition-colors ${activeTab === 'text'
                 ? `${theme.status.info.bg} ${theme.status.info.text} border-b-2 ${theme.status.info.border}`
                 : `${theme.textColors.secondary} hover:${theme.textColors.primary}`
                 }`}
@@ -149,7 +149,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
             </button>
             <button
               onClick={() => setActiveTab('voice')}
-              className={`flex-1 flex items-center justify-center gap-2 ${theme.spacing.xs} ${theme.typography.small} font-medium transition-colors ${activeTab === 'voice'
+              className={`flex-1 flex items-center justify-center gap-2 ${theme.spacing.xs} ${theme.typography.caption} font-medium transition-colors ${activeTab === 'voice'
                 ? `${theme.status.info.bg} ${theme.status.info.text} border-b-2 ${theme.status.info.border}`
                 : `${theme.textColors.secondary} hover:${theme.textColors.primary}`
                 }`}
@@ -170,8 +170,8 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
                 {messages.length === 0 ? (
                   <div className={`text-center ${theme.textColors.muted} ${theme.spacing.lg}`}>
                     <HelpCircle className={`w-12 h-12 mx-auto mb-4 ${theme.textColors.muted}`} />
-                    <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>Ask me anything about personal finance!</p>
-                    <p className={`${theme.typography.tiny} mt-1 ${theme.textColors.muted}`}>I know about everything you&apos;re learning in Finance Quest.</p>
+                    <p className={`${theme.typography.caption} ${theme.textColors.secondary}`}>Ask me anything about personal finance!</p>
+                    <p className={`${theme.typography.caption} mt-1 ${theme.textColors.muted}`}>I know about everything you&apos;re learning in Finance Quest.</p>
                   </div>
                 ) : (
                   messages.map((message) => (
@@ -185,8 +185,8 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
                           : `${theme.backgrounds.card} ${theme.textColors.primary} border ${theme.borderColors.primary}`
                           }`}
                       >
-                        <p className={`${theme.typography.small} ${message.type === 'user' ? theme.textColors.primary : theme.textColors.primary}`}>{message.content}</p>
-                        <p className={`${theme.typography.tiny} mt-1 ${message.type === 'user' ? theme.textColors.muted : theme.textColors.muted
+                        <p className={`${theme.typography.caption} ${message.type === 'user' ? theme.textColors.primary : theme.textColors.primary}`}>{message.content}</p>
+                        <p className={`${theme.typography.caption} mt-1 ${message.type === 'user' ? theme.textColors.muted : theme.textColors.muted
                           }`}>
                           {message.timestamp.toLocaleTimeString([], {
                             hour: '2-digit',
@@ -215,13 +215,13 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
               {/* Suggested Questions */}
               {messages.length === 0 && (
                 <div className={`${theme.spacing.sm} border-t ${theme.borderColors.primary}`}>
-                  <p className={`${theme.typography.tiny} ${theme.textColors.secondary} mb-2`}>Try asking:</p>
+                  <p className={`${theme.typography.caption} ${theme.textColors.secondary} mb-2`}>Try asking:</p>
                   <div className="flex flex-wrap gap-2">
                     {suggestedQuestions.slice(0, 3).map((question, index) => (
                       <button
                         key={index}
                         onClick={() => setInputValue(question)}
-                        className={`${theme.typography.tiny} ${theme.backgrounds.card} hover:${theme.backgrounds.cardHover} ${theme.textColors.secondary} ${theme.spacing.xs} rounded transition-colors border ${theme.borderColors.primary}`}
+                        className={`${theme.typography.caption} ${theme.backgrounds.card} hover:${theme.backgrounds.cardHover} ${theme.textColors.secondary} ${theme.spacing.xs} rounded transition-colors border ${theme.borderColors.primary}`}
                       >
                         {question}
                       </button>
@@ -238,7 +238,7 @@ export default function QASystem({ isQuizMode = false, className = '' }: QASyste
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Ask about budgeting, investing, credit scores..."
-                    className={`flex-1 ${theme.spacing.xs} border ${theme.borderColors.muted} rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500/50 ${theme.typography.small} ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                    className={`flex-1 ${theme.spacing.xs} border ${theme.borderColors.muted} rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500/50 ${theme.typography.caption} ${theme.backgrounds.card} ${theme.textColors.primary}`}
                     disabled={isLoading}
                   />
                   <button

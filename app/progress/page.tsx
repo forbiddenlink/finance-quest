@@ -141,7 +141,7 @@ export default function ProgressPage() {
                 </p>
                 <p className={`text-xs ${theme.textColors.muted}`}>{progress.totalQuizzesTaken} quizzes taken</p>
               </div>
-              <div className={`p-3 ${theme.backgrounds.disabled} rounded-lg`}>
+              <div className={`p-3 ${theme.backgrounds.cardDisabled} rounded-lg`}>
                 <Brain className={`w-8 h-8 ${theme.textColors.secondary}`} />
               </div>
             </div>
@@ -185,7 +185,7 @@ export default function ProgressPage() {
                         <span className={`text-sm font-medium ${theme.textColors.primary}`}>{chapter.name}</span>
                         <span className={`text-sm ${theme.textColors.secondary}`}>{chapter.progress}%</span>
                       </div>
-                      <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
+                      <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2`}>
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${chapter.progress}%` }}
@@ -274,10 +274,10 @@ export default function ProgressPage() {
                       transition={{ delay: 0.4 + index * 0.1 }}
                       className={`flex items-center gap-3 p-3 rounded-lg ${achievement.unlocked
                         ? `${theme.status.warning.bg} border ${theme.status.warning.border}`
-                        : `${theme.backgrounds.disabled} border ${theme.borderColors.primary}`
+                        : `${theme.backgrounds.cardDisabled} border ${theme.borderColors.primary}`
                         }`}
                     >
-                      <div className={`p-2 rounded-lg ${achievement.unlocked ? theme.status.warning.bg : theme.backgrounds.disabled
+                      <div className={`p-2 rounded-lg ${achievement.unlocked ? theme.status.warning.bg : theme.backgrounds.cardDisabled
                         }`}>
                         <Icon className={`w-5 h-5 ${achievement.unlocked ? theme.textColors.primary : theme.textColors.muted}
                           }`} />

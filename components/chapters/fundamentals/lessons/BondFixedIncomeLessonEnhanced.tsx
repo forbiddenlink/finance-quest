@@ -511,7 +511,7 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
                     <div className="font-bold">50%</div>
                     <div className="text-xs">1-3 Year Bonds</div>
                   </div>
-                  <div className={`p-3 ${theme.backgrounds.disabled} rounded opacity-50`}>
+                  <div className={`p-3 ${theme.backgrounds.cardDisabled} rounded opacity-50`}>
                     <div className="font-bold">0%</div>
                     <div className="text-xs">5-7 Year Bonds</div>
                   </div>

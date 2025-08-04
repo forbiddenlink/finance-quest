@@ -31,7 +31,7 @@ export default function HealthAssessmentPage() {
             </div>
             <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} px-3 py-1 rounded-full flex items-center gap-2 backdrop-blur-sm`}>
               <Heart className={`w-4 h-4 ${theme.textColors.primary}`} />
-              <span className={`${theme.typography.small} font-medium ${theme.textColors.secondary}`}>Complete Assessment</span>
+              <span className={`${theme.typography.caption} font-medium ${theme.textColors.secondary}`}>Complete Assessment</span>
             </div>
           </div>
         </div>
@@ -54,25 +54,25 @@ export default function HealthAssessmentPage() {
           <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl shadow-lg ${theme.spacing.md} text-center hover:shadow-xl hover:${theme.borderColors.primary} transition-all ${theme.interactive.hover}`}>
             <Target className={`w-12 h-12 ${theme.textColors.primary} mx-auto mb-4`} />
             <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Instant Scoring</h3>
-            <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>Get your grade (A-F) and detailed breakdown immediately</p>
+            <p className={`${theme.typography.caption} ${theme.textColors.secondary}`}>Get your grade (A-F) and detailed breakdown immediately</p>
           </div>
 
           <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl shadow-lg ${theme.spacing.md} text-center hover:shadow-xl hover:border-blue-500/30 transition-all ${theme.interactive.hover}`}>
             <Brain className="w-12 h-12 text-blue-400 mx-auto mb-4" />
             <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Smart Analysis</h3>
-            <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>AI-powered insights based on your learning progress</p>
+            <p className={`${theme.typography.caption} ${theme.textColors.secondary}`}>AI-powered insights based on your learning progress</p>
           </div>
 
           <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl shadow-lg ${theme.spacing.md} text-center hover:shadow-xl hover:border-slate-500/30 transition-all ${theme.interactive.hover}`}>
             <TrendingUp className={`w-12 h-12 ${theme.textColors.muted} mx-auto mb-4`} />
             <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Action Plan</h3>
-            <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>Prioritized recommendations for maximum impact</p>
+            <p className={`${theme.typography.caption} ${theme.textColors.secondary}`}>Prioritized recommendations for maximum impact</p>
           </div>
 
           <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl shadow-lg ${theme.spacing.md} text-center hover:shadow-xl hover:${theme.borderColors.primary} transition-all ${theme.interactive.hover}`}>
             <Award className={`w-12 h-12 ${theme.textColors.primary} mx-auto mb-4`} />
             <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Track Progress</h3>
-            <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>Monitor improvements over time with retakes</p>
+            <p className={`${theme.typography.caption} ${theme.textColors.secondary}`}>Monitor improvements over time with retakes</p>
           </div>
         </div>
 
@@ -120,7 +120,7 @@ export default function HealthAssessmentPage() {
             <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.primary} rounded-lg ${theme.spacing.md} text-center`}>
               <Target className={`w-12 h-12 ${theme.textColors.primary} mx-auto mb-4`} />
               <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Targeted Learning</h4>
-              <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>
+              <p className={`${theme.textColors.secondary} ${theme.typography.caption}`}>
                 Focus your learning efforts on the areas that will have the biggest impact
                 on your financial well-being and future success.
               </p>
@@ -129,7 +129,7 @@ export default function HealthAssessmentPage() {
             <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.primary} rounded-lg ${theme.spacing.md} text-center`}>
               <TrendingUp className="w-12 h-12 text-blue-400 mx-auto mb-4" />
               <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Measurable Progress</h4>
-              <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>
+              <p className={`${theme.textColors.secondary} ${theme.typography.caption}`}>
                 Track real improvements in your financial health as you complete
                 Finance Quest modules and implement proven strategies.
               </p>
@@ -138,7 +138,7 @@ export default function HealthAssessmentPage() {
             <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.primary} rounded-lg ${theme.spacing.md} text-center`}>
               <Brain className={`w-12 h-12 ${theme.textColors.muted} mx-auto mb-4`} />
               <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Personalized Insights</h4>
-              <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>
+              <p className={`${theme.textColors.secondary} ${theme.typography.caption}`}>
                 Get recommendations tailored to your specific financial situation
                 and learning progress through the platform.
               </p>

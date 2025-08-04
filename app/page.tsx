@@ -317,7 +317,7 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.1, duration: 0.8 }}
-            className={`flex flex-wrap items-center justify-center gap-8 ${theme.typography.small} ${theme.textColors.muted}`}
+            className={`flex flex-wrap items-center justify-center gap-8 ${theme.typography.caption} ${theme.textColors.muted}`}
           >
             <div className="flex items-center gap-2">
               <Users className={`w-4 h-4 ${theme.textColors.primary}`} />
@@ -356,9 +356,9 @@ export default function HomePage() {
               <div className={`${theme.typography.heading1} ${theme.textColors.primary} mb-2`}>
                 <AnimatedCounter end={64} suffix="%" className={`${theme.typography.heading1} ${theme.textColors.primary}`} />
               </div>
-              <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>of Americans can&apos;t pass a basic financial literacy test</p>
+              <p className={`${theme.textColors.muted} ${theme.typography.caption} leading-relaxed`}>of Americans can&apos;t pass a basic financial literacy test</p>
               <div className={`mt-3 px-3 py-1 ${theme.backgrounds.card}/50 rounded-full`}>
-                <p className={`${theme.typography.tiny} ${theme.textColors.primary} font-medium`}>The Crisis We&apos;re Solving</p>
+                <p className={`${theme.typography.caption} ${theme.textColors.primary} font-medium`}>The Crisis We&apos;re Solving</p>
               </div>
             </div>
           </InteractiveCard>
@@ -371,9 +371,9 @@ export default function HomePage() {
               <div className={`${theme.typography.heading1} ${theme.textColors.primary} mb-2`}>
                 <AnimatedCounter end={89} suffix="%" className={`${theme.typography.heading1} ${theme.textColors.primary}`} />
               </div>
-              <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>completion rate with measurable learning outcomes</p>
+              <p className={`${theme.textColors.muted} ${theme.typography.caption} leading-relaxed`}>completion rate with measurable learning outcomes</p>
               <div className={`mt-3 px-3 py-1 ${theme.status.warning.bg} rounded-full`}>
-                <p className={`${theme.typography.tiny} ${theme.status.warning.text} font-medium`}>Proven Results</p>
+                <p className={`${theme.typography.caption} ${theme.status.warning.text} font-medium`}>Proven Results</p>
               </div>
             </div>
           </InteractiveCard>
@@ -386,9 +386,9 @@ export default function HomePage() {
               <div className={`${theme.typography.heading1} ${theme.textColors.primary} mb-2`}>
                 <AnimatedCounter end={180} suffix="+" className={`${theme.typography.heading1} ${theme.textColors.primary}`} />
               </div>
-              <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>specialized lessons across 17 available chapters</p>
+              <p className={`${theme.textColors.muted} ${theme.typography.caption} leading-relaxed`}>specialized lessons across 17 available chapters</p>
               <div className={`mt-3 px-3 py-1 ${theme.status.warning.bg} rounded-full`}>
-                <p className={`${theme.typography.tiny} ${theme.textColors.secondary} font-medium`}>Foundation Track</p>
+                <p className={`${theme.typography.caption} ${theme.textColors.secondary} font-medium`}>Foundation Track</p>
               </div>
             </div>
           </InteractiveCard>
@@ -402,9 +402,9 @@ export default function HomePage() {
                 <Zap className="w-8 h-8" />
                 <span>Real</span>
               </div>
-              <p className={`${theme.textColors.muted} ${theme.typography.small} leading-relaxed`}>OpenAI GPT-4o-mini integration, not simulated chatbots</p>
+              <p className={`${theme.textColors.muted} ${theme.typography.caption} leading-relaxed`}>OpenAI GPT-4o-mini integration, not simulated chatbots</p>
               <div className={`mt-3 px-3 py-1 ${theme.status.info.bg} rounded-full`}>
-                <p className={`${theme.typography.tiny} ${theme.textColors.secondary} font-medium`}>Genuine AI</p>
+                <p className={`${theme.typography.caption} ${theme.textColors.secondary} font-medium`}>Genuine AI</p>
               </div>
             </div>
           </InteractiveCard>
@@ -455,10 +455,10 @@ export default function HomePage() {
                     </div>
                     <div>
                       <h4 className={`text-lg font-bold ${theme.textColors.primary} group-hover:text-amber-200 transition-colors duration-300`}>Chapter 1</h4>
-                      <p className={`${theme.textColors.primary} ${theme.typography.small} group-hover:text-amber-300 transition-colors duration-300`}>Money Psychology</p>
+                      <p className={`${theme.textColors.primary} ${theme.typography.caption} group-hover:text-amber-300 transition-colors duration-300`}>Money Psychology</p>
                     </div>
                   </div>
-                  <p className={`${theme.textColors.secondary} mb-4 ${theme.typography.small} leading-relaxed group-hover:${theme.textColors.primary} transition-colors duration-300`}>
+                  <p className={`${theme.textColors.secondary} mb-4 ${theme.typography.caption} leading-relaxed group-hover:${theme.textColors.primary} transition-colors duration-300`}>
                     Master your emotional relationship with money, overcome limiting beliefs, and build a wealth mindset.
                   </p>
                   <div className="flex items-center justify-between mb-4">
@@ -499,10 +499,10 @@ export default function HomePage() {
                       </div>
                       <div>
                         <h4 className={`text-lg font-bold ${theme.textColors.primary} group-hover:text-blue-200 transition-colors duration-300`}>Chapter 2</h4>
-                        <p className={`${theme.textColors.primary} ${theme.typography.small} group-hover:text-blue-300 transition-colors duration-300`}>Banking Fundamentals</p>
+                        <p className={`${theme.textColors.primary} ${theme.typography.caption} group-hover:text-blue-300 transition-colors duration-300`}>Banking Fundamentals</p>
                       </div>
                     </div>
-                    <p className={`${theme.textColors.secondary} mb-4 ${theme.typography.small} leading-relaxed group-hover:${theme.textColors.primary} transition-colors duration-300`}>
+                    <p className={`${theme.textColors.secondary} mb-4 ${theme.typography.caption} leading-relaxed group-hover:${theme.textColors.primary} transition-colors duration-300`}>
                       Optimize your banking, understand fees, and set up automated financial systems.
                     </p>
                     <div className="flex items-center justify-between mb-4">
@@ -528,20 +528,20 @@ export default function HomePage() {
                     </div>
                     <div>
                       <h4 className={`text-lg font-bold ${theme.textColors.muted}`}>Chapter 2</h4>
-                      <p className={`${theme.textColors.muted} ${theme.typography.small}`}>Banking Fundamentals</p>
+                      <p className={`${theme.textColors.muted} ${theme.typography.caption}`}>Banking Fundamentals</p>
                     </div>
                   </div>
-                  <p className={`${theme.textColors.muted} mb-4 ${theme.typography.small} leading-relaxed`}>
+                  <p className={`${theme.textColors.muted} mb-4 ${theme.typography.caption} leading-relaxed`}>
                     Optimize your banking, understand fees, and set up automated financial systems.
                   </p>
                   <div className="flex items-center justify-between mb-4">
                     <div className={`flex items-center gap-2 px-3 py-1 ${theme.status.warning.bg} rounded-full`}>
                       <Lock className={`w-3 h-3 ${theme.textColors.muted}`} />
-                      <span className={`${theme.textColors.muted} ${theme.typography.tiny} font-medium`}>Complete Chapter 1</span>
+                      <span className={`${theme.textColors.muted} ${theme.typography.caption} font-medium`}>Complete Chapter 1</span>
                     </div>
-                    <div className={`${theme.textColors.muted} ${theme.typography.tiny}`}>6 Lessons</div>
+                    <div className={`${theme.textColors.muted} ${theme.typography.caption}`}>6 Lessons</div>
                   </div>
-                  <Button disabled className={`w-full ${theme.backgrounds.disabled} ${theme.textColors.muted} font-semibold rounded-xl cursor-not-allowed`}>
+                  <Button disabled className={`w-full ${theme.backgrounds.cardDisabled} ${theme.textColors.muted} font-semibold rounded-xl cursor-not-allowed`}>
                     Locked
                   </Button>
                 </div>
@@ -603,7 +603,7 @@ export default function HomePage() {
                     </div>
                     <div className={`${theme.textColors.muted} text-xs`}>6 Lessons</div>
                   </div>
-                  <Button disabled className={`w-full ${theme.backgrounds.disabled} ${theme.textColors.muted} font-semibold rounded-xl cursor-not-allowed`}>
+                  <Button disabled className={`w-full ${theme.backgrounds.cardDisabled} ${theme.textColors.muted} font-semibold rounded-xl cursor-not-allowed`}>
                     Locked
                   </Button>
                 </div>

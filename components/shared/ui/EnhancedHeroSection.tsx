@@ -142,8 +142,8 @@ export default function EnhancedHeroSection() {
                       { name: "Money Psychology", progress: 100, color: theme.status.success.bg.replace('/20', '') },
                       { name: "Banking Fundamentals", progress: 80, color: theme.status.info.bg.replace('/20', '') },
                       { name: "Income & Career", progress: 60, color: theme.status.warning.bg.replace('/20', '') },
-                      { name: "Credit & Debt", progress: 20, color: theme.backgrounds.disabled },
-                      { name: "Emergency Funds", progress: 0, color: theme.backgrounds.disabled }
+                      { name: "Credit & Debt", progress: 20, color: theme.backgrounds.cardDisabled },
+                      { name: "Emergency Funds", progress: 0, color: theme.backgrounds.cardDisabled }
                     ].map((chapter, index) => (
                       <div key={index} className="space-y-2">
                         <div className="flex justify-between text-sm">

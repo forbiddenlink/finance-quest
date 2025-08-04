@@ -152,7 +152,7 @@ export default function ProgressDashboard() {
             </ResponsiveContainer>
           </div>
           <div className="mt-4 text-center">
-            <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>
+            <p className={`${theme.typography.caption} ${theme.textColors.secondary}`}>
               You&apos;ve mastered <strong>{userProgress.currentChapter - 1}</strong> out of <strong>{totalChapters}</strong> chapters
             </p>
           </div>
@@ -179,7 +179,7 @@ export default function ProgressDashboard() {
               <div className="text-center">
                 <FileText className={`w-12 h-12 mx-auto mb-2 ${theme.textColors.muted}`} />
                 <p>No quizzes taken yet</p>
-                <p className={theme.typography.small}>Complete lessons to unlock quizzes</p>
+                <p className={theme.typography.caption}>Complete lessons to unlock quizzes</p>
               </div>
             </div>
           )}
@@ -272,7 +272,7 @@ export default function ProgressDashboard() {
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['paycheck-calculator'] ? `${theme.status.success.bg} ${theme.status.success.text}` : `${theme.backgrounds.disabled} ${theme.textColors.muted}`
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['paycheck-calculator'] ? `${theme.status.success.bg} ${theme.status.success.text}` : `${theme.backgrounds.cardDisabled} ${theme.textColors.muted}`
               }`}>
               <Calculator className="w-8 h-8" />
             </div>
@@ -293,7 +293,7 @@ export default function ProgressDashboard() {
           </div>
 
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['compound-interest'] ? `${theme.status.success.bg} ${theme.status.success.text}` : `${theme.backgrounds.disabled} ${theme.textColors.muted}`
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['compound-interest'] ? `${theme.status.success.bg} ${theme.status.success.text}` : `${theme.backgrounds.cardDisabled} ${theme.textColors.muted}`
               }`}>
               <TrendingUp className="w-8 h-8" />
             </div>
@@ -314,7 +314,7 @@ export default function ProgressDashboard() {
           </div>
 
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['budget-builder'] ? `${theme.status.success.bg} ${theme.status.success.text}` : `${theme.backgrounds.disabled} ${theme.textColors.muted}`
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['budget-builder'] ? `${theme.status.success.bg} ${theme.status.success.text}` : `${theme.backgrounds.cardDisabled} ${theme.textColors.muted}`
               }`}>
               <PieChartIcon className="w-8 h-8" />
             </div>
@@ -335,7 +335,7 @@ export default function ProgressDashboard() {
           </div>
 
           <div className="text-center">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['debt-payoff-calculator'] ? `${theme.status.success.bg} ${theme.status.success.text}` : `${theme.backgrounds.disabled} ${theme.textColors.muted}`
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-2 ${userProgress.calculatorUsage['debt-payoff-calculator'] ? `${theme.status.success.bg} ${theme.status.success.text}` : `${theme.backgrounds.cardDisabled} ${theme.textColors.muted}`
               }`}>
               <CreditCard className="w-8 h-8" />
             </div>

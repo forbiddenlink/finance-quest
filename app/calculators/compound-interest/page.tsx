@@ -22,7 +22,7 @@ export default function CompoundInterestPage() {
               <h1 className={`${theme.typography.heading3} ${theme.textColors.primary}`}>Compound Interest Calculator</h1>
             </div>
             <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} px-3 py-1 rounded-full backdrop-blur-sm`}>
-              <span className={`${theme.typography.small} font-medium ${theme.textColors.secondary} flex items-center gap-1`}>
+              <span className={`${theme.typography.caption} font-medium ${theme.textColors.secondary} flex items-center gap-1`}>
                 <DollarSign className="w-4 h-4" />
                 Wealth Builder
               </span>
@@ -41,7 +41,7 @@ export default function CompoundInterestPage() {
           <p className={`${theme.textColors.secondary} mb-4`}>
             &quot;Compound interest is the most powerful force in the universe.&quot; - Albert Einstein
           </p>
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 ${theme.typography.small}`}>
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 ${theme.typography.caption}`}>
             <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm border ${theme.borderColors.primary} rounded-lg p-3`}>
               <h3 className={`font-semibold ${theme.textColors.primary} flex items-center gap-2`}>
                 <Clock className={`w-4 h-4 ${theme.textColors.primary}`} />

@@ -239,7 +239,7 @@ export default function TaxOptimizerCalculator() {
       case 'Easy': return `${theme.status.success.text} ${theme.status.success.bg}`;
       case 'Medium': return `${theme.status.warning.text} ${theme.status.warning.bg}`;
       case 'Advanced': return `${theme.status.error.text} ${theme.status.error.bg}`;
-      default: return `${theme.textColors.secondary} ${theme.backgrounds.disabled}`;
+      default: return `${theme.textColors.secondary} ${theme.backgrounds.cardDisabled}`;
     }
   };
 

@@ -181,7 +181,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
               <span>Mastery Rate</span>
               <span className="font-medium">{stats.masteryRate.toFixed(1)}%</span>
             </div>
-            <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
+            <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2`}>
               <div
                 className={`${theme.status.success.bg} h-2 rounded-full transition-all duration-500`}
                 style={{ width: `${stats.masteryRate}%` }}
@@ -195,7 +195,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
                 <span>Concepts Needing Attention</span>
                 <span className="font-medium">{stats.strugglingRate.toFixed(1)}%</span>
               </div>
-              <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
+              <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2`}>
                 <div
                   className={`${theme.status.error.bg} h-2 rounded-full transition-all duration-500`}
                   style={{ width: `${stats.strugglingRate}%` }}
@@ -253,7 +253,7 @@ export default function SpacedRepetitionDashboard({ className = '' }: SpacedRepe
                 {currentReviewIndex + 1} of {dueItems.length}
               </span>
             </div>
-            <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
+            <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2`}>
               <div
                 className={`${theme.status.info.bg.replace('/20', '')} h-2 rounded-full transition-all duration-300`}
                 style={{ width: `${((currentReviewIndex + 1) / dueItems.length) * 100}%` }}

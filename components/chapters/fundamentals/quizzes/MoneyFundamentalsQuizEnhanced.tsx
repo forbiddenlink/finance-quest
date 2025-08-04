@@ -343,7 +343,7 @@ export default function MoneyFundamentalsQuizEnhanced({ onComplete }: MoneyFunda
   return (
     <div className={`max-w-2xl mx-auto ${theme.backgrounds.card} rounded-lg shadow-lg`}>
       {/* Progress Bar */}
-      <div className={`${theme.backgrounds.disabled} rounded-t-lg`}>
+      <div className={`${theme.backgrounds.cardDisabled} rounded-t-lg`}>
         <div
           className={`${theme.status.info.bg} h-3 rounded-t-lg transition-all duration-300`}
           style={{ width: `${progress}%` }}

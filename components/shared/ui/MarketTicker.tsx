@@ -162,14 +162,14 @@ export default function MarketTicker() {
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-2">
             <div className={`w-2 h-2 ${theme.textColors.primary} rounded-full animate-pulse`}></div>
-            <span className={`${theme.typography.tiny} ${theme.textColors.secondary} font-semibold`}>Market Pulse</span>
+            <span className={`${theme.typography.caption} ${theme.textColors.secondary} font-semibold`}>Market Pulse</span>
             {isLive ? (
               <Wifi className={`w-3 h-3 ${theme.textColors.primary}`} />
             ) : (
               <WifiOff className={`w-3 h-3 ${theme.textColors.primary}/60`} />
             )}
           </div>
-          <div className={`${theme.typography.tiny} ${theme.textColors.muted}`}>
+          <div className={`${theme.typography.caption} ${theme.textColors.muted}`}>
             {isLive ? 'Live' : 'Demo'}
           </div>
         </div>
@@ -180,12 +180,12 @@ export default function MarketTicker() {
             <div className={`text-lg font-bold ${theme.textColors.primary} tracking-wider`}>
               {currentStock.symbol}
             </div>
-            <div className={`${theme.typography.small} font-semibold ${theme.textColors.secondary}`}>
+            <div className={`${theme.typography.caption} font-semibold ${theme.textColors.secondary}`}>
               ${(currentStock.price || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
             </div>
           </div>
 
-          <div className={`flex items-center space-x-1 px-2 py-1 rounded-lg ${theme.typography.tiny} font-medium ${isPositive
+          <div className={`flex items-center space-x-1 px-2 py-1 rounded-lg ${theme.typography.caption} font-medium ${isPositive
             ? `${theme.status.info.bg} ${theme.status.info.text} border ${theme.status.info.border}`
             : `${theme.status.error.bg} ${theme.status.error.text} border ${theme.status.error.border}`
             }`}>
@@ -210,7 +210,7 @@ export default function MarketTicker() {
               key={index}
               className={`h-1 rounded-full transition-all duration-300 ${index === currentIndex
                 ? `${theme.textColors.primary} w-4`
-                : `${theme.backgrounds.disabled} w-2`
+                : `${theme.backgrounds.cardDisabled} w-2`
                 }`}
             />
           ))}

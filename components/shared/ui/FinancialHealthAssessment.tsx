@@ -237,7 +237,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
       case 'C': return theme.status.warning.bg.replace('/20', '');
       case 'D': return theme.status.warning.bg.replace('/20', '');
       case 'F': return theme.status.error.bg.replace('/20', '');
-      default: return theme.backgrounds.disabled;
+      default: return theme.backgrounds.cardDisabled;
     }
   };
 
@@ -268,7 +268,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
             <h3 className={`text-2xl font-bold ${theme.textColors.primary}`}>{currentCategory.category}</h3>
             <span className={`text-sm ${theme.textColors.secondary}`}>Step {currentStep + 1} of {questions.length}</span>
           </div>
-          <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
+          <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2`}>
             <div
               className={`${theme.status.info.bg.replace('/20', '')} h-2 rounded-full transition-all duration-300`}
               style={{ width: `${((currentStep + 1) / questions.length) * 100}%` }}
@@ -294,7 +294,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                     onClick={() => handleInputChange(q.key, true)}
                     className={`px-6 py-3 rounded-lg font-medium transition-all ${responses[q.key as keyof typeof responses] === true
                       ? `${theme.status.success.bg.replace('/20', '')} ${theme.textColors.primary}`
-                      : `${theme.backgrounds.disabled} ${theme.textColors.secondary} hover:${theme.backgrounds.card}`
+                      : `${theme.backgrounds.cardDisabled} ${theme.textColors.secondary} hover:${theme.backgrounds.card}`
                       }`}
                   >
                     Yes
@@ -303,7 +303,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                     onClick={() => handleInputChange(q.key, false)}
                     className={`px-6 py-3 rounded-lg font-medium transition-all ${responses[q.key as keyof typeof responses] === false
                       ? `${theme.status.error.bg.replace('/20', '')} ${theme.textColors.primary}`
-                      : `${theme.backgrounds.disabled} ${theme.textColors.secondary} hover:${theme.backgrounds.card}`
+                      : `${theme.backgrounds.cardDisabled} ${theme.textColors.secondary} hover:${theme.backgrounds.card}`
                       }`}
                   >
                     No
@@ -318,7 +318,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
           <button
             onClick={handlePrevStep}
             disabled={currentStep === 0}
-            className={`px-6 py-3 ${theme.backgrounds.disabled} ${theme.textColors.secondary} rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-80 transition-all`}
+            className={`px-6 py-3 ${theme.backgrounds.cardDisabled} ${theme.textColors.secondary} rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-80 transition-all`}
           >
             Previous
           </button>
@@ -372,7 +372,7 @@ export default function FinancialHealthAssessment({ onScoreCalculated }: HealthA
                   </div>
                   <span className={`font-bold ${getScoreColor(score)}`}>{score}</span>
                 </div>
-                <div className={`w-full ${theme.backgrounds.disabled} rounded-full h-2`}>
+                <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2`}>
                   <div
                     className={`h-2 rounded-full transition-all duration-500 ${score >= 80 ? theme.status.success.bg.replace('/20', '') : score >= 60 ? theme.status.warning.bg.replace('/20', '') : theme.status.error.bg.replace('/20', '')
                       }`}

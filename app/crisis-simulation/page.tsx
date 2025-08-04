@@ -54,7 +54,7 @@ export default function CrisisSimulationPage() {
             <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg ${theme.spacing.md}`}>
               <Shield className={`w-8 h-8 ${theme.textColors.primary} mx-auto mb-3`} />
               <h3 className={`font-bold ${theme.textColors.primary} mb-2`}>Safe Practice</h3>
-              <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>
+              <p className={`${theme.typography.caption} ${theme.textColors.secondary}`}>
                 Learn from mistakes without real financial consequences
               </p>
             </div>
@@ -62,7 +62,7 @@ export default function CrisisSimulationPage() {
             <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg ${theme.spacing.md}`}>
               <Brain className="w-8 h-8 text-blue-400 mx-auto mb-3" />
               <h3 className={`font-bold ${theme.textColors.primary} mb-2`}>Build Confidence</h3>
-              <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>
+              <p className={`${theme.typography.caption} ${theme.textColors.secondary}`}>
                 Develop decision-making skills for high-pressure situations
               </p>
             </div>
@@ -70,7 +70,7 @@ export default function CrisisSimulationPage() {
             <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg ${theme.spacing.md}`}>
               <AlertTriangle className={`w-8 h-8 ${theme.textColors.muted} mx-auto mb-3`} />
               <h3 className={`font-bold ${theme.textColors.primary} mb-2`}>Real Scenarios</h3>
-              <p className={`${theme.typography.small} ${theme.textColors.secondary}`}>
+              <p className={`${theme.typography.caption} ${theme.textColors.secondary}`}>
                 Practice with realistic crisis situations you might face
               </p>
             </div>

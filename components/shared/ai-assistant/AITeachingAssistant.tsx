@@ -176,7 +176,7 @@ export default function AITeachingAssistant() {
             <div
               className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.isUser
                 ? `${theme.status.info.bg.replace('/20', '')} ${theme.textColors.primary}`
-                : `${theme.backgrounds.disabled} ${theme.textColors.primary}`
+                : `${theme.backgrounds.cardDisabled} ${theme.textColors.primary}`
                 }`}
             >
               {message.isLoading ? (
