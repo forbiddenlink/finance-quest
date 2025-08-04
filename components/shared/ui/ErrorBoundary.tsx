@@ -42,7 +42,7 @@ class ErrorBoundary extends Component<Props, State> {
 
     // Log to error reporting service in production
     if (process.env.NODE_ENV === 'production') {
-      // TODO: Integrate with error reporting service (Sentry, LogRocket, etc.)
+      // Future: Error reporting service integration (Sentry, LogRocket, etc.)
     }
   }
 

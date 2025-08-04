@@ -77,8 +77,7 @@ export default function AITeachingAssistant() {
 
       const data = await response.json();
       return data.response;
-    } catch (error) {
-      console.error('AI Error:', error);
+    } catch {
       // Fallback response
       return "I'm having trouble connecting right now, but I'm here to help! Try asking about paychecks, compound interest, budgeting, or any other financial topic. You can also explore our interactive lessons and calculators!";
     }

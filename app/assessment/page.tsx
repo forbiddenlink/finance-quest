@@ -6,8 +6,7 @@ export default function AssessmentPage() {
   return (
     <BeforeAfterAssessment 
       isDemo={true}
-      onComplete={(results) => {
-        console.log('Assessment results:', results);
+      onComplete={() => {
         // Could save results to context or localStorage for demo purposes
       }}
     />

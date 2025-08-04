@@ -90,14 +90,37 @@ export default function ChapterLayout({
         setLessonCompleted(true);
         completeLesson(`chapter${chapterNumber}-lesson`, 15);
         
-        // Progressive enhancement notifications
+        // Enhanced progress notifications with personalized encouragement
         if (chapterNumber === 1) {
-            toast.success(`🎯 ${title} completed! Welcome to Finance Quest! New features will unlock as you progress.`, {
-                duration: 5000,
+            toast.success(`🎯 ${title} completed! Welcome to Finance Quest! You're building real financial skills that will last a lifetime.`, {
+                duration: 6000,
                 position: 'top-center',
             });
-        } else if (userProgress.completedLessons.length === 2) {
-            toast.success(`🧠 Great progress! Review tab now available for spaced repetition learning!`, {
+        } else if (chapterNumber === 5) {
+            toast.success(`🚀 Halfway through foundational skills! You're developing serious financial confidence.`, {
+                duration: 6000,
+                position: 'top-center',
+            });
+        } else if (chapterNumber === 10) {
+            toast.success(`💪 Amazing progress! You've mastered more finance than 80% of adults. Keep going!`, {
+                duration: 6000,
+                position: 'top-center',
+            });
+        } else if (chapterNumber === 17) {
+            toast.success(`🏆 CONGRATULATIONS! You've completed Finance Quest and joined the financially literate minority!`, {
+                duration: 8000,
+                position: 'top-center',
+            });
+        } else {
+            toast.success(`✅ Chapter ${chapterNumber} completed! Your financial knowledge is growing stronger.`, {
+                duration: 4000,
+                position: 'top-center',
+            });
+        }
+        
+        // Progressive feature unlocks
+        if (userProgress.completedLessons.length === 2) {
+            toast.success(`🧠 New feature unlocked: Review tab for spaced repetition learning!`, {
                 duration: 6000,
                 position: 'top-center',
             });

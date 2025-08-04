@@ -14,7 +14,8 @@ import {
   CheckCircle,
   Lock,
   Star,
-  AlertTriangle
+  AlertTriangle,
+  ChevronRight
 } from 'lucide-react';
 
 export default function ProgressNavigation() {
@@ -33,6 +34,16 @@ export default function ProgressNavigation() {
   const calculatorsUsed = Object.keys(userProgress.calculatorUsage).length;
   const simulationsCompleted = Object.keys(userProgress.simulationResults || {}).length;
   const overallProgress = Math.round((userProgress.completedLessons.length / 102) * 100); // 17 chapters × 6 lessons = 102 total lessons
+  
+  // Calculate user level based on progress
+  const getUserLevel = () => {
+    if (overallProgress < 20) return { level: "Beginner", icon: "🌱", color: "text-green-400" };
+    if (overallProgress < 50) return { level: "Learning", icon: "📚", color: "text-blue-400" };
+    if (overallProgress < 80) return { level: "Advanced", icon: "⚡", color: "text-purple-400" };
+    return { level: "Master", icon: "🏆", color: "text-amber-400" };
+  };
+
+  const userLevel = getUserLevel();
 
   const navigationItems = [
     {
@@ -201,8 +212,26 @@ export default function ProgressNavigation() {
             })}
           </div>
 
-          {/* Compact Progress Display */}
+          {/* Enhanced Progress Display with User Level */}
           <div className="flex items-center space-x-3 flex-shrink-0">
+            {/* Next Chapter Preview */}
+            {userProgress.completedLessons.length > 0 && (
+              <div className={`hidden lg:flex items-center space-x-2 ${theme.backgrounds.glass}/20 backdrop-blur-sm border ${theme.borderColors.primary} rounded-full px-3 py-1.5 hover:${theme.backgrounds.glass}/30 transition-all duration-200`}>
+                <ChevronRight className="w-3 h-3 text-blue-400" />
+                <Link href={`/chapter${Math.min(17, Math.floor(userProgress.completedLessons.length / 6) + 1)}`}>
+                  <span className="text-xs font-medium text-blue-400 hover:text-blue-300 transition-colors">
+                    Chapter {Math.min(17, Math.floor(userProgress.completedLessons.length / 6) + 1)}
+                  </span>
+                </Link>
+              </div>
+            )}
+
+            {/* User Level Badge */}
+            <div className={`hidden sm:flex items-center space-x-2 ${theme.backgrounds.glass}/10 backdrop-blur-sm border ${theme.borderColors.primary} rounded-full px-3 py-1.5`}>
+              <span className="text-sm">{userLevel.icon}</span>
+              <span className={`text-xs font-medium ${userLevel.color}`}>{userLevel.level}</span>
+            </div>
+
             <div className="relative w-9 h-9 group flex-shrink-0">
               <svg className="w-9 h-9 transform -rotate-90 transition-transform duration-300 group-hover:scale-105" viewBox="0 0 36 36">
                 <path
@@ -213,7 +242,7 @@ export default function ProgressNavigation() {
                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
                 <path
-                  className={`${theme.textColors.primary}`}
+                  className={`transition-all duration-500 ${overallProgress > 80 ? 'text-amber-400' : overallProgress > 50 ? 'text-blue-400' : overallProgress > 20 ? 'text-green-400' : 'text-gray-400'}`}
                   stroke="currentColor"
                   strokeWidth="3"
                   strokeDasharray={`${overallProgress}, 100`}

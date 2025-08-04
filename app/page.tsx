@@ -26,7 +26,7 @@ import {
   Lightbulb,
   Award,
   Sparkles,
-  Play,
+  PlayCircle,
   Zap,
   Building,
   Lock,
@@ -193,9 +193,19 @@ export default function HomePage() {
             transition={{ delay: 0.5, duration: 0.8 }}
             className="text-5xl md:text-7xl font-bold mb-8 leading-tight"
           >
-            <span className="bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
-              Master Your
-            </span>
+            {progress.totalLessonsCompleted === 0 ? (
+              <span className="bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
+                Master Your
+              </span>
+            ) : progress.totalLessonsCompleted < 15 ? (
+              <span className="bg-gradient-to-r from-blue-300 via-blue-200 to-blue-100 bg-clip-text text-transparent">
+                Continue Your
+              </span>
+            ) : (
+              <span className="bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-100 bg-clip-text text-transparent">
+                Advance Your
+              </span>
+            )}
             <br />
             <TypingText
               texts={["Money", "Wealth", "Future", "Freedom"]}
@@ -203,19 +213,35 @@ export default function HomePage() {
             />
           </motion.h1>
 
-          {/* Subtitle */}
+          {/* Subtitle with personalized content */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.8 }}
             className={`text-xl md:text-2xl ${theme.textColors.secondary} max-w-4xl mx-auto leading-relaxed mb-12 font-light`}
           >
-            Transform from financial novice to money master through{' '}
-            <span className={`${theme.textColors.primary} font-medium`}>AI-powered coaching</span>,{' '}
-            <span className={`${theme.textColors.secondary} font-medium`}>interactive tools</span>, and{' '}
-            <span className={`${theme.textColors.secondary} font-medium`}>real-world scenarios</span>.
-            <br />
-            <span className={`text-lg ${theme.textColors.muted} mt-2 block`}>No prior knowledge required!</span>
+            {progress.totalLessonsCompleted === 0 ? (
+              <>
+                Transform from financial novice to money master through{' '}
+                <span className={`${theme.textColors.primary} font-medium`}>AI-powered coaching</span>,{' '}
+                <span className={`${theme.textColors.secondary} font-medium`}>interactive tools</span>, and{' '}
+                <span className={`${theme.textColors.secondary} font-medium`}>real-world scenarios</span>.
+                <br />
+                <span className={`text-lg ${theme.textColors.muted} mt-2 block`}>No prior knowledge required!</span>
+              </>
+            ) : (
+              <>
+                You&apos;ve completed <span className={`${theme.textColors.primary} font-medium`}>{progress.totalLessonsCompleted} lessons</span> and scored{' '}
+                <span className={`${theme.textColors.secondary} font-medium`}>{Math.round(progress.averageQuizScore)}% average</span> on quizzes!{' '}
+                Keep building your financial expertise with{' '}
+                <span className={`${theme.textColors.primary} font-medium`}>AI coaching</span> and{' '}
+                <span className={`${theme.textColors.secondary} font-medium`}>professional tools</span>.
+                <br />
+                <span className={`text-lg ${theme.textColors.muted} mt-2 block`}>
+                  Financial Literacy Score: {Math.min(1000, Math.round(progress.userProgress.financialLiteracyScore * 1000))}/1000
+                </span>
+              </>
+            )}
           </motion.p>
 
           {/* CTA Buttons - Redesigned */}
@@ -225,25 +251,55 @@ export default function HomePage() {
             transition={{ delay: 0.9, duration: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
           >
-            <Link href="/chapter1">
-              <Button
-                size="lg"
-                className={`group bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-700 ${theme.textColors.primary} px-8 py-6 text-lg font-semibold shadow-2xl shadow-amber-500/25 hover:shadow-amber-500/40 transition-all duration-300 hover:-translate-y-1 border-0`}
-              >
-                <Sparkles className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
-                Start Your Journey
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
+            {/* Smart Primary CTA based on user progress */}
+            {progress.totalLessonsCompleted === 0 ? (
+              <Link href="/chapter1">
+                <Button
+                  size="lg"
+                  className={`group bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-700 ${theme.textColors.primary} px-8 py-6 text-lg font-semibold shadow-2xl shadow-amber-500/25 hover:shadow-amber-500/40 transition-all duration-300 hover:-translate-y-1 border-0`}
+                >
+                  <Sparkles className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
+                  Begin Your Journey
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            ) : (
+              <Link href={`/chapter${Math.min(17, Math.floor(progress.totalLessonsCompleted / 6) + 1)}`}>
+                <Button
+                  size="lg"
+                  className={`group bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 ${theme.textColors.primary} px-8 py-6 text-lg font-semibold shadow-2xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:-translate-y-1 border-0`}
+                >
+                  <BookOpen className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
+                  Continue Chapter {Math.min(17, Math.floor(progress.totalLessonsCompleted / 6) + 1)}
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            )}
 
+            {/* Secondary CTA - Interactive Tour */}
             <Button
               onClick={() => setShowGuidedTour(true)}
+              variant="outline"
               size="lg"
-              className={`group ${theme.buttons.primary} px-8 py-6 text-lg font-semibold border ${theme.borderColors.primary} hover:border-white/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1`}
+              className={`group ${theme.backgrounds.glass} border ${theme.borderColors.primary} ${theme.textColors.primary} px-8 py-6 text-lg font-semibold backdrop-blur-sm hover:backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg`}
             >
-              <Play className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
-              Demo Tour
+              <PlayCircle className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
+              Interactive Tour
             </Button>
+
+            {/* Quick Calculator Access for engaged users */}
+            {progress.totalLessonsCompleted > 3 && (
+              <Link href="/calculators">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className={`group ${theme.backgrounds.glass} border border-green-500/30 text-green-400 px-8 py-6 text-lg font-semibold backdrop-blur-sm hover:backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-500/20`}
+                >
+                  <Calculator className="mr-2 w-5 h-5 group-hover:bounce transition-transform" />
+                  Financial Tools
+                </Button>
+              </Link>
+            )}
 
             <Link href="/health-assessment">
               <Button

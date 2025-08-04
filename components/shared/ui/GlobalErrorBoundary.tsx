@@ -25,8 +25,10 @@ class GlobalErrorBoundary extends React.Component<
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error('Finance Quest Error:', error, errorInfo);
     
-    // TODO: Send to error reporting service
-    // reportError(error, errorInfo);
+    // Future: Error reporting service integration
+    // if (process.env.NODE_ENV === 'production') {
+    //   reportError(error, errorInfo);
+    // }
   }
 
   render() {
