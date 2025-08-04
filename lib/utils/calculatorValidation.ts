@@ -231,6 +231,19 @@ export const CalculatorValidations = {
     entertainment: ValidationPresets.currency(0, 5000),
     healthcare: ValidationPresets.currency(0, 5000),
     savings: ValidationPresets.currency(0, 50000)
+  },
+
+  businessValuation: {
+    annualRevenue: ValidationPresets.currency(1000, 1000000000),
+    growthRate: ValidationPresets.percentage(-50, 100),
+    netMargin: ValidationPresets.percentage(-100, 100),
+    discountRate: ValidationPresets.percentage(1, 50),
+    terminalGrowthRate: ValidationPresets.percentage(-10, 20),
+    projectionYears: { min: 3, max: 15, required: true },
+    ebitda: ValidationPresets.currency(0, 100000000),
+    ebitdaMultiple: { min: 0.1, max: 50, required: true },
+    totalAssets: ValidationPresets.currency(0, 1000000000),
+    totalLiabilities: ValidationPresets.currency(0, 1000000000)
   }
 };
 

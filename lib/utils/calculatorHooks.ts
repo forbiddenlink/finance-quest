@@ -4,7 +4,7 @@
  */
 
 import { useState, useCallback, useMemo } from 'react';
-import { validateFields, FieldValidation, ValidationResult } from './calculatorValidation';
+import { validateFields, FieldValidation, ValidationResult, CalculatorValidations } from './calculatorValidation';
 
 export interface UseCalculatorOptions<T> {
   initialValues: T;
@@ -622,4 +622,112 @@ export const useBudgetBuilderCalculator = ({
       errors: validationResult.errors
     };
   }, [monthlyIncome, categories]);
+};
+
+// Business Valuation Calculator Hook
+export interface BusinessValuationInputs {
+  annualRevenue: string;
+  growthRate: string;
+  netMargin: string;
+  discountRate: string;
+  terminalGrowthRate: string;
+  projectionYears: string;
+  ebitda: string;
+  ebitdaMultiple: string;
+  totalAssets: string;
+  totalLiabilities: string;
+}
+
+export interface BusinessValuationResults {
+  dcfValuation: number;
+  multipleValuation: number;
+  assetValuation: number;
+  averageValuation: number;
+  terminalValue: number;
+  enterpriseValue: number;
+  projectedCashFlows: number[];
+}
+
+export const useBusinessValuationCalculator = () => {
+  return useCalculator<BusinessValuationInputs>({
+    initialValues: {
+      annualRevenue: '1000000',
+      growthRate: '15',
+      netMargin: '20',
+      discountRate: '12',
+      terminalGrowthRate: '3',
+      projectionYears: '5',
+      ebitda: '200000',
+      ebitdaMultiple: '8',
+      totalAssets: '500000',
+      totalLiabilities: '200000'
+    },
+    validationSchema: {
+      annualRevenue: CalculatorValidations.businessValuation.annualRevenue,
+      growthRate: CalculatorValidations.businessValuation.growthRate,
+      netMargin: CalculatorValidations.businessValuation.netMargin,
+      discountRate: CalculatorValidations.businessValuation.discountRate,
+      terminalGrowthRate: CalculatorValidations.businessValuation.terminalGrowthRate,
+      projectionYears: CalculatorValidations.businessValuation.projectionYears,
+      ebitda: CalculatorValidations.businessValuation.ebitda,
+      ebitdaMultiple: CalculatorValidations.businessValuation.ebitdaMultiple,
+      totalAssets: CalculatorValidations.businessValuation.totalAssets,
+      totalLiabilities: CalculatorValidations.businessValuation.totalLiabilities
+    },
+    calculate: (values: BusinessValuationInputs): BusinessValuationResults => {
+      const annualRevenue = parseFloat(values.annualRevenue) || 0;
+      const growthRate = parseFloat(values.growthRate) / 100 || 0;
+      const netMargin = parseFloat(values.netMargin) / 100 || 0;
+      const discountRate = parseFloat(values.discountRate) / 100 || 0;
+      const terminalGrowthRate = parseFloat(values.terminalGrowthRate) / 100 || 0;
+      const projectionYears = parseInt(values.projectionYears) || 5;
+      const ebitda = parseFloat(values.ebitda) || 0;
+      const ebitdaMultiple = parseFloat(values.ebitdaMultiple) || 0;
+      const totalAssets = parseFloat(values.totalAssets) || 0;
+      const totalLiabilities = parseFloat(values.totalLiabilities) || 0;
+
+      // DCF Calculation
+      const projectedCashFlows: number[] = [];
+      let currentRevenue = annualRevenue;
+      let totalPresentValue = 0;
+
+      for (let year = 1; year <= projectionYears; year++) {
+        currentRevenue *= (1 + growthRate);
+        const netIncome = currentRevenue * netMargin;
+        const freeCashFlow = netIncome * 0.85; // Typical FCF conversion
+        const presentValue = freeCashFlow / Math.pow(1 + discountRate, year);
+        
+        projectedCashFlows.push(freeCashFlow);
+        totalPresentValue += presentValue;
+      }
+
+      // Terminal value calculation
+      const finalYearCashFlow = projectedCashFlows[projectedCashFlows.length - 1];
+      const terminalCashFlow = finalYearCashFlow * (1 + terminalGrowthRate);
+      const terminalValue = terminalCashFlow / (discountRate - terminalGrowthRate);
+      const presentTerminalValue = terminalValue / Math.pow(1 + discountRate, projectionYears);
+
+      const dcfValuation = totalPresentValue + presentTerminalValue;
+
+      // Multiple-based valuation
+      const multipleValuation = ebitda * ebitdaMultiple;
+
+      // Asset-based valuation
+      const netAssets = totalAssets - totalLiabilities;
+      const assetValuation = Math.max(netAssets, 0);
+
+      // Average valuation (weighted)
+      const averageValuation = (dcfValuation * 0.4) + (multipleValuation * 0.4) + (assetValuation * 0.2);
+
+      return {
+        dcfValuation,
+        multipleValuation,
+        assetValuation,
+        averageValuation,
+        terminalValue,
+        enterpriseValue: dcfValuation,
+        projectedCashFlows
+      };
+    }
+  });
 };
