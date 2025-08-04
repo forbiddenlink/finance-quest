@@ -447,6 +447,18 @@ export const themeUtils = {
 } as const;
 
 // Complete enhanced theme object
+// Import gradient utilities
+import { 
+    gradientBackgrounds, 
+    consistentTextColors, 
+    consistentBorders,
+    getGradientClass,
+    getCelebrationGradient,
+    getMarketGradient,
+    getConsistentCardClasses,
+    getConsistentButtonClasses
+} from './gradients';
+
 export const theme = {
     colors,
     backgrounds,
@@ -462,6 +474,34 @@ export const theme = {
     shadows,
     animations,
     utils: themeUtils,
+    
+    // Enhanced gradient system
+    gradients: {
+        backgrounds: gradientBackgrounds,
+        getClass: getGradientClass,
+        celebration: getCelebrationGradient,
+        market: getMarketGradient
+    },
+    
+    // Consistent component utilities
+    consistent: {
+        textColors: consistentTextColors,
+        borders: consistentBorders,
+        cardClasses: getConsistentCardClasses,
+        buttonClasses: getConsistentButtonClasses
+    }
 } as const;
 
 export default theme;
+
+// Re-export gradient utilities for direct import
+export {
+    gradientBackgrounds,
+    consistentTextColors,
+    consistentBorders,
+    getGradientClass,
+    getCelebrationGradient,
+    getMarketGradient,
+    getConsistentCardClasses,
+    getConsistentButtonClasses
+};

@@ -1,41 +1,20 @@
 'use client';
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 import { 
-  Target,
-  Info,
-  DollarSign,
-  PieChart as PieChartIcon,
-  BarChart3,
-  Shuffle,
-  Settings
+  Target, DollarSign, PieChart as PieChartIcon, BarChart3, 
+  Shuffle, Settings, Plus, Minus, Info
 } from 'lucide-react';
 import { theme } from '@/lib/theme';
-import { useProgressStore } from '@/lib/store/progressStore';
 import { PieChart, Pie, Cell, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Tooltip } from 'recharts';
-
-interface PortfolioMetrics {
-  totalValue: number;
-  expectedReturn: number;
-  volatility: number;
-  sharpeRatio: number;
-  diversificationScore: number;
-  correlationScore: number;
-  liquidityScore: number;
-  altAllocation: number;
-  efficientFrontierScore: number;
-  riskAdjustedReturn: number;
-  maxDrawdown: number;
-  recommendations: string[];
-  optimizedAllocation: OptimizedAllocation[];
-}
+import CalculatorWrapper from './CalculatorWrapper';
 
 interface AlternativeAsset {
   id: number;
@@ -53,6 +32,22 @@ interface AlternativeAsset {
   accessibilityRating: number;
 }
 
+interface PortfolioMetrics {
+  totalValue: number;
+  expectedReturn: number;
+  volatility: number;
+  sharpeRatio: number;
+  diversificationScore: number;
+  correlationScore: number;
+  liquidityScore: number;
+  altAllocation: number;
+  efficientFrontierScore: number;
+  riskAdjustedReturn: number;
+  maxDrawdown: number;
+  recommendations: string[];
+  optimizedAllocation: OptimizedAllocation[];
+}
+
 interface OptimizedAllocation {
   category: string;
   current: number;
@@ -62,7 +57,18 @@ interface OptimizedAllocation {
 }
 
 export default function AlternativeInvestmentPortfolioOptimizer() {
-  // Alternative Asset Allocations
+  const [portfolioValue, setPortfolioValue] = useState<string>('500000');
+  const [stockAllocation, setStockAllocation] = useState<number>(60);
+  const [bondAllocation, setBondAllocation] = useState<number>(25);
+  const [riskTolerance, setRiskTolerance] = useState<'Conservative' | 'Moderate' | 'Aggressive'>('Moderate');
+  const [liquidityNeeds, setLiquidityNeeds] = useState<'Low' | 'Medium' | 'High'>('Medium');
+  const [optimizationGoal, setOptimizationGoal] = useState<'Return' | 'Risk' | 'Sharpe'>('Sharpe');
+  const [timeHorizon, setTimeHorizon] = useState<number>(10);
+  const [metrics, setMetrics] = useState<PortfolioMetrics | null>(null);
+  const [showOptimization, setShowOptimization] = useState(false);
+  const [isOptimizing, setIsOptimizing] = useState(false);
+
+  // Default alternative assets
   const [alternativeAssets, setAlternativeAssets] = useState<AlternativeAsset[]>([
     {
       id: 1,
@@ -100,103 +106,48 @@ export default function AlternativeInvestmentPortfolioOptimizer() {
       category: 'Crypto',
       currentAllocation: 5,
       targetAllocation: 3,
-      expectedReturn: 25,
-      volatility: 80,
+      expectedReturn: 15.0,
+      volatility: 75,
       correlationToStocks: 0.35,
       correlationToBonds: 0.05,
-      liquidityRating: 75,
+      liquidityRating: 95,
       minimumInvestment: 10,
       expenseRatio: 0.50,
       accessibilityRating: 85
     },
     {
       id: 4,
-      name: 'Private Equity (REITs/BDCs)',
-      category: 'Private Equity',
-      currentAllocation: 3,
-      targetAllocation: 5,
-      expectedReturn: 12,
-      volatility: 35,
-      correlationToStocks: 0.45,
-      correlationToBonds: 0.15,
-      liquidityRating: 30,
-      minimumInvestment: 25000,
-      expenseRatio: 2.00,
-      accessibilityRating: 40
-    },
-    {
-      id: 5,
-      name: 'Infrastructure Funds',
+      name: 'Infrastructure Debt',
       category: 'Infrastructure',
-      currentAllocation: 4,
-      targetAllocation: 6,
-      expectedReturn: 9.5,
-      volatility: 18,
-      correlationToStocks: 0.55,
-      correlationToBonds: 0.35,
+      currentAllocation: 7,
+      targetAllocation: 8,
+      expectedReturn: 7.5,
+      volatility: 15,
+      correlationToStocks: 0.40,
+      correlationToBonds: 0.60,
       liquidityRating: 60,
-      minimumInvestment: 10000,
-      expenseRatio: 1.25,
+      minimumInvestment: 25000,
+      expenseRatio: 1.20,
       accessibilityRating: 60
-    },
-    {
-      id: 6,
-      name: 'Alternative Income (MLPs, BDCs)',
-      category: 'Hedge Funds',
-      currentAllocation: 5,
-      targetAllocation: 4,
-      expectedReturn: 7.8,
-      volatility: 25,
-      correlationToStocks: 0.70,
-      correlationToBonds: 0.40,
-      liquidityRating: 70,
-      minimumInvestment: 5000,
-      expenseRatio: 1.50,
-      accessibilityRating: 70
     }
   ]);
 
-  // Portfolio Parameters
-  const [portfolioValue, setPortfolioValue] = useState<number>(500000);
-  const [stockAllocation, setStockAllocation] = useState<number>(50);
-  const [bondAllocation, setBondAllocation] = useState<number>(30);
-  const [riskTolerance, setRiskTolerance] = useState<'Conservative' | 'Moderate' | 'Aggressive'>('Moderate');
-  const [liquidityNeeds, setLiquidityNeeds] = useState<'Low' | 'Medium' | 'High'>('Medium');
-  const [optimizationGoal, setOptimizationGoal] = useState<'Return' | 'Risk' | 'Sharpe'>('Sharpe');
-
-  const [metrics, setMetrics] = useState<PortfolioMetrics | null>(null);
-  const [showOptimization, setShowOptimization] = useState<boolean>(false);
-
-  const { recordCalculatorUsage } = useProgressStore();
-
-  useEffect(() => {
-    recordCalculatorUsage('alternative-investment-portfolio-optimizer');
-  }, [recordCalculatorUsage]);
-
-  const assetColors = {
-    'REITs': '#3b82f6',
-    'Commodities': '#f59e0b',
-    'Crypto': '#8b5cf6',
-    'Private Equity': '#ef4444',
-    'Hedge Funds': '#10b981',
-    'Infrastructure': '#06b6d4',
-    'Art/Collectibles': '#ec4899',
-    'Peer-to-Peer': '#84cc16'
-  };
-
-  const updateAlternativeAsset = (index: number, field: keyof AlternativeAsset, value: number | string) => {
-    const newAssets = [...alternativeAssets];
-    newAssets[index] = { ...newAssets[index], [field]: value };
-    setAlternativeAssets(newAssets);
+  const updateAssetAllocation = (id: number, allocation: number) => {
+    setAlternativeAssets(prev => 
+      prev.map(asset => 
+        asset.id === id ? { ...asset, currentAllocation: allocation } : asset
+      )
+    );
   };
 
   const addAlternativeAsset = () => {
+    const nextId = Math.max(...alternativeAssets.map(a => a.id)) + 1;
     const newAsset: AlternativeAsset = {
-      id: Math.max(...alternativeAssets.map(a => a.id)) + 1,
-      name: `New Alternative ${alternativeAssets.length + 1}`,
-      category: 'REITs',
-      currentAllocation: 2,
-      targetAllocation: 2,
+      id: nextId,
+      name: 'Custom Alternative',
+      category: 'Private Equity',
+      currentAllocation: 5,
+      targetAllocation: 5,
       expectedReturn: 8.0,
       volatility: 20.0,
       correlationToStocks: 0.50,
@@ -353,7 +304,7 @@ export default function AlternativeInvestmentPortfolioOptimizer() {
       }
 
       // Adjust for accessibility
-      if (asset.accessibilityRating < 50 && portfolioValue < 1000000) {
+      if (asset.accessibilityRating < 50 && parseFloat(portfolioValue) < 1000000) {
         suggestedAllocation = Math.max(suggestedAllocation - 1, 0);
         reasoning += ' (limited accessibility)';
       }
@@ -398,7 +349,7 @@ export default function AlternativeInvestmentPortfolioOptimizer() {
     }
 
     return {
-      totalValue: portfolioValue,
+      totalValue: parseFloat(portfolioValue),
       expectedReturn: portfolioReturn,
       volatility,
       sharpeRatio,
@@ -414,10 +365,15 @@ export default function AlternativeInvestmentPortfolioOptimizer() {
     };
   }, [alternativeAssets, portfolioValue, stockAllocation, bondAllocation, riskTolerance, liquidityNeeds, optimizationGoal]);
 
-  const handleOptimize = () => {
+  const handleOptimize = async () => {
+    setIsOptimizing(true);
+    // Simulate optimization calculation time for better UX
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
     const portfolioMetrics = optimizePortfolio();
     setMetrics(portfolioMetrics);
     setShowOptimization(true);
+    setIsOptimizing(false);
   };
 
   // Generate radar chart data for portfolio characteristics
@@ -452,502 +408,614 @@ export default function AlternativeInvestmentPortfolioOptimizer() {
       {
         subject: 'Correlation',
         current: metrics.correlationScore,
-        optimal: 80,
+        optimal: 75,
         fullMark: 100
       },
       {
         subject: 'Efficiency',
         current: metrics.efficientFrontierScore,
-        optimal: 90,
+        optimal: 85,
         fullMark: 100
       }
     ];
   };
 
-  return (
-    <div className="w-full max-w-6xl mx-auto p-6 space-y-8">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center space-y-4"
-      >
-        <div className={`w-16 h-16 ${theme.status.info.bg} rounded-full flex items-center justify-center mx-auto`}>
-          <PieChartIcon className={`w-8 h-8 ${theme.status.info.text}`} />
-        </div>
-        <h1 className={`${theme.typography.heading1} ${theme.textColors.primary}`}>
-          Alternative Investment Portfolio Optimizer
-        </h1>
-        <p className={`${theme.typography.body} ${theme.textColors.secondary} max-w-2xl mx-auto`}>
-          Optimize your alternative investment allocation for enhanced diversification and risk-adjusted returns
-        </p>
-      </motion.div>
+  // Results formatting
+  const portfolioResults = metrics ? {
+    primary: {
+      label: 'Portfolio Expected Return',
+      value: metrics.expectedReturn / 100,
+      format: 'percentage' as const
+    },
+    secondary: [
+      {
+        label: 'Sharpe Ratio',
+        value: metrics.sharpeRatio,
+        format: 'number' as const
+      },
+      {
+        label: 'Volatility',
+        value: metrics.volatility / 100,
+        format: 'percentage' as const
+      },
+      {
+        label: 'Diversification Score',
+        value: metrics.diversificationScore,
+        format: 'number' as const
+      },
+      {
+        label: 'Alternative Allocation',
+        value: metrics.altAllocation / 100,
+        format: 'percentage' as const
+      }
+    ]
+  } : undefined;
 
-      {/* Portfolio Parameters */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-      >
-        <Card className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}`}>
+  // Color scheme for charts
+  const COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4'];
+
+  // Metadata
+  const metadata = {
+    id: 'alternative-investment-portfolio-optimizer',
+    title: 'Alternative Investment Portfolio Optimizer',
+    description: 'Optimize your portfolio with alternative investments for better diversification and risk-adjusted returns',
+    category: 'advanced' as const
+  };
+
+  return (
+    <CalculatorWrapper
+      metadata={metadata}
+      results={portfolioResults}
+      onReset={() => {
+        setPortfolioValue('500000');
+        setStockAllocation(60);
+        setBondAllocation(25);
+        setRiskTolerance('Moderate');
+        setLiquidityNeeds('Medium');
+        setOptimizationGoal('Sharpe');
+        setTimeHorizon(10);
+        setMetrics(null);
+        setShowOptimization(false);
+      }}
+    >
+      <div className="space-y-6">
+        {/* Portfolio Settings */}
+        <Card className={theme.utils.glass('normal')}>
           <CardHeader>
             <CardTitle className={`${theme.textColors.primary} flex items-center`}>
               <Settings className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
-              Portfolio Configuration
+              Portfolio Settings
             </CardTitle>
-            <CardDescription>Configure your portfolio parameters and optimization goals</CardDescription>
+            <CardDescription className={theme.textColors.secondary}>
+              Configure your portfolio parameters and optimization preferences
+            </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <div className="grid md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="portfolioValue">Portfolio Value ($)</Label>
+              <div>
+                <Label htmlFor="portfolioValue" className={theme.textColors.primary}>
+                  Portfolio Value
+                </Label>
                 <Input
                   id="portfolioValue"
-                  type="number"
+                  type="text"
                   value={portfolioValue}
-                  onChange={(e) => setPortfolioValue(Number(e.target.value))}
-                  placeholder="500000"
+                  onChange={(e) => setPortfolioValue(e.target.value)}
+                  className={theme.utils.input()}
+                  placeholder="$500,000"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="stockAllocation">Stock Allocation (%)</Label>
+              <div>
+                <Label htmlFor="timeHorizon" className={theme.textColors.primary}>
+                  Time Horizon (Years)
+                </Label>
                 <Input
+                  id="timeHorizon"
+                  type="number"
+                  value={timeHorizon}
+                  onChange={(e) => setTimeHorizon(parseInt(e.target.value) || 10)}
+                  className={theme.utils.input()}
+                  min="1"
+                  max="50"
+                />
+              </div>
+              <div>
+                <Label className={theme.textColors.primary}>
+                  Optimization Goal
+                </Label>
+                <div className="flex space-x-2 mt-1">
+                  {(['Return', 'Risk', 'Sharpe'] as const).map((goal) => (
+                    <Button
+                      key={goal}
+                      variant={optimizationGoal === goal ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setOptimizationGoal(goal)}
+                      className={optimizationGoal === goal ? theme.buttons.primary : theme.buttons.secondary}
+                    >
+                      {goal}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            <Separator className={theme.borderColors.primary} />
+            
+            <div className="grid md:grid-cols-3 gap-4">
+              <div>
+                <Label className={theme.textColors.primary}>
+                  Risk Tolerance
+                </Label>
+                <div className="flex space-x-2 mt-1">
+                  {(['Conservative', 'Moderate', 'Aggressive'] as const).map((risk) => (
+                    <Button
+                      key={risk}
+                      variant={riskTolerance === risk ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setRiskTolerance(risk)}
+                      className={riskTolerance === risk ? theme.buttons.primary : theme.buttons.secondary}
+                    >
+                      {risk}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <Label className={theme.textColors.primary}>
+                  Liquidity Needs
+                </Label>
+                <div className="flex space-x-2 mt-1">
+                  {(['Low', 'Medium', 'High'] as const).map((liquidity) => (
+                    <Button
+                      key={liquidity}
+                      variant={liquidityNeeds === liquidity ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setLiquidityNeeds(liquidity)}
+                      className={liquidityNeeds === liquidity ? theme.buttons.primary : theme.buttons.secondary}
+                    >
+                      {liquidity}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="stockAllocation" className={theme.textColors.primary}>
+                  Stock Allocation: {stockAllocation}%
+                </Label>
+                <input
                   id="stockAllocation"
-                  type="number"
+                  type="range"
+                  min="0"
+                  max="100"
                   value={stockAllocation}
-                  onChange={(e) => setStockAllocation(Number(e.target.value))}
-                  placeholder="50"
+                  onChange={(e) => setStockAllocation(parseInt(e.target.value))}
+                  className="w-full mt-1"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="bondAllocation">Bond Allocation (%)</Label>
-                <Input
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="bondAllocation" className={theme.textColors.primary}>
+                  Bond Allocation: {bondAllocation}%
+                </Label>
+                <input
                   id="bondAllocation"
-                  type="number"
+                  type="range"
+                  min="0"
+                  max="100"
                   value={bondAllocation}
-                  onChange={(e) => setBondAllocation(Number(e.target.value))}
-                  placeholder="30"
+                  onChange={(e) => setBondAllocation(parseInt(e.target.value))}
+                  className="w-full mt-1"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="riskTolerance">Risk Tolerance</Label>
-                <select
-                  id="riskTolerance"
-                  value={riskTolerance}
-                  onChange={(e) => setRiskTolerance(e.target.value as typeof riskTolerance)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="Conservative">Conservative</option>
-                  <option value="Moderate">Moderate</option>
-                  <option value="Aggressive">Aggressive</option>
-                </select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="liquidityNeeds">Liquidity Needs</Label>
-                <select
-                  id="liquidityNeeds"
-                  value={liquidityNeeds}
-                  onChange={(e) => setLiquidityNeeds(e.target.value as typeof liquidityNeeds)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="Low">Low</option>
-                  <option value="Medium">Medium</option>
-                  <option value="High">High</option>
-                </select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="optimizationGoal">Optimization Goal</Label>
-                <select
-                  id="optimizationGoal"
-                  value={optimizationGoal}
-                  onChange={(e) => setOptimizationGoal(e.target.value as typeof optimizationGoal)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="Sharpe">Maximize Sharpe Ratio</option>
-                  <option value="Return">Maximize Return</option>
-                  <option value="Risk">Minimize Risk</option>
-                </select>
+              <div className="flex items-end">
+                <div className={`p-3 rounded-lg ${theme.status.info.bg}/10 border ${theme.status.info.border}`}>
+                  <p className={`text-sm ${theme.textColors.secondary}`}>
+                    Alternative Allocation: {100 - stockAllocation - bondAllocation}%
+                  </p>
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
-      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Alternative Assets Configuration */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="lg:col-span-2"
+        {/* Optimize Button */}
+        <motion.div 
+          className="text-center"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
         >
-          <Card className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}`}>
-            <CardHeader>
-              <CardTitle className={`${theme.textColors.primary} flex items-center justify-between`}>
-                <div className="flex items-center">
-                  <Target className={`w-5 h-5 ${theme.status.success.text} mr-2`} />
-                  Alternative Assets
-                </div>
+          <Button
+            onClick={handleOptimize}
+            disabled={isOptimizing}
+            size="lg"
+            className={`${theme.buttons.primary} px-8 py-3 min-w-[200px] ${theme.interactive.glow}`}
+          >
+            {isOptimizing ? (
+              <>
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
+                Optimizing...
+              </>
+            ) : (
+              <>
+                <Target className="w-5 h-5 mr-2" />
+                Optimize Portfolio
+              </>
+            )}
+          </Button>
+          {!showOptimization && (
+            <p className={`${theme.textColors.muted} text-sm mt-2`}>
+              Analyze your portfolio allocation and get personalized recommendations
+            </p>
+          )}
+        </motion.div>
+
+        {/* Alternative Assets Configuration */}
+        <Card className={theme.utils.glass('normal')}>
+          <CardHeader>
+            <CardTitle className={`${theme.textColors.primary} flex items-center justify-between`}>
+              <div className="flex items-center">
+                <Target className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
+                Alternative Assets
+              </div>
+              <div className="flex items-center space-x-2">
+                <Badge variant="outline" className={`${theme.status.info.text} border-current`}>
+                  {alternativeAssets.length} Assets
+                </Badge>
                 <Button
-                  variant="outline"
-                  size="sm"
                   onClick={addAlternativeAsset}
+                  size="sm"
+                  className={theme.utils.button('secondary', 'sm')}
                 >
+                  <Plus className="w-4 h-4 mr-1" />
                   Add Asset
                 </Button>
-              </CardTitle>
-              <CardDescription>Configure your alternative investment allocations</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-4 max-h-96 overflow-y-auto">
-                {alternativeAssets.map((asset, index) => (
-                  <motion.div
-                    key={asset.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    className={`p-4 ${theme.backgrounds.card} rounded-lg border space-y-3`}
+              </div>
+            </CardTitle>
+            <CardDescription className={theme.textColors.secondary}>
+              Configure your alternative investment allocations and characteristics
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {alternativeAssets.map((asset, index) => (
+              <motion.div 
+                key={asset.id} 
+                className={`${theme.utils.glass('soft')} p-4 space-y-3 ${theme.interactive.hoverSoft}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Badge 
+                      variant="outline" 
+                      className={`${theme.status.info.text} border-current px-3 py-1`}
+                    >
+                      {asset.category}
+                    </Badge>
+                    <span className={`font-medium ${theme.textColors.primary} text-lg`}>
+                      {asset.name}
+                    </span>
+                    {asset.expectedReturn > 12 && (
+                      <Badge className={`${theme.status.success.bg} ${theme.status.success.text} border-none`}>
+                        High Return
+                      </Badge>
+                    )}
+                  </div>
+                  {alternativeAssets.length > 1 && (
+                    <Button
+                      onClick={() => removeAlternativeAsset(asset.id)}
+                      size="sm"
+                      variant="outline"
+                      className={`${theme.buttons.ghost} hover:${theme.status.error.bg} hover:${theme.status.error.text}`}
+                    >
+                      <Minus className="w-4 h-4" />
+                    </Button>
+                  )}
+                </div>
+                
+                <div className="grid md:grid-cols-3 gap-4">
+                  <div>
+                    <Label className={theme.textColors.primary}>
+                      Allocation: {asset.currentAllocation}%
+                    </Label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="50"
+                      value={asset.currentAllocation}
+                      onChange={(e) => updateAssetAllocation(asset.id, parseInt(e.target.value))}
+                      className="w-full mt-1"
+                    />
+                  </div>
+                  <div className={`text-sm ${theme.textColors.secondary} space-y-1`}>
+                    <p>Expected Return: {asset.expectedReturn}%</p>
+                    <p>Volatility: {asset.volatility}%</p>
+                    <p>Stock Correlation: {asset.correlationToStocks}</p>
+                  </div>
+                  <div className={`text-sm ${theme.textColors.secondary} space-y-1`}>
+                    <p>Liquidity Rating: {asset.liquidityRating}/100</p>
+                    <p>Expense Ratio: {asset.expenseRatio}%</p>
+                    <p>Min Investment: ${asset.minimumInvestment.toLocaleString()}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </CardContent>
+        </Card>
+
+        {/* Optimization Results */}
+        {showOptimization && metrics && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
+          >
+            {/* Portfolio Performance Chart */}
+            <Card className={theme.utils.glass('normal')}>
+              <CardHeader>
+                <CardTitle className={`${theme.textColors.primary} flex items-center`}>
+                  <BarChart3 className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
+                  Portfolio Performance Analysis
+                </CardTitle>
+                <CardDescription className={theme.textColors.secondary}>
+                  Comprehensive analysis of your portfolio's risk-return profile and characteristics
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Radar Chart */}
+                  <div>
+                    <h5 className={`font-medium ${theme.textColors.primary} mb-4`}>
+                      Portfolio Characteristics
+                    </h5>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <RadarChart data={generateRadarData()}>
+                        <PolarGrid gridType="polygon" className={theme.borderColors.primary} />
+                        <PolarAngleAxis dataKey="subject" className={theme.textColors.secondary} />
+                        <PolarRadiusAxis domain={[0, 100]} tickCount={5} className={theme.textColors.secondary} />
+                        <Radar
+                          name="Current"
+                          dataKey="current"
+                          stroke="#3B82F6"
+                          fill="#3B82F6"
+                          fillOpacity={0.3}
+                          strokeWidth={2}
+                        />
+                        <Radar
+                          name="Optimal"
+                          dataKey="optimal"
+                          stroke="#10B981"
+                          fill="#10B981"
+                          fillOpacity={0.1}
+                          strokeWidth={2}
+                          strokeDasharray="5 5"
+                        />
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: '#1F2937',
+                            border: '1px solid #374151',
+                            borderRadius: '8px',
+                            color: '#F9FAFB'
+                          }}
+                        />
+                      </RadarChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  {/* Allocation Chart */}
+                  <div>
+                    <h5 className={`font-medium ${theme.textColors.primary} mb-4`}>
+                      Current Allocation
+                    </h5>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <PieChart>
+                        <Pie
+                          data={[
+                            { name: 'Stocks', value: stockAllocation, color: COLORS[0] },
+                            { name: 'Bonds', value: bondAllocation, color: COLORS[1] },
+                            ...alternativeAssets.map((asset, index) => ({
+                              name: asset.name,
+                              value: asset.currentAllocation,
+                              color: COLORS[2 + (index % 4)]
+                            }))
+                          ]}
+                          cx="50%"
+                          cy="50%"
+                          outerRadius={100}
+                          dataKey="value"
+                          label={({ name, value }) => `${name}: ${value}%`}
+                        >
+                          {alternativeAssets.map((_, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: '#1F2937',
+                            border: '1px solid #374151',
+                            borderRadius: '8px',
+                            color: '#F9FAFB'
+                          }}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Optimization Recommendations */}
+            <Card className={theme.utils.glass('normal')}>
+              <CardHeader>
+                <CardTitle className={`${theme.textColors.primary} flex items-center`}>
+                  <Shuffle className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
+                  Optimization Recommendations
+                </CardTitle>
+                <CardDescription className={theme.textColors.secondary}>
+                  AI-powered recommendations to improve your portfolio's risk-adjusted returns
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {metrics.optimizedAllocation.map((allocation, index) => (
+                  <motion.div 
+                    key={index} 
+                    className={`${theme.utils.glass('soft')} p-4 ${theme.interactive.hoverSoft}`}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div 
-                          className="w-4 h-4 rounded-full"
-                          style={{ backgroundColor: assetColors[asset.category] }}
-                        />
-                        <div>
-                          <input
-                            type="text"
-                            value={asset.name}
-                            onChange={(e) => updateAlternativeAsset(index, 'name', e.target.value)}
-                            className="font-medium bg-transparent border-none focus:outline-none text-sm"
-                          />
-                          <Badge variant="outline" className="ml-2">
-                            {asset.category}
+                    <div className="flex items-center justify-between mb-3">
+                      <span className={`font-medium ${theme.textColors.primary} text-lg`}>
+                        {allocation.category}
+                      </span>
+                      <div className="flex items-center space-x-2">
+                        <Badge 
+                          variant={allocation.difference > 0 ? "default" : allocation.difference < 0 ? "destructive" : "secondary"}
+                          className={`px-3 py-1 font-semibold ${
+                            allocation.difference > 0 
+                              ? `${theme.status.success.bg} ${theme.status.success.text} border-none` 
+                              : allocation.difference < 0 
+                                ? `${theme.status.warning.bg} ${theme.status.warning.text} border-none`
+                                : `${theme.status.neutral.bg} ${theme.status.neutral.text} border-none`
+                          }`}
+                        >
+                          {allocation.difference > 0 ? '+' : ''}{allocation.difference.toFixed(1)}%
+                        </Badge>
+                        {allocation.difference > 2 && (
+                          <Badge className={`${theme.status.info.bg} ${theme.status.info.text} border-none text-xs`}>
+                            Strong Signal
                           </Badge>
-                        </div>
+                        )}
                       </div>
-                      {alternativeAssets.length > 1 && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => removeAlternativeAsset(asset.id)}
-                        >
-                          Remove
-                        </Button>
-                      )}
                     </div>
-                    
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                      <div className="space-y-1">
-                        <Label className="text-xs">Category</Label>
-                        <select
-                          value={asset.category}
-                          onChange={(e) => updateAlternativeAsset(index, 'category', e.target.value)}
-                          className="w-full h-8 px-2 border border-gray-300 rounded text-sm"
-                        >
-                          <option value="REITs">REITs</option>
-                          <option value="Commodities">Commodities</option>
-                          <option value="Crypto">Crypto</option>
-                          <option value="Private Equity">Private Equity</option>
-                          <option value="Hedge Funds">Hedge Funds</option>
-                          <option value="Infrastructure">Infrastructure</option>
-                          <option value="Art/Collectibles">Art/Collectibles</option>
-                          <option value="Peer-to-Peer">Peer-to-Peer</option>
-                        </select>
+                    <div className="grid md:grid-cols-3 gap-4 text-sm">
+                      <div className={`${theme.textColors.secondary} flex items-center space-x-2`}>
+                        <span className="font-medium">Current:</span>
+                        <span>{allocation.current}%</span>
                       </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Current Allocation (%)</Label>
-                        <Input
-                          type="number"
-                          step="0.1"
-                          value={asset.currentAllocation}
-                          onChange={(e) => updateAlternativeAsset(index, 'currentAllocation', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
+                      <div className={`${theme.textColors.secondary} flex items-center space-x-2`}>
+                        <span className="font-medium">Suggested:</span>
+                        <span className={allocation.difference > 0 ? theme.status.success.text : allocation.difference < 0 ? theme.status.warning.text : theme.textColors.secondary}>
+                          {allocation.suggested}%
+                        </span>
                       </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Expected Return (%)</Label>
-                        <Input
-                          type="number"
-                          step="0.1"
-                          value={asset.expectedReturn}
-                          onChange={(e) => updateAlternativeAsset(index, 'expectedReturn', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Volatility (%)</Label>
-                        <Input
-                          type="number"
-                          step="0.1"
-                          value={asset.volatility}
-                          onChange={(e) => updateAlternativeAsset(index, 'volatility', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Stock Correlation</Label>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          min="-1"
-                          max="1"
-                          value={asset.correlationToStocks}
-                          onChange={(e) => updateAlternativeAsset(index, 'correlationToStocks', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Liquidity (1-100)</Label>
-                        <Input
-                          type="number"
-                          min="1"
-                          max="100"
-                          value={asset.liquidityRating}
-                          onChange={(e) => updateAlternativeAsset(index, 'liquidityRating', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Min Investment ($)</Label>
-                        <Input
-                          type="number"
-                          value={asset.minimumInvestment}
-                          onChange={(e) => updateAlternativeAsset(index, 'minimumInvestment', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Expense Ratio (%)</Label>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          value={asset.expenseRatio}
-                          onChange={(e) => updateAlternativeAsset(index, 'expenseRatio', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
+                      <div className={`${theme.textColors.secondary} italic`}>
+                        {allocation.reasoning}
                       </div>
                     </div>
                   </motion.div>
                 ))}
-              </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
 
-              <Button 
-                onClick={handleOptimize}
-                className={`w-full ${theme.buttons.primary}`}
-                size="lg"
-              >
-                <Shuffle className="w-4 h-4 mr-2" />
-                Optimize Portfolio
-              </Button>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Current Allocation */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <Card className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}`}>
-            <CardHeader>
-              <CardTitle className={`${theme.textColors.primary} flex items-center`}>
-                <DollarSign className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
-                Current Allocation
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={[
-                        { name: 'Stocks', value: stockAllocation, fill: '#3b82f6' },
-                        { name: 'Bonds', value: bondAllocation, fill: '#10b981' },
-                        ...alternativeAssets.map(asset => ({
-                          name: asset.category,
-                          value: asset.currentAllocation,
-                          fill: assetColors[asset.category]
-                        }))
-                      ]}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ name, percent }) => 
-                        `${name}: ${((percent || 0) * 100).toFixed(0)}%`
-                      }
-                      outerRadius={80}
-                      dataKey="value"
-                    >
-                      {[...alternativeAssets].map((asset) => (
-                        <Cell key={asset.id} fill={assetColors[asset.category]} />
-                      ))}
-                    </Pie>
-                    <Tooltip 
-                      formatter={(value: number) => [`${value}%`, 'Allocation']}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </div>
-
-      {/* Optimization Results */}
-      {metrics && showOptimization && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          <Card className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}`}>
-            <CardHeader>
-              <CardTitle className={`${theme.textColors.primary} flex items-center`}>
-                <BarChart3 className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
-                Portfolio Optimization Results
-              </CardTitle>
-              <CardDescription>Optimized allocation recommendations and portfolio analysis</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Key Metrics */}
-              <div className="grid md:grid-cols-4 gap-4">
-                <div className={`p-4 ${theme.backgrounds.card} rounded-lg border text-center`}>
-                  <div className={`text-2xl font-bold ${theme.status.info.text}`}>
-                    {metrics.expectedReturn.toFixed(1)}%
-                  </div>
-                  <div className={`text-sm ${theme.textColors.secondary}`}>Expected Return</div>
-                </div>
-                <div className={`p-4 ${theme.backgrounds.card} rounded-lg border text-center`}>
-                  <div className={`text-2xl font-bold ${metrics.volatility > 15 ? theme.status.warning.text : theme.status.success.text}`}>
-                    {metrics.volatility.toFixed(1)}%
-                  </div>
-                  <div className={`text-sm ${theme.textColors.secondary}`}>Volatility</div>
-                </div>
-                <div className={`p-4 ${theme.backgrounds.card} rounded-lg border text-center`}>
-                  <div className={`text-2xl font-bold ${metrics.sharpeRatio > 1 ? theme.status.success.text : theme.status.warning.text}`}>
-                    {metrics.sharpeRatio.toFixed(2)}
-                  </div>
-                  <div className={`text-sm ${theme.textColors.secondary}`}>Sharpe Ratio</div>
-                </div>
-                <div className={`p-4 ${theme.backgrounds.card} rounded-lg border text-center`}>
-                  <div className={`text-2xl font-bold ${theme.status.info.text}`}>
-                    {metrics.altAllocation.toFixed(0)}%
-                  </div>
-                  <div className={`text-sm ${theme.textColors.secondary}`}>Alt Allocation</div>
-                </div>
-              </div>
-
-              <Separator />
-
-              {/* Portfolio Characteristics Radar */}
-              <div>
-                <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Portfolio Characteristics</h4>
-                <div className="h-80">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart cx="50%" cy="50%" outerRadius="80%" data={generateRadarData()}>
-                      <PolarGrid />
-                      <PolarAngleAxis dataKey="subject" />
-                      <PolarRadiusAxis domain={[0, 100]} />
-                      <Radar name="Current" dataKey="current" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} />
-                      <Radar name="Optimal" dataKey="optimal" stroke="#10b981" fill="#10b981" fillOpacity={0.1} />
-                      <Tooltip />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              <Separator />
-
-              {/* Optimization Suggestions */}
-              <div>
-                <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Optimization Suggestions</h4>
-                <div className="space-y-3">
-                  {metrics.optimizedAllocation.map((suggestion, index) => (
-                    <div key={index} className={`p-3 ${theme.backgrounds.card} rounded-lg border`}>
-                      <div className="flex items-center justify-between mb-1">
-                        <span className={`font-medium ${theme.textColors.primary}`}>
-                          {suggestion.category}
-                        </span>
-                        <div className="flex items-center space-x-2">
-                          <span className={`text-sm ${theme.textColors.secondary}`}>
-                            {suggestion.current.toFixed(1)}% → {suggestion.suggested.toFixed(1)}%
-                          </span>
-                          <Badge 
-                            variant={suggestion.difference > 0 ? "default" : suggestion.difference < 0 ? "destructive" : "secondary"}
-                          >
-                            {suggestion.difference > 0 ? '+' : ''}{suggestion.difference.toFixed(1)}%
-                          </Badge>
-                        </div>
-                      </div>
-                      <p className={`text-sm ${theme.textColors.secondary}`}>
-                        {suggestion.reasoning}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <Separator />
-
-              {/* Recommendations */}
-              {metrics.recommendations.length > 0 && (
-                <div className={`p-4 ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-lg`}>
-                  <h5 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center`}>
-                    <Info className={`w-4 h-4 ${theme.status.info.text} mr-2`} />
-                    Portfolio Recommendations
-                  </h5>
-                  <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
-                    {metrics.recommendations.map((recommendation, index) => (
-                      <li key={index}>• {recommendation}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </motion.div>
-      )}
-
-      {/* Educational Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
-      >
-        <Card className={`${theme.status.info.bg}/10 border ${theme.status.info.border}`}>
+        {/* Educational Content */}
+        <Card className={`${theme.status.info.bg}/10 border ${theme.status.info.border} ${theme.interactive.glow}`}>
           <CardHeader>
             <CardTitle className={`${theme.textColors.primary} flex items-center`}>
               <Info className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
               Alternative Investment Guide
             </CardTitle>
+            <CardDescription className={theme.textColors.secondary}>
+              Essential knowledge for building a diversified alternative investment portfolio
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h5 className={`font-medium ${theme.textColors.primary} mb-2`}>Benefits of Alternatives:</h5>
-                <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
-                  <li>• <span className="font-medium">Diversification:</span> Low correlation with traditional assets</li>
-                  <li>• <span className="font-medium">Inflation Hedge:</span> Many alternatives protect against inflation</li>
-                  <li>• <span className="font-medium">Return Enhancement:</span> Potential for higher risk-adjusted returns</li>
-                  <li>• <span className="font-medium">Risk Reduction:</span> Can reduce overall portfolio volatility</li>
+              <div className={`${theme.utils.glass('soft')} p-4`}>
+                <h5 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
+                  <span className={`w-2 h-2 rounded-full ${theme.status.success.bg} mr-2`}></span>
+                  Benefits of Alternatives
+                </h5>
+                <ul className={`text-sm ${theme.textColors.secondary} space-y-2`}>
+                  <li className="flex items-start space-x-2">
+                    <span className={`${theme.status.success.text} mt-0.5`}>•</span>
+                    <div>
+                      <span className="font-medium text-white">Diversification:</span> Low correlation with traditional assets reduces overall portfolio risk
+                    </div>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className={`${theme.status.success.text} mt-0.5`}>•</span>
+                    <div>
+                      <span className="font-medium text-white">Inflation Hedge:</span> Many alternatives protect against inflation better than bonds
+                    </div>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className={`${theme.status.success.text} mt-0.5`}>•</span>
+                    <div>
+                      <span className="font-medium text-white">Return Enhancement:</span> Potential for higher risk-adjusted returns through alpha generation
+                    </div>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className={`${theme.status.success.text} mt-0.5`}>•</span>
+                    <div>
+                      <span className="font-medium text-white">Risk Reduction:</span> Can reduce overall portfolio volatility when properly allocated
+                    </div>
+                  </li>
                 </ul>
               </div>
-              <div>
-                <h5 className={`font-medium ${theme.textColors.primary} mb-2`}>Allocation Guidelines:</h5>
-                <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
-                  <li>• <span className="font-medium">Conservative:</span> 5-15% alternative allocation</li>
-                  <li>• <span className="font-medium">Moderate:</span> 15-30% allocation range</li>
-                  <li>• <span className="font-medium">Aggressive:</span> 30-50% for sophisticated investors</li>
-                  <li>• <span className="font-medium">Consider:</span> Liquidity needs, costs, and complexity</li>
+              <div className={`${theme.utils.glass('soft')} p-4`}>
+                <h5 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
+                  <span className={`w-2 h-2 rounded-full ${theme.status.warning.bg} mr-2`}></span>
+                  Allocation Guidelines
+                </h5>
+                <ul className={`text-sm ${theme.textColors.secondary} space-y-2`}>
+                  <li className="flex items-start space-x-2">
+                    <span className={`${theme.status.warning.text} mt-0.5`}>•</span>
+                    <div>
+                      <span className="font-medium text-white">Conservative:</span> 5-15% alternative allocation for risk-averse investors
+                    </div>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className={`${theme.status.warning.text} mt-0.5`}>•</span>
+                    <div>
+                      <span className="font-medium text-white">Moderate:</span> 15-30% allocation range for balanced portfolios
+                    </div>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className={`${theme.status.warning.text} mt-0.5`}>•</span>
+                    <div>
+                      <span className="font-medium text-white">Aggressive:</span> 30-50% for sophisticated investors with high risk tolerance
+                    </div>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className={`${theme.status.warning.text} mt-0.5`}>•</span>
+                    <div>
+                      <span className="font-medium text-white">Consider:</span> Liquidity needs, costs, complexity, and investment minimums
+                    </div>
+                  </li>
                 </ul>
+              </div>
+            </div>
+            
+            {/* Additional Educational Content */}
+            <div className={`${theme.utils.glass('soft')} p-4`}>
+              <h5 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
+                <span className={`w-2 h-2 rounded-full ${theme.status.info.bg} mr-2`}></span>
+                Key Risk Considerations
+              </h5>
+              <div className="grid md:grid-cols-3 gap-4 text-sm">
+                <div className={theme.textColors.secondary}>
+                  <span className="font-medium text-white block mb-1">Liquidity Risk:</span>
+                  Some alternatives may be difficult to sell quickly, especially during market stress.
+                </div>
+                <div className={theme.textColors.secondary}>
+                  <span className="font-medium text-white block mb-1">Complexity Risk:</span>
+                  Alternative investments often require more sophisticated understanding and due diligence.
+                </div>
+                <div className={theme.textColors.secondary}>
+                  <span className="font-medium text-white block mb-1">Cost Risk:</span>
+                  Higher expense ratios and fees can significantly impact long-term returns.
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
-      </motion.div>
-    </div>
+      </div>
+    </CalculatorWrapper>
   );
 }

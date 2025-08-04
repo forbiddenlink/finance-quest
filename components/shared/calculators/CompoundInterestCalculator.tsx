@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
-import { Lightbulb, Sparkles } from 'lucide-react';
-import { useProgressStore } from '@/lib/store/progressStore';
+import React, { useState, useCallback, useEffect } from 'react';
+import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Sparkles, TrendingUp } from 'lucide-react';
+import { Label } from '@/components/ui/label';
 import { theme } from '@/lib/theme';
+
 interface CompoundData {
   year: number;
   principal: number;
@@ -13,287 +15,307 @@ interface CompoundData {
 }
 
 export default function CompoundInterestCalculator() {
-  const [principal, setPrincipal] = useState<string>('10000');
-  const [rate, setRate] = useState<string>('7');
-  const [time, setTime] = useState<string>('30');
-  const [monthlyContribution, setMonthlyContribution] = useState<string>('500');
-  const [data, setData] = useState<CompoundData[]>([]);
-  const [totalContributed, setTotalContributed] = useState(0);
-  const [totalInterest, setTotalInterest] = useState(0);
-  const [finalAmount, setFinalAmount] = useState(0);
+    // Form inputs
+    const [principal, setPrincipal] = useState('10000');
+    const [rate, setRate] = useState('7');
+    const [time, setTime] = useState('30');
+    const [monthlyContribution, setMonthlyContribution] = useState('500');
 
-  // Track calculator usage for analytics
-  const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
+    const [data, setData] = useState<CompoundData[]>([]);
+    const [totalContributed, setTotalContributed] = useState(0);
+    const [totalInterest, setTotalInterest] = useState(0);
+    const [finalAmount, setFinalAmount] = useState(0);
 
-  useEffect(() => {
-    recordCalculatorUsage('compound-interest');
-  }, [recordCalculatorUsage]);
+    const calculateCompoundInterest = useCallback(() => {
+        const P = parseFloat(principal) || 0;
+        const r = (parseFloat(rate) || 0) / 100;
+        const t = parseInt(time) || 0;
+        const monthlyAdd = parseFloat(monthlyContribution) || 0;
 
-  const calculateCompoundInterest = useCallback(() => {
-    const P = parseFloat(principal) || 0;
-    const r = (parseFloat(rate) || 0) / 100;
-    const t = parseInt(time) || 0;
-    const monthlyAdd = parseFloat(monthlyContribution) || 0;
+        if (P < 0 || r < 0 || t < 0 || monthlyAdd < 0) return;
 
-    if (P < 0 || r < 0 || t < 0 || monthlyAdd < 0) return;
+        const compoundData: CompoundData[] = [];
+        let totalContributions = P;
 
-    const compoundData: CompoundData[] = [];
-    let totalContributions = P;
+        for (let year = 0; year <= t; year++) {
+            let yearEndValue: number;
 
-    for (let year = 0; year <= t; year++) {
-      let yearEndValue: number;
+            if (year === 0) {
+                // Initial year - just the principal
+                yearEndValue = P;
+                totalContributions = P;
+            } else {
+                // For subsequent years, we need to account for monthly contributions
+                // Start with previous year's value
+                const startValue = compoundData[year - 1]?.total || P;
+                
+                // Add monthly contributions throughout the year with compound growth
+                let runningTotal = startValue;
+                for (let month = 1; month <= 12; month++) {
+                    // Add interest for the month
+                    runningTotal *= (1 + r / 12);
+                    // Add monthly contribution at end of month
+                    runningTotal += monthlyAdd;
+                }
+                
+                yearEndValue = runningTotal;
+                totalContributions = P + (monthlyAdd * 12 * year);
+            }
 
-      if (year === 0) {
-        // Initial year - just the principal
-        yearEndValue = P;
-        totalContributions = P;
-      } else {
-        // Calculate using financial library for professional accuracy
-        const monthsElapsed = year * 12;
-        const monthlyRate = r / 12;
+            const interestEarned = yearEndValue - totalContributions;
 
-        // Future value of initial principal after compounding
-        const futureValuePrincipal = P * Math.pow(1 + r, year);
-
-        // Future value of monthly contributions (annuity)
-        let futureValueContributions = 0;
-        if (monthlyAdd > 0 && monthlyRate > 0) {
-          // Using financial library's FV calculation for annuity
-          futureValueContributions = monthlyAdd * ((Math.pow(1 + monthlyRate, monthsElapsed) - 1) / monthlyRate);
-        } else if (monthlyAdd > 0) {
-          // If no interest, just sum the contributions
-          futureValueContributions = monthlyAdd * monthsElapsed;
+            compoundData.push({
+                year,
+                principal: totalContributions,
+                interest: interestEarned,
+                total: yearEndValue
+            });
         }
 
-        yearEndValue = futureValuePrincipal + futureValueContributions;
-        totalContributions = P + (monthlyAdd * monthsElapsed);
-      }
+        setData(compoundData);
+        
+        if (compoundData.length > 0) {
+            const finalData = compoundData[compoundData.length - 1];
+            setFinalAmount(finalData.total);
+            setTotalContributed(finalData.principal);
+            setTotalInterest(finalData.interest);
+        }
+    }, [principal, rate, time, monthlyContribution]);
 
-      const interestEarned = yearEndValue - totalContributions;
+    useEffect(() => {
+        calculateCompoundInterest();
+    }, [calculateCompoundInterest]);
 
-      compoundData.push({
-        year,
-        principal: totalContributions,
-        interest: Math.max(0, interestEarned),
-        total: yearEndValue
-      });
-    }
+    const handleReset = () => {
+        setPrincipal('10000');
+        setRate('7');
+        setTime('30');
+        setMonthlyContribution('500');
+    };
 
-    setData(compoundData);
-    setTotalContributed(totalContributions);
-    setTotalInterest(compoundData[t]?.interest || 0);
-    setFinalAmount(compoundData[t]?.total || 0);
-  }, [principal, rate, time, monthlyContribution]);
+    // Calculator metadata
+    const metadata = {
+        id: 'compound-interest-calculator',
+        title: 'Compound Interest Calculator',
+        description: 'Calculate the power of compound interest with regular contributions over time',
+        category: 'basic' as const,
+        icon: Sparkles,
+        tags: ['investing', 'compound interest', 'growth', 'savings', 'retirement'],
+        educationalNotes: [
+            {
+                title: 'The Power of Compound Interest',
+                content: 'Compound interest is earning interest on both your original investment and previously earned interest. Albert Einstein allegedly called it "the eighth wonder of the world." The key is time - starting early gives your money more time to grow exponentially.',
+                tips: [
+                    'Start investing as early as possible, even with small amounts',
+                    'Consistency matters more than timing the market',
+                    'Higher interest rates and longer time periods dramatically increase returns',
+                    'Regular contributions can significantly boost your final amount'
+                ]
+            },
+            {
+                title: 'Investment Strategy Insights',
+                content: 'The "Rule of 72" provides a quick way to estimate doubling time: divide 72 by your annual return rate. At 7%, your money doubles approximately every 10.3 years.',
+                tips: [
+                    'Diversify investments to manage risk while seeking growth',
+                    'Consider tax-advantaged accounts like 401(k)s and IRAs',
+                    'Automate contributions to ensure consistency',
+                    'Review and adjust your strategy regularly as life changes'
+                ]
+            }
+        ]
+    };
 
-  useEffect(() => {
-    calculateCompoundInterest();
-  }, [calculateCompoundInterest]);
+    // Results formatting
+    const results = {
+        primary: {
+            label: 'Final Amount',
+            value: finalAmount,
+            format: 'currency' as const
+        },
+        secondary: [
+            {
+                label: 'Total Contributed',
+                value: totalContributed,
+                format: 'currency' as const
+            },
+            {
+                label: 'Interest Earned',
+                value: totalInterest,
+                format: 'currency' as const
+            },
+            {
+                label: 'Interest Rate of Return',
+                value: totalInterest > 0 ? ((totalInterest / totalContributed) * 100) : 0,
+                format: 'percentage' as const
+            }
+        ]
+    };
 
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
+    return (
+        <CalculatorWrapper
+            metadata={metadata}
+            results={results}
+            onReset={handleReset}
+        >
+            <div className="space-y-6">
+                {/* Investment Parameters */}
+                <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                    <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Investment Parameters</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="principal" className={`${theme.textColors.primary}`}>
+                                Initial Investment
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="principal"
+                                    type="number"
+                                    value={principal}
+                                    onChange={(e) => setPrincipal(e.target.value)}
+                                    placeholder="Enter initial amount"
+                                    min="0"
+                                    max="1000000"
+                                    step="100"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
 
-  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ color: string; value: number; dataKey: string; payload: { principal: number; interest: number; total: number } }>; label?: string }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg p-4`}>
-          <p className={`font-semibold ${theme.textColors.primary}`}>{`Year ${label}`}</p>
-          <p className={`${theme.textColors.primary}`}>
-            {`Total Contributions: ${formatCurrency(payload[0].payload.principal)}`}
-          </p>
-          <p className={`${theme.status.success.text}`}>
-            {`Interest Earned: ${formatCurrency(payload[0].payload.interest)}`}
-          </p>
-          <p className={`${theme.textColors.primary} font-semibold`}>
-            {`Total Value: ${formatCurrency(payload[0].payload.total)}`}
-          </p>
-        </div>
-      );
-    }
-    return null;
-  };
+                        <div>
+                            <Label htmlFor="monthlyContribution" className={`${theme.textColors.primary}`}>
+                                Monthly Contribution
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="monthlyContribution"
+                                    type="number"
+                                    value={monthlyContribution}
+                                    onChange={(e) => setMonthlyContribution(e.target.value)}
+                                    placeholder="Enter monthly amount"
+                                    min="0"
+                                    max="10000"
+                                    step="25"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
 
-  return (
-    <div className={`max-w-6xl mx-auto ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg p-8`}>
-      <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2`}>Compound Interest Calculator</h2>
-      <p className={`${theme.textColors.secondary} mb-8`}>
-        See the magic of compound interest - how your money grows exponentially over time
-      </p>
+                        <div>
+                            <Label htmlFor="rate" className={`${theme.textColors.primary}`}>
+                                Annual Interest Rate (%)
+                            </Label>
+                            <input
+                                id="rate"
+                                type="number"
+                                value={rate}
+                                onChange={(e) => setRate(e.target.value)}
+                                placeholder="Enter annual rate"
+                                min="0"
+                                max="30"
+                                step="0.1"
+                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                            />
+                        </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Input Controls */}
-        <div className="space-y-6">
-          <div>
-            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-              Initial Investment
-            </label>
-            <div className="relative">
-              <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.secondary}`}>$</span>
-              <input
-                type="number"
-                value={principal}
-                onChange={(e) => setPrincipal(e.target.value)}
-                className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 ${theme.textColors.primary} text-lg transition-all`}
-                placeholder="10000"
-              />
+                        <div>
+                            <Label htmlFor="time" className={`${theme.textColors.primary}`}>
+                                Investment Period (years)
+                            </Label>
+                            <input
+                                id="time"
+                                type="number"
+                                value={time}
+                                onChange={(e) => setTime(e.target.value)}
+                                placeholder="Enter number of years"
+                                min="1"
+                                max="50"
+                                step="1"
+                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Growth Visualization */}
+                {data.length > 0 && (
+                    <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                        <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Investment Growth Over Time</h4>
+                        <div className="h-80">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={data}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke={theme.colors.slate[700]} />
+                                    <XAxis 
+                                        dataKey="year" 
+                                        stroke={theme.colors.slate[400]}
+                                        tick={{ fill: theme.colors.slate[400] }}
+                                    />
+                                    <YAxis 
+                                        stroke={theme.colors.slate[400]}
+                                        tick={{ fill: theme.colors.slate[400] }}
+                                        tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                                    />
+                                    <Tooltip 
+                                        contentStyle={{
+                                            backgroundColor: theme.colors.slate[800],
+                                            border: `1px solid ${theme.colors.slate[700]}`,
+                                            borderRadius: '8px',
+                                            color: theme.colors.slate[100]
+                                        }}
+                                        formatter={(value: number, name: string) => [
+                                            `$${value.toLocaleString()}`,
+                                            name === 'principal' ? 'Total Contributed' : 
+                                            name === 'interest' ? 'Interest Earned' : 'Total Value'
+                                        ]}
+                                    />
+                                    <Line 
+                                        type="monotone" 
+                                        dataKey="principal" 
+                                        stroke={theme.colors.blue[400]} 
+                                        strokeWidth={2}
+                                        name="principal"
+                                    />
+                                    <Line 
+                                        type="monotone" 
+                                        dataKey="total" 
+                                        stroke={theme.colors.emerald[400]} 
+                                        strokeWidth={3}
+                                        name="total"
+                                    />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+                        
+                        {/* Key Insights */}
+                        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4 text-center`}>
+                                <TrendingUp className={`w-6 h-6 ${theme.status.info.text} mx-auto mb-2`} />
+                                <div className={`text-sm ${theme.status.info.text} mb-1`}>Effective Annual Return</div>
+                                <div className={`text-lg font-bold ${theme.textColors.primary}`}>
+                                    {totalContributed > 0 ? ((finalAmount / totalContributed - 1) * 100).toFixed(1) : 0}%
+                                </div>
+                            </div>
+                            
+                            <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4 text-center`}>
+                                <Sparkles className={`w-6 h-6 ${theme.status.success.text} mx-auto mb-2`} />
+                                <div className={`text-sm ${theme.status.success.text} mb-1`}>Interest Multiplier</div>
+                                <div className={`text-lg font-bold ${theme.textColors.primary}`}>
+                                    {totalContributed > 0 ? (totalInterest / totalContributed).toFixed(1) : 0}x
+                                </div>
+                            </div>
+                            
+                            <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4 text-center`}>
+                                <div className={`text-sm ${theme.status.warning.text} mb-1`}>Years to Double</div>
+                                <div className={`text-lg font-bold ${theme.textColors.primary}`}>
+                                    {parseFloat(rate) > 0 ? Math.round(72 / parseFloat(rate)) : 0} years
+                                </div>
+                                <div className={`text-xs ${theme.textColors.muted}`}>Rule of 72</div>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
-          </div>
-
-          <div>
-            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-              Monthly Contribution
-            </label>
-            <div className="relative">
-              <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.secondary}`}>$</span>
-              <input
-                type="number"
-                value={monthlyContribution}
-                onChange={(e) => setMonthlyContribution(e.target.value)}
-                className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 ${theme.textColors.primary} text-lg transition-all`}
-                placeholder="500"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-              Annual Interest Rate
-            </label>
-            <div className="relative">
-              <input
-                type="number"
-                step="0.1"
-                value={rate}
-                onChange={(e) => setRate(e.target.value)}
-                className={`w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 ${theme.textColors.primary} text-lg transition-all`}
-                placeholder="7"
-              />
-              <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.secondary}`}>%</span>
-            </div>
-            <p className={`text-xs ${theme.textColors.muted} mt-1`}>S&P 500 historical average: ~10%</p>
-          </div>
-
-          <div>
-            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-              Time Period
-            </label>
-            <div className="relative">
-              <input
-                type="number"
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-                className={`w-full px-4 py-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 ${theme.textColors.primary} text-lg transition-all`}
-                placeholder="30"
-              />
-              <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.secondary}`}>years</span>
-            </div>
-          </div>
-
-          {/* Key Statistics */}
-          <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6 space-y-4`}>
-            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Final Results</h3>
-            <div className="grid grid-cols-1 gap-3">
-              <div className="flex justify-between">
-                <span className={theme.textColors.secondary}>Total Contributed:</span>
-                <span className={`font-semibold ${theme.textColors.primary}`}>{formatCurrency(totalContributed)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className={theme.textColors.secondary}>Interest Earned:</span>
-                <span className={`font-semibold ${theme.status.success.text}`}>{formatCurrency(totalInterest)}</span>
-              </div>
-              <div className={`flex justify-between pt-2 border-t ${theme.borderColors.primary}`}>
-                <span className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Final Amount:</span>
-                <span className={`text-xl font-bold ${theme.textColors.primary}`}>{formatCurrency(finalAmount)}</span>
-              </div>
-            </div>
-
-            {totalInterest > totalContributed && (
-              <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-3`}>
-                <p className={`text-sm ${theme.status.warning.text} flex items-center gap-2`}>
-                  <Sparkles className="w-4 h-4" />
-                  Your money more than doubled through compound interest!
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Chart */}
-        <div className="lg:col-span-1">
-          <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Growth Over Time</h3>
-          <div className="h-96 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
-                <XAxis
-                  dataKey="year"
-                  label={{ value: 'Years', position: 'insideBottom', offset: -5 }}
-                  tick={{ fill: '#94a3b8' }}
-                />
-                <YAxis
-                  tickFormatter={(value: number) => `$${(value / 1000).toFixed(0)}k`}
-                  label={{ value: 'Amount ($)', angle: -90, position: 'insideLeft' }}
-                  tick={{ fill: '#94a3b8' }}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                <Line
-                  type="monotone"
-                  dataKey="principal"
-                  stroke="#60a5fa"
-                  strokeWidth={2}
-                  name="Contributions"
-                  dot={false}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="total"
-                  stroke="#fbbf24"
-                  strokeWidth={3}
-                  name="Total Value"
-                  dot={false}
-                />
-                <ReferenceLine
-                  y={totalContributed}
-                  stroke="#ef4444"
-                  strokeDasharray="5 5"
-                  label="Total Contributions"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      </div>
-
-      {/* Educational Insights */}
-      <div className={`mt-8 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-6`}>
-        <h3 className={`${theme.typography.heading4} ${theme.status.info.text} mb-4 flex items-center gap-2`}>
-          <Lightbulb className="w-5 h-5" />
-          Key Lessons About Compound Interest
-        </h3>
-        <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 text-sm ${theme.textColors.secondary}`}>
-          <div>
-            <h4 className={`font-semibold mb-2 ${theme.textColors.primary}`}>Time is Your Best Friend</h4>
-            <p>The earlier you start investing, the more time compound interest has to work its magic.</p>
-          </div>
-          <div>
-            <h4 className={`font-semibold mb-2 ${theme.textColors.primary}`}>Consistency Matters</h4>
-            <p>Regular monthly contributions can be more powerful than large one-time investments.</p>
-          </div>
-          <div>
-            <h4 className={`font-semibold mb-2 ${theme.textColors.primary}`}>The Power of Growth</h4>
-            <p>Small differences in interest rates compound into huge differences over time.</p>
-          </div>
-          <div>
-            <h4 className={`font-semibold mb-2 ${theme.textColors.primary}`}>Einstein&apos;s &quot;8th Wonder&quot;</h4>
-            <p>Einstein allegedly called compound interest &quot;the eighth wonder of the world.&quot;</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+        </CalculatorWrapper>
+    );
 }

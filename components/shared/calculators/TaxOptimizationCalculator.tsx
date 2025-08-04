@@ -1,498 +1,519 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { Calculator, FileText, TrendingUp, DollarSign, Percent, PieChart } from 'lucide-react';
+import React, { useState, useCallback, useEffect } from 'react';
+import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
+import { Calculator, FileText, TrendingUp, DollarSign, Percent, PieChart, MapPin } from 'lucide-react';
+import { Label } from '@/components/ui/label';
 import { theme } from '@/lib/theme';
-import GradientCard from '@/components/shared/ui/GradientCard';
-
-interface TaxOptimizationCalculatorProps {
-  onCalculationComplete?: () => void;
-}
 
 const stateTaxRates: Record<string, number> = {
   'CA': 0.133, 'NY': 0.109, 'NJ': 0.1075, 'HI': 0.11, 'OR': 0.099,
   'MN': 0.0985, 'DC': 0.095, 'IA': 0.0898, 'VT': 0.0895, 'WI': 0.0765,
-  'FL': 0, 'TX': 0, 'WA': 0, 'NV': 0, 'WY': 0, 'TN': 0, 'AK': 0
+  'ME': 0.075, 'MA': 0.05, 'CT': 0.0699, 'RI': 0.0599, 'DE': 0.066,
+  'MD': 0.0575, 'VA': 0.0575, 'NC': 0.05, 'SC': 0.07, 'GA': 0.0575,
+  'AL': 0.05, 'MS': 0.05, 'LA': 0.06, 'AR': 0.066, 'MO': 0.054,
+  'KS': 0.057, 'OK': 0.05, 'NE': 0.0684, 'ND': 0.029, 'SD': 0,
+  'MT': 0.0675, 'ID': 0.0625, 'UT': 0.0495, 'CO': 0.0455, 'AZ': 0.025,
+  'NM': 0.049, 'OH': 0.0399, 'IN': 0.0323, 'IL': 0.0495, 'MI': 0.0425,
+  'KY': 0.05, 'TN': 0.01, 'WV': 0.065, 'PA': 0.0307, 'NH': 0.05,
+  'FL': 0, 'TX': 0, 'WA': 0, 'NV': 0, 'WY': 0, 'AK': 0
 };
 
-const federalTaxBrackets = [
-  { min: 0, max: 11000, rate: 0.10 },
-  { min: 11000, max: 44725, rate: 0.12 },
-  { min: 44725, max: 95375, rate: 0.22 },
-  { min: 95375, max: 182050, rate: 0.24 },
-  { min: 182050, max: 231250, rate: 0.32 },
-  { min: 231250, max: 578125, rate: 0.35 },
-  { min: 578125, max: Infinity, rate: 0.37 }
+const federalTaxBrackets2024 = [
+  { min: 0, max: 11600, rate: 0.10 },
+  { min: 11600, max: 47150, rate: 0.12 },
+  { min: 47150, max: 100525, rate: 0.22 },
+  { min: 100525, max: 191950, rate: 0.24 },
+  { min: 191950, max: 243725, rate: 0.32 },
+  { min: 243725, max: 609350, rate: 0.35 },
+  { min: 609350, max: Infinity, rate: 0.37 }
 ];
 
-const calculateFederalTax = (taxableIncome: number): number => {
-  let tax = 0;
-  let remainingIncome = taxableIncome;
+interface TaxResults {
+  currentTax: {
+    federal: number;
+    state: number;
+    total: number;
+    marginalRate: number;
+    effectiveRate: number;
+  };
+  capitalGainsLoss: {
+    netGains: number;
+    taxSavings: number;
+    lossCarryforward: number;
+  };
+  municipalBonds: {
+    taxEquivalentYield: number;
+    advantage: number;
+  };
+  rothConversion: {
+    conversionTax: number;
+    potentialSavings: number;
+    breakEvenYears: number;
+  };
+  stateOptimization: {
+    annualSavings: number;
+    bestState: string;
+    recommendation: string;
+  };
+  totalOptimizationPotential: number;
+}
 
-  for (const bracket of federalTaxBrackets) {
-    if (remainingIncome <= 0) break;
-    
-    const taxableInBracket = Math.min(remainingIncome, bracket.max - bracket.min);
-    tax += taxableInBracket * bracket.rate;
-    remainingIncome -= taxableInBracket;
-  }
+export default function TaxOptimizationCalculator() {
+    // Form inputs
+    const [income, setIncome] = useState('100000');
+    const [currentState, setCurrentState] = useState('CA');
+    const [capitalGains, setCapitalGains] = useState('10000');
+    const [capitalLosses, setCapitalLosses] = useState('5000');
+    const [municipalBondYield, setMunicipalBondYield] = useState('3.5');
+    const [rothConversion, setRothConversion] = useState('25000');
+    const [deductions, setDeductions] = useState('13850'); // 2024 standard deduction
+    const [filingStatus, setFilingStatus] = useState('single');
 
-  return tax;
-};
+    const [results, setResults] = useState<TaxResults | null>(null);
 
-export default function TaxOptimizationCalculator({ onCalculationComplete }: TaxOptimizationCalculatorProps) {
-  const [income, setIncome] = useState<number>(100000);
-  const [currentState, setCurrentState] = useState<string>('CA');
-  const [capitalGains, setCapitalGains] = useState<number>(10000);
-  const [capitalLosses, setCapitalLosses] = useState<number>(5000);
-  const [municipalBondYield, setMunicipalBondYield] = useState<number>(3.5);
-  const [rothConversion, setRothConversion] = useState<number>(25000);
-  const [results, setResults] = useState<{
-    currentTax: {
-      federal: number;
-      state: number;
-      total: number;
-      marginalRate: number;
+    const calculateFederalTax = (taxableIncome: number): number => {
+        let tax = 0;
+        let remainingIncome = Math.max(0, taxableIncome);
+
+        for (const bracket of federalTaxBrackets2024) {
+            if (remainingIncome <= 0) break;
+            
+            const taxableInBracket = Math.min(remainingIncome, bracket.max - bracket.min);
+            tax += taxableInBracket * bracket.rate;
+            remainingIncome -= taxableInBracket;
+        }
+
+        return tax;
     };
-    capitalGainsLoss: {
-      netGains: number;
-      netLosses: number;
-      deductibleLoss: number;
-      lossCarryforward: number;
-      taxSavings: number;
+
+    const getMarginalTaxRate = (taxableIncome: number): number => {
+        for (const bracket of federalTaxBrackets2024) {
+            if (taxableIncome <= bracket.max) {
+                return bracket.rate;
+            }
+        }
+        return federalTaxBrackets2024[federalTaxBrackets2024.length - 1].rate;
     };
-    municipalBonds: {
-      yield: number;
-      taxEquivalentYield: number;
-      advantage: number;
+
+    const calculateOptimizations = useCallback(() => {
+        const grossIncome = parseFloat(income) || 0;
+        const deductionAmount = parseFloat(deductions) || 13850;
+        const taxableIncome = Math.max(0, grossIncome - deductionAmount);
+        const gains = parseFloat(capitalGains) || 0;
+        const losses = parseFloat(capitalLosses) || 0;
+        const muniBondYield = parseFloat(municipalBondYield) || 0;
+        const rothAmount = parseFloat(rothConversion) || 0;
+
+        // Current tax calculation
+        const federalTax = calculateFederalTax(taxableIncome);
+        const stateTax = taxableIncome * (stateTaxRates[currentState] || 0);
+        const totalTax = federalTax + stateTax;
+        const marginalRate = getMarginalTaxRate(taxableIncome) + (stateTaxRates[currentState] || 0);
+        const effectiveRate = grossIncome > 0 ? (totalTax / grossIncome) * 100 : 0;
+
+        // Capital gains/loss optimization
+        const netGains = Math.max(0, gains - losses);
+        const capitalGainsTax = netGains * 0.15; // Simplified capital gains rate
+        const lossCarryforward = Math.max(0, losses - gains - 3000); // $3k annual limit
+        const taxSavings = Math.min(losses, gains + 3000) * marginalRate;
+
+        // Municipal bond analysis
+        const taxEquivalentYield = muniBondYield / (1 - marginalRate) * 100;
+        const corporateBondYield = 4.5; // Assume comparable corporate bond yield
+        const advantage = taxEquivalentYield - corporateBondYield;
+
+        // Roth conversion analysis
+        const conversionTax = rothAmount * marginalRate;
+        const assumedRetirementRate = 0.22; // Lower tax bracket in retirement
+        const potentialSavings = rothAmount * (marginalRate - assumedRetirementRate);
+        const breakEvenYears = potentialSavings > 0 ? conversionTax / (rothAmount * 0.07 * (marginalRate - assumedRetirementRate)) : 0;
+
+        // State optimization
+        const noTaxStates = ['FL', 'TX', 'WA', 'NV', 'WY', 'TN', 'AK'];
+        const bestNoTaxState = 'FL'; // Popular choice
+        const annualSavings = stateTax;
+        
+        const recommendation = annualSavings > 10000 ? 
+            `Consider relocating to ${bestNoTaxState} for significant savings` :
+            'Current state tax burden is manageable';
+
+        // Total optimization potential
+        const totalOptimization = taxSavings + Math.max(0, advantage * 10000) + Math.max(0, potentialSavings) + annualSavings * 0.1;
+
+        setResults({
+            currentTax: {
+                federal: federalTax,
+                state: stateTax,
+                total: totalTax,
+                marginalRate: marginalRate * 100,
+                effectiveRate
+            },
+            capitalGainsLoss: {
+                netGains,
+                taxSavings,
+                lossCarryforward
+            },
+            municipalBonds: {
+                taxEquivalentYield,
+                advantage
+            },
+            rothConversion: {
+                conversionTax,
+                potentialSavings,
+                breakEvenYears
+            },
+            stateOptimization: {
+                annualSavings,
+                bestState: bestNoTaxState,
+                recommendation
+            },
+            totalOptimizationPotential: totalOptimization
+        });
+    }, [income, currentState, capitalGains, capitalLosses, municipalBondYield, rothConversion, deductions]);
+
+    useEffect(() => {
+        calculateOptimizations();
+    }, [calculateOptimizations]);
+
+    const handleReset = () => {
+        setIncome('100000');
+        setCurrentState('CA');
+        setCapitalGains('10000');
+        setCapitalLosses('5000');
+        setMunicipalBondYield('3.5');
+        setRothConversion('25000');
+        setDeductions('13850');
+        setFilingStatus('single');
     };
-    rothConversion: {
-      conversionAmount: number;
-      conversionTax: number;
-      potentialSavings: number;
-      breakEvenYears: number;
+
+    // Calculator metadata
+    const metadata = {
+        id: 'tax-optimization-calculator',
+        title: 'Tax Optimization Calculator',
+        description: 'Analyze your tax situation and discover optimization strategies',
+        category: 'advanced' as const,
+        icon: Calculator,
+        tags: ['taxes', 'optimization', 'planning', 'deductions', 'strategies'],
+        educationalNotes: [
+            {
+                title: 'Tax Optimization Strategies',
+                content: 'Tax optimization involves legal strategies to minimize your tax burden. Key areas include capital gains harvesting, tax-loss harvesting, retirement account optimization, and strategic state residency planning.',
+                tips: [
+                    'Harvest tax losses annually to offset gains',
+                    'Consider Roth conversions during low-income years',
+                    'Maximize pre-tax retirement contributions in high-income years',
+                    'Time capital gains realizations strategically'
+                ]
+            },
+            {
+                title: 'Advanced Tax Planning',
+                content: 'Advanced strategies include municipal bond investing for high earners, asset location optimization, and charitable giving strategies. Always consult a tax professional for personalized advice.',
+                tips: [
+                    'Municipal bonds may be tax-free at federal and state levels',
+                    'Consider the total tax burden, not just federal rates',
+                    'State residency changes require careful planning',
+                    'Document all tax optimization strategies for compliance'
+                ]
+            }
+        ]
     };
-    stateOptimization: {
-      currentState: string;
-      annualSavings: number;
-      lifetimeSavings: number;
-      recommendation: string;
-    };
-    totalOptimizationPotential: number;
-  } | null>(null);
 
-  const calculateTaxOptimization = useCallback(() => {
-    // Federal tax calculations
-    const federalTax = calculateFederalTax(income);
-    const stateTax = income * (stateTaxRates[currentState] || 0);
-    const totalCurrentTax = federalTax + stateTax;
-    const currentMarginalRate = 0.24 + (stateTaxRates[currentState] || 0); // Assuming 24% federal bracket
+    // Results formatting
+    const taxResults = results ? {
+        primary: {
+            label: 'Total Annual Tax Savings Potential',
+            value: results.totalOptimizationPotential,
+            format: 'currency' as const
+        },
+        secondary: [
+            {
+                label: 'Current Total Tax',
+                value: results.currentTax.total,
+                format: 'currency' as const
+            },
+            {
+                label: 'Effective Tax Rate',
+                value: results.currentTax.effectiveRate / 100,
+                format: 'percentage' as const
+            },
+            {
+                label: 'Marginal Tax Rate',
+                value: results.currentTax.marginalRate / 100,
+                format: 'percentage' as const
+            },
+            {
+                label: 'State Tax Savings Potential',
+                value: results.stateOptimization.annualSavings,
+                format: 'currency' as const
+            }
+        ]
+    } : undefined;
 
-    // Capital gains/loss calculations
-    const netGains = Math.max(0, capitalGains - capitalLosses);
-    const netLosses = Math.max(0, capitalLosses - capitalGains);
-    const deductibleLoss = Math.min(netLosses, 3000);
-    const lossCarryforward = Math.max(0, netLosses - 3000);
-    const taxSavingsFromLoss = deductibleLoss * currentMarginalRate;
+    return (
+        <CalculatorWrapper
+            metadata={metadata}
+            results={taxResults}
+            onReset={handleReset}
+        >
+            <div className="space-y-6">
+                {/* Income & Filing Details */}
+                <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                    <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Income & Filing Details</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="income" className={`${theme.textColors.primary}`}>
+                                Annual Gross Income
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="income"
+                                    type="number"
+                                    value={income}
+                                    onChange={(e) => setIncome(e.target.value)}
+                                    placeholder="Enter annual income"
+                                    min="0"
+                                    max="10000000"
+                                    step="1000"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
 
-    // Municipal bond equivalent yield
-    const taxEquivalentYield = municipalBondYield / (1 - currentMarginalRate);
+                        <div>
+                            <Label htmlFor="deductions" className={`${theme.textColors.primary}`}>
+                                Total Deductions
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="deductions"
+                                    type="number"
+                                    value={deductions}
+                                    onChange={(e) => setDeductions(e.target.value)}
+                                    placeholder="Enter total deductions"
+                                    min="0"
+                                    max="500000"
+                                    step="100"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                            <p className={`text-xs ${theme.textColors.muted} mt-1`}>
+                                2024 Standard: $13,850 (Single), $27,700 (Married Filing Jointly)
+                            </p>
+                        </div>
 
-    // Roth conversion analysis
-    const conversionTax = rothConversion * currentMarginalRate;
-    const futureValueTaxable = rothConversion * Math.pow(1.07, 20); // 20 years at 7%
-    const futureTaxOnTaxable = futureValueTaxable * 0.15; // Assuming 15% capital gains
-    const rothPotentialSavings = futureTaxOnTaxable - conversionTax;
+                        <div>
+                            <Label htmlFor="currentState" className={`${theme.textColors.primary}`}>
+                                Current State
+                            </Label>
+                            <select
+                                id="currentState"
+                                value={currentState}
+                                onChange={(e) => setCurrentState(e.target.value)}
+                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                            >
+                                {Object.entries(stateTaxRates).map(([state, rate]) => (
+                                    <option key={state} value={state}>
+                                        {state} ({(rate * 100).toFixed(1)}% tax rate)
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
 
-    // State tax optimization
-    const noTaxStates = ['FL', 'TX', 'WA', 'NV', 'WY', 'TN', 'AK'];
-    const annualStateTaxSavings = noTaxStates.includes(currentState) ? 0 : stateTax;
-    const lifetimeStateSavings = annualStateTaxSavings * 25; // 25 years
-
-    setResults({
-      currentTax: {
-        federal: federalTax,
-        state: stateTax,
-        total: totalCurrentTax,
-        marginalRate: currentMarginalRate
-      },
-      capitalGainsLoss: {
-        netGains,
-        netLosses,
-        deductibleLoss,
-        lossCarryforward,
-        taxSavings: taxSavingsFromLoss
-      },
-      municipalBonds: {
-        yield: municipalBondYield,
-        taxEquivalentYield,
-        advantage: taxEquivalentYield - municipalBondYield
-      },
-      rothConversion: {
-        conversionAmount: rothConversion,
-        conversionTax,
-        potentialSavings: rothPotentialSavings,
-        breakEvenYears: rothPotentialSavings > 0 ? 8 : 15
-      },
-      stateOptimization: {
-        currentState,
-        annualSavings: annualStateTaxSavings,
-        lifetimeSavings: lifetimeStateSavings,
-        recommendation: annualStateTaxSavings > 10000 ? 'Consider relocating' : 'State tax burden manageable'
-      },
-      totalOptimizationPotential: taxSavingsFromLoss + Math.max(0, rothPotentialSavings) + annualStateTaxSavings
-    });
-
-    onCalculationComplete?.();
-  }, [income, currentState, capitalGains, capitalLosses, municipalBondYield, rothConversion, onCalculationComplete]);
-
-  useEffect(() => {
-    calculateTaxOptimization();
-  }, [calculateTaxOptimization]);
-
-  return (
-    <div className="space-y-6">
-      {/* Calculator Header */}
-      <div className="text-center mb-8">
-        <div className={`w-16 h-16 ${theme.status.info.bg} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-          <Calculator className={`w-8 h-8 ${theme.status.info.text}`} />
-        </div>
-        <h2 className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>
-          Tax Optimization Calculator
-        </h2>
-        <p className={`${theme.textColors.secondary} max-w-2xl mx-auto`}>
-          Analyze tax-saving strategies including loss harvesting, Roth conversions, and geographic optimization.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Input Section */}
-        <GradientCard variant="glass" gradient="blue" className="p-6">
-          <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-6 flex items-center`}>
-            <FileText className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
-            Financial Information
-          </h3>
-
-          <div className="space-y-6">
-            <div>
-              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                Annual Income
-              </label>
-              <div className="relative">
-                <DollarSign className={`w-5 h-5 ${theme.textColors.muted} absolute left-3 top-1/2 transform -translate-y-1/2`} />
-                <input
-                  type="number"
-                  value={income}
-                  onChange={(e) => setIncome(Number(e.target.value))}
-                  className={`w-full pl-10 pr-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg text-white focus:outline-none focus:border-blue-400`}
-                  min="0"
-                  step="1000"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                State of Residence
-              </label>
-              <select
-                value={currentState}
-                onChange={(e) => setCurrentState(e.target.value)}
-                className={`w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg text-white focus:outline-none focus:border-blue-400`}
-              >
-                <option value="CA">California (13.3%)</option>
-                <option value="NY">New York (10.9%)</option>
-                <option value="NJ">New Jersey (10.75%)</option>
-                <option value="OR">Oregon (9.9%)</option>
-                <option value="FL">Florida (0%)</option>
-                <option value="TX">Texas (0%)</option>
-                <option value="WA">Washington (0%)</option>
-                <option value="NV">Nevada (0%)</option>
-              </select>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Capital Gains
-                </label>
-                <div className="relative">
-                  <DollarSign className={`w-4 h-4 ${theme.textColors.muted} absolute left-3 top-1/2 transform -translate-y-1/2`} />
-                  <input
-                    type="number"
-                    value={capitalGains}
-                    onChange={(e) => setCapitalGains(Number(e.target.value))}
-                    className={`w-full pl-9 pr-3 py-2 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg text-white text-sm focus:outline-none focus:border-blue-400`}
-                    min="0"
-                  />
+                        <div>
+                            <Label htmlFor="filingStatus" className={`${theme.textColors.primary}`}>
+                                Filing Status
+                            </Label>
+                            <select
+                                id="filingStatus"
+                                value={filingStatus}
+                                onChange={(e) => setFilingStatus(e.target.value)}
+                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                            >
+                                <option value="single">Single</option>
+                                <option value="marriedJoint">Married Filing Jointly</option>
+                                <option value="marriedSeparate">Married Filing Separately</option>
+                                <option value="headOfHousehold">Head of Household</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-              </div>
 
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Capital Losses
-                </label>
-                <div className="relative">
-                  <DollarSign className={`w-4 h-4 ${theme.textColors.muted} absolute left-3 top-1/2 transform -translate-y-1/2`} />
-                  <input
-                    type="number"
-                    value={capitalLosses}
-                    onChange={(e) => setCapitalLosses(Number(e.target.value))}
-                    className={`w-full pl-9 pr-3 py-2 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg text-white text-sm focus:outline-none focus:border-blue-400`}
-                    min="0"
-                  />
-                </div>
-              </div>
-            </div>
+                {/* Investment & Optimization Inputs */}
+                <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                    <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Investment & Optimization Scenarios</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="capitalGains" className={`${theme.textColors.primary}`}>
+                                Capital Gains This Year
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="capitalGains"
+                                    type="number"
+                                    value={capitalGains}
+                                    onChange={(e) => setCapitalGains(e.target.value)}
+                                    placeholder="Enter capital gains"
+                                    min="0"
+                                    max="1000000"
+                                    step="1000"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
 
-            <div>
-              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                Municipal Bond Yield (%)
-              </label>
-              <div className="relative">
-                <Percent className={`w-5 h-5 ${theme.textColors.muted} absolute left-3 top-1/2 transform -translate-y-1/2`} />
-                <input
-                  type="number"
-                  value={municipalBondYield}
-                  onChange={(e) => setMunicipalBondYield(Number(e.target.value))}
-                  className={`w-full pl-10 pr-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg text-white focus:outline-none focus:border-blue-400`}
-                  min="0"
-                  max="10"
-                  step="0.1"
-                />
-              </div>
-            </div>
+                        <div>
+                            <Label htmlFor="capitalLosses" className={`${theme.textColors.primary}`}>
+                                Capital Losses Available
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="capitalLosses"
+                                    type="number"
+                                    value={capitalLosses}
+                                    onChange={(e) => setCapitalLosses(e.target.value)}
+                                    placeholder="Enter capital losses"
+                                    min="0"
+                                    max="1000000"
+                                    step="1000"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
 
-            <div>
-              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                Potential Roth Conversion
-              </label>
-              <div className="relative">
-                <DollarSign className={`w-5 h-5 ${theme.textColors.muted} absolute left-3 top-1/2 transform -translate-y-1/2`} />
-                <input
-                  type="number"
-                  value={rothConversion}
-                  onChange={(e) => setRothConversion(Number(e.target.value))}
-                  className={`w-full pl-10 pr-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg text-white focus:outline-none focus:border-blue-400`}
-                  min="0"
-                  step="1000"
-                />
-              </div>
-            </div>
-          </div>
-        </GradientCard>
+                        <div>
+                            <Label htmlFor="municipalBondYield" className={`${theme.textColors.primary}`}>
+                                Municipal Bond Yield (%)
+                            </Label>
+                            <input
+                                id="municipalBondYield"
+                                type="number"
+                                value={municipalBondYield}
+                                onChange={(e) => setMunicipalBondYield(e.target.value)}
+                                placeholder="Enter muni bond yield"
+                                min="0"
+                                max="10"
+                                step="0.1"
+                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                            />
+                        </div>
 
-        {/* Results Section */}
-        {results && (
-          <div className="space-y-6">
-            {/* Current Tax Situation */}
-            <GradientCard variant="glass" gradient="green" className="p-6">
-              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center`}>
-                <PieChart className={`w-5 h-5 ${theme.status.success.text} mr-2`} />
-                Current Tax Analysis
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>Federal Tax:</span>
-                  <span className={`font-bold ${theme.textColors.primary}`}>
-                    ${results.currentTax.federal.toLocaleString()}
-                  </span>
+                        <div>
+                            <Label htmlFor="rothConversion" className={`${theme.textColors.primary}`}>
+                                Potential Roth Conversion
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="rothConversion"
+                                    type="number"
+                                    value={rothConversion}
+                                    onChange={(e) => setRothConversion(e.target.value)}
+                                    placeholder="Enter conversion amount"
+                                    min="0"
+                                    max="500000"
+                                    step="5000"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>State Tax:</span>
-                  <span className={`font-bold ${theme.textColors.primary}`}>
-                    ${results.currentTax.state.toLocaleString()}
-                  </span>
-                </div>
-                <div className={`border-t ${theme.borderColors.primary} pt-3 flex justify-between`}>
-                  <span className={`font-medium ${theme.textColors.primary}`}>Total Tax:</span>
-                  <span className={`font-bold text-xl ${theme.textColors.primary}`}>
-                    ${results.currentTax.total.toLocaleString()}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>Marginal Rate:</span>
-                  <span className={`font-bold ${theme.status.info.text}`}>
-                    {(results.currentTax.marginalRate * 100).toFixed(1)}%
-                  </span>
-                </div>
-              </div>
-            </GradientCard>
 
-            {/* Tax-Loss Harvesting */}
-            <GradientCard variant="glass" gradient="blue" className="p-6">
-              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4 flex items-center`}>
-                <TrendingUp className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
-                Tax-Loss Harvesting
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>Net Gains/Losses:</span>
-                  <span className={`font-bold ${
-                    results.capitalGainsLoss.netGains > 0 ? theme.status.error.text : theme.status.success.text
-                  }`}>
-                    {results.capitalGainsLoss.netGains > 0 
-                      ? `+$${results.capitalGainsLoss.netGains.toLocaleString()}` 
-                      : `-$${results.capitalGainsLoss.netLosses.toLocaleString()}`}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>Deductible Loss:</span>
-                  <span className={`font-bold ${theme.status.success.text}`}>
-                    ${results.capitalGainsLoss.deductibleLoss.toLocaleString()}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>Tax Savings:</span>
-                  <span className={`font-bold ${theme.status.success.text}`}>
-                    ${results.capitalGainsLoss.taxSavings.toLocaleString()}
-                  </span>
-                </div>
-                {results.capitalGainsLoss.lossCarryforward > 0 && (
-                  <div className="flex justify-between">
-                    <span className={theme.textColors.secondary}>Loss Carryforward:</span>
-                    <span className={`font-bold ${theme.status.warning.text}`}>
-                      ${results.capitalGainsLoss.lossCarryforward.toLocaleString()}
-                    </span>
-                  </div>
+                {/* Optimization Analysis */}
+                {results && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Tax Loss Harvesting */}
+                        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                            <div className="flex items-center mb-4">
+                                <TrendingUp className={`w-5 h-5 ${theme.status.success.text} mr-2`} />
+                                <h5 className={`${theme.typography.heading6} ${theme.textColors.primary}`}>Tax Loss Harvesting</h5>
+                            </div>
+                            <div className="space-y-3">
+                                <div className="flex justify-between">
+                                    <span className={`${theme.textColors.secondary}`}>Tax Savings:</span>
+                                    <span className={`${theme.textColors.primary} font-semibold`}>
+                                        ${results.capitalGainsLoss.taxSavings.toFixed(0)}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className={`${theme.textColors.secondary}`}>Loss Carryforward:</span>
+                                    <span className={`${theme.textColors.primary} font-semibold`}>
+                                        ${results.capitalGainsLoss.lossCarryforward.toFixed(0)}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Municipal Bonds */}
+                        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                            <div className="flex items-center mb-4">
+                                <Percent className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
+                                <h5 className={`${theme.typography.heading6} ${theme.textColors.primary}`}>Municipal Bond Analysis</h5>
+                            </div>
+                            <div className="space-y-3">
+                                <div className="flex justify-between">
+                                    <span className={`${theme.textColors.secondary}`}>Tax-Equivalent Yield:</span>
+                                    <span className={`${theme.textColors.primary} font-semibold`}>
+                                        {results.municipalBonds.taxEquivalentYield.toFixed(2)}%
+                                    </span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className={`${theme.textColors.secondary}`}>Advantage:</span>
+                                    <span className={`${results.municipalBonds.advantage > 0 ? theme.status.success.text : theme.status.error.text} font-semibold`}>
+                                        {results.municipalBonds.advantage.toFixed(2)}%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Roth Conversion */}
+                        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                            <div className="flex items-center mb-4">
+                                <PieChart className={`w-5 h-5 ${theme.status.warning.text} mr-2`} />
+                                <h5 className={`${theme.typography.heading6} ${theme.textColors.primary}`}>Roth Conversion</h5>
+                            </div>
+                            <div className="space-y-3">
+                                <div className="flex justify-between">
+                                    <span className={`${theme.textColors.secondary}`}>Conversion Tax:</span>
+                                    <span className={`${theme.textColors.primary} font-semibold`}>
+                                        ${results.rothConversion.conversionTax.toFixed(0)}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className={`${theme.textColors.secondary}`}>Break-even:</span>
+                                    <span className={`${theme.textColors.primary} font-semibold`}>
+                                        {results.rothConversion.breakEvenYears.toFixed(1)} years
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* State Optimization */}
+                        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                            <div className="flex items-center mb-4">
+                                <MapPin className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
+                                <h5 className={`${theme.typography.heading6} ${theme.textColors.primary}`}>State Tax Optimization</h5>
+                            </div>
+                            <div className="space-y-3">
+                                <div className="flex justify-between">
+                                    <span className={`${theme.textColors.secondary}`}>Annual Savings:</span>
+                                    <span className={`${theme.textColors.primary} font-semibold`}>
+                                        ${results.stateOptimization.annualSavings.toFixed(0)}
+                                    </span>
+                                </div>
+                                <p className={`text-sm ${theme.textColors.secondary}`}>
+                                    {results.stateOptimization.recommendation}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 )}
-              </div>
-            </GradientCard>
-
-            {/* Municipal Bonds */}
-            <GradientCard variant="glass" gradient="purple" className="p-6">
-              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4`}>
-                Municipal Bond Analysis
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>Municipal Yield:</span>
-                  <span className={`font-bold ${theme.textColors.primary}`}>
-                    {results.municipalBonds.yield.toFixed(2)}%
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>Tax-Equivalent Yield:</span>
-                  <span className={`font-bold ${theme.status.success.text}`}>
-                    {results.municipalBonds.taxEquivalentYield.toFixed(2)}%
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>Tax Advantage:</span>
-                  <span className={`font-bold ${theme.status.info.text}`}>
-                    +{results.municipalBonds.advantage.toFixed(2)}%
-                  </span>
-                </div>
-              </div>
-            </GradientCard>
-
-            {/* Roth Conversion */}
-            <GradientCard variant="glass" gradient="yellow" className="p-6">
-              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4`}>
-                Roth Conversion Analysis
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>Conversion Tax:</span>
-                  <span className={`font-bold ${theme.status.error.text}`}>
-                    ${results.rothConversion.conversionTax.toLocaleString()}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>Potential 20-yr Savings:</span>
-                  <span className={`font-bold ${
-                    results.rothConversion.potentialSavings > 0 ? theme.status.success.text : theme.status.error.text
-                  }`}>
-                    ${results.rothConversion.potentialSavings.toLocaleString()}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>Break-even Timeline:</span>
-                  <span className={`font-bold ${theme.status.info.text}`}>
-                    {results.rothConversion.breakEvenYears} years
-                  </span>
-                </div>
-              </div>
-            </GradientCard>
-
-            {/* State Tax Optimization */}
-            <GradientCard variant="glass" gradient="green" className="p-6">
-              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4`}>
-                Geographic Tax Optimization
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>Current State:</span>
-                  <span className={`font-bold ${theme.textColors.primary}`}>
-                    {results.stateOptimization.currentState}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className={theme.textColors.secondary}>Annual State Tax:</span>
-                  <span className={`font-bold ${
-                    results.stateOptimization.annualSavings > 0 ? theme.status.error.text : theme.status.success.text
-                  }`}>
-                    ${results.stateOptimization.annualSavings.toLocaleString()}
-                  </span>
-                </div>
-                {results.stateOptimization.annualSavings > 0 && (
-                  <div className="flex justify-between">
-                    <span className={theme.textColors.secondary}>Lifetime Savings (No-Tax State):</span>
-                    <span className={`font-bold ${theme.status.success.text}`}>
-                      ${results.stateOptimization.lifetimeSavings.toLocaleString()}
-                    </span>
-                  </div>
-                )}
-                <div className={`text-sm ${theme.textColors.muted} italic`}>
-                  {results.stateOptimization.recommendation}
-                </div>
-              </div>
-            </GradientCard>
-
-            {/* Total Optimization Summary */}
-            <GradientCard variant="glass" gradient="yellow" className="p-6">
-              <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4`}>
-                Total Optimization Potential
-              </h3>
-              <div className="text-center">
-                <div className={`text-4xl font-bold ${theme.status.success.text} mb-2`}>
-                  ${results.totalOptimizationPotential.toLocaleString()}
-                </div>
-                <p className={`${theme.textColors.secondary} text-sm`}>
-                  Annual tax savings through strategic optimization
-                </p>
-              </div>
-            </GradientCard>
-          </div>
-        )}
-      </div>
-
-      {/* Educational Context */}
-      <GradientCard variant="glass" gradient="blue" className="p-6">
-        <h3 className={`text-xl font-bold ${theme.textColors.primary} mb-4`}>
-          💡 Tax Optimization Strategy Guide
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Priority Strategies:</h4>
-            <ul className={`${theme.textColors.secondary} space-y-1 text-sm`}>
-              <li>• Maximize tax-loss harvesting annually</li>
-              <li>• Optimize asset location for tax efficiency</li>
-              <li>• Time Roth conversions during low-income years</li>
-              <li>• Consider geographic arbitrage opportunities</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Warning Signs:</h4>
-            <ul className={`${theme.textColors.secondary} space-y-1 text-sm`}>
-              <li>• Violating wash sale rules</li>
-              <li>• Converting too much to Roth in high-tax years</li>
-              <li>• Ignoring state residency requirements</li>
-              <li>• Letting tax optimization override investment strategy</li>
-            </ul>
-          </div>
-        </div>
-      </GradientCard>
-    </div>
-  );
+            </div>
+        </CalculatorWrapper>
+    );
 }

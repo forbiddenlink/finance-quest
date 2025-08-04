@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,17 +9,12 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Zap,
-  AlertTriangle,
-  Info,
-  DollarSign,
-  Target,
-  BarChart3,
-  Package
+  Zap, AlertTriangle, Info, DollarSign, Target, BarChart3, 
+  Package, Plus, Minus, TrendingUp, Settings
 } from 'lucide-react';
 import { theme } from '@/lib/theme';
-import { useProgressStore } from '@/lib/store/progressStore';
 import { PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, AreaChart, Area } from 'recharts';
+import CalculatorWrapper from './CalculatorWrapper';
 
 interface CommodityMetrics {
   portfolioValue: number;
@@ -52,7 +47,7 @@ interface CommodityPosition {
 }
 
 export default function CommodityPortfolioBuilder() {
-  // Commodity Positions
+  // Commodity Positions with enhanced defaults
   const [commodityPositions, setCommodityPositions] = useState<CommodityPosition[]>([
     {
       id: 1,
@@ -146,42 +141,32 @@ export default function CommodityPortfolioBuilder() {
   const [riskTolerance, setRiskTolerance] = useState<'Conservative' | 'Moderate' | 'Aggressive'>('Moderate');
   const [inflationTarget, setInflationTarget] = useState<number>(3.0);
   const [rebalanceFrequency, setRebalanceFrequency] = useState<'Monthly' | 'Quarterly' | 'Annually'>('Quarterly');
-
   const [metrics, setMetrics] = useState<CommodityMetrics | null>(null);
+  const [showAnalysis, setShowAnalysis] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  const { recordCalculatorUsage } = useProgressStore();
-
-  useEffect(() => {
-    recordCalculatorUsage('commodity-portfolio-builder');
-  }, [recordCalculatorUsage]);
-
-  const commodityColors = {
-    'Energy': '#f59e0b',
-    'Metals': '#6b7280',
-    'Agriculture': '#10b981',
-    'Livestock': '#8b5cf6',
-    'Industrial': '#ef4444'
-  };
-
-  const updateCommodityPosition = (index: number, field: keyof CommodityPosition, value: number | string) => {
-    const newPositions = [...commodityPositions];
-    newPositions[index] = { ...newPositions[index], [field]: value };
-    setCommodityPositions(newPositions);
+  const updatePositionAmount = (id: number, amount: number) => {
+    setCommodityPositions(prev => 
+      prev.map(position => 
+        position.id === id ? { ...position, amount: Math.max(0, amount) } : position
+      )
+    );
   };
 
   const addCommodityPosition = () => {
+    const nextId = Math.max(...commodityPositions.map(p => p.id)) + 1;
     const newPosition: CommodityPosition = {
-      id: Math.max(...commodityPositions.map(p => p.id)) + 1,
-      name: `New Commodity ${commodityPositions.length + 1}`,
-      category: 'Energy',
+      id: nextId,
+      name: 'Custom Commodity',
+      category: 'Metals',
       allocation: 5,
-      currentPrice: 50.0,
+      currentPrice: 50.00,
       expectedReturn: 6.0,
       volatility: 25.0,
       correlationToInflation: 0.40,
       correlationToStock: 0.20,
       amount: 1000,
-      etfSymbol: 'NEW',
+      etfSymbol: 'CUSTOM',
       expenseRatio: 0.75
     };
     setCommodityPositions([...commodityPositions, newPosition]);
@@ -193,10 +178,27 @@ export default function CommodityPortfolioBuilder() {
     }
   };
 
-  const analyzeCommodityPortfolio = useCallback((): CommodityMetrics => {
+  const calculatePortfolioMetrics = useCallback((): CommodityMetrics => {
     const totalValue = commodityPositions.reduce((sum, position) => sum + position.amount, 0);
     
-    // Portfolio expected return (weighted average)
+    if (totalValue === 0) {
+      return {
+        portfolioValue: 0,
+        expectedReturn: 0,
+        volatility: 0,
+        sharpeRatio: 0,
+        inflationHedgeRating: 0,
+        diversificationScore: 0,
+        correlationScore: 0,
+        riskLevel: 'Low',
+        monthlyVolatility: 0,
+        maxDrawdown: 0,
+        commodityExposure: 0,
+        recommendations: ['Add commodity positions to analyze portfolio']
+      };
+    }
+
+    // Expected return calculation
     const expectedReturn = commodityPositions.reduce((sum, position) => {
       const weight = position.amount / totalValue;
       return sum + (position.expectedReturn * weight);
@@ -272,22 +274,22 @@ export default function CommodityPortfolioBuilder() {
     const recommendations: string[] = [];
     
     if (diversificationScore < 60) {
-      recommendations.push('Consider diversifying across more commodity categories');
+      recommendations.push('Consider diversifying across more commodity categories for better risk management');
     }
     if (volatility > 35) {
-      recommendations.push('High volatility - consider reducing position sizes or adding stable commodities');
+      recommendations.push('High volatility detected - consider reducing position sizes or adding stable commodities like gold');
     }
     if (inflationHedgeRating < 40) {
-      recommendations.push('Low inflation hedge - add more inflation-sensitive commodities');
+      recommendations.push('Low inflation hedge - add more inflation-sensitive commodities like energy or agriculture');
     }
     if (avgStockCorrelation > 0.5) {
-      recommendations.push('High stock correlation - commodities may not provide effective diversification');
+      recommendations.push('High stock correlation - commodities may not provide effective portfolio diversification');
     }
 
     // Category-specific recommendations
     const energyWeight = categoryDistribution['Energy'] || 0;
     if (energyWeight > 0.4) {
-      recommendations.push('High energy concentration - consider reducing for better balance');
+      recommendations.push('High energy concentration - consider reducing for better sector balance');
     }
     
     const expenseRatio = commodityPositions.reduce((sum, position) => {
@@ -295,7 +297,15 @@ export default function CommodityPortfolioBuilder() {
       return sum + (position.expenseRatio * weight);
     }, 0);
     if (expenseRatio > 0.8) {
-      recommendations.push('High expense ratios - consider lower-cost commodity ETFs');
+      recommendations.push('High expense ratios detected - consider lower-cost commodity ETFs to improve returns');
+    }
+
+    // Enhanced recommendations based on risk tolerance
+    if (riskTolerance === 'Conservative' && volatility > 25) {
+      recommendations.push('Portfolio volatility may be too high for conservative risk tolerance - increase stable commodities');
+    }
+    if (riskTolerance === 'Aggressive' && expectedReturn < 8) {
+      recommendations.push('Expected return may be low for aggressive profile - consider higher-return commodities');
     }
 
     return {
@@ -312,546 +322,533 @@ export default function CommodityPortfolioBuilder() {
       commodityExposure,
       recommendations
     };
-  }, [commodityPositions, totalInvestment]);
+  }, [commodityPositions, totalInvestment, riskTolerance]);
 
-  const handleAnalyze = () => {
-    const portfolioMetrics = analyzeCommodityPortfolio();
+  const handleAnalyzePortfolio = async () => {
+    setIsAnalyzing(true);
+    // Simulate analysis time for better UX
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    const portfolioMetrics = calculatePortfolioMetrics();
     setMetrics(portfolioMetrics);
+    setShowAnalysis(true);
+    setIsAnalyzing(false);
   };
 
-  const getRatingColor = (rating: number) => {
-    if (rating >= 80) return theme.status.success.text;
-    if (rating >= 60) return theme.status.warning.text;
-    return theme.status.error.text;
+  const handleReset = () => {
+    setShowAnalysis(false);
+    setMetrics(null);
   };
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  // Generate performance simulation data
-  const generatePerformanceData = () => {
-    if (!metrics) return [];
-    
-    const months = investmentHorizon * 12;
-    const monthlyReturn = metrics.expectedReturn / 12 / 100;
-    const monthlyVol = metrics.monthlyVolatility / 100;
-    
-    let value = totalInvestment;
-    const data = [];
-    
-    for (let i = 0; i <= months; i++) {
-      if (i === 0) {
-        data.push({ month: i, value, cumulative: 0 });
-      } else {
-        // Simple random walk simulation
-        const shock = (Math.random() - 0.5) * monthlyVol * 2;
-        value *= (1 + monthlyReturn + shock);
-        const cumulative = ((value - totalInvestment) / totalInvestment) * 100;
-        data.push({ month: i, value, cumulative });
+  // Results formatting for CalculatorWrapper
+  const portfolioResults = metrics ? {
+    primary: {
+      label: 'Expected Return',
+      value: metrics.expectedReturn / 100,
+      format: 'percentage' as const
+    },
+    secondary: [
+      {
+        label: 'Portfolio Volatility',
+        value: metrics.volatility / 100,
+        format: 'percentage' as const
+      },
+      {
+        label: 'Sharpe Ratio',
+        value: metrics.sharpeRatio,
+        format: 'number' as const
+      },
+      {
+        label: 'Inflation Hedge Rating',
+        value: metrics.inflationHedgeRating,
+        format: 'number' as const
+      },
+      {
+        label: 'Diversification Score',
+        value: metrics.diversificationScore,
+        format: 'number' as const
       }
-    }
-    
-    return data;
-  };
+    ]
+  } : undefined;
+
+  // Chart colors
+  const COLORS = ['#F59E0B', '#10B981', '#3B82F6', '#EF4444', '#8B5CF6', '#06B6D4'];
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-6 space-y-8">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center space-y-4"
-      >
-        <div className={`w-16 h-16 ${theme.status.warning.bg} rounded-full flex items-center justify-center mx-auto`}>
-          <Package className={`w-8 h-8 ${theme.status.warning.text}`} />
-        </div>
-        <h1 className={`${theme.typography.heading1} ${theme.textColors.primary}`}>
-          Commodity Portfolio Builder
-        </h1>
-        <p className={`${theme.typography.body} ${theme.textColors.secondary} max-w-2xl mx-auto`}>
-          Build diversified commodity exposure for inflation protection and portfolio diversification
-        </p>
-      </motion.div>
-
-      {/* Portfolio Parameters */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-      >
-        <Card className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}`}>
+    <CalculatorWrapper
+      metadata={{
+        id: 'commodity-portfolio-builder',
+        title: 'Commodity Portfolio Builder',
+        description: 'Build and analyze a diversified commodity portfolio for inflation protection and portfolio diversification',
+        category: 'advanced'
+      }}
+      results={portfolioResults}
+      onReset={handleReset}
+    >
+      <div className="space-y-6">
+        {/* Portfolio Settings */}
+        <Card className={theme.utils.glass('normal')}>
           <CardHeader>
             <CardTitle className={`${theme.textColors.primary} flex items-center`}>
-              <Target className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
-              Investment Parameters
+              <Settings className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
+              Portfolio Configuration
             </CardTitle>
-            <CardDescription>Configure your commodity investment strategy</CardDescription>
+            <CardDescription className={theme.textColors.secondary}>
+              Set your investment parameters and risk preferences for commodity allocation
+            </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <div className="grid md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="totalInvestment">Total Investment ($)</Label>
-                <Input
-                  id="totalInvestment"
-                  type="number"
-                  value={totalInvestment}
-                  onChange={(e) => setTotalInvestment(Number(e.target.value))}
-                  placeholder="20000"
-                />
+              <div>
+                <Label htmlFor="totalInvestment" className={theme.textColors.primary}>
+                  Total Investment Amount
+                </Label>
+                <div className="relative">
+                  <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                  <Input
+                    id="totalInvestment"
+                    type="number"
+                    value={totalInvestment}
+                    onChange={(e) => setTotalInvestment(parseInt(e.target.value) || 0)}
+                    className={`${theme.utils.input()} pl-8`}
+                    min="1000"
+                    step="1000"
+                  />
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="investmentHorizon">Investment Horizon (Years)</Label>
+              <div>
+                <Label htmlFor="investmentHorizon" className={theme.textColors.primary}>
+                  Investment Horizon (Years)
+                </Label>
                 <Input
                   id="investmentHorizon"
                   type="number"
                   value={investmentHorizon}
-                  onChange={(e) => setInvestmentHorizon(Number(e.target.value))}
-                  placeholder="5"
+                  onChange={(e) => setInvestmentHorizon(parseInt(e.target.value) || 1)}
+                  className={theme.utils.input()}
+                  min="1"
+                  max="30"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="riskTolerance">Risk Tolerance</Label>
-                <select
-                  id="riskTolerance"
-                  value={riskTolerance}
-                  onChange={(e) => setRiskTolerance(e.target.value as typeof riskTolerance)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="Conservative">Conservative</option>
-                  <option value="Moderate">Moderate</option>
-                  <option value="Aggressive">Aggressive</option>
-                </select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="inflationTarget">Inflation Protection Target (%)</Label>
+              <div>
+                <Label htmlFor="inflationTarget" className={theme.textColors.primary}>
+                  Inflation Target (%)
+                </Label>
                 <Input
                   id="inflationTarget"
                   type="number"
                   step="0.1"
                   value={inflationTarget}
-                  onChange={(e) => setInflationTarget(Number(e.target.value))}
-                  placeholder="3.0"
+                  onChange={(e) => setInflationTarget(parseFloat(e.target.value) || 3.0)}
+                  className={theme.utils.input()}
+                  min="0"
+                  max="10"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="rebalanceFrequency">Rebalance Frequency</Label>
-                <select
-                  id="rebalanceFrequency"
-                  value={rebalanceFrequency}
-                  onChange={(e) => setRebalanceFrequency(e.target.value as typeof rebalanceFrequency)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="Monthly">Monthly</option>
-                  <option value="Quarterly">Quarterly</option>
-                  <option value="Annually">Annually</option>
-                </select>
+            </div>
+            
+            <Separator className={theme.borderColors.primary} />
+            
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <Label className={theme.textColors.primary}>Risk Tolerance</Label>
+                <div className="flex space-x-2 mt-2">
+                  {(['Conservative', 'Moderate', 'Aggressive'] as const).map((risk) => (
+                    <Button
+                      key={risk}
+                      variant={riskTolerance === risk ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setRiskTolerance(risk)}
+                      className={riskTolerance === risk ? theme.utils.button('primary', 'sm') : theme.utils.button('secondary', 'sm')}
+                    >
+                      {risk}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <Label className={theme.textColors.primary}>Rebalance Frequency</Label>
+                <div className="flex space-x-2 mt-2">
+                  {(['Monthly', 'Quarterly', 'Annually'] as const).map((freq) => (
+                    <Button
+                      key={freq}
+                      variant={rebalanceFrequency === freq ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setRebalanceFrequency(freq)}
+                      className={rebalanceFrequency === freq ? theme.utils.button('accent', 'sm') : theme.utils.button('secondary', 'sm')}
+                    >
+                      {freq}
+                    </Button>
+                  ))}
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
-      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Commodity Positions Configuration */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="lg:col-span-2"
-        >
-          <Card className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}`}>
-            <CardHeader>
-              <CardTitle className={`${theme.textColors.primary} flex items-center justify-between`}>
-                <div className="flex items-center">
-                  <Zap className={`w-5 h-5 ${theme.status.warning.text} mr-2`} />
-                  Commodity Positions
-                </div>
+        {/* Commodity Positions */}
+        <Card className={theme.utils.glass('normal')}>
+          <CardHeader>
+            <CardTitle className={`${theme.textColors.primary} flex items-center justify-between`}>
+              <div className="flex items-center">
+                <Package className={`w-5 h-5 ${theme.status.warning.text} mr-2`} />
+                Commodity Positions
+              </div>
+              <div className="flex items-center space-x-2">
+                <Badge variant="outline" className={`${theme.status.warning.text} border-current`}>
+                  {commodityPositions.length} Commodities
+                </Badge>
                 <Button
-                  variant="outline"
-                  size="sm"
                   onClick={addCommodityPosition}
+                  size="sm"
+                  className={theme.utils.button('secondary', 'sm')}
                 >
+                  <Plus className="w-4 h-4 mr-1" />
                   Add Position
                 </Button>
-              </CardTitle>
-              <CardDescription>Configure your commodity portfolio allocations</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-4 max-h-96 overflow-y-auto">
-                {commodityPositions.map((position, index) => (
-                  <motion.div
-                    key={position.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    className={`p-4 ${theme.backgrounds.card} rounded-lg border space-y-3`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div 
-                          className="w-4 h-4 rounded-full"
-                          style={{ backgroundColor: commodityColors[position.category] }}
-                        />
-                        <div>
-                          <input
-                            type="text"
-                            value={position.name}
-                            onChange={(e) => updateCommodityPosition(index, 'name', e.target.value)}
-                            className="font-medium bg-transparent border-none focus:outline-none text-sm"
-                          />
-                          <Badge variant="outline" className="ml-2">
-                            {position.etfSymbol}
-                          </Badge>
-                        </div>
-                      </div>
-                      {commodityPositions.length > 1 && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => removeCommodityPosition(position.id)}
-                        >
-                          Remove
-                        </Button>
-                      )}
-                    </div>
-                    
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                      <div className="space-y-1">
-                        <Label className="text-xs">Category</Label>
-                        <select
-                          value={position.category}
-                          onChange={(e) => updateCommodityPosition(index, 'category', e.target.value)}
-                          className="w-full h-8 px-2 border border-gray-300 rounded text-sm"
-                        >
-                          <option value="Energy">Energy</option>
-                          <option value="Metals">Metals</option>
-                          <option value="Agriculture">Agriculture</option>
-                          <option value="Livestock">Livestock</option>
-                          <option value="Industrial">Industrial</option>
-                        </select>
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Amount ($)</Label>
-                        <Input
-                          type="number"
-                          value={position.amount}
-                          onChange={(e) => updateCommodityPosition(index, 'amount', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Expected Return (%)</Label>
-                        <Input
-                          type="number"
-                          step="0.1"
-                          value={position.expectedReturn}
-                          onChange={(e) => updateCommodityPosition(index, 'expectedReturn', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Volatility (%)</Label>
-                        <Input
-                          type="number"
-                          step="0.1"
-                          value={position.volatility}
-                          onChange={(e) => updateCommodityPosition(index, 'volatility', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Inflation Correlation</Label>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          min="-1"
-                          max="1"
-                          value={position.correlationToInflation}
-                          onChange={(e) => updateCommodityPosition(index, 'correlationToInflation', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Stock Correlation</Label>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          min="-1"
-                          max="1"
-                          value={position.correlationToStock}
-                          onChange={(e) => updateCommodityPosition(index, 'correlationToStock', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">ETF Symbol</Label>
-                        <Input
-                          type="text"
-                          value={position.etfSymbol}
-                          onChange={(e) => updateCommodityPosition(index, 'etfSymbol', e.target.value)}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Expense Ratio (%)</Label>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          value={position.expenseRatio}
-                          onChange={(e) => updateCommodityPosition(index, 'expenseRatio', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
               </div>
-
-              <Button 
-                onClick={handleAnalyze}
-                className={`w-full ${theme.buttons.primary}`}
-                size="lg"
+            </CardTitle>
+            <CardDescription className={theme.textColors.secondary}>
+              Configure your commodity allocations across different sectors for optimal diversification
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {commodityPositions.map((position, index) => (
+              <motion.div 
+                key={position.id} 
+                className={`${theme.utils.glass('soft')} p-4 space-y-3 ${theme.interactive.hoverSoft}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
               >
-                <BarChart3 className="w-4 h-4 mr-2" />
-                Analyze Portfolio
-              </Button>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Portfolio Visualization */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <Card className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}`}>
-            <CardHeader>
-              <CardTitle className={`${theme.textColors.primary} flex items-center`}>
-                <DollarSign className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
-                Commodity Allocation
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={commodityPositions.map(position => ({
-                        name: position.category,
-                        value: position.amount,
-                        fill: commodityColors[position.category]
-                      }))}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ name, percent }) => 
-                        `${name}: ${((percent || 0) * 100).toFixed(0)}%`
-                      }
-                      outerRadius={80}
-                      dataKey="value"
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Badge 
+                      variant="outline" 
+                      className={`px-3 py-1 font-medium ${
+                        position.category === 'Energy' ? `${theme.status.warning.text} border-current` :
+                        position.category === 'Metals' ? `${theme.status.success.text} border-current` :
+                        position.category === 'Agriculture' ? `${theme.status.info.text} border-current` :
+                        `${theme.textColors.secondary} border-current`
+                      }`}
                     >
-                      {commodityPositions.map((position) => (
-                        <Cell key={position.id} fill={commodityColors[position.category]} />
-                      ))}
-                    </Pie>
-                    <Tooltip 
-                      formatter={(value: number) => [formatCurrency(value), 'Amount']}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </div>
-
-      {/* Analysis Results */}
-      {metrics && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          <Card className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}`}>
-            <CardHeader>
-              <CardTitle className={`${theme.textColors.primary} flex items-center`}>
-                <BarChart3 className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
-                Portfolio Analysis Results
-              </CardTitle>
-              <CardDescription>Comprehensive analysis of your commodity portfolio</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Key Metrics */}
-              <div className="grid md:grid-cols-4 gap-4">
-                <div className={`p-4 ${theme.backgrounds.card} rounded-lg border text-center`}>
-                  <div className={`text-2xl font-bold ${theme.status.info.text}`}>
-                    {metrics.expectedReturn.toFixed(1)}%
-                  </div>
-                  <div className={`text-sm ${theme.textColors.secondary}`}>Expected Return</div>
-                </div>
-                <div className={`p-4 ${theme.backgrounds.card} rounded-lg border text-center`}>
-                  <div className={`text-2xl font-bold ${metrics.volatility > 30 ? theme.status.warning.text : theme.status.success.text}`}>
-                    {metrics.volatility.toFixed(1)}%
-                  </div>
-                  <div className={`text-sm ${theme.textColors.secondary}`}>Volatility</div>
-                </div>
-                <div className={`p-4 ${theme.backgrounds.card} rounded-lg border text-center`}>
-                  <div className={`text-2xl font-bold ${metrics.sharpeRatio > 0.5 ? theme.status.success.text : theme.status.warning.text}`}>
-                    {metrics.sharpeRatio.toFixed(2)}
-                  </div>
-                  <div className={`text-sm ${theme.textColors.secondary}`}>Sharpe Ratio</div>
-                </div>
-                <div className={`p-4 ${theme.backgrounds.card} rounded-lg border text-center`}>
-                  <div className={`text-2xl font-bold ${getRatingColor(metrics.inflationHedgeRating)}`}>
-                    {metrics.inflationHedgeRating.toFixed(0)}/100
-                  </div>
-                  <div className={`text-sm ${theme.textColors.secondary}`}>Inflation Hedge</div>
-                </div>
-              </div>
-
-              <Separator />
-
-              {/* Risk and Diversification Metrics */}
-              <div>
-                <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Risk & Diversification Analysis</h4>
-                <div className="grid md:grid-cols-4 gap-4">
-                  <div className={`p-4 ${theme.backgrounds.card} rounded-lg border`}>
-                    <div className="flex items-center justify-between">
-                      <span className={`text-sm ${theme.textColors.secondary}`}>Risk Level:</span>
-                      <Badge 
-                        variant={metrics.riskLevel === 'High' || metrics.riskLevel === 'Very High' ? 'destructive' : 'default'}
-                      >
-                        {metrics.riskLevel}
+                      {position.category}
+                    </Badge>
+                    <span className={`font-semibold ${theme.textColors.primary} text-lg`}>
+                      {position.name}
+                    </span>
+                    <Badge variant="outline" className={`${theme.textColors.muted} text-xs`}>
+                      {position.etfSymbol}
+                    </Badge>
+                    {position.correlationToInflation > 0.5 && (
+                      <Badge className={`${theme.status.success.bg} ${theme.status.success.text} border-none text-xs`}>
+                        Inflation Hedge
                       </Badge>
+                    )}
+                  </div>
+                  {commodityPositions.length > 1 && (
+                    <Button
+                      onClick={() => removeCommodityPosition(position.id)}
+                      size="sm"
+                      variant="outline"
+                      className={`${theme.buttons.ghost} hover:${theme.status.error.bg} hover:${theme.status.error.text}`}
+                    >
+                      <Minus className="w-4 h-4" />
+                    </Button>
+                  )}
+                </div>
+                
+                <div className="grid md:grid-cols-4 gap-4">
+                  <div>
+                    <Label className={`${theme.textColors.primary} text-sm font-medium`}>
+                      Investment Amount
+                    </Label>
+                    <div className="relative">
+                      <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-sm`}>$</span>
+                      <Input
+                        type="number"
+                        value={position.amount}
+                        onChange={(e) => updatePositionAmount(position.id, parseInt(e.target.value) || 0)}
+                        className={`${theme.utils.input()} pl-8`}
+                        min="0"
+                        step="100"
+                      />
                     </div>
                   </div>
-                  <div className={`p-4 ${theme.backgrounds.card} rounded-lg border`}>
-                    <div className="flex items-center justify-between">
-                      <span className={`text-sm ${theme.textColors.secondary}`}>Diversification:</span>
-                      <span className={`font-bold ${getRatingColor(metrics.diversificationScore)}`}>
-                        {metrics.diversificationScore.toFixed(0)}/100
-                      </span>
-                    </div>
+                  <div className={`text-sm ${theme.textColors.secondary} space-y-1`}>
+                    <p><span className="font-medium text-white">Expected Return:</span> {position.expectedReturn}%</p>
+                    <p><span className="font-medium text-white">Volatility:</span> {position.volatility}%</p>
+                    <p><span className="font-medium text-white">Current Price:</span> ${position.currentPrice}</p>
                   </div>
-                  <div className={`p-4 ${theme.backgrounds.card} rounded-lg border`}>
-                    <div className="flex items-center justify-between">
-                      <span className={`text-sm ${theme.textColors.secondary}`}>Stock Correlation:</span>
-                      <span className={`font-bold ${getRatingColor(metrics.correlationScore)}`}>
-                        {metrics.correlationScore.toFixed(0)}/100
-                      </span>
-                    </div>
+                  <div className={`text-sm ${theme.textColors.secondary} space-y-1`}>
+                    <p><span className="font-medium text-white">Inflation Correlation:</span> {position.correlationToInflation}</p>
+                    <p><span className="font-medium text-white">Stock Correlation:</span> {position.correlationToStock}</p>
+                    <p><span className="font-medium text-white">Expense Ratio:</span> {position.expenseRatio}%</p>
                   </div>
-                  <div className={`p-4 ${theme.backgrounds.card} rounded-lg border`}>
-                    <div className="flex items-center justify-between">
-                      <span className={`text-sm ${theme.textColors.secondary}`}>Max Drawdown:</span>
-                      <span className={`font-bold ${theme.status.error.text}`}>
-                        {metrics.maxDrawdown.toFixed(1)}%
-                      </span>
-                    </div>
+                  <div className={`text-sm ${theme.textColors.secondary}`}>
+                    <p><span className="font-medium text-white">Portfolio Weight:</span></p>
+                    <p className={`text-lg font-semibold ${theme.textColors.primary}`}>
+                      {((position.amount / commodityPositions.reduce((sum, p) => sum + p.amount, 0)) * 100 || 0).toFixed(1)}%
+                    </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
+            ))}
+          </CardContent>
+        </Card>
 
-              <Separator />
-
-              {/* Performance Projection */}
-              <div>
-                <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Performance Projection</h4>
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={generatePerformanceData()}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis 
-                        dataKey="month" 
-                        label={{ value: 'Months', position: 'insideBottom', offset: -5 }}
-                      />
-                      <YAxis 
-                        label={{ value: 'Portfolio Value ($)', angle: -90, position: 'insideLeft' }}
-                      />
-                      <Tooltip 
-                        formatter={(value: number, name: string) => [
-                          name === 'value' ? formatCurrency(value) : `${value.toFixed(1)}%`,
-                          name === 'value' ? 'Portfolio Value' : 'Cumulative Return'
-                        ]}
-                      />
-                      <Area 
-                        type="monotone" 
-                        dataKey="value" 
-                        stroke="#3b82f6" 
-                        fill="#3b82f6" 
-                        fillOpacity={0.3}
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              <Separator />
-
-              {/* Recommendations */}
-              {metrics.recommendations.length > 0 && (
-                <div className={`p-4 ${theme.status.warning.bg}/10 border ${theme.status.warning.border} rounded-lg`}>
-                  <h5 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center`}>
-                    <AlertTriangle className={`w-4 h-4 ${theme.status.warning.text} mr-2`} />
-                    Portfolio Recommendations
-                  </h5>
-                  <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
-                    {metrics.recommendations.map((recommendation, index) => (
-                      <li key={index}>• {recommendation}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+        {/* Analyze Button */}
+        <motion.div 
+          className="text-center"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <Button
+            onClick={handleAnalyzePortfolio}
+            disabled={isAnalyzing}
+            size="lg"
+            className={`${theme.utils.button('primary', 'lg')} min-w-[200px] ${theme.interactive.glow}`}
+          >
+            {isAnalyzing ? (
+              <>
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
+                Analyzing...
+              </>
+            ) : (
+              <>
+                <BarChart3 className="w-5 h-5 mr-2" />
+                Analyze Portfolio
+              </>
+            )}
+          </Button>
+          {!showAnalysis && (
+            <p className={`${theme.textColors.muted} text-sm mt-2`}>
+              Get comprehensive analysis of your commodity portfolio's risk-return profile
+            </p>
+          )}
         </motion.div>
-      )}
 
-      {/* Educational Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
-      >
-        <Card className={`${theme.status.info.bg}/10 border ${theme.status.info.border}`}>
+        {/* Analysis Results */}
+        {showAnalysis && metrics && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
+          >
+            {/* Portfolio Overview */}
+            <Card className={theme.utils.glass('normal')}>
+              <CardHeader>
+                <CardTitle className={`${theme.textColors.primary} flex items-center`}>
+                  <TrendingUp className={`w-5 h-5 ${theme.status.success.text} mr-2`} />
+                  Portfolio Analysis Overview
+                </CardTitle>
+                <CardDescription className={theme.textColors.secondary}>
+                  Comprehensive risk-return analysis of your commodity portfolio
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Portfolio Allocation Chart */}
+                  <div>
+                    <h5 className={`font-semibold ${theme.textColors.primary} mb-4`}>
+                      Commodity Allocation
+                    </h5>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <PieChart>
+                        <Pie
+                          data={commodityPositions.map((position, index) => ({
+                            name: position.name,
+                            value: position.amount,
+                            category: position.category,
+                            color: COLORS[index % COLORS.length]
+                          }))}
+                          cx="50%"
+                          cy="50%"
+                          outerRadius={100}
+                          dataKey="value"
+                          label={({ name, value }) => {
+                            const total = commodityPositions.reduce((sum, p) => sum + p.amount, 0);
+                            const percentage = (((value || 0) / total) * 100).toFixed(1);
+                            return `${name}: ${percentage}%`;
+                          }}
+                        >
+                          {commodityPositions.map((_, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: '#1F2937',
+                            border: '1px solid #374151',
+                            borderRadius: '8px',
+                            color: '#F9FAFB'
+                          }}
+                          formatter={(value: number) => [`$${value.toLocaleString()}`, 'Investment']}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  {/* Key Metrics */}
+                  <div className="space-y-4">
+                    <h5 className={`font-semibold ${theme.textColors.primary} mb-4`}>
+                      Key Portfolio Metrics
+                    </h5>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className={`${theme.utils.glass('soft')} p-3 text-center`}>
+                        <p className={`text-2xl font-bold ${theme.status.success.text}`}>
+                          {metrics.expectedReturn.toFixed(1)}%
+                        </p>
+                        <p className={`text-sm ${theme.textColors.secondary}`}>Expected Return</p>
+                      </div>
+                      <div className={`${theme.utils.glass('soft')} p-3 text-center`}>
+                        <p className={`text-2xl font-bold ${
+                          metrics.volatility < 25 ? theme.status.success.text :
+                          metrics.volatility < 35 ? theme.status.warning.text : theme.status.error.text
+                        }`}>
+                          {metrics.volatility.toFixed(1)}%
+                        </p>
+                        <p className={`text-sm ${theme.textColors.secondary}`}>Volatility</p>
+                      </div>
+                      <div className={`${theme.utils.glass('soft')} p-3 text-center`}>
+                        <p className={`text-2xl font-bold ${
+                          metrics.sharpeRatio > 0.5 ? theme.status.success.text :
+                          metrics.sharpeRatio > 0.2 ? theme.status.warning.text : theme.status.error.text
+                        }`}>
+                          {metrics.sharpeRatio.toFixed(2)}
+                        </p>
+                        <p className={`text-sm ${theme.textColors.secondary}`}>Sharpe Ratio</p>
+                      </div>
+                      <div className={`${theme.utils.glass('soft')} p-3 text-center`}>
+                        <p className={`text-2xl font-bold ${
+                          metrics.inflationHedgeRating > 50 ? theme.status.success.text :
+                          metrics.inflationHedgeRating > 30 ? theme.status.warning.text : theme.status.error.text
+                        }`}>
+                          {metrics.inflationHedgeRating.toFixed(0)}
+                        </p>
+                        <p className={`text-sm ${theme.textColors.secondary}`}>Inflation Hedge</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Recommendations */}
+            {metrics.recommendations.length > 0 && (
+              <Card className={`${theme.status.info.bg}/10 border ${theme.status.info.border}`}>
+                <CardHeader>
+                  <CardTitle className={`${theme.textColors.primary} flex items-center`}>
+                    <AlertTriangle className={`w-5 h-5 ${theme.status.warning.text} mr-2`} />
+                    Portfolio Recommendations
+                  </CardTitle>
+                  <CardDescription className={theme.textColors.secondary}>
+                    AI-powered suggestions to optimize your commodity portfolio
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {metrics.recommendations.map((recommendation, index) => (
+                      <motion.div
+                        key={index}
+                        className={`${theme.utils.glass('soft')} p-3 flex items-start space-x-3`}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <div className={`w-2 h-2 rounded-full ${theme.status.warning.bg} mt-2 flex-shrink-0`}></div>
+                        <p className={`${theme.textColors.secondary} leading-relaxed`}>
+                          {recommendation}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </motion.div>
+        )}
+
+        {/* Educational Content */}
+        <Card className={`${theme.status.info.bg}/10 border ${theme.status.info.border} ${theme.interactive.glow}`}>
           <CardHeader>
             <CardTitle className={`${theme.textColors.primary} flex items-center`}>
               <Info className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
               Commodity Investment Guide
             </CardTitle>
+            <CardDescription className={theme.textColors.secondary}>
+              Essential knowledge for commodity portfolio construction and risk management
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h5 className={`font-medium ${theme.textColors.primary} mb-2`}>Commodity Benefits:</h5>
-                <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
-                  <li>• <span className="font-medium">Inflation Protection:</span> Prices often rise with inflation</li>
-                  <li>• <span className="font-medium">Diversification:</span> Low correlation with stocks/bonds</li>
-                  <li>• <span className="font-medium">Crisis Hedge:</span> Often perform well during market stress</li>
-                  <li>• <span className="font-medium">Supply/Demand Dynamics:</span> Limited supply, growing demand</li>
+          <CardContent className="space-y-6">
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className={`${theme.utils.glass('soft')} p-4`}>
+                <h5 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
+                  <Zap className={`w-4 h-4 ${theme.status.warning.text} mr-2`} />
+                  Energy Commodities
+                </h5>
+                <ul className={`text-sm ${theme.textColors.secondary} space-y-2`}>
+                  <li>• <span className="font-medium text-white">Oil & Gas:</span> High volatility, inflation sensitive</li>
+                  <li>• <span className="font-medium text-white">Seasonality:</span> Weather and demand patterns</li>
+                  <li>• <span className="font-medium text-white">Geopolitics:</span> Supply disruption risks</li>
+                  <li>• <span className="font-medium text-white">Storage Costs:</span> Contango and backwardation</li>
                 </ul>
               </div>
-              <div>
-                <h5 className={`font-medium ${theme.textColors.primary} mb-2`}>Key Considerations:</h5>
-                <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
-                  <li>• <span className="font-medium">Volatility:</span> Commodities can be highly volatile</li>
-                  <li>• <span className="font-medium">No Income:</span> Most don&apos;t pay dividends or interest</li>
-                  <li>• <span className="font-medium">Storage Costs:</span> ETFs may have higher expense ratios</li>
-                  <li>• <span className="font-medium">Contango Risk:</span> Futures-based ETFs may lose value over time</li>
+              <div className={`${theme.utils.glass('soft')} p-4`}>
+                <h5 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
+                  <Target className={`w-4 h-4 ${theme.status.success.text} mr-2`} />
+                  Metals Portfolio
+                </h5>
+                <ul className={`text-sm ${theme.textColors.secondary} space-y-2`}>
+                  <li>• <span className="font-medium text-white">Precious Metals:</span> Store of value, crisis hedge</li>
+                  <li>• <span className="font-medium text-white">Industrial Metals:</span> Economic growth exposure</li>
+                  <li>• <span className="font-medium text-white">Low Correlation:</span> Portfolio diversification</li>
+                  <li>• <span className="font-medium text-white">Currency Hedge:</span> Dollar weakness protection</li>
                 </ul>
+              </div>
+              <div className={`${theme.utils.glass('soft')} p-4`}>
+                <h5 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
+                  <Package className={`w-4 h-4 ${theme.status.info.text} mr-2`} />
+                  Agriculture & Livestock
+                </h5>
+                <ul className={`text-sm ${theme.textColors.secondary} space-y-2`}>
+                  <li>• <span className="font-medium text-white">Food Security:</span> Population growth demand</li>
+                  <li>• <span className="font-medium text-white">Weather Risk:</span> Climate impact on prices</li>
+                  <li>• <span className="font-medium text-white">Seasonal Patterns:</span> Harvest cycle effects</li>
+                  <li>• <span className="font-medium text-white">Biofuel Demand:</span> Energy sector linkage</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Risk Management Section */}
+            <div className={`${theme.utils.glass('soft')} p-4`}>
+              <h5 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
+                <AlertTriangle className={`w-4 h-4 ${theme.status.error.text} mr-2`} />
+                Risk Management Best Practices
+              </h5>
+              <div className="grid md:grid-cols-2 gap-4 text-sm">
+                <div className={theme.textColors.secondary}>
+                  <span className="font-medium text-white block mb-1">Diversification:</span>
+                  Spread investments across multiple commodity categories to reduce concentration risk and improve risk-adjusted returns.
+                </div>
+                <div className={theme.textColors.secondary}>
+                  <span className="font-medium text-white block mb-1">Volatility Management:</span>
+                  Monitor portfolio volatility and adjust position sizes based on your risk tolerance and investment horizon.
+                </div>
+                <div className={theme.textColors.secondary}>
+                  <span className="font-medium text-white block mb-1">Rebalancing:</span>
+                  Regular rebalancing helps maintain target allocations and can improve long-term returns through disciplined selling high and buying low.
+                </div>
+                <div className={theme.textColors.secondary}>
+                  <span className="font-medium text-white block mb-1">Cost Awareness:</span>
+                  ETF expense ratios and tracking errors can significantly impact returns over time. Choose cost-efficient vehicles when possible.
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
-      </motion.div>
-    </div>
+      </div>
+    </CalculatorWrapper>
   );
 }

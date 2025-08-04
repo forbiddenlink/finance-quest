@@ -1,14 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { theme } from '@/lib/theme';
-import { Calculator, TrendingUp, DollarSign, Percent, Calendar } from 'lucide-react';
+import React, { useState, useCallback, useEffect } from 'react';
+import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { useProgressStore } from '@/lib/store/progressStore';
+import { TrendingUp, DollarSign, Percent, Calendar, Target } from 'lucide-react';
+import { Label } from '@/components/ui/label';
+import { theme } from '@/lib/theme';
 
 interface ValuationResults {
   currentYield: number;
@@ -19,385 +16,339 @@ interface ValuationResults {
   interestRateSensitivity: number;
 }
 
+interface RateScenario {
+  rateChange: string;
+  newPrice: string;
+  priceChange: string;
+  rate: string;
+}
+
 export default function BondCalculator() {
-  const [faceValue, setFaceValue] = useState('1000');
-  const [couponRate, setCouponRate] = useState('5.0');
-  const [yearsToMaturity, setYearsToMaturity] = useState('10');
-  const [currentPrice, setCurrentPrice] = useState('950');
-  const [paymentFrequency, setPaymentFrequency] = useState('2'); // Semi-annual
-  const [results, setResults] = useState<ValuationResults | null>(null);
-  const [rateScenarios, setRateScenarios] = useState<Array<{
-    rateChange: string;
-    newPrice: string;
-    priceChange: string;
-    rate: string;
-  }>>([]);
+    // Form inputs
+    const [faceValue, setFaceValue] = useState('1000');
+    const [couponRate, setCouponRate] = useState('5.0');
+    const [yearsToMaturity, setYearsToMaturity] = useState('10');
+    const [currentPrice, setCurrentPrice] = useState('950');
+    const [paymentFrequency, setPaymentFrequency] = useState('2'); // Semi-annual
 
-  const { recordCalculatorUsage } = useProgressStore();
+    const [results, setResults] = useState<ValuationResults | null>(null);
+    const [rateScenarios, setRateScenarios] = useState<RateScenario[]>([]);
 
-  useEffect(() => {
-    recordCalculatorUsage('bond-calculator');
-  }, [recordCalculatorUsage]);
+    const calculateBondMetrics = useCallback(() => {
+        const face = parseFloat(faceValue) || 1000;
+        const rate = parseFloat(couponRate) || 5.0;
+        const years = parseFloat(yearsToMaturity) || 10;
+        const price = parseFloat(currentPrice) || 950;
+        const frequency = parseInt(paymentFrequency) || 2;
 
-  const calculateBondMetrics = () => {
-    const face = parseFloat(faceValue) || 1000;
-    const rate = parseFloat(couponRate) || 5.0;
-    const years = parseFloat(yearsToMaturity) || 10;
-    const price = parseFloat(currentPrice) || 950;
-    const frequency = parseInt(paymentFrequency) || 2;
+        // Annual coupon payment
+        const annualCoupon = (rate / 100) * face;
 
-    // Annual coupon payment
-    const annualCoupon = (rate / 100) * face;
+        // Current Yield = Annual Coupon / Current Price
+        const currentYield = (annualCoupon / price) * 100;
 
-    // Current Yield = Annual Coupon / Current Price
-    const currentYield = (annualCoupon / price) * 100;
+        // Approximate Yield to Maturity using simplified formula
+        const ytm = ((annualCoupon + (face - price) / years) / ((face + price) / 2)) * 100;
 
-    // Approximate Yield to Maturity using simplified formula
-    const ytm = ((annualCoupon + (face - price) / years) / ((face + price) / 2)) * 100;
+        // Total return if held to maturity
+        const totalCoupons = annualCoupon * years;
+        const capitalGain = face - price;
+        const totalReturn = totalCoupons + capitalGain;
 
-    // Total return if held to maturity
-    const totalCoupons = annualCoupon * years;
-    const capitalGain = face - price;
-    const totalReturn = totalCoupons + capitalGain;
+        // Purchase yield (current yield at purchase price)
+        const purchaseYield = currentYield;
 
-    // Purchase yield (YTM when bought)
-    const purchaseYield = ytm;
+        // Interest rate sensitivity (duration approximation)
+        const modifiedDuration = years / (1 + ytm / 100 / frequency);
+        const interestRateSensitivity = modifiedDuration;
 
-    // Interest rate sensitivity (modified duration approximation)
-    const interestRateSensitivity = years / (1 + (ytm / 100));
+        const calculatedResults: ValuationResults = {
+            currentYield,
+            yieldToMaturity: ytm,
+            totalReturn,
+            annualIncome: annualCoupon,
+            purchaseYield,
+            interestRateSensitivity
+        };
 
-    setResults({
-      currentYield,
-      yieldToMaturity: ytm,
-      totalReturn,
-      annualIncome: annualCoupon,
-      purchaseYield,
-      interestRateSensitivity
-    });
+        setResults(calculatedResults);
 
-    // Generate interest rate scenarios
-    const scenarios = [];
-    for (let rateChange = -3; rateChange <= 3; rateChange += 0.5) {
-      const newRate = (ytm / 100) + (rateChange / 100);
-      const newPrice = calculateBondPrice(face, rate / 100, years, newRate, frequency);
-      const priceChange = ((newPrice - price) / price) * 100;
-      
-      scenarios.push({
-        rateChange: rateChange.toFixed(1),
-        newPrice: newPrice.toFixed(2),
-        priceChange: priceChange.toFixed(2),
-        rate: (newRate * 100).toFixed(2)
-      });
-    }
-    setRateScenarios(scenarios);
-  };
-
-  // Calculate bond price given yield
-  const calculateBondPrice = (face: number, couponRate: number, years: number, bondYield: number, frequency: number) => {
-    const couponPayment = (couponRate * face) / frequency;
-    const totalPayments = years * frequency;
-    const periodYield = bondYield / frequency;
-    
-    let pv = 0;
-    
-    // Present value of coupon payments
-    for (let i = 1; i <= totalPayments; i++) {
-      pv += couponPayment / Math.pow(1 + periodYield, i);
-    }
-    
-    // Present value of face value
-    pv += face / Math.pow(1 + periodYield, totalPayments);
-    
-    return pv;
-  };
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(value);
-  };
-
-  const formatPercentage = (value: number) => {
-    return `${value.toFixed(2)}%`;
-  };
-
-  return (
-    <div className="space-y-6">
-      {/* Input Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <Calculator className={`w-5 h-5 ${theme.status.info.text}`} />
-              <span>Bond Details</span>
-            </CardTitle>
-            <CardDescription>Enter the bond&apos;s characteristics</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                Face Value
-              </label>
-              <Input
-                type="number"
-                value={faceValue}
-                onChange={(e) => setFaceValue(e.target.value)}
-                placeholder="1000"
-              />
-              <p className={`text-xs ${theme.textColors.muted} mt-1`}>Par value at maturity</p>
-            </div>
+        // Calculate rate scenarios
+        const scenarios: RateScenario[] = [];
+        const rateChanges = [-2, -1, -0.5, 0, 0.5, 1, 2];
+        
+        rateChanges.forEach(change => {
+            const newYtm = ytm + change;
+            // Approximate new price using duration
+            const priceChangePercent = -modifiedDuration * change;
+            const newPrice = price * (1 + priceChangePercent / 100);
             
-            <div>
-              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                Coupon Rate (%)
-              </label>
-              <Input
-                type="number"
-                step="0.1"
-                value={couponRate}
-                onChange={(e) => setCouponRate(e.target.value)}
-                placeholder="5.0"
-              />
-              <p className={`text-xs ${theme.textColors.muted} mt-1`}>Annual interest rate</p>
-            </div>
-            
-            <div>
-              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                Years to Maturity
-              </label>
-              <Input
-                type="number"
-                value={yearsToMaturity}
-                onChange={(e) => setYearsToMaturity(e.target.value)}
-                placeholder="10"
-              />
-              <p className={`text-xs ${theme.textColors.muted} mt-1`}>Time until bond matures</p>
-            </div>
-            
-            <div>
-              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                Current Market Price
-              </label>
-              <Input
-                type="number"
-                value={currentPrice}
-                onChange={(e) => setCurrentPrice(e.target.value)}
-                placeholder="950"
-              />
-              <p className={`text-xs ${theme.textColors.muted} mt-1`}>What you pay to buy the bond</p>
-            </div>
-            
-            <div>
-              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                Payment Frequency
-              </label>
-              <select 
-                value={paymentFrequency}
-                onChange={(e) => setPaymentFrequency(e.target.value)}
-                className={`w-full p-2 border ${theme.borderColors.primary} rounded-md`}
-              >
-                <option value="1">Annual</option>
-                <option value="2">Semi-Annual</option>
-                <option value="4">Quarterly</option>
-                <option value="12">Monthly</option>
-              </select>
-              <p className={`text-xs ${theme.textColors.muted} mt-1`}>How often coupons are paid</p>
-            </div>
-            
-            <Button onClick={calculateBondMetrics} className="w-full">
-              Calculate Bond Metrics
-            </Button>
-          </CardContent>
-        </Card>
+            scenarios.push({
+                rateChange: change > 0 ? `+${change}%` : `${change}%`,
+                newPrice: newPrice.toFixed(2),
+                priceChange: `${priceChangePercent.toFixed(1)}%`,
+                rate: `${newYtm.toFixed(2)}%`
+            });
+        });
 
-        {/* Results Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <TrendingUp className={`w-5 h-5 ${theme.status.success.text}`} />
-              <span>Bond Analysis</span>
-            </CardTitle>
-            <CardDescription>Key metrics and returns</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {results ? (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className={`p-3 ${theme.status.info.bg} rounded-lg`}>
-                    <div className="flex items-center space-x-2 mb-1">
-                      <Percent className={`w-4 h-4 ${theme.status.info.text}`} />
-                      <span className={`text-sm font-medium ${theme.textColors.secondary}`}>Current Yield</span>
+        setRateScenarios(scenarios);
+    }, [faceValue, couponRate, yearsToMaturity, currentPrice, paymentFrequency]);
+
+    useEffect(() => {
+        calculateBondMetrics();
+    }, [calculateBondMetrics]);
+
+    const handleReset = () => {
+        setFaceValue('1000');
+        setCouponRate('5.0');
+        setYearsToMaturity('10');
+        setCurrentPrice('950');
+        setPaymentFrequency('2');
+    };
+
+    const isPremium = parseFloat(currentPrice) > parseFloat(faceValue);
+    const isDiscount = parseFloat(currentPrice) < parseFloat(faceValue);
+
+    // Calculator metadata
+    const metadata = {
+        id: 'bond-calculator',
+        title: 'Bond Valuation Calculator',
+        description: 'Calculate bond yields, total returns, and interest rate sensitivity',
+        category: 'intermediate' as const,
+        icon: TrendingUp,
+        tags: ['bonds', 'fixed income', 'yield', 'interest rates', 'investment'],
+        educationalNotes: [
+            {
+                title: 'Understanding Bond Basics',
+                content: 'Bonds are debt securities that pay fixed interest over time. Key metrics include current yield (annual income ÷ current price) and yield to maturity (total return if held to maturity). Bond prices move inversely to interest rates.',
+                tips: [
+                    'Premium bonds (price > face value) have lower yields than coupon rates',
+                    'Discount bonds (price < face value) have higher yields than coupon rates',
+                    'Longer maturity bonds are more sensitive to interest rate changes',
+                    'Semi-annual payments are standard for most corporate and government bonds'
+                ]
+            },
+            {
+                title: 'Interest Rate Risk & Duration',
+                content: 'Duration measures a bond\'s price sensitivity to interest rate changes. Modified duration approximates the percentage price change for a 1% interest rate move. Longer duration = higher interest rate risk.',
+                tips: [
+                    'Use duration to estimate portfolio interest rate risk',
+                    'Ladder bond maturities to reduce reinvestment risk',
+                    'Consider bond funds for diversification and professional management',
+                    'Monitor credit quality and issuer financial health'
+                ]
+            }
+        ]
+    };
+
+    // Results formatting
+    const bondResults = results ? {
+        primary: {
+            label: 'Yield to Maturity',
+            value: results.yieldToMaturity / 100,
+            format: 'percentage' as const
+        },
+        secondary: [
+            {
+                label: 'Current Yield',
+                value: results.currentYield / 100,
+                format: 'percentage' as const
+            },
+            {
+                label: 'Annual Income',
+                value: results.annualIncome,
+                format: 'currency' as const
+            },
+            {
+                label: 'Total Return (to maturity)',
+                value: results.totalReturn,
+                format: 'currency' as const
+            },
+            {
+                label: 'Interest Rate Sensitivity',
+                value: results.interestRateSensitivity,
+                format: 'number' as const
+            }
+        ]
+    } : undefined;
+
+    return (
+        <CalculatorWrapper
+            metadata={metadata}
+            results={bondResults}
+            onReset={handleReset}
+        >
+            <div className="space-y-6">
+                {/* Bond Details */}
+                <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                    <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Bond Details</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="faceValue" className={`${theme.textColors.primary}`}>
+                                Face Value (Par Value)
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="faceValue"
+                                    type="number"
+                                    value={faceValue}
+                                    onChange={(e) => setFaceValue(e.target.value)}
+                                    placeholder="Enter face value"
+                                    min="100"
+                                    max="100000"
+                                    step="100"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <Label htmlFor="currentPrice" className={`${theme.textColors.primary}`}>
+                                Current Market Price
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="currentPrice"
+                                    type="number"
+                                    value={currentPrice}
+                                    onChange={(e) => setCurrentPrice(e.target.value)}
+                                    placeholder="Enter current price"
+                                    min="50"
+                                    max="200000"
+                                    step="0.01"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                            {isPremium && (
+                                <p className={`text-xs ${theme.status.warning.text} mt-1`}>
+                                    Premium bond (trading above par)
+                                </p>
+                            )}
+                            {isDiscount && (
+                                <p className={`text-xs ${theme.status.success.text} mt-1`}>
+                                    Discount bond (trading below par)
+                                </p>
+                            )}
+                        </div>
+
+                        <div>
+                            <Label htmlFor="couponRate" className={`${theme.textColors.primary}`}>
+                                Annual Coupon Rate (%)
+                            </Label>
+                            <input
+                                id="couponRate"
+                                type="number"
+                                value={couponRate}
+                                onChange={(e) => setCouponRate(e.target.value)}
+                                placeholder="Enter coupon rate"
+                                min="0"
+                                max="20"
+                                step="0.1"
+                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                            />
+                        </div>
+
+                        <div>
+                            <Label htmlFor="yearsToMaturity" className={`${theme.textColors.primary}`}>
+                                Years to Maturity
+                            </Label>
+                            <input
+                                id="yearsToMaturity"
+                                type="number"
+                                value={yearsToMaturity}
+                                onChange={(e) => setYearsToMaturity(e.target.value)}
+                                placeholder="Enter years to maturity"
+                                min="0.25"
+                                max="50"
+                                step="0.25"
+                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                            />
+                        </div>
+
+                        <div>
+                            <Label htmlFor="paymentFrequency" className={`${theme.textColors.primary}`}>
+                                Payment Frequency
+                            </Label>
+                            <select
+                                id="paymentFrequency"
+                                value={paymentFrequency}
+                                onChange={(e) => setPaymentFrequency(e.target.value)}
+                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                            >
+                                <option value="1">Annual</option>
+                                <option value="2">Semi-Annual</option>
+                                <option value="4">Quarterly</option>
+                                <option value="12">Monthly</option>
+                            </select>
+                        </div>
                     </div>
-                    <p className={`text-lg font-bold ${theme.status.info.text}`}>
-                      {formatPercentage(results.currentYield)}
-                    </p>
-                  </div>
-                  
-                  <div className={`p-3 ${theme.status.success.bg} rounded-lg`}>
-                    <div className="flex items-center space-x-2 mb-1">
-                      <TrendingUp className={`w-4 h-4 ${theme.status.success.text}`} />
-                      <span className={`text-sm font-medium ${theme.textColors.primary}`}>Yield to Maturity</span>
-                    </div>
-                    <p className={`text-lg font-bold ${theme.status.success.text}`}>
-                      {formatPercentage(results.yieldToMaturity)}
-                    </p>
-                  </div>
-                  
-                  <div className={`p-3 ${theme.status.info.bg} rounded-lg`}>
-                    <div className="flex items-center space-x-2 mb-1">
-                      <DollarSign className={`w-4 h-4 ${theme.status.info.text}`} />
-                      <span className={`text-sm font-medium ${theme.textColors.primary}`}>Annual Income</span>
-                    </div>
-                    <p className={`text-lg font-bold ${theme.textColors.primary}`}>
-                      {formatCurrency(results.annualIncome)}
-                    </p>
-                  </div>
-                  
-                  <div className={`p-3 ${theme.status.warning.bg} rounded-lg`}>
-                    <div className="flex items-center space-x-2 mb-1">
-                      <Calendar className={`w-4 h-4 ${theme.status.warning.text}`} />
-                      <span className={`text-sm font-medium ${theme.status.warning.text}`}>Total Return</span>
-                    </div>
-                    <p className={`text-lg font-bold ${theme.status.warning.text}`}>
-                      {formatCurrency(results.totalReturn)}
-                    </p>
-                  </div>
                 </div>
-                
-                <Separator />
-                
-                <div className="space-y-2">
-                  <h4 className={`font-medium ${theme.textColors.primary}`}>Key Insights</h4>
-                  <div className={`space-y-2 text-sm ${theme.textColors.secondary}`}>
-                    <p>
-                      • <span className="font-medium">Duration Risk:</span> ~{results.interestRateSensitivity.toFixed(1)} years 
-                      (1% rate increase = ~{results.interestRateSensitivity.toFixed(1)}% price decrease)
-                    </p>
-                    <p>
-                      • <span className="font-medium">Premium/Discount:</span> {
-                        parseFloat(currentPrice) > parseFloat(faceValue) 
-                          ? `Trading at ${formatPercentage(((parseFloat(currentPrice) - parseFloat(faceValue)) / parseFloat(faceValue)) * 100)} premium`
-                          : parseFloat(currentPrice) < parseFloat(faceValue)
-                          ? `Trading at ${formatPercentage(((parseFloat(faceValue) - parseFloat(currentPrice)) / parseFloat(faceValue)) * 100)} discount`
-                          : 'Trading at par value'
-                      }
-                    </p>
-                    <p>
-                      • <span className="font-medium">Income Stream:</span> {formatCurrency(results.annualIncome / parseInt(paymentFrequency))} 
-                      per payment ({paymentFrequency === '1' ? 'annually' : paymentFrequency === '2' ? 'semi-annually' : paymentFrequency === '4' ? 'quarterly' : 'monthly'})
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className={`text-center py-8 ${theme.textColors.muted}`}>
-                <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                <p>Enter bond details and click calculate to see results</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
 
-      {/* Interest Rate Sensitivity Analysis */}
-      {rateScenarios.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <TrendingUp className={`w-5 h-5 ${theme.status.info.text}`} />
-              <span>Interest Rate Sensitivity Analysis</span>
-            </CardTitle>
-            <CardDescription>
-              How bond price changes with different interest rate scenarios
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={rateScenarios}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
-                  <XAxis 
-                    dataKey="rateChange" 
-                    label={{ value: 'Rate Change (%)', position: 'insideBottom', offset: -10 }}
-                    tick={{ fill: "#94a3b8" }}
-                  />
-                  <YAxis 
-                    label={{ value: 'Price Change (%)', angle: -90, position: 'insideLeft' }}
-                    tick={{ fill: "#94a3b8" }}
-                  />
-                  <Tooltip 
-                    formatter={(value: number) => [
-                      `${value}%`,
-                      'Price Change'
-                    ]}
-                    labelFormatter={(label) => `Rate Change: ${label}%`}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="priceChange" 
-                    stroke="#4f46e5" 
-                    strokeWidth={3}
-                    dot={{ fill: '#4f46e5', strokeWidth: 2, r: 4 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-            
-            <div className={`mt-4 p-4 ${theme.status.warning.bg} rounded-lg border ${theme.status.warning.border}`}>
-              <h4 className={`font-medium ${theme.status.warning.text} mb-2`}>Understanding the Chart</h4>
-              <p className={`${theme.textColors.secondary} text-sm`}>
-                This chart shows how your bond&apos;s price would change if market interest rates move up or down. 
-                Notice the inverse relationship: when rates rise (right side), bond prices fall. When rates fall (left side), 
-                bond prices rise. Longer-term bonds are more sensitive to rate changes.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+                {/* Interest Rate Sensitivity Analysis */}
+                {rateScenarios.length > 0 && (
+                    <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                        <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Interest Rate Sensitivity Analysis</h4>
+                        
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead>
+                                    <tr className={`border-b ${theme.borderColors.primary}`}>
+                                        <th className={`text-left py-2 ${theme.textColors.primary}`}>Rate Change</th>
+                                        <th className={`text-left py-2 ${theme.textColors.primary}`}>New YTM</th>
+                                        <th className={`text-left py-2 ${theme.textColors.primary}`}>Estimated Price</th>
+                                        <th className={`text-left py-2 ${theme.textColors.primary}`}>Price Change</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {rateScenarios.map((scenario, index) => (
+                                        <tr key={index} className={`border-b ${theme.borderColors.primary}`}>
+                                            <td className={`py-2 ${theme.textColors.secondary}`}>{scenario.rateChange}</td>
+                                            <td className={`py-2 ${theme.textColors.secondary}`}>{scenario.rate}</td>
+                                            <td className={`py-2 ${theme.textColors.secondary}`}>${scenario.newPrice}</td>
+                                            <td className={`py-2 ${
+                                                scenario.priceChange.startsWith('-') ? theme.status.error.text :
+                                                scenario.priceChange.startsWith('+') ? theme.status.success.text :
+                                                theme.textColors.secondary
+                                            }`}>
+                                                {scenario.priceChange}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
 
-      {/* Educational Insights */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Bond Investment Insights</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className={`p-4 ${theme.status.info.bg} rounded-lg border ${theme.status.info.border}`}>
-              <h4 className={`font-medium ${theme.textColors.secondary} mb-2`}>For Income Investors</h4>
-              <p className={`${theme.textColors.secondary} text-sm`}>
-                Bonds provide predictable income streams. Consider laddering bonds with different maturity dates 
-                to manage interest rate risk and ensure steady cash flow.
-              </p>
+                        {/* Key Insights */}
+                        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4 text-center`}>
+                                <Percent className={`w-6 h-6 ${theme.status.info.text} mx-auto mb-2`} />
+                                <div className={`text-sm ${theme.status.info.text} mb-1`}>Modified Duration</div>
+                                <div className={`text-lg font-bold ${theme.textColors.primary}`}>
+                                    {results?.interestRateSensitivity.toFixed(2)} years
+                                </div>
+                            </div>
+                            
+                            <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-4 text-center`}>
+                                <DollarSign className={`w-6 h-6 ${theme.status.success.text} mx-auto mb-2`} />
+                                <div className={`text-sm ${theme.status.success.text} mb-1`}>Annual Income</div>
+                                <div className={`text-lg font-bold ${theme.textColors.primary}`}>
+                                    ${results?.annualIncome.toFixed(2)}
+                                </div>
+                            </div>
+                            
+                            <div className={`${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg p-4 text-center`}>
+                                <Target className={`w-6 h-6 ${theme.status.warning.text} mx-auto mb-2`} />
+                                <div className={`text-sm ${theme.status.warning.text} mb-1`}>Bond Type</div>
+                                <div className={`text-sm font-bold ${theme.textColors.primary}`}>
+                                    {isPremium ? 'Premium' : isDiscount ? 'Discount' : 'At Par'}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
-            
-            <div className={`p-4 ${theme.status.success.bg} rounded-lg border ${theme.status.success.border}`}>
-              <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>For Risk Management</h4>
-              <p className={`${theme.textColors.secondary} text-sm`}>
-                Bonds typically move opposite to stocks, providing portfolio balance. Government bonds are safest, 
-                while corporate bonds offer higher yields with more risk.
-              </p>
-            </div>
-            
-            <div className={`p-4 ${theme.status.info.bg} rounded-lg border ${theme.borderColors.primary}`}>
-              <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Timing Considerations</h4>
-              <p className={`${theme.textColors.secondary} text-sm`}>
-                In rising rate environments, consider shorter-term bonds or bond funds. In falling rate environments, 
-                longer-term bonds can provide capital appreciation.
-              </p>
-            </div>
-          </div>
-          
-          <div className={`p-4 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
-            <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Pro Tip: Bond Laddering Strategy</h4>
-            <p className={`${theme.textColors.primary} text-sm`}>
-              Instead of buying one large bond, consider spreading your investment across bonds with different maturity dates. 
-              For example, buy bonds maturing in 1, 3, 5, 7, and 10 years. As each bond matures, reinvest at current rates. 
-              This strategy provides regular access to your principal and reduces interest rate risk.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
+        </CalculatorWrapper>
+    );
 }

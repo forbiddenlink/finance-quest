@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,17 +9,12 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Zap,
-  AlertTriangle,
-  DollarSign,
-  Target,
-  BarChart3,
-  Shield,
-  Coins
+  Zap, AlertTriangle, DollarSign, Target, BarChart3, 
+  Shield, Coins, Plus, Minus, TrendingUp, Settings, Info
 } from 'lucide-react';
 import { theme } from '@/lib/theme';
-import { useProgressStore } from '@/lib/store/progressStore';
 import { PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar } from 'recharts';
+import CalculatorWrapper from './CalculatorWrapper';
 
 interface CryptoMetrics {
   portfolioValue: number;
@@ -54,7 +49,7 @@ interface CryptoPosition {
 }
 
 export default function CryptocurrencyAllocationCalculator() {
-  // Crypto Positions
+  // Enhanced crypto positions with better defaults
   const [cryptoPositions, setCryptoPositions] = useState<CryptoPosition[]>([
     {
       id: 1,
@@ -144,40 +139,27 @@ export default function CryptocurrencyAllocationCalculator() {
   const [investmentHorizon, setInvestmentHorizon] = useState<number>(5);
   const [maxCryptoAllocation, setMaxCryptoAllocation] = useState<number>(10);
   const [investmentGoal, setInvestmentGoal] = useState<'Speculation' | 'Diversification' | 'Hedge'>('Diversification');
-
   const [metrics, setMetrics] = useState<CryptoMetrics | null>(null);
+  const [showAnalysis, setShowAnalysis] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  const { recordCalculatorUsage } = useProgressStore();
-
-  useEffect(() => {
-    recordCalculatorUsage('cryptocurrency-allocation-calculator');
-  }, [recordCalculatorUsage]);
-
-  const cryptoColors = {
-    'Store of Value': '#f7931a', // Bitcoin orange
-    'Smart Contract': '#627eea', // Ethereum blue
-    'DeFi': '#ff6b6b',
-    'Layer 1': '#4ecdc4',
-    'Layer 2': '#45b7d1',
-    'Utility': '#96ceb4',
-    'Meme': '#feca57',
-    'Privacy': '#6c5ce7'
-  };
-
-  const updateCryptoPosition = (index: number, field: keyof CryptoPosition, value: number | string) => {
-    const newPositions = [...cryptoPositions];
-    newPositions[index] = { ...newPositions[index], [field]: value };
-    setCryptoPositions(newPositions);
+  const updatePositionAmount = (id: number, amount: number) => {
+    setCryptoPositions(prev => 
+      prev.map(position => 
+        position.id === id ? { ...position, amount: Math.max(0, amount) } : position
+      )
+    );
   };
 
   const addCryptoPosition = () => {
+    const nextId = Math.max(...cryptoPositions.map(p => p.id)) + 1;
     const newPosition: CryptoPosition = {
-      id: Math.max(...cryptoPositions.map(p => p.id)) + 1,
-      name: `New Crypto ${cryptoPositions.length + 1}`,
-      symbol: 'NEW',
+      id: nextId,
+      name: 'Custom Token',
+      symbol: 'CUSTOM',
       category: 'Utility',
       allocation: 5,
-      currentPrice: 1.0,
+      currentPrice: 1.00,
       amount: 500,
       marketCap: 1000000000,
       volatility: 80,
@@ -196,10 +178,27 @@ export default function CryptocurrencyAllocationCalculator() {
     }
   };
 
-  const analyzeCryptoPortfolio = useCallback((): CryptoMetrics => {
+  const calculateCryptoMetrics = useCallback((): CryptoMetrics => {
     const totalCryptoValue = cryptoPositions.reduce((sum, position) => sum + position.amount, 0);
     const cryptoAllocation = (totalCryptoValue / totalPortfolioValue) * 100;
     
+    if (totalCryptoValue === 0) {
+      return {
+        portfolioValue: 0,
+        expectedReturn: 0,
+        volatility: 0,
+        sharpeRatio: 0,
+        bitcoinCorrelation: 0,
+        diversificationScore: 0,
+        liquidityScore: 0,
+        riskLevel: 'Low',
+        maxDrawdown: 0,
+        cryptoAllocation: 0,
+        potentialLoss: 0,
+        recommendations: ['Add cryptocurrency positions to analyze portfolio']
+      };
+    }
+
     // Portfolio expected return (crypto is highly speculative, so conservative estimates)
     const expectedReturn = cryptoPositions.reduce((sum, position) => {
       const weight = position.amount / totalCryptoValue;
@@ -269,49 +268,50 @@ export default function CryptocurrencyAllocationCalculator() {
     // Potential loss (95% confidence interval)
     const potentialLoss = totalCryptoValue * (maxDrawdown / 100);
 
-    // Generate recommendations
+    // Generate enhanced recommendations
     const recommendations: string[] = [];
     
     if (cryptoAllocation > maxCryptoAllocation) {
-      recommendations.push(`Crypto allocation (${cryptoAllocation.toFixed(1)}%) exceeds your target (${maxCryptoAllocation}%)`);
+      recommendations.push(`Crypto allocation (${cryptoAllocation.toFixed(1)}%) exceeds your target (${maxCryptoAllocation}%) - consider rebalancing`);
     }
     if (bitcoinCorrelation > 0.8) {
-      recommendations.push('High Bitcoin correlation - consider more diverse crypto categories');
+      recommendations.push('High Bitcoin correlation detected - diversify across different crypto categories for better risk management');
     }
     if (diversificationScore < 60) {
-      recommendations.push('Limited diversification - spread across different crypto use cases');
+      recommendations.push('Limited diversification - spread investments across different crypto use cases and technologies');
     }
     if (liquidityScore < 70) {
-      recommendations.push('Low liquidity assets - ensure you can exit positions when needed');
+      recommendations.push('Low liquidity assets detected - ensure you can exit positions during market stress');
     }
 
     // Risk tolerance specific recommendations
     if (riskTolerance === 'Conservative' && cryptoAllocation > 5) {
-      recommendations.push('Conservative investors typically limit crypto to 1-5% of portfolio');
+      recommendations.push('Conservative investors typically limit crypto to 1-5% of total portfolio');
     }
     if (riskTolerance === 'Moderate' && cryptoAllocation > 15) {
-      recommendations.push('Moderate risk tolerance suggests keeping crypto under 10-15%');
+      recommendations.push('Moderate risk tolerance suggests keeping crypto allocation under 10-15%');
+    }
+    if (riskTolerance === 'Aggressive' && expectedReturn < 30) {
+      recommendations.push('Consider higher-return crypto opportunities for aggressive risk profile');
     }
 
     // Category specific recommendations
     const btcWeight = cryptoPositions.find(p => p.symbol === 'BTC')?.amount || 0;
     const btcPercentage = (btcWeight / totalCryptoValue) * 100;
     if (btcPercentage < 30) {
-      recommendations.push('Consider increasing Bitcoin allocation as portfolio foundation');
+      recommendations.push('Consider increasing Bitcoin allocation as portfolio foundation - it\'s the most established cryptocurrency');
     }
 
-    const smallCapExposure = cryptoPositions.filter(p => p.marketCap < 10000000000)
-      .reduce((sum, p) => sum + p.amount, 0) / totalCryptoValue * 100;
-    if (smallCapExposure > 30) {
-      recommendations.push('High small-cap exposure increases volatility and risk');
+    // Market cap diversification
+    const largeCaps = cryptoPositions.filter(p => p.marketCap > 100000000000);
+    if (largeCaps.length / cryptoPositions.length < 0.5) {
+      recommendations.push('Consider adding more large-cap cryptocurrencies for stability');
     }
 
-    const avgRegulatoryRisk = cryptoPositions.reduce((sum, position) => {
-      const weight = position.amount / totalCryptoValue;
-      return sum + (position.regulatoryRisk * weight);
-    }, 0);
-    if (avgRegulatoryRisk > 40) {
-      recommendations.push('High regulatory risk - monitor policy changes closely');
+    // Technology and adoption scoring
+    const avgTechRating = cryptoPositions.reduce((sum, p) => sum + p.technologyRating * (p.amount / totalCryptoValue), 0);
+    if (avgTechRating < 75) {
+      recommendations.push('Focus on cryptocurrencies with stronger technology fundamentals');
     }
 
     return {
@@ -328,519 +328,563 @@ export default function CryptocurrencyAllocationCalculator() {
       potentialLoss,
       recommendations
     };
-  }, [cryptoPositions, totalPortfolioValue, maxCryptoAllocation, riskTolerance]);
+  }, [cryptoPositions, totalPortfolioValue, riskTolerance, maxCryptoAllocation]);
 
-  const handleAnalyze = () => {
-    const portfolioMetrics = analyzeCryptoPortfolio();
-    setMetrics(portfolioMetrics);
-  };
-
-  const getRatingColor = (rating: number) => {
-    if (rating >= 80) return theme.status.success.text;
-    if (rating >= 60) return theme.status.warning.text;
-    return theme.status.error.text;
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  // Generate risk visualization data
-  const generateRiskData = () => {
-    if (!metrics) return [];
+  const handleAnalyzePortfolio = async () => {
+    setIsAnalyzing(true);
+    // Simulate analysis time for better UX
+    await new Promise(resolve => setTimeout(resolve, 1200));
     
-    return [
-      { name: 'Conservative (1-5%)', allocation: 3, risk: 15, return: 8 },
-      { name: 'Moderate (5-15%)', allocation: 10, risk: 35, return: 20 },
-      { name: 'Aggressive (15-25%)', allocation: 20, risk: 55, return: 35 },
-      { name: 'Your Portfolio', allocation: metrics.cryptoAllocation, risk: metrics.volatility, return: metrics.expectedReturn }
-    ];
+    const cryptoMetrics = calculateCryptoMetrics();
+    setMetrics(cryptoMetrics);
+    setShowAnalysis(true);
+    setIsAnalyzing(false);
   };
+
+  const handleReset = () => {
+    setShowAnalysis(false);
+    setMetrics(null);
+  };
+
+  // Results formatting for CalculatorWrapper
+  const cryptoResults = metrics ? {
+    primary: {
+      label: 'Expected Return',
+      value: metrics.expectedReturn / 100,
+      format: 'percentage' as const
+    },
+    secondary: [
+      {
+        label: 'Portfolio Volatility',
+        value: metrics.volatility / 100,
+        format: 'percentage' as const
+      },
+      {
+        label: 'Crypto Allocation',
+        value: metrics.cryptoAllocation / 100,
+        format: 'percentage' as const
+      },
+      {
+        label: 'Max Potential Loss',
+        value: metrics.potentialLoss,
+        format: 'currency' as const
+      },
+      {
+        label: 'Diversification Score',
+        value: metrics.diversificationScore,
+        format: 'number' as const
+      }
+    ]
+  } : undefined;
+
+  // Chart colors for different crypto categories
+  const CATEGORY_COLORS = {
+    'Store of Value': '#F59E0B',
+    'Smart Contract': '#10B981', 
+    'DeFi': '#3B82F6',
+    'Layer 1': '#8B5CF6',
+    'Layer 2': '#06B6D4',
+    'Utility': '#EF4444',
+    'Meme': '#F97316',
+    'Privacy': '#6B7280'
+  };
+
+  const getCategoryColor = (category: string) => CATEGORY_COLORS[category as keyof typeof CATEGORY_COLORS] || '#6B7280';
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-6 space-y-8">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center space-y-4"
-      >
-        <div className={`w-16 h-16 ${theme.status.warning.bg} rounded-full flex items-center justify-center mx-auto`}>
-          <Coins className={`w-8 h-8 ${theme.status.warning.text}`} />
-        </div>
-        <h1 className={`${theme.typography.heading1} ${theme.textColors.primary}`}>
-          Cryptocurrency Allocation Calculator
-        </h1>
-        <p className={`${theme.typography.body} ${theme.textColors.secondary} max-w-2xl mx-auto`}>
-          Analyze and optimize your cryptocurrency portfolio allocation with risk management
-        </p>
-      </motion.div>
-
-      {/* Investment Parameters */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-      >
-        <Card className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}`}>
+    <CalculatorWrapper
+      metadata={{
+        id: 'cryptocurrency-allocation-calculator',
+        title: 'Cryptocurrency Allocation Calculator',
+        description: 'Analyze and optimize your cryptocurrency portfolio allocation with advanced risk metrics',
+        category: 'advanced'
+      }}
+      results={cryptoResults}
+      onReset={handleReset}
+    >
+      <div className="space-y-6">
+        {/* Portfolio Settings */}
+        <Card className={theme.utils.glass('normal')}>
           <CardHeader>
             <CardTitle className={`${theme.textColors.primary} flex items-center`}>
-              <Target className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
-              Investment Parameters
+              <Settings className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
+              Portfolio Configuration
             </CardTitle>
-            <CardDescription>Configure your crypto investment strategy and risk limits</CardDescription>
+            <CardDescription className={theme.textColors.secondary}>
+              Configure your investment parameters and crypto allocation preferences
+            </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <div className="grid md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="totalPortfolioValue">Total Portfolio Value ($)</Label>
-                <Input
-                  id="totalPortfolioValue"
-                  type="number"
-                  value={totalPortfolioValue}
-                  onChange={(e) => setTotalPortfolioValue(Number(e.target.value))}
-                  placeholder="100000"
-                />
+              <div>
+                <Label htmlFor="totalPortfolioValue" className={theme.textColors.primary}>
+                  Total Portfolio Value
+                </Label>
+                <div className="relative">
+                  <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                  <Input
+                    id="totalPortfolioValue"
+                    type="number"
+                    value={totalPortfolioValue}
+                    onChange={(e) => setTotalPortfolioValue(parseInt(e.target.value) || 0)}
+                    className={`${theme.utils.input()} pl-8`}
+                    min="1000"
+                    step="1000"
+                  />
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="maxCryptoAllocation">Max Crypto Allocation (%)</Label>
+              <div>
+                <Label htmlFor="maxCryptoAllocation" className={theme.textColors.primary}>
+                  Max Crypto Allocation (%)
+                </Label>
                 <Input
                   id="maxCryptoAllocation"
                   type="number"
                   value={maxCryptoAllocation}
-                  onChange={(e) => setMaxCryptoAllocation(Number(e.target.value))}
-                  placeholder="10"
+                  onChange={(e) => setMaxCryptoAllocation(parseInt(e.target.value) || 0)}
+                  className={theme.utils.input()}
+                  min="1"
+                  max="50"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="investmentHorizon">Investment Horizon (Years)</Label>
+              <div>
+                <Label htmlFor="investmentHorizon" className={theme.textColors.primary}>
+                  Investment Horizon (Years)
+                </Label>
                 <Input
                   id="investmentHorizon"
                   type="number"
                   value={investmentHorizon}
-                  onChange={(e) => setInvestmentHorizon(Number(e.target.value))}
-                  placeholder="5"
+                  onChange={(e) => setInvestmentHorizon(parseInt(e.target.value) || 1)}
+                  className={theme.utils.input()}
+                  min="1"
+                  max="20"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="riskTolerance">Risk Tolerance</Label>
-                <select
-                  id="riskTolerance"
-                  value={riskTolerance}
-                  onChange={(e) => setRiskTolerance(e.target.value as typeof riskTolerance)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="Conservative">Conservative</option>
-                  <option value="Moderate">Moderate</option>
-                  <option value="Aggressive">Aggressive</option>
-                </select>
+            </div>
+            
+            <Separator className={theme.borderColors.primary} />
+            
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <Label className={theme.textColors.primary}>Risk Tolerance</Label>
+                <div className="flex space-x-2 mt-2">
+                  {(['Conservative', 'Moderate', 'Aggressive'] as const).map((risk) => (
+                    <Button
+                      key={risk}
+                      variant={riskTolerance === risk ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setRiskTolerance(risk)}
+                      className={riskTolerance === risk ? theme.utils.button('primary', 'sm') : theme.utils.button('secondary', 'sm')}
+                    >
+                      {risk}
+                    </Button>
+                  ))}
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="investmentGoal">Investment Goal</Label>
-                <select
-                  id="investmentGoal"
-                  value={investmentGoal}
-                  onChange={(e) => setInvestmentGoal(e.target.value as typeof investmentGoal)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="Speculation">Speculation</option>
-                  <option value="Diversification">Diversification</option>
-                  <option value="Hedge">Digital Hedge</option>
-                </select>
+              <div>
+                <Label className={theme.textColors.primary}>Investment Goal</Label>
+                <div className="flex space-x-2 mt-2">
+                  {(['Speculation', 'Diversification', 'Hedge'] as const).map((goal) => (
+                    <Button
+                      key={goal}
+                      variant={investmentGoal === goal ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setInvestmentGoal(goal)}
+                      className={investmentGoal === goal ? theme.utils.button('accent', 'sm') : theme.utils.button('secondary', 'sm')}
+                    >
+                      {goal}
+                    </Button>
+                  ))}
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
-      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Crypto Positions Configuration */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="lg:col-span-2"
-        >
-          <Card className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}`}>
-            <CardHeader>
-              <CardTitle className={`${theme.textColors.primary} flex items-center justify-between`}>
-                <div className="flex items-center">
-                  <Zap className={`w-5 h-5 ${theme.status.warning.text} mr-2`} />
-                  Cryptocurrency Positions
-                </div>
+        {/* Cryptocurrency Positions */}
+        <Card className={theme.utils.glass('normal')}>
+          <CardHeader>
+            <CardTitle className={`${theme.textColors.primary} flex items-center justify-between`}>
+              <div className="flex items-center">
+                <Coins className={`w-5 h-5 ${theme.status.warning.text} mr-2`} />
+                Cryptocurrency Positions
+              </div>
+              <div className="flex items-center space-x-2">
+                <Badge variant="outline" className={`${theme.status.warning.text} border-current`}>
+                  {cryptoPositions.length} Assets
+                </Badge>
                 <Button
-                  variant="outline"
-                  size="sm"
                   onClick={addCryptoPosition}
+                  size="sm"
+                  className={theme.utils.button('secondary', 'sm')}
                 >
-                  Add Crypto
+                  <Plus className="w-4 h-4 mr-1" />
+                  Add Token
                 </Button>
-              </CardTitle>
-              <CardDescription>Configure your cryptocurrency portfolio holdings</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-4 max-h-96 overflow-y-auto">
-                {cryptoPositions.map((position, index) => (
-                  <motion.div
-                    key={position.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    className={`p-4 ${theme.backgrounds.card} rounded-lg border space-y-3`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div 
-                          className="w-4 h-4 rounded-full"
-                          style={{ backgroundColor: cryptoColors[position.category] }}
-                        />
-                        <div>
-                          <input
-                            type="text"
-                            value={position.name}
-                            onChange={(e) => updateCryptoPosition(index, 'name', e.target.value)}
-                            className="font-medium bg-transparent border-none focus:outline-none text-sm"
-                          />
-                          <Badge variant="outline" className="ml-2">
-                            {position.symbol}
-                          </Badge>
-                        </div>
-                      </div>
-                      {cryptoPositions.length > 1 && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => removeCryptoPosition(position.id)}
-                        >
-                          Remove
-                        </Button>
-                      )}
-                    </div>
-                    
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                      <div className="space-y-1">
-                        <Label className="text-xs">Category</Label>
-                        <select
-                          value={position.category}
-                          onChange={(e) => updateCryptoPosition(index, 'category', e.target.value)}
-                          className="w-full h-8 px-2 border border-gray-300 rounded text-sm"
-                        >
-                          <option value="Store of Value">Store of Value</option>
-                          <option value="Smart Contract">Smart Contract</option>
-                          <option value="DeFi">DeFi</option>
-                          <option value="Layer 1">Layer 1</option>
-                          <option value="Layer 2">Layer 2</option>
-                          <option value="Utility">Utility</option>
-                          <option value="Meme">Meme</option>
-                          <option value="Privacy">Privacy</option>
-                        </select>
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Symbol</Label>
-                        <Input
-                          type="text"
-                          value={position.symbol}
-                          onChange={(e) => updateCryptoPosition(index, 'symbol', e.target.value)}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Amount ($)</Label>
-                        <Input
-                          type="number"
-                          value={position.amount}
-                          onChange={(e) => updateCryptoPosition(index, 'amount', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Current Price ($)</Label>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          value={position.currentPrice}
-                          onChange={(e) => updateCryptoPosition(index, 'currentPrice', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Volatility (%)</Label>
-                        <Input
-                          type="number"
-                          value={position.volatility}
-                          onChange={(e) => updateCryptoPosition(index, 'volatility', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Liquidity (1-100)</Label>
-                        <Input
-                          type="number"
-                          min="1"
-                          max="100"
-                          value={position.liquidityRating}
-                          onChange={(e) => updateCryptoPosition(index, 'liquidityRating', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">BTC Correlation</Label>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          min="0"
-                          max="1"
-                          value={position.bitcoinCorrelation}
-                          onChange={(e) => updateCryptoPosition(index, 'bitcoinCorrelation', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Regulatory Risk (1-100)</Label>
-                        <Input
-                          type="number"
-                          min="1"
-                          max="100"
-                          value={position.regulatoryRisk}
-                          onChange={(e) => updateCryptoPosition(index, 'regulatoryRisk', Number(e.target.value))}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
               </div>
-
-              <Button 
-                onClick={handleAnalyze}
-                className={`w-full ${theme.buttons.primary}`}
-                size="lg"
+            </CardTitle>
+            <CardDescription className={theme.textColors.secondary}>
+              Configure your cryptocurrency holdings across different categories and use cases
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {cryptoPositions.map((position, index) => (
+              <motion.div 
+                key={position.id} 
+                className={`${theme.utils.glass('soft')} p-4 space-y-3 ${theme.interactive.hoverSoft}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
               >
-                <BarChart3 className="w-4 h-4 mr-2" />
-                Analyze Crypto Portfolio
-              </Button>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Portfolio Visualization */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <Card className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}`}>
-            <CardHeader>
-              <CardTitle className={`${theme.textColors.primary} flex items-center`}>
-                <DollarSign className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
-                Crypto Allocation
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={cryptoPositions.map(position => ({
-                        name: position.symbol,
-                        value: position.amount,
-                        fill: cryptoColors[position.category]
-                      }))}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ name, percent }) => 
-                        `${name}: ${((percent || 0) * 100).toFixed(0)}%`
-                      }
-                      outerRadius={80}
-                      dataKey="value"
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Badge 
+                      variant="outline" 
+                      className={`px-3 py-1 font-medium border-current`}
+                      style={{ color: getCategoryColor(position.category) }}
                     >
-                      {cryptoPositions.map((position) => (
-                        <Cell key={position.id} fill={cryptoColors[position.category]} />
-                      ))}
-                    </Pie>
-                    <Tooltip 
-                      formatter={(value: number) => [formatCurrency(value), 'Amount']}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </div>
-
-      {/* Analysis Results */}
-      {metrics && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          <Card className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}`}>
-            <CardHeader>
-              <CardTitle className={`${theme.textColors.primary} flex items-center`}>
-                <BarChart3 className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
-                Cryptocurrency Portfolio Analysis
-              </CardTitle>
-              <CardDescription>Comprehensive risk and allocation analysis</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Key Metrics */}
-              <div className="grid md:grid-cols-4 gap-4">
-                <div className={`p-4 ${theme.backgrounds.card} rounded-lg border text-center`}>
-                  <div className={`text-2xl font-bold ${metrics.cryptoAllocation > maxCryptoAllocation ? theme.status.error.text : theme.status.success.text}`}>
-                    {metrics.cryptoAllocation.toFixed(1)}%
+                      {position.category}
+                    </Badge>
+                    <span className={`font-bold ${theme.textColors.primary} text-lg`}>
+                      {position.name}
+                    </span>
+                    <Badge variant="outline" className={`${theme.textColors.muted} text-xs font-mono`}>
+                      {position.symbol}
+                    </Badge>
+                    {position.marketCap > 100000000000 && (
+                      <Badge className={`${theme.status.success.bg} ${theme.status.success.text} border-none text-xs`}>
+                        Large Cap
+                      </Badge>
+                    )}
+                    {position.technologyRating > 85 && (
+                      <Badge className={`${theme.status.info.bg} ${theme.status.info.text} border-none text-xs`}>
+                        High Tech
+                      </Badge>
+                    )}
                   </div>
-                  <div className={`text-sm ${theme.textColors.secondary}`}>Portfolio Allocation</div>
+                  {cryptoPositions.length > 1 && (
+                    <Button
+                      onClick={() => removeCryptoPosition(position.id)}
+                      size="sm"
+                      variant="outline"
+                      className={`${theme.buttons.ghost} hover:${theme.status.error.bg} hover:${theme.status.error.text}`}
+                    >
+                      <Minus className="w-4 h-4" />
+                    </Button>
+                  )}
                 </div>
-                <div className={`p-4 ${theme.backgrounds.card} rounded-lg border text-center`}>
-                  <div className={`text-2xl font-bold ${theme.status.warning.text}`}>
-                    {metrics.expectedReturn.toFixed(0)}%
-                  </div>
-                  <div className={`text-sm ${theme.textColors.secondary}`}>Expected Return</div>
-                </div>
-                <div className={`p-4 ${theme.backgrounds.card} rounded-lg border text-center`}>
-                  <div className={`text-2xl font-bold ${metrics.volatility > 80 ? theme.status.error.text : theme.status.warning.text}`}>
-                    {metrics.volatility.toFixed(0)}%
-                  </div>
-                  <div className={`text-sm ${theme.textColors.secondary}`}>Volatility</div>
-                </div>
-                <div className={`p-4 ${theme.backgrounds.card} rounded-lg border text-center`}>
-                  <div className={`text-2xl font-bold ${theme.status.error.text}`}>
-                    {formatCurrency(metrics.potentialLoss)}
-                  </div>
-                  <div className={`text-sm ${theme.textColors.secondary}`}>Potential Loss</div>
-                </div>
-              </div>
-
-              <Separator />
-
-              {/* Risk Analysis */}
-              <div>
-                <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Risk Assessment</h4>
+                
                 <div className="grid md:grid-cols-4 gap-4">
-                  <div className={`p-4 ${theme.backgrounds.card} rounded-lg border`}>
-                    <div className="flex items-center justify-between">
-                      <span className={`text-sm ${theme.textColors.secondary}`}>Risk Level:</span>
-                      <Badge 
-                        variant={metrics.riskLevel === 'High' || metrics.riskLevel === 'Very High' ? 'destructive' : 'default'}
-                      >
+                  <div>
+                    <Label className={`${theme.textColors.primary} text-sm font-medium`}>
+                      Investment Amount
+                    </Label>
+                    <div className="relative">
+                      <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-sm`}>$</span>
+                      <Input
+                        type="number"
+                        value={position.amount}
+                        onChange={(e) => updatePositionAmount(position.id, parseInt(e.target.value) || 0)}
+                        className={`${theme.utils.input()} pl-8`}
+                        min="0"
+                        step="100"
+                      />
+                    </div>
+                  </div>
+                  <div className={`text-sm ${theme.textColors.secondary} space-y-1`}>
+                    <p><span className="font-medium text-white">Current Price:</span> ${position.currentPrice.toLocaleString()}</p>
+                    <p><span className="font-medium text-white">Volatility:</span> {position.volatility}%</p>
+                    <p><span className="font-medium text-white">Liquidity:</span> {position.liquidityRating}/100</p>
+                  </div>
+                  <div className={`text-sm ${theme.textColors.secondary} space-y-1`}>
+                    <p><span className="font-medium text-white">Market Cap:</span> ${(position.marketCap / 1000000000).toFixed(1)}B</p>
+                    <p><span className="font-medium text-white">BTC Correlation:</span> {position.bitcoinCorrelation}</p>
+                    <p><span className="font-medium text-white">Tech Rating:</span> {position.technologyRating}/100</p>
+                  </div>
+                  <div className={`text-sm ${theme.textColors.secondary}`}>
+                    <p><span className="font-medium text-white">Portfolio Weight:</span></p>
+                    <p className={`text-lg font-semibold ${theme.textColors.primary}`}>
+                      {((position.amount / cryptoPositions.reduce((sum, p) => sum + p.amount, 0)) * 100 || 0).toFixed(1)}%
+                    </p>
+                    <div className="flex items-center space-x-1 mt-1">
+                      <div className={`w-2 h-2 rounded-full ${
+                        position.regulatoryRisk < 25 ? theme.status.success.bg :
+                        position.regulatoryRisk < 50 ? theme.status.warning.bg : theme.status.error.bg
+                      }`}></div>
+                      <span className="text-xs">Regulatory Risk: {position.regulatoryRisk}%</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </CardContent>
+        </Card>
+
+        {/* Analyze Button */}
+        <motion.div 
+          className="text-center"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <Button
+            onClick={handleAnalyzePortfolio}
+            disabled={isAnalyzing}
+            size="lg"
+            className={`${theme.utils.button('primary', 'lg')} min-w-[200px] ${theme.interactive.glow}`}
+          >
+            {isAnalyzing ? (
+              <>
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
+                Analyzing...
+              </>
+            ) : (
+              <>
+                <BarChart3 className="w-5 h-5 mr-2" />
+                Analyze Crypto Portfolio
+              </>
+            )}
+          </Button>
+          {!showAnalysis && (
+            <p className={`${theme.textColors.muted} text-sm mt-2`}>
+              Get comprehensive risk analysis and optimization recommendations for your crypto portfolio
+            </p>
+          )}
+        </motion.div>
+
+        {/* Analysis Results */}
+        {showAnalysis && metrics && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
+          >
+            {/* Portfolio Overview */}
+            <Card className={theme.utils.glass('normal')}>
+              <CardHeader>
+                <CardTitle className={`${theme.textColors.primary} flex items-center`}>
+                  <TrendingUp className={`w-5 h-5 ${theme.status.success.text} mr-2`} />
+                  Crypto Portfolio Analysis
+                </CardTitle>
+                <CardDescription className={theme.textColors.secondary}>
+                  Advanced risk-return analysis of your cryptocurrency allocation
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Portfolio Allocation Chart */}
+                  <div>
+                    <h5 className={`font-semibold ${theme.textColors.primary} mb-4`}>
+                      Cryptocurrency Allocation
+                    </h5>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <PieChart>
+                        <Pie
+                          data={cryptoPositions.map((position) => ({
+                            name: position.symbol,
+                            value: position.amount,
+                            category: position.category,
+                            color: getCategoryColor(position.category)
+                          }))}
+                          cx="50%"
+                          cy="50%"
+                          outerRadius={100}
+                          dataKey="value"
+                          label={({ name, value }) => {
+                            const total = cryptoPositions.reduce((sum, p) => sum + p.amount, 0);
+                            const percentage = (((value || 0) / total) * 100).toFixed(1);
+                            return `${name}: ${percentage}%`;
+                          }}
+                        >
+                          {cryptoPositions.map((position, index) => (
+                            <Cell key={`cell-${index}`} fill={getCategoryColor(position.category)} />
+                          ))}
+                        </Pie>
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: '#1F2937',
+                            border: '1px solid #374151',
+                            borderRadius: '8px',
+                            color: '#F9FAFB'
+                          }}
+                          formatter={(value: number) => [`$${value.toLocaleString()}`, 'Investment']}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  {/* Key Metrics */}
+                  <div className="space-y-4">
+                    <h5 className={`font-semibold ${theme.textColors.primary} mb-4`}>
+                      Key Risk Metrics
+                    </h5>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className={`${theme.utils.glass('soft')} p-3 text-center`}>
+                        <p className={`text-2xl font-bold ${
+                          metrics.expectedReturn > 30 ? theme.status.success.text :
+                          metrics.expectedReturn > 15 ? theme.status.warning.text : theme.status.error.text
+                        }`}>
+                          {metrics.expectedReturn.toFixed(1)}%
+                        </p>
+                        <p className={`text-sm ${theme.textColors.secondary}`}>Expected Return</p>
+                      </div>
+                      <div className={`${theme.utils.glass('soft')} p-3 text-center`}>
+                        <p className={`text-2xl font-bold ${
+                          metrics.volatility < 60 ? theme.status.success.text :
+                          metrics.volatility < 80 ? theme.status.warning.text : theme.status.error.text
+                        }`}>
+                          {metrics.volatility.toFixed(1)}%
+                        </p>
+                        <p className={`text-sm ${theme.textColors.secondary}`}>Volatility</p>
+                      </div>
+                      <div className={`${theme.utils.glass('soft')} p-3 text-center`}>
+                        <p className={`text-2xl font-bold ${
+                          metrics.cryptoAllocation <= maxCryptoAllocation ? theme.status.success.text : theme.status.error.text
+                        }`}>
+                          {metrics.cryptoAllocation.toFixed(1)}%
+                        </p>
+                        <p className={`text-sm ${theme.textColors.secondary}`}>Crypto Allocation</p>
+                      </div>
+                      <div className={`${theme.utils.glass('soft')} p-3 text-center`}>
+                        <p className={`text-2xl font-bold ${theme.status.error.text}`}>
+                          ${metrics.potentialLoss.toLocaleString()}
+                        </p>
+                        <p className={`text-sm ${theme.textColors.secondary}`}>Max Potential Loss</p>
+                      </div>
+                    </div>
+
+                    {/* Risk Level Indicator */}
+                    <div className={`${theme.utils.glass('soft')} p-4 text-center`}>
+                      <p className={`text-sm ${theme.textColors.secondary} mb-2`}>Portfolio Risk Level</p>
+                      <Badge className={`${
+                        metrics.riskLevel === 'Low' ? `${theme.status.success.bg} ${theme.status.success.text}` :
+                        metrics.riskLevel === 'Moderate' ? `${theme.status.warning.bg} ${theme.status.warning.text}` :
+                        metrics.riskLevel === 'High' ? `${theme.status.error.bg} ${theme.status.error.text}` :
+                        `${theme.status.error.bg} ${theme.status.error.text}`
+                      } border-none px-4 py-2 text-lg font-bold`}>
                         {metrics.riskLevel}
                       </Badge>
                     </div>
                   </div>
-                  <div className={`p-4 ${theme.backgrounds.card} rounded-lg border`}>
-                    <div className="flex items-center justify-between">
-                      <span className={`text-sm ${theme.textColors.secondary}`}>Max Drawdown:</span>
-                      <span className={`font-bold ${theme.status.error.text}`}>
-                        {metrics.maxDrawdown.toFixed(0)}%
-                      </span>
-                    </div>
-                  </div>
-                  <div className={`p-4 ${theme.backgrounds.card} rounded-lg border`}>
-                    <div className="flex items-center justify-between">
-                      <span className={`text-sm ${theme.textColors.secondary}`}>Liquidity:</span>
-                      <span className={`font-bold ${getRatingColor(metrics.liquidityScore)}`}>
-                        {metrics.liquidityScore.toFixed(0)}/100
-                      </span>
-                    </div>
-                  </div>
-                  <div className={`p-4 ${theme.backgrounds.card} rounded-lg border`}>
-                    <div className="flex items-center justify-between">
-                      <span className={`text-sm ${theme.textColors.secondary}`}>Diversification:</span>
-                      <span className={`font-bold ${getRatingColor(metrics.diversificationScore)}`}>
-                        {metrics.diversificationScore.toFixed(0)}/100
-                      </span>
-                    </div>
-                  </div>
                 </div>
-              </div>
+              </CardContent>
+            </Card>
 
-              <Separator />
-
-              {/* Risk/Return Comparison */}
-              <div>
-                <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Risk vs Return Analysis</h4>
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={generateRiskData()}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" angle={-45} textAnchor="end" height={80} />
-                      <YAxis />
-                      <Tooltip />
-                      <Bar dataKey="allocation" fill="#3b82f6" name="Allocation %" />
-                      <Bar dataKey="risk" fill="#ef4444" name="Risk %" />
-                      <Bar dataKey="return" fill="#10b981" name="Expected Return %" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              <Separator />
-
-              {/* Recommendations */}
-              {metrics.recommendations.length > 0 && (
-                <div className={`p-4 ${theme.status.warning.bg}/10 border ${theme.status.warning.border} rounded-lg`}>
-                  <h5 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center`}>
-                    <AlertTriangle className={`w-4 h-4 ${theme.status.warning.text} mr-2`} />
-                    Portfolio Recommendations
-                  </h5>
-                  <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
+            {/* Recommendations */}
+            {metrics.recommendations.length > 0 && (
+              <Card className={`${theme.status.warning.bg}/10 border ${theme.status.warning.border}`}>
+                <CardHeader>
+                  <CardTitle className={`${theme.textColors.primary} flex items-center`}>
+                    <Shield className={`w-5 h-5 ${theme.status.warning.text} mr-2`} />
+                    Risk Management Recommendations
+                  </CardTitle>
+                  <CardDescription className={theme.textColors.secondary}>
+                    AI-powered suggestions to optimize your cryptocurrency portfolio risk profile
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
                     {metrics.recommendations.map((recommendation, index) => (
-                      <li key={index}>• {recommendation}</li>
+                      <motion.div
+                        key={index}
+                        className={`${theme.utils.glass('soft')} p-3 flex items-start space-x-3`}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <div className={`w-2 h-2 rounded-full ${theme.status.warning.bg} mt-2 flex-shrink-0`}></div>
+                        <p className={`${theme.textColors.secondary} leading-relaxed`}>
+                          {recommendation}
+                        </p>
+                      </motion.div>
                     ))}
-                  </ul>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </motion.div>
-      )}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </motion.div>
+        )}
 
-      {/* Educational Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
-      >
-        <Card className={`${theme.status.warning.bg}/10 border ${theme.status.warning.border}`}>
+        {/* Educational Content */}
+        <Card className={`${theme.status.info.bg}/10 border ${theme.status.info.border} ${theme.interactive.glow}`}>
           <CardHeader>
             <CardTitle className={`${theme.textColors.primary} flex items-center`}>
-              <Shield className={`w-5 h-5 ${theme.status.warning.text} mr-2`} />
+              <Info className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
               Cryptocurrency Investment Guide
             </CardTitle>
+            <CardDescription className={theme.textColors.secondary}>
+              Essential knowledge for cryptocurrency portfolio construction and risk management
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h5 className={`font-medium ${theme.textColors.primary} mb-2`}>Key Considerations:</h5>
-                <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
-                  <li>• <span className="font-medium">High Volatility:</span> Crypto can lose 50-90% of value</li>
-                  <li>• <span className="font-medium">Regulatory Risk:</span> Government actions can impact prices</li>
-                  <li>• <span className="font-medium">Technology Risk:</span> Smart contract bugs, hacks possible</li>
-                  <li>• <span className="font-medium">Limited History:</span> No long-term performance data</li>
+          <CardContent className="space-y-6">
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className={`${theme.utils.glass('soft')} p-4`}>
+                <h5 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
+                  <Coins className={`w-4 h-4 ${theme.status.warning.text} mr-2`} />
+                  Portfolio Allocation
+                </h5>
+                <ul className={`text-sm ${theme.textColors.secondary} space-y-2`}>
+                  <li>• <span className="font-medium text-white">Conservative:</span> 1-5% of total portfolio</li>
+                  <li>• <span className="font-medium text-white">Moderate:</span> 5-15% allocation range</li>
+                  <li>• <span className="font-medium text-white">Aggressive:</span> 15-30% for risk-tolerant investors</li>
+                  <li>• <span className="font-medium text-white">Core Holdings:</span> Focus on Bitcoin and Ethereum</li>
                 </ul>
               </div>
-              <div>
-                <h5 className={`font-medium ${theme.textColors.primary} mb-2`}>Allocation Guidelines:</h5>
-                <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
-                  <li>• <span className="font-medium">Conservative:</span> 1-5% of total portfolio</li>
-                  <li>• <span className="font-medium">Moderate:</span> 5-15% maximum allocation</li>
-                  <li>• <span className="font-medium">Aggressive:</span> 15-25% for risk-tolerant investors</li>
-                  <li>• <span className="font-medium">Never invest:</span> More than you can afford to lose</li>
+              <div className={`${theme.utils.glass('soft')} p-4`}>
+                <h5 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
+                  <Shield className={`w-4 h-4 ${theme.status.success.text} mr-2`} />
+                  Risk Management
+                </h5>
+                <ul className={`text-sm ${theme.textColors.secondary} space-y-2`}>
+                  <li>• <span className="font-medium text-white">Diversification:</span> Spread across categories</li>
+                  <li>• <span className="font-medium text-white">Volatility:</span> Expect high price swings</li>
+                  <li>• <span className="font-medium text-white">Liquidity:</span> Stick to established exchanges</li>
+                  <li>• <span className="font-medium text-white">Security:</span> Use hardware wallets for storage</li>
                 </ul>
+              </div>
+              <div className={`${theme.utils.glass('soft')} p-4`}>
+                <h5 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
+                  <AlertTriangle className={`w-4 h-4 ${theme.status.error.text} mr-2`} />
+                  Key Risks
+                </h5>
+                <ul className={`text-sm ${theme.textColors.secondary} space-y-2`}>
+                  <li>• <span className="font-medium text-white">Regulatory:</span> Government intervention risks</li>
+                  <li>• <span className="font-medium text-white">Technology:</span> Protocol failures and bugs</li>
+                  <li>• <span className="font-medium text-white">Market:</span> Extreme volatility and manipulation</li>
+                  <li>• <span className="font-medium text-white">Operational:</span> Exchange hacks and custody risks</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Investment Categories Section */}
+            <div className={`${theme.utils.glass('soft')} p-4`}>
+              <h5 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
+                <Target className={`w-4 h-4 ${theme.status.info.text} mr-2`} />
+                Cryptocurrency Categories
+              </h5>
+              <div className="grid md:grid-cols-2 gap-4 text-sm">
+                <div className={theme.textColors.secondary}>
+                  <span className="font-medium text-white block mb-1">Store of Value (Bitcoin):</span>
+                  Digital gold alternative, inflation hedge, portfolio diversifier with established track record.
+                </div>
+                <div className={theme.textColors.secondary}>
+                  <span className="font-medium text-white block mb-1">Smart Contract Platforms:</span>
+                  Ethereum, Cardano - programmable blockchain networks enabling decentralized applications.
+                </div>
+                <div className={theme.textColors.secondary}>
+                  <span className="font-medium text-white block mb-1">DeFi & Utility Tokens:</span>
+                  Tokens powering decentralized finance protocols and specific blockchain utility functions.
+                </div>
+                <div className={theme.textColors.secondary}>
+                  <span className="font-medium text-white block mb-1">Layer 2 Solutions:</span>
+                  Scaling solutions for major blockchains, improving transaction speed and reducing costs.
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
-      </motion.div>
-    </div>
+      </div>
+    </CalculatorWrapper>
   );
 }

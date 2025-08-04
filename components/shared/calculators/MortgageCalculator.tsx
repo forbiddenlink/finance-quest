@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
-import { useProgressStore } from '@/lib/store/progressStore';
-import { Calculator, Home, TrendingUp, AlertTriangle, CheckCircle } from 'lucide-react';
+import React, { useState, useCallback, useEffect } from 'react';
+import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
+import { Home, TrendingUp, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Label } from '@/components/ui/label';
 import { theme } from '@/lib/theme';
 
 interface MortgageResult {
@@ -14,24 +14,17 @@ interface MortgageResult {
 }
 
 export default function MortgageCalculator() {
-    const { recordCalculatorUsage } = useProgressStore();
-
     // Form inputs
-    const [homePrice, setHomePrice] = useState<string>('400000');
-    const [downPayment, setDownPayment] = useState<string>('80000');
-    const [interestRate, setInterestRate] = useState<string>('6.5');
-    const [loanTerm, setLoanTerm] = useState<string>('30');
-    const [monthlyIncome, setMonthlyIncome] = useState<string>('8000');
-    const [propertyTax, setPropertyTax] = useState<string>('500');
-    const [insurance, setInsurance] = useState<string>('200');
-    const [pmi, setPmi] = useState<string>('150');
+    const [homePrice, setHomePrice] = useState('400000');
+    const [downPayment, setDownPayment] = useState('80000');
+    const [interestRate, setInterestRate] = useState('6.5');
+    const [loanTerm, setLoanTerm] = useState('30');
+    const [monthlyIncome, setMonthlyIncome] = useState('8000');
+    const [propertyTax, setPropertyTax] = useState('500');
+    const [insurance, setInsurance] = useState('200');
+    const [pmi, setPmi] = useState('150');
 
     const [result, setResult] = useState<MortgageResult | null>(null);
-
-    // Record calculator usage
-    useEffect(() => {
-        recordCalculatorUsage('mortgage-calculator');
-    }, [recordCalculatorUsage]);
 
     const calculateMortgage = useCallback(() => {
         const price = parseFloat(homePrice) || 0;
@@ -77,268 +70,297 @@ export default function MortgageCalculator() {
         calculateMortgage();
     }, [calculateMortgage]);
 
+    const handleReset = () => {
+        setHomePrice('400000');
+        setDownPayment('80000');
+        setInterestRate('6.5');
+        setLoanTerm('30');
+        setMonthlyIncome('8000');
+        setPropertyTax('500');
+        setInsurance('200');
+        setPmi('150');
+    };
+
     const downPaymentPercent = ((parseFloat(downPayment) || 0) / (parseFloat(homePrice) || 1)) * 100;
 
+    // Calculator metadata
+    const metadata = {
+        id: 'mortgage-calculator',
+        title: 'Mortgage Payment Calculator',
+        description: 'Calculate monthly mortgage payments, total interest, and affordability ratios',
+        category: 'intermediate' as const,
+        icon: Home,
+        tags: ['mortgage', 'real estate', 'home buying', 'loans', 'interest'],
+        educationalNotes: [
+            {
+                title: 'Understanding Mortgage Calculations',
+                content: 'A mortgage payment consists of principal and interest (P&I), plus property taxes, insurance, and possibly PMI. The 28/36 rule suggests housing costs should not exceed 28% of gross income.',
+                tips: [
+                    'Aim for 20% down payment to avoid PMI',
+                    'Each 1% interest rate increase adds ~10% to monthly payment',
+                    'Consider property taxes and insurance in your budget',
+                    'Pre-approval helps determine realistic price range'
+                ]
+            },
+            {
+                title: 'Affordability Guidelines',
+                content: 'Lenders typically prefer a housing payment ratio of 28% or less, and total debt-to-income ratio of 36% or less. These ratios help ensure you can comfortably afford your mortgage.',
+                tips: [
+                    'Factor in HOA fees, utilities, and maintenance costs',
+                    'Keep emergency fund for home repairs',
+                    'Consider future income changes',
+                    'Account for closing costs (2-5% of home price)'
+                ]
+            }
+        ]
+    };
+
+    // Results formatting
+    const results = result ? {
+        primary: {
+            label: 'Monthly Payment (PITI + PMI)',
+            value: result.monthlyPayment,
+            format: 'currency' as const
+        },
+        secondary: [
+            {
+                label: 'Total Interest Over Life of Loan',
+                value: result.totalInterest,
+                format: 'currency' as const
+            },
+            {
+                label: 'Total Cost of Home',
+                value: result.totalCost,
+                format: 'currency' as const
+            },
+            {
+                label: 'Housing Payment Ratio',
+                value: result.affordabilityRatio / 100,
+                format: 'percentage' as const
+            },
+            {
+                label: 'Down Payment Percentage',
+                value: downPaymentPercent / 100,
+                format: 'percentage' as const
+            }
+        ]
+    } : undefined;
+
     return (
-        <div className="max-w-6xl mx-auto p-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Input Form */}
-                <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="space-y-6"
-                >
-                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6`}>
-                        <div className="flex items-center gap-3 mb-6">
-                            <Calculator className={`w-6 h-6 ${theme.status.info.text}`} />
-                            <h2 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Mortgage Details</h2>
+        <CalculatorWrapper
+            metadata={metadata}
+            results={results}
+            onReset={handleReset}
+        >
+            <div className="space-y-6">
+                {/* Home Purchase Details */}
+                <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                    <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Home Purchase Details</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="homePrice" className={`${theme.textColors.primary}`}>
+                                Home Price
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="homePrice"
+                                    type="number"
+                                    value={homePrice}
+                                    onChange={(e) => setHomePrice(e.target.value)}
+                                    placeholder="Enter home price"
+                                    min="50000"
+                                    max="5000000"
+                                    step="1000"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
                         </div>
 
-                        <div className="space-y-4">
-                            <div>
-                                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                                    Home Price
-                                </label>
-                                <div className="relative">
-                                    <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
-                                    <input
-                                        type="number"
-                                        value={homePrice}
-                                        onChange={(e) => setHomePrice(e.target.value)}
-                                        className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
-                                        placeholder="400,000"
-                                    />
-                                </div>
+                        <div>
+                            <Label htmlFor="downPayment" className={`${theme.textColors.primary}`}>
+                                Down Payment
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="downPayment"
+                                    type="number"
+                                    value={downPayment}
+                                    onChange={(e) => setDownPayment(e.target.value)}
+                                    placeholder="Enter down payment"
+                                    min="0"
+                                    max="1000000"
+                                    step="1000"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
                             </div>
-
-                            <div>
-                                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                                    Down Payment
-                                </label>
-                                <div className="relative">
-                                    <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
-                                    <input
-                                        type="number"
-                                        value={downPayment}
-                                        onChange={(e) => setDownPayment(e.target.value)}
-                                        className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
-                                        placeholder="80,000"
-                                    />
-                                </div>
-                                <p className={`text-sm ${theme.textColors.muted} mt-1`}>
-                                    {downPaymentPercent.toFixed(1)}% of home price
-                                </p>
-                            </div>
-
-                            <div>
-                                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                                    Interest Rate
-                                </label>
-                                <div className="relative">
-                                    <input
-                                        type="number"
-                                        step="0.1"
-                                        value={interestRate}
-                                        onChange={(e) => setInterestRate(e.target.value)}
-                                        className={`w-full pr-8 pl-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
-                                        placeholder="6.5"
-                                    />
-                                    <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>%</span>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                                    Loan Term
-                                </label>
-                                <select
-                                    value={loanTerm}
-                                    onChange={(e) => setLoanTerm(e.target.value)}
-                                    className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
-                                >
-                                    <option value="15">15 years</option>
-                                    <option value="30">30 years</option>
-                                </select>
-                            </div>
+                            <p className={`text-xs ${theme.textColors.muted} mt-1`}>
+                                {downPaymentPercent.toFixed(1)}% of home price
+                            </p>
                         </div>
                     </div>
+                </div>
 
-                    {/* Additional Costs */}
-                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6`}>
-                        <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Additional Monthly Costs</h3>
+                {/* Loan Terms */}
+                <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                    <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Loan Terms</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="interestRate" className={`${theme.textColors.primary}`}>
+                                Interest Rate (%)
+                            </Label>
+                            <input
+                                id="interestRate"
+                                type="number"
+                                value={interestRate}
+                                onChange={(e) => setInterestRate(e.target.value)}
+                                placeholder="Enter interest rate"
+                                min="0.1"
+                                max="15"
+                                step="0.1"
+                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                            />
+                        </div>
 
-                        <div className="space-y-4">
-                            <div>
-                                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                                    Property Tax (monthly)
-                                </label>
-                                <div className="relative">
-                                    <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
-                                    <input
-                                        type="number"
-                                        value={propertyTax}
-                                        onChange={(e) => setPropertyTax(e.target.value)}
-                                        className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
-                                        placeholder="500"
-                                    />
-                                </div>
+                        <div>
+                            <Label htmlFor="loanTerm" className={`${theme.textColors.primary}`}>
+                                Loan Term (years)
+                            </Label>
+                            <input
+                                id="loanTerm"
+                                type="number"
+                                value={loanTerm}
+                                onChange={(e) => setLoanTerm(e.target.value)}
+                                placeholder="Enter loan term"
+                                min="5"
+                                max="50"
+                                step="1"
+                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Additional Costs */}
+                <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                    <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Monthly Costs & Income</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="monthlyIncome" className={`${theme.textColors.primary}`}>
+                                Monthly Gross Income
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="monthlyIncome"
+                                    type="number"
+                                    value={monthlyIncome}
+                                    onChange={(e) => setMonthlyIncome(e.target.value)}
+                                    placeholder="Enter monthly income"
+                                    min="1000"
+                                    max="100000"
+                                    step="100"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
                             </div>
+                        </div>
 
-                            <div>
-                                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                                    Home Insurance (monthly)
-                                </label>
-                                <div className="relative">
-                                    <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
-                                    <input
-                                        type="number"
-                                        value={insurance}
-                                        onChange={(e) => setInsurance(e.target.value)}
-                                        className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
-                                        placeholder="200"
-                                    />
-                                </div>
+                        <div>
+                            <Label htmlFor="propertyTax" className={`${theme.textColors.primary}`}>
+                                Monthly Property Tax
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="propertyTax"
+                                    type="number"
+                                    value={propertyTax}
+                                    onChange={(e) => setPropertyTax(e.target.value)}
+                                    placeholder="Enter property tax"
+                                    min="0"
+                                    max="5000"
+                                    step="10"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
                             </div>
+                        </div>
 
-                            {downPaymentPercent < 20 && (
-                                <div>
-                                    <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                                        PMI (Private Mortgage Insurance)
-                                    </label>
-                                    <div className="relative">
-                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
-                                        <input
-                                            type="number"
-                                            value={pmi}
-                                            onChange={(e) => setPmi(e.target.value)}
-                                            className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
-                                            placeholder="150"
-                                        />
-                                    </div>
-                                    <p className={`text-sm ${theme.status.warning.text} mt-1`}>
-                                        Required when down payment is less than 20%
-                                    </p>
-                                </div>
+                        <div>
+                            <Label htmlFor="insurance" className={`${theme.textColors.primary}`}>
+                                Monthly Home Insurance
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="insurance"
+                                    type="number"
+                                    value={insurance}
+                                    onChange={(e) => setInsurance(e.target.value)}
+                                    placeholder="Enter insurance"
+                                    min="0"
+                                    max="2000"
+                                    step="10"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <Label htmlFor="pmi" className={`${theme.textColors.primary}`}>
+                                Monthly PMI (if applicable)
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="pmi"
+                                    type="number"
+                                    value={pmi}
+                                    onChange={(e) => setPmi(e.target.value)}
+                                    placeholder="Enter PMI"
+                                    min="0"
+                                    max="1000"
+                                    step="10"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                            <p className={`text-xs ${theme.textColors.muted} mt-1`}>
+                                Required if down payment is less than 20%
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Affordability Status */}
+                {result && (
+                    <div className={`border rounded-lg p-4 ${
+                        result.affordabilityRatio <= 28 
+                            ? `${theme.status.success.bg} ${theme.status.success.border}` 
+                            : result.affordabilityRatio <= 36
+                            ? `${theme.status.warning.bg} ${theme.status.warning.border}`
+                            : `${theme.status.error.bg} ${theme.status.error.border}`
+                    }`}>
+                        <div className="flex items-center mb-3">
+                            {result.affordabilityRatio <= 28 ? (
+                                <CheckCircle className={`w-5 h-5 ${theme.status.success.text} mr-2`} />
+                            ) : (
+                                <AlertTriangle className={`w-5 h-5 ${theme.status.warning.text} mr-2`} />
                             )}
-
-                            <div>
-                                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                                    Monthly Income (for affordability)
-                                </label>
-                                <div className="relative">
-                                    <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
-                                    <input
-                                        type="number"
-                                        value={monthlyIncome}
-                                        onChange={(e) => setMonthlyIncome(e.target.value)}
-                                        className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
-                                        placeholder="8,000"
-                                    />
-                                </div>
-                            </div>
+                            <h4 className={`font-semibold ${theme.textColors.primary}`}>Affordability Analysis</h4>
                         </div>
+                        
+                        <p className={`text-sm ${theme.textColors.secondary}`}>
+                            {result.affordabilityRatio <= 28 ? (
+                                "✅ Excellent! Your housing payment is well within recommended limits."
+                            ) : result.affordabilityRatio <= 36 ? (
+                                "⚠️ Acceptable ratio, but consider if you have other debt obligations."
+                            ) : (
+                                "🚨 High ratio - consider a smaller home, larger down payment, or improving income."
+                            )}
+                        </p>
                     </div>
-                </motion.div>
-
-                {/* Results */}
-                <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="space-y-6"
-                >
-                    {result && (
-                        <>
-                            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6`}>
-                                <div className="flex items-center gap-3 mb-6">
-                                    <Home className={`w-6 h-6 ${theme.status.success.text}`} />
-                                    <h2 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Payment Breakdown</h2>
-                                </div>
-
-                                <div className="space-y-4">
-                                    <div className={`flex justify-between items-center p-4 ${theme.status.info.bg} rounded-lg`}>
-                                        <span className={`font-medium ${theme.textColors.primary}`}>Total Monthly Payment</span>
-                                        <span className={`${theme.typography.heading2} ${theme.status.info.text}`}>
-                                            ${result.monthlyPayment.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-                                        </span>
-                                    </div>
-
-                                    <div className={`flex justify-between items-center p-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
-                                        <span className={`${theme.textColors.secondary}`}>Total Interest Over Life of Loan</span>
-                                        <span className={`font-semibold ${theme.textColors.primary}`}>
-                                            ${result.totalInterest.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-                                        </span>
-                                    </div>
-
-                                    <div className={`flex justify-between items-center p-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
-                                        <span className={`${theme.textColors.secondary}`}>Total Cost of Home</span>
-                                        <span className={`font-semibold ${theme.textColors.primary}`}>
-                                            ${result.totalCost.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Affordability Analysis */}
-                            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl shadow-lg p-6`}>
-                                <div className="flex items-center gap-3 mb-4">
-                                    <TrendingUp className={`w-6 h-6 ${theme.textColors.primary}`} />
-                                    <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>Affordability Analysis</h3>
-                                </div>
-
-                                <div className="space-y-4">
-                                    <div className={`p-4 rounded-lg border-2 ${result.affordabilityRatio <= 28
-                                        ? '${theme.status.success.border} ${theme.status.success.bg}'
-                                        : result.affordabilityRatio <= 36
-                                            ? '${theme.status.warning.border} ${theme.status.warning.bg}'
-                                            : '${theme.status.error.border} ${theme.status.error.bg}'
-                                        }`}>
-                                        <div className="flex items-center gap-2 mb-2">
-                                            {result.affordabilityRatio <= 28 ? (
-                                                <CheckCircle className={`w-5 h-5 ${theme.status.success.text}`} />
-                                            ) : (
-                                                <AlertTriangle className={`w-5 h-5 ${theme.status.warning.text}`} />
-                                            )}
-                                            <span className="font-medium">
-                                                Housing Payment Ratio: {result.affordabilityRatio.toFixed(1)}%
-                                            </span>
-                                        </div>
-                                        <p className={`text-sm ${result.affordabilityRatio <= 28
-                                            ? '${theme.textColors.secondary}'
-                                            : result.affordabilityRatio <= 36
-                                                ? '${theme.textColors.secondary}'
-                                                : '${theme.textColors.secondary}'
-                                            }`}>
-                                            {result.affordabilityRatio <= 28
-                                                ? 'Excellent! Well within recommended limits.'
-                                                : result.affordabilityRatio <= 36
-                                                    ? 'Acceptable, but consider reducing other debts.'
-                                                    : 'Above recommended limits. Consider a less expensive home.'}
-                                        </p>
-                                    </div>
-
-                                    <div className={`text-sm ${theme.textColors.secondary} space-y-1`}>
-                                        <p>• Ideal: Housing costs ≤ 28% of gross income</p>
-                                        <p>• Maximum: Housing costs ≤ 36% of gross income</p>
-                                        <p>• This includes principal, interest, taxes, and insurance</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Tips */}
-                            <div className="bg-gradient-to-br from-slate-50 to-slate-50 rounded-xl p-6">
-                                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>💡 Smart Home Buying Tips</h3>
-                                <div className={`space-y-2 text-sm ${theme.textColors.primary}`}>
-                                    <p>• Aim for 20% down payment to avoid PMI</p>
-                                    <p>• Get pre-approved before house hunting</p>
-                                    <p>• Factor in maintenance costs (1-3% of home value annually)</p>
-                                    <p>• Consider all monthly expenses, not just mortgage payment</p>
-                                    <p>• Shop around for the best interest rates</p>
-                                </div>
-                            </div>
-                        </>
-                    )}
-                </motion.div>
+                )}
             </div>
-        </div>
+        </CalculatorWrapper>
     );
 }

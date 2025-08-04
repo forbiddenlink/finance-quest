@@ -1,15 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import React, { useState, useCallback, useEffect } from 'react';
+import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { TrendingUp, TrendingDown, AlertTriangle, DollarSign, Percent, Target, BarChart3 } from 'lucide-react';
+import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { theme } from '@/lib/theme';
-import { Calculator, TrendingUp, TrendingDown, AlertTriangle, DollarSign, Percent, Target } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { useProgressStore } from '@/lib/store/progressStore';
 
 interface ValuationResults {
   intrinsicValue: number;
@@ -19,477 +16,602 @@ interface ValuationResults {
   investmentGrade: string;
   keyStrengths: string[];
   keyRisks: string[];
+  ratios: {
+    peRatio: number;
+    pbRatio: number;
+    pegRatio: number;
+    debtToEquity: number;
+    roe: number;
+    roa: number;
+  };
 }
 
 export default function StockAnalysisCalculator() {
-  const [symbol, setSymbol] = useState('AAPL');
-  const [currentPrice, setCurrentPrice] = useState('150.00');
-  const [earnings, setEarnings] = useState('6.05');
-  const [bookValue, setBookValue] = useState('4.15');
-  const [revenue, setRevenue] = useState('365.8');
-  const [growthRate, setGrowthRate] = useState('8.5');
-  const [dividendYield, setDividendYield] = useState('0.52');
-  const [debt, setDebt] = useState('110.0');
-  const [equity, setEquity] = useState('62.1');
-  const [results, setResults] = useState<ValuationResults | null>(null);
-  const [historicalData, setHistoricalData] = useState<Array<{
-    month: string;
-    price: string;
-    pe: string;
-  }>>([]);
+    // Form inputs
+    const [symbol, setSymbol] = useState('AAPL');
+    const [currentPrice, setCurrentPrice] = useState('150.00');
+    const [earnings, setEarnings] = useState('6.05');
+    const [bookValue, setBookValue] = useState('4.15');
+    const [revenue, setRevenue] = useState('365.8');
+    const [growthRate, setGrowthRate] = useState('8.5');
+    const [dividendYield, setDividendYield] = useState('0.52');
+    const [debt, setDebt] = useState('110.0');
+    const [equity, setEquity] = useState('62.1');
+    const [marketCap, setMarketCap] = useState('2400');
+    const [freeCashFlow, setFreeCashFlow] = useState('92.9');
 
-  const { recordCalculatorUsage } = useProgressStore();
+    const [results, setResults] = useState<ValuationResults | null>(null);
 
-  useEffect(() => {
-    recordCalculatorUsage('stock-analysis-calculator');
-  }, [recordCalculatorUsage]);
+    const analyzeStock = useCallback(() => {
+        const price = parseFloat(currentPrice) || 150;
+        const eps = parseFloat(earnings) || 6;
+        const bv = parseFloat(bookValue) || 4;
+        const growth = parseFloat(growthRate) || 8;
+        const divYield = parseFloat(dividendYield) || 0.5;
+        const totalDebt = parseFloat(debt) || 110;
+        const totalEquity = parseFloat(equity) || 62;
+        const rev = parseFloat(revenue) || 365;
+        const mcap = parseFloat(marketCap) || 2400;
+        const fcf = parseFloat(freeCashFlow) || 92;
 
-  const analyzeStock = () => {
-    const price = parseFloat(currentPrice) || 150;
-    const eps = parseFloat(earnings) || 6;
-    const bv = parseFloat(bookValue) || 4;
-    const growth = parseFloat(growthRate) || 8;
-    const divYield = parseFloat(dividendYield) || 0.5;
-    const totalDebt = parseFloat(debt) || 110;
-    const totalEquity = parseFloat(equity) || 62;
+        // Calculate key ratios
+        const peRatio = price / eps;
+        const pbRatio = price / bv;
+        const pegRatio = peRatio / growth;
+        const debtToEquity = totalDebt / totalEquity;
+        const roe = (eps / bv) * 100; // Simplified ROE
+        const roa = (eps / (totalDebt + totalEquity)) * 100; // Simplified ROA
+        const priceToSales = mcap / rev;
+        const fcfYield = (fcf / mcap) * 100;
 
-    // Calculate key ratios
-    const peRatio = price / eps;
-    const pbRatio = price / bv;
-    const pegRatio = peRatio / growth;
-    const debtToEquity = totalDebt / totalEquity;
+        // DCF-based intrinsic value calculation (simplified)
+        const discountRate = 0.10; // 10% discount rate
+        const terminalGrowth = 0.03; // 3% terminal growth
+        let dcfValue = 0;
+        
+        // Project 5 years of cash flows
+        for (let year = 1; year <= 5; year++) {
+            const projectedFcf = fcf * Math.pow(1 + growth / 100, year);
+            dcfValue += projectedFcf / Math.pow(1 + discountRate, year);
+        }
+        
+        // Terminal value
+        const finalYearFcf = fcf * Math.pow(1 + growth / 100, 5);
+        const terminalValue = (finalYearFcf * (1 + terminalGrowth)) / (discountRate - terminalGrowth);
+        dcfValue += terminalValue / Math.pow(1 + discountRate, 5);
+        
+        const intrinsicValue = dcfValue / (mcap / price); // Per share value
+        
+        // Comparative valuation (P/E method)
+        const industryPE = 25; // Assumed industry average
+        const fairValue = eps * industryPE;
+        
+        // Final intrinsic value (average of methods)
+        const finalIntrinsicValue = (intrinsicValue + fairValue) / 2;
+        
+        const upside = ((finalIntrinsicValue - price) / price) * 100;
 
-    // DCF-based intrinsic value (simplified)
-    const futureEarnings = eps * Math.pow(1 + growth / 100, 5);
-    const terminalValue = futureEarnings * 15; // 15x terminal multiple
-    const discountRate = 0.10; // 10% discount rate
-    const intrinsicValue = terminalValue / Math.pow(1 + discountRate, 5);
+        // Risk assessment
+        let riskScore = 0;
+        const risks: string[] = [];
+        const strengths: string[] = [];
 
-    // Fair value based on industry averages
-    const industryPE = 18; // Tech industry average
-    const fairValue = eps * industryPE;
+        // P/E analysis
+        if (peRatio > 30) {
+            riskScore += 20;
+            risks.push('High P/E ratio suggests overvaluation');
+        } else if (peRatio < 15) {
+            strengths.push('Attractive P/E ratio');
+        }
 
-    // Calculate upside/downside
-    const upside = ((intrinsicValue - price) / price) * 100;
+        // PEG analysis
+        if (pegRatio < 1) {
+            strengths.push('Favorable PEG ratio indicates growth at reasonable price');
+        } else if (pegRatio > 2) {
+            riskScore += 15;
+            risks.push('High PEG ratio suggests overvaluation relative to growth');
+        }
 
-    // Risk scoring (0-100, higher = riskier)
-    let riskScore = 0;
-    if (peRatio > 25) riskScore += 20;
-    if (pegRatio > 2) riskScore += 15;
-    if (pbRatio > 5) riskScore += 10;
-    if (debtToEquity > 0.5) riskScore += 20;
-    if (growth < 5) riskScore += 15;
-    if (divYield < 1) riskScore += 10;
+        // Debt analysis
+        if (debtToEquity > 2) {
+            riskScore += 25;
+            risks.push('High debt-to-equity ratio');
+        } else if (debtToEquity < 0.5) {
+            strengths.push('Conservative debt levels');
+        }
 
-    // Investment grade
-    let grade = 'A';
-    if (riskScore > 70) grade = 'C';
-    else if (riskScore > 40) grade = 'B';
+        // Growth analysis
+        if (growth > 15) {
+            strengths.push('Strong growth prospects');
+        } else if (growth < 3) {
+            riskScore += 10;
+            risks.push('Low growth expectations');
+        }
 
-    // Determine strengths and risks
-    const keyStrengths = [];
-    const keyRisks = [];
+        // Dividend analysis
+        if (divYield > 3) {
+            strengths.push('Attractive dividend yield');
+        }
 
-    if (peRatio < 20) keyStrengths.push('Reasonable valuation (P/E < 20)');
-    if (pegRatio < 1.5) keyStrengths.push('Strong growth at reasonable price');
-    if (growth > 10) keyStrengths.push('High growth rate');
-    if (divYield > 2) keyStrengths.push('Attractive dividend yield');
-    if (debtToEquity < 0.3) keyStrengths.push('Strong balance sheet');
+        // ROE analysis
+        if (roe > 15) {
+            strengths.push('Strong return on equity');
+        } else if (roe < 10) {
+            riskScore += 10;
+            risks.push('Below-average return on equity');
+        }
 
-    if (peRatio > 30) keyRisks.push('High valuation risk (P/E > 30)');
-    if (pegRatio > 2) keyRisks.push('Expensive relative to growth');
-    if (debtToEquity > 0.8) keyRisks.push('High debt levels');
-    if (growth < 3) keyRisks.push('Slow growth prospects');
-    if (pbRatio > 10) keyRisks.push('High price-to-book ratio');
+        // FCF Yield analysis
+        if (fcfYield > 5) {
+            strengths.push('Strong free cash flow yield');
+        } else if (fcfYield < 2) {
+            riskScore += 15;
+            risks.push('Low free cash flow yield');
+        }
 
-    if (keyStrengths.length === 0) keyStrengths.push('Moderate investment characteristics');
-    if (keyRisks.length === 0) keyRisks.push('Well-balanced risk profile');
+        // Investment grade
+        let grade = 'A';
+        if (riskScore > 50) grade = 'D';
+        else if (riskScore > 35) grade = 'C';
+        else if (riskScore > 20) grade = 'B';
 
-    setResults({
-      intrinsicValue,
-      fairValue,
-      upside,
-      riskScore,
-      investmentGrade: grade,
-      keyStrengths: keyStrengths.slice(0, 3),
-      keyRisks: keyRisks.slice(0, 3)
-    });
+        setResults({
+            intrinsicValue: finalIntrinsicValue,
+            fairValue,
+            upside,
+            riskScore,
+            investmentGrade: grade,
+            keyStrengths: strengths,
+            keyRisks: risks,
+            ratios: {
+                peRatio,
+                pbRatio,
+                pegRatio,
+                debtToEquity,
+                roe,
+                roa
+            }
+        });
+    }, [currentPrice, earnings, bookValue, revenue, growthRate, dividendYield, debt, equity, marketCap, freeCashFlow]);
 
-    // Generate historical data simulation
-    const historical = [];
-    for (let i = 12; i >= 0; i--) {
-      const variance = (Math.random() - 0.5) * 0.2; // ±10% variance
-      const simulatedPrice = price * (1 + variance);
-      historical.push({
-        month: `${i}M ago`,
-        price: simulatedPrice.toFixed(2),
-        pe: (simulatedPrice / eps).toFixed(1)
-      });
-    }
-    setHistoricalData(historical);
-  };
+    useEffect(() => {
+        analyzeStock();
+    }, [analyzeStock]);
 
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(value);
-  };
+    const handleReset = () => {
+        setSymbol('AAPL');
+        setCurrentPrice('150.00');
+        setEarnings('6.05');
+        setBookValue('4.15');
+        setRevenue('365.8');
+        setGrowthRate('8.5');
+        setDividendYield('0.52');
+        setDebt('110.0');
+        setEquity('62.1');
+        setMarketCap('2400');
+        setFreeCashFlow('92.9');
+    };
 
-  const formatPercent = (value: number) => {
-    return `${value > 0 ? '+' : ''}${value.toFixed(1)}%`;
-  };
+    const getGradeColor = (grade: string) => {
+        switch (grade) {
+            case 'A': return theme.status.success.text;
+            case 'B': return theme.status.info.text;
+            case 'C': return theme.status.warning.text;
+            case 'D': return theme.status.error.text;
+            default: return theme.textColors.primary;
+        }
+    };
 
-  const getRiskColor = (score: number) => {
-    if (score <= 30) return `${theme.status.success.text} ${theme.status.success.bg} ${theme.status.success.border}`;
-    if (score <= 60) return `${theme.status.warning.text} ${theme.status.warning.bg} ${theme.status.warning.border}`;
-    return `${theme.status.error.text} ${theme.status.error.bg} ${theme.status.error.border}`;
-  };
+    const getUpsideColor = (upside: number) => {
+        if (upside > 20) return theme.status.success.text;
+        if (upside > 0) return theme.status.info.text;
+        if (upside > -20) return theme.status.warning.text;
+        return theme.status.error.text;
+    };
 
-  const getUpsideColor = (upside: number) => {
-    if (upside > 20) return theme.status.success.text;
-    if (upside > 0) return theme.status.info.text;
-    return theme.status.error.text;
-  };
+    // Calculator metadata
+    const metadata = {
+        id: 'stock-analysis-calculator',
+        title: 'Stock Analysis Calculator',
+        description: 'Comprehensive fundamental analysis with valuation models and risk assessment',
+        category: 'advanced' as const,
+        icon: BarChart3,
+        tags: ['stocks', 'valuation', 'analysis', 'DCF', 'ratios'],
+        educationalNotes: [
+            {
+                title: 'Fundamental Analysis Basics',
+                content: 'Fundamental analysis evaluates a stock\'s intrinsic value using financial metrics, ratios, and business fundamentals. Key metrics include P/E ratio, PEG ratio, debt-to-equity, and free cash flow yield.',
+                tips: [
+                    'P/E ratio shows how much investors pay per dollar of earnings',
+                    'PEG ratio below 1.0 may indicate undervaluation relative to growth',
+                    'Compare metrics to industry averages for context',
+                    'Consider multiple valuation methods for comprehensive analysis'
+                ]
+            },
+            {
+                title: 'Valuation Models & Risk Assessment',
+                content: 'DCF (Discounted Cash Flow) models estimate intrinsic value by projecting future cash flows. Risk assessment considers debt levels, growth sustainability, and market conditions.',
+                tips: [
+                    'DCF models are sensitive to growth and discount rate assumptions',
+                    'Combine multiple valuation approaches for robust analysis',
+                    'High debt-to-equity ratios increase financial risk',
+                    'Consistent free cash flow generation indicates quality business'
+                ]
+            }
+        ]
+    };
 
-  return (
-    <div className="space-y-6">
-      {/* Input Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <Calculator className={`w-5 h-5 ${theme.textColors.primary}`} />
-              <span>Stock Fundamentals</span>
-            </CardTitle>
-            <CardDescription>Enter the company&apos;s financial metrics</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                  Symbol
-                </label>
-                <Input
-                  type="text"
-                  value={symbol}
-                  onChange={(e) => setSymbol(e.target.value.toUpperCase())}
-                  placeholder="AAPL"
-                />
-              </div>
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                  Current Price ($)
-                </label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={currentPrice}
-                  onChange={(e) => setCurrentPrice(e.target.value)}
-                  placeholder="150.00"
-                />
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                  Earnings Per Share ($)
-                </label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={earnings}
-                  onChange={(e) => setEarnings(e.target.value)}
-                  placeholder="6.05"
-                />
-              </div>
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                  Book Value Per Share ($)
-                </label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={bookValue}
-                  onChange={(e) => setBookValue(e.target.value)}
-                  placeholder="4.15"
-                />
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                  Annual Revenue (B)
-                </label>
-                <Input
-                  type="number"
-                  step="0.1"
-                  value={revenue}
-                  onChange={(e) => setRevenue(e.target.value)}
-                  placeholder="365.8"
-                />
-              </div>
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                  Growth Rate (%)
-                </label>
-                <Input
-                  type="number"
-                  step="0.1"
-                  value={growthRate}
-                  onChange={(e) => setGrowthRate(e.target.value)}
-                  placeholder="8.5"
-                />
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                  Dividend Yield (%)
-                </label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={dividendYield}
-                  onChange={(e) => setDividendYield(e.target.value)}
-                  placeholder="0.52"
-                />
-              </div>
-              <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                  Total Debt (B)
-                </label>
-                <Input
-                  type="number"
-                  step="0.1"
-                  value={debt}
-                  onChange={(e) => setDebt(e.target.value)}
-                  placeholder="110.0"
-                />
-              </div>
-            </div>
-            
-            <div>
-              <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
-                Total Equity (B)
-              </label>
-              <Input
-                type="number"
-                step="0.1"
-                value={equity}
-                onChange={(e) => setEquity(e.target.value)}
-                placeholder="62.1"
-              />
-            </div>
-            
-            <Button onClick={analyzeStock} className="w-full">
-              Analyze Stock
-            </Button>
-          </CardContent>
-        </Card>
+    // Results formatting
+    const stockResults = results ? {
+        primary: {
+            label: 'Intrinsic Value Per Share',
+            value: results.intrinsicValue,
+            format: 'currency' as const
+        },
+        secondary: [
+            {
+                label: 'Current Price',
+                value: parseFloat(currentPrice),
+                format: 'currency' as const
+            },
+            {
+                label: 'Upside/Downside',
+                value: results.upside / 100,
+                format: 'percentage' as const
+            },
+            {
+                label: 'P/E Ratio',
+                value: results.ratios.peRatio,
+                format: 'number' as const
+            },
+            {
+                label: 'Risk Score',
+                value: results.riskScore,
+                format: 'number' as const
+            }
+        ]
+    } : undefined;
 
-        {/* Results Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <TrendingUp className={`w-5 h-5 ${theme.status.success.text}`} />
-              <span>Valuation Analysis</span>
-            </CardTitle>
-            <CardDescription>Investment recommendation and risk assessment</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {results ? (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className={`p-3 ${theme.status.info.bg} rounded-lg`}>
-                    <div className="flex items-center space-x-2 mb-1">
-                      <DollarSign className={`w-4 h-4 ${theme.status.info.text}`} />
-                      <span className={`text-sm font-medium ${theme.textColors.secondary}`}>Intrinsic Value</span>
+    return (
+        <CalculatorWrapper
+            metadata={metadata}
+            results={stockResults}
+            onReset={handleReset}
+        >
+            <div className="space-y-6">
+                {/* Stock Information */}
+                <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                    <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Stock Information</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <Label htmlFor="symbol" className={`${theme.textColors.primary}`}>
+                                Stock Symbol
+                            </Label>
+                            <input
+                                id="symbol"
+                                type="text"
+                                value={symbol}
+                                onChange={(e) => setSymbol(e.target.value.toUpperCase())}
+                                placeholder="Enter stock symbol"
+                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                            />
+                        </div>
+
+                        <div>
+                            <Label htmlFor="currentPrice" className={`${theme.textColors.primary}`}>
+                                Current Price
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="currentPrice"
+                                    type="number"
+                                    value={currentPrice}
+                                    onChange={(e) => setCurrentPrice(e.target.value)}
+                                    placeholder="Enter current price"
+                                    min="0"
+                                    step="0.01"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <p className={`text-lg font-bold ${theme.status.info.text}`}>
-                      {formatCurrency(results.intrinsicValue)}
-                    </p>
-                  </div>
-                  
-                  <div className={`p-3 ${theme.status.success.bg} rounded-lg`}>
-                    <div className="flex items-center space-x-2 mb-1">
-                      <Target className={`w-4 h-4 ${theme.status.success.text}`} />
-                      <span className={`text-sm font-medium ${theme.textColors.primary}`}>Fair Value</span>
-                    </div>
-                    <p className={`text-lg font-bold ${theme.status.success.text}`}>
-                      {formatCurrency(results.fairValue)}
-                    </p>
-                  </div>
-                  
-                  <div className={`p-3 ${theme.status.info.bg} rounded-lg`}>
-                    <div className="flex items-center space-x-2 mb-1">
-                      {results.upside > 0 ? (
-                        <TrendingUp className={`w-4 h-4 ${theme.status.info.text}`} />
-                      ) : (
-                        <TrendingDown className={`w-4 h-4 ${theme.status.info.text}`} />
-                      )}
-                      <span className={`text-sm font-medium ${theme.textColors.primary}`}>Upside Potential</span>
-                    </div>
-                    <p className={`text-lg font-bold ${getUpsideColor(results.upside)}`}>
-                      {formatPercent(results.upside)}
-                    </p>
-                  </div>
-                  
-                  <div className={`p-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
-                    <div className="flex items-center space-x-2 mb-1">
-                      <Percent className={`w-4 h-4 ${theme.textColors.secondary}`} />
-                      <span className={`text-sm font-medium ${theme.textColors.primary}`}>Investment Grade</span>
-                    </div>
-                    <p className={`text-lg font-bold ${theme.textColors.primary}`}>
-                      {results.investmentGrade}
-                    </p>
-                  </div>
                 </div>
-                
-                <div className={`p-3 rounded-lg border ${getRiskColor(results.riskScore)}`}>
-                  <div className="flex items-center space-x-2 mb-1">
-                    <AlertTriangle className="w-4 h-4" />
-                    <span className="text-sm font-medium">Risk Score</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold">{results.riskScore}/100</span>
-                    <Badge variant="outline" className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/50`}>
-                      {results.riskScore <= 30 ? 'Low Risk' : results.riskScore <= 60 ? 'Medium Risk' : 'High Risk'}
-                    </Badge>
-                  </div>
-                </div>
-                
-                <Separator />
-                
-                <div className="space-y-3">
-                  <div>
-                    <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center`}>
-                      <div className={`w-2 h-2 ${theme.status.success.bg}0 rounded-full mr-2`}></div>
-                      Key Strengths
-                    </h4>
-                    <ul className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
-                      {results.keyStrengths.map((strength, index) => (
-                        <li key={index} className="flex items-center space-x-2">
-                          <span>•</span>
-                          <span>{strength}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h4 className={`font-medium ${theme.textColors.primary} mb-2 flex items-center`}>
-                      <div className={`w-2 h-2 ${theme.status.error.bg}0 rounded-full mr-2`}></div>
-                      Key Risks
-                    </h4>
-                    <ul className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
-                      {results.keyRisks.map((risk, index) => (
-                        <li key={index} className="flex items-center space-x-2">
-                          <span>•</span>
-                          <span>{risk}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className={`text-center py-8 ${theme.textColors.muted}`}>
-                <Calculator className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                <p>Enter stock details and click analyze to see results</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
 
-      {/* Historical Chart */}
-      {historicalData.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <TrendingUp className={`w-5 h-5 ${theme.status.info.text}`} />
-              <span>Price Trend Analysis</span>
-            </CardTitle>
-            <CardDescription>
-              Historical price movement and valuation metrics
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={historicalData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
-                  <XAxis dataKey="month"  tick={{ fill: "#94a3b8" }} />
-                  <YAxis  tick={{ fill: "#94a3b8" }} />
-                  <Tooltip 
-                    formatter={(value: number, name: string) => [
-                      name === 'price' ? `$${value}` : `${value}x`,
-                      name === 'price' ? 'Price' : 'P/E Ratio'
-                    ]}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="price" 
-                    stroke="#4f46e5" 
-                    strokeWidth={3}
-                    dot={{ fill: '#4f46e5', strokeWidth: 2, r: 4 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+                {/* Financial Metrics */}
+                <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                    <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Financial Metrics</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div>
+                            <Label htmlFor="earnings" className={`${theme.textColors.primary}`}>
+                                Earnings Per Share (EPS)
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="earnings"
+                                    type="number"
+                                    value={earnings}
+                                    onChange={(e) => setEarnings(e.target.value)}
+                                    placeholder="Enter EPS"
+                                    min="0"
+                                    step="0.01"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
 
-      {/* Educational Insights */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Stock Analysis Fundamentals</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className={`p-4 ${theme.status.info.bg} rounded-lg border ${theme.status.info.border}`}>
-              <h4 className={`font-medium ${theme.textColors.secondary} mb-2`}>Valuation Metrics</h4>
-              <div className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
-                <p><span className="font-medium">P/E Ratio:</span> Price ÷ Earnings per share</p>
-                <p><span className="font-medium">PEG Ratio:</span> P/E ÷ Growth rate</p>
-                <p><span className="font-medium">P/B Ratio:</span> Price ÷ Book value per share</p>
-              </div>
+                        <div>
+                            <Label htmlFor="bookValue" className={`${theme.textColors.primary}`}>
+                                Book Value Per Share
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="bookValue"
+                                    type="number"
+                                    value={bookValue}
+                                    onChange={(e) => setBookValue(e.target.value)}
+                                    placeholder="Enter book value"
+                                    min="0"
+                                    step="0.01"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <Label htmlFor="revenue" className={`${theme.textColors.primary}`}>
+                                Revenue (Billions)
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="revenue"
+                                    type="number"
+                                    value={revenue}
+                                    onChange={(e) => setRevenue(e.target.value)}
+                                    placeholder="Enter revenue"
+                                    min="0"
+                                    step="0.1"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <Label htmlFor="growthRate" className={`${theme.textColors.primary}`}>
+                                Expected Growth Rate (%)
+                            </Label>
+                            <input
+                                id="growthRate"
+                                type="number"
+                                value={growthRate}
+                                onChange={(e) => setGrowthRate(e.target.value)}
+                                placeholder="Enter growth rate"
+                                min="-50"
+                                max="100"
+                                step="0.1"
+                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                            />
+                        </div>
+
+                        <div>
+                            <Label htmlFor="dividendYield" className={`${theme.textColors.primary}`}>
+                                Dividend Yield (%)
+                            </Label>
+                            <input
+                                id="dividendYield"
+                                type="number"
+                                value={dividendYield}
+                                onChange={(e) => setDividendYield(e.target.value)}
+                                placeholder="Enter dividend yield"
+                                min="0"
+                                max="20"
+                                step="0.01"
+                                className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                            />
+                        </div>
+
+                        <div>
+                            <Label htmlFor="freeCashFlow" className={`${theme.textColors.primary}`}>
+                                Free Cash Flow (Billions)
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="freeCashFlow"
+                                    type="number"
+                                    value={freeCashFlow}
+                                    onChange={(e) => setFreeCashFlow(e.target.value)}
+                                    placeholder="Enter FCF"
+                                    min="0"
+                                    step="0.1"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Balance Sheet */}
+                <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                    <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Balance Sheet Data</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <Label htmlFor="debt" className={`${theme.textColors.primary}`}>
+                                Total Debt (Billions)
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="debt"
+                                    type="number"
+                                    value={debt}
+                                    onChange={(e) => setDebt(e.target.value)}
+                                    placeholder="Enter total debt"
+                                    min="0"
+                                    step="0.1"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <Label htmlFor="equity" className={`${theme.textColors.primary}`}>
+                                Total Equity (Billions)
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="equity"
+                                    type="number"
+                                    value={equity}
+                                    onChange={(e) => setEquity(e.target.value)}
+                                    placeholder="Enter total equity"
+                                    min="0"
+                                    step="0.1"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <Label htmlFor="marketCap" className={`${theme.textColors.primary}`}>
+                                Market Cap (Billions)
+                            </Label>
+                            <div className="relative">
+                                <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                <input
+                                    id="marketCap"
+                                    type="number"
+                                    value={marketCap}
+                                    onChange={(e) => setMarketCap(e.target.value)}
+                                    placeholder="Enter market cap"
+                                    min="0"
+                                    step="1"
+                                    className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}`}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Analysis Results */}
+                {results && (
+                    <div className="space-y-6">
+                        {/* Valuation Summary */}
+                        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                            <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Valuation Summary</h4>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                                <div className="text-center">
+                                    <div className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>
+                                        ${results.intrinsicValue.toFixed(2)}
+                                    </div>
+                                    <div className={`text-sm ${theme.textColors.secondary}`}>Intrinsic Value</div>
+                                </div>
+                                
+                                <div className="text-center">
+                                    <div className={`text-3xl font-bold ${getUpsideColor(results.upside)} mb-2`}>
+                                        {results.upside > 0 ? '+' : ''}{results.upside.toFixed(1)}%
+                                    </div>
+                                    <div className={`text-sm ${theme.textColors.secondary}`}>Upside/Downside</div>
+                                </div>
+                                
+                                <div className="text-center">
+                                    <div className={`text-3xl font-bold ${getGradeColor(results.investmentGrade)} mb-2`}>
+                                        {results.investmentGrade}
+                                    </div>
+                                    <div className={`text-sm ${theme.textColors.secondary}`}>Investment Grade</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Key Ratios */}
+                        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                            <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Key Financial Ratios</h4>
+                            
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                                <div className="text-center">
+                                    <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                        {results.ratios.peRatio.toFixed(1)}
+                                    </div>
+                                    <div className={`text-sm ${theme.textColors.secondary}`}>P/E Ratio</div>
+                                </div>
+                                
+                                <div className="text-center">
+                                    <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                        {results.ratios.pegRatio.toFixed(2)}
+                                    </div>
+                                    <div className={`text-sm ${theme.textColors.secondary}`}>PEG Ratio</div>
+                                </div>
+                                
+                                <div className="text-center">
+                                    <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                        {results.ratios.pbRatio.toFixed(1)}
+                                    </div>
+                                    <div className={`text-sm ${theme.textColors.secondary}`}>P/B Ratio</div>
+                                </div>
+                                
+                                <div className="text-center">
+                                    <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                        {results.ratios.debtToEquity.toFixed(1)}
+                                    </div>
+                                    <div className={`text-sm ${theme.textColors.secondary}`}>D/E Ratio</div>
+                                </div>
+                                
+                                <div className="text-center">
+                                    <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                        {results.ratios.roe.toFixed(1)}%
+                                    </div>
+                                    <div className={`text-sm ${theme.textColors.secondary}`}>ROE</div>
+                                </div>
+                                
+                                <div className="text-center">
+                                    <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                        {results.ratios.roa.toFixed(1)}%
+                                    </div>
+                                    <div className={`text-sm ${theme.textColors.secondary}`}>ROA</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Strengths & Risks */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className={`${theme.status.success.bg} border ${theme.status.success.border} rounded-lg p-6`}>
+                                <h5 className={`${theme.typography.heading6} ${theme.status.success.text} mb-4 flex items-center`}>
+                                    <TrendingUp className="w-5 h-5 mr-2" />
+                                    Key Strengths
+                                </h5>
+                                <ul className="space-y-2">
+                                    {results.keyStrengths.map((strength, index) => (
+                                        <li key={index} className={`text-sm ${theme.textColors.secondary} flex items-start`}>
+                                            <span className={`${theme.status.success.text} mr-2`}>•</span>
+                                            {strength}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <div className={`${theme.status.error.bg} border ${theme.status.error.border} rounded-lg p-6`}>
+                                <h5 className={`${theme.typography.heading6} ${theme.status.error.text} mb-4 flex items-center`}>
+                                    <AlertTriangle className="w-5 h-5 mr-2" />
+                                    Key Risks
+                                </h5>
+                                <ul className="space-y-2">
+                                    {results.keyRisks.map((risk, index) => (
+                                        <li key={index} className={`text-sm ${theme.textColors.secondary} flex items-start`}>
+                                            <span className={`${theme.status.error.text} mr-2`}>•</span>
+                                            {risk}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
-            
-            <div className={`p-4 ${theme.status.success.bg} rounded-lg border ${theme.status.success.border}`}>
-              <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Quality Indicators</h4>
-              <div className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
-                <p><span className="font-medium">ROE:</span> Return on equity</p>
-                <p><span className="font-medium">Debt/Equity:</span> Financial leverage</p>
-                <p><span className="font-medium">Growth Rate:</span> Revenue/earnings growth</p>
-              </div>
-            </div>
-            
-            <div className={`p-4 ${theme.status.info.bg} rounded-lg border ${theme.borderColors.primary}`}>
-              <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Investment Rules</h4>
-              <div className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
-                <p><span className="font-medium">Diversify:</span> Don&apos;t put all eggs in one basket</p>
-                <p><span className="font-medium">Long-term:</span> Hold quality stocks for years</p>
-                <p><span className="font-medium">Research:</span> Understand the business model</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className={`p-4 ${theme.status.warning.bg} rounded-lg border ${theme.status.warning.border}`}>
-            <h4 className={`font-medium ${theme.status.warning.text} mb-2`}>⚠️ Important Disclaimer</h4>
-            <p className={`${theme.textColors.secondary} text-sm`}>
-              This calculator provides educational analysis based on simplified models. It should not be used as the sole basis 
-              for investment decisions. Always conduct thorough research, consider multiple valuation methods, and consult with 
-              financial professionals before investing. Past performance does not guarantee future results.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
+        </CalculatorWrapper>
+    );
 }
