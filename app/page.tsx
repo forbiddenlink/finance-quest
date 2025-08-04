@@ -443,32 +443,40 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
-              <InteractiveCard className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.md} hover:${theme.borderColors.primary} transition-all duration-300`}>
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-amber-500/25">
-                    <Brain className={`w-6 h-6 ${theme.textColors.primary}`} />
+              <InteractiveCard className={`group relative ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.md} hover:${theme.borderColors.primary} transition-all duration-500 transform hover:scale-[1.02] hover:-translate-y-1`}>
+                {/* Enhanced Glow Effect */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-600/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                {/* Card Content */}
+                <div className="relative">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mr-4 shadow-lg shadow-amber-500/25 group-hover:shadow-amber-500/40 group-hover:scale-110 transition-all duration-300">
+                      <Brain className={`w-6 h-6 ${theme.textColors.primary} group-hover:rotate-12 transition-transform duration-300`} />
+                    </div>
+                    <div>
+                      <h4 className={`text-lg font-bold ${theme.textColors.primary} group-hover:text-amber-200 transition-colors duration-300`}>Chapter 1</h4>
+                      <p className={`${theme.textColors.primary} ${theme.typography.small} group-hover:text-amber-300 transition-colors duration-300`}>Money Psychology</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Chapter 1</h4>
-                    <p className={`${theme.textColors.primary} ${theme.typography.small}`}>Money Psychology</p>
+                  <p className={`${theme.textColors.secondary} mb-4 ${theme.typography.small} leading-relaxed group-hover:${theme.textColors.primary} transition-colors duration-300`}>
+                    Master your emotional relationship with money, overcome limiting beliefs, and build a wealth mindset.
+                  </p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={`flex items-center gap-2 px-3 py-1 ${theme.status.warning.bg}/20 rounded-full group-hover:${theme.status.warning.bg}/30 transition-all duration-300`}>
+                      <CheckCircle className={`w-3 h-3 ${theme.status.warning.text} group-hover:scale-110 transition-transform duration-300`} />
+                      <span className={`${theme.status.warning.text} text-xs font-medium`}>Available Now</span>
+                    </div>
+                    <div className={`${theme.status.warning.text} text-xs group-hover:text-amber-300 transition-colors duration-300`}>6 Lessons</div>
                   </div>
+                  <Link href="/chapter1">
+                    <Button className={`w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-amber-500/40 transform hover:-translate-y-0.5`}>
+                      <span className="group-hover:scale-105 inline-block transition-transform duration-300">
+                        Start Learning
+                      </span>
+                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    </Button>
+                  </Link>
                 </div>
-                <p className={`${theme.textColors.secondary} mb-4 ${theme.typography.small} leading-relaxed`}>
-                  Master your emotional relationship with money, overcome limiting beliefs, and build a wealth mindset.
-                </p>
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`flex items-center gap-2 px-3 py-1 ${theme.status.warning.bg}/20 rounded-full`}>
-                    <CheckCircle className={`w-3 h-3 ${theme.status.warning.text}`} />
-                    <span className={`${theme.status.warning.text} text-xs font-medium`}>Available Now</span>
-                  </div>
-                  <div className={`${theme.status.warning.text} text-xs`}>6 Lessons</div>
-                </div>
-                <Link href="/chapter1">
-                  <Button className={`w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25`}>
-                    Start Learning
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </Link>
               </InteractiveCard>
             </motion.div>
 
@@ -479,32 +487,38 @@ export default function HomePage() {
               transition={{ delay: 0.9, duration: 0.6 }}
             >
               {progress.userProgress.currentChapter >= 2 ? (
-                <InteractiveCard className={`${theme.backgrounds.card} border ${theme.status.info.border} rounded-2xl ${theme.spacing.md} hover:${theme.status.info.border}/50 transition-all duration-300`}>
-                  <div className="flex items-center mb-4">
-                    <div className={`w-12 h-12 bg-gradient-to-r from-slate-600 to-slate-700 rounded-xl flex items-center justify-center mr-4 shadow-lg`}>
-                      <Building className={`w-6 h-6 ${theme.textColors.primary}`} />
+                <InteractiveCard className={`group relative ${theme.backgrounds.card} border ${theme.status.info.border} rounded-2xl ${theme.spacing.md} hover:${theme.status.info.border}/50 transition-all duration-500 transform hover:scale-[1.02] hover:-translate-y-1`}>
+                  {/* Enhanced Glow Effect */}
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500/20 via-slate-500/20 to-blue-600/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  {/* Card Content */}
+                  <div className="relative">
+                    <div className="flex items-center mb-4">
+                      <div className={`w-12 h-12 bg-gradient-to-r from-slate-600 to-slate-700 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:shadow-blue-500/25 group-hover:scale-110 transition-all duration-300`}>
+                        <Building className={`w-6 h-6 ${theme.textColors.primary} group-hover:rotate-12 transition-transform duration-300`} />
+                      </div>
+                      <div>
+                        <h4 className={`text-lg font-bold ${theme.textColors.primary} group-hover:text-blue-200 transition-colors duration-300`}>Chapter 2</h4>
+                        <p className={`${theme.textColors.primary} ${theme.typography.small} group-hover:text-blue-300 transition-colors duration-300`}>Banking Fundamentals</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className={`text-lg font-bold ${theme.textColors.primary}`}>Chapter 2</h4>
-                      <p className={`${theme.textColors.primary} ${theme.typography.small}`}>Banking Fundamentals</p>
+                    <p className={`${theme.textColors.secondary} mb-4 ${theme.typography.small} leading-relaxed group-hover:${theme.textColors.primary} transition-colors duration-300`}>
+                      Optimize your banking, understand fees, and set up automated financial systems.
+                    </p>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className={`flex items-center gap-2 px-3 py-1 ${theme.status.warning.bg}/20 rounded-full group-hover:${theme.status.info.bg}/30 transition-all duration-300`}>
+                        <CheckCircle className={`w-3 h-3 ${theme.textColors.primary} group-hover:scale-110 transition-transform duration-300`} />
+                        <span className={`${theme.textColors.secondary} text-xs font-medium group-hover:text-blue-300 transition-colors duration-300`}>Unlocked!</span>
+                      </div>
+                      <div className={`${theme.textColors.primary} text-xs group-hover:text-blue-300 transition-colors duration-300`}>6 Lessons</div>
                     </div>
-                  </div>
-                  <p className={`${theme.textColors.secondary} mb-4 ${theme.typography.small} leading-relaxed`}>
-                    Optimize your banking, understand fees, and set up automated financial systems.
-                  </p>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className={`flex items-center gap-2 px-3 py-1 ${theme.status.warning.bg}/20 rounded-full`}>
-                      <CheckCircle className={`w-3 h-3 ${theme.textColors.primary}`} />
-                      <span className={`${theme.textColors.secondary} text-xs font-medium`}>Unlocked!</span>
-                    </div>
-                    <div className={`${theme.textColors.primary} text-xs`}>6 Lessons</div>
-                  </div>
                   <Link href="/chapter2">
                     <Button className={`w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg`}>
                       Continue Learning
                       <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
                   </Link>
+                  </div>
                 </InteractiveCard>
               ) : (
                 <div className={`${theme.backgrounds.card} border ${theme.borderColors.muted} rounded-2xl ${theme.spacing.md} opacity-60`}>

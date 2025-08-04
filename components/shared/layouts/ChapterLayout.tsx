@@ -12,6 +12,8 @@ import QASystem from '@/components/shared/QASystem';
 import SpacedRepetitionDashboard from '@/components/shared/ui/SpacedRepetitionDashboard';
 import VoiceQA from '@/components/shared/ui/VoiceQA';
 import LearningAnalyticsDashboard from '@/components/shared/ui/LearningAnalyticsDashboard';
+import SuccessAnimation from '@/components/shared/ui/SuccessAnimation';
+import EnhancedProgressBar from '@/components/shared/ui/EnhancedProgressBar';
 import {
     Calculator,
     BookOpen,
@@ -78,6 +80,12 @@ export default function ChapterLayout({
     const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz' | 'assistant' | 'analytics' | 'review'>('lesson');
     const [lessonCompleted, setLessonCompleted] = useState(false);
     const [activeCalculatorTab, setActiveCalculatorTab] = useState(0);
+    const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
+    const [lastAchievement, setLastAchievement] = useState<{
+        type: 'lesson' | 'quiz' | 'chapter' | 'milestone';
+        title: string;
+        description: string;
+    } | null>(null);
 
     // Check if chapter is unlocked (skip for Chapter 1)
     const isUnlocked = chapterNumber === 1 || !requiresPreviousChapters || isChapterUnlocked(chapterNumber);
@@ -89,6 +97,14 @@ export default function ChapterLayout({
     const handleLessonComplete = () => {
         setLessonCompleted(true);
         completeLesson(`chapter${chapterNumber}-lesson`, 15);
+        
+        // Set achievement data for animation
+        setLastAchievement({
+            type: 'lesson',
+            title: `${title} Lesson Complete!`,
+            description: 'Your financial knowledge is growing stronger'
+        });
+        setShowSuccessAnimation(true);
         
         // Enhanced progress notifications with personalized encouragement
         if (chapterNumber === 1) {
@@ -140,6 +156,14 @@ export default function ChapterLayout({
     };
 
     const handleQuizComplete = () => {
+        // Set achievement data for quiz completion
+        setLastAchievement({
+            type: 'quiz',
+            title: `Chapter ${chapterNumber} Mastered!`,
+            description: `Ready for Chapter ${chapterNumber + 1}!`
+        });
+        setShowSuccessAnimation(true);
+        
         toast.success(`Chapter ${chapterNumber} mastered! Ready for Chapter ${chapterNumber + 1}! 🎯`, {
             duration: 4000,
             position: 'top-center',
@@ -203,30 +227,65 @@ export default function ChapterLayout({
                             Back to Home
                         </Link>
                         <div className="flex items-center space-x-4">
-                            {/* Progress Indicator */}
-                            <div className={`${theme.backgrounds.cardHover} px-3 py-2 rounded-lg border ${theme.borderColors.primary}`}>
-                                <div className="flex items-center space-x-2">
-                                    <div className={`w-2 h-2 rounded-full ${lessonCompleted ? theme.status.success.bg : theme.status.warning.bg}`}></div>
-                                    <span className={`${theme.textColors.secondary} text-sm`}>
-                                        {lessonCompleted ? 'Ready for Quiz' : 'In Progress'}
+                            {/* Enhanced Progress Indicator with Progress Bar */}
+                            <div className={`${theme.backgrounds.cardHover} px-4 py-3 rounded-lg border ${theme.borderColors.primary} min-w-[200px]`}>
+                                <div className="flex items-center justify-between mb-2">
+                                    <div className="flex items-center space-x-2">
+                                        <motion.div 
+                                            className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                                                lessonCompleted ? theme.status.success.bg : theme.status.warning.bg
+                                            }`}
+                                            animate={lessonCompleted ? { scale: [1, 1.2, 1] } : {}}
+                                            transition={{ duration: 0.5 }}
+                                        />
+                                        <span className={`${theme.textColors.secondary} text-sm font-medium`}>
+                                            {lessonCompleted ? 'Ready for Quiz' : 'In Progress'}
+                                        </span>
+                                    </div>
+                                    <span className={`${theme.textColors.primary} text-xs font-semibold`}>
+                                        {Math.round((lessonCompleted ? 70 : 35))}%
                                     </span>
                                 </div>
+                                <EnhancedProgressBar 
+                                    value={lessonCompleted ? 70 : 35}
+                                    size="sm"
+                                    variant={lessonCompleted ? "success" : "default"}
+                                    showPercentage={false}
+                                    animated={true}
+                                />
                             </div>
                             
-                            <div className={`${theme.status.info.bg} px-3 py-1 rounded-full`}>
+                            <motion.div 
+                                className={`${theme.status.info.bg} px-3 py-1 rounded-full`}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
                                 <span className={`${theme.status.info.text} text-sm font-medium`}>
                                     Chapter {chapterNumber}
                                 </span>
-                            </div>
+                            </motion.div>
                             
                             {/* Advanced Features Badge */}
                             {hasCompletedContent && (
-                                <div className={`${theme.status.warning.bg} px-3 py-1 rounded-full`}>
-                                    <span className={`${theme.status.warning.text} text-xs font-medium flex items-center`}>
+                                <motion.div 
+                                    className={`${theme.status.warning.bg} px-3 py-1 rounded-full relative overflow-hidden`}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: 0.5, type: "spring" }}
+                                >
+                                    <span className={`${theme.status.warning.text} text-xs font-medium flex items-center relative z-10`}>
                                         <Star className="w-3 h-3 mr-1" />
                                         Pro Features
                                     </span>
-                                </div>
+                                    {/* Animated shine effect */}
+                                    <motion.div
+                                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                                        animate={{ x: ['-100%', '200%'] }}
+                                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                    />
+                                </motion.div>
                             )}
                         </div>
                     </div>
@@ -241,49 +300,86 @@ export default function ChapterLayout({
                     transition={{ duration: 0.8 }}
                     className="text-center mb-8"
                 >
-                    <div className={`w-16 h-16 ${theme.status.info.bg} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-                        <Icon className={`w-8 h-8 ${iconColor}`} />
-                    </div>
-                    <h1 className="text-4xl font-bold mb-2">
+                    <motion.div 
+                        className={`w-16 h-16 ${theme.status.info.bg} rounded-2xl flex items-center justify-center mx-auto mb-4 relative overflow-hidden`}
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <Icon className={`w-8 h-8 ${iconColor} relative z-10`} />
+                        {/* Animated background pulse */}
+                        <motion.div
+                            className="absolute inset-0 bg-white/10 rounded-2xl"
+                            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                        />
+                    </motion.div>
+                    <motion.h1 
+                        className="text-4xl font-bold mb-2"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                    >
                         <span className={`${theme.textColors.primary}`}>Chapter {chapterNumber}:</span>
                         <br />
                         <span className={`${theme.textColors.primary} gradient-text-blue`}>
                             {title}
                         </span>
-                    </h1>
-                    <p className={`${theme.textColors.muted} max-w-2xl mx-auto`}>
+                    </motion.h1>
+                    <motion.p 
+                        className={`${theme.textColors.muted} max-w-2xl mx-auto`}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                    >
                         {subtitle}
-                    </p>
+                    </motion.p>
                 </motion.div>
 
                 {/* Tab Navigation - Dynamic based on user progress */}
                 <Tabs value={currentSection} onValueChange={(value) => setCurrentSection(value as 'lesson' | 'calculator' | 'quiz' | 'assistant' | 'analytics' | 'review')} className="w-full">
-                    <TabsList className={`grid w-full ${hasCompletedContent ? 'grid-cols-6' : 'grid-cols-4'} ${theme.backgrounds.header} border ${theme.borderColors.primary}`}>
+                    <TabsList className={`grid w-full ${hasCompletedContent ? 'grid-cols-6' : 'grid-cols-4'} ${theme.backgrounds.header} border ${theme.borderColors.primary} relative overflow-hidden`}>
                         <TabsTrigger 
                             value="lesson" 
-                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text}`}
+                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} relative transition-all duration-300 hover:scale-105`}
                         >
                             <BookOpen className="w-4 h-4 mr-2" />
                             Lesson
+                            {lessonCompleted && (
+                                <motion.div
+                                    className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full"
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{ type: "spring", stiffness: 300 }}
+                                />
+                            )}
                         </TabsTrigger>
                         <TabsTrigger 
                             value="calculator" 
-                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text}`}
+                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 hover:scale-105`}
                         >
                             <Calculator className="w-4 h-4 mr-2" />
                             Calculator
                         </TabsTrigger>
                         <TabsTrigger 
                             value="quiz" 
-                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text}`}
+                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 relative hover:scale-105`}
                             disabled={!lessonCompleted && chapterNumber > 1}
                         >
                             <Trophy className="w-4 h-4 mr-2" />
                             Quiz
+                            {(!lessonCompleted && chapterNumber > 1) && (
+                                <motion.div
+                                    className="absolute inset-0 bg-black/20 rounded-md flex items-center justify-center"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                >
+                                    <Lock className="w-3 h-3" />
+                                </motion.div>
+                            )}
                         </TabsTrigger>
                         <TabsTrigger 
                             value="assistant" 
-                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text}`}
+                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 hover:scale-105`}
                         >
                             <Bot className="w-4 h-4 mr-2" />
                             AI Coach
@@ -292,24 +388,36 @@ export default function ChapterLayout({
                         {/* Advanced Features - Only show after user has some progress */}
                         {hasCompletedContent && (
                             <>
-                                <TabsTrigger 
-                                    value="review" 
-                                    className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text}`}
+                                <motion.div
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.2 }}
                                 >
-                                    <Brain className="w-4 h-4 mr-2" />
-                                    <span className="hidden sm:inline">Review</span>
-                                    <span className="sm:hidden">Review</span>
-                                </TabsTrigger>
+                                    <TabsTrigger 
+                                        value="review" 
+                                        className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 hover:scale-105`}
+                                    >
+                                        <Brain className="w-4 h-4 mr-2" />
+                                        <span className="hidden sm:inline">Review</span>
+                                        <span className="sm:hidden">Review</span>
+                                    </TabsTrigger>
+                                </motion.div>
                                 
                                 {hasQuizScores && (
-                                    <TabsTrigger 
-                                        value="analytics" 
-                                        className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text}`}
+                                    <motion.div
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.4 }}
                                     >
-                                        <BarChart3 className="w-4 h-4 mr-2" />
-                                        <span className="hidden sm:inline">Analytics</span>
-                                        <span className="sm:hidden">Stats</span>
-                                    </TabsTrigger>
+                                        <TabsTrigger 
+                                            value="analytics" 
+                                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 hover:scale-105`}
+                                        >
+                                            <BarChart3 className="w-4 h-4 mr-2" />
+                                            <span className="hidden sm:inline">Analytics</span>
+                                            <span className="sm:hidden">Stats</span>
+                                        </TabsTrigger>
+                                    </motion.div>
                                 )}
                             </>
                         )}
@@ -472,6 +580,20 @@ export default function ChapterLayout({
                     )}
                 </Tabs>
             </div>
+
+            {/* Success Animation Overlay */}
+            {showSuccessAnimation && lastAchievement && (
+                <SuccessAnimation
+                    isVisible={showSuccessAnimation}
+                    onComplete={() => {
+                        setShowSuccessAnimation(false);
+                        setLastAchievement(null);
+                    }}
+                    type={lastAchievement.type}
+                    title={lastAchievement.title}
+                    description={lastAchievement.description}
+                />
+            )}
         </div>
     );
 }

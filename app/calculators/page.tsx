@@ -201,33 +201,41 @@ export default function CalculatorsPage() {
           {calculators.map((calc) => (
             <div
               key={calc.id}
-              className={`group ${theme.backgrounds.card} backdrop-blur-xl border ${theme.borderColors.primary} rounded-xl p-6 hover:shadow-xl hover:${theme.borderColors.primary} transition-all transform hover:scale-105`}
+              className={`group relative ${theme.backgrounds.card} backdrop-blur-xl border ${theme.borderColors.primary} rounded-xl p-6 hover:shadow-2xl hover:shadow-blue-500/10 hover:${theme.borderColors.primary} transition-all duration-500 transform hover:scale-[1.02] hover:-translate-y-2`}
             >
-              <div className="flex items-center mb-4">
-                <div className={`${theme.status.warning.bg} p-3 rounded-lg mr-4 group-hover:${theme.status.warning.bg} transition-all`}>
-                  <calc.icon className={`w-8 h-8 ${theme.textColors.primary}`} />
+              {/* Enhanced Glow Effect */}
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-amber-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              {/* Card Content */}
+              <div className="relative">
+                <div className="flex items-center mb-4">
+                  <div className={`${theme.status.warning.bg} p-3 rounded-lg mr-4 group-hover:${theme.status.warning.bg} group-hover:scale-110 transition-all duration-300`}>
+                    <calc.icon className={`w-8 h-8 ${theme.textColors.primary} group-hover:rotate-12 transition-transform duration-300`} />
+                  </div>
+                  <h3 className={`text-xl font-bold ${theme.textColors.primary} group-hover:text-blue-200 transition-colors duration-300`}>
+                    {calc.title}
+                  </h3>
                 </div>
-                <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>
-                  {calc.title}
-                </h3>
-              </div>
 
-              <p className={`${theme.textColors.secondary} mb-6 leading-relaxed`}>
-                {calc.description}
-              </p>
-
-              <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm rounded-lg p-3 mb-6 border ${theme.borderColors.muted}`}>
-                <p className={`text-sm font-medium ${theme.textColors.secondary} mb-1`}>Example Result:</p>
-                <p className={`text-sm ${theme.textColors.primary} font-semibold`}>
-                  {calc.example}
+                <p className={`${theme.textColors.secondary} mb-6 leading-relaxed group-hover:${theme.textColors.primary} transition-colors duration-300`}>
+                  {calc.description}
                 </p>
-              </div>
 
-              <Link href={calc.href}>
-                <button className={`w-full ${theme.buttons.accent} px-6 py-3 rounded-lg font-semibold transition-all shadow-md group-hover:shadow-lg`}>
-                  Start Calculating
-                </button>
-              </Link>
+                <div className={`${theme.backgrounds.cardHover} backdrop-blur-sm rounded-lg p-3 mb-6 border ${theme.borderColors.muted} group-hover:border-blue-500/30 group-hover:bg-blue-900/10 transition-all duration-300`}>
+                  <p className={`text-sm font-medium ${theme.textColors.secondary} mb-1`}>Example Result:</p>
+                  <p className={`text-sm ${theme.textColors.primary} font-semibold group-hover:text-blue-300 transition-colors duration-300`}>
+                    {calc.example}
+                  </p>
+                </div>
+
+                <Link href={calc.href}>
+                  <button className={`w-full ${theme.buttons.accent} px-6 py-3 rounded-lg font-semibold transition-all duration-300 shadow-md group-hover:shadow-xl group-hover:shadow-blue-500/25 group-hover:-translate-y-0.5 transform`}>
+                    <span className="group-hover:scale-105 inline-block transition-transform duration-300">
+                      Start Calculating
+                    </span>
+                  </button>
+                </Link>
+              </div>
             </div>
           ))}
         </div>
