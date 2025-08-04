@@ -252,6 +252,34 @@ export const CalculatorValidations = {
     couponRate: ValidationPresets.percentage(0, 50),
     yearsToMaturity: { min: 0.1, max: 50, required: true },
     paymentFrequency: { min: 1, max: 12, required: true }
+  },
+
+  creditScore: {
+    paymentHistory: ValidationPresets.percentage(0, 100),
+    creditUtilization: ValidationPresets.percentage(0, 100),
+    creditAge: { min: 0, max: 50, step: 0.5, required: true },
+    creditMix: { min: 1, max: 6, required: true },
+    newCredit: { min: 0, max: 20, required: true }
+  },
+
+  stockAnalysis: {
+    currentPrice: ValidationPresets.currency(0.01, 100000),
+    earnings: ValidationPresets.currency(0.01, 1000),
+    bookValue: ValidationPresets.currency(0.01, 1000),
+    revenue: ValidationPresets.currency(0.1, 10000),
+    growthRate: ValidationPresets.percentage(-50, 100),
+    dividendYield: ValidationPresets.percentage(0, 20),
+    debt: ValidationPresets.currency(0, 10000),
+    equity: ValidationPresets.currency(0.1, 10000),
+    marketCap: ValidationPresets.currency(1, 50000),
+    freeCashFlow: ValidationPresets.currency(-100, 10000),
+    targetPrice: ValidationPresets.currency(0.01, 100000),
+    peRatio: {
+      required: false,
+      type: 'number' as const,
+      min: 0,
+      max: 1000
+    }
   }
 };
 

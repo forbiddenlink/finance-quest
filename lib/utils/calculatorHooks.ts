@@ -799,3 +799,236 @@ export const useBondCalculator = () => {
     }
   });
 };
+
+/**
+ * Credit Score Simulator Hook
+ */
+export interface CreditProfile {
+  paymentHistory: number;
+  creditUtilization: number;
+  creditAge: number;
+  creditMix: number;
+  newCredit: number;
+}
+
+export interface CreditScoreResult {
+  currentScore: number;
+  projectedScore: number;
+  increase: number;
+  factorAnalysis: CreditFactorAnalysis[];
+  timelineProjections: ScoreProjection[];
+  scoreGrade: string;
+  projectedGrade: string;
+}
+
+export interface CreditFactorAnalysis {
+  name: string;
+  current: number;
+  target: number;
+  weight: number;
+  impact: number;
+  priority: 'high' | 'medium' | 'low';
+}
+
+export interface ScoreProjection {
+  month: number;
+  score: number;
+  description: string;
+}
+
+export interface UseCreditScoreCalculatorResult {
+  values: {
+    current: CreditProfile;
+    target: CreditProfile;
+  };
+  errors: Record<string, string>;
+  result: CreditScoreResult | null;
+  isValid: boolean;
+  updateCurrentProfile: (field: keyof CreditProfile, value: string) => void;
+  updateTargetProfile: (field: keyof CreditProfile, value: string) => void;
+  reset: () => void;
+}
+
+export function useCreditScoreCalculator(): UseCreditScoreCalculatorResult {
+  const [currentProfile, setCurrentProfile] = useState({
+    paymentHistory: 95,
+    creditUtilization: 30,
+    creditAge: 3,
+    creditMix: 3,
+    newCredit: 2
+  });
+
+  const [targetProfile, setTargetProfile] = useState({
+    paymentHistory: 100,
+    creditUtilization: 10,
+    creditAge: 5,
+    creditMix: 4,
+    newCredit: 0
+  });
+
+  // Validation
+  const currentValidation = validateFields(currentProfile, CalculatorValidations.creditScore);
+  const targetValidation = validateFields(targetProfile, CalculatorValidations.creditScore);
+  
+  const errors = {
+    ...Object.fromEntries(
+      Object.entries(currentValidation.errors).map(([key, error]) => [`current_${key}`, error])
+    ),
+    ...Object.fromEntries(
+      Object.entries(targetValidation.errors).map(([key, error]) => [`target_${key}`, error])
+    )
+  };
+
+  const isValid = currentValidation.isValid && targetValidation.isValid;
+
+  // Credit score calculation algorithm
+  const calculateCreditScore = useCallback((profile: CreditProfile): number => {
+    const { paymentHistory, creditUtilization, creditAge, creditMix, newCredit } = profile;
+    
+    // FICO-like scoring algorithm
+    const paymentScore = Math.min(100, paymentHistory) * 0.35;
+    const utilizationScore = Math.max(0, 100 - creditUtilization * 2) * 0.30;
+    const ageScore = Math.min(100, creditAge * 15) * 0.15;
+    const mixScore = Math.min(100, creditMix * 20) * 0.10;
+    const inquiryScore = Math.max(0, 100 - newCredit * 15) * 0.10;
+
+    const totalScore = paymentScore + utilizationScore + ageScore + mixScore + inquiryScore;
+    const scaledScore = 300 + (totalScore / 100) * 550;
+
+    return Math.round(Math.min(850, Math.max(300, scaledScore)));
+  }, []);
+
+  const getScoreGrade = useCallback((score: number): string => {
+    if (score >= 800) return 'Exceptional';
+    if (score >= 740) return 'Very Good';
+    if (score >= 670) return 'Good';
+    if (score >= 580) return 'Fair';
+    return 'Poor';
+  }, []);
+
+  // Calculate results
+  const result = useMemo((): CreditScoreResult | null => {
+    if (!isValid) return null;
+
+    const currentScore = calculateCreditScore(currentProfile);
+    const projectedScore = calculateCreditScore(targetProfile);
+    const increase = projectedScore - currentScore;
+
+    // Factor analysis
+    const factors = [
+      {
+        name: 'Payment History',
+        current: currentProfile.paymentHistory,
+        target: targetProfile.paymentHistory,
+        weight: 35,
+        impact: (targetProfile.paymentHistory - currentProfile.paymentHistory) * 2.45
+      },
+      {
+        name: 'Credit Utilization',
+        current: currentProfile.creditUtilization,
+        target: targetProfile.creditUtilization,
+        weight: 30,
+        impact: (currentProfile.creditUtilization - targetProfile.creditUtilization) * 2.1
+      },
+      {
+        name: 'Credit Age',
+        current: currentProfile.creditAge,
+        target: targetProfile.creditAge,
+        weight: 15,
+        impact: (targetProfile.creditAge - currentProfile.creditAge) * 10.5
+      },
+      {
+        name: 'Credit Mix',
+        current: currentProfile.creditMix,
+        target: targetProfile.creditMix,
+        weight: 10,
+        impact: (targetProfile.creditMix - currentProfile.creditMix) * 14
+      },
+      {
+        name: 'New Credit Inquiries',
+        current: currentProfile.newCredit,
+        target: targetProfile.newCredit,
+        weight: 10,
+        impact: (currentProfile.newCredit - targetProfile.newCredit) * 11.67
+      }
+    ];
+
+    const factorAnalysis: CreditFactorAnalysis[] = factors.map(factor => ({
+      ...factor,
+      priority: Math.abs(factor.impact) > 15 ? 'high' : Math.abs(factor.impact) > 5 ? 'medium' : 'low'
+    }));
+
+    // Timeline projections
+    const scoreDiff = increase;
+    const timeToTarget = Math.max(1, Math.ceil(Math.abs(scoreDiff) / 10)); // ~10 points per month
+
+    const timelineProjections: ScoreProjection[] = [];
+    for (let month = 0; month <= timeToTarget; month++) {
+      const progress = month / timeToTarget;
+      const monthScore = currentScore + (scoreDiff * progress);
+
+      let description = 'Starting point';
+      if (month === Math.round(timeToTarget * 0.25)) description = 'Pay down high balances';
+      if (month === Math.round(timeToTarget * 0.5)) description = 'Optimize utilization';
+      if (month === Math.round(timeToTarget * 0.75)) description = 'Diversify credit mix';
+      if (month === timeToTarget) description = 'Target achieved!';
+
+      timelineProjections.push({
+        month,
+        score: Math.round(monthScore),
+        description
+      });
+    }
+
+    return {
+      currentScore,
+      projectedScore,
+      increase,
+      factorAnalysis,
+      timelineProjections,
+      scoreGrade: getScoreGrade(currentScore),
+      projectedGrade: getScoreGrade(projectedScore)
+    };
+  }, [currentProfile, targetProfile, isValid, calculateCreditScore, getScoreGrade]);
+
+  // Update functions
+  const updateCurrentProfile = useCallback((field: keyof CreditProfile, value: string) => {
+    const numValue = parseFloat(value) || 0;
+    setCurrentProfile(prev => ({ ...prev, [field]: numValue }));
+  }, []);
+
+  const updateTargetProfile = useCallback((field: keyof CreditProfile, value: string) => {
+    const numValue = parseFloat(value) || 0;
+    setTargetProfile(prev => ({ ...prev, [field]: numValue }));
+  }, []);
+
+  const reset = useCallback(() => {
+    setCurrentProfile({
+      paymentHistory: 95,
+      creditUtilization: 30,
+      creditAge: 3,
+      creditMix: 3,
+      newCredit: 2
+    });
+    setTargetProfile({
+      paymentHistory: 100,
+      creditUtilization: 10,
+      creditAge: 5,
+      creditMix: 4,
+      newCredit: 0
+    });
+  }, []);
+
+  return {
+    values: {
+      current: currentProfile,
+      target: targetProfile
+    },
+    errors,
+    result,
+    isValid,
+    updateCurrentProfile,
+    updateTargetProfile,
+    reset
+  };
+}
