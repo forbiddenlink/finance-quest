@@ -241,8 +241,12 @@ export default function RetirementPlannerCalculator() {
   return (
     <CalculatorWrapper
       metadata={metadata}
-      inputs={
-        <div className="space-y-6">
+      results={results}
+      insights={insights}
+      onReset={handleReset}
+      chartComponent={chartComponent}
+    >
+      <div className="space-y-6">
           <div>
             <h3 className="text-lg font-semibold mb-4 text-blue-700 dark:text-blue-300">Personal Information</h3>
             <div className="grid grid-cols-2 gap-4">
