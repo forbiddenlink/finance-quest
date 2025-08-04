@@ -4,11 +4,11 @@
 
 > **Production-ready platform addressing the 64% financial illiteracy crisis with OpenAI GPT-4o-mini coaching, interactive calculators, and measurable learning outcomes.**
 
-Finance Quest delivers comprehensive financial education through **6 complete chapters**, **6+ professional calculators**, real-time market data, and contextual AI coaching. Built with Next.js 15.4.4, Zustand state management, and genuine OpenAI integration for personalized learning experiences.
+Finance Quest delivers comprehensive financial education through **17 available chapters**, **13+ professional calculators**, real-time market data, and contextual AI coaching. Built with Next.js 15.4.4, Zustand state management, and genuine OpenAI integration for personalized learning experiences.
 
 ## 🎯 **Current Platform Status**
 - **Version**: 2.1.0 Production Release
-- **Implementation**: 6 chapters complete with lessons, calculators, and assessments
+- **Implementation**: 17 chapters available with lessons, calculators, and assessments
 - **AI Integration**: OpenAI GPT-4o-mini with contextual coaching
 - **State Management**: Advanced Zustand with localStorage persistence  
 - **Market Data**: Multi-API integration with intelligent fallbacks
@@ -17,18 +17,16 @@ Finance Quest delivers comprehensive financial education through **6 complete ch
 ## ✨ **Core Features**
 
 ### 📚 **Educational System**
-- **6 Complete Chapters**: Money psychology, banking, income, credit, emergency funds, financial planning
+- **17 Available Chapters**: From money psychology to estate planning and advanced investments
 - **Interactive Lessons**: Theory with real-world examples and immediate feedback
 - **Progressive Unlocking**: 80% quiz requirement to advance to next chapter
 - **Comprehensive Assessments**: Knowledge verification with detailed explanations
 
 ### 🧮 **Professional Calculator Suite**
-- **Compound Interest Calculator**: Investment growth with Finance.js integration
-- **Mortgage Calculator**: PMT calculations with amortization schedules
-- **Debt Payoff Calculator**: Snowball vs avalanche strategies
-- **Paycheck Calculator**: Gross to net with tax breakdown
-- **Emergency Fund Calculator**: Savings goals with timeline projections
-- **Portfolio Analyzer**: Asset allocation and risk assessment
+- **Foundation Calculators**: Compound Interest, Mortgage, Debt Payoff, Emergency Fund
+- **Advanced Tools**: Portfolio Analyzer, Tax Optimizer, Estate Planning, Bond Calculator
+- **Interactive Features**: Dynamic calculations with Finance.js integration
+- **Educational Context**: Each calculator includes learning materials and explanations
 
 ### 🤖 **Real AI Integration**
 - **OpenAI GPT-4o-mini**: Context-aware financial coaching

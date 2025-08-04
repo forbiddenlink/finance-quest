@@ -213,8 +213,8 @@ export const useProgressStore = create<ProgressStore>()(
             ? quizScores.reduce((sum, score) => sum + score, 0) / quizScores.length
             : 0;
 
-          const totalPossibleLessons = 12; // 4 lessons per chapter × 3 chapters
-          const lessonCompletionRate = (state.userProgress.completedLessons.length / totalPossibleLessons) * 100;
+          const totalPossibleLessons = Math.min(state.userProgress.currentChapter * 6, 102); // 6 lessons per chapter, max 17 chapters = 102 lessons
+          const lessonCompletionRate = totalPossibleLessons > 0 ? (state.userProgress.completedLessons.length / totalPossibleLessons) * 100 : 0;
 
           const areasNeedingWork = state.userProgress.strugglingTopics.length > 0
             ? state.userProgress.strugglingTopics
@@ -247,12 +247,14 @@ export const useProgressStore = create<ProgressStore>()(
         }
 
         // Lesson completion (30% of total)
-        const lessonPoints = (userProgress.completedLessons.length / 12) * 300;
+        const maxPossibleLessons = Math.min(userProgress.currentChapter * 6, 102); // Up to 17 chapters
+        const lessonPoints = maxPossibleLessons > 0 ? (userProgress.completedLessons.length / maxPossibleLessons) * 300 : 0;
         score += lessonPoints;
 
         // Calculator usage shows practical application (20% of total)
+        const maxCalculators = 13; // Current available calculators
         const calculatorUsageCount = Object.keys(userProgress.calculatorUsage).length;
-        const calculatorPoints = Math.min(calculatorUsageCount / 4, 1) * 200;
+        const calculatorPoints = Math.min(calculatorUsageCount / maxCalculators, 1) * 200;
         score += calculatorPoints;
 
         // Consistency and engagement (10% of total)
@@ -269,9 +271,9 @@ export const useProgressStore = create<ProgressStore>()(
         );
         const quizPassed = userProgress.completedQuizzes.includes(`chapter${chapterId}-quiz`);
 
-        // 4 lessons + 1 quiz = 5 total items per chapter
+        // 6 lessons + 1 quiz = 7 total items per chapter
         const completedItems = chapterLessons.length + (quizPassed ? 1 : 0);
-        return Math.round((completedItems / 5) * 100);
+        return Math.round((completedItems / 7) * 100);
       },
 
       isChapterUnlocked: (chapterId: number) => {

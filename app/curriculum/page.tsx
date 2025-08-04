@@ -52,22 +52,22 @@ export default function CurriculumPage() {
                             <span className={theme.textColors.primary}>Mastery Curriculum</span>
                         </h1>
                         <p className={`${theme.typography.heading4} ${theme.textColors.secondary} max-w-3xl mx-auto mb-8`}>
-                            30 comprehensive chapters across 6 specialized learning tracks.
-                            From financial psychology to advanced wealth management - master every aspect of personal finance.
+                            17 available chapters covering all essential aspects of personal finance.
+                            From foundation concepts to advanced investment strategies and estate planning.
                         </p>
 
                         <div className={`flex flex-wrap items-center justify-center gap-8 ${theme.typography.small} ${theme.textColors.muted} mb-12`}>
                             <div className="flex items-center gap-2">
                                 <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                                <span>30 Specialized Chapters</span>
+                                <span>17 Available Chapters</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <div className="w-3 h-3 bg-amber-500 rounded-full"></div>
-                                <span>180+ Interactive Lessons</span>
+                                <span>100+ Interactive Lessons</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <div className="w-3 h-3 bg-amber-500 rounded-full"></div>
-                                <span>20+ Financial Calculators</span>
+                                <span>13+ Financial Calculators</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
@@ -82,7 +82,7 @@ export default function CurriculumPage() {
                                 </div>
                                 <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Foundation Track</h3>
                                 <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>Master psychology, banking, income, and debt fundamentals</p>
-                                <div className={`mt-3 ${theme.textColors.primary} ${theme.typography.tiny} font-medium`}>✅ 5 Chapters Available</div>
+                                <div className={`mt-3 ${theme.textColors.primary} ${theme.typography.tiny} font-medium`}>✅ 17 Chapters Available</div>
                             </div>
 
                             <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.md}`}>
@@ -91,7 +91,7 @@ export default function CurriculumPage() {
                                 </div>
                                 <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-2`}>Advanced Tracks</h3>
                                 <p className={`${theme.textColors.secondary} ${theme.typography.small}`}>Investment, protection, tax planning, and economic literacy</p>
-                                <div className={`mt-3 ${theme.textColors.warning} ${theme.typography.tiny} font-medium`}>🚧 25 Chapters Coming Soon</div>
+                                <div className={`mt-3 ${theme.textColors.warning} ${theme.typography.tiny} font-medium`}>🚧 13+ More Coming Soon</div>
                             </div>
 
                             <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.md}`}>

@@ -32,7 +32,7 @@ export default function ProgressNavigation() {
   const totalQuizzesPassed = Object.values(userProgress.quizScores).filter(score => score >= 80).length;
   const calculatorsUsed = Object.keys(userProgress.calculatorUsage).length;
   const simulationsCompleted = Object.keys(userProgress.simulationResults || {}).length;
-  const overallProgress = Math.round((userProgress.completedLessons.length / 15) * 100); // Assuming 15 total lessons
+  const overallProgress = Math.round((userProgress.completedLessons.length / 102) * 100); // 17 chapters × 6 lessons = 102 total lessons
 
   const navigationItems = [
     {

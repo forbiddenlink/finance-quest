@@ -17,17 +17,14 @@ import {
     Lock,
     CheckCircle,
     Star,
-    Target,
     Users,
     Calculator,
     Briefcase,
-    PiggyBank,
     Lightbulb,
     Home,
     Heart,
     Umbrella,
     Timer,
-    Award,
     BarChart3
 } from 'lucide-react';
 
@@ -89,9 +86,9 @@ const ComprehensiveNavigation = () => {
                 },
                 {
                     id: 3,
-                    title: 'Income & Career Finance',
-                    description: 'Salary negotiation, benefits, side hustles',
-                    icon: <Briefcase className="w-5 h-5" />,
+                    title: 'Budgeting & Cash Flow Mastery',
+                    description: 'Zero-based budgeting, automation, expense tracking',
+                    icon: <Calculator className="w-5 h-5" />,
                     route: '/chapter3',
                     lessons: 6,
                     isAvailable: progress.userProgress.currentChapter >= 3,
@@ -99,9 +96,9 @@ const ComprehensiveNavigation = () => {
                 },
                 {
                     id: 4,
-                    title: 'Credit & Debt Management',
-                    description: 'Credit scores, debt elimination strategies',
-                    icon: <CreditCard className="w-5 h-5" />,
+                    title: 'Emergency Funds & Financial Security',
+                    description: 'Fund sizing, safety strategies, protection planning',
+                    icon: <Umbrella className="w-5 h-5" />,
                     route: '/chapter4',
                     lessons: 6,
                     isAvailable: progress.userProgress.currentChapter >= 4,
@@ -109,9 +106,9 @@ const ComprehensiveNavigation = () => {
                 },
                 {
                     id: 5,
-                    title: 'Emergency Funds & Safety',
-                    description: 'Fund sizing, savings strategies',
-                    icon: <Umbrella className="w-5 h-5" />,
+                    title: 'Income & Career Optimization',
+                    description: 'Salary negotiation, benefits, side hustles',
+                    icon: <Briefcase className="w-5 h-5" />,
                     route: '/chapter5',
                     lessons: 6,
                     isAvailable: progress.userProgress.currentChapter >= 5,
@@ -119,12 +116,13 @@ const ComprehensiveNavigation = () => {
                 },
                 {
                     id: 6,
-                    title: 'Budgeting Mastery & Cash Flow',
-                    description: 'Zero-based budgeting, automation, expense tracking',
-                    icon: <Calculator className="w-5 h-5" />,
+                    title: 'Credit & Debt Management',
+                    description: 'Credit scores, debt elimination strategies',
+                    icon: <CreditCard className="w-5 h-5" />,
+                    route: '/chapter6',
                     lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
+                    isAvailable: progress.userProgress.currentChapter >= 6,
+                    isCompleted: progress.userProgress.currentChapter >= 7
                 }
             ]
         },
@@ -134,47 +132,19 @@ const ComprehensiveNavigation = () => {
             description: 'Master credit optimization, strategic borrowing, and debt management',
             icon: <CreditCard className="w-6 h-6" />,
             color: 'amber',
-            totalLessons: 24,
+            totalLessons: 0,
             status: 'coming-soon',
-            chapters: [
-                {
-                    id: 7,
-                    title: 'Credit Scores & Reports Deep Dive',
-                    description: 'FICO vs VantageScore, dispute processes, building strategies',
-                    icon: <Star className="w-5 h-5" />,
-                    route: '/chapter7',
-                    lessons: 6,
-                    isAvailable: progress.userProgress.currentChapter >= 6,
-                    isCompleted: false
-                },
-                {
-                    id: 8,
-                    title: 'Credit Cards Mastery',
-                    description: 'Rewards optimization, balance transfers, utilization',
-                    icon: <CreditCard className="w-5 h-5" />,
-                    lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
-                },
-                {
-                    id: 9,
-                    title: 'Personal Loans & Lines of Credit',
-                    description: 'Shopping strategies, HELOC, payday alternatives',
-                    icon: <Target className="w-5 h-5" />,
-                    lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
-                },
-                {
-                    id: 10,
-                    title: 'Student Loans & Education Finance',
-                    description: 'Federal vs private, forgiveness programs, refinancing',
-                    icon: <BookOpen className="w-5 h-5" />,
-                    lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
-                }
-            ]
+            chapters: []
+        },
+        {
+            id: 'protection',
+            title: 'Protection & Planning Track',
+            description: 'Protect your wealth with insurance, healthcare planning, and risk management',
+            icon: <Shield className="w-6 h-6" />,
+            color: 'purple',
+            totalLessons: 0,
+            status: 'coming-soon',
+            chapters: []
         },
         {
             id: 'investment',
@@ -182,62 +152,78 @@ const ComprehensiveNavigation = () => {
             description: 'Build wealth through stocks, bonds, retirement accounts, and advanced strategies',
             icon: <TrendingUp className="w-6 h-6" />,
             color: 'green',
-            totalLessons: 36,
-            status: 'coming-soon',
+            totalLessons: 42,
+            status: 'available',
             chapters: [
                 {
-                    id: 11,
+                    id: 7,
                     title: 'Investment Fundamentals',
                     description: 'Risk vs return, diversification, dollar-cost averaging',
                     icon: <TrendingUp className="w-5 h-5" />,
+                    route: '/chapter7',
                     lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
+                    isAvailable: progress.userProgress.currentChapter >= 7,
+                    isCompleted: progress.userProgress.currentChapter >= 8
+                },
+                {
+                    id: 8,
+                    title: 'Portfolio Construction & Asset Allocation',
+                    description: 'Modern portfolio theory, rebalancing, risk tolerance',
+                    icon: <BarChart3 className="w-5 h-5" />,
+                    route: '/chapter8',
+                    lessons: 6,
+                    isAvailable: progress.userProgress.currentChapter >= 8,
+                    isCompleted: progress.userProgress.currentChapter >= 9
+                },
+                {
+                    id: 9,
+                    title: 'Retirement Planning & Long-Term Wealth',
+                    description: '401k optimization, IRA strategies, withdrawal planning',
+                    icon: <Timer className="w-5 h-5" />,
+                    route: '/chapter9',
+                    lessons: 6,
+                    isAvailable: progress.userProgress.currentChapter >= 9,
+                    isCompleted: progress.userProgress.currentChapter >= 10
+                },
+                {
+                    id: 10,
+                    title: 'Tax Optimization & Planning',
+                    description: 'Tax-efficient investing, retirement account strategies',
+                    icon: <Calculator className="w-5 h-5" />,
+                    route: '/chapter10',
+                    lessons: 6,
+                    isAvailable: progress.userProgress.currentChapter >= 10,
+                    isCompleted: progress.userProgress.currentChapter >= 11
+                },
+                {
+                    id: 11,
+                    title: 'Insurance & Risk Management',
+                    description: 'Life, disability, property insurance optimization',
+                    icon: <Shield className="w-5 h-5" />,
+                    route: '/chapter11',
+                    lessons: 6,
+                    isAvailable: progress.userProgress.currentChapter >= 11,
+                    isCompleted: progress.userProgress.currentChapter >= 12
                 },
                 {
                     id: 12,
-                    title: 'Stocks & Equity Investing',
-                    description: 'Company analysis, dividend investing, international exposure',
-                    icon: <BarChart3 className="w-5 h-5" />,
+                    title: 'Real Estate & Property Investment',
+                    description: 'Primary residence vs investment, mortgage strategies',
+                    icon: <Home className="w-5 h-5" />,
+                    route: '/chapter12',
                     lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
+                    isAvailable: progress.userProgress.currentChapter >= 12,
+                    isCompleted: progress.userProgress.currentChapter >= 13
                 },
                 {
                     id: 13,
-                    title: 'Bonds & Fixed Income',
-                    description: 'Government vs corporate, ladders, municipal bonds',
-                    icon: <Shield className="w-5 h-5" />,
+                    title: 'Stock Market Mastery & Trading',
+                    description: 'Fundamental and technical analysis, trading strategies',
+                    icon: <TrendingUp className="w-5 h-5" />,
+                    route: '/chapter13',
                     lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
-                },
-                {
-                    id: 14,
-                    title: 'Mutual Funds & ETFs',
-                    description: 'Expense ratios, active vs passive, index funds',
-                    icon: <Users className="w-5 h-5" />,
-                    lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
-                },
-                {
-                    id: 15,
-                    title: 'Retirement Accounts Mastery',
-                    description: '401k optimization, IRA types, rollover strategies',
-                    icon: <Timer className="w-5 h-5" />,
-                    lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
-                },
-                {
-                    id: 16,
-                    title: 'Advanced Investment Strategies',
-                    description: 'Options basics, REITs, tax-loss harvesting',
-                    icon: <Award className="w-5 h-5" />,
-                    lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
+                    isAvailable: progress.userProgress.currentChapter >= 13,
+                    isCompleted: progress.userProgress.currentChapter >= 14
                 }
             ]
         },
@@ -291,56 +277,51 @@ const ComprehensiveNavigation = () => {
         {
             id: 'advanced',
             title: 'Advanced Planning Track',
-            description: 'Master tax optimization, real estate, business finance, and estate planning',
+            description: 'Master advanced concepts like bonds, alternative investments, and business finance',
             icon: <Building className="w-6 h-6" />,
             color: 'indigo',
-            totalLessons: 30,
-            status: 'coming-soon',
+            totalLessons: 24,
+            status: 'available',
             chapters: [
                 {
-                    id: 21,
-                    title: 'Tax Strategy & Optimization',
-                    description: 'Bracket optimization, deductions, tax-advantaged accounts',
-                    icon: <Calculator className="w-5 h-5" />,
+                    id: 14,
+                    title: 'Bonds & Fixed Income',
+                    description: 'Government vs corporate bonds, yield analysis',
+                    icon: <Shield className="w-5 h-5" />,
+                    route: '/chapter14',
                     lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
+                    isAvailable: progress.userProgress.currentChapter >= 14,
+                    isCompleted: progress.userProgress.currentChapter >= 15
                 },
                 {
-                    id: 22,
-                    title: 'Real Estate Investment',
-                    description: 'Primary residence vs investment, mortgage strategies',
-                    icon: <Home className="w-5 h-5" />,
+                    id: 15,
+                    title: 'Alternative Investments',
+                    description: 'REITs, commodities, cryptocurrency basics',
+                    icon: <Star className="w-5 h-5" />,
+                    route: '/chapter15',
                     lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
+                    isAvailable: progress.userProgress.currentChapter >= 15,
+                    isCompleted: progress.userProgress.currentChapter >= 16
                 },
                 {
-                    id: 23,
+                    id: 16,
                     title: 'Business & Entrepreneurship Finance',
-                    description: 'Structure selection, cash flow, business credit',
+                    description: 'Business structures, cash flow, business credit',
                     icon: <Briefcase className="w-5 h-5" />,
+                    route: '/chapter16',
                     lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
+                    isAvailable: progress.userProgress.currentChapter >= 16,
+                    isCompleted: progress.userProgress.currentChapter >= 17
                 },
                 {
-                    id: 24,
-                    title: 'Estate Planning Fundamentals',
-                    description: 'Wills, trusts, beneficiaries, probate avoidance',
+                    id: 17,
+                    title: 'Estate Planning & Wealth Transfer',
+                    description: 'Wills, trusts, beneficiaries, tax strategies',
                     icon: <Users className="w-5 h-5" />,
+                    route: '/chapter17',
                     lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
-                },
-                {
-                    id: 25,
-                    title: 'Financial Independence & Early Retirement',
-                    description: 'FIRE principles, withdrawal strategies',
-                    icon: <PiggyBank className="w-5 h-5" />,
-                    lessons: 6,
-                    isAvailable: false,
-                    isCompleted: false
+                    isAvailable: progress.userProgress.currentChapter >= 17,
+                    isCompleted: progress.userProgress.currentChapter >= 18
                 }
             ]
         },
@@ -519,13 +500,13 @@ const ComprehensiveNavigation = () => {
                         </div>
                         <div className="text-center">
                             <div className={`text-3xl font-bold ${theme.status.warning.text} mb-2`}>
-                                {Math.round(((progress.userProgress.currentChapter - 1) / 5) * 100)}%
+                                {Math.round(((progress.userProgress.currentChapter - 1) / 17) * 100)}%
                             </div>
-                            <p className={`${theme.textColors.muted} text-sm`}>Foundation Track</p>
+                            <p className={`${theme.textColors.muted} text-sm`}>Overall Progress</p>
                         </div>
                         <div className="text-center">
-                            <div className="text-3xl font-bold text-navy-400 mb-2">30</div>
-                            <p className={`${theme.textColors.muted} text-sm`}>Total Chapters</p>
+                            <div className="text-3xl font-bold text-navy-400 mb-2">17</div>
+                            <p className={`${theme.textColors.muted} text-sm`}>Available Chapters</p>
                         </div>
                     </div>
                 </div>
