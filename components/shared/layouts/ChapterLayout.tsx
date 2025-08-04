@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, ReactNode } from 'react';
+import React, { useState, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -29,6 +29,14 @@ import {
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
+interface CalculatorTab {
+    id: string;
+    label: string;
+    icon: LucideIcon;
+    component: React.ComponentType;
+    description: string;
+}
+
 interface ChapterLayoutProps {
     chapterNumber: number;
     title: string;
@@ -40,6 +48,7 @@ interface ChapterLayoutProps {
     quizComponent: ReactNode;
     calculatorTitle?: string;
     calculatorDescription?: string;
+    calculatorTabs?: CalculatorTab[];
     quizTitle?: string;
     quizDescription?: string;
     onLessonComplete?: () => void;
@@ -58,6 +67,7 @@ export default function ChapterLayout({
     quizComponent,
     calculatorTitle = "Calculator",
     calculatorDescription = "Interactive financial calculator",
+    calculatorTabs,
     quizTitle = "Knowledge Quiz",
     quizDescription = "Test your understanding",
     onLessonComplete,
@@ -67,6 +77,7 @@ export default function ChapterLayout({
     const { isChapterUnlocked, completeLesson, userProgress } = useProgressStore();
     const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz' | 'assistant' | 'analytics' | 'review'>('lesson');
     const [lessonCompleted, setLessonCompleted] = useState(false);
+    const [activeCalculatorTab, setActiveCalculatorTab] = useState(0);
 
     // Check if chapter is unlocked (skip for Chapter 1)
     const isUnlocked = chapterNumber === 1 || !requiresPreviousChapters || isChapterUnlocked(chapterNumber);
@@ -303,7 +314,47 @@ export default function ChapterLayout({
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="p-0">
-                                {calculatorComponent}
+                                {calculatorTabs ? (
+                                    <div className="space-y-6">
+                                        {/* Calculator Sub-tabs */}
+                                        <div className="border-b border-white/10">
+                                            <nav className="flex space-x-8 px-6" aria-label="Calculator tabs">
+                                                {calculatorTabs.map((tab, index) => {
+                                                    const IconComponent = tab.icon;
+                                                    return (
+                                                        <button
+                                                            key={tab.id}
+                                                            onClick={() => setActiveCalculatorTab(index)}
+                                                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors ${
+                                                                activeCalculatorTab === index
+                                                                    ? 'border-blue-500 text-blue-400'
+                                                                    : 'border-transparent text-slate-400 hover:text-slate-300 hover:border-slate-300'
+                                                            }`}
+                                                        >
+                                                            <IconComponent className="w-4 h-4 mr-2" />
+                                                            {tab.label}
+                                                        </button>
+                                                    );
+                                                })}
+                                            </nav>
+                                        </div>
+
+                                        {/* Active Calculator */}
+                                        <div className="px-6 pb-6">
+                                            <div className="mb-4">
+                                                <h3 className="text-lg font-semibold text-white mb-2">
+                                                    {calculatorTabs[activeCalculatorTab].label}
+                                                </h3>
+                                                <p className="text-slate-300 text-sm">
+                                                    {calculatorTabs[activeCalculatorTab].description}
+                                                </p>
+                                            </div>
+                                            {React.createElement(calculatorTabs[activeCalculatorTab].component)}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    calculatorComponent
+                                )}
                             </CardContent>
                         </Card>
                     </TabsContent>

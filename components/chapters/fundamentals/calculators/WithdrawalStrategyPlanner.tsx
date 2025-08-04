@@ -1,16 +1,14 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import {
   TrendingDown,
   DollarSign,
-  Calendar,
   BarChart3,
   AlertTriangle,
   Info,
-  Calculator,
   Target
 } from 'lucide-react';
 
@@ -41,7 +39,7 @@ const WithdrawalStrategyPlanner: React.FC = () => {
   const [inflationRate, setInflationRate] = useState<number>(3);
   const [portfolioReturn, setPortfolioReturn] = useState<number>(7);
   const [portfolioVolatility, setPortfolioVolatility] = useState<number>(15);
-  const [desiredAnnualIncome, setDesiredAnnualIncome] = useState<number>(60000);
+  const [desiredAnnualIncome] = useState<number>(60000);
   
   const [selectedStrategy, setSelectedStrategy] = useState<string>('4% Rule');
   const [projections, setProjections] = useState<WithdrawalProjection[]>([]);
@@ -97,9 +95,9 @@ const WithdrawalStrategyPlanner: React.FC = () => {
 
   useEffect(() => {
     calculateProjections();
-  }, [retirementPortfolio, currentAge, lifeExpectancy, inflationRate, portfolioReturn, portfolioVolatility, desiredAnnualIncome]);
+  }, [retirementPortfolio, currentAge, lifeExpectancy, inflationRate, portfolioReturn, portfolioVolatility, desiredAnnualIncome]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const calculateProjections = () => {
+  const calculateProjections = useCallback(() => {
     const yearsInRetirement = lifeExpectancy - currentAge;
     const newProjections: WithdrawalProjection[] = [];
 
@@ -109,12 +107,10 @@ const WithdrawalStrategyPlanner: React.FC = () => {
     });
 
     setProjections(newProjections);
-  };
+  }, [lifeExpectancy, currentAge, strategies, retirementPortfolio]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const simulateWithdrawalStrategy = (strategy: WithdrawalStrategy, yearsInRetirement: number): WithdrawalProjection => {
+  const simulateWithdrawalStrategy = useCallback((strategy: WithdrawalStrategy, yearsInRetirement: number): WithdrawalProjection => {
     const initialWithdrawal = retirementPortfolio * (strategy.withdrawalRate / 100);
-    let currentPortfolio = retirementPortfolio;
-    let currentWithdrawal = initialWithdrawal;
     let portfolioLife = yearsInRetirement;
     
     // Monte Carlo simulation (simplified)
@@ -185,7 +181,7 @@ const WithdrawalStrategyPlanner: React.FC = () => {
       worstCaseScenario: worstCase,
       bestCaseScenario: Math.min(bestCase, yearsInRetirement)
     };
-  };
+  }, [retirementPortfolio, portfolioReturn, portfolioVolatility, inflationRate]);
 
   const generateRandomReturn = (meanReturn: number, volatility: number): number => {
     // Box-Muller transformation for normal distribution

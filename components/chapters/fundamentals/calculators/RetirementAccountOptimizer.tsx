@@ -1,16 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import {
   PiggyBank,
   Target,
-  Calendar,
   DollarSign,
-  TrendingUp,
   Calculator,
-  AlertTriangle,
   CheckCircle
 } from 'lucide-react';
 
@@ -73,7 +70,7 @@ const RetirementAccountOptimizer: React.FC = () => {
 
   useEffect(() => {
     calculateOptimization();
-  }, [currentAge, retirementAge, currentIncome, currentTaxBracket, expectedRetirementTaxBracket, accounts]);
+  }, [currentAge, retirementAge, currentIncome, currentTaxBracket, expectedRetirementTaxBracket, accounts]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const addAccount = () => {
     const newAccount: Account = {
@@ -129,7 +126,7 @@ const RetirementAccountOptimizer: React.FC = () => {
     return limits[accountType];
   };
 
-  const calculateOptimization = () => {
+  const calculateOptimization = useCallback(() => {
     const yearsToRetirement = retirementAge - currentAge;
     const isCatchUpEligible = currentAge >= 50;
     
@@ -143,7 +140,6 @@ const RetirementAccountOptimizer: React.FC = () => {
     // Project future balances
     const futureProjections = accounts.map(account => {
       const annualContribution = account.monthlyContribution * 12;
-      const totalContributions = (account.currentBalance + (annualContribution * yearsToRetirement));
       const projectedBalance = account.currentBalance * Math.pow(1.07, yearsToRetirement) +
         (annualContribution * (Math.pow(1.07, yearsToRetirement) - 1) / 0.07);
 
@@ -185,7 +181,7 @@ const RetirementAccountOptimizer: React.FC = () => {
     }
 
     // Contribution limits
-    accounts.forEach((account, index) => {
+    accounts.forEach((account) => {
       const annualContribution = account.monthlyContribution * 12;
       const effectiveLimit = isCatchUpEligible ? 
         account.contributionLimit + (account.catchUpLimit || 0) : 
@@ -210,7 +206,7 @@ const RetirementAccountOptimizer: React.FC = () => {
       futureProjections,
       recommendations
     });
-  };
+  }, [retirementAge, currentAge, accounts, currentTaxBracket, expectedRetirementTaxBracket]);
 
   const getTaxTreatmentColor = (treatment: Account['taxTreatment']) => {
     switch (treatment) {

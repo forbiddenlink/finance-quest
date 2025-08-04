@@ -1,17 +1,14 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import {
   Heart,
-  Calendar,
   TrendingUp,
   DollarSign,
   Activity,
   Target,
-  Calculator,
-  AlertTriangle,
   Info
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
@@ -46,7 +43,7 @@ const LongevityRiskAnalyzer: React.FC = () => {
   const [currentPortfolio, setCurrentPortfolio] = useState<number>(500000);
   const [annualSavings, setAnnualSavings] = useState<number>(50000);
   const [desiredIncome, setDesiredIncome] = useState<number>(80000);
-  const [inflationRate, setInflationRate] = useState<number>(3);
+  const [inflationRate] = useState<number>(3);
   const [portfolioReturn, setPortfolioReturn] = useState<number>(7);
 
   const [factors, setFactors] = useState<LifeExpectancyFactors>({
@@ -70,13 +67,13 @@ const LongevityRiskAnalyzer: React.FC = () => {
 
   useEffect(() => {
     calculateAdjustedLifeExpectancy();
-  }, [factors]);
+  }, [factors]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     calculateProjections();
-  }, [currentAge, retirementAge, currentPortfolio, annualSavings, desiredIncome, inflationRate, portfolioReturn, adjustedLifeExpectancy]);
+  }, [currentAge, retirementAge, currentPortfolio, annualSavings, desiredIncome, inflationRate, portfolioReturn, adjustedLifeExpectancy]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const calculateAdjustedLifeExpectancy = () => {
+  const calculateAdjustedLifeExpectancy = useCallback(() => {
     let adjustedAge = factors.baseAge;
     
     // Gender adjustment (women live longer on average)
@@ -141,9 +138,9 @@ const LongevityRiskAnalyzer: React.FC = () => {
     adjustedAge += educationAdjustments[factors.education];
     
     setAdjustedLifeExpectancy(Math.max(65, Math.round(adjustedAge)));
-  };
+  }, [factors]);
 
-  const calculateProjections = () => {
+  const calculateProjections = useCallback(() => {
     const yearsToRetirement = retirementAge - currentAge;
     const portfolioAtRetirement = currentPortfolio * Math.pow(1 + portfolioReturn/100, yearsToRetirement) +
       (annualSavings * (Math.pow(1 + portfolioReturn/100, yearsToRetirement) - 1) / (portfolioReturn/100));
@@ -176,9 +173,9 @@ const LongevityRiskAnalyzer: React.FC = () => {
     }
 
     setProjections(newProjections);
-  };
+  }, [retirementAge, currentAge, currentPortfolio, portfolioReturn, annualSavings, adjustedLifeExpectancy, desiredIncome, inflationRate]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const calculateSurvivalProbability = (targetAge: number): number => {
+  const calculateSurvivalProbability = useCallback((targetAge: number): number => {
     // Simplified survival probability based on adjusted life expectancy
     const yearsFromExpected = targetAge - adjustedLifeExpectancy;
     
@@ -187,26 +184,26 @@ const LongevityRiskAnalyzer: React.FC = () => {
     } else {
       return Math.max(5, 50 - yearsFromExpected * 8); // Lower probability for ages after expected
     }
-  };
+  }, [adjustedLifeExpectancy]);
 
-  const calculateRequiredPortfolio = (annualIncome: number, years: number): number => {
+  const calculateRequiredPortfolio = useCallback((annualIncome: number, years: number): number => {
     // Present value of annuity calculation
     const realReturn = (portfolioReturn - inflationRate) / 100;
     if (realReturn <= 0) {
       return annualIncome * years;
     }
     return annualIncome * (1 - Math.pow(1 + realReturn, -years)) / realReturn;
-  };
+  }, [portfolioReturn, inflationRate]);
 
-  const calculateTotalWithdrawals = (initialIncome: number, years: number): number => {
+  const calculateTotalWithdrawals = useCallback((initialIncome: number, years: number): number => {
     let total = 0;
     for (let year = 0; year < years; year++) {
       total += initialIncome * Math.pow(1 + inflationRate/100, year);
     }
     return total;
-  };
+  }, [inflationRate]);
 
-  const runMonteCarloSimulation = (initialPortfolio: number, annualIncome: number, years: number, simulations: number): number[] => {
+  const runMonteCarloSimulation = useCallback((initialPortfolio: number, annualIncome: number, years: number, simulations: number): number[] => {
     const outcomes: number[] = [];
     
     for (let sim = 0; sim < simulations; sim++) {
@@ -228,7 +225,7 @@ const LongevityRiskAnalyzer: React.FC = () => {
     }
     
     return outcomes;
-  };
+  }, [portfolioReturn, inflationRate]);
 
   const chartData = useMemo(() => {
     return projections.map(proj => ({
@@ -245,15 +242,6 @@ const LongevityRiskAnalyzer: React.FC = () => {
     if (age >= adjustedLifeExpectancy + 5) return theme.status.success.text;
     if (age >= adjustedLifeExpectancy) return theme.status.warning.text;
     return theme.status.error.text;
-  };
-
-  const getFactorColor = (factor: string, value: string) => {
-    const positiveValues = ['female', 'moderate', 'heavy', 'good', 'excellent', 'low', 'high', 'college', 'graduate'];
-    const negativeValues = ['smoker', 'none', 'poor', 'high'];
-    
-    if (value === 'true' || negativeValues.includes(value)) return theme.status.error.text;
-    if (positiveValues.includes(value)) return theme.status.success.text;
-    return theme.textColors.secondary;
   };
 
   return (
@@ -324,7 +312,7 @@ const LongevityRiskAnalyzer: React.FC = () => {
               </label>
               <select
                 value={factors.exercise}
-                onChange={(e) => setFactors({...factors, exercise: e.target.value as any})}
+                onChange={(e) => setFactors({...factors, exercise: e.target.value as LifeExpectancyFactors['exercise']})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
               >
                 <option value="none">None</option>
@@ -340,7 +328,7 @@ const LongevityRiskAnalyzer: React.FC = () => {
               </label>
               <select
                 value={factors.diet}
-                onChange={(e) => setFactors({...factors, diet: e.target.value as any})}
+                onChange={(e) => setFactors({...factors, diet: e.target.value as LifeExpectancyFactors['diet']})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
               >
                 <option value="poor">Poor</option>
@@ -356,7 +344,7 @@ const LongevityRiskAnalyzer: React.FC = () => {
               </label>
               <select
                 value={factors.familyHistory}
-                onChange={(e) => setFactors({...factors, familyHistory: e.target.value as any})}
+                onChange={(e) => setFactors({...factors, familyHistory: e.target.value as LifeExpectancyFactors['familyHistory']})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
               >
                 <option value="poor">Poor longevity</option>
@@ -374,7 +362,7 @@ const LongevityRiskAnalyzer: React.FC = () => {
               </label>
               <select
                 value={factors.stress}
-                onChange={(e) => setFactors({...factors, stress: e.target.value as any})}
+                onChange={(e) => setFactors({...factors, stress: e.target.value as LifeExpectancyFactors['stress']})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
               >
                 <option value="high">High stress</option>
@@ -389,7 +377,7 @@ const LongevityRiskAnalyzer: React.FC = () => {
               </label>
               <select
                 value={factors.income}
-                onChange={(e) => setFactors({...factors, income: e.target.value as any})}
+                onChange={(e) => setFactors({...factors, income: e.target.value as LifeExpectancyFactors['income']})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
               >
                 <option value="low">Low income</option>
@@ -404,7 +392,7 @@ const LongevityRiskAnalyzer: React.FC = () => {
               </label>
               <select
                 value={factors.education}
-                onChange={(e) => setFactors({...factors, education: e.target.value as any})}
+                onChange={(e) => setFactors({...factors, education: e.target.value as LifeExpectancyFactors['education']})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
               >
                 <option value="high-school">High School</option>

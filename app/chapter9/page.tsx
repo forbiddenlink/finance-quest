@@ -1,10 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
-import { useProgressStore } from '@/lib/store/progressStore';
-import { PiggyBank, Target, TrendingUp, Calculator, CheckCircle, Clock, BookOpen, Brain, DollarSign, Calendar, Heart, Percent } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { PiggyBank, Target, TrendingUp, Heart } from 'lucide-react';
 import RetirementPlannerCalculator from '@/components/shared/calculators/RetirementPlannerCalculator';
 import RetirementAccountOptimizer from '@/components/chapters/fundamentals/calculators/RetirementAccountOptimizer';
 import WithdrawalStrategyPlanner from '@/components/chapters/fundamentals/calculators/WithdrawalStrategyPlanner';
