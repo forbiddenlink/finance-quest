@@ -3,9 +3,9 @@
 import React, { useState, useEffect, ReactNode } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-import { Calculator, Loader2, AlertCircle, CheckCircle, AlertTriangle, XCircle, Info as InfoIcon, RotateCcw, Share2, Download, Lightbulb } from 'lucide-react';
+import { Calculator, AlertCircle, CheckCircle, AlertTriangle, XCircle, Info as InfoIcon, RotateCcw, Share2, Download, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { formatCurrency, formatPercentage, validatePositiveNumber } from '@/lib/utils/financial';
+import { formatCurrency, formatPercentage } from '@/lib/utils/financial';
 
 export interface CalculatorMetadata {
   id: string;

@@ -4,7 +4,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
 import { CurrencyInput, NumberInput } from '@/components/shared/calculators/FormFields';
 import { ResultCard } from '@/components/shared/calculators/ResultComponents';
-import { calculateCompoundInterest, formatCurrency, formatPercentage } from '@/lib/utils/financial';
+import { formatCurrency } from '@/lib/utils/financial';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Sparkles, TrendingUp } from 'lucide-react';
 import { theme } from '@/lib/theme';
@@ -105,9 +105,6 @@ export default function CompoundInterestCalculator() {
         
         const effectiveReturn = results.totalContributed > 0 ? 
             ((results.finalAmount / results.totalContributed - 1) * 100) : 0;
-        
-        const interestMultiplier = results.totalContributed > 0 ? 
-            (results.totalInterest / results.totalContributed) : 0;
 
         // High growth insight
         if (effectiveReturn > 200) {

@@ -9,11 +9,11 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Zap, AlertTriangle, Info, DollarSign, Target, BarChart3, 
+  Zap, AlertTriangle, Info, Target, BarChart3, 
   Package, Plus, Minus, TrendingUp, Settings
 } from 'lucide-react';
 import { theme } from '@/lib/theme';
-import { PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, AreaChart, Area } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import CalculatorWrapper from './CalculatorWrapper';
 
 interface CommodityMetrics {
@@ -623,7 +623,7 @@ export default function CommodityPortfolioBuilder() {
           </Button>
           {!showAnalysis && (
             <p className={`${theme.textColors.muted} text-sm mt-2`}>
-              Get comprehensive analysis of your commodity portfolio's risk-return profile
+              Get comprehensive analysis of your commodity portfolio&apos;s risk-return profile
             </p>
           )}
         </motion.div>

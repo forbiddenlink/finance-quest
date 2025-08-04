@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { 
-  Target, DollarSign, PieChart as PieChartIcon, BarChart3, 
+  Target, BarChart3, 
   Shuffle, Settings, Plus, Minus, Info
 } from 'lucide-react';
 import { theme } from '@/lib/theme';
@@ -761,7 +761,7 @@ export default function AlternativeInvestmentPortfolioOptimizer() {
                   Portfolio Performance Analysis
                 </CardTitle>
                 <CardDescription className={theme.textColors.secondary}>
-                  Comprehensive analysis of your portfolio's risk-return profile and characteristics
+                  Comprehensive analysis of your portfolio&apos;s risk-return profile and characteristics
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -855,7 +855,7 @@ export default function AlternativeInvestmentPortfolioOptimizer() {
                   Optimization Recommendations
                 </CardTitle>
                 <CardDescription className={theme.textColors.secondary}>
-                  AI-powered recommendations to improve your portfolio's risk-adjusted returns
+                  AI-powered recommendations to improve your portfolio&apos;s risk-adjusted returns
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">

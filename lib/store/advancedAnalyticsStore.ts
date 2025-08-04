@@ -367,10 +367,6 @@ export const useAdvancedAnalytics = create<AdvancedAnalyticsStore>()(
           .filter(s => s.currentLevel < 60)
           .map(s => s.skillName);
 
-        const improvingSkills = state.skills
-          .filter(s => s.trend === 'improving')
-          .map(s => s.skillName);
-
         const nextSteps = state.recommendations
           .filter(r => !r.consumed && r.priority === 'high')
           .map(r => r.title);

@@ -1,11 +1,20 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 
+// Type definitions for better type safety
+interface CalculatorInputs {
+  [key: string]: string | number | boolean;
+}
+
+interface CalculatorResults {
+  [key: string]: string | number | boolean | CalculatorResults;
+}
+
 // Hook for calculator state management
-export function useCalculatorState(calculatorId: string, initialInputs: Record<string, any>) {
+export function useCalculatorState(calculatorId: string, initialInputs: CalculatorInputs) {
   const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
   const [inputs, setInputs] = useState(initialInputs);
-  const [results, setResults] = useState<any>(null);
+  const [results, setResults] = useState<CalculatorResults | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -13,12 +22,12 @@ export function useCalculatorState(calculatorId: string, initialInputs: Record<s
     recordCalculatorUsage(calculatorId);
   }, [recordCalculatorUsage, calculatorId]);
 
-  const updateInput = useCallback((key: string, value: any) => {
+  const updateInput = useCallback((key: string, value: string | number | boolean) => {
     setInputs(prev => ({ ...prev, [key]: value }));
     setError(null);
   }, []);
 
-  const updateMultipleInputs = useCallback((updates: Record<string, any>) => {
+  const updateMultipleInputs = useCallback((updates: CalculatorInputs) => {
     setInputs(prev => ({ ...prev, ...updates }));
     setError(null);
   }, []);
@@ -29,7 +38,7 @@ export function useCalculatorState(calculatorId: string, initialInputs: Record<s
     setError(null);
   }, [initialInputs]);
 
-  const calculate = useCallback(async (calculationFn: (inputs: any) => Promise<any> | any) => {
+  const calculate = useCallback(async (calculationFn: (inputs: CalculatorInputs) => Promise<CalculatorResults> | CalculatorResults) => {
     setIsCalculating(true);
     setError(null);
     
@@ -56,12 +65,12 @@ export function useCalculatorState(calculatorId: string, initialInputs: Record<s
 }
 
 // Hook for form validation
-export function useFormValidation<T>(initialValues: T, validationRules: Record<keyof T, (value: any) => string | null>) {
+export function useFormValidation<T extends Record<string, unknown>>(initialValues: T, validationRules: Record<keyof T, (value: unknown) => string | null>) {
   const [values, setValues] = useState<T>(initialValues);
   const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
   const [touched, setTouchedState] = useState<Partial<Record<keyof T, boolean>>>({});
 
-  const validateField = useCallback((field: keyof T, value: any): string | null => {
+  const validateField = useCallback((field: keyof T, value: unknown): string | null => {
     const rule = validationRules[field];
     return rule ? rule(value) : null;
   }, [validationRules]);
@@ -81,9 +90,9 @@ export function useFormValidation<T>(initialValues: T, validationRules: Record<k
 
     setErrors(newErrors);
     return isValid;
-  }, [values, validateField]);
+  }, [values, validateField, validationRules]);
 
-  const setValue = useCallback((field: keyof T, value: any) => {
+  const setValue = useCallback((field: keyof T, value: unknown) => {
     setValues(prev => ({ ...prev, [field]: value }));
     
     // Validate field if it's been touched
@@ -119,8 +128,18 @@ export function useFormValidation<T>(initialValues: T, validationRules: Record<k
   };
 }
 
+// Quiz question interface
+interface QuizQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation?: string;
+  difficulty?: 'easy' | 'medium' | 'hard';
+}
+
 // Hook for quiz state management
-export function useQuizState(questions: any[], passingScore: number) {
+export function useQuizState(questions: QuizQuestion[], passingScore: number) {
   const recordQuizScore = useProgressStore((state) => state.recordQuizScore);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>(new Array(questions.length).fill(-1));
@@ -260,7 +279,7 @@ export function useLessonProgress(lessonId: string, totalSections: number) {
 // Hook for data fetching with loading states
 export function useAsyncData<T>(
   fetchFn: () => Promise<T>,
-  dependencies: any[] = []
+  dependencies: React.DependencyList = []
 ) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
@@ -278,7 +297,8 @@ export function useAsyncData<T>(
     } finally {
       setLoading(false);
     }
-  }, dependencies);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchFn, ...dependencies]);
 
   useEffect(() => {
     fetch();

@@ -170,7 +170,7 @@ export function calculateDebtPayoff(
   if (debts.length === 0) return [];
   
   // Clone debts and sort by strategy
-  let sortedDebts = [...debts];
+  const sortedDebts = [...debts];
   if (strategy === 'avalanche') {
     sortedDebts.sort((a, b) => b.interestRate - a.interestRate);
   } else {

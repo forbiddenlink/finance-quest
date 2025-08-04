@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
-import { Calculator, FileText, TrendingUp, DollarSign, Percent, PieChart, MapPin } from 'lucide-react';
+import { Calculator, TrendingUp, Percent, PieChart, MapPin } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { theme } from '@/lib/theme';
 
@@ -114,7 +114,6 @@ export default function TaxOptimizationCalculator() {
 
         // Capital gains/loss optimization
         const netGains = Math.max(0, gains - losses);
-        const capitalGainsTax = netGains * 0.15; // Simplified capital gains rate
         const lossCarryforward = Math.max(0, losses - gains - 3000); // $3k annual limit
         const taxSavings = Math.min(losses, gains + 3000) * marginalRate;
 
@@ -130,7 +129,6 @@ export default function TaxOptimizationCalculator() {
         const breakEvenYears = potentialSavings > 0 ? conversionTax / (rothAmount * 0.07 * (marginalRate - assumedRetirementRate)) : 0;
 
         // State optimization
-        const noTaxStates = ['FL', 'TX', 'WA', 'NV', 'WY', 'TN', 'AK'];
         const bestNoTaxState = 'FL'; // Popular choice
         const annualSavings = stateTax;
         

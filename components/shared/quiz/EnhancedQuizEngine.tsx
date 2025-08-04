@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
-import { CheckCircle, XCircle, Sparkles, Brain, DollarSign, TrendingUp } from 'lucide-react';
+import { CheckCircle, XCircle, Sparkles } from 'lucide-react';
 import { theme } from '@/lib/theme';
 
 export interface QuizQuestion {
@@ -300,7 +300,7 @@ export default function EnhancedQuizEngine({ config, onComplete, className = '' 
               ) : (
                 <>
                   <XCircle className="w-4 h-4" />
-                  Not quite - here's why:
+                  Not quite - here&apos;s why:
                 </>
               )}
             </h3>

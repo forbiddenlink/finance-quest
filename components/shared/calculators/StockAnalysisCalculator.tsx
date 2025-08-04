@@ -2,10 +2,8 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { TrendingUp, TrendingDown, AlertTriangle, DollarSign, Percent, Target, BarChart3 } from 'lucide-react';
+import { TrendingUp, AlertTriangle, BarChart3 } from 'lucide-react';
 import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
 import { theme } from '@/lib/theme';
 
 interface ValuationResults {
@@ -50,7 +48,6 @@ export default function StockAnalysisCalculator() {
         const divYield = parseFloat(dividendYield) || 0.5;
         const totalDebt = parseFloat(debt) || 110;
         const totalEquity = parseFloat(equity) || 62;
-        const rev = parseFloat(revenue) || 365;
         const mcap = parseFloat(marketCap) || 2400;
         const fcf = parseFloat(freeCashFlow) || 92;
 
@@ -61,7 +58,6 @@ export default function StockAnalysisCalculator() {
         const debtToEquity = totalDebt / totalEquity;
         const roe = (eps / bv) * 100; // Simplified ROE
         const roa = (eps / (totalDebt + totalEquity)) * 100; // Simplified ROA
-        const priceToSales = mcap / rev;
         const fcfYield = (fcf / mcap) * 100;
 
         // DCF-based intrinsic value calculation (simplified)
@@ -172,7 +168,7 @@ export default function StockAnalysisCalculator() {
                 roa
             }
         });
-    }, [currentPrice, earnings, bookValue, revenue, growthRate, dividendYield, debt, equity, marketCap, freeCashFlow]);
+    }, [currentPrice, earnings, bookValue, growthRate, dividendYield, debt, equity, marketCap, freeCashFlow]);
 
     useEffect(() => {
         analyzeStock();

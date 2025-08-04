@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
+import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
+import { CurrencyInput, SelectField } from '@/components/shared/calculators/FormFields';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-import { Shield, Target, Calendar, DollarSign, TrendingUp, AlertCircle, CheckCircle } from 'lucide-react';
-import { useProgressStore } from '@/lib/store/progressStore';
-import { theme } from '@/lib/theme';
+import { Shield, Target, CheckCircle } from 'lucide-react';
+import { formatCurrency } from '@/lib/utils/financial';
+import { Progress } from '@/components/ui/progress';
 
 interface ExpenseCategory {
   name: string;
@@ -21,34 +23,30 @@ interface SavingsMilestone {
 }
 
 export default function EmergencyFundCalculator() {
-  // Income and expenses
-  const [monthlyIncome, setMonthlyIncome] = useState<string>('6000');
-  const [rent, setRent] = useState<string>('1500');
-  const [utilities, setUtilities] = useState<string>('200');
-  const [groceries, setGroceries] = useState<string>('600');
-  const [transportation, setTransportation] = useState<string>('400');
-  const [insurance, setInsurance] = useState<string>('300');
-  const [minimumDebt, setMinimumDebt] = useState<string>('250');
-  const [other, setOther] = useState<string>('300');
+  // Input states
+  const [monthlyIncome, setMonthlyIncome] = useState('6000');
+  const [rent, setRent] = useState('1500');
+  const [utilities, setUtilities] = useState('200');
+  const [groceries, setGroceries] = useState('600');
+  const [transportation, setTransportation] = useState('400');
+  const [insurance, setInsurance] = useState('300');
+  const [minimumDebt, setMinimumDebt] = useState('250');
+  const [other, setOther] = useState('300');
+  const [monthsOfExpenses, setMonthsOfExpenses] = useState('6');
+  const [monthlySavings, setMonthlySavings] = useState('500');
+  const [currentSavings, setCurrentSavings] = useState('1000');
 
-  // Emergency fund settings
-  const [monthsOfExpenses, setMonthsOfExpenses] = useState<string>('6');
-  const [monthlySavings, setMonthlySavings] = useState<string>('500');
-  const [currentSavings, setCurrentSavings] = useState<string>('1000');
-
-  // Results
-  const [totalExpenses, setTotalExpenses] = useState(0);
-  const [emergencyFundTarget, setEmergencyFundTarget] = useState(0);
-  const [timeToGoal, setTimeToGoal] = useState(0);
-  const [expenseBreakdown, setExpenseBreakdown] = useState<ExpenseCategory[]>([]);
-  const [savingsMilestones, setSavingsMilestones] = useState<SavingsMilestone[]>([]);
-
-  // Track calculator usage
-  const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
-
-  useEffect(() => {
-    recordCalculatorUsage('emergency-fund');
-  }, [recordCalculatorUsage]);
+  // Results state
+  const [results, setResults] = useState({
+    totalExpenses: 0,
+    emergencyFundTarget: 0,
+    timeToGoal: 0,
+    expenseBreakdown: [] as ExpenseCategory[],
+    savingsMilestones: [] as SavingsMilestone[],
+    incomeAfterExpenses: 0,
+    savingsRate: 0,
+    currentProgress: 0
+  });
 
   const calculateEmergencyFund = useCallback(() => {
     const rentAmount = parseFloat(rent) || 0;
@@ -61,6 +59,7 @@ export default function EmergencyFundCalculator() {
     const months = parseFloat(monthsOfExpenses) || 6;
     const savings = parseFloat(monthlySavings) || 0;
     const current = parseFloat(currentSavings) || 0;
+    const income = parseFloat(monthlyIncome) || 0;
 
     const expenses = rentAmount + utilitiesAmount + groceriesAmount +
       transportationAmount + insuranceAmount + debtAmount + otherAmount;
@@ -68,10 +67,9 @@ export default function EmergencyFundCalculator() {
     const target = expenses * months;
     const remaining = Math.max(0, target - current);
     const timeMonths = savings > 0 ? Math.ceil(remaining / savings) : 0;
-
-    setTotalExpenses(expenses);
-    setEmergencyFundTarget(target);
-    setTimeToGoal(timeMonths);
+    const incomeAfterExpenses = income - expenses;
+    const savingsRate = income > 0 ? (savings / income) * 100 : 0;
+    const currentProgress = target > 0 ? (current / target) * 100 : 0;
 
     // Expense breakdown for pie chart
     const breakdown: ExpenseCategory[] = [
@@ -83,8 +81,6 @@ export default function EmergencyFundCalculator() {
       { name: 'Debt Payments', amount: debtAmount, essential: true, color: '#8B5CF6' },
       { name: 'Other', amount: otherAmount, essential: false, color: '#6B7280' }
     ].filter(category => category.amount > 0);
-
-    setExpenseBreakdown(breakdown);
 
     // Savings milestones
     const milestones: SavingsMilestone[] = [
@@ -100,20 +96,34 @@ export default function EmergencyFundCalculator() {
       milestone.months = savings > 0 ? Math.ceil(remainingToMilestone / savings) : 0;
     });
 
-    setSavingsMilestones(milestones);
-  }, [rent, utilities, groceries, transportation, insurance, minimumDebt, other, monthsOfExpenses, monthlySavings, currentSavings]);
+    setResults({
+      totalExpenses: expenses,
+      emergencyFundTarget: target,
+      timeToGoal: timeMonths,
+      expenseBreakdown: breakdown,
+      savingsMilestones: milestones,
+      incomeAfterExpenses,
+      savingsRate,
+      currentProgress
+    });
+  }, [rent, utilities, groceries, transportation, insurance, minimumDebt, other, monthsOfExpenses, monthlySavings, currentSavings, monthlyIncome]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     calculateEmergencyFund();
   }, [calculateEmergencyFund]);
 
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
+  const handleReset = () => {
+    setMonthlyIncome('6000');
+    setRent('1500');
+    setUtilities('200');
+    setGroceries('600');
+    setTransportation('400');
+    setInsurance('300');
+    setMinimumDebt('250');
+    setOther('300');
+    setMonthsOfExpenses('6');
+    setMonthlySavings('500');
+    setCurrentSavings('1000');
   };
 
   const formatMonths = (months: number) => {
@@ -126,256 +136,286 @@ export default function EmergencyFundCalculator() {
     return `${years} year${years > 1 ? 's' : ''}, ${remainingMonths} month${remainingMonths > 1 ? 's' : ''}`;
   };
 
-  const incomeAfterExpenses = parseFloat(monthlyIncome) - totalExpenses;
-  const savingsRate = parseFloat(monthlyIncome) > 0 ? (parseFloat(monthlySavings) / parseFloat(monthlyIncome)) * 100 : 0;
-  const currentProgress = emergencyFundTarget > 0 ? (parseFloat(currentSavings) / emergencyFundTarget) * 100 : 0;
+  // Generate insights based on calculations
+  const generateInsights = () => {
+    const insights = [];
+    
+    // Budget health insight
+    if (results.incomeAfterExpenses > 0) {
+      insights.push({
+        type: 'success' as const,
+        title: 'Healthy Budget',
+        message: `Great! You have ${formatCurrency(results.incomeAfterExpenses)} left after essential expenses. This gives you flexibility to build your emergency fund.`
+      });
+    } else {
+      insights.push({
+        type: 'error' as const,
+        title: 'Budget Deficit',
+        message: `Warning: You're spending ${formatCurrency(Math.abs(results.incomeAfterExpenses))} more than you earn. Focus on reducing expenses before building emergency savings.`
+      });
+    }
+
+    // Savings rate insight
+    if (results.savingsRate >= 20) {
+      insights.push({
+        type: 'success' as const,
+        title: 'Excellent Savings Rate',
+        message: `Your ${results.savingsRate.toFixed(1)}% savings rate is excellent! You're well positioned to build wealth long-term.`
+      });
+    } else if (results.savingsRate >= 10) {
+      insights.push({
+        type: 'info' as const,
+        title: 'Good Savings Rate',
+        message: `Your ${results.savingsRate.toFixed(1)}% savings rate is good. Consider increasing to 20%+ for faster wealth building.`
+      });
+    } else {
+      insights.push({
+        type: 'warning' as const,
+        title: 'Low Savings Rate',
+        message: `Your ${results.savingsRate.toFixed(1)}% savings rate is below the recommended 10%. Try to cut expenses or increase income.`
+      });
+    }
+
+    // Progress insight
+    if (results.currentProgress >= 100) {
+      insights.push({
+        type: 'success' as const,
+        title: 'Emergency Fund Complete!',
+        message: `Congratulations! You've reached your emergency fund goal. Consider investing additional savings for growth.`
+      });
+    } else if (results.currentProgress >= 50) {
+      insights.push({
+        type: 'info' as const,
+        title: 'Halfway There!',
+        message: `You're ${results.currentProgress.toFixed(1)}% to your emergency fund goal. Keep up the momentum!`
+      });
+    }
+
+    // Time to goal insight
+    if (results.timeToGoal <= 12) {
+      insights.push({
+        type: 'success' as const,
+        title: 'Quick Goal Achievement',
+        message: `At your current savings rate, you'll reach your emergency fund goal in just ${formatMonths(results.timeToGoal)}!`
+      });
+    }
+
+    return insights;
+  };
+
+  // Calculator metadata
+  const metadata = {
+    id: 'emergency-fund-calculator',
+    title: 'Emergency Fund Calculator',
+    description: 'Build your financial safety net with personalized targets and realistic timelines.',
+    category: 'basic' as const,
+    icon: Shield,
+    tags: ['emergency fund', 'savings', 'financial security', 'budgeting'],
+    educationalNotes: [
+      {
+        title: 'Emergency Fund Strategy',
+        content: 'An emergency fund is your financial safety net for unexpected expenses like job loss, medical bills, or major repairs. It should be easily accessible but separate from your regular checking account.',
+        tips: [
+          'Start small with $1,000, then work toward 3-6 months of expenses',
+          'Keep emergency funds in high-yield savings accounts',
+          'Automate transfers on payday to build consistently',
+          'Commission workers and contractors need larger emergency funds'
+        ]
+      },
+      {
+        title: 'Calculating Your Target',
+        content: 'Your emergency fund should cover essential expenses only, not your entire lifestyle. Focus on housing, utilities, food, transportation, insurance, and minimum debt payments.',
+        tips: [
+          'Use only essential expenses in your calculation',
+          'Single-income families should target 9-12 months',
+          'Government employees might need only 3 months',
+          'Freelancers should target 6-12 months minimum'
+        ]
+      }
+    ]
+  };
+
+  // Results formatting for the wrapper
+  const calculatorResults = {
+    primary: {
+      label: 'Emergency Fund Target',
+      value: results.emergencyFundTarget,
+      format: 'currency' as const,
+      variant: 'success' as const,
+      description: `${monthsOfExpenses} months of essential expenses`
+    },
+    secondary: [
+      {
+        label: 'Monthly Expenses',
+        value: results.totalExpenses,
+        format: 'currency' as const,
+        description: 'Total essential monthly costs'
+      },
+      {
+        label: 'Time to Goal',
+        value: results.timeToGoal,
+        format: 'months' as const,
+        variant: results.timeToGoal <= 12 ? 'success' as const : 'info' as const,
+        description: `At ${formatCurrency(parseFloat(monthlySavings))}/month`
+      },
+      {
+        label: 'Current Progress',
+        value: results.currentProgress,
+        format: 'percentage' as const,
+        variant: results.currentProgress >= 100 ? 'success' as const : 
+                 results.currentProgress >= 50 ? 'info' as const : 'warning' as const,
+        description: `${formatCurrency(parseFloat(currentSavings))} saved so far`
+      }
+    ]
+  };
 
   return (
-    <div className={`min-h-screen ${theme.backgrounds.primary}`}>
-      {/* Header */}
-      <div className="bg-slate-900/80 backdrop-blur-xl border-b border-amber-500/20">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-white mb-2 flex items-center justify-center gap-3">
-              <Shield className="w-8 h-8 text-amber-400" />
-              Emergency Fund Calculator
-            </h2>
-            <p className="text-gray-300">
-              Build your financial safety net with personalized targets and realistic timelines
-            </p>
+    <CalculatorWrapper
+      metadata={metadata}
+      results={calculatorResults}
+      insights={generateInsights()}
+      onReset={handleReset}
+    >
+      <div className="space-y-6">
+        {/* Income Section */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4 text-blue-700 dark:text-blue-300">Income</h3>
+          <CurrencyInput
+            id="monthly-income"
+            label="Monthly Income"
+            value={monthlyIncome}
+            onChange={setMonthlyIncome}
+            placeholder="6,000"
+            helpText="Your total monthly take-home pay"
+          />
+        </div>
+
+        {/* Essential Expenses */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4 text-blue-700 dark:text-blue-300">Essential Monthly Expenses</h3>
+          <div className="space-y-4">
+            <CurrencyInput
+              id="housing"
+              label="Housing (Rent/Mortgage)"
+              value={rent}
+              onChange={setRent}
+              placeholder="1,500"
+              helpText="Monthly housing payment"
+            />
+            <CurrencyInput
+              id="utilities"
+              label="Utilities"
+              value={utilities}
+              onChange={setUtilities}
+              placeholder="200"
+              helpText="Electric, gas, water, internet, phone"
+            />
+            <CurrencyInput
+              id="groceries"
+              label="Groceries"
+              value={groceries}
+              onChange={setGroceries}
+              placeholder="600"
+              helpText="Essential food and household items"
+            />
+            <CurrencyInput
+              id="transportation"
+              label="Transportation"
+              value={transportation}
+              onChange={setTransportation}
+              placeholder="400"
+              helpText="Car payment, gas, public transit"
+            />
+            <CurrencyInput
+              id="insurance"
+              label="Insurance"
+              value={insurance}
+              onChange={setInsurance}
+              placeholder="300"
+              helpText="Health, auto, life insurance premiums"
+            />
+            <CurrencyInput
+              id="debt-payments"
+              label="Minimum Debt Payments"
+              value={minimumDebt}
+              onChange={setMinimumDebt}
+              placeholder="250"
+              helpText="Credit cards, loans (minimums only)"
+            />
+            <CurrencyInput
+              id="other-essential"
+              label="Other Essential"
+              value={other}
+              onChange={setOther}
+              placeholder="300"
+              helpText="Childcare, prescriptions, etc."
+            />
           </div>
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          {/* Input Controls */}
-          <div className="xl:col-span-1 space-y-6">
-            {/* Income */}
-            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
-              <h3 className="text-lg font-semibold text-white mb-4">Monthly Income</h3>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                <input
-                  type="number"
-                  value={monthlyIncome}
-                  onChange={(e) => setMonthlyIncome(e.target.value)}
-                  className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                  placeholder="6000"
-                />
-              </div>
-            </div>
-
-            {/* Essential Expenses */}
-            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
-              <h3 className="text-lg font-semibold text-white mb-4">Essential Monthly Expenses</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Housing (Rent/Mortgage)</label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                    <input
-                      type="number"
-                      value={rent}
-                      onChange={(e) => setRent(e.target.value)}
-                      className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                      placeholder="1500"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Utilities</label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                    <input
-                      type="number"
-                      value={utilities}
-                      onChange={(e) => setUtilities(e.target.value)}
-                      className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                      placeholder="200"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Groceries</label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                    <input
-                      type="number"
-                      value={groceries}
-                      onChange={(e) => setGroceries(e.target.value)}
-                      className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                      placeholder="600"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Transportation</label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                    <input
-                      type="number"
-                      value={transportation}
-                      onChange={(e) => setTransportation(e.target.value)}
-                      className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                      placeholder="400"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Insurance</label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                    <input
-                      type="number"
-                      value={insurance}
-                      onChange={(e) => setInsurance(e.target.value)}
-                      className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                      placeholder="300"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Minimum Debt Payments</label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                    <input
-                      type="number"
-                      value={minimumDebt}
-                      onChange={(e) => setMinimumDebt(e.target.value)}
-                      className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                      placeholder="250"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Other Essential</label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                    <input
-                      type="number"
-                      value={other}
-                      onChange={(e) => setOther(e.target.value)}
-                      className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                      placeholder="300"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Emergency Fund Settings */}
-            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
-              <h3 className="text-lg font-semibold text-white mb-4">Emergency Fund Goals</h3>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Target (Months of Expenses)</label>
-                  <select
-                    value={monthsOfExpenses}
-                    onChange={(e) => setMonthsOfExpenses(e.target.value)}
-                    className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                  >
-                    <option value="1">1 month (Minimum)</option>
-                    <option value="3">3 months (Standard)</option>
-                    <option value="6">6 months (Recommended)</option>
-                    <option value="9">9 months (Conservative)</option>
-                    <option value="12">12 months (High Risk Jobs)</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Monthly Savings Goal</label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                    <input
-                      type="number"
-                      value={monthlySavings}
-                      onChange={(e) => setMonthlySavings(e.target.value)}
-                      className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                      placeholder="500"
-                    />
-                  </div>
-                  <p className="text-xs text-amber-400 mt-1">
-                    {savingsRate.toFixed(1)}% of income
-                  </p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Current Emergency Savings</label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                    <input
-                      type="number"
-                      value={currentSavings}
-                      onChange={(e) => setCurrentSavings(e.target.value)}
-                      className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                      placeholder="1000"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+        {/* Emergency Fund Goals */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4 text-blue-700 dark:text-blue-300">Emergency Fund Settings</h3>
+          <div className="space-y-4">
+            <SelectField
+              id="months-target"
+              label="Target (Months of Expenses)"
+              value={monthsOfExpenses}
+              onChange={setMonthsOfExpenses}
+              options={[
+                { value: '1', label: '1 month (Minimum)' },
+                { value: '3', label: '3 months (Standard)' },
+                { value: '6', label: '6 months (Recommended)' },
+                { value: '9', label: '9 months (Conservative)' },
+                { value: '12', label: '12 months (High Risk Jobs)' }
+              ]}
+              helpText="How many months of expenses to save"
+            />
+            <CurrencyInput
+              id="monthly-savings"
+              label="Monthly Savings Goal"
+              value={monthlySavings}
+              onChange={setMonthlySavings}
+              placeholder="500"
+              helpText={`${results.savingsRate.toFixed(1)}% of income`}
+            />
+            <CurrencyInput
+              id="current-savings"
+              label="Current Emergency Savings"
+              value={currentSavings}
+              onChange={setCurrentSavings}
+              placeholder="1,000"
+              helpText="Amount already saved for emergencies"
+            />
           </div>
+        </div>
 
-          {/* Results and Charts */}
-          <div className="xl:col-span-2 space-y-8">
-            {/* Key Results */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center`}>
-                <DollarSign className="w-8 h-8 mx-auto mb-3 text-amber-400" />
-                <h3 className="text-lg font-semibold text-white">Monthly Expenses</h3>
-                <p className="text-2xl font-bold text-amber-300">{formatCurrency(totalExpenses)}</p>
-                <p className="text-sm text-gray-300">Essential costs to cover</p>
-              </div>
-
-              <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center`}>
-                <Target className="w-8 h-8 mx-auto mb-3 text-blue-400" />
-                <h3 className="text-lg font-semibold text-white">Emergency Fund Target</h3>
-                <p className="text-2xl font-bold text-blue-300">{formatCurrency(emergencyFundTarget)}</p>
-                <p className="text-sm text-gray-300">{monthsOfExpenses} months of expenses</p>
-              </div>
-
-              <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6 text-center`}>
-                <Calendar className="w-8 h-8 mx-auto mb-3 text-slate-400" />
-                <h3 className="text-lg font-semibold text-white">Time to Goal</h3>
-                <p className="text-2xl font-bold text-slate-300">{formatMonths(timeToGoal)}</p>
-                <p className="text-sm text-gray-300">At ${monthlySavings}/month</p>
-              </div>
-            </div>
-
+        {/* Charts and Additional Content */}
+        {results.expenseBreakdown.length > 0 && (
+          <div className="space-y-8 mt-8">
             {/* Progress Bar */}
-            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
-              <h3 className="text-lg font-semibold text-white mb-4">Current Progress</h3>
-              <div className="relative">
-                <div className="w-full bg-slate-700 rounded-full h-6">
-                  <div
-                    className="bg-gradient-to-r from-amber-500 to-blue-500 h-6 rounded-full transition-all duration-500"
-                    style={{ width: `${Math.min(currentProgress, 100)}%` }}
-                  ></div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-blue-700 dark:text-blue-300">Current Progress</h3>
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>{formatCurrency(parseFloat(currentSavings))}</span>
+                  <span>{formatCurrency(results.emergencyFundTarget)}</span>
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-sm font-medium text-white">
-                    {formatCurrency(parseFloat(currentSavings))} / {formatCurrency(emergencyFundTarget)} ({currentProgress.toFixed(1)}%)
-                  </span>
+                <Progress value={Math.min(results.currentProgress, 100)} className="h-3" />
+                <div className="text-center text-sm text-gray-600">
+                  {results.currentProgress.toFixed(1)}% Complete
                 </div>
               </div>
             </div>
 
             {/* Expense Breakdown Chart */}
-            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
-              <h3 className="text-lg font-semibold text-white mb-4">Monthly Expense Breakdown</h3>
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-blue-700 dark:text-blue-300">Monthly Expense Breakdown</h3>
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={expenseBreakdown}
+                      data={results.expenseBreakdown}
                       cx="50%"
                       cy="50%"
                       innerRadius={60}
@@ -383,7 +423,7 @@ export default function EmergencyFundCalculator() {
                       dataKey="amount"
                       nameKey="name"
                     >
-                      {expenseBreakdown.map((entry, index) => (
+                      {results.expenseBreakdown.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
@@ -391,34 +431,44 @@ export default function EmergencyFundCalculator() {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
+              
+              {/* Legend */}
+              <div className="grid grid-cols-2 gap-2 mt-4">
+                {results.expenseBreakdown.map((entry, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded" style={{ backgroundColor: entry.color }}></div>
+                    <span className="text-sm text-gray-600">{entry.name}: {formatCurrency(entry.amount)}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Savings Milestones */}
-            <div className={`${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
-              <h3 className="text-lg font-semibold text-white mb-4">Savings Milestones</h3>
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-blue-700 dark:text-blue-300">Savings Milestones</h3>
               <div className="space-y-3">
-                {savingsMilestones.map((milestone, index) => {
+                {results.savingsMilestones.map((milestone, index) => {
                   const achieved = parseFloat(currentSavings) >= milestone.amount;
-
                   return (
-                    <div key={index} className={`flex items-center justify-between p-4 rounded-lg border-2 ${achieved ? 'bg-amber-500/20 border-amber-500/30' : 'bg-slate-800/50 border-slate-600'
-                      }`}>
+                    <div key={index} className={`flex items-center justify-between p-4 rounded-lg border-2 ${
+                      achieved ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'
+                    }`}>
                       <div className="flex items-center gap-3">
                         {achieved ? (
-                          <CheckCircle className="w-5 h-5 text-amber-400" />
+                          <CheckCircle className="w-5 h-5 text-green-500" />
                         ) : (
                           <Target className="w-5 h-5 text-gray-400" />
                         )}
                         <div>
-                          <div className={`font-medium ${achieved ? 'text-amber-300' : 'text-white'}`}>
+                          <div className={`font-medium ${achieved ? 'text-green-700' : 'text-gray-700'}`}>
                             {milestone.description}
                           </div>
-                          <div className={`text-sm ${achieved ? 'text-amber-400' : 'text-gray-300'}`}>
+                          <div className={`text-sm ${achieved ? 'text-green-600' : 'text-gray-500'}`}>
                             {formatCurrency(milestone.amount)}
                           </div>
                         </div>
                       </div>
-                      <div className={`text-sm font-medium ${achieved ? 'text-amber-400' : 'text-gray-300'}`}>
+                      <div className={`text-sm font-medium ${achieved ? 'text-green-600' : 'text-gray-500'}`}>
                         {achieved ? '✓ Achieved!' : formatMonths(milestone.months)}
                       </div>
                     </div>
@@ -427,75 +477,8 @@ export default function EmergencyFundCalculator() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Financial Health Assessment */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className={`rounded-xl p-6 border-2 backdrop-blur-xl ${incomeAfterExpenses > 0 ? 'bg-green-500/20 border-green-500/30' : 'bg-red-500/20 border-red-500/30'
-            }`}>
-            <div className="flex items-center gap-3 mb-3">
-              {incomeAfterExpenses > 0 ? (
-                <CheckCircle className="w-6 h-6 text-green-400" />
-              ) : (
-                <AlertCircle className="w-6 h-6 text-red-400" />
-              )}
-              <h4 className={`font-semibold ${incomeAfterExpenses > 0 ? 'text-green-300' : 'text-red-300'}`}>
-                Budget Analysis
-              </h4>
-            </div>
-            <p className={`text-sm ${incomeAfterExpenses > 0 ? 'text-green-400' : 'text-red-400'}`}>
-              {incomeAfterExpenses > 0
-                ? `Great! You have ${formatCurrency(incomeAfterExpenses)} left after essential expenses.`
-                : `Warning: You&apos;re spending ${formatCurrency(Math.abs(incomeAfterExpenses))} more than you earn.`
-              }
-            </p>
-          </div>
-
-          <div className={`rounded-xl p-6 border-2 backdrop-blur-xl ${savingsRate >= 20 ? 'bg-green-500/20 border-green-500/30' :
-            savingsRate >= 10 ? 'bg-yellow-500/20 border-yellow-500/30' : 'bg-red-500/20 border-red-500/30'
-            }`}>
-            <div className="flex items-center gap-3 mb-3">
-              <TrendingUp className={`w-6 h-6 ${savingsRate >= 20 ? 'text-green-400' :
-                savingsRate >= 10 ? 'text-yellow-400' : 'text-red-400'
-                }`} />
-              <h4 className={`font-semibold ${savingsRate >= 20 ? 'text-green-300' :
-                savingsRate >= 10 ? 'text-yellow-300' : 'text-red-300'
-                }`}>
-                Savings Rate
-              </h4>
-            </div>
-            <p className={`text-sm ${savingsRate >= 20 ? 'text-green-400' :
-              savingsRate >= 10 ? 'text-yellow-400' : 'text-red-400'
-              }`}>
-              You&apos;re saving {savingsRate.toFixed(1)}% of income.
-              {savingsRate >= 20 ? ' Excellent!' : savingsRate >= 10 ? ' Good, but could be higher.' : ' Try to reach at least 10%.'}
-            </p>
-          </div>
-        </div>
-
-        {/* Tips */}
-        <div className={`mt-8 ${theme.backgrounds.glass}/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg p-6`}>
-          <h3 className="text-lg font-semibold text-white mb-4">💡 Emergency Fund Strategy Tips</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div>
-              <h4 className="font-semibold mb-2 text-amber-300">Start Small, Build Steadily</h4>
-              <p className="text-gray-300">Begin with $1,000, then work toward 3-6 months of expenses. Small wins build momentum!</p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2 text-amber-300">Automate Your Savings</h4>
-              <p className="text-gray-300">Set up automatic transfers on payday. Pay yourself first before other expenses.</p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2 text-amber-300">High-Yield Storage</h4>
-              <p className="text-gray-300">Keep emergency funds in high-yield savings accounts earning 4%+ while staying accessible.</p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2 text-amber-300">Adjust for Your Risk</h4>
-              <p className="text-gray-300">Commission workers, contractors, and single-income families need larger emergency funds.</p>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
-    </div>
+    </CalculatorWrapper>
   );
 }

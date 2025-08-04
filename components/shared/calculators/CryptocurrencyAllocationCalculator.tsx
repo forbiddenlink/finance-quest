@@ -9,11 +9,11 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Zap, AlertTriangle, DollarSign, Target, BarChart3, 
+  Zap, AlertTriangle, Target, BarChart3, 
   Shield, Coins, Plus, Minus, TrendingUp, Settings, Info
 } from 'lucide-react';
 import { theme } from '@/lib/theme';
-import { PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import CalculatorWrapper from './CalculatorWrapper';
 
 interface CryptoMetrics {

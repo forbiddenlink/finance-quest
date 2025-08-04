@@ -2,8 +2,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { TrendingUp, DollarSign, Percent, Calendar, Target } from 'lucide-react';
+import { TrendingUp, DollarSign, Percent, Target } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { theme } from '@/lib/theme';
 

@@ -146,7 +146,7 @@ Provide guidance that:
 Make the numbers meaningful and actionable.
 `,
 
-  quiz_review: (context: string, quizResults: any) => `
+  quiz_review: (context: string, quizResults: { score: number; total: number; incorrectAnswers?: string[]; incorrectTopics?: string[] }) => `
 You are a supportive coach reviewing quiz performance in Finance Quest.
 
 ${context}
@@ -185,17 +185,17 @@ Celebrate their progress and inspire continued learning.
 export function buildAIPrompt(
   type: keyof typeof AI_PROMPT_TEMPLATES,
   context: AIContextBuilder,
-  additionalData?: any
+  additionalData?: Record<string, unknown>
 ): string {
   const enhancedContext = buildEnhancedAIContext(context);
   
   switch (type) {
     case 'lesson_help':
-      return AI_PROMPT_TEMPLATES.lesson_help(enhancedContext, additionalData?.lessonTopic || 'current lesson');
+      return AI_PROMPT_TEMPLATES.lesson_help(enhancedContext, (additionalData?.lessonTopic as string) || 'current lesson');
     case 'calculator_guidance':
-      return AI_PROMPT_TEMPLATES.calculator_guidance(enhancedContext, additionalData?.calculatorType || 'financial calculator');
+      return AI_PROMPT_TEMPLATES.calculator_guidance(enhancedContext, (additionalData?.calculatorType as string) || 'financial calculator');
     case 'quiz_review':
-      return AI_PROMPT_TEMPLATES.quiz_review(enhancedContext, additionalData?.quizResults || {});
+      return AI_PROMPT_TEMPLATES.quiz_review(enhancedContext, (additionalData?.quizResults as { score: number; total: number; incorrectAnswers?: string[]; incorrectTopics?: string[] }) || { score: 0, total: 0 });
     case 'progress_coaching':
       return AI_PROMPT_TEMPLATES.progress_coaching(enhancedContext);
     default:

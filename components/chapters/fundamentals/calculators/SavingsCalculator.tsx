@@ -4,7 +4,7 @@ import React, { useState, useCallback } from 'react';
 import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
 import { CurrencyInput, NumberInput } from '@/components/shared/calculators/FormFields';
 import { ResultCard } from '@/components/shared/calculators/ResultComponents';
-import { formatCurrency, formatPercentage } from '@/lib/utils/financial';
+import { formatCurrency } from '@/lib/utils/financial';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { PiggyBank, TrendingUp, DollarSign, Target } from 'lucide-react';
 import { theme } from '@/lib/theme';
@@ -119,7 +119,6 @@ const SavingsCalculator = () => {
     const rateNum = parseFloat(interestRate) || 0;
     const yearNum = parseInt(timeYears) || 0;
     const monthlyNum = parseFloat(monthlyDeposit) || 0;
-    const initialNum = parseFloat(initialDeposit) || 0;
 
     // Low interest rate warning
     if (rateNum < 1) {

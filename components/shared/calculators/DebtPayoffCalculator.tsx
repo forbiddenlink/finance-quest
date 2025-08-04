@@ -2,10 +2,10 @@
 
 import React, { useState, useCallback } from 'react';
 import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
-import { CurrencyInput, NumberInput, SelectField, RadioGroup } from '@/components/shared/calculators/FormFields';
+import { CurrencyInput, RadioGroup } from '@/components/shared/calculators/FormFields';
 import { ResultCard } from '@/components/shared/calculators/ResultComponents';
-import { calculateDebtPayoff, formatCurrency } from '@/lib/utils/financial';
-import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from 'recharts';
+import { formatCurrency } from '@/lib/utils/financial';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { theme } from '@/lib/theme';
 import {
   CreditCard,
@@ -167,8 +167,6 @@ export default function DebtPayoffCalculator() {
     const insights = [];
     
     const extraPaymentNum = parseFloat(extraPayment) || 0;
-    const avgInterestRate = debts.length > 0 ? 
-      debts.reduce((sum, debt) => sum + debt.interestRate, 0) / debts.length : 0;
 
     // High interest debt warning
     const highInterestDebts = debts.filter(debt => debt.interestRate > 15);
