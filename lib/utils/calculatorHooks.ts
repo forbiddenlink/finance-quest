@@ -731,3 +731,71 @@ export const useBusinessValuationCalculator = () => {
     }
   });
 };
+
+// Bond Calculator Hook
+export interface BondInputs {
+  faceValue: string;
+  currentPrice: string;
+  couponRate: string;
+  yearsToMaturity: string;
+  paymentFrequency: string;
+}
+
+export interface BondResults {
+  currentYield: number;
+  yieldToMaturity: number;
+  totalReturn: number;
+  annualIncome: number;
+  interestRateSensitivity: number;
+}
+
+export const useBondCalculator = () => {
+  return useCalculator<BondInputs>({
+    initialValues: {
+      faceValue: '1000',
+      currentPrice: '950',
+      couponRate: '5.0',
+      yearsToMaturity: '10',
+      paymentFrequency: '2'
+    },
+    validationSchema: {
+      faceValue: CalculatorValidations.bond.faceValue,
+      currentPrice: CalculatorValidations.bond.currentPrice,
+      couponRate: CalculatorValidations.bond.couponRate,
+      yearsToMaturity: CalculatorValidations.bond.yearsToMaturity,
+      paymentFrequency: CalculatorValidations.bond.paymentFrequency
+    },
+    calculate: (values: BondInputs): BondResults => {
+      const faceValue = parseFloat(values.faceValue) || 1000;
+      const currentPrice = parseFloat(values.currentPrice) || 950;
+      const couponRate = parseFloat(values.couponRate) / 100 || 0.05;
+      const yearsToMaturity = parseFloat(values.yearsToMaturity) || 10;
+      const frequency = parseInt(values.paymentFrequency) || 2;
+
+      // Annual coupon payment
+      const annualIncome = couponRate * faceValue;
+
+      // Current Yield = Annual Coupon / Current Price
+      const currentYield = (annualIncome / currentPrice) * 100;
+
+      // Approximate Yield to Maturity using simplified formula
+      const yieldToMaturity = ((annualIncome + (faceValue - currentPrice) / yearsToMaturity) / ((faceValue + currentPrice) / 2)) * 100;
+
+      // Total return if held to maturity
+      const totalCoupons = annualIncome * yearsToMaturity;
+      const capitalGain = faceValue - currentPrice;
+      const totalReturn = totalCoupons + capitalGain;
+
+      // Interest rate sensitivity (modified duration approximation)
+      const modifiedDuration = yearsToMaturity / (1 + yieldToMaturity / 100 / frequency);
+
+      return {
+        currentYield,
+        yieldToMaturity,
+        totalReturn,
+        annualIncome,
+        interestRateSensitivity: modifiedDuration
+      };
+    }
+  });
+};

@@ -244,6 +244,14 @@ export const CalculatorValidations = {
     ebitdaMultiple: { min: 0.1, max: 50, required: true },
     totalAssets: ValidationPresets.currency(0, 1000000000),
     totalLiabilities: ValidationPresets.currency(0, 1000000000)
+  },
+
+  bond: {
+    faceValue: ValidationPresets.currency(100, 1000000),
+    currentPrice: ValidationPresets.currency(1, 1000000),
+    couponRate: ValidationPresets.percentage(0, 50),
+    yearsToMaturity: { min: 0.1, max: 50, required: true },
+    paymentFrequency: { min: 1, max: 12, required: true }
   }
 };
 
