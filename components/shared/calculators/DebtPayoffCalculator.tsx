@@ -2,21 +2,29 @@
 
 import React, { useState, useCallback } from 'react';
 import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
-import { CurrencyInput, RadioGroup } from '@/components/shared/calculators/FormFields';
-import { ResultCard } from '@/components/shared/calculators/ResultComponents';
+import { CurrencyInput, SelectField } from '@/components/shared/calculators/FormFields';
+import { InputGroup } from '@/components/shared/calculators/FormFields';
 import { formatCurrency } from '@/lib/utils/financial';
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { theme } from '@/lib/theme';
+import { useDebtPayoffCalculator } from '@/lib/utils/calculatorHooks';
 import {
   CreditCard,
   GraduationCap,
   Car,
+  Home,
+  User,
   LucideIcon,
   DollarSign,
   Lightbulb,
   TrendingDown,
   Calendar,
-  Target
+  Target,
+  Plus,
+  Trash2,
+  AlertTriangle,
+  CheckCircle,
+  Clock
 } from 'lucide-react';
 
 interface Debt {
@@ -37,6 +45,14 @@ interface PayoffProjection {
   debtsFree: number;
 }
 
+const DEBT_TYPES = {
+  credit_card: { icon: CreditCard, label: 'Credit Card', color: 'bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800' },
+  student_loan: { icon: GraduationCap, label: 'Student Loan', color: 'bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800' },
+  auto_loan: { icon: Car, label: 'Auto Loan', color: 'bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800' },
+  personal_loan: { icon: User, label: 'Personal Loan', color: 'bg-amber-50 border-amber-200 dark:bg-amber-900/20 dark:border-amber-800' },
+  mortgage: { icon: Home, label: 'Mortgage', color: 'bg-slate-50 border-slate-200 dark:bg-slate-900/20 dark:border-slate-800' }
+};
+
 export default function DebtPayoffCalculator() {
   const [debts, setDebts] = useState<Debt[]>([
     { id: '1', name: 'Credit Card 1', balance: 5000, minimumPayment: 125, interestRate: 18.99, type: 'credit_card', icon: CreditCard },
@@ -51,32 +67,11 @@ export default function DebtPayoffCalculator() {
     totalBalance: 0,
     payoffMonths: 0,
     totalInterest: 0,
-    totalPayment: 0
+    totalPayment: 0,
+    minimumPaymentTotal: 0
   });
 
-  const addDebt = () => {
-    const newDebt: Debt = {
-      id: Date.now().toString(),
-      name: 'New Debt',
-      balance: 1000,
-      minimumPayment: 50,
-      interestRate: 15,
-      type: 'credit_card',
-      icon: CreditCard
-    };
-    setDebts([...debts, newDebt]);
-  };
-
-  const updateDebt = (id: string, field: keyof Debt, value: string | number) => {
-    setDebts(prev => prev.map(debt =>
-      debt.id === id ? { ...debt, [field]: value } : debt
-    ));
-  };
-
-  const removeDebt = (id: string) => {
-    setDebts(prev => prev.filter(debt => debt.id !== id));
-  };
-
+  // Calculate payoff strategy
   const calculatePayoffStrategy = useCallback(() => {
     if (debts.length === 0) return [];
 
@@ -135,6 +130,7 @@ export default function DebtPayoffCalculator() {
     return projections;
   }, [debts, extraPayment, strategy]);
 
+  // Update projections when inputs change
   React.useEffect(() => {
     const projections = calculatePayoffStrategy();
     setProjectionData(projections);
@@ -148,9 +144,33 @@ export default function DebtPayoffCalculator() {
       totalBalance,
       payoffMonths: payoffTime,
       totalInterest: totalInterestPaid,
-      totalPayment: totalMinimumPayments + parseFloat(extraPayment || '0')
+      totalPayment: totalMinimumPayments + parseFloat(extraPayment || '0'),
+      minimumPaymentTotal: totalMinimumPayments
     });
   }, [calculatePayoffStrategy, debts, extraPayment]);
+
+  const addDebt = () => {
+    const newDebt: Debt = {
+      id: Date.now().toString(),
+      name: 'New Debt',
+      balance: 1000,
+      minimumPayment: 50,
+      interestRate: 15,
+      type: 'credit_card',
+      icon: CreditCard
+    };
+    setDebts([...debts, newDebt]);
+  };
+
+  const updateDebt = (id: string, field: keyof Debt, value: string | number) => {
+    setDebts(prev => prev.map(debt =>
+      debt.id === id ? { ...debt, [field]: value } : debt
+    ));
+  };
+
+  const removeDebt = (id: string) => {
+    setDebts(prev => prev.filter(debt => debt.id !== id));
+  };
 
   const handleReset = () => {
     setDebts([
@@ -180,7 +200,7 @@ export default function DebtPayoffCalculator() {
 
     // Strategy effectiveness insight
     if (extraPaymentNum > 100) {
-      const monthsSaved = Math.max(0, 360 - results.payoffMonths); // Rough estimate
+      const monthsSaved = Math.max(0, 120 - results.payoffMonths); // Rough estimate
       insights.push({
         type: 'success' as const,
         title: 'Excellent Payment Strategy',
@@ -215,15 +235,15 @@ export default function DebtPayoffCalculator() {
     return insights;
   };
 
-  const getDebtTypeColor = (type: string) => {
-    const colors = {
-      'credit_card': 'bg-red-50 border-red-200',
-      'student_loan': 'bg-blue-50 border-blue-200',
-      'auto_loan': 'bg-green-50 border-green-200',
-      'personal_loan': 'bg-amber-50 border-amber-200',
-      'mortgage': 'bg-slate-50 border-slate-200'
-    };
-    return colors[type as keyof typeof colors] || 'bg-slate-50 border-slate-200';
+  // Get priority order for display
+  const getOrderedDebts = () => {
+    const ordered = [...debts];
+    if (strategy === 'avalanche') {
+      ordered.sort((a, b) => b.interestRate - a.interestRate);
+    } else {
+      ordered.sort((a, b) => a.balance - b.balance);
+    }
+    return ordered;
   };
 
   // Calculator metadata
@@ -300,85 +320,73 @@ export default function DebtPayoffCalculator() {
     >
       <div className="space-y-6">
         {/* Strategy and Payment Configuration */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
-            <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-              <Lightbulb className="w-5 h-5" />
-              Payoff Strategy
-            </h4>
-            <RadioGroup
-              name="strategy"
-              label=""
-              options={[
-                {
-                  value: 'avalanche',
-                  label: 'Debt Avalanche',
-                  description: 'Pay minimums on all debts, extra goes to highest interest rate'
-                },
-                {
-                  value: 'snowball',
-                  label: 'Debt Snowball',
-                  description: 'Pay minimums on all debts, extra goes to smallest balance'
-                }
-              ]}
+        <InputGroup 
+          title="Debt Elimination Strategy" 
+          description="Choose your approach and set your extra payment amount"
+        >
+          <div className={theme.utils.calculatorFieldGrid(2)}>
+            <SelectField
+              id="strategy"
+              label="Payoff Strategy"
               value={strategy}
               onChange={(value) => setStrategy(value as 'avalanche' | 'snowball')}
+              options={[
+                { value: 'avalanche', label: 'Debt Avalanche (Save Most Money)' },
+                { value: 'snowball', label: 'Debt Snowball (Build Momentum)' }
+              ]}
+              helpText={strategy === 'avalanche' ? 
+                'Targets highest interest rates first - saves more money' : 
+                'Targets smallest balances first - builds motivation'
+              }
             />
-          </div>
-
-          <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
-            <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-              <DollarSign className="w-5 h-5" />
-              Extra Monthly Payment
-            </h4>
+            
             <CurrencyInput
-              id="extraPayment"
-              label=""
+              id="extra-payment"
+              label="Extra Monthly Payment"
               value={extraPayment}
               onChange={setExtraPayment}
-              min={0}
-              step={25}
-              placeholder="Enter extra payment amount"
+              placeholder="200"
+              helpText="Any amount helps! Even $50 can save thousands in interest"
             />
-            <p className={`text-sm ${theme.textColors.muted} mt-2`}>
-              Any amount helps! Even $50 extra can save thousands in interest.
-            </p>
           </div>
-        </div>
+        </InputGroup>
 
         {/* Key Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <ResultCard
-            icon={TrendingDown}
-            label="Total Debt"
-            value={results.totalBalance}
-            format="currency"
-            variant="error"
-          />
+          <div className={theme.utils.calculatorMetric()}>
+            <TrendingDown className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
+            <div className={`text-lg font-bold ${theme.status.error.text}`}>
+              {formatCurrency(results.totalBalance)}
+            </div>
+            <div className={`text-xs ${theme.textColors.muted}`}>Total Debt</div>
+          </div>
           
-          <ResultCard
-            icon={Calendar}
-            label="Payoff Time"
-            value={results.payoffMonths}
-            format="months"
-            variant="info"
-          />
+          <div className={theme.utils.calculatorMetric()}>
+            <Calendar className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
+            <div className={`text-lg font-bold ${theme.textColors.primary}`}>
+              {results.payoffMonths > 0 ? 
+                `${Math.floor(results.payoffMonths / 12)}y ${results.payoffMonths % 12}m` : 
+                'N/A'
+              }
+            </div>
+            <div className={`text-xs ${theme.textColors.muted}`}>Payoff Time</div>
+          </div>
           
-          <ResultCard
-            icon={DollarSign}
-            label="Interest Paid"
-            value={results.totalInterest}
-            format="currency"
-            variant="warning"
-          />
+          <div className={theme.utils.calculatorMetric()}>
+            <AlertTriangle className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
+            <div className={`text-lg font-bold ${theme.status.warning.text}`}>
+              {formatCurrency(results.totalInterest)}
+            </div>
+            <div className={`text-xs ${theme.textColors.muted}`}>Interest Paid</div>
+          </div>
           
-          <ResultCard
-            icon={Target}
-            label="Monthly Payment"
-            value={results.totalPayment}
-            format="currency"
-            variant="success"
-          />
+          <div className={theme.utils.calculatorMetric()}>
+            <DollarSign className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
+            <div className={`text-lg font-bold ${theme.textColors.primary}`}>
+              {formatCurrency(results.totalPayment)}
+            </div>
+            <div className={`text-xs ${theme.textColors.muted}`}>Monthly Payment</div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -388,112 +396,153 @@ export default function DebtPayoffCalculator() {
               <h4 className={`${theme.typography.heading5} ${theme.textColors.primary}`}>Your Debts</h4>
               <button
                 onClick={addDebt}
-                className={`${theme.status.info.bg} ${theme.textColors.primary} px-4 py-2 rounded-lg hover:opacity-80 transition-colors text-sm`}
+                className={`${theme.buttons.primary} px-4 py-2 rounded-lg transition-colors text-sm flex items-center gap-2`}
               >
-                + Add Debt
+                <Plus className="w-4 h-4" />
+                Add Debt
               </button>
             </div>
 
-            {debts.map((debt, index) => (
-              <div key={debt.id} className={`${getDebtTypeColor(debt.type)} border rounded-lg p-4`}>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center space-x-2">
-                    <debt.icon className={`w-5 h-5 ${theme.textColors.secondary}`} />
-                    <input
-                      type="text"
-                      value={debt.name}
-                      onChange={(e) => updateDebt(debt.id, 'name', e.target.value)}
-                      className={`font-medium ${theme.textColors.primary} bg-transparent border-none focus:outline-none focus:ring-1 focus:ring-yellow-500 rounded px-2 py-1`}
-                    />
-                  </div>
-                  <span className={`text-xs px-2 py-1 rounded ${strategy === 'avalanche' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'}`}>
-                    #{index + 1} Priority
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  <div>
-                    <label className={`text-xs ${theme.textColors.secondary}`}>Balance</label>
-                    <div className="relative">
-                      <span className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>$</span>
-                      <input
-                        type="number"
-                        value={debt.balance}
-                        onChange={(e) => updateDebt(debt.id, 'balance', Number(e.target.value))}
-                        className={`w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
-                        min="0"
-                        step="100"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className={`text-xs ${theme.textColors.secondary}`}>Min Payment</label>
-                    <div className="relative">
-                      <span className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>$</span>
-                      <input
-                        type="number"
-                        value={debt.minimumPayment}
-                        onChange={(e) => updateDebt(debt.id, 'minimumPayment', Number(e.target.value))}
-                        className={`w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
-                        min="0"
-                        step="5"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className={`text-xs ${theme.textColors.secondary}`}>Interest Rate</label>
-                    <div className="relative">
-                      <input
-                        type="number"
-                        value={debt.interestRate}
-                        onChange={(e) => updateDebt(debt.id, 'interestRate', Number(e.target.value))}
-                        className={`w-full pl-2 pr-6 py-1 border ${theme.borderColors.primary} rounded text-sm`}
-                        min="0"
-                        max="50"
-                        step="0.1"
-                      />
-                      <span className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>%</span>
-                    </div>
-                  </div>
-                  <div className="flex items-end">
-                    <button
-                      onClick={() => removeDebt(debt.id)}
-                      className={`w-full ${theme.status.error.bg} ${theme.status.error.text} px-2 py-1 rounded text-xs hover:opacity-80 transition-colors`}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </div>
+            {/* Debt Order Information */}
+            <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-3`}>
+              <div className={`text-sm ${theme.status.info.text} flex items-center gap-2`}>
+                <Lightbulb className="w-4 h-4" />
+                <span className="font-medium">
+                  {strategy === 'avalanche' ? 'Highest Interest First' : 'Smallest Balance First'}
+                </span>
               </div>
-            ))}
+              <p className={`text-xs ${theme.status.info.text} mt-1`}>
+                Debts are ordered by your chosen strategy. Extra payments go to debt #1 first.
+              </p>
+            </div>
+
+            {getOrderedDebts().map((debt, index) => {
+              const debtType = DEBT_TYPES[debt.type];
+              return (
+                <div key={debt.id} className={`${debtType.color} border rounded-lg p-4 relative`}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-2">
+                      <debt.icon className={`w-5 h-5 ${theme.textColors.secondary}`} />
+                      <input
+                        type="text"
+                        value={debt.name}
+                        onChange={(e) => updateDebt(debt.id, 'name', e.target.value)}
+                        className={`font-medium ${theme.textColors.primary} bg-transparent border-none focus:outline-none focus:ring-1 focus:ring-yellow-500 rounded px-2 py-1`}
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className={`text-xs px-2 py-1 rounded font-medium ${
+                        index === 0 ? 
+                          'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300' : 
+                          'bg-gray-100 text-gray-800 dark:bg-gray-900/50 dark:text-gray-300'
+                      }`}>
+                        #{index + 1} Priority
+                      </span>
+                      {index === 0 && (
+                        <div title="Target for extra payments">
+                          <Target className="w-4 h-4 text-red-500" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div>
+                      <label className={`text-xs ${theme.textColors.secondary} font-medium`}>Balance</label>
+                      <CurrencyInput
+                        id={`balance-${debt.id}`}
+                        label=""
+                        value={debt.balance.toString()}
+                        onChange={(value) => updateDebt(debt.id, 'balance', Number(value))}
+                        placeholder="5,000"
+                        className="text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className={`text-xs ${theme.textColors.secondary} font-medium`}>Min Payment</label>
+                      <CurrencyInput
+                        id={`payment-${debt.id}`}
+                        label=""
+                        value={debt.minimumPayment.toString()}
+                        onChange={(value) => updateDebt(debt.id, 'minimumPayment', Number(value))}
+                        placeholder="125"
+                        className="text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className={`text-xs ${theme.textColors.secondary} font-medium`}>Interest Rate</label>
+                      <div className="relative">
+                        <input
+                          type="number"
+                          value={debt.interestRate}
+                          onChange={(e) => updateDebt(debt.id, 'interestRate', Number(e.target.value))}
+                          className={`w-full pl-2 pr-6 py-1 border ${theme.borderColors.primary} rounded text-sm ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                          min="0"
+                          max="50"
+                          step="0.1"
+                          placeholder="18.99"
+                        />
+                        <span className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>%</span>
+                      </div>
+                    </div>
+                    <div className="flex items-end">
+                      <button
+                        onClick={() => removeDebt(debt.id)}
+                        className={`w-full ${theme.status.error.bg} ${theme.status.error.text} px-2 py-1 rounded text-xs hover:opacity-80 transition-colors flex items-center justify-center gap-1`}
+                        title="Remove debt"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Debt type selector */}
+                  <div className="mt-3">
+                    <label className={`text-xs ${theme.textColors.secondary} font-medium`}>Debt Type</label>
+                    <select
+                      value={debt.type}
+                      onChange={(e) => updateDebt(debt.id, 'type', e.target.value)}
+                      className={`w-full px-2 py-1 border ${theme.borderColors.primary} rounded text-sm ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                    >
+                      {Object.entries(DEBT_TYPES).map(([key, type]) => (
+                        <option key={key} value={key}>{type.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           {/* Charts and Projections */}
           <div className="space-y-6">
-            <h4 className={`${theme.typography.heading5} ${theme.textColors.primary}`}>Payoff Projection</h4>
-
-            {/* Debt Balance Chart */}
+            {/* Payoff Timeline */}
             {projectionData.length > 0 && (
-              <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4`}>
-                <h5 className={`font-semibold ${theme.textColors.primary} mb-4`}>Debt Balance Over Time</h5>
+              <div className={theme.utils.calculatorChart()}>
+                <h5 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Debt Payoff Timeline</h5>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={projectionData.slice(0, Math.min(projectionData.length, 120))}>
-                      <CartesianGrid strokeDasharray="3 3" stroke={theme.colors.slate[700]} opacity={0.3} />
+                      <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
                       <XAxis
                         dataKey="month"
-                        tick={{ fill: theme.colors.slate[400] }}
+                        axisLine={false}
+                        tickLine={false}
+                        className={theme.textColors.muted}
                       />
                       <YAxis
                         tickFormatter={(value: number) => `$${(value / 1000).toFixed(1)}k`}
-                        tick={{ fill: theme.colors.slate[400] }}
+                        axisLine={false}
+                        tickLine={false}
+                        className={theme.textColors.muted}
                       />
                       <Tooltip
                         contentStyle={{
-                          backgroundColor: theme.colors.slate[800],
-                          border: `1px solid ${theme.colors.slate[700]}`,
+                          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                          border: 'none',
                           borderRadius: '8px',
-                          color: theme.colors.slate[100]
+                          color: 'white'
                         }}
                         formatter={(value: number, name: string) => [
                           formatCurrency(value), 
@@ -512,7 +561,7 @@ export default function DebtPayoffCalculator() {
                       <Line
                         type="monotone"
                         dataKey="totalInterest"
-                        stroke={theme.colors.amber[400]}
+                        stroke="#f59e0b"
                         strokeWidth={2}
                         name="totalInterest"
                         dot={false}
@@ -524,24 +573,67 @@ export default function DebtPayoffCalculator() {
             )}
 
             {/* Motivation Section */}
-            <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4`}>
-              <h5 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-                <Lightbulb className="w-4 h-4" />
+            <div className={theme.utils.calculatorSection()}>
+              <h5 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
+                <CheckCircle className="w-5 h-5 text-green-500" />
                 Your Debt-Free Future
               </h5>
-              <div className={`space-y-2 text-sm ${theme.textColors.secondary}`}>
-                <div>
-                  <strong>Freedom Date:</strong> {results.payoffMonths > 0 ? `${Math.floor(results.payoffMonths / 12)} years, ${results.payoffMonths % 12} months` : 'Add debts to calculate'}
+              <div className={`space-y-3 text-sm ${theme.textColors.secondary}`}>
+                <div className="flex justify-between">
+                  <span>Freedom Date:</span>
+                  <span className="font-medium">
+                    {results.payoffMonths > 0 ? 
+                      `${Math.floor(results.payoffMonths / 12)} years, ${results.payoffMonths % 12} months` : 
+                      'Add debts to calculate'
+                    }
+                  </span>
                 </div>
-                <div>
-                  <strong>Monthly Freedom:</strong> {formatCurrency(results.totalPayment)} back in your pocket
+                <div className="flex justify-between">
+                  <span>Monthly Freedom:</span>
+                  <span className="font-medium">{formatCurrency(results.totalPayment)} back in your pocket</span>
                 </div>
-                <div>
-                  <strong>Annual Freedom:</strong> {formatCurrency(results.totalPayment * 12)} per year
+                <div className="flex justify-between">
+                  <span>Annual Freedom:</span>
+                  <span className="font-medium">{formatCurrency(results.totalPayment * 12)} per year</span>
                 </div>
-                <div className={`mt-3 p-3 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded`}>
-                  <strong>Imagine:</strong> What could you do with an extra {formatCurrency(results.totalPayment * 12)} per year?
-                  Vacation? Investment? Dream purchase? Your debt-free life is closer than you think!
+                
+                <div className={`mt-4 p-4 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Clock className="w-4 h-4 text-blue-400" />
+                    <span className="font-semibold text-blue-400">Imagine Your Freedom</span>
+                  </div>
+                  <p className={theme.textColors.secondary}>
+                    What could you do with an extra {formatCurrency(results.totalPayment * 12)} per year?
+                    Vacation? Investment? Dream purchase? Your debt-free life is closer than you think!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Strategy Comparison */}
+            <div className={theme.utils.calculatorSection()}>
+              <h5 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-3`}>Strategy Benefits</h5>
+              <div className="space-y-3">
+                <div className={`p-3 rounded-lg ${strategy === 'avalanche' ? theme.status.success.bg + ' ' + theme.status.success.border : theme.backgrounds.cardHover + ' ' + theme.borderColors.primary} border`}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <TrendingDown className="w-4 h-4" />
+                    <span className="font-medium">Debt Avalanche</span>
+                    {strategy === 'avalanche' && <CheckCircle className="w-4 h-4 text-green-500" />}
+                  </div>
+                  <p className={`text-sm ${theme.textColors.secondary}`}>
+                    Mathematically optimal - saves the most money by targeting high interest rates first
+                  </p>
+                </div>
+                
+                <div className={`p-3 rounded-lg ${strategy === 'snowball' ? theme.status.success.bg + ' ' + theme.status.success.border : theme.backgrounds.cardHover + ' ' + theme.borderColors.primary} border`}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Target className="w-4 h-4" />
+                    <span className="font-medium">Debt Snowball</span>
+                    {strategy === 'snowball' && <CheckCircle className="w-4 h-4 text-green-500" />}
+                  </div>
+                  <p className={`text-sm ${theme.textColors.secondary}`}>
+                    Psychological boost - builds momentum with quick wins by eliminating small debts first
+                  </p>
                 </div>
               </div>
             </div>

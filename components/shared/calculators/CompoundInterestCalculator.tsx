@@ -2,12 +2,14 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
-import { CurrencyInput, NumberInput } from '@/components/shared/calculators/FormFields';
+import { CurrencyInput, NumberInput, SelectField } from '@/components/shared/calculators/FormFields';
 import { ResultCard } from '@/components/shared/calculators/ResultComponents';
 import { formatCurrency } from '@/lib/utils/financial';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Sparkles, TrendingUp } from 'lucide-react';
+import { Sparkles, TrendingUp, Calculator, Clock } from 'lucide-react';
 import { theme } from '@/lib/theme';
+import { useCompoundInterestCalculator } from '@/lib/utils/calculatorHooks';
+import { validateFields, CalculatorValidations } from '@/lib/utils/calculatorValidation';
 
 interface CompoundData {
   year: number;
@@ -17,24 +19,24 @@ interface CompoundData {
 }
 
 export default function CompoundInterestCalculator() {
-    // Form inputs - keeping as strings for form fields
-    const [principal, setPrincipal] = useState('10000');
-    const [rate, setRate] = useState('7');
-    const [time, setTime] = useState('30');
-    const [monthlyContribution, setMonthlyContribution] = useState('500');
+    const {
+        values,
+        results,
+        validation,
+        isCalculating,
+        updateField,
+        reset
+    } = useCompoundInterestCalculator();
 
     const [data, setData] = useState<CompoundData[]>([]);
-    const [results, setResults] = useState({
-      finalAmount: 0,
-      totalContributed: 0,
-      totalInterest: 0
-    });
 
     const calculateGrowth = useCallback(() => {
-        const P = parseFloat(principal) || 0;
-        const r = parseFloat(rate) || 0;
-        const t = parseInt(time) || 0;
-        const monthlyAdd = parseFloat(monthlyContribution) || 0;
+        if (!results) return;
+
+        const P = parseFloat(values.principal) || 0;
+        const r = parseFloat(values.rate) || 0;
+        const t = parseInt(values.time) || 0;
+        const monthlyAdd = parseFloat(values.monthlyContribution) || 0;
 
         if (P < 0 || r < 0 || t < 0 || monthlyAdd < 0) return;
 
@@ -72,46 +74,29 @@ export default function CompoundInterestCalculator() {
         }
 
         setData(compoundData);
-        
-        if (compoundData.length > 0) {
-            const finalData = compoundData[compoundData.length - 1];
-            setResults({
-              finalAmount: finalData.total,
-              totalContributed: finalData.principal,
-              totalInterest: finalData.interest
-            });
-        }
-    }, [principal, rate, time, monthlyContribution]);
+    }, [values, results]);
 
     useEffect(() => {
         calculateGrowth();
     }, [calculateGrowth]);
 
-    const handleReset = () => {
-        setPrincipal('10000');
-        setRate('7');
-        setTime('30');
-        setMonthlyContribution('500');
-    };
-
     // Generate insights based on calculations
     const generateInsights = () => {
+        if (!results) return [];
+        
         const insights = [];
         
-        const rateNum = parseFloat(rate) || 0;
-        const timeNum = parseInt(time) || 0;
-        const monthlyContributionNum = parseFloat(monthlyContribution) || 0;
-        const principalNum = parseFloat(principal) || 0;
+        const rateNum = parseFloat(values.rate) || 0;
+        const timeNum = parseInt(values.time) || 0;
+        const monthlyContributionNum = parseFloat(values.monthlyContribution) || 0;
+        const principalNum = parseFloat(values.principal) || 0;
         
-        const effectiveReturn = results.totalContributed > 0 ? 
-            ((results.finalAmount / results.totalContributed - 1) * 100) : 0;
-
         // High growth insight
-        if (effectiveReturn > 200) {
+        if (results.effectiveReturn > 200) {
             insights.push({
                 type: 'success' as const,
                 title: 'Excellent Growth Potential',
-                message: `Your investments could grow by ${effectiveReturn.toFixed(0)}% over ${timeNum} years. The power of compound interest is working strongly in your favor!`
+                message: `Your investments could grow by ${results.effectiveReturn.toFixed(0)}% over ${timeNum} years. The power of compound interest is working strongly in your favor!`
             });
         }
 
@@ -178,13 +163,13 @@ export default function CompoundInterestCalculator() {
     };
 
     // Results formatting for the wrapper
-    const calculatorResults = {
+    const calculatorResults = results ? {
         primary: {
             label: 'Final Amount',
             value: results.finalAmount,
             format: 'currency' as const,
             variant: 'success' as const,
-            description: `After ${time} years of ${rate}% annual growth`
+            description: `After ${values.time} years of ${values.rate}% annual growth`
         },
         secondary: [
             {
@@ -202,74 +187,122 @@ export default function CompoundInterestCalculator() {
             },
             {
                 label: 'Effective Return',
-                value: results.totalContributed > 0 ? ((results.finalAmount / results.totalContributed - 1) * 100) : 0,
+                value: results.effectiveReturn,
                 format: 'percentage' as const,
                 description: 'Total return on your investment'
             }
         ]
-    };
+    } : undefined;
 
     return (
         <CalculatorWrapper
             metadata={metadata}
             results={calculatorResults}
             insights={generateInsights()}
-            onReset={handleReset}
+            validation={validation}
+            onReset={reset}
+            isLoading={isCalculating}
         >
             <div className="space-y-6">
                 {/* Investment Parameters */}
-                <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                <div className={theme.utils.calculatorSection()}>
                     <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Investment Parameters</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className={theme.utils.calculatorFieldGrid(2)}>
                         <CurrencyInput
                             id="principal"
                             label="Initial Investment"
-                            value={principal}
-                            onChange={setPrincipal}
+                            value={values.principal}
+                            onChange={(value) => updateField('principal', value)}
                             min={0}
                             max={1000000}
                             step={100}
                             placeholder="Enter initial amount"
+                            error={validation.errors.principal}
+                            required
                         />
 
                         <CurrencyInput
                             id="monthlyContribution"
                             label="Monthly Contribution"
-                            value={monthlyContribution}
-                            onChange={setMonthlyContribution}
+                            value={values.monthlyContribution}
+                            onChange={(value) => updateField('monthlyContribution', value)}
                             min={0}
                             max={10000}
                             step={25}
                             placeholder="Enter monthly amount"
+                            error={validation.errors.monthlyContribution}
                         />
 
                         <NumberInput
                             id="rate"
                             label="Annual Interest Rate (%)"
-                            value={rate}
-                            onChange={setRate}
+                            value={values.rate}
+                            onChange={(value) => updateField('rate', value)}
                             min={0}
                             max={30}
                             step={0.1}
                             placeholder="Enter annual rate"
+                            error={validation.errors.rate}
+                            required
                         />
 
                         <NumberInput
                             id="time"
                             label="Investment Period (years)"
-                            value={time}
-                            onChange={setTime}
+                            value={values.time}
+                            onChange={(value) => updateField('time', value)}
                             min={1}
                             max={50}
                             step={1}
                             placeholder="Enter number of years"
+                            error={validation.errors.time}
+                            required
                         />
                     </div>
                 </div>
 
+                {/* Key Metrics Overview */}
+                {results && (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <ResultCard
+                            icon={TrendingUp}
+                            label="Effective Annual Return"
+                            value={results.effectiveReturn}
+                            format="percentage"
+                            variant="info"
+                        />
+                        
+                        <ResultCard
+                            icon={Sparkles}
+                            label="Interest Multiplier"
+                            value={results.totalContributed > 0 ? (results.totalInterest / results.totalContributed) : 0}
+                            format="number"
+                            variant="success"
+                        />
+                        
+                        <ResultCard
+                            icon={Clock}
+                            label="Years to Double"
+                            value={results.yearsToDouble}
+                            format="number"
+                            variant="warning"
+                            description="Rule of 72"
+                        />
+
+                        <ResultCard
+                            icon={Calculator}
+                            label="Monthly Growth"
+                            value={results.finalAmount / (parseInt(values.time) * 12)}
+                            format="currency"
+                            variant="info"
+                            description="Average per month"
+                        />
+                    </div>
+                )}
+
                 {/* Growth Visualization */}
                 {data.length > 0 && (
-                    <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                    <div className={theme.utils.calculatorChart()}>
                         <h4 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Investment Growth Over Time</h4>
                         <div className="h-80">
                             <ResponsiveContainer width="100%" height="100%">
@@ -314,33 +347,6 @@ export default function CompoundInterestCalculator() {
                                     />
                                 </LineChart>
                             </ResponsiveContainer>
-                        </div>
-                        
-                        {/* Key Insights */}
-                        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <ResultCard
-                                icon={TrendingUp}
-                                label="Effective Annual Return"
-                                value={results.totalContributed > 0 ? ((results.finalAmount / results.totalContributed - 1) * 100) : 0}
-                                format="percentage"
-                                variant="info"
-                            />
-                            
-                            <ResultCard
-                                icon={Sparkles}
-                                label="Interest Multiplier"
-                                value={results.totalContributed > 0 ? (results.totalInterest / results.totalContributed) : 0}
-                                format="number"
-                                variant="success"
-                            />
-                            
-                            <ResultCard
-                                label="Years to Double"
-                                value={parseFloat(rate) > 0 ? Math.round(72 / parseFloat(rate)) : 0}
-                                format="number"
-                                variant="warning"
-                                description="Rule of 72"
-                            />
                         </div>
                     </div>
                 )}

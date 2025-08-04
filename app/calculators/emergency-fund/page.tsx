@@ -3,10 +3,14 @@
 import React, { useState, useCallback } from 'react';
 import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
 import { CurrencyInput, SelectField } from '@/components/shared/calculators/FormFields';
+import { InputGroup } from '@/components/shared/calculators/FormFields';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-import { Shield, Target, CheckCircle } from 'lucide-react';
+import { Shield, Target, CheckCircle, TrendingUp, DollarSign, Clock } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils/financial';
 import { Progress } from '@/components/ui/progress';
+import { theme } from '@/lib/theme';
+import { useEmergencyFundCalculator } from '@/lib/utils/calculatorHooks';
+import { validateFields } from '@/lib/utils/calculatorValidation';
 
 interface ExpenseCategory {
   name: string;
@@ -23,7 +27,7 @@ interface SavingsMilestone {
 }
 
 export default function EmergencyFundCalculator() {
-  // Input states
+  // Extended inputs for detailed breakdown
   const [monthlyIncome, setMonthlyIncome] = useState('6000');
   const [rent, setRent] = useState('1500');
   const [utilities, setUtilities] = useState('200');
@@ -36,81 +40,33 @@ export default function EmergencyFundCalculator() {
   const [monthlySavings, setMonthlySavings] = useState('500');
   const [currentSavings, setCurrentSavings] = useState('1000');
 
-  // Results state
-  const [results, setResults] = useState({
-    totalExpenses: 0,
-    emergencyFundTarget: 0,
-    timeToGoal: 0,
-    expenseBreakdown: [] as ExpenseCategory[],
-    savingsMilestones: [] as SavingsMilestone[],
-    incomeAfterExpenses: 0,
-    savingsRate: 0,
-    currentProgress: 0
-  });
+  // Calculate total monthly expenses
+  const totalExpenses = 
+    (parseFloat(rent) || 0) +
+    (parseFloat(utilities) || 0) +
+    (parseFloat(groceries) || 0) +
+    (parseFloat(transportation) || 0) +
+    (parseFloat(insurance) || 0) +
+    (parseFloat(minimumDebt) || 0) +
+    (parseFloat(other) || 0);
 
-  const calculateEmergencyFund = useCallback(() => {
-    const rentAmount = parseFloat(rent) || 0;
-    const utilitiesAmount = parseFloat(utilities) || 0;
-    const groceriesAmount = parseFloat(groceries) || 0;
-    const transportationAmount = parseFloat(transportation) || 0;
-    const insuranceAmount = parseFloat(insurance) || 0;
-    const debtAmount = parseFloat(minimumDebt) || 0;
-    const otherAmount = parseFloat(other) || 0;
-    const months = parseFloat(monthsOfExpenses) || 6;
-    const savings = parseFloat(monthlySavings) || 0;
-    const current = parseFloat(currentSavings) || 0;
-    const income = parseFloat(monthlyIncome) || 0;
+  // Use the simplified hook with calculated expenses
+  const {
+    values,
+    results,
+    validation,
+    updateField,
+    reset: resetHook
+  } = useEmergencyFundCalculator();
 
-    const expenses = rentAmount + utilitiesAmount + groceriesAmount +
-      transportationAmount + insuranceAmount + debtAmount + otherAmount;
-
-    const target = expenses * months;
-    const remaining = Math.max(0, target - current);
-    const timeMonths = savings > 0 ? Math.ceil(remaining / savings) : 0;
-    const incomeAfterExpenses = income - expenses;
-    const savingsRate = income > 0 ? (savings / income) * 100 : 0;
-    const currentProgress = target > 0 ? (current / target) * 100 : 0;
-
-    // Expense breakdown for pie chart
-    const breakdown: ExpenseCategory[] = [
-      { name: 'Housing', amount: rentAmount, essential: true, color: '#EF4444' },
-      { name: 'Utilities', amount: utilitiesAmount, essential: true, color: '#F97316' },
-      { name: 'Food', amount: groceriesAmount, essential: true, color: '#EAB308' },
-      { name: 'Transportation', amount: transportationAmount, essential: true, color: '#22C55E' },
-      { name: 'Insurance', amount: insuranceAmount, essential: true, color: '#3B82F6' },
-      { name: 'Debt Payments', amount: debtAmount, essential: true, color: '#8B5CF6' },
-      { name: 'Other', amount: otherAmount, essential: false, color: '#6B7280' }
-    ].filter(category => category.amount > 0);
-
-    // Savings milestones
-    const milestones: SavingsMilestone[] = [
-      { amount: 1000, months: 0, description: 'Starter Emergency Fund', color: '#10B981' },
-      { amount: expenses * 1, months: 0, description: '1 Month of Expenses', color: '#3B82F6' },
-      { amount: expenses * 3, months: 0, description: '3 Months of Expenses', color: '#8B5CF6' },
-      { amount: expenses * 6, months: 0, description: '6 Months of Expenses', color: '#EF4444' },
-      { amount: expenses * 12, months: 0, description: '12 Months of Expenses', color: '#F59E0B' }
-    ];
-
-    milestones.forEach(milestone => {
-      const remainingToMilestone = Math.max(0, milestone.amount - current);
-      milestone.months = savings > 0 ? Math.ceil(remainingToMilestone / savings) : 0;
-    });
-
-    setResults({
-      totalExpenses: expenses,
-      emergencyFundTarget: target,
-      timeToGoal: timeMonths,
-      expenseBreakdown: breakdown,
-      savingsMilestones: milestones,
-      incomeAfterExpenses,
-      savingsRate,
-      currentProgress
-    });
-  }, [rent, utilities, groceries, transportation, insurance, minimumDebt, other, monthsOfExpenses, monthlySavings, currentSavings, monthlyIncome]);
-
+  // Sync the hook values with our detailed inputs
   React.useEffect(() => {
-    calculateEmergencyFund();
-  }, [calculateEmergencyFund]);
+    updateField('monthlyExpenses', totalExpenses.toString());
+    updateField('monthlyIncome', monthlyIncome);
+    updateField('targetMonths', monthsOfExpenses);
+    updateField('currentSavings', currentSavings);
+    updateField('monthlySavings', monthlySavings);
+  }, [totalExpenses, monthlyIncome, monthsOfExpenses, currentSavings, monthlySavings, updateField]);
 
   const handleReset = () => {
     setMonthlyIncome('6000');
@@ -124,6 +80,7 @@ export default function EmergencyFundCalculator() {
     setMonthsOfExpenses('6');
     setMonthlySavings('500');
     setCurrentSavings('1000');
+    resetHook();
   };
 
   const formatMonths = (months: number) => {
@@ -136,22 +93,55 @@ export default function EmergencyFundCalculator() {
     return `${years} year${years > 1 ? 's' : ''}, ${remainingMonths} month${remainingMonths > 1 ? 's' : ''}`;
   };
 
+  // Generate expense breakdown for chart
+  const expenseBreakdown: ExpenseCategory[] = [
+    { name: 'Housing', amount: parseFloat(rent) || 0, essential: true, color: '#EF4444' },
+    { name: 'Utilities', amount: parseFloat(utilities) || 0, essential: true, color: '#F97316' },
+    { name: 'Food', amount: parseFloat(groceries) || 0, essential: true, color: '#EAB308' },
+    { name: 'Transportation', amount: parseFloat(transportation) || 0, essential: true, color: '#22C55E' },
+    { name: 'Insurance', amount: parseFloat(insurance) || 0, essential: true, color: '#3B82F6' },
+    { name: 'Debt Payments', amount: parseFloat(minimumDebt) || 0, essential: true, color: '#8B5CF6' },
+    { name: 'Other', amount: parseFloat(other) || 0, essential: false, color: '#6B7280' }
+  ].filter(category => category.amount > 0);
+
+  // Generate savings milestones
+  const savingsMilestones: SavingsMilestone[] = [
+    { amount: 1000, months: 0, description: 'Starter Emergency Fund', color: '#10B981' },
+    { amount: totalExpenses * 1, months: 0, description: '1 Month of Expenses', color: '#3B82F6' },
+    { amount: totalExpenses * 3, months: 0, description: '3 Months of Expenses', color: '#8B5CF6' },
+    { amount: totalExpenses * 6, months: 0, description: '6 Months of Expenses', color: '#EF4444' },
+    { amount: totalExpenses * 12, months: 0, description: '12 Months of Expenses', color: '#F59E0B' }
+  ];
+
+  // Calculate time to reach each milestone
+  const monthlySavingsNum = parseFloat(monthlySavings) || 0;
+  const currentSavingsNum = parseFloat(currentSavings) || 0;
+  
+  savingsMilestones.forEach(milestone => {
+    const remainingToMilestone = Math.max(0, milestone.amount - currentSavingsNum);
+    milestone.months = monthlySavingsNum > 0 ? Math.ceil(remainingToMilestone / monthlySavingsNum) : 0;
+  });
+
   // Generate insights based on calculations
   const generateInsights = () => {
+    if (!results) return [];
+    
     const insights = [];
+    const incomeNum = parseFloat(monthlyIncome) || 0;
+    const incomeAfterExpenses = incomeNum - totalExpenses;
     
     // Budget health insight
-    if (results.incomeAfterExpenses > 0) {
+    if (incomeAfterExpenses > 0) {
       insights.push({
         type: 'success' as const,
         title: 'Healthy Budget',
-        message: `Great! You have ${formatCurrency(results.incomeAfterExpenses)} left after essential expenses. This gives you flexibility to build your emergency fund.`
+        message: `Great! You have ${formatCurrency(incomeAfterExpenses)} left after essential expenses. This gives you flexibility to build your emergency fund.`
       });
     } else {
       insights.push({
         type: 'error' as const,
         title: 'Budget Deficit',
-        message: `Warning: You're spending ${formatCurrency(Math.abs(results.incomeAfterExpenses))} more than you earn. Focus on reducing expenses before building emergency savings.`
+        message: `Warning: You're spending ${formatCurrency(Math.abs(incomeAfterExpenses))} more than you earn. Focus on reducing expenses before building emergency savings.`
       });
     }
 
@@ -236,10 +226,10 @@ export default function EmergencyFundCalculator() {
   };
 
   // Results formatting for the wrapper
-  const calculatorResults = {
+  const calculatorResults = results ? {
     primary: {
       label: 'Emergency Fund Target',
-      value: results.emergencyFundTarget,
+      value: results.targetAmount,
       format: 'currency' as const,
       variant: 'success' as const,
       description: `${monthsOfExpenses} months of essential expenses`
@@ -247,7 +237,7 @@ export default function EmergencyFundCalculator() {
     secondary: [
       {
         label: 'Monthly Expenses',
-        value: results.totalExpenses,
+        value: totalExpenses,
         format: 'currency' as const,
         description: 'Total essential monthly costs'
       },
@@ -267,7 +257,7 @@ export default function EmergencyFundCalculator() {
         description: `${formatCurrency(parseFloat(currentSavings))} saved so far`
       }
     ]
-  };
+  } : undefined;
 
   return (
     <CalculatorWrapper
@@ -278,8 +268,7 @@ export default function EmergencyFundCalculator() {
     >
       <div className="space-y-6">
         {/* Income Section */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-blue-700 dark:text-blue-300">Income</h3>
+        <InputGroup title="Monthly Income" description="Your total monthly take-home pay">
           <CurrencyInput
             id="monthly-income"
             label="Monthly Income"
@@ -287,13 +276,16 @@ export default function EmergencyFundCalculator() {
             onChange={setMonthlyIncome}
             placeholder="6,000"
             helpText="Your total monthly take-home pay"
+            required
           />
-        </div>
+        </InputGroup>
 
         {/* Essential Expenses */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-blue-700 dark:text-blue-300">Essential Monthly Expenses</h3>
-          <div className="space-y-4">
+        <InputGroup 
+          title="Essential Monthly Expenses"
+          description="Focus on truly essential expenses only - housing, utilities, food, transportation, insurance, and minimum debt payments"
+        >
+          <div className={theme.utils.calculatorFieldGrid(2)}>
             <CurrencyInput
               id="housing"
               label="Housing (Rent/Mortgage)"
@@ -342,21 +334,20 @@ export default function EmergencyFundCalculator() {
               placeholder="250"
               helpText="Credit cards, loans (minimums only)"
             />
-            <CurrencyInput
-              id="other-essential"
-              label="Other Essential"
-              value={other}
-              onChange={setOther}
-              placeholder="300"
-              helpText="Childcare, prescriptions, etc."
-            />
           </div>
-        </div>
+          <CurrencyInput
+            id="other-essential"
+            label="Other Essential Expenses"
+            value={other}
+            onChange={setOther}
+            placeholder="300"
+            helpText="Childcare, prescriptions, etc."
+          />
+        </InputGroup>
 
         {/* Emergency Fund Goals */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-blue-700 dark:text-blue-300">Emergency Fund Settings</h3>
-          <div className="space-y-4">
+        <InputGroup title="Emergency Fund Settings" description="Configure your savings target and monthly contribution">
+          <div className={theme.utils.calculatorFieldGrid(3)}>
             <SelectField
               id="months-target"
               label="Target (Months of Expenses)"
@@ -377,7 +368,7 @@ export default function EmergencyFundCalculator() {
               value={monthlySavings}
               onChange={setMonthlySavings}
               placeholder="500"
-              helpText={`${results.savingsRate.toFixed(1)}% of income`}
+              helpText={results ? `${results.savingsRate.toFixed(1)}% of income` : ''}
             />
             <CurrencyInput
               id="current-savings"
@@ -388,34 +379,71 @@ export default function EmergencyFundCalculator() {
               helpText="Amount already saved for emergencies"
             />
           </div>
-        </div>
+        </InputGroup>
+
+        {/* Key Metrics */}
+        {results && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className={theme.utils.calculatorMetric()}>
+              <DollarSign className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
+              <div className={`text-lg font-bold ${theme.textColors.primary}`}>
+                {formatCurrency(totalExpenses)}
+              </div>
+              <div className={`text-xs ${theme.textColors.muted}`}>Monthly Expenses</div>
+            </div>
+            
+            <div className={theme.utils.calculatorMetric()}>
+              <Target className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
+              <div className={`text-lg font-bold ${theme.textColors.primary}`}>
+                {formatCurrency(results.targetAmount)}
+              </div>
+              <div className={`text-xs ${theme.textColors.muted}`}>Target Amount</div>
+            </div>
+            
+            <div className={theme.utils.calculatorMetric()}>
+              <Clock className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
+              <div className={`text-lg font-bold ${theme.textColors.primary}`}>
+                {formatMonths(results.timeToGoal)}
+              </div>
+              <div className={`text-xs ${theme.textColors.muted}`}>Time to Goal</div>
+            </div>
+            
+            <div className={theme.utils.calculatorMetric()}>
+              <TrendingUp className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
+              <div className={`text-lg font-bold ${theme.textColors.primary}`}>
+                {results.savingsRate.toFixed(1)}%
+              </div>
+              <div className={`text-xs ${theme.textColors.muted}`}>Savings Rate</div>
+            </div>
+          </div>
+        )}
 
         {/* Charts and Additional Content */}
-        {results.expenseBreakdown.length > 0 && (
+        {expenseBreakdown.length > 0 && results && (
           <div className="space-y-8 mt-8">
             {/* Progress Bar */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4 text-blue-700 dark:text-blue-300">Current Progress</h3>
+            <div className={theme.utils.calculatorSection()}>
+              <h3 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Current Progress</h3>
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>{formatCurrency(parseFloat(currentSavings))}</span>
-                  <span>{formatCurrency(results.emergencyFundTarget)}</span>
+                  <span>{formatCurrency(results.targetAmount)}</span>
                 </div>
                 <Progress value={Math.min(results.currentProgress, 100)} className="h-3" />
-                <div className="text-center text-sm text-gray-600">
+                <div className="text-center text-sm text-gray-400">
                   {results.currentProgress.toFixed(1)}% Complete
                 </div>
               </div>
             </div>
 
             {/* Expense Breakdown Chart */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4 text-blue-700 dark:text-blue-300">Monthly Expense Breakdown</h3>
+            <div className={theme.utils.calculatorChart()}>
+              <h3 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Monthly Expense Breakdown</h3>
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={results.expenseBreakdown}
+                      data={expenseBreakdown}
                       cx="50%"
                       cy="50%"
                       innerRadius={60}
@@ -423,7 +451,7 @@ export default function EmergencyFundCalculator() {
                       dataKey="amount"
                       nameKey="name"
                     >
-                      {results.expenseBreakdown.map((entry, index) => (
+                      {expenseBreakdown.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
@@ -434,41 +462,42 @@ export default function EmergencyFundCalculator() {
               
               {/* Legend */}
               <div className="grid grid-cols-2 gap-2 mt-4">
-                {results.expenseBreakdown.map((entry, index) => (
+                {expenseBreakdown.map((entry, index) => (
                   <div key={index} className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded" style={{ backgroundColor: entry.color }}></div>
-                    <span className="text-sm text-gray-600">{entry.name}: {formatCurrency(entry.amount)}</span>
+                    <span className={`text-sm ${theme.textColors.secondary}`}>{entry.name}: {formatCurrency(entry.amount)}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Savings Milestones */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4 text-blue-700 dark:text-blue-300">Savings Milestones</h3>
+            <div className={theme.utils.calculatorSection()}>
+              <h3 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>Savings Milestones</h3>
               <div className="space-y-3">
-                {results.savingsMilestones.map((milestone, index) => {
+                {savingsMilestones.map((milestone, index) => {
                   const achieved = parseFloat(currentSavings) >= milestone.amount;
                   return (
                     <div key={index} className={`flex items-center justify-between p-4 rounded-lg border-2 ${
-                      achieved ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'
+                      achieved ? theme.status.success.bg + ' ' + theme.status.success.border : 
+                                 theme.backgrounds.cardHover + ' ' + theme.borderColors.primary
                     }`}>
                       <div className="flex items-center gap-3">
                         {achieved ? (
-                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <CheckCircle className={`w-5 h-5 ${theme.status.success.text}`} />
                         ) : (
-                          <Target className="w-5 h-5 text-gray-400" />
+                          <Target className={`w-5 h-5 ${theme.textColors.muted}`} />
                         )}
                         <div>
-                          <div className={`font-medium ${achieved ? 'text-green-700' : 'text-gray-700'}`}>
+                          <div className={`font-medium ${achieved ? theme.status.success.text : theme.textColors.primary}`}>
                             {milestone.description}
                           </div>
-                          <div className={`text-sm ${achieved ? 'text-green-600' : 'text-gray-500'}`}>
+                          <div className={`text-sm ${achieved ? theme.status.success.text : theme.textColors.secondary}`}>
                             {formatCurrency(milestone.amount)}
                           </div>
                         </div>
                       </div>
-                      <div className={`text-sm font-medium ${achieved ? 'text-green-600' : 'text-gray-500'}`}>
+                      <div className={`text-sm font-medium ${achieved ? theme.status.success.text : theme.textColors.secondary}`}>
                         {achieved ? '✓ Achieved!' : formatMonths(milestone.months)}
                       </div>
                     </div>

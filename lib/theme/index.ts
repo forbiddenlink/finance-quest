@@ -444,6 +444,62 @@ export const themeUtils = {
         };
         return `${buttons[variant]} ${sizeClasses[size]} rounded-lg font-semibold transition-all duration-200 ${interactive.focus}`;
     },
+
+    // Calculator-specific utilities
+    calculatorWrapper: () => 'max-w-7xl mx-auto bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl',
+    
+    calculatorSection: () => 'bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6',
+    
+    calculatorInput: (hasError = false) => `
+        w-full px-4 py-3 
+        bg-slate-800/50 
+        border ${hasError ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-yellow-500'} 
+        rounded-lg 
+        text-white placeholder-slate-400 
+        focus:outline-none focus:ring-2 focus:ring-yellow-500/50 
+        transition-all duration-200
+    `,
+    
+    calculatorLabel: () => 'block text-sm font-medium text-white mb-2',
+    
+    calculatorResult: (variant: 'primary' | 'success' | 'warning' | 'error' | 'info' = 'primary') => {
+        const variants = {
+            primary: 'bg-white/5 border-white/10',
+            success: 'bg-emerald-500/15 border-emerald-500/30',
+            warning: 'bg-amber-500/15 border-amber-500/30',
+            error: 'bg-red-500/15 border-red-500/30',
+            info: 'bg-blue-500/15 border-blue-500/30'
+        };
+        return `${variants[variant]} border rounded-xl p-6 backdrop-blur-xl`;
+    },
+    
+    calculatorChart: () => 'bg-white/5 border border-white/10 rounded-lg p-4 backdrop-blur-xl',
+    
+    calculatorInsight: (type: 'success' | 'warning' | 'error' | 'info' = 'info') => {
+        const variants = {
+            success: 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400',
+            warning: 'bg-amber-500/15 border-amber-500/30 text-amber-400',
+            error: 'bg-red-500/15 border-red-500/30 text-red-400',
+            info: 'bg-blue-500/15 border-blue-500/30 text-blue-400'
+        };
+        return `${variants[type]} border rounded-lg p-4 backdrop-blur-xl`;
+    },
+    
+    calculatorGrid: () => 'grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8',
+    
+    calculatorFieldGrid: (cols: 1 | 2 | 3 | 4 = 2) => `grid grid-cols-1 ${cols >= 2 ? 'md:grid-cols-2' : ''} ${cols >= 3 ? 'lg:grid-cols-3' : ''} ${cols >= 4 ? 'xl:grid-cols-4' : ''} gap-4`,
+    
+    calculatorValidationError: () => 'text-red-400 text-sm mt-1 flex items-center gap-1',
+    
+    calculatorLoadingSpinner: () => 'animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-500',
+    
+    calculatorProgressBar: (percentage: number) => `
+        relative w-full bg-slate-700 rounded-full h-4 overflow-hidden
+    `,
+    
+    calculatorMetric: () => 'text-center p-4 bg-white/5 border border-white/10 rounded-lg backdrop-blur-xl',
+    
+    calculatorTooltip: () => 'absolute z-10 px-3 py-2 text-sm bg-slate-800 border border-white/10 rounded-lg shadow-xl backdrop-blur-xl',
 } as const;
 
 // Complete enhanced theme object

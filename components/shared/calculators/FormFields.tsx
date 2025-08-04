@@ -43,7 +43,7 @@ export function CurrencyInput({
 }: Omit<InputFieldProps, 'prefix'>) {
   return (
     <div className={`space-y-2 ${className}`}>
-      <Label htmlFor={id} className={`${theme.textColors.primary} ${required ? 'required' : ''}`}>
+      <Label htmlFor={id} className={`${theme.utils.calculatorLabel()}`}>
         {label}
         {required && <span className="text-red-400 ml-1">*</span>}
       </Label>
@@ -61,23 +61,15 @@ export function CurrencyInput({
           max={max}
           step={step}
           disabled={disabled}
-          className={`
-            w-full pl-8 pr-4 py-3 
-            border ${error ? 'border-red-500' : theme.borderColors.primary} 
-            rounded-lg 
-            focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}
-            ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
-            bg-slate-800/50
-            ${theme.textColors.primary}
-            transition-all duration-200
-          `}
+          className={theme.utils.calculatorInput(!!error)}
+          style={{ paddingLeft: '2rem' }}
         />
       </div>
       {helpText && !error && (
         <p className={`text-xs ${theme.textColors.muted}`}>{helpText}</p>
       )}
       {error && (
-        <div className="flex items-center gap-1 text-red-400 text-xs">
+        <div className={theme.utils.calculatorValidationError()}>
           <AlertCircle className="w-3 h-3" />
           {error}
         </div>
@@ -103,7 +95,7 @@ export function PercentageInput({
 }: Omit<InputFieldProps, 'suffix'>) {
   return (
     <div className={`space-y-2 ${className}`}>
-      <Label htmlFor={id} className={`${theme.textColors.primary} ${required ? 'required' : ''}`}>
+      <Label htmlFor={id} className={`${theme.utils.calculatorLabel()}`}>
         {label}
         {required && <span className="text-red-400 ml-1">*</span>}
       </Label>
@@ -118,16 +110,8 @@ export function PercentageInput({
           max={max}
           step={step}
           disabled={disabled}
-          className={`
-            w-full pl-4 pr-8 py-3 
-            border ${error ? 'border-red-500' : theme.borderColors.primary} 
-            rounded-lg 
-            focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}
-            ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
-            bg-slate-800/50
-            ${theme.textColors.primary}
-            transition-all duration-200
-          `}
+          className={theme.utils.calculatorInput(!!error)}
+          style={{ paddingRight: '2rem' }}
         />
         <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} pointer-events-none`}>
           %
@@ -137,7 +121,7 @@ export function PercentageInput({
         <p className={`text-xs ${theme.textColors.muted}`}>{helpText}</p>
       )}
       {error && (
-        <div className="flex items-center gap-1 text-red-400 text-xs">
+        <div className={theme.utils.calculatorValidationError()}>
           <AlertCircle className="w-3 h-3" />
           {error}
         </div>
@@ -163,7 +147,7 @@ export function NumberInput({
 }: InputFieldProps) {
   return (
     <div className={`space-y-2 ${className}`}>
-      <Label htmlFor={id} className={`${theme.textColors.primary} ${required ? 'required' : ''}`}>
+      <Label htmlFor={id} className={`${theme.utils.calculatorLabel()}`}>
         {label}
         {required && <span className="text-red-400 ml-1">*</span>}
       </Label>
@@ -177,22 +161,13 @@ export function NumberInput({
         max={max}
         step={step}
         disabled={disabled}
-        className={`
-          w-full px-4 py-3 
-          border ${error ? 'border-red-500' : theme.borderColors.primary} 
-          rounded-lg 
-          focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}
-          ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
-          bg-slate-800/50
-          ${theme.textColors.primary}
-          transition-all duration-200
-        `}
+        className={theme.utils.calculatorInput(!!error)}
       />
       {helpText && !error && (
         <p className={`text-xs ${theme.textColors.muted}`}>{helpText}</p>
       )}
       {error && (
-        <div className="flex items-center gap-1 text-red-400 text-xs">
+        <div className={theme.utils.calculatorValidationError()}>
           <AlertCircle className="w-3 h-3" />
           {error}
         </div>
@@ -236,7 +211,7 @@ export function SelectField({
 }: SelectFieldProps) {
   return (
     <div className={`space-y-2 ${className}`}>
-      <Label htmlFor={id} className={`${theme.textColors.primary} ${required ? 'required' : ''}`}>
+      <Label htmlFor={id} className={`${theme.utils.calculatorLabel()}`}>
         {label}
         {required && <span className="text-red-400 ml-1">*</span>}
       </Label>
@@ -245,16 +220,7 @@ export function SelectField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
-        className={`
-          w-full px-4 py-3 
-          border ${error ? 'border-red-500' : theme.borderColors.primary} 
-          rounded-lg 
-          focus:ring-2 focus:ring-yellow-500 focus:${theme.status.warning.border}
-          ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
-          bg-slate-800/50
-          ${theme.textColors.primary}
-          transition-all duration-200
-        `}
+        className={theme.utils.calculatorInput(!!error)}
       >
         {placeholder && (
           <option value="" disabled>
@@ -275,7 +241,7 @@ export function SelectField({
         <p className={`text-xs ${theme.textColors.muted}`}>{helpText}</p>
       )}
       {error && (
-        <div className="flex items-center gap-1 text-red-400 text-xs">
+        <div className={theme.utils.calculatorValidationError()}>
           <AlertCircle className="w-3 h-3" />
           {error}
         </div>
