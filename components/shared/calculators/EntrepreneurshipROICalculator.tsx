@@ -137,10 +137,6 @@ export default function EntrepreneurshipROICalculator() {
     recordCalculatorUsage('entrepreneurship-roi-calculator');
   }, [recordCalculatorUsage]);
 
-  useEffect(() => {
-    calculateROI();
-  }, [inputs]);
-
   const calculateROI = useCallback(() => {
     // Total Investment
     const totalInvestment = inputs.initialInvestment + inputs.additionalInvestments;
@@ -251,6 +247,10 @@ export default function EntrepreneurshipROICalculator() {
     
     setInvestmentCategories(categories);
   }, [inputs]);
+
+  useEffect(() => {
+    calculateROI();
+  }, [inputs, calculateROI]);
 
   const formatCurrency = (amount: number): string => {
     if (Math.abs(amount) >= 1000000) {

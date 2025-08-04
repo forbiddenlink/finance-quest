@@ -90,10 +90,6 @@ export default function BusinessValuationCalculator() {
     recordCalculatorUsage('business-valuation-calculator');
   }, [recordCalculatorUsage]);
 
-  useEffect(() => {
-    calculateValuation();
-  }, [inputs]);
-
   const calculateValuation = useCallback(() => {
     // DCF Calculation
     const projectedCashFlows: number[] = [];
@@ -145,6 +141,10 @@ export default function BusinessValuationCalculator() {
       equityValue: dcfValuation
     });
   }, [inputs]);
+
+  useEffect(() => {
+    calculateValuation();
+  }, [inputs, calculateValuation]);
 
   const formatCurrency = (amount: number): string => {
     if (amount >= 1000000) {

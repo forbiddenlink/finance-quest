@@ -110,10 +110,6 @@ export default function StartupFinanceCalculator() {
     recordCalculatorUsage('startup-finance-calculator');
   }, [recordCalculatorUsage]);
 
-  useEffect(() => {
-    calculateStartupMetrics();
-  }, [inputs]);
-
   const calculateStartupMetrics = useCallback(() => {
     // Calculate funding round impact
     const postmoney = inputs.premoney + inputs.fundingAmount;
@@ -183,6 +179,10 @@ export default function StartupFinanceCalculator() {
     
     setFundingRounds(rounds);
   }, [inputs]);
+
+  useEffect(() => {
+    calculateStartupMetrics();
+  }, [inputs, calculateStartupMetrics]);
 
   const formatCurrency = (amount: number): string => {
     if (amount >= 1000000) {

@@ -121,10 +121,6 @@ export default function BusinessCashFlowAnalyzer() {
     recordCalculatorUsage('business-cash-flow-analyzer');
   }, [recordCalculatorUsage]);
 
-  useEffect(() => {
-    calculateCashFlow();
-  }, [inputs, initialCashBalance]);
-
   const calculateCashFlow = useCallback(() => {
     // Operating Cash Flow Calculation
     const grossProfit = inputs.monthlyRevenue * (inputs.grossMargin / 100);
@@ -199,6 +195,10 @@ export default function BusinessCashFlowAnalyzer() {
       operatingCashFlowMargin
     });
   }, [inputs, initialCashBalance, projectionMonths]);
+
+  useEffect(() => {
+    calculateCashFlow();
+  }, [inputs, initialCashBalance, calculateCashFlow]);
 
   const formatCurrency = (amount: number): string => {
     if (Math.abs(amount) >= 1000000) {
