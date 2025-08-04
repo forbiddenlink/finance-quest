@@ -207,21 +207,21 @@ export default function InvestmentCalculatorEnhanced() {
           <h3 className={`${theme.typography.heading3} ${theme.textColors.primary} mb-4`}>Investment Account Priority</h3>
           <div className="space-y-3">
             <div className={`p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg flex items-center`}>
-              <div className={`w-8 h-8 ${theme.status.success.text} bg-white rounded-full flex items-center justify-center font-bold mr-4`}>1</div>
+              <div className={`w-8 h-8 ${theme.status.success.bg} rounded-full flex items-center justify-center font-bold mr-4 ${theme.status.success.text}`}>1</div>
               <div>
                 <h4 className={`font-bold ${theme.status.success.text}`}>401(k) Match</h4>
                 <p className={`text-sm ${theme.textColors.secondary}`}>Free money - contribute enough for full employer match</p>
               </div>
             </div>
             <div className={`p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg flex items-center`}>
-              <div className={`w-8 h-8 ${theme.status.info.text} bg-white rounded-full flex items-center justify-center font-bold mr-4`}>2</div>
+              <div className={`w-8 h-8 ${theme.status.info.bg} rounded-full flex items-center justify-center font-bold mr-4 ${theme.status.info.text}`}>2</div>
               <div>
                 <h4 className={`font-bold ${theme.status.info.text}`}>Emergency Fund</h4>
                 <p className={`text-sm ${theme.textColors.secondary}`}>3-6 months expenses before investing</p>
               </div>
             </div>
             <div className={`p-4 ${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg flex items-center`}>
-              <div className={`w-8 h-8 ${theme.status.warning.text} bg-white rounded-full flex items-center justify-center font-bold mr-4`}>3</div>
+              <div className={`w-8 h-8 ${theme.status.warning.bg} rounded-full flex items-center justify-center font-bold mr-4 ${theme.status.warning.text}`}>3</div>
               <div>
                 <h4 className={`font-bold ${theme.status.warning.text}`}>Roth IRA</h4>
                 <p className={`text-sm ${theme.textColors.secondary}`}>$7,000/year tax-free growth (2024 limit)</p>

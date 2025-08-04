@@ -276,7 +276,7 @@ export default function SkillInvestmentROICalculator() {
               
               <button
                 onClick={addSkill}
-                className="w-full px-4 py-3 bg-yellow-500 text-black font-medium rounded-md hover:bg-yellow-400 transition-colors"
+                className={`w-full px-4 py-3 ${theme.buttons.accent} rounded-md transition-colors`}
               >
                 Add Skill Investment
               </button>

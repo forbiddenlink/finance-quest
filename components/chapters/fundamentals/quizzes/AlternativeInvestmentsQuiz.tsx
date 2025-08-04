@@ -350,7 +350,7 @@ const AlternativeInvestmentsQuiz: React.FC<AlternativeInvestmentsQuizProps> = ({
                   onClick={() => handleAnswerSelect(index)}
                   className={`w-full p-4 text-left rounded-lg border transition-all duration-200 ${
                     selectedAnswers[currentQuestion] === index
-                      ? 'border-blue-400 bg-blue-400/10 text-white'
+                      ? `${theme.borderColors.accent} ${theme.backgrounds.cardHover} ${theme.textColors.primary}`
                       : 'border-white/10 hover:border-white/20 hover:bg-white/5 text-gray-300'
                   }`}
                 >
@@ -371,7 +371,7 @@ const AlternativeInvestmentsQuiz: React.FC<AlternativeInvestmentsQuizProps> = ({
           variant="outline"
           onClick={handlePrevious}
           disabled={currentQuestion === 0}
-          className="border-white/20 text-white hover:bg-white/10"
+          className={`${theme.borderColors.primary} ${theme.textColors.secondary} hover:${theme.backgrounds.cardHover}`}
         >
           Previous
         </Button>

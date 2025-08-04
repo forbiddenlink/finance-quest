@@ -342,7 +342,7 @@ const BusinessFinanceLesson: React.FC<BusinessFinanceLessonProps> = ({ onComplet
           variant="outline"
           onClick={() => setCurrentSection(Math.max(0, currentSection - 1))}
           disabled={currentSection === 0}
-          className="border-white/20 text-white hover:bg-white/10"
+          className={`${theme.borderColors.primary} ${theme.textColors.secondary} hover:${theme.backgrounds.cardHover}`}
         >
           Previous
         </Button>

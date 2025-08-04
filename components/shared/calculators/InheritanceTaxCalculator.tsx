@@ -493,7 +493,7 @@ const InheritanceTaxCalculator: React.FC = () => {
 
               <Button
                 onClick={handleCalculate}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                className={`w-full ${theme.buttons.primary}`}
                 size="lg"
               >
                 Calculate Inheritance Tax

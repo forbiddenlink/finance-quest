@@ -620,7 +620,7 @@ const WealthTransferCalculator: React.FC = () => {
 
               <Button
                 onClick={handleCalculate}
-                className="w-full bg-yellow-600 hover:bg-yellow-700 text-white"
+                className={`w-full ${theme.buttons.accent}`}
                 size="lg"
               >
                 Calculate Transfer Strategy

@@ -282,7 +282,7 @@ const BusinessFinanceQuiz: React.FC<BusinessFinanceQuizProps> = ({ onComplete })
             </div>
 
             <div className="flex gap-4 justify-center pt-6">
-              <Button onClick={resetQuiz} variant="outline" className="border-white/20 text-white hover:bg-white/10">
+              <Button onClick={resetQuiz} variant="outline" className={`${theme.borderColors.primary} ${theme.textColors.secondary} hover:${theme.backgrounds.cardHover}`}>
                 <RotateCcw className="w-4 h-4 mr-2" />
                 Retake Quiz
               </Button>
@@ -331,7 +331,7 @@ const BusinessFinanceQuiz: React.FC<BusinessFinanceQuizProps> = ({ onComplete })
                 onClick={() => handleAnswerSelect(currentQuestion, index.toString())}
                 className={`w-full p-4 text-left rounded-lg border transition-all duration-200 ${
                   selectedAnswers[currentQuestion] === index.toString()
-                    ? 'border-blue-400 bg-blue-400/10 text-white'
+                    ? `${theme.borderColors.accent} ${theme.backgrounds.cardHover} ${theme.textColors.primary}`
                     : 'border-white/10 hover:border-white/20 hover:bg-white/5 text-gray-300'
                 }`}
               >
@@ -350,7 +350,7 @@ const BusinessFinanceQuiz: React.FC<BusinessFinanceQuizProps> = ({ onComplete })
           variant="outline"
           onClick={handlePrevious}
           disabled={currentQuestion === 0}
-          className="border-white/20 text-white hover:bg-white/10"
+          className={`${theme.borderColors.primary} ${theme.textColors.secondary} hover:${theme.backgrounds.cardHover}`}
         >
           Previous
         </Button>

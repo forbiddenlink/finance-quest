@@ -543,7 +543,7 @@ const TrustAnalysisCalculator: React.FC = () => {
 
               <Button
                 onClick={handleCalculate}
-                className="w-full bg-green-600 hover:bg-green-700 text-white"
+                className={`w-full ${theme.buttons.primary}`}
                 size="lg"
               >
                 Analyze Trust Structure
