@@ -280,6 +280,20 @@ export const CalculatorValidations = {
       min: 0,
       max: 1000
     }
+  },
+
+  taxOptimizer: {
+    income: ValidationPresets.currency(1000, 10000000),
+    currentDeductions: ValidationPresets.currency(0, 1000000),
+    retirement401k: ValidationPresets.currency(0, 70000),
+    retirementIra: ValidationPresets.currency(0, 7000),
+    hsaContribution: ValidationPresets.currency(0, 8300),
+    charitableDonations: ValidationPresets.currency(0, 500000),
+    mortgageInterest: ValidationPresets.currency(0, 100000),
+    stateLocalTaxes: ValidationPresets.currency(0, 50000),
+    businessExpenses: ValidationPresets.currency(0, 500000),
+    childTaxCredit: ValidationPresets.currency(0, 10000),
+    educationCredits: ValidationPresets.currency(0, 5000)
   }
 };
 

@@ -1032,3 +1032,296 @@ export function useCreditScoreCalculator(): UseCreditScoreCalculatorResult {
     reset
   };
 }
+
+/**
+ * Tax Optimizer Calculator Hook
+ */
+export interface TaxOptimizerInputs {
+  income: number;
+  filingStatus: string;
+  currentDeductions: number;
+  retirement401k: number;
+  retirementIra: number;
+  hsaContribution: number;
+  charitableDonations: number;
+  mortgageInterest: number;
+  stateLocalTaxes: number;
+  businessExpenses: number;
+  childTaxCredit: number;
+  educationCredits: number;
+}
+
+export interface TaxStrategy {
+  name: string;
+  description: string;
+  potentialSavings: number;
+  difficulty: 'Easy' | 'Medium' | 'Advanced';
+  category: string;
+}
+
+export interface TaxOptimizerResult {
+  currentTaxes: number;
+  optimizedTaxes: number;
+  taxSavings: number;
+  effectiveRate: number;
+  optimizedRate: number;
+  marginalRate: number;
+  standardDeduction: number;
+  itemizedDeductions: number;
+  takeHomeIncome: number;
+  optimizedTakeHome: number;
+  recommendations: string[];
+  strategies: TaxStrategy[];
+  taxBracketAnalysis: Array<{
+    bracket: string;
+    rate: number;
+    taxableIncome: number;
+    taxes: number;
+  }>;
+}
+
+export interface UseTaxOptimizerCalculatorResult {
+  values: TaxOptimizerInputs;
+  errors: Record<string, string>;
+  result: TaxOptimizerResult | null;
+  isValid: boolean;
+  updateValue: (field: keyof TaxOptimizerInputs, value: string) => void;
+  updateFilingStatus: (status: string) => void;
+  reset: () => void;
+}
+
+const TAX_BRACKETS_2024 = [
+  { min: 0, max: 11600, rate: 0.10 },
+  { min: 11600, max: 47150, rate: 0.12 },
+  { min: 47150, max: 100525, rate: 0.22 },
+  { min: 100525, max: 191950, rate: 0.24 },
+  { min: 191950, max: 243725, rate: 0.32 },
+  { min: 243725, max: 609350, rate: 0.35 },
+  { min: 609350, max: Infinity, rate: 0.37 }
+];
+
+const STANDARD_DEDUCTIONS_2024 = {
+  single: 13850,
+  marriedJointly: 27700,
+  marriedSeparately: 13850,
+  headOfHousehold: 20800
+};
+
+export function useTaxOptimizerCalculator(): UseTaxOptimizerCalculatorResult {
+  const [values, setValues] = useState<TaxOptimizerInputs>({
+    income: 75000,
+    filingStatus: 'single',
+    currentDeductions: 13850,
+    retirement401k: 6000,
+    retirementIra: 3000,
+    hsaContribution: 2000,
+    charitableDonations: 2500,
+    mortgageInterest: 8000,
+    stateLocalTaxes: 5000,
+    businessExpenses: 1000,
+    childTaxCredit: 0,
+    educationCredits: 0
+  });
+
+  // Validation
+  const validation = validateFields(values, CalculatorValidations.taxOptimizer);
+  const errors = validation.errors;
+  const isValid = validation.isValid;
+
+  // Tax calculation functions
+  const calculateFederalTax = useCallback((taxableIncome: number): number => {
+    let totalTax = 0;
+    let remainingIncome = Math.max(0, taxableIncome);
+
+    for (const bracket of TAX_BRACKETS_2024) {
+      if (remainingIncome <= 0) break;
+      
+      const taxableInBracket = Math.min(remainingIncome, bracket.max - bracket.min);
+      totalTax += taxableInBracket * bracket.rate;
+      remainingIncome -= taxableInBracket;
+    }
+
+    return totalTax;
+  }, []);
+
+  const getMarginalTaxRate = useCallback((taxableIncome: number): number => {
+    for (const bracket of TAX_BRACKETS_2024) {
+      if (taxableIncome <= bracket.max) {
+        return bracket.rate;
+      }
+    }
+    return TAX_BRACKETS_2024[TAX_BRACKETS_2024.length - 1].rate;
+  }, []);
+
+  const getStandardDeduction = useCallback((filingStatus: string): number => {
+    return STANDARD_DEDUCTIONS_2024[filingStatus as keyof typeof STANDARD_DEDUCTIONS_2024] || STANDARD_DEDUCTIONS_2024.single;
+  }, []);
+
+  // Calculate results
+  const result = useMemo((): TaxOptimizerResult | null => {
+    if (!isValid) return null;
+
+    const {
+      income, filingStatus, currentDeductions, retirement401k, retirementIra,
+      hsaContribution, charitableDonations, mortgageInterest, stateLocalTaxes,
+      businessExpenses, childTaxCredit, educationCredits
+    } = values;
+
+    const standardDeduction = getStandardDeduction(filingStatus);
+    
+    // Calculate itemized deductions
+    const itemizedTotal = charitableDonations + mortgageInterest + Math.min(stateLocalTaxes, 10000) + businessExpenses;
+    const itemizedDeductions = itemizedTotal;
+    
+    // Use higher of standard or itemized deductions
+    const bestDeduction = Math.max(standardDeduction, itemizedDeductions);
+    
+    // Current scenario
+    const currentAdjustedIncome = income - retirement401k - retirementIra - hsaContribution;
+    const currentTaxableIncome = Math.max(0, currentAdjustedIncome - currentDeductions);
+    const currentFederalTax = calculateFederalTax(currentTaxableIncome);
+    const currentTotalTax = Math.max(0, currentFederalTax - childTaxCredit - educationCredits);
+    
+    // Optimized scenario
+    const optimizedTaxableIncome = Math.max(0, currentAdjustedIncome - bestDeduction);
+    const optimizedFederalTax = calculateFederalTax(optimizedTaxableIncome);
+    const optimizedTotalTax = Math.max(0, optimizedFederalTax - childTaxCredit - educationCredits);
+    
+    const taxSavings = currentTotalTax - optimizedTotalTax;
+    const effectiveRate = income > 0 ? (currentTotalTax / income) * 100 : 0;
+    const optimizedRate = income > 0 ? (optimizedTotalTax / income) * 100 : 0;
+    const marginalRate = getMarginalTaxRate(currentTaxableIncome) * 100;
+    
+    const takeHomeIncome = income - currentTotalTax;
+    const optimizedTakeHome = income - optimizedTotalTax;
+
+    // Generate recommendations
+    const recommendations: string[] = [];
+    
+    if (itemizedDeductions > standardDeduction) {
+      recommendations.push('Itemize deductions to save on taxes');
+    } else {
+      recommendations.push('Use standard deduction for simplicity');
+    }
+    
+    if (retirement401k < 23000) {
+      recommendations.push('Maximize 401(k) contributions for tax savings');
+    }
+    
+    if (hsaContribution < 4300) {
+      recommendations.push('Increase HSA contributions for triple tax advantage');
+    }
+    
+    if (charitableDonations < income * 0.02) {
+      recommendations.push('Consider charitable giving for tax deductions');
+    }
+
+    // Generate strategies
+    const strategies: TaxStrategy[] = [
+      {
+        name: 'Maximize 401(k) Contributions',
+        description: 'Contribute the maximum allowed to your 401(k) plan',
+        potentialSavings: (23000 - retirement401k) * marginalRate / 100,
+        difficulty: 'Easy' as const,
+        category: 'Retirement'
+      },
+      {
+        name: 'HSA Optimization',
+        description: 'Maximize Health Savings Account contributions',
+        potentialSavings: (4300 - hsaContribution) * marginalRate / 100,
+        difficulty: 'Easy' as const,
+        category: 'Healthcare'
+      },
+      {
+        name: 'Tax-Loss Harvesting',
+        description: 'Realize investment losses to offset gains',
+        potentialSavings: income * 0.01,
+        difficulty: 'Medium' as const,
+        category: 'Investments'
+      },
+      {
+        name: 'Charitable Bunching',
+        description: 'Bunch charitable donations in alternating years',
+        potentialSavings: income * 0.005,
+        difficulty: 'Advanced' as const,
+        category: 'Charitable'
+      }
+    ].filter(strategy => strategy.potentialSavings > 0);
+
+    // Tax bracket analysis
+    const taxBracketAnalysis = TAX_BRACKETS_2024.map(bracket => {
+      const bracketIncome = Math.min(
+        Math.max(0, currentTaxableIncome - bracket.min),
+        bracket.max - bracket.min
+      );
+      return {
+        bracket: `${(bracket.rate * 100).toFixed(0)}%`,
+        rate: bracket.rate * 100,
+        taxableIncome: bracketIncome,
+        taxes: bracketIncome * bracket.rate
+      };
+    }).filter(item => item.taxableIncome > 0);
+
+    return {
+      currentTaxes: currentTotalTax,
+      optimizedTaxes: optimizedTotalTax,
+      taxSavings,
+      effectiveRate,
+      optimizedRate,
+      marginalRate,
+      standardDeduction,
+      itemizedDeductions,
+      takeHomeIncome,
+      optimizedTakeHome,
+      recommendations,
+      strategies,
+      taxBracketAnalysis
+    };
+  }, [values, isValid, calculateFederalTax, getMarginalTaxRate, getStandardDeduction]);
+
+  // Update functions
+  const updateValue = useCallback((field: keyof TaxOptimizerInputs, value: string) => {
+    if (field === 'filingStatus') {
+      setValues(prev => ({ ...prev, [field]: value }));
+    } else {
+      const numValue = parseFloat(value) || 0;
+      setValues(prev => ({ ...prev, [field]: numValue }));
+    }
+  }, []);
+
+  const updateFilingStatus = useCallback((status: string) => {
+    const standardDeduction = getStandardDeduction(status);
+    setValues(prev => ({ 
+      ...prev, 
+      filingStatus: status,
+      currentDeductions: standardDeduction
+    }));
+  }, [getStandardDeduction]);
+
+  const reset = useCallback(() => {
+    setValues({
+      income: 75000,
+      filingStatus: 'single',
+      currentDeductions: 13850,
+      retirement401k: 6000,
+      retirementIra: 3000,
+      hsaContribution: 2000,
+      charitableDonations: 2500,
+      mortgageInterest: 8000,
+      stateLocalTaxes: 5000,
+      businessExpenses: 1000,
+      childTaxCredit: 0,
+      educationCredits: 0
+    });
+  }, []);
+
+  return {
+    values,
+    errors,
+    result,
+    isValid,
+    updateValue,
+    updateFilingStatus,
+    reset
+  };
+}
