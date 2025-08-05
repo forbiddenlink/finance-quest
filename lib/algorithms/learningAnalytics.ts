@@ -146,7 +146,7 @@ class LearningAnalyticsEngine {
         const masteredConcepts = this.identifyMasteredConcepts(quizScores);
 
         // Predict optimal study time based on performance patterns
-        const optimalStudyTime = this.predictOptimalStudyTime(userProgress);
+        const optimalStudyTime = this.predictOptimalStudyTime();
 
         // Calculate cognitive load
         const cognitiveLoad = this.calculateCognitiveLoad(userProgress);
@@ -185,12 +185,7 @@ class LearningAnalyticsEngine {
             .map(([concept]) => concept);
     }
 
-    private predictOptimalStudyTime(userProgress: {
-        completedLessons: string[];
-        quizScores: Record<string, number>;
-        calculatorUsage: Record<string, number>;
-        totalTimeSpent: number;
-    }): Date {
+    private predictOptimalStudyTime(): Date {
         // Simple algorithm - can be enhanced with ML
         const hour = new Date().getHours();
         const bestHour = hour < 12 ? 10 : hour < 18 ? 14 : 20; // Morning, afternoon, or evening

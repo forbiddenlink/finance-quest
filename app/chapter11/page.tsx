@@ -51,7 +51,7 @@ export default function Chapter11() {
       iconColor="text-blue-400"
       lessonComponent={<InsuranceRiskManagementLessonEnhanced />}
       calculatorComponent={<LifeInsuranceCalculator />}
-      quizComponent={<InsuranceRiskManagementQuizEnhanced onComplete={() => {}} />}
+      quizComponent={<InsuranceRiskManagementQuizEnhanced />}
       calculatorTitle="Insurance & Risk Management Suite"
       calculatorDescription="Professional insurance calculators for life, disability, property, and umbrella coverage analysis"
       quizTitle="Insurance & Risk Management Quiz"
