@@ -290,7 +290,10 @@ export function useStockAnalysisCalculator() {
         pe: '',
         eps: '',
         dividendYield: '',
-        marketCap: ''
+        marketCap: '',
+        peRatio: '',
+        growthRate: '',
+        timeHorizon: ''
     });
 
     const [errors, setErrors] = useState<ValidationError>({});
@@ -302,14 +305,31 @@ export function useStockAnalysisCalculator() {
     const result = useMemo(() => {
         const currentPrice = parseFloat(values.currentPrice) || 0;
         const targetPrice = parseFloat(values.targetPrice) || 0;
+        const peRatio = parseFloat(values.peRatio) || 0;
+        const eps = parseFloat(values.eps) || 0;
+        const dividendYield = parseFloat(values.dividendYield) || 0;
+        const growthRate = parseFloat(values.growthRate) || 0;
+        const timeHorizon = parseFloat(values.timeHorizon) || 1;
 
         if (currentPrice <= 0) return null;
 
         const potentialReturn = targetPrice > 0 ? ((targetPrice - currentPrice) / currentPrice) * 100 : 0;
+        const fairValue = eps * (peRatio + growthRate);
+        const valueGap = fairValue > 0 ? ((fairValue - currentPrice) / currentPrice) * 100 : 0;
+        const priceAppreciation = potentialReturn;
+        const dividendReturn = dividendYield;
+        const totalReturn = priceAppreciation + dividendReturn;
+        const annualizedReturn = timeHorizon > 0 ? totalReturn / timeHorizon : totalReturn;
 
         return {
             potentialReturn,
-            recommendation: potentialReturn > 10 ? 'BUY' : potentialReturn < -10 ? 'SELL' : 'HOLD'
+            recommendation: potentialReturn > 10 ? 'BUY' : potentialReturn < -10 ? 'SELL' : 'HOLD',
+            fairValue,
+            valueGap,
+            priceAppreciation,
+            dividendReturn,
+            totalReturn,
+            annualizedReturn
         };
     }, [values]);
 
@@ -320,15 +340,18 @@ export function useStockAnalysisCalculator() {
             pe: '',
             eps: '',
             dividendYield: '',
-            marketCap: ''
+            marketCap: '',
+            peRatio: '',
+            growthRate: '',
+            timeHorizon: ''
         });
         setErrors({});
     }, []);
 
     return {
         values,
-        errors,
         result,
+        errors,
         updateValue,
         reset
     };

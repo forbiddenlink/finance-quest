@@ -17,9 +17,9 @@ export default function StockAnalysisCalculator() {
     const { recordCalculatorUsage } = useProgressStore();
     const {
         values,
-        results,
-        validation,
-        updateField,
+        result,
+        errors,
+        updateValue,
         reset
     } = useStockAnalysisCalculator();
 
@@ -55,16 +55,16 @@ export default function StockAnalysisCalculator() {
     };
 
     // Prepare chart data
-    const analysisData = results ? [
+    const analysisData = result ? [
         { name: 'Current Price', value: parseFloat(values.currentPrice) || 0 },
         { name: 'Target Price', value: parseFloat(values.targetPrice) || 0 },
-        { name: 'Fair Value', value: results.fairValue || 0 }
+        { name: 'Fair Value', value: result?.fairValue || 0 }
     ] : [];
 
-    const returnData = results ? [
-        { name: 'Price Appreciation', value: results.priceAppreciation || 0 },
-        { name: 'Dividend Return', value: results.dividendReturn || 0 },
-        { name: 'Total Return', value: results.totalReturn || 0 }
+    const returnData = result ? [
+        { name: 'Price Appreciation', value: result?.priceAppreciation || 0 },
+        { name: 'Dividend Return', value: result?.dividendReturn || 0 },
+        { name: 'Total Return', value: result?.totalReturn || 0 }
     ] : [];
 
     return (
@@ -96,11 +96,11 @@ export default function StockAnalysisCalculator() {
                                         id="currentPrice"
                                         type="number"
                                         value={values.currentPrice}
-                                        onChange={(e) => updateField('currentPrice', e.target.value)}
+                                        onChange={(e) => updateValue('currentPrice', e.target.value)}
                                         placeholder="100.00"
                                     />
-                                    {validation.errors?.currentPrice && (
-                                        <p className="text-sm text-red-600 mt-1">{validation.errors.currentPrice}</p>
+                                    {errors?.currentPrice && (
+                                        <p className="text-sm text-red-600 mt-1">{errors.currentPrice}</p>
                                     )}
                                 </div>
 
@@ -110,11 +110,11 @@ export default function StockAnalysisCalculator() {
                                         id="targetPrice"
                                         type="number"
                                         value={values.targetPrice}
-                                        onChange={(e) => updateField('targetPrice', e.target.value)}
+                                        onChange={(e) => updateValue('targetPrice', e.target.value)}
                                         placeholder="120.00"
                                     />
-                                    {validation.errors?.targetPrice && (
-                                        <p className="text-sm text-red-600 mt-1">{validation.errors.targetPrice}</p>
+                                    {errors?.targetPrice && (
+                                        <p className="text-sm text-red-600 mt-1">{errors.targetPrice}</p>
                                     )}
                                 </div>
 
@@ -124,11 +124,11 @@ export default function StockAnalysisCalculator() {
                                         id="dividendYield"
                                         type="number"
                                         value={values.dividendYield}
-                                        onChange={(e) => updateField('dividendYield', e.target.value)}
+                                        onChange={(e) => updateValue('dividendYield', e.target.value)}
                                         placeholder="2.5"
                                     />
-                                    {validation.errors?.dividendYield && (
-                                        <p className="text-sm text-red-600 mt-1">{validation.errors.dividendYield}</p>
+                                    {errors?.dividendYield && (
+                                        <p className="text-sm text-red-600 mt-1">{errors.dividendYield}</p>
                                     )}
                                 </div>
 
@@ -138,11 +138,11 @@ export default function StockAnalysisCalculator() {
                                         id="peRatio"
                                         type="number"
                                         value={values.peRatio}
-                                        onChange={(e) => updateField('peRatio', e.target.value)}
+                                        onChange={(e) => updateValue('peRatio', e.target.value)}
                                         placeholder="15"
                                     />
-                                    {validation.errors?.peRatio && (
-                                        <p className="text-sm text-red-600 mt-1">{validation.errors.peRatio}</p>
+                                    {errors?.peRatio && (
+                                        <p className="text-sm text-red-600 mt-1">{errors.peRatio}</p>
                                     )}
                                 </div>
 
@@ -152,11 +152,11 @@ export default function StockAnalysisCalculator() {
                                         id="eps"
                                         type="number"
                                         value={values.eps}
-                                        onChange={(e) => updateField('eps', e.target.value)}
+                                        onChange={(e) => updateValue('eps', e.target.value)}
                                         placeholder="6.67"
                                     />
-                                    {validation.errors?.eps && (
-                                        <p className="text-sm text-red-600 mt-1">{validation.errors.eps}</p>
+                                    {errors?.eps && (
+                                        <p className="text-sm text-red-600 mt-1">{errors.eps}</p>
                                     )}
                                 </div>
 
@@ -166,11 +166,11 @@ export default function StockAnalysisCalculator() {
                                         id="growthRate"
                                         type="number"
                                         value={values.growthRate}
-                                        onChange={(e) => updateField('growthRate', e.target.value)}
+                                        onChange={(e) => updateValue('growthRate', e.target.value)}
                                         placeholder="8"
                                     />
-                                    {validation.errors?.growthRate && (
-                                        <p className="text-sm text-red-600 mt-1">{validation.errors.growthRate}</p>
+                                    {errors?.growthRate && (
+                                        <p className="text-sm text-red-600 mt-1">{errors.growthRate}</p>
                                     )}
                                 </div>
 
@@ -180,11 +180,11 @@ export default function StockAnalysisCalculator() {
                                         id="timeHorizon"
                                         type="number"
                                         value={values.timeHorizon}
-                                        onChange={(e) => updateField('timeHorizon', e.target.value)}
+                                        onChange={(e) => updateValue('timeHorizon', e.target.value)}
                                         placeholder="1"
                                     />
-                                    {validation.errors?.timeHorizon && (
-                                        <p className="text-sm text-red-600 mt-1">{validation.errors.timeHorizon}</p>
+                                    {errors?.timeHorizon && (
+                                        <p className="text-sm text-red-600 mt-1">{errors.timeHorizon}</p>
                                     )}
                                 </div>
                             </div>
@@ -197,9 +197,9 @@ export default function StockAnalysisCalculator() {
                     </Button>
                 </div>
 
-                {/* Results Section */}
+                {/* result Section */}
                 <div className="space-y-6">
-                    {results && (
+                    {result && (
                         <>
                             {/* Investment Recommendation */}
                             <Card>
@@ -212,12 +212,12 @@ export default function StockAnalysisCalculator() {
                                 <CardContent>
                                     <div className="space-y-4">
                                         <div className="flex items-center justify-between">
-                                            <Badge className={`text-lg px-4 py-2 ${getRecommendationColor(results.recommendation)}`}>
-                                                {results.recommendation}
+                                            <Badge className={`text-lg px-4 py-2 ${getRecommendationColor(result?.recommendation)}`}>
+                                                {result?.recommendation}
                                             </Badge>
                                             <div className="text-right">
                                                 <div className="text-2xl font-bold">
-                                                    {results.valueGap >= 0 ? '+' : ''}{formatPercentage(results.valueGap || 0)}
+                                                    {result?.valueGap >= 0 ? '+' : ''}{formatPercentage(result?.valueGap || 0)}
                                                 </div>
                                                 <div className="text-sm text-gray-600">Value Gap</div>
                                             </div>
@@ -226,14 +226,14 @@ export default function StockAnalysisCalculator() {
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="p-3 bg-blue-50 rounded-lg">
                                                 <div className="text-lg font-bold text-blue-600">
-                                                    {formatCurrency(results.fairValue || 0)}
+                                                    {formatCurrency(result?.fairValue || 0)}
                                                 </div>
                                                 <div className="text-sm text-blue-700">Fair Value</div>
                                             </div>
 
                                             <div className="p-3 bg-green-50 rounded-lg">
                                                 <div className="text-lg font-bold text-green-600">
-                                                    {formatPercentage(results.totalReturn || 0)}
+                                                    {formatPercentage(result?.totalReturn || 0)}
                                                 </div>
                                                 <div className="text-sm text-green-700">Total Return</div>
                                             </div>
@@ -300,12 +300,12 @@ export default function StockAnalysisCalculator() {
                                                         </div>
                                                         <div className="flex justify-between">
                                                             <span>Fair Value:</span>
-                                                            <span className="font-medium">{formatCurrency(results.fairValue || 0)}</span>
+                                                            <span className="font-medium">{formatCurrency(result?.fairValue || 0)}</span>
                                                         </div>
                                                         <div className="flex justify-between">
                                                             <span>Value Gap:</span>
-                                                            <span className={`font-medium ${(results.valueGap || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                                                {formatPercentage(results.valueGap || 0)}
+                                                            <span className={`font-medium ${(result?.valueGap || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                                                {formatPercentage(result?.valueGap || 0)}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -343,7 +343,7 @@ export default function StockAnalysisCalculator() {
                                                     <div className="p-4 bg-blue-50 rounded-lg">
                                                         <h4 className="font-semibold text-blue-900">Price Appreciation</h4>
                                                         <p className="text-2xl font-bold text-blue-600">
-                                                            {formatPercentage(results.priceAppreciation || 0)}
+                                                            {formatPercentage(result?.priceAppreciation || 0)}
                                                         </p>
                                                         <p className="text-sm text-blue-700">Capital Gains</p>
                                                     </div>
@@ -351,7 +351,7 @@ export default function StockAnalysisCalculator() {
                                                     <div className="p-4 bg-green-50 rounded-lg">
                                                         <h4 className="font-semibold text-green-900">Dividend Return</h4>
                                                         <p className="text-2xl font-bold text-green-600">
-                                                            {formatPercentage(results.dividendReturn || 0)}
+                                                            {formatPercentage(result?.dividendReturn || 0)}
                                                         </p>
                                                         <p className="text-sm text-green-700">Annual Yield</p>
                                                     </div>
@@ -359,7 +359,7 @@ export default function StockAnalysisCalculator() {
                                                     <div className="p-4 bg-purple-50 rounded-lg">
                                                         <h4 className="font-semibold text-purple-900">Total Return</h4>
                                                         <p className="text-2xl font-bold text-purple-600">
-                                                            {formatPercentage(results.totalReturn || 0)}
+                                                            {formatPercentage(result?.totalReturn || 0)}
                                                         </p>
                                                         <p className="text-sm text-purple-700">Combined Return</p>
                                                     </div>
@@ -367,7 +367,7 @@ export default function StockAnalysisCalculator() {
                                                     <div className="p-4 bg-orange-50 rounded-lg">
                                                         <h4 className="font-semibold text-orange-900">Annualized Return</h4>
                                                         <p className="text-2xl font-bold text-orange-600">
-                                                            {formatPercentage(results.annualizedReturn || 0)}
+                                                            {formatPercentage(result?.annualizedReturn || 0)}
                                                         </p>
                                                         <p className="text-sm text-orange-700">Per Year</p>
                                                     </div>
@@ -406,19 +406,19 @@ export default function StockAnalysisCalculator() {
                                                     <div className="p-4 bg-gray-50 rounded-lg">
                                                         <h4 className="font-semibold mb-3">Recommendation Logic</h4>
                                                         <div className="text-sm space-y-2">
-                                                            {results.valueGap > 10 && (
+                                                            {result?.valueGap > 10 && (
                                                                 <div className="flex items-center gap-2">
                                                                     <CheckCircle2 className="h-4 w-4 text-green-500" />
                                                                     <span>Stock appears undervalued (value gap &gt; 10%)</span>
                                                                 </div>
                                                             )}
-                                                            {results.valueGap < -10 && (
+                                                            {result?.valueGap < -10 && (
                                                                 <div className="flex items-center gap-2">
                                                                     <AlertTriangle className="h-4 w-4 text-red-500" />
                                                                     <span>Stock appears overvalued (value gap &lt; -10%)</span>
                                                                 </div>
                                                             )}
-                                                            {results.valueGap >= -10 && results.valueGap <= 10 && (
+                                                            {result?.valueGap >= -10 && result?.valueGap <= 10 && (
                                                                 <div className="flex items-center gap-2">
                                                                     <Eye className="h-4 w-4 text-yellow-500" />
                                                                     <span>Stock appears fairly valued (-10% to +10% range)</span>
@@ -428,7 +428,7 @@ export default function StockAnalysisCalculator() {
                                                             <div className="mt-3 pt-3 border-t">
                                                                 <p><strong>Fair Value Calculation:</strong> EPS × (P/E Ratio + Growth Rate)</p>
                                                                 <p className="text-xs text-gray-600 mt-1">
-                                                                    ${values.eps} × ({values.peRatio} + {values.growthRate}) = {formatCurrency(results.fairValue || 0)}
+                                                                    ${values.eps} × ({values.peRatio} + {values.growthRate}) = {formatCurrency(result?.fairValue || 0)}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -440,11 +440,11 @@ export default function StockAnalysisCalculator() {
                                 </TabsContent>
                             </Tabs>
 
-                            {Math.abs(results.valueGap || 0) > 20 && (
+                            {Math.abs(result?.valueGap || 0) > 20 && (
                                 <Alert>
                                     <AlertTriangle className="h-4 w-4" />
                                     <AlertDescription className="font-medium">
-                                        {(results.valueGap || 0) > 20 ?
+                                        {(result?.valueGap || 0) > 20 ?
                                             'Significant undervaluation detected. Consider researching fundamental factors before investing.' :
                                             'Significant overvaluation detected. Current price may be too high relative to fundamentals.'
                                         }
@@ -454,7 +454,7 @@ export default function StockAnalysisCalculator() {
                         </>
                     )}
 
-                    {!validation.isValid && validation.errors && Object.keys(validation.errors).length > 0 && (
+                    {!errors.isValid && errors && Object.keys(errors).length > 0 && (
                         <Alert variant="destructive">
                             <AlertTriangle className="h-4 w-4" />
                             <AlertDescription>
