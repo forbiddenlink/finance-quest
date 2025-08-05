@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Shield, BarChart3, Calendar, Calculator as CalcIcon } from 'lucide-react';
 import { theme } from '@/lib/theme';
+import { useProgressStore } from '@/lib/store/progressStore';
 import { motion } from 'framer-motion';
 import EmergencyFundScenarioAnalyzer from '@/components/chapters/fundamentals/calculators/EmergencyFundScenarioAnalyzer';
 import EmergencyFundBuildingTimeline from '@/components/chapters/fundamentals/calculators/EmergencyFundBuildingTimeline';
@@ -14,6 +15,11 @@ type CalculatorView = 'overview' | 'scenario' | 'timeline' | 'calculator';
 
 export default function EmergencyFundCalculatorEnhanced() {
   const [activeView, setActiveView] = useState<CalculatorView>('overview');
+  const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
+
+  useEffect(() => {
+    recordCalculatorUsage('emergency-fund-calculator-enhanced');
+  }, [recordCalculatorUsage]);
 
   const calculatorViews = [
     {
