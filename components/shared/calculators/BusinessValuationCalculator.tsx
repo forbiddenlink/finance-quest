@@ -1,87 +1,133 @@
 'use client';
 
-import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import React, { useState } from 'react';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import CalculatorWrapper, { CalculatorMetadata } from './CalculatorWrapper';
 import { CurrencyInput, NumberInput, PercentageInput } from './FormFields';
 import { theme } from '@/lib/theme';
-import { useBusinessValuationCalculator } from '@/lib/utils/calculatorHooks';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { formatCurrency } from '@/lib/utils/financial';
-import { Building2, TrendingUp, BarChart3, PieChart as PieChartIcon, Target } from 'lucide-react';
+import { Building2, TrendingUp, BarChart3, Target } from 'lucide-react';
+
+interface BusinessValuationValues {
+  annualRevenue: string;
+  growthRate: string;
+  netMargin: string;
+  discountRate: string;
+  terminalGrowthRate: string;
+  projectionYears: string;
+  ebitda: string;
+  ebitdaMultiple: string;
+  totalAssets: string;
+  totalLiabilities: string;
+}
+
+interface BusinessValuationResult {
+  dcfValuation: number;
+  multipleValuation: number;
+  assetValuation: number;
+  averageValuation: number;
+}
 
 export default function BusinessValuationCalculator() {
   const { recordCalculatorUsage } = useProgressStore();
+
+  const [values, setValues] = useState<BusinessValuationValues>({
+    annualRevenue: '1000000',
+    growthRate: '15',
+    netMargin: '20',
+    discountRate: '10',
+    terminalGrowthRate: '3',
+    projectionYears: '5',
+    ebitda: '200000',
+    ebitdaMultiple: '8',
+    totalAssets: '800000',
+    totalLiabilities: '300000'
+  });
+
+  const updateField = (field: keyof BusinessValuationValues, value: string) => {
+    setValues(prev => ({ ...prev, [field]: value }));
+  };
 
   React.useEffect(() => {
     recordCalculatorUsage('business-valuation-calculator');
   }, [recordCalculatorUsage]);
 
+  // Calculate business valuation
+  const result = React.useMemo((): BusinessValuationResult => {
+    const revenue = parseFloat(values.annualRevenue) || 0;
+    const growth = parseFloat(values.growthRate) / 100 || 0;
+    const margin = parseFloat(values.netMargin) / 100 || 0;
+    const discount = parseFloat(values.discountRate) / 100 || 0;
+    const terminalGrowth = parseFloat(values.terminalGrowthRate) / 100 || 0;
+    const years = parseInt(values.projectionYears) || 5;
+    const ebitda = parseFloat(values.ebitda) || 0;
+    const multiple = parseFloat(values.ebitdaMultiple) || 0;
+    const assets = parseFloat(values.totalAssets) || 0;
+    const liabilities = parseFloat(values.totalLiabilities) || 0;
+
+    // DCF Calculation
+    let dcfValue = 0;
+    let currentRevenue = revenue;
+    
+    for (let year = 1; year <= years; year++) {
+      currentRevenue *= (1 + growth);
+      const netIncome = currentRevenue * margin;
+      const presentValue = netIncome / Math.pow(1 + discount, year);
+      dcfValue += presentValue;
+    }
+    
+    // Terminal value
+    const terminalCashFlow = currentRevenue * margin * (1 + terminalGrowth);
+    const terminalValue = terminalCashFlow / (discount - terminalGrowth);
+    const presentTerminalValue = terminalValue / Math.pow(1 + discount, years);
+    dcfValue += presentTerminalValue;
+
+    // Multiple valuation
+    const multipleValue = ebitda * multiple;
+
+    // Asset valuation
+    const assetValue = assets - liabilities;
+
+    // Average valuation
+    const average = (dcfValue + multipleValue + assetValue) / 3;
+
+    return {
+      dcfValuation: dcfValue,
+      multipleValuation: multipleValue,
+      assetValuation: assetValue,
+      averageValuation: average
+    };
+  }, [values]);
+
+  const reset = () => {
+    setValues({
+      annualRevenue: '1000000',
+      growthRate: '15',
+      netMargin: '20',
+      discountRate: '10',
+      terminalGrowthRate: '3',
+      projectionYears: '5',
+      ebitda: '200000',
+      ebitdaMultiple: '8',
+      totalAssets: '800000',
+      totalLiabilities: '300000'
+    });
+  };
+
   const metadata: CalculatorMetadata = {
     id: 'business-valuation-calculator',
     title: 'Business Valuation Calculator',
-    description: 'Value your business using multiple proven methodologies including DCF, comparable multiples, and asset-based approaches.',
+    description: 'Calculate business value using DCF, multiples, and asset-based approaches',
     category: 'advanced',
-    icon: Building2,
-    tags: ['Business Valuation', 'DCF Analysis', 'Enterprise Value', 'Investment Analysis', 'Financial Modeling'],
-    educationalNotes: [
-      {
-        title: 'Valuation Methods Overview',
-        content: 'Different valuation methods provide various perspectives on business worth. Using multiple approaches gives a more complete picture and helps validate your estimates.',
-        tips: [
-          'DCF (Discounted Cash Flow) focuses on future cash generation potential',
-          'Multiple-based valuation compares to similar businesses in the market',
-          'Asset-based valuation considers the underlying value of business assets',
-          'Consider all three methods and look for convergence in valuations'
-        ]
-      },
-      {
-        title: 'Key Valuation Drivers',
-        content: 'Business value is driven by profitability, growth potential, risk profile, and market conditions. Small changes in assumptions can significantly impact valuation.',
-        tips: [
-          'Higher growth rates increase valuation but consider sustainability',
-          'Lower discount rates increase value but should reflect actual risk',
-          'Consistent profit margins are more valuable than volatile ones',
-          'Industry multiples vary significantly - research comparable companies'
-        ]
-      }
-    ]
+    tags: ['valuation', 'dcf', 'business', 'investment']
   };
-
-  const calculatorHook = useBusinessValuationCalculator();
-  const { values, result, updateValue, reset } = calculatorHook;
-
-  const handleReset = () => {
-    reset();
-  };
-
-  // Generate results for CalculatorWrapper
-  const calculatorResults = React.useMemo(() => {
-    if (!result) return undefined;
-
-    // Since hook is a stub, return undefined for now
-    return undefined;
-
-    // This would be the actual implementation when hook is implemented:
-    // const { dcfValuation, multipleValuation, assetValuation, averageValuation } = result;
-
-    return {
-      primary: {
-        label: 'Business Valuation',
-        value: 0,
-        format: 'currency' as const,
-        variant: 'info' as const,
-        description: 'Feature coming soon - comprehensive business valuation toolkit'
-      },
-      secondary: []
-    };
-  }, [result]);
 
   // Generate insights
   const insights = React.useMemo(() => {
-    if (!results) return [];
+    if (!result) return [];
 
-    const { dcfValuation, multipleValuation, assetValuation, averageValuation } = results;
+    const { dcfValuation, multipleValuation, assetValuation, averageValuation } = result;
     const insights = [];
 
     // Check for valuation convergence
@@ -93,43 +139,42 @@ export default function BusinessValuationCalculator() {
     if (variance < 20) {
       insights.push({
         type: 'success' as const,
-        title: 'Consistent Valuation',
-        message: `All three methods show similar values (within ${variance.toFixed(1)}%), indicating a reliable valuation range.`
+        title: 'Valuation Convergence',
+        message: `All valuation methods are within 20%, suggesting a reliable estimate of ${formatCurrency(averageValuation)}.`
       });
     } else {
       insights.push({
         type: 'warning' as const,
-        title: 'High Valuation Variance',
-        message: `Methods show significant differences (${variance.toFixed(1)}% variance). Review assumptions and consider market conditions.`
+        title: 'Valuation Divergence',
+        message: `Significant variance between methods (${variance.toFixed(1)}%). Consider reviewing assumptions.`
       });
     }
 
-    // Growth rate analysis
-    const growthRate = parseFloat(values.growthRate);
+    const growthRate = parseFloat(values.growthRate) || 0;
+    const discountRate = parseFloat(values.discountRate) || 0;
+
     if (growthRate > 25) {
       insights.push({
-        type: 'info' as const,
-        title: 'High Growth Assumptions',
-        message: 'Growth rates above 25% are ambitious. Ensure these projections are sustainable and well-supported.'
+        type: 'warning' as const,
+        title: 'High Growth Assumption',
+        message: 'Growth rates above 25% are difficult to sustain long-term. Consider more conservative projections.'
       });
     }
 
-    // Discount rate analysis
-    const discountRate = parseFloat(values.discountRate);
     if (discountRate < 8) {
       insights.push({
-        type: 'warning' as const,
+        type: 'info' as const,
         title: 'Low Discount Rate',
-        message: 'Discount rates below 8% may be too optimistic. Consider market risk and business-specific factors.'
+        message: 'Your discount rate seems optimistic. Most businesses carry higher risk profiles.'
       });
     }
 
     return insights;
-  }, [results, values]);
+  }, [result, values]);
 
   // Generate chart data for cash flow projections
   const cashFlowData = React.useMemo(() => {
-    if (!results) return [];
+    if (!result) return [];
 
     const data = [];
     const projectionYears = parseInt(values.projectionYears);
@@ -139,201 +184,209 @@ export default function BusinessValuationCalculator() {
 
     for (let year = 1; year <= projectionYears; year++) {
       currentRevenue *= (1 + growthRate);
-      const netIncome = currentRevenue * netMargin;
-      const freeCashFlow = netIncome * 0.85; // Typical FCF conversion
-
+      const cashFlow = currentRevenue * netMargin;
       data.push({
-        year: `Year ${year}`,
-        revenue: Math.round(currentRevenue),
-        freeCashFlow: Math.round(freeCashFlow)
+        year,
+        revenue: currentRevenue,
+        cashFlow,
+        name: `Year ${year}`
       });
     }
 
     return data;
-  }, [results, values]);
+  }, [result, values]);
 
   // Generate valuation method comparison data
   const valuationComparisonData = React.useMemo(() => {
-    if (!results) return [];
+    if (!result) return [];
 
-    const { dcfValuation, multipleValuation, assetValuation } = results;
+    const { dcfValuation, multipleValuation, assetValuation } = result;
 
     return [
       { name: 'DCF Method', value: dcfValuation, color: theme.colors.blue[500] },
       { name: 'Multiple Method', value: multipleValuation, color: theme.colors.emerald[500] },
       { name: 'Asset Method', value: assetValuation, color: theme.colors.amber[500] }
     ];
-  }, [results]);
+  }, [result]);
+
+  const calculatorResults = result ? {
+    primary: {
+      label: 'Average Valuation',
+      value: formatCurrency(result.averageValuation),
+      helpText: 'Average of all three valuation methods'
+    },
+    secondary: [
+      {
+        label: 'DCF Valuation',
+        value: formatCurrency(result.dcfValuation)
+      },
+      {
+        label: 'Multiple Valuation',
+        value: formatCurrency(result.multipleValuation)
+      },
+      {
+        label: 'Asset Valuation',
+        value: formatCurrency(result.assetValuation)
+      }
+    ]
+  } : undefined;
 
   return (
     <CalculatorWrapper
       metadata={metadata}
       results={calculatorResults}
       insights={insights}
-      onReset={handleReset}
+      onReset={reset}
     >
-      <div className="space-y-6">
-        {/* DCF Method Inputs */}
-        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
-          <h3 className={`text-lg font-semibold mb-4 ${theme.textColors.primary} flex items-center`}>
-            <TrendingUp className="mr-2 w-5 h-5" />
-            DCF Analysis Inputs
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <CurrencyInput
-              id="annual-revenue"
-              label="Annual Revenue"
-              value={values.annualRevenue}
-              onChange={(value) => updateField('annualRevenue', value)}
-              placeholder="1,000,000"
-              helpText="Current annual revenue"
-            />
-            <PercentageInput
-              id="growth-rate"
-              label="Revenue Growth Rate"
-              value={values.growthRate}
-              onChange={(value) => updateField('growthRate', value)}
-              placeholder="15"
-              helpText="Expected annual growth rate"
-            />
-            <PercentageInput
-              id="net-margin"
-              label="Net Profit Margin"
-              value={values.netMargin}
-              onChange={(value) => updateField('netMargin', value)}
-              placeholder="20"
-              helpText="Net income as % of revenue"
-            />
-            <PercentageInput
-              id="discount-rate"
-              label="Discount Rate (WACC)"
-              value={values.discountRate}
-              onChange={(value) => updateField('discountRate', value)}
-              placeholder="12"
-              helpText="Weighted average cost of capital"
-            />
-            <PercentageInput
-              id="terminal-growth"
-              label="Terminal Growth Rate"
-              value={values.terminalGrowthRate}
-              onChange={(value) => updateField('terminalGrowthRate', value)}
-              placeholder="3"
-              helpText="Long-term growth assumption"
-            />
-            <NumberInput
-              id="projection-years"
-              label="Projection Years"
-              value={values.projectionYears}
-              onChange={(value) => updateField('projectionYears', value)}
-              min={3}
-              max={10}
-              helpText="Years to project cash flows"
-            />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Input Controls */}
+        <div className="space-y-6">
+          {/* DCF Inputs */}
+          <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
+            <h3 className={`text-lg font-semibold mb-4 ${theme.textColors.primary} flex items-center`}>
+              <TrendingUp className="mr-2 w-5 h-5" />
+              DCF Analysis
+            </h3>
+            <div className="grid grid-cols-1 gap-4">
+              <CurrencyInput
+                id="annualRevenue"
+                label="Annual Revenue"
+                value={values.annualRevenue}
+                onChange={(value) => updateField('annualRevenue', value)}
+                helpText="Current annual revenue"
+              />
+              <PercentageInput
+                id="growthRate"
+                label="Growth Rate"
+                value={values.growthRate}
+                onChange={(value) => updateField('growthRate', value)}
+                helpText="Expected annual revenue growth"
+              />
+              <PercentageInput
+                id="netMargin"
+                label="Net Margin"
+                value={values.netMargin}
+                onChange={(value) => updateField('netMargin', value)}
+                helpText="Net profit margin percentage"
+              />
+              <PercentageInput
+                id="discountRate"
+                label="Discount Rate"
+                value={values.discountRate}
+                onChange={(value) => updateField('discountRate', value)}
+                helpText="Required rate of return (WACC)"
+              />
+              <PercentageInput
+                id="terminalGrowthRate"
+                label="Terminal Growth Rate"
+                value={values.terminalGrowthRate}
+                onChange={(value) => updateField('terminalGrowthRate', value)}
+                helpText="Long-term growth rate"
+              />
+              <NumberInput
+                id="projectionYears"
+                label="Projection Years"
+                value={values.projectionYears}
+                onChange={(value) => updateField('projectionYears', value)}
+                min={3}
+                max={10}
+                helpText="Number of years to project"
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Multiple-Based Valuation Inputs */}
-        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
-          <h3 className={`text-lg font-semibold mb-4 ${theme.textColors.primary} flex items-center`}>
-            <BarChart3 className="mr-2 w-5 h-5" />
-            Multiple-Based Valuation
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <CurrencyInput
-              id="ebitda"
-              label="EBITDA"
-              value={values.ebitda}
-              onChange={(value) => updateField('ebitda', value)}
-              placeholder="200,000"
-              helpText="Earnings before interest, taxes, depreciation, amortization"
-            />
-            <NumberInput
-              id="ebitda-multiple"
-              label="Industry EBITDA Multiple"
-              value={values.ebitdaMultiple}
-              onChange={(value) => updateField('ebitdaMultiple', value)}
-              step={0.1}
-              helpText="Typical multiple for your industry"
-            />
-          </div>
-        </div>
-
-        {/* Asset-Based Valuation Inputs */}
-        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
-          <h3 className={`text-lg font-semibold mb-4 ${theme.textColors.primary} flex items-center`}>
-            <Building2 className="mr-2 w-5 h-5" />
-            Asset-Based Valuation
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <CurrencyInput
-              id="total-assets"
-              label="Total Assets"
-              value={values.totalAssets}
-              onChange={(value) => updateField('totalAssets', value)}
-              placeholder="500,000"
-              helpText="Total book value of assets"
-            />
-            <CurrencyInput
-              id="total-liabilities"
-              label="Total Liabilities"
-              value={values.totalLiabilities}
-              onChange={(value) => updateField('totalLiabilities', value)}
-              placeholder="200,000"
-              helpText="Total liabilities and debt"
-            />
-          </div>
-        </div>
-
-        {/* Cash Flow Projections Chart */}
-        {cashFlowData.length > 0 && (
+          {/* Multiple Valuation Inputs */}
           <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
             <h3 className={`text-lg font-semibold mb-4 ${theme.textColors.primary} flex items-center`}>
               <BarChart3 className="mr-2 w-5 h-5" />
-              Projected Cash Flows
+              Multiple Analysis
             </h3>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={cashFlowData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke={theme.colors.slate[600]} opacity={0.3} />
-                  <XAxis
-                    dataKey="year"
-                    stroke={theme.colors.slate[400]}
-                    fontSize={12}
-                  />
-                  <YAxis
-                    stroke={theme.colors.slate[400]}
-                    fontSize={12}
-                    tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: theme.colors.slate[800],
-                      border: `1px solid ${theme.colors.slate[600]}`,
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)',
-                      color: theme.colors.white
-                    }}
-                    formatter={(value: number, name: string) => [
-                      formatCurrency(value),
-                      name === 'revenue' ? 'Revenue' : 'Free Cash Flow'
-                    ]}
-                  />
-                  <Bar dataKey="revenue" fill={theme.colors.blue[500]} />
-                  <Bar dataKey="freeCashFlow" fill={theme.colors.emerald[500]} />
-                </BarChart>
-              </ResponsiveContainer>
+            <div className="grid grid-cols-1 gap-4">
+              <CurrencyInput
+                id="ebitda"
+                label="EBITDA"
+                value={values.ebitda}
+                onChange={(value) => updateField('ebitda', value)}
+                helpText="Earnings before interest, taxes, depreciation, and amortization"
+              />
+              <NumberInput
+                id="ebitdaMultiple"
+                label="EBITDA Multiple"
+                value={values.ebitdaMultiple}
+                onChange={(value) => updateField('ebitdaMultiple', value)}
+                step={0.1}
+                helpText="Industry EBITDA multiple"
+              />
             </div>
           </div>
-        )}
 
-        {/* Valuation Methods Comparison */}
-        {valuationComparisonData.length > 0 && (
+          {/* Asset Valuation Inputs */}
           <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
             <h3 className={`text-lg font-semibold mb-4 ${theme.textColors.primary} flex items-center`}>
-              <PieChartIcon className="mr-2 w-5 h-5" />
-              Valuation Methods Comparison
+              <Building2 className="mr-2 w-5 h-5" />
+              Asset Analysis
             </h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-4">
+              <CurrencyInput
+                id="totalAssets"
+                label="Total Assets"
+                value={values.totalAssets}
+                onChange={(value) => updateField('totalAssets', value)}
+                helpText="Book value of all assets"
+              />
+              <CurrencyInput
+                id="totalLiabilities"
+                label="Total Liabilities"
+                value={values.totalLiabilities}
+                onChange={(value) => updateField('totalLiabilities', value)}
+                helpText="Book value of all liabilities"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Results and Charts */}
+        <div className="space-y-6">
+          {/* Valuation Summary */}
+          {result && (
+            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
+              <h3 className={`text-lg font-semibold mb-4 ${theme.textColors.primary} flex items-center`}>
+                <Target className="mr-2 w-5 h-5" />
+                Valuation Summary
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="text-center p-4 bg-slate-800/50 rounded-lg">
+                  <div className={`text-xl font-bold ${theme.textColors.primary} mb-1`}>
+                    {formatCurrency(result.dcfValuation)}
+                  </div>
+                  <div className={`text-sm ${theme.textColors.secondary}`}>DCF Method</div>
+                </div>
+                <div className="text-center p-4 bg-slate-800/50 rounded-lg">
+                  <div className={`text-xl font-bold ${theme.textColors.primary} mb-1`}>
+                    {formatCurrency(result.multipleValuation)}
+                  </div>
+                  <div className={`text-sm ${theme.textColors.secondary}`}>Multiple Method</div>
+                </div>
+                <div className="text-center p-4 bg-slate-800/50 rounded-lg">
+                  <div className={`text-xl font-bold ${theme.textColors.primary} mb-1`}>
+                    {formatCurrency(result.assetValuation)}
+                  </div>
+                  <div className={`text-sm ${theme.textColors.secondary}`}>Asset Method</div>
+                </div>
+                <div className="text-center p-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg">
+                  <div className={`text-xl font-bold ${theme.textColors.primary} mb-1`}>
+                    {formatCurrency(result.averageValuation)}
+                  </div>
+                  <div className={`text-sm ${theme.textColors.primary}`}>Average</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Valuation Method Comparison Chart */}
+          {valuationComparisonData.length > 0 && (
+            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
+              <h4 className={`text-lg font-semibold mb-4 ${theme.textColors.primary}`}>Valuation Comparison</h4>
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -341,82 +394,40 @@ export default function BusinessValuationCalculator() {
                       data={valuationComparisonData}
                       cx="50%"
                       cy="50%"
-                      innerRadius={60}
-                      outerRadius={100}
-                      paddingAngle={5}
+                      outerRadius={80}
                       dataKey="value"
+                      label={({ name, value }) => `${name}: ${formatCurrency(value || 0)}`}
                     >
                       {valuationComparisonData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: theme.colors.slate[800],
-                        border: `1px solid ${theme.colors.slate[600]}`,
-                        borderRadius: '8px',
-                        color: theme.colors.white
-                      }}
-                      formatter={(value: number) => formatCurrency(value)}
-                    />
+                    <Tooltip formatter={(value) => formatCurrency(Number(value))} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              <div className="space-y-4">
-                {valuationComparisonData.map((item, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
-                    <div className="flex items-center">
-                      <div
-                        className="w-4 h-4 rounded mr-3"
-                        style={{ backgroundColor: item.color }}
-                      ></div>
-                      <span className={`font-medium ${theme.textColors.primary}`}>{item.name}</span>
-                    </div>
-                    <span className={`font-bold ${theme.textColors.primary}`}>
-                      {formatCurrency(item.value)}
-                    </span>
-                  </div>
-                ))}
-              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Valuation Summary */}
-        {results && (
-          <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
-            <h3 className={`text-lg font-semibold mb-4 ${theme.textColors.primary} flex items-center`}>
-              <Target className="mr-2 w-5 h-5" />
-              Valuation Summary
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="text-center p-4 bg-slate-800/50 rounded-lg">
-                <div className={`text-xl font-bold ${theme.textColors.primary} mb-1`}>
-                  {formatCurrency(results.dcfValuation)}
-                </div>
-                <div className={`text-sm ${theme.textColors.secondary}`}>DCF Method</div>
-              </div>
-              <div className="text-center p-4 bg-slate-800/50 rounded-lg">
-                <div className={`text-xl font-bold ${theme.textColors.primary} mb-1`}>
-                  {formatCurrency(results.multipleValuation)}
-                </div>
-                <div className={`text-sm ${theme.textColors.secondary}`}>Multiple Method</div>
-              </div>
-              <div className="text-center p-4 bg-slate-800/50 rounded-lg">
-                <div className={`text-xl font-bold ${theme.textColors.primary} mb-1`}>
-                  {formatCurrency(results.assetValuation)}
-                </div>
-                <div className={`text-sm ${theme.textColors.secondary}`}>Asset Method</div>
-              </div>
-              <div className="text-center p-4 bg-gradient-to-r from-blue-600/20 to-emerald-600/20 rounded-lg border border-blue-500/30">
-                <div className={`text-xl font-bold ${theme.textColors.success} mb-1`}>
-                  {formatCurrency(results.averageValuation)}
-                </div>
-                <div className={`text-sm ${theme.textColors.secondary}`}>Average Valuation</div>
+          {/* Cash Flow Projections Chart */}
+          {cashFlowData.length > 0 && (
+            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
+              <h4 className={`text-lg font-semibold mb-4 ${theme.textColors.primary}`}>Cash Flow Projections</h4>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={cashFlowData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis tickFormatter={(value) => formatCurrency(value)} />
+                    <Tooltip formatter={(value) => formatCurrency(Number(value))} />
+                    <Line type="monotone" dataKey="revenue" stroke={theme.colors.blue[500]} name="Revenue" />
+                    <Line type="monotone" dataKey="cashFlow" stroke={theme.colors.emerald[500]} name="Cash Flow" />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </CalculatorWrapper>
   );
