@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { theme } from '@/lib/theme';
-import { MultiLineChart, AreaChart, CandlestickChart } from '@/components/shared/charts/ProfessionalCharts';
+import { MultiLineChart, CandlestickChart } from '@/components/shared/charts/ProfessionalCharts';
 import { formatCurrency } from '@/lib/utils/financial';
 import {
     TrendingUp,
@@ -36,6 +36,9 @@ interface EconomicIndicator {
     description: string;
 }
 
+// Educational stock symbols for financial literacy  
+const educationalSymbols = ['AAPL', 'MSFT', 'SPY', 'QQQ', 'VTI', 'BND'];
+
 export default function RealTimeMarketDashboard() {
     const [marketData, setMarketData] = useState<MarketData[]>([]);
     const [economicData, setEconomicData] = useState<EconomicIndicator[]>([]);
@@ -43,11 +46,8 @@ export default function RealTimeMarketDashboard() {
     const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
     const [selectedTimeframe, setSelectedTimeframe] = useState<'1D' | '1W' | '1M' | '1Y'>('1D');
 
-    // Educational stock symbols for financial literacy
-    const educationalSymbols = ['AAPL', 'MSFT', 'SPY', 'QQQ', 'VTI', 'BND'];
-
     // Fetch market data with fallbacks
-    const fetchMarketData = async () => {
+    const fetchMarketData = useCallback(async () => {
         try {
             setLoading(true);
 
@@ -113,7 +113,7 @@ export default function RealTimeMarketDashboard() {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchMarketData();
@@ -121,7 +121,7 @@ export default function RealTimeMarketDashboard() {
         // Update every 30 seconds during market hours
         const interval = setInterval(fetchMarketData, 30000);
         return () => clearInterval(interval);
-    }, []);
+    }, [fetchMarketData]);
 
     // Generate historical data for charts
     const generateHistoricalData = (symbol: string, days: number) => {
@@ -333,7 +333,7 @@ export default function RealTimeMarketDashboard() {
                         </h3>
 
                         <div className="space-y-4">
-                            {economicData.map((indicator, index) => (
+                            {economicData.map((indicator) => (
                                 <div key={indicator.name} className="border-b border-white/10 pb-4 last:border-b-0">
                                     <div className="flex items-center justify-between mb-2">
                                         <span className={`font-medium ${theme.textColors.primary}`}>

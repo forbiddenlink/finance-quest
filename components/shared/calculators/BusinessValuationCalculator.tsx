@@ -9,9 +9,7 @@ import { useLearningAnalytics } from '@/lib/algorithms/learningAnalytics';
 import { formatCurrency } from '@/lib/utils/financial';
 import {
   MultiLineChart,
-  DonutChart,
-  BarChart,
-  AreaChart
+  DonutChart
 } from '@/components/shared/charts/ProfessionalCharts';
 import { Building2, TrendingUp, BarChart3, Target, Brain, Lightbulb } from 'lucide-react';
 

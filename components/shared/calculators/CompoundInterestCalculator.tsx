@@ -5,9 +5,7 @@ import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper
 import { CurrencyInput, NumberInput } from '@/components/shared/calculators/FormFields';
 import { ResultCard } from '@/components/shared/calculators/ResultComponents';
 import { formatCurrency } from '@/lib/utils/financial';
-import { AreaChart, MultiLineChart } from '@/components/shared/charts/ProfessionalCharts';
 import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Line } from 'recharts';
-import { useLearningAnalytics } from '@/lib/algorithms/learningAnalytics';
 import { Sparkles, TrendingUp, Calculator, Clock } from 'lucide-react';
 import { theme } from '@/lib/theme';
 import { useCompoundInterestCalculator } from '@/lib/utils/calculatorHooks';
@@ -23,11 +21,9 @@ export default function CompoundInterestCalculator() {
     const {
         values,
         result,
-        updateValue,
         reset
     } = useCompoundInterestCalculator();
 
-    const learningAnalytics = useLearningAnalytics();
     const [data, setData] = useState<CompoundData[]>([]);
 
     const calculateGrowth = useCallback(() => {

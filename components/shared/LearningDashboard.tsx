@@ -5,10 +5,8 @@ import { motion } from 'framer-motion';
 import {
     useLearningAnalytics,
     useSpacedRepetition,
-    SpacedRepetitionCard,
     LearningPerformance
 } from '@/lib/algorithms/learningAnalytics';
-import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import { AreaChart, BarChart, DonutChart } from '@/components/shared/charts/ProfessionalCharts';
 import {
@@ -26,9 +24,8 @@ import {
 } from 'lucide-react';
 
 export default function LearningDashboard() {
-    const { userProgress } = useProgressStore();
     const learningAnalytics = useLearningAnalytics();
-    const { cards, dueCards, updateCard } = useSpacedRepetition('dashboard');
+    const { dueCards, updateCard } = useSpacedRepetition('dashboard');
     const [selectedTimeframe, setSelectedTimeframe] = useState<'week' | 'month' | 'quarter'>('month');
 
     // Generate mock progress data for charts

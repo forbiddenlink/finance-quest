@@ -51,7 +51,7 @@ export default function Chapter10() {
       iconColor="text-green-400"
       lessonComponent={<TaxOptimizationLessonEnhanced />}
       calculatorComponent={<TaxSavingsCalculator />}
-      quizComponent={<TaxOptimizationQuizEnhanced onComplete={() => {}} />}
+      quizComponent={<TaxOptimizationQuizEnhanced />}
       calculatorTitle="Tax Optimization Suite"
       calculatorDescription="Comprehensive tax planning tools including savings calculator, deduction optimizer, tax-loss harvesting, and Roth conversion analysis"
       quizTitle="Tax Planning Quiz"

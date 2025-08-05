@@ -6,7 +6,7 @@ import { CurrencyInput, NumberInput, PercentageInput } from './FormFields';
 import { formatCurrency } from '@/lib/utils/financial';
 import { AreaChart, MultiLineChart, BarChart } from '@/components/shared/charts/ProfessionalCharts';
 import { useLearningAnalytics } from '@/lib/algorithms/learningAnalytics';
-import { Sparkles, TrendingUp, Calculator, Clock, Brain, Lightbulb, Target } from 'lucide-react';
+import { Calculator, Brain, Lightbulb, Target } from 'lucide-react';
 import { theme } from '@/lib/theme';
 import { useProgressStore } from '@/lib/store/progressStore';
 
@@ -58,7 +58,6 @@ export default function EnhancedCompoundInterestCalculator() {
         const monthlyContribution = parseFloat(values.monthlyContribution) || 0;
         const annualRate = parseFloat(values.annualRate) || 0;
         const years = parseInt(values.years) || 0;
-        const compoundingFrequency = parseInt(values.compoundingFrequency) || 12;
 
         if (principal <= 0 || years <= 0 || annualRate <= 0) return null;
 
@@ -117,7 +116,7 @@ export default function EnhancedCompoundInterestCalculator() {
         if (!result) return [];
 
         const insights = [];
-        const { finalAmount, totalContributions, totalInterest, effectiveRate } = result;
+        const { totalContributions, totalInterest, effectiveRate } = result;
         const years = parseInt(values.years) || 0;
         const annualRate = parseFloat(values.annualRate) || 0;
 
