@@ -14,6 +14,8 @@ import VoiceQA from '@/components/shared/ui/VoiceQA';
 import LearningAnalyticsDashboard from '@/components/shared/ui/LearningAnalyticsDashboard';
 import SuccessAnimation from '@/components/shared/ui/SuccessAnimation';
 import EnhancedProgressBar from '@/components/shared/ui/EnhancedProgressBar';
+import StreakMotivationWidget from '@/components/shared/ui/StreakMotivationWidget';
+import AchievementNotification from '@/components/shared/ui/AchievementNotification';
 import {
     Calculator,
     BookOpen,
@@ -76,11 +78,20 @@ export default function ChapterLayout({
     onQuizComplete,
     requiresPreviousChapters = true
 }: ChapterLayoutProps) {
-    const { isChapterUnlocked, completeLesson, userProgress } = useProgressStore();
+    const { 
+        isChapterUnlocked, 
+        completeLesson, 
+        userProgress,
+        getPersonalizedEncouragement,
+        getStudyRecommendation,
+        checkLevelUp
+    } = useProgressStore();
     const [currentSection, setCurrentSection] = useState<'lesson' | 'calculator' | 'quiz' | 'assistant' | 'analytics' | 'review'>('lesson');
     const [lessonCompleted, setLessonCompleted] = useState(false);
     const [activeCalculatorTab, setActiveCalculatorTab] = useState(0);
     const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
+    const [showAchievementNotification, setShowAchievementNotification] = useState(false);
+    const [newAchievement, setNewAchievement] = useState<any>(null);
     const [lastAchievement, setLastAchievement] = useState<{
         type: 'lesson' | 'quiz' | 'chapter' | 'milestone';
         title: string;
@@ -98,6 +109,22 @@ export default function ChapterLayout({
         setLessonCompleted(true);
         completeLesson(`chapter${chapterNumber}-lesson`, 15);
         
+        // Check for level up
+        const leveledUp = checkLevelUp();
+        if (leveledUp) {
+            // Show level up achievement
+            setNewAchievement({
+                id: `level-${userProgress.userLevel}`,
+                title: `Level ${userProgress.userLevel}!`,
+                description: `You've reached level ${userProgress.userLevel}! Your financial knowledge is growing stronger.`,
+                tier: userProgress.userLevel >= 10 ? 'gold' : userProgress.userLevel >= 5 ? 'silver' : 'bronze',
+                xpReward: 0,
+                rarity: Math.max(5, 100 - (userProgress.userLevel * 8)),
+                category: 'milestone'
+            });
+            setShowAchievementNotification(true);
+        }
+        
         // Set achievement data for animation
         setLastAchievement({
             type: 'lesson',
@@ -107,28 +134,31 @@ export default function ChapterLayout({
         setShowSuccessAnimation(true);
         
         // Enhanced progress notifications with personalized encouragement
+        const encouragement = getPersonalizedEncouragement();
+        const recommendation = getStudyRecommendation();
+        
         if (chapterNumber === 1) {
-            toast.success(`🎯 ${title} completed! Welcome to Finance Quest! You're building real financial skills that will last a lifetime.`, {
+            toast.success(`🎯 ${title} completed! Welcome to Finance Quest! ${encouragement}`, {
                 duration: 6000,
                 position: 'top-center',
             });
         } else if (chapterNumber === 5) {
-            toast.success(`🚀 Halfway through foundational skills! You're developing serious financial confidence.`, {
+            toast.success(`🚀 Halfway through foundational skills! ${encouragement}`, {
                 duration: 6000,
                 position: 'top-center',
             });
         } else if (chapterNumber === 10) {
-            toast.success(`💪 Amazing progress! You've mastered more finance than 80% of adults. Keep going!`, {
+            toast.success(`💪 Amazing progress! You've mastered more finance than 80% of adults. ${encouragement}`, {
                 duration: 6000,
                 position: 'top-center',
             });
         } else if (chapterNumber === 17) {
-            toast.success(`🏆 CONGRATULATIONS! You've completed Finance Quest and joined the financially literate minority!`, {
+            toast.success(`🏆 CONGRATULATIONS! You've completed Finance Quest and joined the financially literate minority! ${encouragement}`, {
                 duration: 8000,
                 position: 'top-center',
             });
         } else {
-            toast.success(`✅ Chapter ${chapterNumber} completed! Your financial knowledge is growing stronger.`, {
+            toast.success(`✅ Chapter ${chapterNumber} completed! ${encouragement}`, {
                 duration: 4000,
                 position: 'top-center',
             });
@@ -145,11 +175,16 @@ export default function ChapterLayout({
                 duration: 6000,
                 position: 'top-center',
             });
-        } else {
-            toast.success(`${title} completed! 🎯`, {
-                duration: 4000,
-                position: 'top-center',
-            });
+        }
+        
+        // Show next recommendation if high priority
+        if (recommendation.priority === 'high') {
+            setTimeout(() => {
+                toast.success(`💡 Tip: ${recommendation.message}`, {
+                    duration: 5000,
+                    position: 'top-center',
+                });
+            }, 2000);
         }
         
         onLessonComplete?.();
@@ -334,6 +369,22 @@ export default function ChapterLayout({
                         {subtitle}
                     </motion.p>
                 </motion.div>
+
+                {/* Streak Motivation Widget */}
+                {hasCompletedContent && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.6 }}
+                        className="mb-8"
+                    >
+                        <StreakMotivationWidget 
+                            size="default"
+                            showMotivation={true}
+                            className="max-w-2xl mx-auto"
+                        />
+                    </motion.div>
+                )}
 
                 {/* Tab Navigation - Dynamic based on user progress */}
                 <Tabs value={currentSection} onValueChange={(value) => setCurrentSection(value as 'lesson' | 'calculator' | 'quiz' | 'assistant' | 'analytics' | 'review')} className="w-full">
@@ -592,6 +643,23 @@ export default function ChapterLayout({
                     type={lastAchievement.type}
                     title={lastAchievement.title}
                     description={lastAchievement.description}
+                />
+            )}
+
+            {/* Achievement Notification */}
+            {newAchievement && (
+                <AchievementNotification
+                    achievement={newAchievement}
+                    isVisible={showAchievementNotification}
+                    onClose={() => {
+                        setShowAchievementNotification(false);
+                        setNewAchievement(null);
+                    }}
+                    onViewDetails={() => {
+                        setShowAchievementNotification(false);
+                        setNewAchievement(null);
+                        // Could navigate to achievements page here
+                    }}
                 />
             )}
         </div>

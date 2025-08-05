@@ -5,6 +5,7 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
 import { CheckCircle, XCircle, Sparkles, Brain, DollarSign, TrendingUp } from 'lucide-react';
 import { theme } from '@/lib/theme';
+import toast from 'react-hot-toast';
 
 interface QuizQuestion {
   id: number;
@@ -212,6 +213,12 @@ export default function MoneyFundamentalsQuizEnhanced({ onComplete }: MoneyFunda
     setSelectedAnswers(new Array(enhancedQuizQuestions.length).fill(-1));
     setShowResults(false);
     setShowExplanation(false);
+    setShowCelebration(false);
+    
+    toast.success('Quiz reset! Ready for another attempt? 🔄', {
+      duration: 2000,
+      position: 'top-center',
+    });
   };
 
   if (showResults) {

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
+import StreakMotivationWidget from './StreakMotivationWidget';
 import {
   Home,
   BookOpen,
@@ -214,6 +215,14 @@ export default function ProgressNavigation() {
 
           {/* Enhanced Progress Display with User Level */}
           <div className="flex items-center space-x-3 flex-shrink-0">
+            {/* Compact Streak Widget */}
+            <div className="hidden lg:block">
+              <StreakMotivationWidget 
+                size="compact" 
+                showMotivation={false}
+              />
+            </div>
+
             {/* Next Chapter Preview */}
             {userProgress.completedLessons.length > 0 && (
               <div className={`hidden lg:flex items-center space-x-2 ${theme.backgrounds.glass}/20 backdrop-blur-sm border ${theme.borderColors.primary} rounded-full px-3 py-1.5 hover:${theme.backgrounds.glass}/30 transition-all duration-200`}>
@@ -269,6 +278,15 @@ export default function ProgressNavigation() {
       {/* Mobile Navigation Drawer */}
       <div className={`xl:hidden border-t ${theme.borderColors.primary} ${theme.backgrounds.header} backdrop-blur-sm`}>
         <div className="px-3 py-2">
+          {/* Mobile Streak Widget */}
+          <div className="flex items-center justify-center mb-2">
+            <StreakMotivationWidget 
+              size="compact" 
+              showMotivation={false}
+              className="scale-90"
+            />
+          </div>
+          
           <div className="flex items-center justify-center space-x-2 overflow-x-auto">
             {navigationItems.slice(4).filter(item => item.isAvailable).map((item) => {
               const Icon = item.icon;

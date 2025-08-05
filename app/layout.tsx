@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/shared/ui/ToastProvider";
-import ProgressNavigation from "@/components/shared/ui/ProgressNavigation";
+import EnhancedProgressNavigation from "@/components/shared/ui/EnhancedProgressNavigation";
 import ErrorBoundary from "@/components/shared/ui/ErrorBoundary";
+import { theme } from '@/lib/theme';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,6 +14,20 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// Add Inter for enhanced typography
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+// Add JetBrains Mono for financial data
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-jetbrains-mono',
 });
 
 export const metadata: Metadata = {
@@ -62,15 +77,55 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
+      <head>
+        {/* Performance optimizations */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* Theme and viewport */}
+        <meta name="theme-color" content="#0f172a" />
+        <meta name="color-scheme" content="dark" />
+        
+        {/* PWA support */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Finance Quest" />
+      </head>
+      <body className={`font-sans antialiased ${theme.utils.pageBackground()}`}>
         <ErrorBoundary>
           <ToastProvider>
-            <ProgressNavigation />
-            <main>
-              {children}
+            {/* Enhanced Navigation System */}
+            <EnhancedProgressNavigation />
+            
+            {/* Main Content Area with Professional Styling */}
+            <main className="relative">
+              {/* Background Effects */}
+              <div className="fixed inset-0 -z-10">
+                {/* Animated gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 opacity-90" />
+                
+                {/* Subtle grid pattern */}
+                <div 
+                  className="absolute inset-0 opacity-[0.02]"
+                  style={{
+                    backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+                    backgroundSize: '24px 24px'
+                  }}
+                />
+                
+                {/* Ambient glow effects */}
+                <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
+                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-blue-500/3 to-purple-500/3 rounded-full blur-3xl" />
+              </div>
+              
+              {/* Content wrapper */}
+              <div className="relative z-10 min-h-screen">
+                {children}
+              </div>
             </main>
           </ToastProvider>
         </ErrorBoundary>

@@ -96,6 +96,10 @@ export default function MoneyFundamentalsLessonEnhanced() {
   const { userProgress, completeLesson } = useProgressStore();
   const [currentLesson, setCurrentLesson] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<boolean[]>(new Array(enhancedLessons.length).fill(false));
+  const [timeSpentOnLesson, setTimeSpentOnLesson] = useState(0);
+  const [lessonStartTime, setLessonStartTime] = useState<number>(Date.now());
+  const [showAchievement, setShowAchievement] = useState(false);
+  const [achievementData, setAchievementData] = useState<{title: string, description: string} | null>(null);
 
   // Load completed lessons from global state
   useEffect(() => {
@@ -105,6 +109,23 @@ export default function MoneyFundamentalsLessonEnhanced() {
     setCompletedLessons(newCompleted);
   }, [userProgress.completedLessons]);
 
+  // Track time spent on current lesson
+  useEffect(() => {
+    setLessonStartTime(Date.now());
+    const interval = setInterval(() => {
+      setTimeSpentOnLesson(prev => prev + 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [currentLesson]);
+
+  // Achievement system for lesson completion
+  const triggerAchievement = (title: string, description: string) => {
+    setAchievementData({ title, description });
+    setShowAchievement(true);
+    setTimeout(() => setShowAchievement(false), 4000);
+  };
+
   const markComplete = () => {
     const lessonId = `money-fundamentals-enhanced-${currentLesson}`;
     completeLesson(lessonId, 12);
@@ -113,10 +134,25 @@ export default function MoneyFundamentalsLessonEnhanced() {
     newCompleted[currentLesson] = true;
     setCompletedLessons(newCompleted);
 
-    toast.success(`"${lesson.title}" completed! 🎯`, {
-      duration: 3000,
-      position: 'top-center',
-    });
+    const completedCount = newCompleted.filter(Boolean).length;
+    const isLastLesson = currentLesson === enhancedLessons.length - 1;
+
+    if (isLastLesson && completedCount === enhancedLessons.length) {
+      toast.success(`🎉 All lessons completed! You've mastered the fundamentals of money psychology and mindset. Ready for the calculator and quiz!`, {
+        duration: 6000,
+        position: 'top-center',
+      });
+    } else if (completedCount === Math.floor(enhancedLessons.length / 2)) {
+      toast.success(`🚀 Halfway there! "${lesson.title}" completed. You're building strong financial foundations!`, {
+        duration: 4000,
+        position: 'top-center',
+      });
+    } else {
+      toast.success(`✅ "${lesson.title}" completed! ${enhancedLessons.length - completedCount} lessons remaining.`, {
+        duration: 3000,
+        position: 'top-center',
+      });
+    }
   };
 
   const nextLesson = () => {
@@ -218,7 +254,7 @@ export default function MoneyFundamentalsLessonEnhanced() {
 
           {/* Additional Interactive Content Based on Lesson */}
           {currentLesson === 2 && (
-            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+            <div className={`mb-8 p-6 ${theme.utils.glass('normal')} border ${theme.borderColors.primary} rounded-lg`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
                 <Brain className="w-5 h-5" />
                 Discover Your Financial Personality
@@ -231,18 +267,18 @@ export default function MoneyFundamentalsLessonEnhanced() {
           )}
           
           {currentLesson === 3 && (
-            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+            <div className={`mb-8 p-6 ${theme.utils.glass('normal')} border ${theme.borderColors.primary} rounded-lg`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
                 <TrendingUp className="w-5 h-5" />
                 Compound Interest Visualization
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className={`p-4 ${theme.status.error.bg} rounded-lg`}>
+                <div className={`p-4 ${theme.status.error.bg} rounded-lg border ${theme.status.error.border}`}>
                   <h4 className={`font-bold ${theme.status.error.text} mb-2`}>Daily Coffee Habit</h4>
                   <p className={`${theme.textColors.secondary} text-sm`}>$6/day × 365 days × 20 years</p>
                   <p className={`text-2xl font-bold ${theme.status.error.text}`}>= $43,800 spent</p>
                 </div>
-                <div className={`p-4 ${theme.status.success.bg} rounded-lg`}>
+                <div className={`p-4 ${theme.status.success.bg} rounded-lg border ${theme.status.success.border}`}>
                   <h4 className={`font-bold ${theme.status.success.text} mb-2`}>Invested Instead</h4>
                   <p className={`${theme.textColors.secondary} text-sm`}>$180/month × 7% return × 20 years</p>
                   <p className={`text-2xl font-bold ${theme.status.success.text}`}>= $87,000 gained</p>

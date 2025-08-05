@@ -33,7 +33,19 @@ export const useEnhancedProgress = () => {
     totalLessonsCompleted: store.userProgress.completedLessons.length,
     averageQuizScore: store.userProgress.learningAnalytics.averageQuizScore,
     currentStreak: store.userProgress.streakDays,
+    longestStreak: store.userProgress.longestStreak,
     totalTimeSpentHours: Math.round(store.userProgress.totalTimeSpent / 3600 * 10) / 10,
+    currentLevel: store.userProgress.userLevel,
+    totalXP: store.userProgress.totalXP,
+    
+    // Streak helpers
+    streakStatus: store.getStreakMotivation().streakStatus,
+    streakMessage: store.getStreakMotivation().message,
+    canUseStreakFreeze: store.userProgress.streakFreezesUsed < 3,
+    
+    // Goal tracking
+    weeklyGoalProgress: (store.userProgress.weeklyProgress / store.userProgress.weeklyGoal) * 100,
+    isWeeklyGoalMet: store.userProgress.weeklyProgress >= store.userProgress.weeklyGoal,
     
     // Helper methods
     hasPassedChapter: (chapterId: number) => {
@@ -46,43 +58,59 @@ export const useEnhancedProgress = () => {
     
     getMasteredConcepts: () => store.userProgress.learningAnalytics.conceptsMastered,
     
+    getUserRank: () => {
+      const totalXP = store.userProgress.totalXP;
+      if (totalXP >= 25000) return { rank: 'Financial Guru', color: 'text-purple-400' };
+      if (totalXP >= 15000) return { rank: 'Wealth Strategist', color: 'text-pink-400' };
+      if (totalXP >= 10000) return { rank: 'Investment Advisor', color: 'text-purple-400' };
+      if (totalXP >= 6000) return { rank: 'Financial Analyst', color: 'text-green-400' };
+      if (totalXP >= 3000) return { rank: 'Money Manager', color: 'text-blue-400' };
+      if (totalXP >= 1000) return { rank: 'Budget Builder', color: 'text-amber-400' };
+      return { rank: 'Finance Novice', color: 'text-slate-400' };
+    },
+    
+    getXPToNextLevel: () => {
+      const currentLevel = store.userProgress.userLevel;
+      const xpForNextLevel = currentLevel * 1000;
+      return xpForNextLevel - store.userProgress.currentXP;
+    },
+    
+    getLevelProgress: () => {
+      const currentLevel = store.userProgress.userLevel;
+      const xpForCurrentLevel = (currentLevel - 1) * 1000;
+      const xpForNextLevel = currentLevel * 1000;
+      const currentLevelXP = store.userProgress.totalXP - xpForCurrentLevel;
+      const totalLevelXP = xpForNextLevel - xpForCurrentLevel;
+      return Math.min(100, Math.max(0, (currentLevelXP / totalLevelXP) * 100));
+    },
+    
     getRecommendedNextAction: () => {
-      const { userProgress } = store;
-      
-      // If struggling with topics, recommend review
-      if (userProgress.strugglingTopics.length > 0) {
-        return {
-          type: 'review',
-          message: `Review ${userProgress.strugglingTopics[0]} concepts`,
-          action: `Go to ${userProgress.strugglingTopics[0]} lesson`
-        };
-      }
-      
-      // If current chapter incomplete, continue it
-      const currentChapterProgress = store.getChapterProgress(userProgress.currentChapter);
-      if (currentChapterProgress < 100) {
-        return {
-          type: 'continue',
-          message: `Continue Chapter ${userProgress.currentChapter}`,
-          action: `You&apos;re ${currentChapterProgress}% done`
-        };
-      }
-      
-      // If next chapter available, start it
-      if (store.isChapterUnlocked(userProgress.currentChapter + 1)) {
-        return {
-          type: 'advance',
-          message: `Start Chapter ${userProgress.currentChapter + 1}`,
-          action: 'Begin new chapter'
-        };
-      }
-      
-      // Default: practice with calculators
-      return {
-        type: 'practice',
-        message: 'Practice with financial calculators',
-        action: 'Explore tools'
-      };
+      return store.getStudyRecommendation();
+    },
+    
+    getPersonalizedMessage: () => {
+      return store.getPersonalizedEncouragement();
+    },
+    
+    // Advanced analytics
+    getLearningVelocity: () => store.userProgress.learningAnalytics.learningVelocity,
+    getRetentionRate: () => store.userProgress.learningAnalytics.retentionRate,
+    getFocusScore: () => store.userProgress.learningAnalytics.focusScore,
+    
+    // Engagement metrics
+    getEngagementScore: () => {
+      const metrics = store.userProgress.engagementMetrics;
+      const streakBonus = Math.min(50, store.userProgress.streakDays * 2);
+      const sessionBonus = Math.min(30, metrics.sessionsThisWeek * 5);
+      const baseScore = 20; // Everyone starts with some engagement
+      return Math.min(100, baseScore + streakBonus + sessionBonus);
+    },
+    
+    isHighlyEngaged: () => {
+      const engagementScore = store.userProgress.engagementMetrics.sessionsThisWeek >= 3 &&
+                             store.userProgress.streakDays >= 3 &&
+                             store.userProgress.learningAnalytics.averageQuizScore >= 75;
+      return engagementScore;
     }
   };
 };

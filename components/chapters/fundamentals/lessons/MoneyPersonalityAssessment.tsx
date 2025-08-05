@@ -167,33 +167,50 @@ export default function MoneyPersonalityAssessment({ onComplete }: MoneyPersonal
   const [result, setResult] = useState<PersonalityType | null>(null);
 
   const handleAnswer = (option: AssessmentQuestion['options'][0]) => {
-    const newAnswers = { ...answers, [assessmentQuestions[currentQuestion].id]: option.text };
-    const newScores = { ...scores };
-    newScores[option.personality] += option.points;
-    
-    setAnswers(newAnswers);
-    setScores(newScores);
+    try {
+      const newAnswers = { ...answers, [assessmentQuestions[currentQuestion].id]: option.text };
+      const newScores = { ...scores };
+      newScores[option.personality] += option.points;
+      
+      setAnswers(newAnswers);
+      setScores(newScores);
 
-    if (currentQuestion < assessmentQuestions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      // Calculate result
-      const dominantPersonality = Object.entries(newScores).reduce((a, b) => 
-        newScores[a[0] as keyof typeof newScores] > newScores[b[0] as keyof typeof newScores] ? a : b
-      )[0] as PersonalityType['type'];
-      
-      const personalityResult = personalityTypes.find(p => p.type === dominantPersonality)!;
-      setResult(personalityResult);
-      setShowResults(true);
-      
-      toast.success(`Assessment complete! You're "${personalityResult.title}" 🧠`, {
-        duration: 4000,
+      if (currentQuestion < assessmentQuestions.length - 1) {
+        setCurrentQuestion(currentQuestion + 1);
+      } else {
+        // Calculate result
+        const dominantPersonality = Object.entries(newScores).reduce((a, b) => 
+          newScores[a[0] as keyof typeof newScores] > newScores[b[0] as keyof typeof newScores] ? a : b
+        )[0] as PersonalityType['type'];
+        
+        const personalityResult = personalityTypes.find(p => p.type === dominantPersonality);
+        
+        if (!personalityResult) {
+          toast.error('Assessment error. Please try again.', {
+            duration: 3000,
+            position: 'top-center',
+          });
+          return;
+        }
+        
+        setResult(personalityResult);
+        setShowResults(true);
+        
+        toast.success(`Assessment complete! You're "${personalityResult.title}" 🧠`, {
+          duration: 4000,
+          position: 'top-center',
+        });
+        
+        if (onComplete) {
+          onComplete(personalityResult);
+        }
+      }
+    } catch (error) {
+      console.error('Assessment error:', error);
+      toast.error('Something went wrong. Please try again.', {
+        duration: 3000,
         position: 'top-center',
       });
-      
-      if (onComplete) {
-        onComplete(personalityResult);
-      }
     }
   };
 

@@ -21,6 +21,8 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "decimal.js": "^10.6.0",
+    "dinero.js": "^1.9.1",
     "financejs": "^4.1.0",
     "financial": "^0.2.4",
     "framer-motion": "^12.23.12",
@@ -41,6 +43,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/dinero.js": "^1.9.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
