@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { theme } from '@/lib/theme';
+import { useProgressStore } from '@/lib/store/progressStore';
 import { 
   Gamepad2, 
   Timer, 
@@ -252,6 +253,8 @@ const expenseScenarios: ExpenseScenario[] = [
 const GAME_DURATION = 45; // seconds per scenario
 
 export default function ExpenseOptimizationGame() {
+  const { recordCalculatorUsage } = useProgressStore();
+  
   const [gameState, setGameState] = useState<GameState>({
     currentScenario: 0,
     timeRemaining: GAME_DURATION,
@@ -264,6 +267,11 @@ export default function ExpenseOptimizationGame() {
 
   const [selectedStrategies, setSelectedStrategies] = useState<string[]>([]);
   const [showResults, setShowResults] = useState(false);
+
+  // Record calculator usage on mount
+  useEffect(() => {
+    recordCalculatorUsage('expense-optimization-game');
+  }, [recordCalculatorUsage]);
 
   // Handle time up function
   const handleTimeUp = useCallback(() => {

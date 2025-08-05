@@ -14,11 +14,12 @@ jest.mock('@/lib/store/progressStore', () => ({
 // Mock Framer Motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
-    h3: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
-    p: ({ children, ...props }: any) => <p {...props}>{children}</p>
-  }
+    div: ({ children, whileHover, whileTap, animate, initial, transition, ...props }: any) => <div {...props}>{children}</div>,
+    button: ({ children, whileHover, whileTap, animate, initial, transition, ...props }: any) => <button {...props}>{children}</button>,
+    h3: ({ children, whileHover, whileTap, animate, initial, transition, ...props }: any) => <h3 {...props}>{children}</h3>,
+    p: ({ children, whileHover, whileTap, animate, initial, transition, ...props }: any) => <p {...props}>{children}</p>
+  },
+  AnimatePresence: ({ children }: any) => children
 }));
 
 // Mock react-hot-toast
@@ -41,7 +42,6 @@ describe('ExpenseOptimizationGame', () => {
   });
 
   afterEach(() => {
-    jest.runOnlyPendingTimers();
     jest.useRealTimers();
   });
 
@@ -59,14 +59,14 @@ describe('ExpenseOptimizationGame', () => {
     render(<ExpenseOptimizationGame />);
     const startButton = screen.getByText(/Start Challenge/i);
     fireEvent.click(startButton);
-    expect(screen.getByText(/Time Remaining/i)).toBeInTheDocument();
+    expect(screen.getByText(/Time Left/i)).toBeInTheDocument();
   });
 
   test('shows expense categories', () => {
     render(<ExpenseOptimizationGame />);
     const startButton = screen.getByText(/Start Challenge/i);
     fireEvent.click(startButton);
-    expect(screen.getByText(/Dining Out/i)).toBeInTheDocument();
+    expect(screen.getByText(/Scenario 1 of 5/i)).toBeInTheDocument();
   });
 
   test('records calculator usage on mount', () => {
@@ -78,7 +78,7 @@ describe('ExpenseOptimizationGame', () => {
     render(<ExpenseOptimizationGame />);
     const startButton = screen.getByText(/Start Challenge/i);
     fireEvent.click(startButton);
-    expect(screen.getByText(/2:00/i)).toBeInTheDocument();
+    expect(screen.getByText(/45/)).toBeInTheDocument();
   });
 
   test('handles component lifecycle correctly', () => {

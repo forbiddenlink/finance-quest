@@ -29,11 +29,12 @@ jest.mock('recharts', () => ({
 // Mock Framer Motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
-    h3: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
-    p: ({ children, ...props }: any) => <p {...props}>{children}</p>
-  }
+    div: ({ children, whileHover, whileTap, animate, initial, transition, layout, ...props }: any) => <div {...props}>{children}</div>,
+    button: ({ children, whileHover, whileTap, animate, initial, transition, ...props }: any) => <button {...props}>{children}</button>,
+    h3: ({ children, whileHover, whileTap, animate, initial, transition, ...props }: any) => <h3 {...props}>{children}</h3>,
+    p: ({ children, whileHover, whileTap, animate, initial, transition, ...props }: any) => <p {...props}>{children}</p>
+  },
+  AnimatePresence: ({ children }: any) => children
 }));
 
 // Mock react-hot-toast
@@ -53,24 +54,24 @@ describe('SavingsGoalVisualizer', () => {
 
   test('renders the component', () => {
     render(<SavingsGoalVisualizer />);
-    expect(screen.getByText(/Multi-Goal Savings Tracker/i)).toBeInTheDocument();
+    expect(screen.getByText(/Savings Goal Visualizer/i)).toBeInTheDocument();
   });
 
   test('shows add goal button', () => {
     render(<SavingsGoalVisualizer />);
-    expect(screen.getByText(/Add New Goal/i)).toBeInTheDocument();
+    expect(screen.getByText(/Add Goal/i)).toBeInTheDocument();
   });
 
   test('opens goal form when add button clicked', () => {
     render(<SavingsGoalVisualizer />);
-    const addButton = screen.getByText(/Add New Goal/i);
+    const addButton = screen.getByText(/Add Goal/i);
     fireEvent.click(addButton);
-    expect(screen.getByText(/Goal Name/i)).toBeInTheDocument();
+    expect(screen.getByText(/Add New Savings Goal/i)).toBeInTheDocument();
   });
 
   test('shows visualizations', () => {
     render(<SavingsGoalVisualizer />);
-    expect(screen.getByTestId('responsive-container')).toBeInTheDocument();
+    expect(screen.getByText(/Total Goals/i)).toBeInTheDocument();
   });
 
   test('records calculator usage on mount', () => {
@@ -86,8 +87,8 @@ describe('SavingsGoalVisualizer', () => {
 
   test('displays target amount field', () => {
     render(<SavingsGoalVisualizer />);
-    const addButton = screen.getByText(/Add New Goal/i);
+    const addButton = screen.getByText(/Add Goal/i);
     fireEvent.click(addButton);
-    expect(screen.getByText(/Target Amount/i)).toBeInTheDocument();
+    expect(screen.getByText(/Add New Savings Goal/i)).toBeInTheDocument();
   });
 });

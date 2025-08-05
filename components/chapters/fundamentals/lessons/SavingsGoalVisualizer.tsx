@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { theme } from '@/lib/theme';
+import { useProgressStore } from '@/lib/store/progressStore';
 import { 
   Target, 
   TrendingUp, 
@@ -94,10 +95,17 @@ const goalCategories = [
 ];
 
 export default function SavingsGoalVisualizer() {
+  const { recordCalculatorUsage } = useProgressStore();
+  
   const [goals, setGoals] = useState<SavingsGoal[]>(defaultGoals);
   const [monthlyBudget, setMonthlyBudget] = useState(1000);
   const [showAddGoal, setShowAddGoal] = useState(false);
   const [viewMode, setViewMode] = useState<'progress' | 'timeline' | 'allocation'>('progress');
+
+  // Record calculator usage on mount
+  useEffect(() => {
+    recordCalculatorUsage('savings-goal-visualizer');
+  }, [recordCalculatorUsage]);
 
   const [newGoal, setNewGoal] = useState<{
     name: string;

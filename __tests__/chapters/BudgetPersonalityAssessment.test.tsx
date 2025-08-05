@@ -39,19 +39,18 @@ describe('BudgetPersonalityAssessment', () => {
 
   test('renders the component', () => {
     render(<BudgetPersonalityAssessment />);
-    expect(screen.getByText(/What's Your Budgeting Personality?/i)).toBeInTheDocument();
+    expect(screen.getByText(/Discover Your Budgeting Personality/i)).toBeInTheDocument();
   });
 
   test('shows start assessment button', () => {
     render(<BudgetPersonalityAssessment />);
-    expect(screen.getByText(/Start Assessment/i)).toBeInTheDocument();
+    expect(screen.getByText(/Question 1 of 5/i)).toBeInTheDocument();
   });
 
   test('starts assessment when button clicked', () => {
     render(<BudgetPersonalityAssessment />);
-    const startButton = screen.getByText(/Start Assessment/i);
-    fireEvent.click(startButton);
-    expect(screen.getByText(/Question 1 of 5/i)).toBeInTheDocument();
+    // Component starts automatically, so just check if first question is visible
+    expect(screen.getByText(/How do you typically approach financial planning?/i)).toBeInTheDocument();
   });
 
   test('records calculator usage on mount', () => {

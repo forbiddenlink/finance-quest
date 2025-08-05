@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { theme } from '@/lib/theme';
+import { useProgressStore } from '@/lib/store/progressStore';
 import { 
   User, 
   Calculator, 
@@ -217,11 +218,18 @@ const personalityTypes: PersonalityType[] = [
 ];
 
 export default function BudgetPersonalityAssessment() {
+  const { recordCalculatorUsage } = useProgressStore();
+  
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [scores, setScores] = useState<Record<string, number>>({});
   const [showResults, setShowResults] = useState(false);
   const [selectedPersonality, setSelectedPersonality] = useState<PersonalityType | null>(null);
+
+  // Record calculator usage on mount
+  useEffect(() => {
+    recordCalculatorUsage('budget-personality-assessment');
+  }, [recordCalculatorUsage]);
 
   const handleAnswer = (questionId: number, optionValue: string, points: Record<string, number>) => {
     setAnswers(prev => ({ ...prev, [questionId]: optionValue }));
