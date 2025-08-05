@@ -20,9 +20,17 @@ interface CompoundData {
 export default function CompoundInterestCalculator() {
     const {
         values,
+        errors,
         result,
+        updateValue,
         reset
     } = useCompoundInterestCalculator();
+
+    // Create validation object for CalculatorWrapper
+    const validation = {
+        isValid: Object.keys(errors).length === 0,
+        errors: Object.entries(errors).map(([field, message]) => ({ field, message }))
+    };
 
     const [data, setData] = useState<CompoundData[]>([]);
 
@@ -199,7 +207,7 @@ export default function CompoundInterestCalculator() {
             insights={generateInsights()}
             validation={validation}
             onReset={reset}
-            isLoading={isCalculating}
+            isLoading={false}
         >
             <div className="space-y-6">
                 {/* Investment Parameters */}
@@ -210,12 +218,12 @@ export default function CompoundInterestCalculator() {
                             id="principal"
                             label="Initial Investment"
                             value={values.principal}
-                            onChange={(value) => updateField('principal', value)}
+                            onChange={(value) => updateValue('principal', value)}
                             min={0}
                             max={1000000}
                             step={100}
                             placeholder="Enter initial amount"
-                            error={validation.errors.principal}
+                            error={errors.principal}
                             required
                         />
 
@@ -223,49 +231,49 @@ export default function CompoundInterestCalculator() {
                             id="monthlyContribution"
                             label="Monthly Contribution"
                             value={values.monthlyContribution}
-                            onChange={(value) => updateField('monthlyContribution', value)}
+                            onChange={(value) => updateValue('monthlyContribution', value)}
                             min={0}
                             max={10000}
                             step={25}
                             placeholder="Enter monthly amount"
-                            error={validation.errors.monthlyContribution}
+                            error={errors.monthlyContribution}
                         />
 
                         <NumberInput
-                            id="rate"
+                            id="annualRate"
                             label="Annual Interest Rate (%)"
-                            value={values.rate}
-                            onChange={(value) => updateField('rate', value)}
+                            value={values.annualRate}
+                            onChange={(value) => updateValue('annualRate', value)}
                             min={0}
                             max={30}
                             step={0.1}
                             placeholder="Enter annual rate"
-                            error={validation.errors.rate}
+                            error={errors.annualRate}
                             required
                         />
 
                         <NumberInput
-                            id="time"
+                            id="years"
                             label="Investment Period (years)"
-                            value={values.time}
-                            onChange={(value) => updateField('time', value)}
+                            value={values.years}
+                            onChange={(value) => updateValue('years', value)}
                             min={1}
                             max={50}
                             step={1}
                             placeholder="Enter number of years"
-                            error={validation.errors.time}
+                            error={errors.years}
                             required
                         />
                     </div>
                 </div>
 
                 {/* Key Metrics Overview */}
-                {results && (
+                {result && (
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <ResultCard
                             icon={TrendingUp}
                             label="Effective Annual Return"
-                            value={results.effectiveReturn}
+                            value={((result.finalAmount / parseFloat(values.principal || '1')) ** (1 / parseInt(values.years || '1')) - 1) * 100}
                             format="percentage"
                             variant="info"
                         />
@@ -273,7 +281,7 @@ export default function CompoundInterestCalculator() {
                         <ResultCard
                             icon={Sparkles}
                             label="Interest Multiplier"
-                            value={results.totalContributed > 0 ? (results.totalInterest / results.totalContributed) : 0}
+                            value={result.totalContributions > 0 ? (result.totalInterest / result.totalContributions) : 0}
                             format="number"
                             variant="success"
                         />
@@ -281,7 +289,7 @@ export default function CompoundInterestCalculator() {
                         <ResultCard
                             icon={Clock}
                             label="Years to Double"
-                            value={results.yearsToDouble}
+                            value={parseFloat(values.annualRate || '0') > 0 ? 72 / parseFloat(values.annualRate) : 0}
                             format="number"
                             variant="warning"
                             description="Rule of 72"
@@ -290,7 +298,7 @@ export default function CompoundInterestCalculator() {
                         <ResultCard
                             icon={Calculator}
                             label="Monthly Growth"
-                            value={results.finalAmount / (parseInt(values.time) * 12)}
+                            value={result.finalAmount / (parseInt(values.years || '1') * 12)}
                             format="currency"
                             variant="info"
                             description="Average per month"

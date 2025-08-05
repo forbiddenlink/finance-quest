@@ -22,8 +22,8 @@ export default function CreditScoreSimulator() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     result: null as any,
     isValid: false,
-    updateCurrentProfile: () => { },
-    updateTargetProfile: () => { },
+    updateCurrentProfile: (_field: string, _value: string) => { },
+    updateTargetProfile: (_field: string, _value: string) => { },
     reset: () => { }
   };
 
