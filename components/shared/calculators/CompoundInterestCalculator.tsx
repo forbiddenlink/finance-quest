@@ -6,8 +6,9 @@ import { CurrencyInput, NumberInput } from '@/components/shared/calculators/Form
 import { ResultCard } from '@/components/shared/calculators/ResultComponents';
 import { formatCurrency } from '@/lib/utils/financial';
 import { AreaChart, MultiLineChart } from '@/components/shared/charts/ProfessionalCharts';
+import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Line } from 'recharts';
 import { useLearningAnalytics } from '@/lib/algorithms/learningAnalytics';
-import { Sparkles, TrendingUp, Calculator, Clock, Brain, Lightbulb } from 'lucide-react';
+import { Sparkles, TrendingUp, Calculator, Clock } from 'lucide-react';
 import { theme } from '@/lib/theme';
 import { useCompoundInterestCalculator } from '@/lib/utils/calculatorHooks';
 

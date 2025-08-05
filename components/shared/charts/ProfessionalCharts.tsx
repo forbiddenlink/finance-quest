@@ -534,7 +534,7 @@ export const HeatmapChart: React.FC<{
     );
 };
 
-export default {
+const ProfessionalCharts = {
     CandlestickChart,
     MultiLineChart,
     AreaChart,
@@ -542,3 +542,5 @@ export default {
     BarChart,
     HeatmapChart
 };
+
+export default ProfessionalCharts;

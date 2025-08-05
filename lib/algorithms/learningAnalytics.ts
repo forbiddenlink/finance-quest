@@ -106,8 +106,12 @@ class SpacedRepetitionEngine {
     }
 
     // Adaptive difficulty adjustment
-    getOptimalDifficulty(userStats: any): number {
-        const { averageAccuracy, averageSpeed, recentPerformance } = userStats;
+    getOptimalDifficulty(userStats: {
+        averageAccuracy: number;
+        averageSpeed: number;
+        recentPerformance: unknown;
+    }): number {
+        const { averageAccuracy, averageSpeed } = userStats;
 
         if (averageAccuracy > 0.9 && averageSpeed < 10) return 2; // Hard
         if (averageAccuracy > 0.7 && averageSpeed < 20) return 1; // Medium
@@ -127,8 +131,13 @@ class LearningAnalyticsEngine {
     }
 
     // Analyze user's learning patterns
-    analyzeLearningPatterns(userProgress: any): LearningAnalytics {
-        const { completedLessons, quizScores, calculatorUsage, totalTimeSpent } = userProgress;
+    analyzeLearningPatterns(userProgress: {
+        completedLessons: string[];
+        quizScores: Record<string, number>;
+        calculatorUsage: Record<string, number>;
+        totalTimeSpent: number;
+    }): LearningAnalytics {
+        const { completedLessons, quizScores, totalTimeSpent } = userProgress;
 
         // Calculate struggling concepts
         const strugglingConcepts = this.identifyStrugglingConcepts(quizScores);
@@ -165,18 +174,23 @@ class LearningAnalyticsEngine {
 
     private identifyStrugglingConcepts(quizScores: Record<string, number>): string[] {
         return Object.entries(quizScores)
-            .filter(([_, score]) => score < 70)
-            .map(([concept, _]) => concept)
+            .filter(([, score]) => score < 70)
+            .map(([concept]) => concept)
             .slice(0, 5); // Top 5 struggling concepts
     }
 
     private identifyMasteredConcepts(quizScores: Record<string, number>): string[] {
         return Object.entries(quizScores)
-            .filter(([_, score]) => score >= 90)
-            .map(([concept, _]) => concept);
+            .filter(([, score]) => score >= 90)
+            .map(([concept]) => concept);
     }
 
-    private predictOptimalStudyTime(userProgress: any): Date {
+    private predictOptimalStudyTime(userProgress: {
+        completedLessons: string[];
+        quizScores: Record<string, number>;
+        calculatorUsage: Record<string, number>;
+        totalTimeSpent: number;
+    }): Date {
         // Simple algorithm - can be enhanced with ML
         const hour = new Date().getHours();
         const bestHour = hour < 12 ? 10 : hour < 18 ? 14 : 20; // Morning, afternoon, or evening
@@ -187,7 +201,12 @@ class LearningAnalyticsEngine {
         return optimal;
     }
 
-    private calculateCognitiveLoad(userProgress: any): number {
+    private calculateCognitiveLoad(userProgress: {
+        completedLessons: string[];
+        quizScores: Record<string, number>;
+        calculatorUsage: Record<string, number>;
+        totalTimeSpent: number;
+    }): number {
         const { completedLessons, totalTimeSpent } = userProgress;
         const recentLessons = completedLessons.slice(-5); // Last 5 lessons
 
@@ -216,7 +235,12 @@ class LearningAnalyticsEngine {
         return completedLessons.length / hoursSpent;
     }
 
-    private predictMasteryLevel(userProgress: any): number {
+    private predictMasteryLevel(userProgress: {
+        completedLessons: string[];
+        quizScores: Record<string, number>;
+        calculatorUsage: Record<string, number>;
+        totalTimeSpent: number;
+    }): number {
         const { quizScores, completedLessons } = userProgress;
         const scores = Object.values(quizScores) as number[];
 
@@ -273,7 +297,16 @@ export function useSpacedRepetition(chapterId: string) {
         if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
             const savedCards = localStorage.getItem(`sr_cards_${chapterId}`);
             if (savedCards) {
-                const parsedCards = JSON.parse(savedCards).map((card: any) => ({
+                const parsedCards = JSON.parse(savedCards).map((card: {
+                    id: string;
+                    concept: string;
+                    difficulty: number;
+                    repetitions: number;
+                    easeFactor: number;
+                    interval: number;
+                    lastReviewed: string;
+                    nextReview: string;
+                }) => ({
                     ...card,
                     lastReviewed: new Date(card.lastReviewed),
                     nextReview: new Date(card.nextReview)

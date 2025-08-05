@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { useSpacedRepetition, LearningPerformance } from '@/lib/algorithms/learningAnalytics';
 import SuccessCelebration from '@/components/shared/ui/SuccessCelebration';
@@ -43,10 +43,9 @@ interface EnhancedQuizEngineProps {
 export default function EnhancedQuizEngine({ config, onComplete, className = '' }: EnhancedQuizEngineProps) {
   const { recordQuizScore } = useProgressStore();
 
-  // Spaced repetition integration
-  const spacedRepetition = config.enableSpacedRepetition && config.chapterId
-    ? useSpacedRepetition(config.chapterId)
-    : null;
+  // Always call the hook, but conditionally use the result
+  const spacedRepetitionHook = useSpacedRepetition(config.chapterId || 'default');
+  const spacedRepetition = config.enableSpacedRepetition && config.chapterId ? spacedRepetitionHook : null;
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(config.questions.length).fill(-1));
@@ -316,7 +315,7 @@ export default function EnhancedQuizEngine({ config, onComplete, className = '' 
                   </p>
                 </div>
 
-                {spacedRepetition.dueCards.map((card, index) => (
+                {spacedRepetition.dueCards.map((card) => (
                   <div
                     key={card.id}
                     className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4`}

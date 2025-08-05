@@ -396,7 +396,7 @@ export default function RealTimeMarketDashboard() {
                             <p className="text-emerald-300 text-sm">
                                 Each candlestick shows four key prices: Open, High, Low, and Close (OHLC).
                                 Green candles indicate the closing price was higher than the opening price (bullish),
-                                while red candles show the opposite (bearish). The "wicks" show the day's price range.
+                                while red candles show the opposite (bearish). The &ldquo;wicks&rdquo; show the day&apos;s price range.
                             </p>
                         </div>
                     </motion.div>
