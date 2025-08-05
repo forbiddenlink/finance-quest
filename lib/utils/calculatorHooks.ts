@@ -785,12 +785,35 @@ export function useRetirementCalculator() {
 }
 
 export function useMortgageCalculator() {
+    // Mock result object that matches component expectations
+    const mockResult = {
+        loanAmount: 0,
+        monthlyPayment: 0,
+        monthlyInterestRate: 0,
+        totalInterest: 0,
+        totalCost: 0
+    };
+
     return {
-        values: {},
-        errors: {},
-        result: null,
-        updateValue: () => { },
-        reset: () => { }
+        values: {
+            homePrice: '',
+            downPayment: '',
+            interestRate: '',
+            termYears: ''
+        },
+        errors: {
+            homePrice: '',
+            downPayment: '',
+            interestRate: '',
+            termYears: ''
+        },
+        result: mockResult,
+        updateValue: (field: string, value: string) => { 
+            console.log(`Updating ${field} to ${value}`);
+        },
+        reset: () => { 
+            console.log('Resetting calculator');
+        }
     };
 }
 
@@ -1102,11 +1125,77 @@ export function useBusinessValuationCalculator() {
 }
 
 export function useCryptocurrencyAllocationCalculator() {
+    // Mock result object that matches component expectations
+    const mockResult = {
+        totalCryptoValue: 0,
+        riskLevel: 'Moderate' as const,
+        expectedReturn: 0,
+        diversificationScore: 0,
+        riskScore: 0,
+        correlationScore: 0,
+        volatility: 0,
+        sharpeRatio: 0,
+        maxDrawdown: 0,
+        totalAllocation: 0,
+        allocationValid: true,
+        cryptoAssets: [] as Array<{
+            name: string;
+            allocation: number;
+            value: number;
+            color: string;
+            riskLevel: string;
+            category: string;
+            volatility: number;
+            expectedReturn: number;
+        }>,
+        recommendations: [] as Array<{
+            title: string;
+            description: string;
+            priority: string;
+            impact: string;
+        }>
+    };
+
     return {
-        values: {},
-        errors: {},
-        result: null,
-        updateValue: () => { },
-        reset: () => { }
+        values: {
+            totalPortfolio: '',
+            cryptoPercentage: '',
+            investmentHorizon: '',
+            riskTolerance: 'moderate',
+            rebalanceFrequency: 'quarterly',
+            bitcoin: '',
+            ethereum: '',
+            altcoins: '',
+            defi: '',
+            stablecoins: ''
+        },
+        errors: {
+            totalPortfolio: '',
+            cryptoPercentage: '',
+            investmentHorizon: '',
+            riskTolerance: '',
+            rebalanceFrequency: '',
+            bitcoin: '',
+            ethereum: '',
+            altcoins: '',
+            defi: '',
+            stablecoins: ''
+        },
+        result: mockResult,
+        updateValue: (field: string, value: string) => { 
+            console.log(`Updating ${field} to ${value}`);
+        },
+        updateRiskTolerance: (value: string) => { 
+            console.log(`Updating risk tolerance to ${value}`);
+        },
+        updateRebalanceFrequency: (value: string) => { 
+            console.log(`Updating rebalance frequency to ${value}`);
+        },
+        autoBalance: () => { 
+            console.log('Auto-balancing portfolio');
+        },
+        reset: () => { 
+            console.log('Resetting calculator');
+        }
     };
 }

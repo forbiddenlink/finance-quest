@@ -16,17 +16,17 @@ import { Coins, Shield, TrendingUp, AlertTriangle, CheckCircle2, RefreshCw, Targ
 
 export default function CryptocurrencyAllocationCalculator() {
   const { recordCalculatorUsage } = useProgressStore();
+  const hookResult = useCryptocurrencyAllocationCalculator();
   const {
     values,
     errors,
     result,
-    isValid,
     updateValue,
     updateRiskTolerance,
     updateRebalanceFrequency,
     autoBalance,
     reset
-  } = useCryptocurrencyAllocationCalculator();
+  } = hookResult;
 
   // Record usage when component mounts
   React.useEffect(() => {
@@ -45,6 +45,13 @@ export default function CryptocurrencyAllocationCalculator() {
   const formatPercentage = (value: number): string => {
     return `${value.toFixed(1)}%`;
   };
+
+  interface ChartEntry {
+    name: string;
+    value: number;
+    amount: number;
+    color: string;
+  }
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -75,6 +82,13 @@ export default function CryptocurrencyAllocationCalculator() {
     }
   };
 
+  interface Recommendation {
+    title: string;
+    description: string;
+    priority: string;
+    impact: string;
+  }
+
   const riskToleranceOptions = [
     { value: 'conservative', label: 'Conservative' },
     { value: 'moderate', label: 'Moderate' },
@@ -89,15 +103,27 @@ export default function CryptocurrencyAllocationCalculator() {
     { value: 'never', label: 'Never' }
   ];
 
+  // Define types for crypto assets
+  interface CryptoAsset {
+    name: string;
+    allocation: number;
+    value: number;
+    color: string;
+    riskLevel: string;
+    category: string;
+    volatility: number;
+    expectedReturn: number;
+  }
+
   // Prepare chart data
-  const allocationChartData = result?.cryptoAssets.map(asset => ({
+  const allocationChartData = result?.cryptoAssets.map((asset: CryptoAsset) => ({
     name: asset.name,
     value: asset.allocation,
     amount: asset.value,
     color: asset.color
   })) || [];
 
-  const riskData = result?.cryptoAssets.map(asset => ({
+  const riskData = result?.cryptoAssets.map((asset: CryptoAsset) => ({
     name: asset.name,
     risk: asset.volatility * 100,
     return: asset.expectedReturn * 100
@@ -403,7 +429,7 @@ export default function CryptocurrencyAllocationCalculator() {
                                 fill="#8884d8"
                                 dataKey="value"
                               >
-                                {allocationChartData.map((entry, index) => (
+                                {allocationChartData.map((entry: ChartEntry, index: number) => (
                                   <Cell key={`cell-${index}`} fill={entry.color} />
                                 ))}
                               </Pie>
@@ -414,7 +440,7 @@ export default function CryptocurrencyAllocationCalculator() {
 
                         {/* Allocation Details */}
                         <div className="space-y-3">
-                          {result.cryptoAssets.map((asset, index) => (
+                          {result.cryptoAssets.map((asset: CryptoAsset, index: number) => (
                             <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
                               <div className="flex items-center gap-3">
                                 <div
@@ -549,7 +575,7 @@ export default function CryptocurrencyAllocationCalculator() {
                     <CardContent>
                       <div className="space-y-4">
                         {result.recommendations.length > 0 ? (
-                          result.recommendations.map((rec, index) => (
+                          result.recommendations.map((rec: Recommendation, index: number) => (
                             <div key={index} className="p-4 border rounded-lg">
                               <div className="flex items-start justify-between mb-2">
                                 <div className="flex-1">
@@ -590,7 +616,7 @@ export default function CryptocurrencyAllocationCalculator() {
             </>
           )}
 
-          {!isValid && Object.keys(errors).length > 0 && (
+          {Object.keys(errors).length > 0 && (
             <Alert variant="destructive">
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>

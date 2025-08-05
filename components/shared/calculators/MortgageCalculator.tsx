@@ -30,8 +30,8 @@ interface CostBreakdown {
 export default function MortgageCalculator() {
   const {
     values,
-    results,
-    updateField,
+    result,
+    updateValue,
     reset,
     errors
   } = useMortgageCalculator();
@@ -46,19 +46,19 @@ export default function MortgageCalculator() {
 
   // Calculate comprehensive payment breakdown
   const generatePaymentSchedule = React.useMemo((): PaymentBreakdown[] => {
-    if (!results) return [];
+    if (!result) return [];
 
     const schedule: PaymentBreakdown[] = [];
-    let balance = results.loanAmount;
+    let balance = result.loanAmount;
     let cumulativeInterest = 0;
     let cumulativePrincipal = 0;
 
-    const monthlyRate = results.monthlyInterestRate / 100;
+    const monthlyRate = result.monthlyInterestRate / 100;
     const totalPayments = parseInt(values.termYears) * 12;
 
     for (let month = 1; month <= totalPayments; month++) {
       const interestPayment = balance * monthlyRate;
-      const principalPayment = results.monthlyPayment - interestPayment;
+      const principalPayment = result.monthlyPayment - interestPayment;
 
       balance -= principalPayment;
       cumulativeInterest += interestPayment;
@@ -77,7 +77,7 @@ export default function MortgageCalculator() {
     }
 
     return schedule;
-  }, [results, values.termYears]);
+  }, [result, values.termYears]);
 
   // Generate yearly summary for chart
   const yearlyData = React.useMemo(() => {
@@ -106,22 +106,22 @@ export default function MortgageCalculator() {
 
   // Calculate total housing payment including extras
   const totalHousingPayment = React.useMemo(() => {
-    if (!results || !includeExtras) return results?.monthlyPayment || 0;
+    if (!result || !includeExtras) return result?.monthlyPayment || 0;
 
     const monthlyPropertyTax = (parseFloat(propertyTax) || 0) / 12;
     const monthlyInsurance = (parseFloat(homeInsurance) || 0) / 12;
     const monthlyPMI = parseFloat(pmi) || 0;
     const monthlyHOA = parseFloat(hoaFees) || 0;
 
-    return results.monthlyPayment + monthlyPropertyTax + monthlyInsurance + monthlyPMI + monthlyHOA;
-  }, [results, includeExtras, propertyTax, homeInsurance, pmi, hoaFees]);
+    return result.monthlyPayment + monthlyPropertyTax + monthlyInsurance + monthlyPMI + monthlyHOA;
+  }, [result, includeExtras, propertyTax, homeInsurance, pmi, hoaFees]);
 
   // Cost breakdown for pie chart
   const costBreakdown: CostBreakdown[] = React.useMemo(() => {
-    if (!results) return [];
+    if (!result) return [];
 
     const breakdown: CostBreakdown[] = [
-      { name: 'Principal & Interest', value: results.monthlyPayment, color: '#3B82F6' }
+      { name: 'Principal & Interest', value: result.monthlyPayment, color: '#3B82F6' }
     ];
 
     if (includeExtras) {
@@ -137,14 +137,14 @@ export default function MortgageCalculator() {
     }
 
     return breakdown;
-  }, [results, includeExtras, propertyTax, homeInsurance, pmi, hoaFees]);
+  }, [result, includeExtras, propertyTax, homeInsurance, pmi, hoaFees]);
 
   // Generate insights
   const generateInsights = () => {
-    if (!results) return [];
+    if (!result) return [];
 
     const insights = [];
-    const loanToValue = (results.loanAmount / parseFloat(values.homePrice)) * 100;
+    const loanToValue = (result.loanAmount / parseFloat(values.homePrice)) * 100;
 
     // LTV insight
     if (loanToValue >= 80) {
@@ -162,11 +162,11 @@ export default function MortgageCalculator() {
     }
 
     // Interest vs Principal insight
-    if (results.totalInterest > results.loanAmount) {
+    if (result.totalInterest > result.loanAmount) {
       insights.push({
         type: 'info' as const,
         title: 'Interest Exceeds Principal',
-        message: `You'll pay ${formatCurrency(results.totalInterest)} in interest over the loan term. Consider making extra payments to reduce this cost.`
+        message: `You'll pay ${formatCurrency(result.totalInterest)} in interest over the loan term. Consider making extra payments to reduce this cost.`
       });
     }
 
@@ -241,11 +241,11 @@ export default function MortgageCalculator() {
     ]
   };
 
-  // Results formatting for the wrapper
-  const calculatorResults = results ? {
+  // result formatting for the wrapper
+  const calculatorresult = result ? {
     primary: {
       label: 'Monthly Payment (P&I)',
-      value: results.monthlyPayment,
+      value: result.monthlyPayment,
       format: 'currency' as const,
       variant: 'success' as const,
       description: includeExtras ? `Total with extras: ${formatCurrency(totalHousingPayment)}` : 'Principal and interest only'
@@ -253,20 +253,20 @@ export default function MortgageCalculator() {
     secondary: [
       {
         label: 'Loan Amount',
-        value: results.loanAmount,
+        value: result.loanAmount,
         format: 'currency' as const,
-        description: `${((results.loanAmount / parseFloat(values.homePrice)) * 100).toFixed(1)}% LTV`
+        description: `${((result.loanAmount / parseFloat(values.homePrice)) * 100).toFixed(1)}% LTV`
       },
       {
         label: 'Total Interest',
-        value: results.totalInterest,
+        value: result.totalInterest,
         format: 'currency' as const,
-        variant: results.totalInterest > results.loanAmount ? 'warning' as const : 'info' as const,
+        variant: result.totalInterest > result.loanAmount ? 'warning' as const : 'info' as const,
         description: `Over ${values.termYears} years`
       },
       {
         label: 'Total Cost',
-        value: results.totalCost,
+        value: result.totalCost,
         format: 'currency' as const,
         description: 'Principal + total interest'
       }
@@ -276,7 +276,7 @@ export default function MortgageCalculator() {
   return (
     <CalculatorWrapper
       metadata={metadata}
-      results={calculatorResults}
+      results={calculatorresult}
       insights={generateInsights()}
       onReset={handleReset}
     >
@@ -288,7 +288,7 @@ export default function MortgageCalculator() {
               id="home-price"
               label="Home Price"
               value={values.homePrice}
-              onChange={(value) => updateField('homePrice', value)}
+              onChange={(value) => updateValue('homePrice', value)}
               placeholder="400,000"
               helpText="Total purchase price of the home"
               error={errors.homePrice}
@@ -322,7 +322,7 @@ export default function MortgageCalculator() {
                   id="down-payment"
                   label="Down Payment"
                   value={values.downPayment}
-                  onChange={(value) => updateField('downPayment', value)}
+                  onChange={(value) => updateValue('downPayment', value)}
                   placeholder="20"
                   helpText={`${formatCurrency((parseFloat(values.homePrice) || 0) * (parseFloat(values.downPayment) || 0) / 100)}`}
                   error={errors.downPayment}
@@ -334,7 +334,7 @@ export default function MortgageCalculator() {
                   value={((parseFloat(values.homePrice) || 0) * (parseFloat(values.downPayment) || 0) / 100).toString()}
                   onChange={(value) => {
                     const percentage = (parseFloat(value) / (parseFloat(values.homePrice) || 1)) * 100;
-                    updateField('downPayment', percentage.toString());
+                    updateValue('downPayment', percentage.toString());
                   }}
                   placeholder="80,000"
                   helpText={`${values.downPayment}% of home price`}
@@ -348,7 +348,7 @@ export default function MortgageCalculator() {
               id="interest-rate"
               label="Interest Rate"
               value={values.interestRate}
-              onChange={(value) => updateField('interestRate', value)}
+              onChange={(value) => updateValue('interestRate', value)}
               placeholder="6.5"
               helpText="Annual percentage rate (APR)"
               error={errors.interestRate}
@@ -358,7 +358,7 @@ export default function MortgageCalculator() {
               id="loan-term"
               label="Loan Term"
               value={values.termYears}
-              onChange={(value) => updateField('termYears', value)}
+              onChange={(value) => updateValue('termYears', value)}
               options={[
                 { value: '15', label: '15 years' },
                 { value: '20', label: '20 years' },
@@ -425,12 +425,12 @@ export default function MortgageCalculator() {
         </InputGroup>
 
         {/* Key Metrics */}
-        {results && (
+        {result && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className={theme.utils.calculatorMetric()}>
               <DollarSign className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
               <div className={`text-lg font-bold ${theme.textColors.primary}`}>
-                {formatCurrency(results.loanAmount)}
+                {formatCurrency(result.loanAmount)}
               </div>
               <div className={`text-xs ${theme.textColors.muted}`}>Loan Amount</div>
             </div>
@@ -438,7 +438,7 @@ export default function MortgageCalculator() {
             <div className={theme.utils.calculatorMetric()}>
               <Percent className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
               <div className={`text-lg font-bold ${theme.textColors.primary}`}>
-                {((results.loanAmount / parseFloat(values.homePrice)) * 100).toFixed(1)}%
+                {((result.loanAmount / parseFloat(values.homePrice)) * 100).toFixed(1)}%
               </div>
               <div className={`text-xs ${theme.textColors.muted}`}>Loan-to-Value</div>
             </div>
@@ -454,7 +454,7 @@ export default function MortgageCalculator() {
             <div className={theme.utils.calculatorMetric()}>
               <TrendingUp className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
               <div className={`text-lg font-bold ${theme.textColors.primary}`}>
-                {(results.monthlyInterestRate).toFixed(3)}%
+                {(result.monthlyInterestRate).toFixed(3)}%
               </div>
               <div className={`text-xs ${theme.textColors.muted}`}>Monthly Rate</div>
             </div>
@@ -462,7 +462,7 @@ export default function MortgageCalculator() {
         )}
 
         {/* Charts and Visualizations */}
-        {results && yearlyData.length > 0 && (
+        {result && yearlyData.length > 0 && (
           <div className="space-y-8 mt-8">
             {/* Payment Breakdown Chart */}
             <div className={theme.utils.calculatorChart()}>
