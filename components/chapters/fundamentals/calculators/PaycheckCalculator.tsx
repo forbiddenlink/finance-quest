@@ -6,6 +6,8 @@ import { Lightbulb, DollarSign, TrendingDown, Calculator, AlertCircle, Info, Che
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import { validateField, ValidationPresets } from '@/lib/utils/calculatorValidation';
+import { usePerformanceMonitor } from '@/lib/monitoring/PerformanceMonitor';
+import { useAccessibility } from '@/lib/accessibility/AccessibilityManager';
 import toast from 'react-hot-toast';
 import Decimal from 'decimal.js';
 import GuidedTour, { hasTourBeenCompleted } from '@/components/shared/ui/GuidedTour';
@@ -47,6 +49,10 @@ export default function PaycheckCalculator() {
   const [runTour, setRunTour] = useState(false);
   const recordCalculatorUsage = useProgressStore(state => state.recordCalculatorUsage);
   const userProgress = useProgressStore(state => state.userProgress);
+  
+  // Enhanced monitoring and accessibility
+  const { trackCalculation } = usePerformanceMonitor('PaycheckCalculator');
+  const { announce } = useAccessibility();
 
   // Configure Decimal.js for financial precision
   Decimal.set({
@@ -213,10 +219,12 @@ export default function PaycheckCalculator() {
   const calculatePaycheck = useCallback(async () => {
     if (!validateInputs()) {
       setBreakdown(null);
+      announce('Please fix the input errors before calculating', 'assertive');
       return;
     }
 
     setIsCalculating(true);
+    const startTime = performance.now();
 
     // Add small delay to show loading state
     await new Promise(resolve => setTimeout(resolve, 300));
@@ -268,6 +276,10 @@ export default function PaycheckCalculator() {
 
     setBreakdown(calculationResults);
     setIsCalculating(false);
+    
+    // Track performance
+    const executionTime = performance.now() - startTime;
+    trackCalculation('paycheck-calculator', executionTime, 'medium');
 
     // Trigger achievement checks
     const retirement401kPercent = retirement401kPercentDecimal.toNumber();
@@ -278,14 +290,19 @@ export default function PaycheckCalculator() {
 
     // Show success message with key insight
     const takeHomePercentage = Math.round((netPay.div(grossDecimal)).mul(100).toNumber());
-    toast.success(`💡 Your take-home rate is ${takeHomePercentage}%! ${takeHomePercentage > 75 ? 'Excellent!' :
+    const message = `💡 Your take-home rate is ${takeHomePercentage}%! ${takeHomePercentage > 75 ? 'Excellent!' :
       takeHomePercentage > 70 ? 'Good rate!' :
         'Consider optimizing deductions.'
-      }`, {
+      }`;
+    
+    toast.success(message, {
       duration: 4000,
       position: 'top-center',
     });
-  }, [grossPay, filingStatus, state, healthInsurance, retirement401k, calculateFederalTax, stateTaxRates, validateInputs, toDecimal]);
+    
+    // Announce to screen readers
+    announce(`Calculation complete. Your take-home rate is ${takeHomePercentage} percent`, 'polite');
+  }, [grossPay, filingStatus, state, healthInsurance, retirement401k, calculateFederalTax, stateTaxRates, validateInputs, toDecimal, announce, trackCalculation]);
 
   // Auto-calculate when inputs change with debounce
   useEffect(() => {

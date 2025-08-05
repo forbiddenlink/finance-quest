@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useProgressStore } from '@/lib/store/progressStore';
+import { theme } from '@/lib/theme';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell } from 'recharts';
 import {
   BarChart3,
   TrendingUp,
@@ -11,10 +14,7 @@ import {
   Award,
   Zap
 } from 'lucide-react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import GradientCard from './GradientCard';
-import { useProgressStore } from '@/lib/store/progressStore';
-import { theme } from '@/lib/theme';
 
 interface LearningMetrics {
   sessionTime: number;

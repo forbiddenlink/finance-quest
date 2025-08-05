@@ -186,19 +186,49 @@ const moneyFundamentalsQuizConfig: QuizConfig = {
             concept: 'fear-based-decisions'
         },
         {
-            id: 12,
-            question: 'Why is starting to invest early more powerful than investing larger amounts later?',
+            id: 13,
+            question: 'What percentage of financial decisions are driven by emotions rather than logic?',
             options: [
-                'Early investments have better returns',
-                'Time allows compound interest to work its magic',
-                'Market conditions are usually better when young',
-                'Young people make smarter investment choices'
+                'About 20% - Most decisions are logical',
+                'About 50% - It\'s evenly split',
+                'About 80% - Emotions dominate financial decisions',
+                'About 95% - Logic rarely plays a role'
             ],
-            correctAnswer: 1,
-            explanation: 'Time is the most powerful factor in compound growth. Someone who invests $200/month from age 25-35 (only $24,000 total) will have more at retirement than someone who invests $200/month from age 35-65 ($72,000 total) due to the extra 10 years of compounding.',
+            correctAnswer: 2,
+            explanation: 'Research in behavioral finance shows that approximately 80% of financial decisions are driven by emotions, cognitive biases, and psychological factors rather than pure logic. This is why understanding money psychology is crucial for financial success.',
+            category: 'psychology',
+            difficulty: 'medium',
+            concept: 'emotional-decision-making'
+        },
+        {
+            id: 14,
+            question: 'According to the "Rule of 72", approximately how long will it take for money to double at 6% annual return?',
+            options: [
+                '6 years',
+                '9 years',
+                '12 years',
+                '18 years'
+            ],
+            correctAnswer: 2,
+            explanation: 'The Rule of 72 states that you divide 72 by the interest rate to find the doubling time. 72 ÷ 6 = 12 years. This quick mental math tool helps you understand the power of compound interest without complex calculations.',
             category: 'compound',
             difficulty: 'easy',
-            concept: 'time-value-money'
+            concept: 'rule-of-72'
+        },
+        {
+            id: 15,
+            question: 'What is the most effective way to overcome analysis paralysis when making financial decisions?',
+            options: [
+                'Gather more information until you\'re 100% certain',
+                'Set a decision deadline and stick to it',
+                'Always choose the safest option',
+                'Ask others to make the decision for you'
+            ],
+            correctAnswer: 1,
+            explanation: 'Setting a decision deadline forces action and prevents endless research that can lead to missed opportunities. Perfect information is impossible, so making a good decision quickly often beats making a perfect decision too late.',
+            category: 'psychology',
+            difficulty: 'hard',
+            concept: 'decision-making-frameworks'
         }
     ]
 };
