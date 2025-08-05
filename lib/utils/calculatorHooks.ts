@@ -2476,3 +2476,259 @@ export function useOptionsCalculator() {
     errors: errors.errors
   };
 }
+
+// Business Calculator Hook
+export interface BusinessCalculatorInputs {
+  // Break-even Analysis
+  fixedCosts: number;
+  variableCostPerUnit: number;
+  pricePerUnit: number;
+  
+  // Financial Ratios
+  currentAssets: number;
+  currentLiabilities: number;
+  totalDebt: number;
+  totalEquity: number;
+  revenue: number;
+  grossProfit: number;
+  netIncome: number;
+  
+  // Cash Flow
+  monthlyRevenue: number;
+  monthlyExpenses: number;
+  initialCash: number;
+  
+  // Growth
+  revenueGrowthRate: number;
+  expenseGrowthRate: number;
+}
+
+export interface BusinessCalculatorResults {
+  // Break-even Analysis
+  breakEvenUnits: number;
+  breakEvenRevenue: number;
+  contributionMargin: number;
+  contributionMarginRatio: number;
+  marginOfSafety: number;
+  
+  // Financial Ratios
+  currentRatio: number;
+  workingCapital: number;
+  debtToEquityRatio: number;
+  grossProfitMargin: number;
+  netProfitMargin: number;
+  roa: number;
+  roe: number;
+  
+  // Cash Flow Projection (12 months)
+  cashFlowProjection: {
+    month: number;
+    revenue: number;
+    expenses: number;
+    netCashFlow: number;
+    cumulativeCash: number;
+  }[];
+  
+  // Business Health Metrics
+  burnRate: number;
+  runwayMonths: number;
+  businessHealthScore: number;
+  recommendations: string[];
+  
+  // Risk Assessment
+  riskLevel: 'Low' | 'Medium' | 'High';
+  profitabilityTimeline: number;
+}
+
+export function useBusinessCalculator() {
+  const [values, setValues] = useState<BusinessCalculatorInputs>({
+    // Break-even Analysis
+    fixedCosts: 10000,
+    variableCostPerUnit: 15,
+    pricePerUnit: 25,
+    
+    // Financial Ratios
+    currentAssets: 50000,
+    currentLiabilities: 30000,
+    totalDebt: 40000,
+    totalEquity: 60000,
+    revenue: 120000,
+    grossProfit: 80000,
+    netIncome: 25000,
+    
+    // Cash Flow
+    monthlyRevenue: 10000,
+    monthlyExpenses: 8000,
+    initialCash: 15000,
+    
+    // Growth
+    revenueGrowthRate: 10,
+    expenseGrowthRate: 5
+  });
+
+  const errors = useMemo(() => {
+    return validateFields(values, CalculatorValidations.businessCalculator);
+  }, [values]);
+
+  const isValid = useMemo(() => errors.isValid, [errors]);
+
+  const result = useMemo<BusinessCalculatorResults | null>(() => {
+    if (!isValid) return null;
+
+    // Break-even Analysis
+    const contributionMargin = values.pricePerUnit - values.variableCostPerUnit;
+    const contributionMarginRatio = values.pricePerUnit > 0 ? (contributionMargin / values.pricePerUnit) * 100 : 0;
+    const breakEvenUnits = contributionMargin > 0 ? values.fixedCosts / contributionMargin : 0;
+    const breakEvenRevenue = breakEvenUnits * values.pricePerUnit;
+    const currentUnits = values.revenue / values.pricePerUnit;
+    const marginOfSafety = currentUnits > breakEvenUnits ? ((currentUnits - breakEvenUnits) / currentUnits) * 100 : 0;
+
+    // Financial Ratios
+    const currentRatio = values.currentLiabilities > 0 ? values.currentAssets / values.currentLiabilities : 0;
+    const workingCapital = values.currentAssets - values.currentLiabilities;
+    const debtToEquityRatio = values.totalEquity > 0 ? values.totalDebt / values.totalEquity : 0;
+    const grossProfitMargin = values.revenue > 0 ? (values.grossProfit / values.revenue) * 100 : 0;
+    const netProfitMargin = values.revenue > 0 ? (values.netIncome / values.revenue) * 100 : 0;
+    const totalAssets = values.currentAssets + values.totalDebt + values.totalEquity;
+    const roa = totalAssets > 0 ? (values.netIncome / totalAssets) * 100 : 0;
+    const roe = values.totalEquity > 0 ? (values.netIncome / values.totalEquity) * 100 : 0;
+
+    // Cash Flow Projection
+    const cashFlowProjection = [];
+    let cumulativeCash = values.initialCash;
+    
+    for (let month = 1; month <= 12; month++) {
+      const monthlyRevenueGrowth = Math.pow(1 + values.revenueGrowthRate / 100, month - 1);
+      const monthlyExpenseGrowth = Math.pow(1 + values.expenseGrowthRate / 100, month - 1);
+      
+      const revenue = values.monthlyRevenue * monthlyRevenueGrowth;
+      const expenses = values.monthlyExpenses * monthlyExpenseGrowth;
+      const netCashFlow = revenue - expenses;
+      
+      cumulativeCash += netCashFlow;
+      
+      cashFlowProjection.push({
+        month,
+        revenue,
+        expenses,
+        netCashFlow,
+        cumulativeCash
+      });
+    }
+
+    // Business Health Metrics
+    const burnRate = values.monthlyExpenses - values.monthlyRevenue;
+    const runwayMonths = burnRate > 0 ? values.initialCash / burnRate : Infinity;
+    
+    // Calculate business health score (0-100)
+    let healthScore = 50; // Base score
+    
+    // Profitability factors
+    if (values.netIncome > 0) healthScore += 20;
+    if (netProfitMargin > 10) healthScore += 10;
+    if (grossProfitMargin > 40) healthScore += 10;
+    
+    // Liquidity factors
+    if (currentRatio > 1.5) healthScore += 10;
+    if (workingCapital > 0) healthScore += 5;
+    
+    // Growth factors
+    if (values.revenueGrowthRate > 0) healthScore += 5;
+    if (values.revenueGrowthRate > 15) healthScore += 10;
+    
+    // Risk factors
+    if (debtToEquityRatio > 2) healthScore -= 15;
+    if (runwayMonths < 6) healthScore -= 20;
+    if (contributionMarginRatio < 30) healthScore -= 10;
+
+    healthScore = Math.max(0, Math.min(100, healthScore));
+
+    // Generate recommendations
+    const recommendations = [];
+    
+    if (contributionMarginRatio < 30) {
+      recommendations.push("Consider increasing prices or reducing variable costs to improve contribution margin");
+    }
+    if (currentRatio < 1) {
+      recommendations.push("Improve liquidity by increasing current assets or reducing current liabilities");
+    }
+    if (runwayMonths < 12) {
+      recommendations.push("Focus on improving cash flow or raising additional funding");
+    }
+    if (debtToEquityRatio > 2) {
+      recommendations.push("Consider reducing debt levels to improve financial stability");
+    }
+    if (netProfitMargin < 5) {
+      recommendations.push("Work on improving operational efficiency to increase profitability");
+    }
+    if (values.revenueGrowthRate < 0) {
+      recommendations.push("Develop strategies to increase revenue and market share");
+    }
+
+    // Risk Assessment
+    let riskLevel: 'Low' | 'Medium' | 'High' = 'Medium';
+    if (healthScore >= 75) riskLevel = 'Low';
+    else if (healthScore <= 40) riskLevel = 'High';
+
+    // Profitability Timeline
+    const profitabilityTimeline = values.netIncome <= 0 ? 
+      Math.ceil(Math.abs(values.netIncome) / Math.max(1, values.monthlyRevenue - values.monthlyExpenses)) : 0;
+
+    return {
+      breakEvenUnits,
+      breakEvenRevenue,
+      contributionMargin,
+      contributionMarginRatio,
+      marginOfSafety,
+      currentRatio,
+      workingCapital,
+      debtToEquityRatio,
+      grossProfitMargin,
+      netProfitMargin,
+      roa,
+      roe,
+      cashFlowProjection,
+      burnRate,
+      runwayMonths,
+      businessHealthScore: healthScore,
+      recommendations,
+      riskLevel,
+      profitabilityTimeline
+    };
+  }, [values, isValid]);
+
+  const updateField = useCallback((field: keyof BusinessCalculatorInputs, value: string) => {
+    const numValue = parseFloat(value) || 0;
+    setValues(prev => ({ ...prev, [field]: numValue }));
+  }, []);
+
+  const reset = useCallback(() => {
+    setValues({
+      fixedCosts: 10000,
+      variableCostPerUnit: 15,
+      pricePerUnit: 25,
+      currentAssets: 50000,
+      currentLiabilities: 30000,
+      totalDebt: 40000,
+      totalEquity: 60000,
+      revenue: 120000,
+      grossProfit: 80000,
+      netIncome: 25000,
+      monthlyRevenue: 10000,
+      monthlyExpenses: 8000,
+      initialCash: 15000,
+      revenueGrowthRate: 10,
+      expenseGrowthRate: 5
+    });
+  }, []);
+
+  return {
+    values,
+    result,
+    validation: errors,
+    isValid,
+    updateField,
+    reset,
+    errors: errors.errors
+  };
+}

@@ -396,6 +396,31 @@ export const CalculatorValidations = {
       required: true,
       message: 'Strategy type is required'
     }
+  },
+
+  businessCalculator: {
+    // Break-even Analysis
+    fixedCosts: ValidationPresets.currency(0, 10000000),
+    variableCostPerUnit: ValidationPresets.currency(0, 10000),
+    pricePerUnit: ValidationPresets.currency(0.01, 10000),
+    
+    // Financial Ratios
+    currentAssets: ValidationPresets.currency(0, 100000000),
+    currentLiabilities: ValidationPresets.currency(0, 100000000),
+    totalDebt: ValidationPresets.currency(0, 100000000),
+    totalEquity: ValidationPresets.currency(0.01, 100000000),
+    revenue: ValidationPresets.currency(0, 1000000000),
+    grossProfit: ValidationPresets.currency(0, 1000000000),
+    netIncome: ValidationPresets.currency(-1000000000, 1000000000),
+    
+    // Cash Flow
+    monthlyRevenue: ValidationPresets.currency(0, 10000000),
+    monthlyExpenses: ValidationPresets.currency(0, 10000000),
+    initialCash: ValidationPresets.currency(0, 100000000),
+    
+    // Growth
+    revenueGrowthRate: ValidationPresets.percentage(-50, 200),
+    expenseGrowthRate: ValidationPresets.percentage(-50, 200)
   }
 };
 
