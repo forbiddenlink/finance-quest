@@ -18,9 +18,9 @@ export default function RetirementPlannerCalculator() {
   const { recordCalculatorUsage } = useProgressStore();
   const {
     values,
-    results,
-    validation,
-    updateField,
+    result,
+    errors,
+    updateValue,
     reset
   } = useRetirementCalculator();
 
@@ -58,7 +58,7 @@ export default function RetirementPlannerCalculator() {
 
   // Generate projection data for charts
   const projectionData = React.useMemo(() => {
-    if (!results) return [];
+    if (!result) return [];
 
     const currentAge = parseInt(values.currentAge) || 30;
     const retirementAge = parseInt(values.retirementAge) || 65;
@@ -85,16 +85,16 @@ export default function RetirementPlannerCalculator() {
     }
 
     return data;
-  }, [values, results]);
+  }, [values, result]);
 
   // Create allocation breakdown data
-  const allocationData = results ? [
-    { name: 'Current Savings Growth', value: results.totalRetirementSavings - (parseFloat(values.currentSavings) || 0), color: '#3B82F6' },
+  const allocationData = result ? [
+    { name: 'Current Savings Growth', value: result.totalRetirementSavings - (parseFloat(values.currentSavings) || 0), color: '#3B82F6' },
     { name: 'Current Savings', value: parseFloat(values.currentSavings) || 0, color: '#10B981' },
     { name: 'Future Contributions', value: (parseInt(values.retirementAge) - parseInt(values.currentAge)) * parseFloat(values.monthlyContribution) * 12, color: '#8B5CF6' }
   ].filter(item => item.value > 0) : [];
 
-  const readinessPercentage = results ? Math.min(100, (results.totalRetirementSavings / results.requiredSavings) * 100) : 0;
+  const readinessPercentage = result ? Math.min(100, (result.totalRetirementSavings / result.requiredSavings) * 100) : 0;
 
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-8">
@@ -125,11 +125,11 @@ export default function RetirementPlannerCalculator() {
                     id="currentAge"
                     type="number"
                     value={values.currentAge}
-                    onChange={(e) => updateField('currentAge', e.target.value)}
+                    onChange={(e) => updateValue('currentAge', e.target.value)}
                     placeholder="30"
                   />
-                  {validation.errors?.currentAge && (
-                    <p className="text-sm text-red-600 mt-1">{validation.errors.currentAge}</p>
+                  {errors?.currentAge && (
+                    <p className="text-sm text-red-600 mt-1">{errors.currentAge}</p>
                   )}
                 </div>
 
@@ -139,16 +139,16 @@ export default function RetirementPlannerCalculator() {
                     id="retirementAge"
                     type="number"
                     value={values.retirementAge}
-                    onChange={(e) => updateField('retirementAge', e.target.value)}
+                    onChange={(e) => updateValue('retirementAge', e.target.value)}
                     placeholder="65"
                   />
-                  {validation.errors?.retirementAge && (
-                    <p className="text-sm text-red-600 mt-1">{validation.errors.retirementAge}</p>
+                  {errors?.retirementAge && (
+                    <p className="text-sm text-red-600 mt-1">{errors.retirementAge}</p>
                   )}
                 </div>
               </div>
 
-              {results && (
+              {result && (
                 <div className="p-3 bg-blue-50 rounded-lg">
                   <div className="text-sm text-blue-700">
                     <Clock className="h-4 w-4 inline mr-1" />
@@ -172,11 +172,11 @@ export default function RetirementPlannerCalculator() {
                   id="currentSavings"
                   type="number"
                   value={values.currentSavings}
-                  onChange={(e) => updateField('currentSavings', e.target.value)}
+                  onChange={(e) => updateValue('currentSavings', e.target.value)}
                   placeholder="50000"
                 />
-                {validation.errors?.currentSavings && (
-                  <p className="text-sm text-red-600 mt-1">{validation.errors.currentSavings}</p>
+                {errors?.currentSavings && (
+                  <p className="text-sm text-red-600 mt-1">{errors.currentSavings}</p>
                 )}
               </div>
 
@@ -186,13 +186,13 @@ export default function RetirementPlannerCalculator() {
                   id="monthlyContribution"
                   type="number"
                   value={values.monthlyContribution}
-                  onChange={(e) => updateField('monthlyContribution', e.target.value)}
+                  onChange={(e) => updateValue('monthlyContribution', e.target.value)}
                   placeholder="1000"
                 />
-                {validation.errors?.monthlyContribution && (
-                  <p className="text-sm text-red-600 mt-1">{validation.errors.monthlyContribution}</p>
+                {errors?.monthlyContribution && (
+                  <p className="text-sm text-red-600 mt-1">{errors.monthlyContribution}</p>
                 )}
-                {results && (
+                {result && (
                   <p className="text-sm text-gray-600 mt-1">
                     Annual contribution: {formatCurrency(parseFloat(values.monthlyContribution) * 12 || 0)}
                   </p>
@@ -205,11 +205,11 @@ export default function RetirementPlannerCalculator() {
                   id="desiredIncome"
                   type="number"
                   value={values.desiredIncome}
-                  onChange={(e) => updateField('desiredIncome', e.target.value)}
+                  onChange={(e) => updateValue('desiredIncome', e.target.value)}
                   placeholder="80000"
                 />
-                {validation.errors?.desiredIncome && (
-                  <p className="text-sm text-red-600 mt-1">{validation.errors.desiredIncome}</p>
+                {errors?.desiredIncome && (
+                  <p className="text-sm text-red-600 mt-1">{errors.desiredIncome}</p>
                 )}
               </div>
             </CardContent>
@@ -228,11 +228,11 @@ export default function RetirementPlannerCalculator() {
                     type="number"
                     step="0.1"
                     value={values.expectedReturn}
-                    onChange={(e) => updateField('expectedReturn', e.target.value)}
+                    onChange={(e) => updateValue('expectedReturn', e.target.value)}
                     placeholder="7"
                   />
-                  {validation.errors?.expectedReturn && (
-                    <p className="text-sm text-red-600 mt-1">{validation.errors.expectedReturn}</p>
+                  {errors?.expectedReturn && (
+                    <p className="text-sm text-red-600 mt-1">{errors.expectedReturn}</p>
                   )}
                 </div>
 
@@ -243,11 +243,11 @@ export default function RetirementPlannerCalculator() {
                     type="number"
                     step="0.1"
                     value={values.inflationRate}
-                    onChange={(e) => updateField('inflationRate', e.target.value)}
+                    onChange={(e) => updateValue('inflationRate', e.target.value)}
                     placeholder="3"
                   />
-                  {validation.errors?.inflationRate && (
-                    <p className="text-sm text-red-600 mt-1">{validation.errors.inflationRate}</p>
+                  {errors?.inflationRate && (
+                    <p className="text-sm text-red-600 mt-1">{errors.inflationRate}</p>
                   )}
                 </div>
               </div>
@@ -266,9 +266,9 @@ export default function RetirementPlannerCalculator() {
           </Button>
         </div>
 
-        {/* Results Section */}
+        {/* result Section */}
         <div className="space-y-6">
-          {results && (
+          {result && (
             <>
               {/* Retirement Readiness */}
               <Card>
@@ -295,34 +295,34 @@ export default function RetirementPlannerCalculator() {
                     <div className="grid grid-cols-2 gap-4">
                       <div className="p-3 bg-green-50 rounded-lg">
                         <div className="text-lg font-bold text-green-600">
-                          {formatCurrency(results.totalRetirementSavings)}
+                          {formatCurrency(result.totalRetirementSavings)}
                         </div>
                         <div className="text-sm text-green-700">Projected Savings</div>
                       </div>
 
                       <div className="p-3 bg-blue-50 rounded-lg">
                         <div className="text-lg font-bold text-blue-600">
-                          {formatCurrency(results.requiredSavings)}
+                          {formatCurrency(result.requiredSavings)}
                         </div>
                         <div className="text-sm text-blue-700">Required Savings</div>
                       </div>
                     </div>
 
-                    {results.shortfall > 0 && (
+                    {result.shortfall > 0 && (
                       <Alert>
                         <AlertTriangle className="h-4 w-4" />
                         <AlertDescription>
-                          <strong>Shortfall:</strong> {formatCurrency(results.shortfall)}
+                          <strong>Shortfall:</strong> {formatCurrency(result.shortfall)}
                           <br />Consider increasing contributions or extending retirement age.
                         </AlertDescription>
                       </Alert>
                     )}
 
-                    {results.surplus > 0 && (
+                    {result.surplus > 0 && (
                       <Alert>
                         <CheckCircle2 className="h-4 w-4" />
                         <AlertDescription>
-                          <strong>Surplus:</strong> {formatCurrency(results.surplus)}
+                          <strong>Surplus:</strong> {formatCurrency(result.surplus)}
                           <br />                          You&apos;re on track! Consider early retirement or lifestyle upgrades.
                         </AlertDescription>
                       </Alert>
@@ -378,7 +378,7 @@ export default function RetirementPlannerCalculator() {
                           <div className="p-4 bg-orange-50 rounded-lg">
                             <h4 className="font-semibold text-orange-900">At Retirement</h4>
                             <p className="text-2xl font-bold text-orange-600">
-                              {formatCurrency(results.totalRetirementSavings)}
+                              {formatCurrency(result.totalRetirementSavings)}
                             </p>
                             <p className="text-sm text-orange-700">Final Balance</p>
                           </div>
@@ -393,7 +393,7 @@ export default function RetirementPlannerCalculator() {
                             </div>
                             <div className="flex justify-between">
                               <span>Equivalent at retirement:</span>
-                              <span className="font-medium">{formatCurrency(results.inflationAdjustedIncome || 0)}</span>
+                              <span className="font-medium">{formatCurrency(result.inflationAdjustedIncome || 0)}</span>
                             </div>
                             <div className="text-xs text-gray-600 mt-2">
                               *Adjusted for {formatPercentage(parseFloat(values.inflationRate) || 0)} annual inflation
@@ -454,13 +454,13 @@ export default function RetirementPlannerCalculator() {
                               <div className="flex justify-between">
                                 <span>Investment growth:</span>
                                 <span className="font-medium text-green-600">
-                                  {formatCurrency(results.totalRetirementSavings - parseFloat(values.currentSavings) - ((parseInt(values.retirementAge) - parseInt(values.currentAge)) * parseFloat(values.monthlyContribution) * 12))}
+                                  {formatCurrency(result.totalRetirementSavings - parseFloat(values.currentSavings) - ((parseInt(values.retirementAge) - parseInt(values.currentAge)) * parseFloat(values.monthlyContribution) * 12))}
                                 </span>
                               </div>
                               <div className="border-t pt-2 mt-2">
                                 <div className="flex justify-between font-semibold">
                                   <span>Total at retirement:</span>
-                                  <span>{formatCurrency(results.totalRetirementSavings)}</span>
+                                  <span>{formatCurrency(result.totalRetirementSavings)}</span>
                                 </div>
                               </div>
                             </div>
@@ -529,10 +529,10 @@ export default function RetirementPlannerCalculator() {
                             <h4 className="font-semibold text-purple-900 mb-3">Investment Return Impact</h4>
                             <div className="space-y-2 text-sm text-purple-700">
                               <div>
-                                6% return → {formatCurrency(results.totalRetirementSavings * 0.85)} (vs current projection)
+                                6% return → {formatCurrency(result.totalRetirementSavings * 0.85)} (vs current projection)
                               </div>
                               <div>
-                                8% return → {formatCurrency(results.totalRetirementSavings * 1.2)} (vs current projection)
+                                8% return → {formatCurrency(result.totalRetirementSavings * 1.2)} (vs current projection)
                               </div>
                               <div className="text-xs mt-2">*Rough estimates for comparison</div>
                             </div>
@@ -543,14 +543,14 @@ export default function RetirementPlannerCalculator() {
                         <div className="p-4 bg-yellow-50 rounded-lg">
                           <h4 className="font-semibold text-yellow-900 mb-3">Recommended Actions</h4>
                           <div className="space-y-2 text-sm text-yellow-700">
-                            {results.shortfall > 0 && (
+                            {result.shortfall > 0 && (
                               <>
-                                <div>• Increase monthly contributions by {formatCurrency(results.shortfall / ((parseInt(values.retirementAge) - parseInt(values.currentAge)) * 12))} to close the gap</div>
-                                <div>• Consider working {Math.ceil(results.shortfall / (parseFloat(values.monthlyContribution) * 12))} additional years</div>
+                                <div>• Increase monthly contributions by {formatCurrency(result.shortfall / ((parseInt(values.retirementAge) - parseInt(values.currentAge)) * 12))} to close the gap</div>
+                                <div>• Consider working {Math.ceil(result.shortfall / (parseFloat(values.monthlyContribution) * 12))} additional years</div>
                                 <div>• Review investment allocation to potentially increase returns</div>
                               </>
                             )}
-                            {results.surplus > 0 && (
+                            {result.surplus > 0 && (
                               <>
                                 <div>• You&apos;re ahead of schedule! Consider early retirement</div>
                                 <div>• Increase lifestyle goals or leave a larger legacy</div>
@@ -569,7 +569,7 @@ export default function RetirementPlannerCalculator() {
             </>
           )}
 
-          {!validation.isValid && validation.errors && Object.keys(validation.errors).length > 0 && (
+          {errors && Object.keys(errors).length > 0 && (
             <Alert variant="destructive">
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>

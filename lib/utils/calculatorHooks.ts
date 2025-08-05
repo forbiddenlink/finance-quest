@@ -775,12 +775,43 @@ export function useOptionsCalculator() {
 }
 
 export function useRetirementCalculator() {
+    // Mock result object that matches component expectations
+    const mockResult = {
+        totalRetirementSavings: 0,
+        requiredSavings: 0,
+        shortfall: 0,
+        surplus: 0,
+        inflationAdjustedIncome: 0
+    };
+
     return {
-        values: {},
-        errors: {},
-        result: null,
-        updateValue: () => { },
-        reset: () => { }
+        values: {
+            currentAge: '',
+            retirementAge: '',
+            currentSavings: '',
+            monthlyContribution: '',
+            expectedReturn: '',
+            inflationRate: '',
+            retirementIncome: '',
+            desiredIncome: ''
+        },
+        errors: {
+            currentAge: '',
+            retirementAge: '',
+            currentSavings: '',
+            monthlyContribution: '',
+            expectedReturn: '',
+            inflationRate: '',
+            retirementIncome: '',
+            desiredIncome: ''
+        },
+        result: mockResult,
+        updateValue: (field: string, value: string) => { 
+            console.log(`Updating ${field} to ${value}`);
+        },
+        reset: () => { 
+            console.log('Resetting calculator');
+        }
     };
 }
 
