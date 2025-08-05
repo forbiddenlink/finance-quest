@@ -30,10 +30,11 @@
 5. **Chapter 8** - `PortfolioConstructionQuizEnhanced.tsx`
 
 ### **Advanced Chapters** 
-5. **Chapter 8** - `PortfolioConstructionQuizEnhanced.tsx` ✅
 6. **Chapter 9** - `RetirementPlanningQuizEnhanced.tsx` ✅
 7. **Chapter 10** - `TaxOptimizationQuizEnhanced.tsx` ✅
-8. **Chapter 11** - `InsuranceRiskManagementQuizEnhanced.tsx`
+8. **Chapter 11** - `InsuranceRiskManagementQuizEnhanced.tsx` ✅
+9. **Chapter 12** - `RealEstateAlternativesQuizEnhanced.tsx` ✅
+10. **Chapter 13** - `StockMarketMasteryQuizEnhanced.tsx`
 9. **Chapter 12** - `RealEstateAlternativesQuizEnhanced.tsx`
 10. **Chapter 13** - `StockMarketMasteryQuizEnhanced.tsx`
 11. **Chapter 14** - `BondFixedIncomeQuizEnhanced.tsx`
@@ -100,6 +101,6 @@
 
 ---
 
-## 📊 **COMPLETION STATUS: 10/17 Chapters (59%)**
+## 📊 **COMPLETION STATUS: 14/17 Chapters (82%)**
 
 **To achieve full spaced repetition integration across all chapters, we need to update the remaining 7 quiz files with the enhanced quiz engine configuration.**
