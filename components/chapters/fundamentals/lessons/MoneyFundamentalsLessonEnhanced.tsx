@@ -8,6 +8,8 @@ import ProgressRing from '@/components/shared/ui/ProgressRing';
 import { CheckCircle, Star, ChevronRight, ChevronLeft, Brain, DollarSign, TrendingUp, Shield, Target } from 'lucide-react';
 import toast from 'react-hot-toast';
 import MoneyPersonalityAssessment from './MoneyPersonalityAssessment';
+import InteractiveCompoundVisualization from './InteractiveCompoundVisualization';
+import InteractiveBudgetAllocation from './InteractiveBudgetAllocation';
 
 interface LessonContent {
   title: string;
@@ -249,23 +251,29 @@ export default function MoneyFundamentalsLessonEnhanced() {
             <div className={`mb-8 p-6 ${theme.utils.glass('normal')} border ${theme.borderColors.primary} rounded-lg`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
                 <TrendingUp className="w-5 h-5" />
-                Compound Interest Visualization
+                Interactive Compound Growth Visualization
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className={`p-4 ${theme.status.error.bg} rounded-lg border ${theme.status.error.border}`}>
-                  <h4 className={`font-bold ${theme.status.error.text} mb-2`}>Daily Coffee Habit</h4>
-                  <p className={`${theme.textColors.secondary} text-sm`}>$6/day × 365 days × 20 years</p>
-                  <p className={`text-2xl font-bold ${theme.status.error.text}`}>= $43,800 spent</p>
-                </div>
-                <div className={`p-4 ${theme.status.success.bg} rounded-lg border ${theme.status.success.border}`}>
-                  <h4 className={`font-bold ${theme.status.success.text} mb-2`}>Invested Instead</h4>
-                  <p className={`${theme.textColors.secondary} text-sm`}>$180/month × 7% return × 20 years</p>
-                  <p className={`text-2xl font-bold ${theme.status.success.text}`}>= $87,000 gained</p>
-                </div>
-              </div>
-              <p className={`mt-4 text-center font-bold ${theme.textColors.primary}`}>
-                💡 Difference: $130,800 just from redirecting one daily habit!
+              <p className={`${theme.textColors.secondary} mb-6`}>
+                See the magical power of compound interest in action with our interactive calculator below.
               </p>
+              <InteractiveCompoundVisualization 
+                initialAmount={180}
+                initialYears={20}
+                initialRate={7}
+              />
+            </div>
+          )}
+
+          {currentLesson === 4 && (
+            <div className={`mb-8 p-6 ${theme.utils.glass('normal')} border ${theme.borderColors.primary} rounded-lg`}>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                <Target className="w-5 h-5" />
+                Interactive Budget Allocation Game
+              </h3>
+              <p className={`${theme.textColors.secondary} mb-6`}>
+                Practice the PACT framework by allocating a budget. Drag money amounts to different categories and see how close you get to financial best practices!
+              </p>
+              <InteractiveBudgetAllocation />
             </div>
           )}
         </div>
