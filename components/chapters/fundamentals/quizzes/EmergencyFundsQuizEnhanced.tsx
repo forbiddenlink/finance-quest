@@ -135,15 +135,15 @@ const emergencyFundsQuizConfig = {
 
   // Categories for quiz organization
   categories: {
-    'building': { icon: () => null, label: 'Fund Building' },
     'sizing': { icon: () => null, label: 'Fund Sizing' },
     'placement': { icon: () => null, label: 'Fund Placement' },
+    'building': { icon: () => null, label: 'Building Strategy' },
     'protection': { icon: () => null, label: 'Fund Protection' },
     'psychology': { icon: () => null, label: 'Financial Psychology' }
   },
 
   successMessage: "Outstanding! You've mastered emergency fund strategies and built a foundation for financial security.",
-  failureMessage: "Review the emergency fund concepts and try again. Focus on sizing, placement, and building strategies."
+  failureMessage: "Review emergency fund concepts and try again. Focus on sizing, placement, and building strategies."
 };
 
 interface EmergencyFundsQuizProps {
