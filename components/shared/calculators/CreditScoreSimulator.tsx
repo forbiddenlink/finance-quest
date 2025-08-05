@@ -15,13 +15,55 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 export default function CreditScoreSimulator() {
   // Mock the calculator hook until it's available
   const calculatorHook = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    values: { current: {} as any, target: {} as any },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    errors: {} as any,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    result: null as any,
-    isValid: false,
+    values: { 
+      current: {
+        paymentHistory: 85,
+        creditUtilization: 30,
+        creditAge: 5,
+        creditMix: 3,
+        newCredit: 2
+      }, 
+      target: {
+        paymentHistory: 100,
+        creditUtilization: 10,
+        creditAge: 8,
+        creditMix: 4,
+        newCredit: 1
+      }
+    },
+    errors: {
+      current_paymentHistory: undefined,
+      current_creditUtilization: undefined,
+      current_creditAge: undefined,
+      current_creditMix: undefined,
+      current_newCredit: undefined,
+      target_paymentHistory: undefined,
+      target_creditUtilization: undefined,
+      target_creditAge: undefined,
+      target_creditMix: undefined,
+      target_newCredit: undefined
+    },
+    result: {
+      currentScore: 650,
+      targetScore: 750,
+      scoreChange: 100,
+      timeToTarget: '12-18 months',
+      factorAnalysis: [
+        { name: 'Payment History', current: 85, target: 100, priority: 'high' },
+        { name: 'Credit Utilization', current: 30, target: 10, priority: 'high' },
+        { name: 'Credit Age', current: 5, target: 8, priority: 'medium' }
+      ],
+      increase: 100,
+      projectedScore: 750,
+      projectedGrade: 'Excellent',
+      scoreGrade: 'Fair',
+      timelineProjections: [
+        { month: 0, score: 650 },
+        { month: 6, score: 700 },
+        { month: 12, score: 750 }
+      ]
+    },
+    isValid: true,
     updateCurrentProfile: (field: string, value: string) => { 
       // Mock implementation - parameters intentionally unused
       void field;
