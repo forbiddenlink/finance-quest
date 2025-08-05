@@ -421,6 +421,16 @@ export const CalculatorValidations = {
     // Growth
     revenueGrowthRate: ValidationPresets.percentage(-50, 200),
     expenseGrowthRate: ValidationPresets.percentage(-50, 200)
+  },
+
+  paycheck: {
+    grossPay: ValidationPresets.currency(0, 50000),
+    healthInsurance: ValidationPresets.currency(0, 2000),
+    retirement401k: ValidationPresets.percentage(0, 50),
+    filingStatus: { required: true },
+    state: { required: true },
+    additionalWithholding: ValidationPresets.currency(0, 5000),
+    dependents: { min: 0, max: 20, required: true }
   }
 };
 
