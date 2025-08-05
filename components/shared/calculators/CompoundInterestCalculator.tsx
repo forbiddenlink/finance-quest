@@ -12,10 +12,10 @@ import { useCompoundInterestCalculator } from '@/lib/utils/calculatorHooks';
 import { validateFields, CalculatorValidations } from '@/lib/utils/calculatorValidation';
 
 interface CompoundData {
-  year: number;
-  principal: number;
-  interest: number;
-  total: number;
+    year: number;
+    principal: number;
+    interest: number;
+    total: number;
 }
 
 export default function CompoundInterestCalculator() {
@@ -53,12 +53,12 @@ export default function CompoundInterestCalculator() {
                 // Calculate year-end value with monthly contributions
                 const startValue = compoundData[year - 1]?.total || P;
                 let runningTotal = startValue;
-                
+
                 for (let month = 1; month <= 12; month++) {
                     runningTotal *= (1 + r / 100 / 12);
                     runningTotal += monthlyAdd;
                 }
-                
+
                 yearEndValue = runningTotal;
                 totalContributions = P + (monthlyAdd * 12 * year);
             }
@@ -83,14 +83,14 @@ export default function CompoundInterestCalculator() {
     // Generate insights based on calculations
     const generateInsights = () => {
         if (!results) return [];
-        
+
         const insights = [];
-        
+
         const rateNum = parseFloat(values.rate) || 0;
         const timeNum = parseInt(values.time) || 0;
         const monthlyContributionNum = parseFloat(values.monthlyContribution) || 0;
         const principalNum = parseFloat(values.principal) || 0;
-        
+
         // High growth insight
         if (results.effectiveReturn > 200) {
             insights.push({
@@ -271,7 +271,7 @@ export default function CompoundInterestCalculator() {
                             format="percentage"
                             variant="info"
                         />
-                        
+
                         <ResultCard
                             icon={Sparkles}
                             label="Interest Multiplier"
@@ -279,7 +279,7 @@ export default function CompoundInterestCalculator() {
                             format="number"
                             variant="success"
                         />
-                        
+
                         <ResultCard
                             icon={Clock}
                             label="Years to Double"
@@ -308,17 +308,17 @@ export default function CompoundInterestCalculator() {
                             <ResponsiveContainer width="100%" height="100%">
                                 <LineChart data={data}>
                                     <CartesianGrid strokeDasharray="3 3" stroke={theme.colors.slate[700]} />
-                                    <XAxis 
-                                        dataKey="year" 
+                                    <XAxis
+                                        dataKey="year"
                                         stroke={theme.colors.slate[400]}
                                         tick={{ fill: theme.colors.slate[400] }}
                                     />
-                                    <YAxis 
+                                    <YAxis
                                         stroke={theme.colors.slate[400]}
                                         tick={{ fill: theme.colors.slate[400] }}
                                         tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                                     />
-                                    <Tooltip 
+                                    <Tooltip
                                         contentStyle={{
                                             backgroundColor: theme.colors.slate[800],
                                             border: `1px solid ${theme.colors.slate[700]}`,
@@ -327,21 +327,21 @@ export default function CompoundInterestCalculator() {
                                         }}
                                         formatter={(value: number, name: string) => [
                                             `$${value.toLocaleString()}`,
-                                            name === 'principal' ? 'Total Contributed' : 
-                                            name === 'interest' ? 'Interest Earned' : 'Total Value'
+                                            name === 'principal' ? 'Total Contributed' :
+                                                name === 'interest' ? 'Interest Earned' : 'Total Value'
                                         ]}
                                     />
-                                    <Line 
-                                        type="monotone" 
-                                        dataKey="principal" 
-                                        stroke={theme.colors.blue[400]} 
+                                    <Line
+                                        type="monotone"
+                                        dataKey="principal"
+                                        stroke={theme.colors.blue[400]}
                                         strokeWidth={2}
                                         name="principal"
                                     />
-                                    <Line 
-                                        type="monotone" 
-                                        dataKey="total" 
-                                        stroke={theme.colors.emerald[400]} 
+                                    <Line
+                                        type="monotone"
+                                        dataKey="total"
+                                        stroke={theme.colors.emerald[400]}
                                         strokeWidth={3}
                                         name="total"
                                     />

@@ -189,12 +189,12 @@ export default function OptionsStrategyCalculator() {
 
     // Error function approximation
     const erf = (x: number): number => {
-      const a1 =  0.254829592;
+      const a1 = 0.254829592;
       const a2 = -0.284496736;
-      const a3 =  1.421413741;
+      const a3 = 1.421413741;
       const a4 = -1.453152027;
-      const a5 =  1.061405429;
-      const p  =  0.3275911;
+      const a5 = 1.061405429;
+      const p = 0.3275911;
 
       const sign = x < 0 ? -1 : 1;
       x = Math.abs(x);
@@ -210,11 +210,11 @@ export default function OptionsStrategyCalculator() {
 
     // Greeks
     const delta = Math.exp(-q * T) * normCDF(d1);
-    const gamma = Math.exp(-q * T) / (S * sigma * Math.sqrt(T)) * 
-                  Math.exp(-0.5 * d1 * d1) / Math.sqrt(2 * Math.PI);
-    const theta = (-S * Math.exp(-q * T) * Math.exp(-0.5 * d1 * d1) / Math.sqrt(2 * Math.PI) * sigma / (2 * Math.sqrt(T)) 
-                   - r * K * Math.exp(-r * T) * normCDF(d2) 
-                   + q * S * Math.exp(-q * T) * normCDF(d1)) / 365;
+    const gamma = Math.exp(-q * T) / (S * sigma * Math.sqrt(T)) *
+      Math.exp(-0.5 * d1 * d1) / Math.sqrt(2 * Math.PI);
+    const theta = (-S * Math.exp(-q * T) * Math.exp(-0.5 * d1 * d1) / Math.sqrt(2 * Math.PI) * sigma / (2 * Math.sqrt(T))
+      - r * K * Math.exp(-r * T) * normCDF(d2)
+      + q * S * Math.exp(-q * T) * normCDF(d1)) / 365;
     const vega = S * Math.exp(-q * T) * Math.sqrt(T) * Math.exp(-0.5 * d1 * d1) / Math.sqrt(2 * Math.PI) / 100;
     const rho = K * T * Math.exp(-r * T) * normCDF(d2) / 100;
 
@@ -236,7 +236,7 @@ export default function OptionsStrategyCalculator() {
     const q = dividendYield / 100;
 
     const bs = calculateBlackScholes(stockPrice, strikePrice, T, r, sigma, q);
-    
+
     let profitLoss = 0;
     let maxProfit = 0;
     let maxLoss = 0;
@@ -246,15 +246,15 @@ export default function OptionsStrategyCalculator() {
 
     // Calculate strategy-specific metrics
     const strategy = OPTION_STRATEGIES[selectedStrategy];
-    
+
     // Generate payoff diagram
     const payoffDiagram: { price: number; pnl: number }[] = [];
     const priceRange = stockPrice * 0.5; // 50% range around current price
     const step = stockPrice * 0.02; // 2% steps
-    
+
     for (let price = stockPrice - priceRange; price <= stockPrice + priceRange; price += step) {
       let pnl = 0;
-      
+
       switch (selectedStrategy) {
         case 'long-call':
           pnl = Math.max(price - strikePrice, 0) - currentPremium;
@@ -276,7 +276,7 @@ export default function OptionsStrategyCalculator() {
         default:
           pnl = Math.max(price - strikePrice, 0) - currentPremium;
       }
-      
+
       payoffDiagram.push({ price, pnl: pnl * contracts * 100 }); // Multiply by contracts and 100 shares per contract
     }
 
@@ -347,12 +347,12 @@ export default function OptionsStrategyCalculator() {
     // Strategy analysis
     const strategyAnalysis = {
       marketOutlook: strategy.marketView,
-      riskLevel: (selectedStrategy.includes('spread') ? 'Medium' : 
-                 selectedStrategy.includes('straddle') || selectedStrategy.includes('condor') ? 'High' : 'Low') as 'Low' | 'Medium' | 'High',
+      riskLevel: (selectedStrategy.includes('spread') ? 'Medium' :
+        selectedStrategy.includes('straddle') || selectedStrategy.includes('condor') ? 'High' : 'Low') as 'Low' | 'Medium' | 'High',
       complexity: (selectedStrategy.includes('spread') || selectedStrategy.includes('condor') ? 'Advanced' :
-                  selectedStrategy.includes('covered') || selectedStrategy.includes('secured') ? 'Intermediate' : 'Beginner') as 'Beginner' | 'Intermediate' | 'Advanced',
-      timeHorizon: (timeToExpiration <= 30 ? 'Short-term' : 
-                   timeToExpiration <= 90 ? 'Medium-term' : 'Long-term') as 'Short-term' | 'Medium-term' | 'Long-term',
+        selectedStrategy.includes('covered') || selectedStrategy.includes('secured') ? 'Intermediate' : 'Beginner') as 'Beginner' | 'Intermediate' | 'Advanced',
+      timeHorizon: (timeToExpiration <= 30 ? 'Short-term' :
+        timeToExpiration <= 90 ? 'Medium-term' : 'Long-term') as 'Short-term' | 'Medium-term' | 'Long-term',
       bestScenario: strategy.maxProfit,
       worstScenario: strategy.maxLoss
     };
@@ -449,7 +449,7 @@ export default function OptionsStrategyCalculator() {
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Strategy Selection
             </h3>
-            
+
             <div className="space-y-4">
               <div>
                 <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
@@ -527,7 +527,7 @@ export default function OptionsStrategyCalculator() {
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Market Data
             </h3>
-            
+
             <div className="space-y-4">
               <div>
                 <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
@@ -689,9 +689,8 @@ export default function OptionsStrategyCalculator() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="text-center">
-                    <div className={`text-2xl font-bold ${
-                      result.profitLoss >= 0 ? 'text-green-400' : 'text-red-400'
-                    } mb-1`}>
+                    <div className={`text-2xl font-bold ${result.profitLoss >= 0 ? 'text-green-400' : 'text-red-400'
+                      } mb-1`}>
                       {formatCurrency(result.profitLoss)}
                     </div>
                     <div className={`text-sm ${theme.textColors.secondary}`}>Current P&L</div>
@@ -749,7 +748,7 @@ export default function OptionsStrategyCalculator() {
                     Black-Scholes Option Pricing
                   </h3>
                 </div>
-                
+
                 <div className="p-4">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                     <div className="text-center">
@@ -790,7 +789,7 @@ export default function OptionsStrategyCalculator() {
                     Greeks Risk Analysis
                   </h3>
                 </div>
-                
+
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead className={`bg-slate-700/50 ${theme.textColors.secondary}`}>

@@ -53,14 +53,14 @@ export default function MortgageCalculator() {
     let balance = results.loanAmount;
     let cumulativeInterest = 0;
     let cumulativePrincipal = 0;
-    
+
     const monthlyRate = results.monthlyInterestRate / 100;
     const totalPayments = parseInt(values.termYears) * 12;
 
     for (let month = 1; month <= totalPayments; month++) {
       const interestPayment = balance * monthlyRate;
       const principalPayment = results.monthlyPayment - interestPayment;
-      
+
       balance -= principalPayment;
       cumulativeInterest += interestPayment;
       cumulativePrincipal += principalPayment;
@@ -85,7 +85,7 @@ export default function MortgageCalculator() {
     if (!generatePaymentSchedule.length) return [];
 
     const yearsMap = new Map<number, { principal: number; interest: number; balance: number }>();
-    
+
     generatePaymentSchedule.forEach(payment => {
       if (!yearsMap.has(payment.year)) {
         yearsMap.set(payment.year, { principal: 0, interest: 0, balance: payment.balance });
@@ -143,7 +143,7 @@ export default function MortgageCalculator() {
   // Generate insights
   const generateInsights = () => {
     if (!results) return [];
-    
+
     const insights = [];
     const loanToValue = (results.loanAmount / parseFloat(values.homePrice)) * 100;
     const debtToIncomeRatio = 28; // Assume 28% as target ratio
@@ -301,22 +301,20 @@ export default function MortgageCalculator() {
                 <button
                   type="button"
                   onClick={() => setDownPaymentType('percentage')}
-                  className={`px-3 py-1 text-xs rounded ${
-                    downPaymentType === 'percentage' 
-                      ? theme.buttons.primary 
+                  className={`px-3 py-1 text-xs rounded ${downPaymentType === 'percentage'
+                      ? theme.buttons.primary
                       : theme.buttons.secondary
-                  }`}
+                    }`}
                 >
                   Percentage
                 </button>
                 <button
                   type="button"
                   onClick={() => setDownPaymentType('amount')}
-                  className={`px-3 py-1 text-xs rounded ${
-                    downPaymentType === 'amount' 
-                      ? theme.buttons.primary 
+                  className={`px-3 py-1 text-xs rounded ${downPaymentType === 'amount'
+                      ? theme.buttons.primary
                       : theme.buttons.secondary
-                  }`}
+                    }`}
                 >
                   Amount
                 </button>
@@ -346,7 +344,7 @@ export default function MortgageCalculator() {
               )}
             </div>
           </div>
-          
+
           <div className={theme.utils.calculatorFieldGrid(2)}>
             <PercentageInput
               id="interest-rate"
@@ -389,7 +387,7 @@ export default function MortgageCalculator() {
               Include additional housing costs in calculations
             </label>
           </div>
-          
+
           {includeExtras && (
             <div className={theme.utils.calculatorFieldGrid(2)}>
               <CurrencyInput
@@ -438,7 +436,7 @@ export default function MortgageCalculator() {
               </div>
               <div className={`text-xs ${theme.textColors.muted}`}>Loan Amount</div>
             </div>
-            
+
             <div className={theme.utils.calculatorMetric()}>
               <Percent className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
               <div className={`text-lg font-bold ${theme.textColors.primary}`}>
@@ -446,7 +444,7 @@ export default function MortgageCalculator() {
               </div>
               <div className={`text-xs ${theme.textColors.muted}`}>Loan-to-Value</div>
             </div>
-            
+
             <div className={theme.utils.calculatorMetric()}>
               <Calendar className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
               <div className={`text-lg font-bold ${theme.textColors.primary}`}>
@@ -454,7 +452,7 @@ export default function MortgageCalculator() {
               </div>
               <div className={`text-xs ${theme.textColors.muted}`}>Total Payments</div>
             </div>
-            
+
             <div className={theme.utils.calculatorMetric()}>
               <TrendingUp className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
               <div className={`text-lg font-bold ${theme.textColors.primary}`}>
@@ -473,7 +471,7 @@ export default function MortgageCalculator() {
               <h3 className={`${theme.typography.heading5} ${theme.textColors.primary} mb-4`}>
                 {includeExtras ? 'Total Monthly Housing Payment' : 'Principal & Interest Breakdown'}
               </h3>
-              
+
               {includeExtras && costBreakdown.length > 1 ? (
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
@@ -501,7 +499,7 @@ export default function MortgageCalculator() {
                   <p className={theme.textColors.secondary}>Enable "Include additional housing costs" to see payment breakdown</p>
                 </div>
               )}
-              
+
               {/* Legend for pie chart */}
               {includeExtras && costBreakdown.length > 1 && (
                 <div className="grid grid-cols-2 gap-2 mt-4">
@@ -524,19 +522,19 @@ export default function MortgageCalculator() {
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={yearlyData}>
                     <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                    <XAxis 
-                      dataKey="year" 
+                    <XAxis
+                      dataKey="year"
                       axisLine={false}
                       tickLine={false}
                       className={theme.textColors.muted}
                     />
-                    <YAxis 
+                    <YAxis
                       tickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
                       axisLine={false}
                       tickLine={false}
                       className={theme.textColors.muted}
                     />
-                    <Tooltip 
+                    <Tooltip
                       formatter={(value: number) => formatCurrency(value)}
                       labelFormatter={(label) => `Year ${label}`}
                       contentStyle={{
@@ -546,10 +544,10 @@ export default function MortgageCalculator() {
                         color: 'white'
                       }}
                     />
-                    <Line 
-                      type="monotone" 
-                      dataKey="balance" 
-                      stroke="#3B82F6" 
+                    <Line
+                      type="monotone"
+                      dataKey="balance"
+                      stroke="#3B82F6"
                       strokeWidth={3}
                       dot={false}
                       name="Remaining Balance"
@@ -566,19 +564,19 @@ export default function MortgageCalculator() {
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={yearlyData}>
                     <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                    <XAxis 
+                    <XAxis
                       dataKey="year"
                       axisLine={false}
                       tickLine={false}
                       className={theme.textColors.muted}
                     />
-                    <YAxis 
+                    <YAxis
                       tickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
                       axisLine={false}
                       tickLine={false}
                       className={theme.textColors.muted}
                     />
-                    <Tooltip 
+                    <Tooltip
                       formatter={(value: number) => formatCurrency(value)}
                       labelFormatter={(label) => `Year ${label}`}
                       contentStyle={{
@@ -588,17 +586,17 @@ export default function MortgageCalculator() {
                         color: 'white'
                       }}
                     />
-                    <Line 
-                      type="monotone" 
-                      dataKey="principal" 
-                      stroke="#10B981" 
+                    <Line
+                      type="monotone"
+                      dataKey="principal"
+                      stroke="#10B981"
                       strokeWidth={2}
                       name="Principal"
                     />
-                    <Line 
-                      type="monotone" 
-                      dataKey="interest" 
-                      stroke="#EF4444" 
+                    <Line
+                      type="monotone"
+                      dataKey="interest"
+                      stroke="#EF4444"
                       strokeWidth={2}
                       name="Interest"
                     />

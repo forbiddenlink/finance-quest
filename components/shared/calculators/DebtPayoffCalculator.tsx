@@ -134,12 +134,12 @@ export default function DebtPayoffCalculator() {
   React.useEffect(() => {
     const projections = calculatePayoffStrategy();
     setProjectionData(projections);
-    
+
     const totalBalance = debts.reduce((sum, debt) => sum + debt.balance, 0);
     const totalMinimumPayments = debts.reduce((sum, debt) => sum + debt.minimumPayment, 0);
     const payoffTime = projections.length > 0 ? projections[projections.length - 1]?.month || 0 : 0;
     const totalInterestPaid = projections.length > 0 ? projections[projections.length - 1]?.totalInterest || 0 : 0;
-    
+
     setResults({
       totalBalance,
       payoffMonths: payoffTime,
@@ -185,7 +185,7 @@ export default function DebtPayoffCalculator() {
   // Generate insights based on calculations
   const generateInsights = () => {
     const insights = [];
-    
+
     const extraPaymentNum = parseFloat(extraPayment) || 0;
 
     // High interest debt warning
@@ -320,8 +320,8 @@ export default function DebtPayoffCalculator() {
     >
       <div className="space-y-6">
         {/* Strategy and Payment Configuration */}
-        <InputGroup 
-          title="Debt Elimination Strategy" 
+        <InputGroup
+          title="Debt Elimination Strategy"
           description="Choose your approach and set your extra payment amount"
         >
           <div className={theme.utils.calculatorFieldGrid(2)}>
@@ -334,12 +334,12 @@ export default function DebtPayoffCalculator() {
                 { value: 'avalanche', label: 'Debt Avalanche (Save Most Money)' },
                 { value: 'snowball', label: 'Debt Snowball (Build Momentum)' }
               ]}
-              helpText={strategy === 'avalanche' ? 
-                'Targets highest interest rates first - saves more money' : 
+              helpText={strategy === 'avalanche' ?
+                'Targets highest interest rates first - saves more money' :
                 'Targets smallest balances first - builds motivation'
               }
             />
-            
+
             <CurrencyInput
               id="extra-payment"
               label="Extra Monthly Payment"
@@ -360,18 +360,18 @@ export default function DebtPayoffCalculator() {
             </div>
             <div className={`text-xs ${theme.textColors.muted}`}>Total Debt</div>
           </div>
-          
+
           <div className={theme.utils.calculatorMetric()}>
             <Calendar className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
             <div className={`text-lg font-bold ${theme.textColors.primary}`}>
-              {results.payoffMonths > 0 ? 
-                `${Math.floor(results.payoffMonths / 12)}y ${results.payoffMonths % 12}m` : 
+              {results.payoffMonths > 0 ?
+                `${Math.floor(results.payoffMonths / 12)}y ${results.payoffMonths % 12}m` :
                 'N/A'
               }
             </div>
             <div className={`text-xs ${theme.textColors.muted}`}>Payoff Time</div>
           </div>
-          
+
           <div className={theme.utils.calculatorMetric()}>
             <AlertTriangle className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
             <div className={`text-lg font-bold ${theme.status.warning.text}`}>
@@ -379,7 +379,7 @@ export default function DebtPayoffCalculator() {
             </div>
             <div className={`text-xs ${theme.textColors.muted}`}>Interest Paid</div>
           </div>
-          
+
           <div className={theme.utils.calculatorMetric()}>
             <DollarSign className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
             <div className={`text-lg font-bold ${theme.textColors.primary}`}>
@@ -431,11 +431,10 @@ export default function DebtPayoffCalculator() {
                       />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className={`text-xs px-2 py-1 rounded font-medium ${
-                        index === 0 ? 
-                          'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300' : 
+                      <span className={`text-xs px-2 py-1 rounded font-medium ${index === 0 ?
+                          'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300' :
                           'bg-gray-100 text-gray-800 dark:bg-gray-900/50 dark:text-gray-300'
-                      }`}>
+                        }`}>
                         #{index + 1} Priority
                       </span>
                       {index === 0 && (
@@ -545,7 +544,7 @@ export default function DebtPayoffCalculator() {
                           color: 'white'
                         }}
                         formatter={(value: number, name: string) => [
-                          formatCurrency(value), 
+                          formatCurrency(value),
                           name === 'totalBalance' ? 'Remaining Debt' : 'Total Interest Paid'
                         ]}
                         labelFormatter={(month) => `Month ${month}`}
@@ -582,8 +581,8 @@ export default function DebtPayoffCalculator() {
                 <div className="flex justify-between">
                   <span>Freedom Date:</span>
                   <span className="font-medium">
-                    {results.payoffMonths > 0 ? 
-                      `${Math.floor(results.payoffMonths / 12)} years, ${results.payoffMonths % 12} months` : 
+                    {results.payoffMonths > 0 ?
+                      `${Math.floor(results.payoffMonths / 12)} years, ${results.payoffMonths % 12} months` :
                       'Add debts to calculate'
                     }
                   </span>
@@ -596,7 +595,7 @@ export default function DebtPayoffCalculator() {
                   <span>Annual Freedom:</span>
                   <span className="font-medium">{formatCurrency(results.totalPayment * 12)} per year</span>
                 </div>
-                
+
                 <div className={`mt-4 p-4 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}>
                   <div className="flex items-center gap-2 mb-2">
                     <Clock className="w-4 h-4 text-blue-400" />
@@ -624,7 +623,7 @@ export default function DebtPayoffCalculator() {
                     Mathematically optimal - saves the most money by targeting high interest rates first
                   </p>
                 </div>
-                
+
                 <div className={`p-3 rounded-lg ${strategy === 'snowball' ? theme.status.success.bg + ' ' + theme.status.success.border : theme.backgrounds.cardHover + ' ' + theme.borderColors.primary} border`}>
                   <div className="flex items-center gap-2 mb-1">
                     <Target className="w-4 h-4" />

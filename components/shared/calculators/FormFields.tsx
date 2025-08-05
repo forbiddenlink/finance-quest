@@ -228,9 +228,9 @@ export function SelectField({
           </option>
         )}
         {options.map((option) => (
-          <option 
-            key={option.value} 
-            value={option.value} 
+          <option
+            key={option.value}
+            value={option.value}
             disabled={option.disabled}
           >
             {option.label}
@@ -285,8 +285,8 @@ export function ToggleField({
             ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
           `}
         />
-        <Label 
-          htmlFor={id} 
+        <Label
+          htmlFor={id}
           className={`${theme.textColors.primary} ${disabled ? 'opacity-50' : 'cursor-pointer'}`}
         >
           {label}
@@ -356,7 +356,7 @@ export function RadioGroup({
               `}
             />
             <div className="flex-1">
-              <Label 
+              <Label
                 htmlFor={`${name}-${option.value}`}
                 className={`${theme.textColors.primary} ${disabled || option.disabled ? 'opacity-50' : 'cursor-pointer'}`}
               >

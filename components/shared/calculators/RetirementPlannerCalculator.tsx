@@ -59,23 +59,23 @@ export default function RetirementPlannerCalculator() {
   // Generate projection data for charts
   const projectionData = React.useMemo(() => {
     if (!results) return [];
-    
+
     const currentAge = parseInt(values.currentAge) || 30;
     const retirementAge = parseInt(values.retirementAge) || 65;
     const currentSavings = parseFloat(values.currentSavings) || 0;
     const monthlyContribution = parseFloat(values.monthlyContribution) || 0;
     const expectedReturn = parseFloat(values.expectedReturn) / 100 || 0.07;
-    
+
     const data = [];
     let balance = currentSavings;
-    
+
     for (let age = currentAge; age <= retirementAge; age++) {
       if (age > currentAge) {
         // Add monthly contributions for the year
         const yearlyContribution = monthlyContribution * 12;
         balance = (balance + yearlyContribution) * (1 + expectedReturn);
       }
-      
+
       data.push({
         age,
         balance: Math.round(balance),
@@ -83,7 +83,7 @@ export default function RetirementPlannerCalculator() {
         growth: Math.round(balance - currentSavings - ((age - currentAge) * monthlyContribution * 12))
       });
     }
-    
+
     return data;
   }, [values, results]);
 
@@ -312,7 +312,7 @@ export default function RetirementPlannerCalculator() {
                       <Alert>
                         <AlertTriangle className="h-4 w-4" />
                         <AlertDescription>
-                          <strong>Shortfall:</strong> {formatCurrency(results.shortfall)} 
+                          <strong>Shortfall:</strong> {formatCurrency(results.shortfall)}
                           <br />Consider increasing contributions or extending retirement age.
                         </AlertDescription>
                       </Alert>
@@ -322,7 +322,7 @@ export default function RetirementPlannerCalculator() {
                       <Alert>
                         <CheckCircle2 className="h-4 w-4" />
                         <AlertDescription>
-                          <strong>Surplus:</strong> {formatCurrency(results.surplus)} 
+                          <strong>Surplus:</strong> {formatCurrency(results.surplus)}
                           <br />You're on track! Consider early retirement or lifestyle upgrades.
                         </AlertDescription>
                       </Alert>
@@ -356,7 +356,7 @@ export default function RetirementPlannerCalculator() {
                               <CartesianGrid strokeDasharray="3 3" />
                               <XAxis dataKey="age" />
                               <YAxis tickFormatter={(value) => formatCurrency(value)} />
-                              <Tooltip 
+                              <Tooltip
                                 formatter={(value: any, name: string) => [formatCurrency(value), name === 'balance' ? 'Total Balance' : name]}
                                 labelFormatter={(age) => `Age ${age}`}
                               />

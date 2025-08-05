@@ -41,7 +41,7 @@ export default function EmergencyFundCalculator() {
   const [currentSavings, setCurrentSavings] = useState('1000');
 
   // Calculate total monthly expenses
-  const totalExpenses = 
+  const totalExpenses =
     (parseFloat(rent) || 0) +
     (parseFloat(utilities) || 0) +
     (parseFloat(groceries) || 0) +
@@ -116,7 +116,7 @@ export default function EmergencyFundCalculator() {
   // Calculate time to reach each milestone
   const monthlySavingsNum = parseFloat(monthlySavings) || 0;
   const currentSavingsNum = parseFloat(currentSavings) || 0;
-  
+
   savingsMilestones.forEach(milestone => {
     const remainingToMilestone = Math.max(0, milestone.amount - currentSavingsNum);
     milestone.months = monthlySavingsNum > 0 ? Math.ceil(remainingToMilestone / monthlySavingsNum) : 0;
@@ -125,11 +125,11 @@ export default function EmergencyFundCalculator() {
   // Generate insights based on calculations
   const generateInsights = () => {
     if (!results) return [];
-    
+
     const insights = [];
     const incomeNum = parseFloat(monthlyIncome) || 0;
     const incomeAfterExpenses = incomeNum - totalExpenses;
-    
+
     // Budget health insight
     if (incomeAfterExpenses > 0) {
       insights.push({
@@ -252,8 +252,8 @@ export default function EmergencyFundCalculator() {
         label: 'Current Progress',
         value: results.currentProgress,
         format: 'percentage' as const,
-        variant: results.currentProgress >= 100 ? 'success' as const : 
-                 results.currentProgress >= 50 ? 'info' as const : 'warning' as const,
+        variant: results.currentProgress >= 100 ? 'success' as const :
+          results.currentProgress >= 50 ? 'info' as const : 'warning' as const,
         description: `${formatCurrency(parseFloat(currentSavings))} saved so far`
       }
     ]
@@ -281,7 +281,7 @@ export default function EmergencyFundCalculator() {
         </InputGroup>
 
         {/* Essential Expenses */}
-        <InputGroup 
+        <InputGroup
           title="Essential Monthly Expenses"
           description="Focus on truly essential expenses only - housing, utilities, food, transportation, insurance, and minimum debt payments"
         >
@@ -391,7 +391,7 @@ export default function EmergencyFundCalculator() {
               </div>
               <div className={`text-xs ${theme.textColors.muted}`}>Monthly Expenses</div>
             </div>
-            
+
             <div className={theme.utils.calculatorMetric()}>
               <Target className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
               <div className={`text-lg font-bold ${theme.textColors.primary}`}>
@@ -399,7 +399,7 @@ export default function EmergencyFundCalculator() {
               </div>
               <div className={`text-xs ${theme.textColors.muted}`}>Target Amount</div>
             </div>
-            
+
             <div className={theme.utils.calculatorMetric()}>
               <Clock className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
               <div className={`text-lg font-bold ${theme.textColors.primary}`}>
@@ -407,7 +407,7 @@ export default function EmergencyFundCalculator() {
               </div>
               <div className={`text-xs ${theme.textColors.muted}`}>Time to Goal</div>
             </div>
-            
+
             <div className={theme.utils.calculatorMetric()}>
               <TrendingUp className={`w-6 h-6 mx-auto mb-2 ${theme.textColors.accent}`} />
               <div className={`text-lg font-bold ${theme.textColors.primary}`}>
@@ -459,7 +459,7 @@ export default function EmergencyFundCalculator() {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              
+
               {/* Legend */}
               <div className="grid grid-cols-2 gap-2 mt-4">
                 {expenseBreakdown.map((entry, index) => (
@@ -478,10 +478,9 @@ export default function EmergencyFundCalculator() {
                 {savingsMilestones.map((milestone, index) => {
                   const achieved = parseFloat(currentSavings) >= milestone.amount;
                   return (
-                    <div key={index} className={`flex items-center justify-between p-4 rounded-lg border-2 ${
-                      achieved ? theme.status.success.bg + ' ' + theme.status.success.border : 
-                                 theme.backgrounds.cardHover + ' ' + theme.borderColors.primary
-                    }`}>
+                    <div key={index} className={`flex items-center justify-between p-4 rounded-lg border-2 ${achieved ? theme.status.success.bg + ' ' + theme.status.success.border :
+                        theme.backgrounds.cardHover + ' ' + theme.borderColors.primary
+                      }`}>
                       <div className="flex items-center gap-3">
                         {achieved ? (
                           <CheckCircle className={`w-5 h-5 ${theme.status.success.text}`} />
