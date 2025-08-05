@@ -2161,3 +2161,318 @@ export function useCryptocurrencyAllocationCalculator(): UseCryptocurrencyAlloca
     reset
   };
 }
+
+// Options Strategy Calculator Hook
+export interface OptionsStrategyInputs {
+  stockPrice: number;
+  strikePrice: number;
+  strikePrice2: number;
+  premium: number;
+  premium2: number;
+  daysToExpiration: number;
+  impliedVolatility: number;
+  riskFreeRate: number;
+  dividendYield: number;
+  numberOfContracts: number;
+  strategyType: string;
+}
+
+export interface OptionsStrategyResults {
+  currentValue: number;
+  maxProfit: number;
+  maxLoss: number;
+  breakEvenPoints: number[];
+  profitLoss: number;
+  delta: number;
+  gamma: number;
+  theta: number;
+  vega: number;
+  rho: number;
+  probabilityOfProfit: number;
+  payoffDiagram: { price: number; pnl: number }[];
+  riskMetrics: {
+    metric: string;
+    value: string;
+    interpretation: string;
+    color: string;
+  }[];
+  strategyAnalysis: {
+    marketOutlook: string;
+    riskLevel: 'Low' | 'Medium' | 'High';
+    complexity: 'Beginner' | 'Intermediate' | 'Advanced';
+    timeHorizon: 'Short-term' | 'Medium-term' | 'Long-term';
+    bestScenario: string;
+    worstScenario: string;
+  };
+}
+
+export function useOptionsCalculator() {
+  const [values, setValues] = useState<OptionsStrategyInputs>({
+    stockPrice: 100,
+    strikePrice: 100,
+    strikePrice2: 110,
+    premium: 3,
+    premium2: 1,
+    daysToExpiration: 30,
+    impliedVolatility: 25,
+    riskFreeRate: 5,
+    dividendYield: 2,
+    numberOfContracts: 1,
+    strategyType: 'long-call'
+  });
+
+  const errors = useMemo(() => {
+    return validateFields(values, CalculatorValidations.optionsStrategy);
+  }, [values]);
+
+  const isValid = useMemo(() => errors.isValid, [errors]);
+
+  // Black-Scholes formula implementation
+  const calculateBlackScholes = useCallback((
+    S: number, K: number, T: number, r: number, sigma: number, q: number = 0, isCall: boolean = true
+  ) => {
+    const d1 = (Math.log(S / K) + (r - q + 0.5 * sigma * sigma) * T) / (sigma * Math.sqrt(T));
+    const d2 = d1 - sigma * Math.sqrt(T);
+    
+    const Nd1 = normalCDF(d1);
+    const Nd2 = normalCDF(d2);
+    const NminusD1 = normalCDF(-d1);
+    const NminusD2 = normalCDF(-d2);
+    
+    if (isCall) {
+      const price = S * Math.exp(-q * T) * Nd1 - K * Math.exp(-r * T) * Nd2;
+      const delta = Math.exp(-q * T) * Nd1;
+      const gamma = Math.exp(-q * T) * normalPDF(d1) / (S * sigma * Math.sqrt(T));
+      const theta = (-S * Math.exp(-q * T) * normalPDF(d1) * sigma / (2 * Math.sqrt(T)) 
+                    - r * K * Math.exp(-r * T) * Nd2 
+                    + q * S * Math.exp(-q * T) * Nd1) / 365;
+      const vega = S * Math.exp(-q * T) * normalPDF(d1) * Math.sqrt(T) / 100;
+      const rho = K * T * Math.exp(-r * T) * Nd2 / 100;
+      
+      return { price, delta, gamma, theta, vega, rho };
+    } else {
+      const price = K * Math.exp(-r * T) * NminusD2 - S * Math.exp(-q * T) * NminusD1;
+      const delta = -Math.exp(-q * T) * NminusD1;
+      const gamma = Math.exp(-q * T) * normalPDF(d1) / (S * sigma * Math.sqrt(T));
+      const theta = (-S * Math.exp(-q * T) * normalPDF(d1) * sigma / (2 * Math.sqrt(T)) 
+                    + r * K * Math.exp(-r * T) * NminusD2 
+                    - q * S * Math.exp(-q * T) * NminusD1) / 365;
+      const vega = S * Math.exp(-q * T) * normalPDF(d1) * Math.sqrt(T) / 100;
+      const rho = -K * T * Math.exp(-r * T) * NminusD2 / 100;
+      
+      return { price, delta, gamma, theta, vega, rho };
+    }
+  }, []);
+
+  // Normal distribution functions
+  const normalCDF = (x: number): number => {
+    return 0.5 * (1 + erf(x / Math.sqrt(2)));
+  };
+
+  const normalPDF = (x: number): number => {
+    return Math.exp(-0.5 * x * x) / Math.sqrt(2 * Math.PI);
+  };
+
+  const erf = (x: number): number => {
+    const a1 = 0.254829592;
+    const a2 = -0.284496736;
+    const a3 = 1.421413741;
+    const a4 = -1.453152027;
+    const a5 = 1.061405429;
+    const p = 0.3275911;
+
+    const sign = x >= 0 ? 1 : -1;
+    x = Math.abs(x);
+
+    const t = 1.0 / (1.0 + p * x);
+    const y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+
+    return sign * y;
+  };
+
+  const result = useMemo<OptionsStrategyResults | null>(() => {
+    if (!isValid) return null;
+
+    const T = values.daysToExpiration / 365;
+    const r = values.riskFreeRate / 100;
+    const sigma = values.impliedVolatility / 100;
+    const q = values.dividendYield / 100;
+
+    let currentValue = 0;
+    let maxProfit = 0;
+    let maxLoss = 0;
+    let breakEvenPoints: number[] = [];
+    let delta = 0;
+    let gamma = 0;
+    let theta = 0;
+    let vega = 0;
+    let rho = 0;
+
+    // Calculate based on strategy type
+    switch (values.strategyType) {
+      case 'long-call': {
+        const option = calculateBlackScholes(values.stockPrice, values.strikePrice, T, r, sigma, q, true);
+        currentValue = option.price * values.numberOfContracts * 100;
+        maxProfit = Infinity;
+        maxLoss = values.premium * values.numberOfContracts * 100;
+        breakEvenPoints = [values.strikePrice + values.premium];
+        delta = option.delta * values.numberOfContracts * 100;
+        gamma = option.gamma * values.numberOfContracts * 100;
+        theta = option.theta * values.numberOfContracts * 100;
+        vega = option.vega * values.numberOfContracts * 100;
+        rho = option.rho * values.numberOfContracts * 100;
+        break;
+      }
+      case 'long-put': {
+        const option = calculateBlackScholes(values.stockPrice, values.strikePrice, T, r, sigma, q, false);
+        currentValue = option.price * values.numberOfContracts * 100;
+        maxProfit = (values.strikePrice - values.premium) * values.numberOfContracts * 100;
+        maxLoss = values.premium * values.numberOfContracts * 100;
+        breakEvenPoints = [values.strikePrice - values.premium];
+        delta = option.delta * values.numberOfContracts * 100;
+        gamma = option.gamma * values.numberOfContracts * 100;
+        theta = option.theta * values.numberOfContracts * 100;
+        vega = option.vega * values.numberOfContracts * 100;
+        rho = option.rho * values.numberOfContracts * 100;
+        break;
+      }
+      case 'bull-call-spread': {
+        const longCall = calculateBlackScholes(values.stockPrice, values.strikePrice, T, r, sigma, q, true);
+        const shortCall = calculateBlackScholes(values.stockPrice, values.strikePrice2, T, r, sigma, q, true);
+        const netPremium = values.premium - values.premium2;
+        
+        currentValue = (longCall.price - shortCall.price) * values.numberOfContracts * 100;
+        maxProfit = (values.strikePrice2 - values.strikePrice - netPremium) * values.numberOfContracts * 100;
+        maxLoss = netPremium * values.numberOfContracts * 100;
+        breakEvenPoints = [values.strikePrice + netPremium];
+        delta = (longCall.delta - shortCall.delta) * values.numberOfContracts * 100;
+        gamma = (longCall.gamma - shortCall.gamma) * values.numberOfContracts * 100;
+        theta = (longCall.theta - shortCall.theta) * values.numberOfContracts * 100;
+        vega = (longCall.vega - shortCall.vega) * values.numberOfContracts * 100;
+        rho = (longCall.rho - shortCall.rho) * values.numberOfContracts * 100;
+        break;
+      }
+    }
+
+    // Generate payoff diagram
+    const payoffDiagram = [];
+    const priceRange = values.stockPrice * 0.5;
+    for (let price = values.stockPrice - priceRange; price <= values.stockPrice + priceRange; price += 1) {
+      let pnl = 0;
+      
+      switch (values.strategyType) {
+        case 'long-call':
+          pnl = Math.max(price - values.strikePrice, 0) - values.premium;
+          break;
+        case 'long-put':
+          pnl = Math.max(values.strikePrice - price, 0) - values.premium;
+          break;
+        case 'bull-call-spread':
+          const longCallPnl = Math.max(price - values.strikePrice, 0);
+          const shortCallPnl = Math.max(price - values.strikePrice2, 0);
+          pnl = longCallPnl - shortCallPnl - (values.premium - values.premium2);
+          break;
+      }
+      
+      payoffDiagram.push({ price, pnl: pnl * values.numberOfContracts * 100 });
+    }
+
+    // Calculate probability of profit (simplified)
+    const volatilityAdjustment = sigma * Math.sqrt(T);
+    const probabilityOfProfit = values.strategyType === 'long-call' 
+      ? Math.max(0, Math.min(100, 50 + (values.stockPrice - breakEvenPoints[0]) / volatilityAdjustment * 10))
+      : Math.max(0, Math.min(100, 50 + (breakEvenPoints[0] - values.stockPrice) / volatilityAdjustment * 10));
+
+    // Risk metrics
+    const riskMetrics = [
+      {
+        metric: 'Delta',
+        value: delta.toFixed(2),
+        interpretation: delta > 0 ? 'Positive exposure to price moves' : 'Negative exposure to price moves',
+        color: delta > 0 ? 'text-green-400' : 'text-red-400'
+      },
+      {
+        metric: 'Gamma',
+        value: gamma.toFixed(4),
+        interpretation: 'Rate of change of delta',
+        color: 'text-blue-400'
+      },
+      {
+        metric: 'Theta',
+        value: theta.toFixed(2),
+        interpretation: theta < 0 ? 'Losing value daily due to time decay' : 'Gaining value from time decay',
+        color: theta < 0 ? 'text-red-400' : 'text-green-400'
+      },
+      {
+        metric: 'Vega',
+        value: vega.toFixed(2),
+        interpretation: 'Sensitivity to volatility changes',
+        color: 'text-purple-400'
+      }
+    ];
+
+    // Strategy analysis
+    const strategyAnalysis = {
+      marketOutlook: values.strategyType.includes('call') ? 'Bullish' : values.strategyType.includes('put') ? 'Bearish' : 'Neutral',
+      riskLevel: (values.strategyType.includes('spread') ? 'Medium' : values.strategyType.includes('long') ? 'Low' : 'High') as 'Low' | 'Medium' | 'High',
+      complexity: (values.strategyType.includes('spread') ? 'Intermediate' : 'Beginner') as 'Beginner' | 'Intermediate' | 'Advanced',
+      timeHorizon: (values.daysToExpiration < 30 ? 'Short-term' : values.daysToExpiration < 90 ? 'Medium-term' : 'Long-term') as 'Short-term' | 'Medium-term' | 'Long-term',
+      bestScenario: values.strategyType === 'long-call' ? 'Stock price rises significantly' : 
+                   values.strategyType === 'long-put' ? 'Stock price falls significantly' : 
+                   'Stock price moves in predicted direction',
+      worstScenario: 'Option expires worthless'
+    };
+
+    return {
+      currentValue,
+      maxProfit: maxProfit === Infinity ? maxProfit : maxProfit,
+      maxLoss,
+      breakEvenPoints,
+      profitLoss: currentValue - (values.premium * values.numberOfContracts * 100),
+      delta,
+      gamma,
+      theta,
+      vega,
+      rho,
+      probabilityOfProfit,
+      payoffDiagram,
+      riskMetrics,
+      strategyAnalysis
+    };
+  }, [values, isValid, calculateBlackScholes]);
+
+  const updateField = useCallback((field: keyof OptionsStrategyInputs, value: string) => {
+    if (field === 'strategyType') {
+      setValues(prev => ({ ...prev, [field]: value }));
+    } else {
+      const numValue = parseFloat(value) || 0;
+      setValues(prev => ({ ...prev, [field]: numValue }));
+    }
+  }, []);
+
+  const reset = useCallback(() => {
+    setValues({
+      stockPrice: 100,
+      strikePrice: 100,
+      strikePrice2: 110,
+      premium: 3,
+      premium2: 1,
+      daysToExpiration: 30,
+      impliedVolatility: 25,
+      riskFreeRate: 5,
+      dividendYield: 2,
+      numberOfContracts: 1,
+      strategyType: 'long-call'
+    });
+  }, []);
+
+  return {
+    values,
+    result,
+    validation: errors,
+    isValid,
+    updateField,
+    reset,
+    errors: errors.errors
+  };
+}

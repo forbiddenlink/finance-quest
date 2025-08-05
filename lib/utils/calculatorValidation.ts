@@ -379,6 +379,23 @@ export const CalculatorValidations = {
       required: true,
       message: 'Rebalance frequency is required'
     }
+  },
+
+  optionsStrategy: {
+    stockPrice: ValidationPresets.currency(0.01, 10000),
+    strikePrice: ValidationPresets.currency(0.01, 10000),
+    strikePrice2: ValidationPresets.currency(0.01, 10000),
+    premium: ValidationPresets.currency(0.01, 1000),
+    premium2: ValidationPresets.currency(0.01, 1000),
+    daysToExpiration: ValidationPresets.positiveInteger(1, 365),
+    impliedVolatility: ValidationPresets.percentage(0, 200),
+    riskFreeRate: ValidationPresets.percentage(0, 20),
+    dividendYield: ValidationPresets.percentage(0, 20),
+    numberOfContracts: ValidationPresets.positiveInteger(1, 100),
+    strategyType: {
+      required: true,
+      message: 'Strategy type is required'
+    }
   }
 };
 
