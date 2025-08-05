@@ -5,6 +5,8 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Ba
 import CalculatorWrapper, { CalculatorMetadata } from './CalculatorWrapper';
 import { CurrencyInput, NumberInput } from './FormFields';
 import { theme } from '@/lib/theme';
+import { usePerformanceMonitor } from '@/lib/monitoring/PerformanceMonitor';
+// import { useAccessibility } from '@/lib/accessibility/AccessibilityManager'; // TODO: Implement accessibility features
 import {
     BudgetCategory
 } from '@/lib/utils/calculatorHooks';
@@ -106,6 +108,8 @@ const BudgetSection: React.FC<BudgetSectionProps> = ({
 
 export default function BudgetBuilderCalculator() {
     const { recordCalculatorUsage } = useProgressStore();
+    const { trackCalculation } = usePerformanceMonitor('BudgetBuilderCalculator');
+    // const accessibility = useAccessibility(); // TODO: Implement accessibility features
 
     React.useEffect(() => {
         recordCalculatorUsage('budget-builder-calculator');
@@ -146,10 +150,39 @@ export default function BudgetBuilderCalculator() {
     const [categories, setCategories] = useState<BudgetCategory[]>(DEFAULT_CATEGORIES);
 
     const updateCategory = (id: string, field: 'budgeted' | 'actual', value: number) => {
+        const startTime = performance.now();
         setCategories(prev => prev.map(cat =>
             cat.id === id ? { ...cat, [field]: value } : cat
         ));
+        const executionTime = performance.now() - startTime;
+        trackCalculation('budget-builder-update', executionTime, 'low');
     };
+
+    // const addCategory = (name: string, type: 'need' | 'want' | 'savings') => {
+    //     const startTime = performance.now();
+        
+    //     const newCategory: BudgetCategory = {
+    //         id: Date.now().toString(),
+    //         name,
+    //         type,
+    //         budgeted: 0,
+    //         actual: 0
+    //     };
+        
+    //     setCategories(prev => [...prev, newCategory]);
+        
+    //     const executionTime = performance.now() - startTime;
+    //     trackCalculation('budget-builder-add', executionTime, 'low');
+    // };
+
+    // const removeCategory = (id: string) => {
+    //     const startTime = performance.now();
+        
+    //     setCategories(prev => prev.filter(cat => cat.id !== id));
+        
+    //     const executionTime = performance.now() - startTime;
+    //     trackCalculation('budget-builder-remove', executionTime, 'low');
+    // };
 
     const handleReset = () => {
         setMonthlyIncome(5000);

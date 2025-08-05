@@ -22,6 +22,10 @@ import {
 import toast from 'react-hot-toast';
 import CashFlowTimingTool from './CashFlowTimingTool';
 import IrregularExpenseTracker from './IrregularExpenseTracker';
+import InteractiveBudgetAllocation from './InteractiveBudgetAllocation';
+import BudgetPersonalityAssessment from '@/components/chapters/fundamentals/lessons/BudgetPersonalityAssessment';
+import ExpenseOptimizationGame from '@/components/chapters/fundamentals/lessons/ExpenseOptimizationGame';
+import SavingsGoalVisualizer from '@/components/chapters/fundamentals/lessons/SavingsGoalVisualizer';
 
 interface BudgetingMasteryLessonProps {
   onComplete?: () => void;
@@ -266,15 +270,39 @@ export default function BudgetingMasteryLessonEnhanced({ onComplete }: Budgeting
           </div>
 
           {/* Interactive Content */}
+          {currentLesson === 0 && (
+            <div className={`mb-8`}>
+              <BudgetPersonalityAssessment />
+            </div>
+          )}
+
+          {currentLesson === 1 && (
+            <div className={`mb-8`}>
+              <InteractiveBudgetAllocation />
+            </div>
+          )}
+
           {currentLesson === 2 && (
             <div className={`mb-8`}>
               <CashFlowTimingTool />
             </div>
           )}
 
+          {currentLesson === 3 && (
+            <div className={`mb-8`}>
+              <ExpenseOptimizationGame />
+            </div>
+          )}
+
           {currentLesson === 4 && (
             <div className={`mb-8`}>
               <IrregularExpenseTracker />
+            </div>
+          )}
+
+          {currentLesson === 5 && (
+            <div className={`mb-8`}>
+              <SavingsGoalVisualizer />
             </div>
           )}
 
