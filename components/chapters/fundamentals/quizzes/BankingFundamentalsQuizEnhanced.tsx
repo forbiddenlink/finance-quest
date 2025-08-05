@@ -9,6 +9,8 @@ const bankingQuizConfig = {
   passingScore: 80,
   enableSpacedRepetition: true,
   chapterId: 'chapter2',
+  enableAnimations: true,
+  showProgressAnimations: true,
   
   questions: [
     {

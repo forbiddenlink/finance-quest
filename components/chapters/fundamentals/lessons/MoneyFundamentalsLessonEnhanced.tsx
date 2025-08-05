@@ -30,7 +30,7 @@ const enhancedLessons: LessonContent[] = [
       "Rewriting your money story is the foundation of financial transformation"
     ],
     practicalAction: "Write down 3 money messages you heard growing up, then rewrite each as an empowering belief",
-    moneyExample: "Instead of 'Rich people are greedy' → 'Wealthy people create value and can help others more effectively'"
+    moneyExample: "Maria (teacher, $45k salary) heard 'Money doesn't grow on trees' → Rewrote as 'I create value through my work and deserve financial abundance.' This mindset shift helped her start a tutoring side business earning $1,200/month."
   },
   {
     title: "Scarcity vs Abundance: The Wealth Mindset Shift",
@@ -42,7 +42,7 @@ const enhancedLessons: LessonContent[] = [
       "Question shift: From 'I can't afford it' to 'How can I afford it?'"
     ],
     practicalAction: "For 7 days, catch yourself saying 'I can't afford that' and reframe to 'How could I afford this if it's important?'",
-    moneyExample: "Scarcity: Skip $50 course to save money. Abundance: How can I earn extra $50 to invest in skills that could increase my income by $500/month?"
+    moneyExample: "Carlos (mechanic, single dad) wanted a $2,000 certification course. Scarcity thinking: 'I can't afford it.' Abundance thinking: 'How can I afford it?' He worked overtime for 3 months, earned the extra $2,000, got certified, and increased his income by $15,000/year."
   },
   {
     title: "Understanding Your Financial Personality Type",
@@ -117,9 +117,10 @@ export default function MoneyFundamentalsLessonEnhanced() {
 
     const completedCount = newCompleted.filter(Boolean).length;
     const isLastLesson = currentLesson === enhancedLessons.length - 1;
+    const lesson = enhancedLessons[currentLesson];
 
     if (isLastLesson && completedCount === enhancedLessons.length) {
-      toast.success(`🎉 All lessons completed! You've mastered the fundamentals of money psychology and mindset. Ready for the calculator and quiz!`, {
+      toast.success(`🎉 Chapter 1 Complete! You've mastered money psychology fundamentals and built a wealth-building mindset. Ready to apply these insights with advanced tools!`, {
         duration: 6000,
         position: 'top-center',
       });
@@ -129,8 +130,9 @@ export default function MoneyFundamentalsLessonEnhanced() {
         position: 'top-center',
       });
     } else {
-      toast.success(`✅ "${lesson.title}" completed! ${enhancedLessons.length - completedCount} lessons remaining.`, {
-        duration: 3000,
+      const remainingLessons = enhancedLessons.length - completedCount;
+      toast.success(`✅ Lesson ${currentLesson + 1} completed! ${remainingLessons} more lessons to master money psychology.`, {
+        duration: 4000,
         position: 'top-center',
       });
     }
@@ -261,6 +263,34 @@ export default function MoneyFundamentalsLessonEnhanced() {
                 initialYears={20}
                 initialRate={7}
               />
+              
+              {/* Enhanced Visual Learning Examples */}
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 border border-emerald-500/20 rounded-lg p-4">
+                  <h6 className="text-sm font-medium text-emerald-400 mb-2">Starting at 25</h6>
+                  <p className="text-xs text-slate-300 mb-1">$200/month for 40 years</p>
+                  <p className="text-lg font-bold text-emerald-400">$1.75M</p>
+                  <p className="text-xs text-slate-400">Total invested: $96k</p>
+                </div>
+                <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-lg p-4">
+                  <h6 className="text-sm font-medium text-amber-400 mb-2">Starting at 35</h6>
+                  <p className="text-xs text-slate-300 mb-1">$400/month for 30 years</p>
+                  <p className="text-lg font-bold text-amber-400">$1.22M</p>
+                  <p className="text-xs text-slate-400">Total invested: $144k</p>
+                </div>
+                <div className="bg-gradient-to-br from-red-500/10 to-red-600/10 border border-red-500/20 rounded-lg p-4">
+                  <h6 className="text-sm font-medium text-red-400 mb-2">Starting at 45</h6>
+                  <p className="text-xs text-slate-300 mb-1">$800/month for 20 years</p>
+                  <p className="text-lg font-bold text-red-400">$656k</p>
+                  <p className="text-xs text-slate-400">Total invested: $192k</p>
+                </div>
+              </div>
+              
+              <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                <p className="text-sm text-blue-300 font-medium">
+                  💡 Key Insight: Starting 10 years earlier with half the monthly amount creates more wealth!
+                </p>
+              </div>
             </div>
           )}
 

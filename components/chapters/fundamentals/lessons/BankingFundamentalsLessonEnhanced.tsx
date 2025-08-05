@@ -15,10 +15,15 @@ import {
   Star,
   Shield,
   Target,
-  Calculator
+  Calculator,
+  Brain
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import BankComparisonTool from './BankComparisonTool';
+import InteractiveBankingWizard from './InteractiveBankingWizard';
+import FeeImpactGame from './FeeImpactGame';
+import BankingPersonalityAssessment from './BankingPersonalityAssessment';
+import SavingsImpactVisualizer from './SavingsImpactVisualizer';
 
 interface BankingFundamentalsLessonProps {
   onComplete?: () => void;
@@ -44,7 +49,7 @@ const enhancedLessons: LessonContent[] = [
       "Money market accounts: Hybrid option with check-writing and higher rates, but require $2,500+ minimums"
     ],
     practicalAction: "This week: Open a high-yield savings account online and transfer at least $500 to start earning real interest immediately",
-    moneyExample: "Emma moved her $5,000 emergency fund from Bank of America (0.01% APY) to Marcus Online (4.5% APY). Annual earnings jumped from $0.50 to $225 - that's $224 in free money for 5 minutes of work!",
+    moneyExample: "Jamal moved his $8,000 emergency fund from Chase (0.01% APY) to Ally Bank (4.25% APY). His earnings jumped from $0.80/year to $340/year - that's $339 in free money for 10 minutes of work! Over 10 years, this difference compounds to $3,390 vs $8 at his old bank.",
     warningTip: "Banks make billions in profits by paying you almost nothing while lending your money at 6-20%+ rates - don't let them profit off your ignorance"
   },
   {
@@ -257,6 +262,57 @@ export default function BankingFundamentalsLessonEnhanced({ onComplete }: Bankin
           </div>
 
           {/* Interactive Content */}
+          {currentLesson === 0 && (
+            <div className={`mb-8 p-6 ${theme.utils.glass('normal')} border ${theme.borderColors.primary} rounded-lg`}>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                <Brain className="w-5 h-5" />
+                Discover Your Banking Personality
+              </h3>
+              <p className={`${theme.textColors.secondary} mb-6`}>
+                Take our banking personality assessment to understand your banking style and get personalized recommendations for optimizing your financial setup.
+              </p>
+              <BankingPersonalityAssessment />
+            </div>
+          )}
+
+          {currentLesson === 1 && (
+            <div className={`mb-8`}>
+              <FeeImpactGame />
+            </div>
+          )}
+
+          {currentLesson === 2 && (
+            <div className={`mb-8`}>
+              <InteractiveBankingWizard 
+                onComplete={(setup) => {
+                  toast.success(`🎉 Banking setup complete! You'll save $${(setup.primaryBank && setup.savingsBank) ? 
+                    ((180 - setup.primaryBank.checkingFee * 12) + (setup.emergencyFundGoal * setup.savingsBank.savingsAPY / 100 - setup.emergencyFundGoal * 0.0001)).toFixed(0) : 
+                    '300'} annually!`, {
+                    duration: 6000,
+                    position: 'top-center',
+                  });
+                }}
+              />
+            </div>
+          )}
+
+          {currentLesson === 2 && (
+            <div className={`mb-8`}>
+              <BankComparisonTool />
+            </div>
+          )}
+
+          {currentLesson === 5 && (
+            <div className={`mb-8`}>
+              <SavingsImpactVisualizer
+                currentRate={0.01}
+                optimizedRate={4.5}
+                amount={10000}
+                years={5}
+              />
+            </div>
+          )}
+
           {currentLesson === 5 && (
             <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
@@ -304,12 +360,6 @@ export default function BankingFundamentalsLessonEnhanced({ onComplete }: Bankin
                   💡 Complete this checklist to optimize your banking and save $300-500 annually!
                 </p>
               </div>
-            </div>
-          )}
-
-          {currentLesson === 2 && (
-            <div className={`mb-8`}>
-              <BankComparisonTool />
             </div>
           )}
 
