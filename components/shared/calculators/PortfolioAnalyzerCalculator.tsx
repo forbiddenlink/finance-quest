@@ -25,10 +25,18 @@ export default function PortfolioAnalyzerCalculator() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     result: null as any,
     isValid: false,
-    updateValue: () => { },
-    updateRiskTolerance: () => { },
-    autoRebalance: () => { },
-    reset: () => { }
+    updateValue: (field: string, value: string) => { 
+      console.log(`Updating ${field} to ${value}`);
+    },
+    updateRiskTolerance: (value: string) => { 
+      console.log(`Updating risk tolerance to ${value}`);
+    },
+    autoRebalance: () => { 
+      console.log('Auto-rebalancing portfolio');
+    },
+    reset: () => { 
+      console.log('Resetting calculator');
+    }
   };
 
   const {
