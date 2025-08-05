@@ -59,20 +59,36 @@ class SmartNotificationSystem {
     }
 
     private loadConfig(): NotificationConfig {
-        const stored = localStorage.getItem('notification-config');
-        return stored ? JSON.parse(stored) : {
+        // Default configuration
+        const defaultConfig: NotificationConfig = {
             studyReminders: true,
             achievementAlerts: true,
             streakWarnings: true,
             goalUpdates: true,
             weeklyReports: true,
-            preferredTime: 'evening',
+            preferredTime: 'evening' as const,
             quietHours: { start: '22:00', end: '07:00' }
         };
+
+        // Check if we're on the client side
+        if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+            return defaultConfig;
+        }
+
+        try {
+            const stored = localStorage.getItem('notification-config');
+            return stored ? JSON.parse(stored) : defaultConfig;
+        } catch (error) {
+            console.warn('Failed to load notification config:', error);
+            return defaultConfig;
+        }
     }
 
     private saveConfig(): void {
-        localStorage.setItem('notification-config', JSON.stringify(this.config));
+        // Check if we're on the client side
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            localStorage.setItem('notification-config', JSON.stringify(this.config));
+        }
     }
 
     private initializeTimers(): void {

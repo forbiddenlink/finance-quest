@@ -5,8 +5,9 @@ import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper
 import { CurrencyInput, NumberInput } from '@/components/shared/calculators/FormFields';
 import { ResultCard } from '@/components/shared/calculators/ResultComponents';
 import { formatCurrency } from '@/lib/utils/financial';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Sparkles, TrendingUp, Calculator, Clock } from 'lucide-react';
+import { AreaChart, MultiLineChart } from '@/components/shared/charts/ProfessionalCharts';
+import { useLearningAnalytics } from '@/lib/algorithms/learningAnalytics';
+import { Sparkles, TrendingUp, Calculator, Clock, Brain, Lightbulb } from 'lucide-react';
 import { theme } from '@/lib/theme';
 import { useCompoundInterestCalculator } from '@/lib/utils/calculatorHooks';
 
@@ -21,17 +22,19 @@ export default function CompoundInterestCalculator() {
     const {
         values,
         result,
+        updateValue,
         reset
     } = useCompoundInterestCalculator();
 
+    const learningAnalytics = useLearningAnalytics();
     const [data, setData] = useState<CompoundData[]>([]);
 
     const calculateGrowth = useCallback(() => {
         if (!result) return;
 
         const P = parseFloat(values.principal) || 0;
-        const r = parseFloat(values.rate) || 0;
-        const t = parseInt(values.time) || 0;
+        const r = parseFloat(values.annualRate) || 0;
+        const t = parseInt(values.years) || 0;
         const monthlyAdd = parseFloat(values.monthlyContribution) || 0;
 
         if (P < 0 || r < 0 || t < 0 || monthlyAdd < 0) return;

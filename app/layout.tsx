@@ -37,6 +37,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Finance Quest Team" }],
   creator: "Finance Quest",
   publisher: "Finance Quest",
+  manifest: "/manifest.json",
   openGraph: {
     title: "Finance Quest - AI-Powered Financial Literacy Platform",
     description: "Master personal finance through interactive learning, professional calculators, and genuine AI coaching. 17 chapters covering everything from money psychology to advanced investments.",
@@ -69,6 +70,10 @@ export const metadata: Metadata = {
     icon: '/favicon.svg',
     apple: '/favicon.svg',
   },
+  other: {
+    'mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent'
+  }
 };
 
 export default function RootLayout({

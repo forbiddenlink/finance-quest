@@ -23,7 +23,8 @@ import {
     BookOpen,
     BarChart3,
     Star,
-    ChevronDown
+    ChevronDown,
+    Brain
 } from 'lucide-react';
 
 interface NavigationItem {
@@ -64,22 +65,25 @@ const EnhancedProgressNavigation: React.FC = () => {
             title: 'Learn',
             items: [
                 { label: 'Dashboard', href: '/', icon: Home, description: 'Your learning overview' },
-                { label: 'Curriculum', href: '/curriculum', icon: BookOpen, description: 'All 30 chapters' },
-                { label: 'Progress', href: '/progress', icon: TrendingUp, description: 'Track your journey' }
+                { label: 'Curriculum', href: '/curriculum', icon: BookOpen, description: 'All 17 chapters' },
+                { label: 'Progress', href: '/progress', icon: TrendingUp, description: 'Track your journey' },
+                { label: 'AI Analytics', href: '/learning-analytics', icon: Brain, isNew: true, description: 'AI-powered learning insights' }
             ]
         },
         {
             title: 'Tools',
             items: [
                 { label: 'Calculators', href: '/calculators', icon: Calculator, badge: '13+', description: 'Financial calculators' },
-                { label: 'Market Data', href: '/market', icon: BarChart3, isNew: true, description: 'Live market insights' },
+                { label: 'Market Dashboard', href: '/market-dashboard', icon: BarChart3, isNew: true, description: 'Live market data & education' },
+                { label: 'Market Data', href: '/market', icon: TrendingUp, description: 'Market insights' },
                 { label: 'Assessment', href: '/assessment', icon: Star, description: 'Test your knowledge' }
             ]
         },
         {
             title: 'Advanced',
             items: [
-                { label: 'Analytics', href: '/advanced-progress', icon: BarChart3, isPro: true, description: 'Deep learning insights' },
+                { label: 'Enhanced Analytics', href: '/advanced-progress', icon: BarChart3, isPro: true, description: 'Deep learning insights' },
+                { label: 'Professional Charts', href: '/calculators/business-valuation', icon: TrendingUp, isPro: true, description: 'Professional financial analysis' },
                 { label: 'Crisis Sim', href: '/crisis-simulation', icon: Zap, isPro: true, description: 'Financial crisis scenarios' }
             ]
         }

@@ -93,13 +93,13 @@ export const useEnhancedProgress = () => {
     },
 
     // Advanced analytics
-    getLearningVelocity: () => store.userProgress.learningAnalytics.learningVelocity,
-    getRetentionRate: () => store.userProgress.learningAnalytics.retentionRate,
-    getFocusScore: () => store.userProgress.learningAnalytics.focusScore,
+    getLearningVelocity: () => store.userProgress.learningAnalytics?.learningVelocity || 0,
+    getRetentionRate: () => store.userProgress.learningAnalytics?.retentionRate || 0,
+    getFocusScore: () => store.userProgress.learningAnalytics?.focusScore || 0,
 
     // Engagement metrics
     getEngagementScore: () => {
-      const metrics = store.userProgress.engagementMetrics;
+      const metrics = store.userProgress.engagementMetrics || { sessionsThisWeek: 0 };
       const streakBonus = Math.min(50, store.userProgress.streakDays * 2);
       const sessionBonus = Math.min(30, metrics.sessionsThisWeek * 5);
       const baseScore = 20; // Everyone starts with some engagement
@@ -107,9 +107,11 @@ export const useEnhancedProgress = () => {
     },
 
     isHighlyEngaged: () => {
-      const engagementScore = store.userProgress.engagementMetrics.sessionsThisWeek >= 3 &&
+      const metrics = store.userProgress.engagementMetrics || { sessionsThisWeek: 0 };
+      const analytics = store.userProgress.learningAnalytics || { averageQuizScore: 0 };
+      const engagementScore = metrics.sessionsThisWeek >= 3 &&
         store.userProgress.streakDays >= 3 &&
-        store.userProgress.learningAnalytics.averageQuizScore >= 75;
+        analytics.averageQuizScore >= 75;
       return engagementScore;
     }
   };

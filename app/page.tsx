@@ -97,7 +97,7 @@ export default function HomePage() {
                   <span className={`text-xs ${theme.textColors.primary} font-medium`}>Live Learning Experience</span>
                 </div>
               </div>
-              
+
               {/* Feature badges - more compact design */}
               <div className={`hidden lg:flex items-center space-x-3 text-xs ${theme.textColors.muted}`}>
                 <div className={`flex items-center space-x-1.5 px-2.5 py-1 ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-lg backdrop-blur-sm`}>
@@ -113,7 +113,7 @@ export default function HomePage() {
                   <span className={`${theme.status.success.text} font-medium text-xs`}>Pro Tools</span>
                 </div>
               </div>
-              
+
               {/* Compact version for medium screens */}
               <div className={`hidden md:flex lg:hidden items-center space-x-2 text-xs ${theme.textColors.muted}`}>
                 <span className={`${theme.status.info.text} text-xs`}>Live Data</span>
@@ -123,7 +123,7 @@ export default function HomePage() {
                 <span className={`${theme.status.success.text} text-xs`}>Tools</span>
               </div>
             </div>
-            
+
             {/* Right side - Market ticker and progress */}
             <div className="flex items-center space-x-3 flex-shrink-0">
               {/* Market ticker wrapper with enhanced styling */}
@@ -133,7 +133,7 @@ export default function HomePage() {
                   <MarketTicker />
                 </div>
               </div>
-              
+
               {/* Progress display wrapper */}
               <div className="relative group">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-slate-500/20 to-amber-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -143,7 +143,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          
+
           {/* Mobile-only feature badges - more compact */}
           <div className={`md:hidden mt-2.5 pt-2.5 border-t ${theme.borderColors.muted}`}>
             <div className="flex items-center justify-center space-x-2 text-xs">
@@ -410,7 +410,7 @@ export default function HomePage() {
           </InteractiveCard>
         </motion.div>
 
-          {/* Learning Path Overview - Redesigned */}
+        {/* Learning Path Overview - Redesigned */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -446,7 +446,7 @@ export default function HomePage() {
               <InteractiveCard className={`group relative ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-2xl ${theme.spacing.md} hover:${theme.borderColors.primary} transition-all duration-500 transform hover:scale-[1.02] hover:-translate-y-1`}>
                 {/* Enhanced Glow Effect */}
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-600/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 {/* Card Content */}
                 <div className="relative">
                   <div className="flex items-center mb-4">
@@ -490,7 +490,7 @@ export default function HomePage() {
                 <InteractiveCard className={`group relative ${theme.backgrounds.card} border ${theme.status.info.border} rounded-2xl ${theme.spacing.md} hover:${theme.status.info.border}/50 transition-all duration-500 transform hover:scale-[1.02] hover:-translate-y-1`}>
                   {/* Enhanced Glow Effect */}
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500/20 via-slate-500/20 to-blue-600/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
+
                   {/* Card Content */}
                   <div className="relative">
                     <div className="flex items-center mb-4">
@@ -512,12 +512,12 @@ export default function HomePage() {
                       </div>
                       <div className={`${theme.textColors.primary} text-xs group-hover:text-blue-300 transition-colors duration-300`}>6 Lessons</div>
                     </div>
-                  <Link href="/chapter2">
-                    <Button className={`w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg`}>
-                      Continue Learning
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
-                  </Link>
+                    <Link href="/chapter2">
+                      <Button className={`w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 ${theme.textColors.primary} font-semibold rounded-xl transition-all duration-300 hover:shadow-lg`}>
+                        Continue Learning
+                        <ArrowRight className="ml-2 w-4 h-4" />
+                      </Button>
+                    </Link>
                   </div>
                 </InteractiveCard>
               ) : (
@@ -1224,6 +1224,151 @@ export default function HomePage() {
               <div>
                 <div className={`text-2xl font-bold ${theme.textColors.warning} mb-1`}>47</div>
                 <div className={`text-xs ${theme.textColors.muted}`}>Countries Represented</div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* NEW: Professional Finance Suite - Latest Enhancements */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.0, duration: 0.8 }}
+          className="bg-gradient-to-r from-emerald-900/20 via-blue-900/20 to-purple-900/20 border border-emerald-500/30 backdrop-blur-xl rounded-3xl p-8 md:p-12 mb-20"
+        >
+          <div className="text-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.1, duration: 0.6 }}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 border border-emerald-400/30 rounded-full px-4 py-2 mb-6"
+            >
+              <Sparkles className="w-4 h-4 text-emerald-400" />
+              <span className="text-sm font-medium text-emerald-300">Just Released - August 2025</span>
+            </motion.div>
+
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
+              className="text-3xl md:text-4xl font-bold mb-6"
+            >
+              <span className="bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Professional Finance Suite
+              </span>
+            </motion.h3>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.3, duration: 0.6 }}
+              className={`text-lg ${theme.textColors.secondary} max-w-3xl mx-auto`}
+            >
+              Experience industry-grade financial tools with AI-powered learning optimization.
+              Features that rival Bloomberg Terminal, designed for educational excellence.
+            </motion.p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {/* Professional Charts */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.4, duration: 0.6 }}
+            >
+              <InteractiveCard className={`${theme.backgrounds.glass}/10 backdrop-blur-xl border border-emerald-500/20 rounded-2xl p-6 hover:border-emerald-400/40 transition-all duration-300 group`}>
+                <div className="w-14 h-14 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                  <BarChart3 className="w-7 h-7 text-white" />
+                </div>
+                <h4 className={`text-xl font-bold ${theme.textColors.primary} mb-3`}>
+                  Professional Charts
+                </h4>
+                <p className={`${theme.textColors.secondary} mb-4 text-sm leading-relaxed`}>
+                  Industry-standard candlestick charts, multi-line analysis, and interactive visualizations
+                  powered by ApexCharts - the same technology used by financial professionals.
+                </p>
+                <Link href="/market-dashboard" className="inline-flex items-center text-emerald-400 hover:text-emerald-300 text-sm font-medium group-hover:translate-x-1 transition-transform">
+                  Explore Market Dashboard
+                  <ArrowRight className="ml-1 w-4 h-4" />
+                </Link>
+              </InteractiveCard>
+            </motion.div>
+
+            {/* AI Learning Analytics */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.5, duration: 0.6 }}
+            >
+              <InteractiveCard className={`${theme.backgrounds.glass}/10 backdrop-blur-xl border border-blue-500/20 rounded-2xl p-6 hover:border-blue-400/40 transition-all duration-300 group`}>
+                <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                  <Brain className="w-7 h-7 text-white" />
+                </div>
+                <h4 className={`text-xl font-bold ${theme.textColors.primary} mb-3`}>
+                  AI Learning Optimization
+                </h4>
+                <p className={`${theme.textColors.secondary} mb-4 text-sm leading-relaxed`}>
+                  Spaced repetition algorithms (SM2), predictive analytics, and personalized learning paths
+                  powered by machine learning to optimize your financial education journey.
+                </p>
+                <Link href="/learning-analytics" className="inline-flex items-center text-blue-400 hover:text-blue-300 text-sm font-medium group-hover:translate-x-1 transition-transform">
+                  View AI Dashboard
+                  <ArrowRight className="ml-1 w-4 h-4" />
+                </Link>
+              </InteractiveCard>
+            </motion.div>
+
+            {/* Real-Time Market Education */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.6, duration: 0.6 }}
+            >
+              <InteractiveCard className={`${theme.backgrounds.glass}/10 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-6 hover:border-purple-400/40 transition-all duration-300 group`}>
+                <div className="w-14 h-14 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                  <TrendingUp className="w-7 h-7 text-white" />
+                </div>
+                <h4 className={`text-xl font-bold ${theme.textColors.primary} mb-3`}>
+                  Live Market Education
+                </h4>
+                <p className={`${theme.textColors.secondary} mb-4 text-sm leading-relaxed`}>
+                  Real-time market data integrated with educational content. Learn about economic indicators,
+                  market sentiment, and investment analysis with live, contextual examples.
+                </p>
+                <Link href="/calculators/business-valuation" className="inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium group-hover:translate-x-1 transition-transform">
+                  Try Enhanced Calculators
+                  <ArrowRight className="ml-1 w-4 h-4" />
+                </Link>
+              </InteractiveCard>
+            </motion.div>
+          </div>
+
+          {/* Feature Comparison */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.7, duration: 0.6 }}
+            className="bg-gradient-to-r from-slate-800/30 to-slate-700/30 border border-white/10 rounded-2xl p-6"
+          >
+            <h4 className={`text-lg font-bold ${theme.textColors.primary} mb-4 text-center`}>
+              Professional Features Now Available
+            </h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <div className="text-2xl font-bold text-emerald-400 mb-1">15+</div>
+                <div className={`text-sm ${theme.textColors.secondary}`}>Professional Charts</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-blue-400 mb-1">AI</div>
+                <div className={`text-sm ${theme.textColors.secondary}`}>Learning Optimization</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-purple-400 mb-1">Live</div>
+                <div className={`text-sm ${theme.textColors.secondary}`}>Market Integration</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-amber-400 mb-1">SM2</div>
+                <div className={`text-sm ${theme.textColors.secondary}`}>Spaced Repetition</div>
               </div>
             </div>
           </motion.div>

@@ -1,0 +1,25 @@
+{
+    "name": "Finance Quest - AI Financial Literacy Platform",
+    "short_name": "Finance Quest",
+    "description": "Professional AI-powered financial education with interactive calculators and personalized learning paths",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#3b82f6",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ],
+    "categories": [
+        "education",
+        "finance",
+        "productivity"
+    ],
+    "lang": "en-US",
+    "scope": "/",
+    "prefer_related_applications": false
+}

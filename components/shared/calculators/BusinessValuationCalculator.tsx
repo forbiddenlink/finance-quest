@@ -1,13 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
-import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import CalculatorWrapper, { CalculatorMetadata } from './CalculatorWrapper';
 import { CurrencyInput, NumberInput, PercentageInput } from './FormFields';
 import { theme } from '@/lib/theme';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { useLearningAnalytics } from '@/lib/algorithms/learningAnalytics';
 import { formatCurrency } from '@/lib/utils/financial';
-import { Building2, TrendingUp, BarChart3, Target } from 'lucide-react';
+import {
+  MultiLineChart,
+  DonutChart,
+  BarChart,
+  AreaChart
+} from '@/components/shared/charts/ProfessionalCharts';
+import { Building2, TrendingUp, BarChart3, Target, Brain, Lightbulb } from 'lucide-react';
 
 interface BusinessValuationValues {
   annualRevenue: string;
@@ -31,6 +37,7 @@ interface BusinessValuationResult {
 
 export default function BusinessValuationCalculator() {
   const { recordCalculatorUsage } = useProgressStore();
+  const learningAnalytics = useLearningAnalytics();
 
   const [values, setValues] = useState<BusinessValuationValues>({
     annualRevenue: '1000000',
@@ -69,14 +76,14 @@ export default function BusinessValuationCalculator() {
     // DCF Calculation
     let dcfValue = 0;
     let currentRevenue = revenue;
-    
+
     for (let year = 1; year <= years; year++) {
       currentRevenue *= (1 + growth);
       const netIncome = currentRevenue * margin;
       const presentValue = netIncome / Math.pow(1 + discount, year);
       dcfValue += presentValue;
     }
-    
+
     // Terminal value
     const terminalCashFlow = currentRevenue * margin * (1 + terminalGrowth);
     const terminalValue = terminalCashFlow / (discount - terminalGrowth);
@@ -203,9 +210,9 @@ export default function BusinessValuationCalculator() {
     const { dcfValuation, multipleValuation, assetValuation } = result;
 
     return [
-      { name: 'DCF Method', value: dcfValuation, color: theme.colors.blue[500] },
-      { name: 'Multiple Method', value: multipleValuation, color: theme.colors.emerald[500] },
-      { name: 'Asset Method', value: assetValuation, color: theme.colors.amber[500] }
+      { label: 'DCF Method', value: dcfValuation, color: theme.colors.blue[500] },
+      { label: 'Multiple Method', value: multipleValuation, color: theme.colors.emerald[500] },
+      { label: 'Asset Method', value: assetValuation, color: theme.colors.amber[500] }
     ];
   }, [result]);
 
@@ -383,47 +390,81 @@ export default function BusinessValuationCalculator() {
             </div>
           )}
 
-          {/* Valuation Method Comparison Chart */}
+          {/* Enhanced Valuation Method Comparison Chart */}
           {valuationComparisonData.length > 0 && (
             <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
               <h4 className={`text-lg font-semibold mb-4 ${theme.textColors.primary}`}>Valuation Comparison</h4>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={valuationComparisonData}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={80}
-                      dataKey="value"
-                      label={({ name, value }) => `${name}: ${formatCurrency(value || 0)}`}
-                    >
-                      {valuationComparisonData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
+              <DonutChart
+                data={valuationComparisonData}
+                title="Valuation Methods"
+                height={300}
+                showLegend={true}
+              />
             </div>
           )}
 
-          {/* Cash Flow Projections Chart */}
+          {/* Enhanced Cash Flow Projections Chart */}
           {cashFlowData.length > 0 && (
             <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
               <h4 className={`text-lg font-semibold mb-4 ${theme.textColors.primary}`}>Cash Flow Projections</h4>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={cashFlowData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis tickFormatter={(value) => formatCurrency(value)} />
-                    <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                    <Line type="monotone" dataKey="revenue" stroke={theme.colors.blue[500]} name="Revenue" />
-                    <Line type="monotone" dataKey="cashFlow" stroke={theme.colors.emerald[500]} name="Cash Flow" />
-                  </LineChart>
-                </ResponsiveContainer>
+              <MultiLineChart
+                series={[
+                  {
+                    name: 'Revenue',
+                    data: cashFlowData.map(item => ({ x: new Date(2024, item.year - 1, 1), y: item.revenue })),
+                    color: theme.colors.blue[500]
+                  },
+                  {
+                    name: 'Cash Flow',
+                    data: cashFlowData.map(item => ({ x: new Date(2024, item.year - 1, 1), y: item.cashFlow })),
+                    color: theme.colors.emerald[500]
+                  }
+                ]}
+                title="Financial Projections"
+                yAxisFormatter={formatCurrency}
+                height={350}
+              />
+            </div>
+          )}
+
+          {/* AI-Powered Learning Insights */}
+          {learningAnalytics && (
+            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.accent} rounded-lg p-6`}>
+              <h4 className={`text-lg font-semibold mb-4 ${theme.textColors.primary} flex items-center`}>
+                <Brain className="mr-2 w-5 h-5 text-amber-400" />
+                AI Learning Insights
+              </h4>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-blue-500/15 border border-blue-500/30 rounded-lg p-4">
+                    <div className="text-blue-400 text-sm font-medium mb-1">Mastery Level</div>
+                    <div className="text-white text-2xl font-bold">
+                      {(learningAnalytics.predictedMastery * 100).toFixed(1)}%
+                    </div>
+                  </div>
+                  <div className="bg-emerald-500/15 border border-emerald-500/30 rounded-lg p-4">
+                    <div className="text-emerald-400 text-sm font-medium mb-1">Learning Velocity</div>
+                    <div className="text-white text-2xl font-bold">
+                      {learningAnalytics.learningVelocity.toFixed(1)} concepts/hr
+                    </div>
+                  </div>
+                </div>
+
+                {learningAnalytics.strugglingConcepts.length > 0 && (
+                  <div className="bg-amber-500/15 border border-amber-500/30 rounded-lg p-4">
+                    <div className="text-amber-400 text-sm font-medium mb-2 flex items-center">
+                      <Lightbulb className="w-4 h-4 mr-1" />
+                      Recommended Review Topics
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {learningAnalytics.strugglingConcepts.slice(0, 3).map((concept, index) => (
+                        <span key={index} className="bg-amber-500/20 text-amber-300 px-2 py-1 rounded text-xs">
+                          {concept}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}

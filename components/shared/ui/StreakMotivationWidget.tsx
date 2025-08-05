@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
@@ -39,6 +39,31 @@ export default function StreakMotivationWidget({
     const [showDetails, setShowDetails] = useState(false);
     const [showEncouragement, setShowEncouragement] = useState(false);
     const [justUsedFreeze, setJustUsedFreeze] = useState(false);
+    const [isClient, setIsClient] = useState(false);
+
+    // Prevent hydration mismatch by only rendering on client
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    // Don't render anything on server to prevent hydration mismatch
+    if (!isClient) {
+        return (
+            <div className={`flex items-center space-x-2 ${className}`}>
+                <div className="relative w-8 h-8 bg-slate-500/20 border-slate-500/40 border rounded-full flex items-center justify-center">
+                    <Target className="w-4 h-4 text-slate-400" />
+                </div>
+                <div className="flex flex-col">
+                    <span className={`text-sm font-bold ${theme.textColors.primary}`}>
+                        {userProgress.streakDays}
+                    </span>
+                    <span className={`text-xs ${theme.textColors.muted}`}>
+                        day{userProgress.streakDays !== 1 ? 's' : ''}
+                    </span>
+                </div>
+            </div>
+        );
+    }
 
     const streakMotivation = getStreakMotivation();
     const encouragement = getPersonalizedEncouragement();
