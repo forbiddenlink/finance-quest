@@ -78,9 +78,9 @@ export default function ChapterLayout({
     onQuizComplete,
     requiresPreviousChapters = true
 }: ChapterLayoutProps) {
-    const { 
-        isChapterUnlocked, 
-        completeLesson, 
+    const {
+        isChapterUnlocked,
+        completeLesson,
         userProgress,
         getPersonalizedEncouragement,
         getStudyRecommendation,
@@ -108,7 +108,7 @@ export default function ChapterLayout({
     const handleLessonComplete = () => {
         setLessonCompleted(true);
         completeLesson(`chapter${chapterNumber}-lesson`, 15);
-        
+
         // Check for level up
         const leveledUp = checkLevelUp();
         if (leveledUp) {
@@ -124,7 +124,7 @@ export default function ChapterLayout({
             });
             setShowAchievementNotification(true);
         }
-        
+
         // Set achievement data for animation
         setLastAchievement({
             type: 'lesson',
@@ -132,11 +132,11 @@ export default function ChapterLayout({
             description: 'Your financial knowledge is growing stronger'
         });
         setShowSuccessAnimation(true);
-        
+
         // Enhanced progress notifications with personalized encouragement
         const encouragement = getPersonalizedEncouragement();
         const recommendation = getStudyRecommendation();
-        
+
         if (chapterNumber === 1) {
             toast.success(`🎯 ${title} completed! Welcome to Finance Quest! ${encouragement}`, {
                 duration: 6000,
@@ -163,7 +163,7 @@ export default function ChapterLayout({
                 position: 'top-center',
             });
         }
-        
+
         // Progressive feature unlocks
         if (userProgress.completedLessons.length === 2) {
             toast.success(`🧠 New feature unlocked: Review tab for spaced repetition learning!`, {
@@ -176,7 +176,7 @@ export default function ChapterLayout({
                 position: 'top-center',
             });
         }
-        
+
         // Show next recommendation if high priority
         if (recommendation.priority === 'high') {
             setTimeout(() => {
@@ -186,7 +186,7 @@ export default function ChapterLayout({
                 });
             }, 2000);
         }
-        
+
         onLessonComplete?.();
     };
 
@@ -198,7 +198,7 @@ export default function ChapterLayout({
             description: `Ready for Chapter ${chapterNumber + 1}!`
         });
         setShowSuccessAnimation(true);
-        
+
         toast.success(`Chapter ${chapterNumber} mastered! Ready for Chapter ${chapterNumber + 1}! 🎯`, {
             duration: 4000,
             position: 'top-center',
@@ -266,10 +266,9 @@ export default function ChapterLayout({
                             <div className={`${theme.backgrounds.cardHover} px-4 py-3 rounded-lg border ${theme.borderColors.primary} min-w-[200px]`}>
                                 <div className="flex items-center justify-between mb-2">
                                     <div className="flex items-center space-x-2">
-                                        <motion.div 
-                                            className={`w-2 h-2 rounded-full transition-colors duration-300 ${
-                                                lessonCompleted ? theme.status.success.bg : theme.status.warning.bg
-                                            }`}
+                                        <motion.div
+                                            className={`w-2 h-2 rounded-full transition-colors duration-300 ${lessonCompleted ? theme.status.success.bg : theme.status.warning.bg
+                                                }`}
                                             animate={lessonCompleted ? { scale: [1, 1.2, 1] } : {}}
                                             transition={{ duration: 0.5 }}
                                         />
@@ -281,7 +280,7 @@ export default function ChapterLayout({
                                         {Math.round((lessonCompleted ? 70 : 35))}%
                                     </span>
                                 </div>
-                                <EnhancedProgressBar 
+                                <EnhancedProgressBar
                                     value={lessonCompleted ? 70 : 35}
                                     size="sm"
                                     variant={lessonCompleted ? "success" : "default"}
@@ -289,8 +288,8 @@ export default function ChapterLayout({
                                     animated={true}
                                 />
                             </div>
-                            
-                            <motion.div 
+
+                            <motion.div
                                 className={`${theme.status.info.bg} px-3 py-1 rounded-full`}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
@@ -299,10 +298,10 @@ export default function ChapterLayout({
                                     Chapter {chapterNumber}
                                 </span>
                             </motion.div>
-                            
+
                             {/* Advanced Features Badge */}
                             {hasCompletedContent && (
-                                <motion.div 
+                                <motion.div
                                     className={`${theme.status.warning.bg} px-3 py-1 rounded-full relative overflow-hidden`}
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
@@ -335,7 +334,7 @@ export default function ChapterLayout({
                     transition={{ duration: 0.8 }}
                     className="text-center mb-8"
                 >
-                    <motion.div 
+                    <motion.div
                         className={`w-16 h-16 ${theme.status.info.bg} rounded-2xl flex items-center justify-center mx-auto mb-4 relative overflow-hidden`}
                         whileHover={{ scale: 1.1, rotate: 5 }}
                         whileTap={{ scale: 0.95 }}
@@ -348,7 +347,7 @@ export default function ChapterLayout({
                             transition={{ duration: 2, repeat: Infinity }}
                         />
                     </motion.div>
-                    <motion.h1 
+                    <motion.h1
                         className="text-4xl font-bold mb-2"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -360,7 +359,7 @@ export default function ChapterLayout({
                             {title}
                         </span>
                     </motion.h1>
-                    <motion.p 
+                    <motion.p
                         className={`${theme.textColors.muted} max-w-2xl mx-auto`}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -378,7 +377,7 @@ export default function ChapterLayout({
                         transition={{ delay: 0.6 }}
                         className="mb-8"
                     >
-                        <StreakMotivationWidget 
+                        <StreakMotivationWidget
                             size="default"
                             showMotivation={true}
                             className="max-w-2xl mx-auto"
@@ -389,8 +388,8 @@ export default function ChapterLayout({
                 {/* Tab Navigation - Dynamic based on user progress */}
                 <Tabs value={currentSection} onValueChange={(value) => setCurrentSection(value as 'lesson' | 'calculator' | 'quiz' | 'assistant' | 'analytics' | 'review')} className="w-full">
                     <TabsList className={`grid w-full ${hasCompletedContent ? 'grid-cols-6' : 'grid-cols-4'} ${theme.backgrounds.header} border ${theme.borderColors.primary} relative overflow-hidden`}>
-                        <TabsTrigger 
-                            value="lesson" 
+                        <TabsTrigger
+                            value="lesson"
                             className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} relative transition-all duration-300 hover:scale-105`}
                         >
                             <BookOpen className="w-4 h-4 mr-2" />
@@ -404,15 +403,15 @@ export default function ChapterLayout({
                                 />
                             )}
                         </TabsTrigger>
-                        <TabsTrigger 
-                            value="calculator" 
+                        <TabsTrigger
+                            value="calculator"
                             className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 hover:scale-105`}
                         >
                             <Calculator className="w-4 h-4 mr-2" />
                             Calculator
                         </TabsTrigger>
-                        <TabsTrigger 
-                            value="quiz" 
+                        <TabsTrigger
+                            value="quiz"
                             className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 relative hover:scale-105`}
                             disabled={!lessonCompleted && chapterNumber > 1}
                         >
@@ -428,14 +427,14 @@ export default function ChapterLayout({
                                 </motion.div>
                             )}
                         </TabsTrigger>
-                        <TabsTrigger 
-                            value="assistant" 
+                        <TabsTrigger
+                            value="assistant"
                             className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 hover:scale-105`}
                         >
                             <Bot className="w-4 h-4 mr-2" />
                             AI Coach
                         </TabsTrigger>
-                        
+
                         {/* Advanced Features - Only show after user has some progress */}
                         {hasCompletedContent && (
                             <>
@@ -444,8 +443,8 @@ export default function ChapterLayout({
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: 0.2 }}
                                 >
-                                    <TabsTrigger 
-                                        value="review" 
+                                    <TabsTrigger
+                                        value="review"
                                         className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 hover:scale-105`}
                                     >
                                         <Brain className="w-4 h-4 mr-2" />
@@ -453,15 +452,15 @@ export default function ChapterLayout({
                                         <span className="sm:hidden">Review</span>
                                     </TabsTrigger>
                                 </motion.div>
-                                
+
                                 {hasQuizScores && (
                                     <motion.div
                                         initial={{ opacity: 0, x: 20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.4 }}
                                     >
-                                        <TabsTrigger 
-                                            value="analytics" 
+                                        <TabsTrigger
+                                            value="analytics"
                                             className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 hover:scale-105`}
                                         >
                                             <BarChart3 className="w-4 h-4 mr-2" />
@@ -507,11 +506,10 @@ export default function ChapterLayout({
                                                         <button
                                                             key={tab.id}
                                                             onClick={() => setActiveCalculatorTab(index)}
-                                                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors ${
-                                                                activeCalculatorTab === index
+                                                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors ${activeCalculatorTab === index
                                                                     ? 'border-blue-500 text-blue-400'
                                                                     : 'border-transparent text-slate-400 hover:text-slate-300 hover:border-slate-300'
-                                                            }`}
+                                                                }`}
                                                         >
                                                             <IconComponent className="w-4 h-4 mr-2" />
                                                             {tab.label}
@@ -573,7 +571,7 @@ export default function ChapterLayout({
                             </CardHeader>
                             <CardContent className="space-y-6">
                                 <AITeachingAssistant />
-                                
+
                                 {/* Voice QA Integration */}
                                 <div className={`${theme.backgrounds.cardHover} rounded-lg p-6 border ${theme.borderColors.primary}`}>
                                     <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center`}>
@@ -582,7 +580,7 @@ export default function ChapterLayout({
                                     </h3>
                                     <VoiceQA />
                                 </div>
-                                
+
                                 <QASystem />
                             </CardContent>
                         </Card>

@@ -31,31 +31,54 @@
   --radius: 0.5rem;
 
   /* Enhanced Typography Scale */
-  --typography-xs: 0.75rem;     /* 12px */
-  --typography-sm: 0.875rem;    /* 14px */
-  --typography-base: 1rem;      /* 16px */
-  --typography-lg: 1.125rem;    /* 18px */
-  --typography-xl: 1.25rem;     /* 20px */
-  --typography-2xl: 1.5rem;     /* 24px */
-  --typography-3xl: 1.875rem;   /* 30px */
-  --typography-4xl: 2.25rem;    /* 36px */
-  --typography-5xl: 3rem;       /* 48px */
-  --typography-6xl: 3.75rem;    /* 60px */
-  --typography-7xl: 4.5rem;     /* 72px */
-  --typography-8xl: 6rem;       /* 96px */
-  --typography-9xl: 8rem;       /* 128px */
+  --typography-xs: 0.75rem;
+  /* 12px */
+  --typography-sm: 0.875rem;
+  /* 14px */
+  --typography-base: 1rem;
+  /* 16px */
+  --typography-lg: 1.125rem;
+  /* 18px */
+  --typography-xl: 1.25rem;
+  /* 20px */
+  --typography-2xl: 1.5rem;
+  /* 24px */
+  --typography-3xl: 1.875rem;
+  /* 30px */
+  --typography-4xl: 2.25rem;
+  /* 36px */
+  --typography-5xl: 3rem;
+  /* 48px */
+  --typography-6xl: 3.75rem;
+  /* 60px */
+  --typography-7xl: 4.5rem;
+  /* 72px */
+  --typography-8xl: 6rem;
+  /* 96px */
+  --typography-9xl: 8rem;
+  /* 128px */
 
   /* Enhanced Spacing Scale */
-  --spacing-xs: 0.25rem;   /* 4px */
-  --spacing-sm: 0.5rem;    /* 8px */
-  --spacing-md: 1rem;      /* 16px */
-  --spacing-lg: 1.5rem;    /* 24px */
-  --spacing-xl: 2rem;      /* 32px */
-  --spacing-2xl: 2.5rem;   /* 40px */
-  --spacing-3xl: 3rem;     /* 48px */
-  --spacing-4xl: 4rem;     /* 64px */
-  --spacing-5xl: 5rem;     /* 80px */
-  --spacing-6xl: 6rem;     /* 96px */
+  --spacing-xs: 0.25rem;
+  /* 4px */
+  --spacing-sm: 0.5rem;
+  /* 8px */
+  --spacing-md: 1rem;
+  /* 16px */
+  --spacing-lg: 1.5rem;
+  /* 24px */
+  --spacing-xl: 2rem;
+  /* 32px */
+  --spacing-2xl: 2.5rem;
+  /* 40px */
+  --spacing-3xl: 3rem;
+  /* 48px */
+  --spacing-4xl: 4rem;
+  /* 64px */
+  --spacing-5xl: 5rem;
+  /* 80px */
+  --spacing-6xl: 6rem;
+  /* 96px */
 }
 }
 
@@ -344,13 +367,16 @@ body {
     opacity: 0;
     transform: scale(0.3) translateY(-50px);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.05) translateY(0);
   }
+
   70% {
     transform: scale(0.95);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);
@@ -358,33 +384,45 @@ body {
 }
 
 @keyframes wiggle {
-  0%, 7% {
+
+  0%,
+  7% {
     transform: rotateZ(0);
   }
+
   15% {
     transform: rotateZ(-15deg);
   }
+
   20% {
     transform: rotateZ(10deg);
   }
+
   25% {
     transform: rotateZ(-10deg);
   }
+
   30% {
     transform: rotateZ(6deg);
   }
+
   35% {
     transform: rotateZ(-4deg);
   }
-  40%, 100% {
+
+  40%,
+  100% {
     transform: rotateZ(0);
   }
 }
 
 @keyframes glow-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 5px currentColor;
   }
+
   50% {
     box-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
   }
@@ -395,6 +433,7 @@ body {
     opacity: 0;
     transform: translateX(30px);
   }
+
   100% {
     opacity: 1;
     transform: translateX(0);

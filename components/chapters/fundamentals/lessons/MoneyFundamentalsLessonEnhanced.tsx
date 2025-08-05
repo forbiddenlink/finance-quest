@@ -99,7 +99,7 @@ export default function MoneyFundamentalsLessonEnhanced() {
   const [timeSpentOnLesson, setTimeSpentOnLesson] = useState(0);
   const [lessonStartTime, setLessonStartTime] = useState<number>(Date.now());
   const [showAchievement, setShowAchievement] = useState(false);
-  const [achievementData, setAchievementData] = useState<{title: string, description: string} | null>(null);
+  const [achievementData, setAchievementData] = useState<{ title: string, description: string } | null>(null);
 
   // Load completed lessons from global state
   useEffect(() => {
@@ -265,7 +265,7 @@ export default function MoneyFundamentalsLessonEnhanced() {
               <MoneyPersonalityAssessment />
             </div>
           )}
-          
+
           {currentLesson === 3 && (
             <div className={`mb-8 p-6 ${theme.utils.glass('normal')} border ${theme.borderColors.primary} rounded-lg`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>

@@ -83,11 +83,11 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
+
         {/* Theme and viewport */}
         <meta name="theme-color" content="#0f172a" />
         <meta name="color-scheme" content="dark" />
-        
+
         {/* PWA support */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -99,29 +99,29 @@ export default function RootLayout({
           <ToastProvider>
             {/* Enhanced Navigation System */}
             <EnhancedProgressNavigation />
-            
+
             {/* Main Content Area with Professional Styling */}
             <main className="relative">
               {/* Background Effects */}
               <div className="fixed inset-0 -z-10">
                 {/* Animated gradient background */}
                 <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 opacity-90" />
-                
+
                 {/* Subtle grid pattern */}
-                <div 
+                <div
                   className="absolute inset-0 opacity-[0.02]"
                   style={{
                     backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
                     backgroundSize: '24px 24px'
                   }}
                 />
-                
+
                 {/* Ambient glow effects */}
                 <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
                 <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-blue-500/3 to-purple-500/3 rounded-full blur-3xl" />
               </div>
-              
+
               {/* Content wrapper */}
               <div className="relative z-10 min-h-screen">
                 {children}

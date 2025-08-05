@@ -35,7 +35,7 @@ export default function ProgressNavigation() {
   const calculatorsUsed = Object.keys(userProgress.calculatorUsage).length;
   const simulationsCompleted = Object.keys(userProgress.simulationResults || {}).length;
   const overallProgress = Math.round((userProgress.completedLessons.length / 102) * 100); // 17 chapters × 6 lessons = 102 total lessons
-  
+
   // Calculate user level based on progress
   const getUserLevel = () => {
     if (overallProgress < 20) return { level: "Beginner", icon: "🌱", color: "text-green-400" };
@@ -121,13 +121,13 @@ export default function ProgressNavigation() {
               <div className={`w-9 h-9 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg shadow-lg flex items-center justify-center relative overflow-hidden transition-all duration-300 group-hover:scale-105 hover:${theme.borderColors.primary}`}>
                 {/* Subtle background glow */}
                 <div className={`absolute inset-0 ${theme.status.warning.bg} opacity-5`}></div>
-                
+
                 {/* Clean financial symbol */}
                 <svg viewBox="0 0 24 24" className={`w-5 h-5 ${theme.textColors.primary} relative z-10`} fill="none" stroke="currentColor" strokeWidth="2">
                   {/* Dollar sign with education element */}
-                  <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                  <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                   {/* Learning progress arc */}
-                  <path d="M8 3a9 9 0 0 1 8 8" strokeWidth="1.5" opacity="0.6" strokeLinecap="round"/>
+                  <path d="M8 3a9 9 0 0 1 8 8" strokeWidth="1.5" opacity="0.6" strokeLinecap="round" />
                 </svg>
               </div>
             </div>
@@ -142,11 +142,10 @@ export default function ProgressNavigation() {
           <div className="flex items-center space-x-3 flex-1 justify-center mx-8">
             {/* Always show essential navigation */}
             <Link href="/">
-              <button className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1.5 ${
-                isClient && pathname === '/' 
-                  ? `${theme.status.info.bg} ${theme.status.info.text} shadow-sm` 
+              <button className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1.5 ${isClient && pathname === '/'
+                  ? `${theme.status.info.bg} ${theme.status.info.text} shadow-sm`
                   : `${theme.textColors.muted} hover:${theme.backgrounds.card}/60 hover:${theme.textColors.primary}`
-              }`}>
+                }`}>
                 <Home className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Home</span>
               </button>
@@ -156,7 +155,7 @@ export default function ProgressNavigation() {
             {navigationItems.slice(1, 4).map((item) => {
               const Icon = item.icon;
               const isActive = isClient && pathname === item.href;
-              
+
               if (!item.isAvailable) return (
                 <div key={item.name} className={`px-3 py-2 rounded-lg text-xs ${theme.textColors.muted} flex items-center space-x-1.5 opacity-50`}>
                   <Lock className="w-3.5 h-3.5" />
@@ -166,11 +165,10 @@ export default function ProgressNavigation() {
 
               return (
                 <Link key={item.name} href={item.href}>
-                  <button className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1.5 relative ${
-                    isActive 
-                      ? `${theme.status.warning.bg} ${theme.status.warning.text} shadow-sm` 
+                  <button className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1.5 relative ${isActive
+                      ? `${theme.status.warning.bg} ${theme.status.warning.text} shadow-sm`
                       : `${theme.textColors.secondary} hover:${theme.backgrounds.cardHover} hover:${theme.textColors.primary}`
-                  }`}>
+                    }`}>
                     <Icon className="w-3.5 h-3.5" />
                     <span className="hidden md:inline whitespace-nowrap">{item.name}</span>
                     {item.progress === 100 && (
@@ -187,7 +185,7 @@ export default function ProgressNavigation() {
             {navigationItems.slice(4).map((item) => {
               const Icon = item.icon;
               const isActive = isClient && pathname === item.href;
-              
+
               if (!item.isAvailable) return null;
 
               // Don&apos;t show badge for calculators
@@ -195,11 +193,10 @@ export default function ProgressNavigation() {
 
               return (
                 <Link key={item.name} href={item.href}>
-                  <button className={`px-2.5 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1.5 relative ${
-                    isActive 
-                      ? `${theme.status.info.bg} ${theme.status.info.text} shadow-sm` 
+                  <button className={`px-2.5 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1.5 relative ${isActive
+                      ? `${theme.status.info.bg} ${theme.status.info.text} shadow-sm`
                       : `${theme.textColors.muted} hover:${theme.backgrounds.card}/60 hover:${theme.textColors.primary}`
-                  }`}>
+                    }`}>
                     <Icon className="w-3.5 h-3.5" />
                     <span className="whitespace-nowrap">{item.name}</span>
                     {shouldShowBadge && (
@@ -217,8 +214,8 @@ export default function ProgressNavigation() {
           <div className="flex items-center space-x-3 flex-shrink-0">
             {/* Compact Streak Widget */}
             <div className="hidden lg:block">
-              <StreakMotivationWidget 
-                size="compact" 
+              <StreakMotivationWidget
+                size="compact"
                 showMotivation={false}
               />
             </div>
@@ -280,25 +277,24 @@ export default function ProgressNavigation() {
         <div className="px-3 py-2">
           {/* Mobile Streak Widget */}
           <div className="flex items-center justify-center mb-2">
-            <StreakMotivationWidget 
-              size="compact" 
+            <StreakMotivationWidget
+              size="compact"
               showMotivation={false}
               className="scale-90"
             />
           </div>
-          
+
           <div className="flex items-center justify-center space-x-2 overflow-x-auto">
             {navigationItems.slice(4).filter(item => item.isAvailable).map((item) => {
               const Icon = item.icon;
               const isActive = isClient && pathname === item.href;
-              
+
               return (
                 <Link key={item.name} href={item.href}>
-                  <button className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1 whitespace-nowrap ${
-                    isActive 
-                      ? `${theme.status.info.bg} ${theme.status.info.text}` 
+                  <button className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1 whitespace-nowrap ${isActive
+                      ? `${theme.status.info.bg} ${theme.status.info.text}`
                       : `${theme.textColors.muted} hover:${theme.backgrounds.card}/60`
-                  }`}>
+                    }`}>
                     <Icon className="w-3 h-3" />
                     <span>{item.name}</span>
                     {item.badge && item.badge > 0 && (

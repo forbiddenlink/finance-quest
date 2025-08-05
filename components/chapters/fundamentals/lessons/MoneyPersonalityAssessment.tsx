@@ -171,7 +171,7 @@ export default function MoneyPersonalityAssessment({ onComplete }: MoneyPersonal
       const newAnswers = { ...answers, [assessmentQuestions[currentQuestion].id]: option.text };
       const newScores = { ...scores };
       newScores[option.personality] += option.points;
-      
+
       setAnswers(newAnswers);
       setScores(newScores);
 
@@ -179,12 +179,12 @@ export default function MoneyPersonalityAssessment({ onComplete }: MoneyPersonal
         setCurrentQuestion(currentQuestion + 1);
       } else {
         // Calculate result
-        const dominantPersonality = Object.entries(newScores).reduce((a, b) => 
+        const dominantPersonality = Object.entries(newScores).reduce((a, b) =>
           newScores[a[0] as keyof typeof newScores] > newScores[b[0] as keyof typeof newScores] ? a : b
         )[0] as PersonalityType['type'];
-        
+
         const personalityResult = personalityTypes.find(p => p.type === dominantPersonality);
-        
+
         if (!personalityResult) {
           toast.error('Assessment error. Please try again.', {
             duration: 3000,
@@ -192,15 +192,15 @@ export default function MoneyPersonalityAssessment({ onComplete }: MoneyPersonal
           });
           return;
         }
-        
+
         setResult(personalityResult);
         setShowResults(true);
-        
+
         toast.success(`Assessment complete! You're "${personalityResult.title}" 🧠`, {
           duration: 4000,
           position: 'top-center',
         });
-        
+
         if (onComplete) {
           onComplete(personalityResult);
         }
@@ -226,7 +226,7 @@ export default function MoneyPersonalityAssessment({ onComplete }: MoneyPersonal
 
   if (showResults && result) {
     const IconComponent = result.icon;
-    
+
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}

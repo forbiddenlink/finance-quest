@@ -49,7 +49,7 @@ const enhancedQuizQuestions: QuizQuestion[] = [
     options: [
       "About $36,500 ($5 × 365 × 20)",
       "About $50,000",
-      "About $66,000", 
+      "About $66,000",
       "About $78,139"
     ],
     correctAnswer: 3,
@@ -114,7 +114,7 @@ const enhancedQuizQuestions: QuizQuestion[] = [
     options: [
       "Saving $1,000 once per year",
       "Saving $83 every month consistently",
-      "Saving $20 every week consistently", 
+      "Saving $20 every week consistently",
       "Saving random amounts when you remember"
     ],
     correctAnswer: 2,
@@ -214,7 +214,7 @@ export default function MoneyFundamentalsQuizEnhanced({ onComplete }: MoneyFunda
     setShowResults(false);
     setShowExplanation(false);
     setShowCelebration(false);
-    
+
     toast.success('Quiz reset! Ready for another attempt? 🔄', {
       duration: 2000,
       position: 'top-center',
@@ -378,15 +378,14 @@ export default function MoneyFundamentalsQuizEnhanced({ onComplete }: MoneyFunda
             <button
               key={index}
               onClick={() => handleAnswerSelect(index)}
-              className={`w-full p-4 text-left rounded-lg border-2 transition-colors ${
-                selectedAnswer === index
+              className={`w-full p-4 text-left rounded-lg border-2 transition-colors ${selectedAnswer === index
                   ? showExplanation
                     ? index === question.correctAnswer
                       ? `border-2 ${theme.status.success.border} ${theme.status.success.bg} ${theme.status.success.text}`
                       : `border-2 ${theme.status.error.border} ${theme.status.error.bg} ${theme.status.error.text}`
                     : `border-2 ${theme.borderColors.primary} ${theme.backgrounds.card} ${theme.textColors.primary}`
                   : `border-2 ${theme.borderColors.primary} hover:${theme.borderColors.primary} ${theme.textColors.secondary} hover:${theme.textColors.primary}`
-              }`}
+                }`}
             >
               <div className="flex items-center">
                 <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-current mr-3 flex items-center justify-center text-sm font-medium">
@@ -400,14 +399,12 @@ export default function MoneyFundamentalsQuizEnhanced({ onComplete }: MoneyFunda
 
         {/* Enhanced Explanation */}
         {showExplanation && (
-          <div className={`mb-6 p-4 rounded-lg ${
-            isCorrect 
-              ? `${theme.status.success.bg} border ${theme.status.success.border}` 
+          <div className={`mb-6 p-4 rounded-lg ${isCorrect
+              ? `${theme.status.success.bg} border ${theme.status.success.border}`
               : `${theme.status.error.bg} border ${theme.status.error.border}`
-          }`}>
-            <h3 className={`font-semibold mb-2 flex items-center gap-2 ${
-              isCorrect ? theme.status.success.text : theme.status.error.text
             }`}>
+            <h3 className={`font-semibold mb-2 flex items-center gap-2 ${isCorrect ? theme.status.success.text : theme.status.error.text
+              }`}>
               {isCorrect ? (
                 <>
                   <CheckCircle className="w-4 h-4" />

@@ -89,7 +89,7 @@ export interface ProgressStore {
   updateTimeSpent: (seconds: number) => void;
   updateStreak: () => void;
   useStreakFreeze: () => boolean;
-  
+
   // Engagement and gamification
   startStudySession: () => void;
   endStudySession: (sessionLength: number) => void;
@@ -97,7 +97,7 @@ export interface ProgressStore {
   awardXP: (amount: number, reason: string) => void;
   checkLevelUp: () => boolean;
   unlockAchievement: (achievementId: string) => void;
-  
+
   // Learning insights
   getStudyRecommendation: () => {
     type: 'continue' | 'review' | 'practice' | 'streak' | 'goal';
@@ -180,7 +180,7 @@ export const useProgressStore = create<ProgressStore>()(
 
         // Award XP for lesson completion
         get().awardXP(100, `Completed ${lessonId}`);
-        
+
         // Check for achievements
         const { userProgress } = get();
         if (userProgress.completedLessons.length === 1) {

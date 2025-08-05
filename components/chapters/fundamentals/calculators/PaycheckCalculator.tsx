@@ -45,8 +45,8 @@ export default function PaycheckCalculator() {
   const recordCalculatorUsage = useProgressStore(state => state.recordCalculatorUsage);
 
   // Configure Decimal.js for financial precision
-  Decimal.set({ 
-    precision: 10, 
+  Decimal.set({
+    precision: 10,
     rounding: Decimal.ROUND_HALF_UP,
     toExpNeg: -7,
     toExpPos: 21
@@ -144,7 +144,7 @@ export default function PaycheckCalculator() {
       const bracketMin = toDecimal(bracket.min);
       const bracketMax = toDecimal(bracket.max);
       const taxableInThisBracket = Decimal.min(remainingIncome, bracketMax.minus(bracketMin));
-      
+
       tax = tax.plus(taxableInThisBracket.mul(bracket.rate));
       remainingIncome = remainingIncome.minus(taxableInThisBracket);
     }
@@ -159,7 +159,7 @@ export default function PaycheckCalculator() {
     }
 
     setIsCalculating(true);
-    
+
     // Add small delay to show loading state
     await new Promise(resolve => setTimeout(resolve, 300));
 
@@ -187,7 +187,7 @@ export default function PaycheckCalculator() {
     const medicareRate = toDecimal(0.0145);
     const stateDisabilityRate = toDecimal(0.001);
     const socialSecurityWageBase = toDecimal(160200).div(12); // 2024 SS wage base monthly
-    
+
     const socialSecurity = Decimal.min(grossDecimal.mul(socialSecurityRate), socialSecurityWageBase.mul(socialSecurityRate));
     const medicare = grossDecimal.mul(medicareRate);
     const stateDisability = grossDecimal.mul(stateDisabilityRate);
@@ -213,11 +213,10 @@ export default function PaycheckCalculator() {
 
     // Show success message with key insight
     const takeHomePercentage = Math.round((netPay.div(grossDecimal)).mul(100).toNumber());
-    toast.success(`💡 Your take-home rate is ${takeHomePercentage}%! ${
-      takeHomePercentage > 75 ? 'Excellent!' : 
-      takeHomePercentage > 70 ? 'Good rate!' : 
-      'Consider optimizing deductions.'
-    }`, {
+    toast.success(`💡 Your take-home rate is ${takeHomePercentage}%! ${takeHomePercentage > 75 ? 'Excellent!' :
+        takeHomePercentage > 70 ? 'Good rate!' :
+          'Consider optimizing deductions.'
+      }`, {
       duration: 4000,
       position: 'top-center',
     });
@@ -299,11 +298,10 @@ export default function PaycheckCalculator() {
                     type="number"
                     value={grossPay}
                     onChange={(e) => handleGrossPayChange(e.target.value)}
-                    className={`pl-8 w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all text-lg ${
-                      errors.grossPay 
-                        ? 'border-red-500 bg-red-50/5' 
+                    className={`pl-8 w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all text-lg ${errors.grossPay
+                        ? 'border-red-500 bg-red-50/5'
                         : `${theme.borderColors.primary} bg-slate-800/50`
-                    }`}
+                      }`}
                     placeholder="5000"
                     min="0"
                     max="100000"
@@ -390,11 +388,10 @@ export default function PaycheckCalculator() {
                     type="number"
                     value={healthInsurance}
                     onChange={(e) => handleHealthInsuranceChange(e.target.value)}
-                    className={`pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all ${
-                      errors.healthInsurance 
-                        ? 'border-red-500 bg-red-50/5' 
+                    className={`pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all ${errors.healthInsurance
+                        ? 'border-red-500 bg-red-50/5'
                         : `${theme.borderColors.primary} bg-slate-800/50`
-                    }`}
+                      }`}
                     placeholder="200"
                     min="0"
                     max="2000"
@@ -436,11 +433,10 @@ export default function PaycheckCalculator() {
                     step="0.5"
                     value={retirement401k}
                     onChange={(e) => handleRetirement401kChange(e.target.value)}
-                    className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all ${
-                      errors.retirement401k 
-                        ? 'border-red-500 bg-red-50/5' 
+                    className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all ${errors.retirement401k
+                        ? 'border-red-500 bg-red-50/5'
                         : `${theme.borderColors.primary} bg-slate-800/50`
-                    }`}
+                      }`}
                     placeholder="5"
                     min="0"
                     max="50"
@@ -513,13 +509,12 @@ export default function PaycheckCalculator() {
                       <Info className="w-4 h-4" />
                       Take-home percentage:
                     </span>
-                    <span className={`font-semibold text-lg ${
-                      ((breakdown.netPay / breakdown.grossPay) * 100) > 75 
-                        ? theme.status.success.text 
-                        : ((breakdown.netPay / breakdown.grossPay) * 100) > 70 
-                          ? theme.status.warning.text 
+                    <span className={`font-semibold text-lg ${((breakdown.netPay / breakdown.grossPay) * 100) > 75
+                        ? theme.status.success.text
+                        : ((breakdown.netPay / breakdown.grossPay) * 100) > 70
+                          ? theme.status.warning.text
                           : theme.status.error.text
-                    }`}>
+                      }`}>
                       {((breakdown.netPay / breakdown.grossPay) * 100).toFixed(1)}%
                     </span>
                   </div>
@@ -635,13 +630,12 @@ export default function PaycheckCalculator() {
           <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 text-sm ${theme.textColors.secondary}`}>
             <div className={`p-4 ${theme.backgrounds.glass} rounded-lg border ${theme.borderColors.primary}`}>
               <h4 className="font-semibold mb-2 flex items-center gap-1">
-                <AlertCircle className={`w-4 h-4 ${
-                  ((breakdown.federalTax + breakdown.stateTax) / breakdown.grossPay) > 0.25 
-                    ? 'text-red-500' 
-                    : ((breakdown.federalTax + breakdown.stateTax) / breakdown.grossPay) > 0.20 
-                      ? 'text-yellow-500' 
+                <AlertCircle className={`w-4 h-4 ${((breakdown.federalTax + breakdown.stateTax) / breakdown.grossPay) > 0.25
+                    ? 'text-red-500'
+                    : ((breakdown.federalTax + breakdown.stateTax) / breakdown.grossPay) > 0.20
+                      ? 'text-yellow-500'
                       : 'text-green-500'
-                }`} />
+                  }`} />
                 Tax Efficiency Analysis
               </h4>
               <p className="mb-2">Your effective tax rate is {(((breakdown.federalTax + breakdown.stateTax) / breakdown.grossPay) * 100).toFixed(1)}%.</p>
@@ -653,7 +647,7 @@ export default function PaycheckCalculator() {
                 <p className="text-green-400">✅ <strong>Great tax efficiency!</strong> Your pre-tax deductions are working well.</p>
               )}
             </div>
-            
+
             <div className={`p-4 ${theme.backgrounds.glass} rounded-lg border ${theme.borderColors.primary}`}>
               <h4 className="font-semibold mb-2 flex items-center gap-1">
                 <Info className="w-4 h-4 text-blue-500" />
@@ -663,16 +657,15 @@ export default function PaycheckCalculator() {
               <p className="mb-2">Medicare: {formatCurrency(breakdown.medicare)} (1.45%)</p>
               <p className="text-slate-400">These payroll taxes fund your future benefits. Social Security provides retirement income, while Medicare covers healthcare after age 65.</p>
             </div>
-            
+
             <div className={`p-4 ${theme.backgrounds.glass} rounded-lg border ${theme.borderColors.primary}`}>
               <h4 className="font-semibold mb-2 flex items-center gap-1">
-                <TrendingDown className={`w-4 h-4 ${
-                  (breakdown.retirement401k || 0) >= breakdown.grossPay * 0.10 
-                    ? 'text-green-500' 
-                    : (breakdown.retirement401k || 0) >= breakdown.grossPay * 0.05 
-                      ? 'text-yellow-500' 
+                <TrendingDown className={`w-4 h-4 ${(breakdown.retirement401k || 0) >= breakdown.grossPay * 0.10
+                    ? 'text-green-500'
+                    : (breakdown.retirement401k || 0) >= breakdown.grossPay * 0.05
+                      ? 'text-yellow-500'
                       : 'text-red-500'
-                }`} />
+                  }`} />
                 Retirement Savings Analysis
               </h4>
               {breakdown.retirement401k && breakdown.retirement401k > 0 ? (
@@ -693,22 +686,21 @@ export default function PaycheckCalculator() {
                 </div>
               )}
             </div>
-            
+
             <div className={`p-4 ${theme.backgrounds.glass} rounded-lg border ${theme.borderColors.primary}`}>
               <h4 className="font-semibold mb-2 flex items-center gap-1">
-                <Calculator className={`w-4 h-4 ${
-                  (breakdown.netPay / breakdown.grossPay) > 0.75 
-                    ? 'text-green-500' 
-                    : (breakdown.netPay / breakdown.grossPay) > 0.70 
-                      ? 'text-yellow-500' 
+                <Calculator className={`w-4 h-4 ${(breakdown.netPay / breakdown.grossPay) > 0.75
+                    ? 'text-green-500'
+                    : (breakdown.netPay / breakdown.grossPay) > 0.70
+                      ? 'text-yellow-500'
                       : 'text-red-500'
-                }`} />
+                  }`} />
                 Take-Home Optimization
               </h4>
               <p className="mb-2">Your take-home rate of {((breakdown.netPay / breakdown.grossPay) * 100).toFixed(1)}% is {
                 (breakdown.netPay / breakdown.grossPay) > 0.75 ? 'excellent 🌟' :
-                  (breakdown.netPay / breakdown.grossPay) > 0.70 ? 'good 👍' : 
-                  (breakdown.netPay / breakdown.grossPay) > 0.65 ? 'average 📊' : 'below average ⚠️'
+                  (breakdown.netPay / breakdown.grossPay) > 0.70 ? 'good 👍' :
+                    (breakdown.netPay / breakdown.grossPay) > 0.65 ? 'average 📊' : 'below average ⚠️'
               }</p>
               {(breakdown.netPay / breakdown.grossPay) <= 0.70 && (
                 <p className="text-amber-400">💡 <strong>Optimization tip:</strong> Review your withholdings and consider strategies like HSA contributions, transit benefits, or flexible spending accounts.</p>

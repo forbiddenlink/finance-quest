@@ -8,7 +8,7 @@ import { useProgressStore } from './progressStore';
 // Legacy hook for components still using the old context pattern
 export const useProgress = () => {
   const store = useProgressStore();
-  
+
   return {
     userProgress: store.userProgress,
     completeLesson: store.completeLesson,
@@ -25,7 +25,7 @@ export const useProgress = () => {
 // Enhanced hooks for new features
 export const useEnhancedProgress = () => {
   const store = useProgressStore();
-  
+
   return {
     ...store,
     // Computed values for convenience
@@ -37,27 +37,27 @@ export const useEnhancedProgress = () => {
     totalTimeSpentHours: Math.round(store.userProgress.totalTimeSpent / 3600 * 10) / 10,
     currentLevel: store.userProgress.userLevel,
     totalXP: store.userProgress.totalXP,
-    
+
     // Streak helpers
     streakStatus: store.getStreakMotivation().streakStatus,
     streakMessage: store.getStreakMotivation().message,
     canUseStreakFreeze: store.userProgress.streakFreezesUsed < 3,
-    
+
     // Goal tracking
     weeklyGoalProgress: (store.userProgress.weeklyProgress / store.userProgress.weeklyGoal) * 100,
     isWeeklyGoalMet: store.userProgress.weeklyProgress >= store.userProgress.weeklyGoal,
-    
+
     // Helper methods
     hasPassedChapter: (chapterId: number) => {
       const quizId = `chapter${chapterId}-quiz`;
       const score = store.userProgress.quizScores[quizId];
       return score && score >= 80;
     },
-    
+
     getStrugglingAreas: () => store.userProgress.strugglingTopics,
-    
+
     getMasteredConcepts: () => store.userProgress.learningAnalytics.conceptsMastered,
-    
+
     getUserRank: () => {
       const totalXP = store.userProgress.totalXP;
       if (totalXP >= 25000) return { rank: 'Financial Guru', color: 'text-purple-400' };
@@ -68,13 +68,13 @@ export const useEnhancedProgress = () => {
       if (totalXP >= 1000) return { rank: 'Budget Builder', color: 'text-amber-400' };
       return { rank: 'Finance Novice', color: 'text-slate-400' };
     },
-    
+
     getXPToNextLevel: () => {
       const currentLevel = store.userProgress.userLevel;
       const xpForNextLevel = currentLevel * 1000;
       return xpForNextLevel - store.userProgress.currentXP;
     },
-    
+
     getLevelProgress: () => {
       const currentLevel = store.userProgress.userLevel;
       const xpForCurrentLevel = (currentLevel - 1) * 1000;
@@ -83,20 +83,20 @@ export const useEnhancedProgress = () => {
       const totalLevelXP = xpForNextLevel - xpForCurrentLevel;
       return Math.min(100, Math.max(0, (currentLevelXP / totalLevelXP) * 100));
     },
-    
+
     getRecommendedNextAction: () => {
       return store.getStudyRecommendation();
     },
-    
+
     getPersonalizedMessage: () => {
       return store.getPersonalizedEncouragement();
     },
-    
+
     // Advanced analytics
     getLearningVelocity: () => store.userProgress.learningAnalytics.learningVelocity,
     getRetentionRate: () => store.userProgress.learningAnalytics.retentionRate,
     getFocusScore: () => store.userProgress.learningAnalytics.focusScore,
-    
+
     // Engagement metrics
     getEngagementScore: () => {
       const metrics = store.userProgress.engagementMetrics;
@@ -105,11 +105,11 @@ export const useEnhancedProgress = () => {
       const baseScore = 20; // Everyone starts with some engagement
       return Math.min(100, baseScore + streakBonus + sessionBonus);
     },
-    
+
     isHighlyEngaged: () => {
       const engagementScore = store.userProgress.engagementMetrics.sessionsThisWeek >= 3 &&
-                             store.userProgress.streakDays >= 3 &&
-                             store.userProgress.learningAnalytics.averageQuizScore >= 75;
+        store.userProgress.streakDays >= 3 &&
+        store.userProgress.learningAnalytics.averageQuizScore >= 75;
       return engagementScore;
     }
   };
