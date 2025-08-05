@@ -8,7 +8,7 @@ export interface ValidationRule {
     min?: number;
     max?: number;
     type?: 'number' | 'currency' | 'percentage' | 'integer';
-    custom?: (value: any) => string | null;
+    custom?: (value: unknown) => string | null;
 }
 
 export interface ValidationResult {
@@ -23,7 +23,7 @@ export interface FieldValidation {
 /**
  * Validates a single field based on its rules
  */
-export function validateField(value: any, rules: ValidationRule, fieldName: string): string | null {
+export function validateField(value: unknown, rules: ValidationRule, fieldName: string): string | null {
     // Check required
     if (rules.required && (value === '' || value === null || value === undefined)) {
         return `${fieldName} is required`;
@@ -34,7 +34,7 @@ export function validateField(value: any, rules: ValidationRule, fieldName: stri
         return null;
     }
 
-    const numValue = typeof value === 'string' ? parseFloat(value) : value;
+    const numValue = typeof value === 'string' ? parseFloat(value) : typeof value === 'number' ? value : NaN;
 
     // Check if valid number
     if (rules.type && ['number', 'currency', 'percentage', 'integer'].includes(rules.type)) {
@@ -53,13 +53,15 @@ export function validateField(value: any, rules: ValidationRule, fieldName: stri
         }
     }
 
-    // Check min/max
-    if (rules.min !== undefined && numValue < rules.min) {
-        return `${fieldName} must be at least ${rules.min}`;
-    }
+    // Check min/max (only for valid numbers)
+    if (typeof numValue === 'number' && !isNaN(numValue)) {
+        if (rules.min !== undefined && numValue < rules.min) {
+            return `${fieldName} must be at least ${rules.min}`;
+        }
 
-    if (rules.max !== undefined && numValue > rules.max) {
-        return `${fieldName} must be no more than ${rules.max}`;
+        if (rules.max !== undefined && numValue > rules.max) {
+            return `${fieldName} must be no more than ${rules.max}`;
+        }
     }
 
     // Custom validation
@@ -73,7 +75,7 @@ export function validateField(value: any, rules: ValidationRule, fieldName: stri
 /**
  * Validates multiple fields at once
  */
-export function validateFields(values: Record<string, any>, validations: FieldValidation): ValidationResult {
+export function validateFields(values: Record<string, unknown>, validations: FieldValidation): ValidationResult {
     const errors: Record<string, string> = {};
 
     Object.entries(validations).forEach(([fieldName, rules]) => {
@@ -149,7 +151,7 @@ export const ValidationPresets = {
         max: 100000
     }),
 
-    custom: (validator: (value: any) => string | null): ValidationRule => ({
+    custom: (validator: (value: unknown) => string | null): ValidationRule => ({
         custom: validator
     })
 };
@@ -199,8 +201,8 @@ export const CalculatorValidations = {
     retirement: {
         currentAge: ValidationPresets.age(),
         retirementAge: ValidationPresets.custom((value) => {
-            const age = parseInt(value);
-            if (age < 50 || age > 80) return 'Retirement age should be between 50 and 80';
+            const age = parseInt(String(value));
+            if (isNaN(age) || age < 50 || age > 80) return 'Retirement age should be between 50 and 80';
             return null;
         }),
         currentSavings: ValidationPresets.currency(0, 50000000),
@@ -212,14 +214,21 @@ export const CalculatorValidations = {
     stockAnalysis: {
         currentPrice: ValidationPresets.currency(0.01, 100000),
         targetPrice: ValidationPresets.currency(0.01, 100000),
+        earnings: ValidationPresets.currency(0.01, 1000),
+        bookValue: ValidationPresets.currency(0.01, 1000),
+        revenue: ValidationPresets.currency(0.1, 10000),
+        growthRate: ValidationPresets.percentage(-50, 100),
         dividendYield: ValidationPresets.percentage(0, 50),
+        debt: ValidationPresets.currency(0, 10000),
+        equity: ValidationPresets.currency(0.1, 10000),
+        marketCap: ValidationPresets.currency(1, 50000),
+        freeCashFlow: ValidationPresets.currency(-100, 10000),
         peRatio: {
             required: false,
             type: 'number' as const,
             min: 0,
             max: 1000
-        },
-        growthRate: ValidationPresets.percentage(-50, 100)
+        }
     },
 
     budget: {
@@ -260,26 +269,6 @@ export const CalculatorValidations = {
         creditAge: { min: 0, max: 50, step: 0.5, required: true },
         creditMix: { min: 1, max: 6, required: true },
         newCredit: { min: 0, max: 20, required: true }
-    },
-
-    stockAnalysis: {
-        currentPrice: ValidationPresets.currency(0.01, 100000),
-        earnings: ValidationPresets.currency(0.01, 1000),
-        bookValue: ValidationPresets.currency(0.01, 1000),
-        revenue: ValidationPresets.currency(0.1, 10000),
-        growthRate: ValidationPresets.percentage(-50, 100),
-        dividendYield: ValidationPresets.percentage(0, 20),
-        debt: ValidationPresets.currency(0, 10000),
-        equity: ValidationPresets.currency(0.1, 10000),
-        marketCap: ValidationPresets.currency(1, 50000),
-        freeCashFlow: ValidationPresets.currency(-100, 10000),
-        targetPrice: ValidationPresets.currency(0.01, 100000),
-        peRatio: {
-            required: false,
-            type: 'number' as const,
-            min: 0,
-            max: 1000
-        }
     },
 
     taxOptimizer: {
@@ -469,7 +458,7 @@ export function hasValidationErrors(errors: Record<string, string>): boolean {
  * Real-time validation hook for React components
  */
 export function useFieldValidation(
-    value: any,
+    value: unknown,
     rules: ValidationRule,
     fieldName: string
 ): {

@@ -267,7 +267,7 @@ export default function StockAnalysisCalculator() {
                                                             <CartesianGrid strokeDasharray="3 3" />
                                                             <XAxis dataKey="name" />
                                                             <YAxis />
-                                                            <Tooltip formatter={(value: any) => [formatCurrency(value), 'Price']} />
+                                                            <Tooltip formatter={(value: unknown) => [formatCurrency(Number(value)), 'Price']} />
                                                             <Bar dataKey="value" fill="#3B82F6" />
                                                         </BarChart>
                                                     </ResponsiveContainer>
@@ -332,7 +332,7 @@ export default function StockAnalysisCalculator() {
                                                             <CartesianGrid strokeDasharray="3 3" />
                                                             <XAxis dataKey="name" />
                                                             <YAxis />
-                                                            <Tooltip formatter={(value: any) => [formatPercentage(value), 'Return']} />
+                                                            <Tooltip formatter={(value: unknown) => [formatPercentage(Number(value)), 'Return']} />
                                                             <Bar dataKey="value" fill="#10B981" />
                                                         </BarChart>
                                                     </ResponsiveContainer>

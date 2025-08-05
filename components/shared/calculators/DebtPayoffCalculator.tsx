@@ -7,7 +7,6 @@ import { InputGroup } from '@/components/shared/calculators/FormFields';
 import { formatCurrency } from '@/lib/utils/financial';
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { theme } from '@/lib/theme';
-import { useDebtPayoffCalculator } from '@/lib/utils/calculatorHooks';
 import {
   CreditCard,
   GraduationCap,
@@ -432,8 +431,8 @@ export default function DebtPayoffCalculator() {
                     </div>
                     <div className="flex items-center gap-2">
                       <span className={`text-xs px-2 py-1 rounded font-medium ${index === 0 ?
-                          'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300' :
-                          'bg-gray-100 text-gray-800 dark:bg-gray-900/50 dark:text-gray-300'
+                        'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300' :
+                        'bg-gray-100 text-gray-800 dark:bg-gray-900/50 dark:text-gray-300'
                         }`}>
                         #{index + 1} Priority
                       </span>

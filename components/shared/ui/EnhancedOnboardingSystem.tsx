@@ -1,12 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import {
     ChevronLeft,
-    ChevronRight,
     Target,
     Clock,
     TrendingUp,
@@ -14,14 +12,12 @@ import {
     BookOpen,
     Calculator,
     Brain,
-    Zap,
     CheckCircle,
     ArrowRight,
     DollarSign,
     PiggyBank,
     CreditCard,
     Home,
-    Car,
     GraduationCap,
     Briefcase,
     X
@@ -31,7 +27,7 @@ interface OnboardingStep {
     id: string;
     title: string;
     description: string;
-    component: React.ComponentType<{ onNext: () => void; onPrev: () => void; data: any; setData: (data: any) => void }>;
+    component: React.ComponentType<{ onNext: () => void; onPrev: () => void; data: Record<string, unknown>; setData: (data: Record<string, unknown>) => void }>;
 }
 
 interface UserPreferences {
@@ -45,7 +41,7 @@ interface UserPreferences {
 }
 
 // Financial Goal Selection Component
-const GoalSelectionStep: React.FC<{ onNext: () => void; onPrev: () => void; data: any; setData: (data: any) => void }> = ({
+const GoalSelectionStep: React.FC<{ onNext: () => void; onPrev: () => void; data: Record<string, unknown>; setData: (data: Record<string, unknown>) => void }> = ({
     onNext, data, setData
 }) => {
     const goals = [
@@ -59,7 +55,7 @@ const GoalSelectionStep: React.FC<{ onNext: () => void; onPrev: () => void; data
         { id: 'business', label: 'Start a Business', icon: Briefcase, description: 'Learn entrepreneurial finance' }
     ];
 
-    const selectedGoals = data.goals || [];
+    const selectedGoals = Array.isArray(data.goals) ? data.goals : [];
 
     const toggleGoal = (goalId: string) => {
         const newGoals = selectedGoals.includes(goalId)
@@ -75,7 +71,7 @@ const GoalSelectionStep: React.FC<{ onNext: () => void; onPrev: () => void; data
                     What are your financial goals?
                 </h2>
                 <p className={`text-lg ${theme.textColors.secondary}`}>
-                    Select all that apply. We'll personalize your learning path based on your goals.
+                    Select all that apply. We&apos;ll personalize your learning path based on your goals.
                 </p>
             </div>
 
@@ -89,8 +85,8 @@ const GoalSelectionStep: React.FC<{ onNext: () => void; onPrev: () => void; data
                             key={goal.id}
                             onClick={() => toggleGoal(goal.id)}
                             className={`p-6 rounded-xl border-2 text-left transition-all duration-200 ${isSelected
-                                    ? `${theme.borderColors.accent} ${theme.backgrounds.cardHover}`
-                                    : `${theme.borderColors.primary} ${theme.backgrounds.card} hover:${theme.backgrounds.cardHover}`
+                                ? `${theme.borderColors.primary} ${theme.backgrounds.cardHover}`
+                                : `${theme.borderColors.primary} ${theme.backgrounds.card} hover:${theme.backgrounds.cardHover}`
                                 }`}
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
@@ -121,8 +117,8 @@ const GoalSelectionStep: React.FC<{ onNext: () => void; onPrev: () => void; data
                     onClick={onNext}
                     disabled={selectedGoals.length === 0}
                     className={`px-8 py-3 rounded-xl font-semibold transition-all duration-200 ${selectedGoals.length > 0
-                            ? `${theme.buttons.primary} hover:scale-105`
-                            : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                        ? `${theme.buttons.primary} hover:scale-105`
+                        : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                         }`}
                     whileHover={selectedGoals.length > 0 ? { scale: 1.05 } : {}}
                     whileTap={selectedGoals.length > 0 ? { scale: 0.95 } : {}}
@@ -136,7 +132,7 @@ const GoalSelectionStep: React.FC<{ onNext: () => void; onPrev: () => void; data
 };
 
 // Experience Level Selection Component
-const ExperienceLevelStep: React.FC<{ onNext: () => void; onPrev: () => void; data: any; setData: (data: any) => void }> = ({
+const ExperienceLevelStep: React.FC<{ onNext: () => void; onPrev: () => void; data: Record<string, unknown>; setData: (data: Record<string, unknown>) => void }> = ({
     onNext, onPrev, data, setData
 }) => {
     const levels = [
@@ -169,7 +165,7 @@ const ExperienceLevelStep: React.FC<{ onNext: () => void; onPrev: () => void; da
         <div className="max-w-3xl mx-auto">
             <div className="text-center mb-8">
                 <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-4`}>
-                    What's your experience level?
+                    What&apos;s your experience level?
                 </h2>
                 <p className={`text-lg ${theme.textColors.secondary}`}>
                     This helps us customize the difficulty and pace of your learning journey.
@@ -182,8 +178,8 @@ const ExperienceLevelStep: React.FC<{ onNext: () => void; onPrev: () => void; da
                         key={level.id}
                         onClick={() => setData({ ...data, experienceLevel: level.id })}
                         className={`w-full p-6 rounded-xl border-2 text-left transition-all duration-200 ${selectedLevel === level.id
-                                ? `${theme.borderColors.accent} ${theme.backgrounds.cardHover}`
-                                : `${theme.borderColors.primary} ${theme.backgrounds.card} hover:${theme.backgrounds.cardHover}`
+                            ? `${theme.borderColors.accent} ${theme.backgrounds.cardHover}`
+                            : `${theme.borderColors.primary} ${theme.backgrounds.card} hover:${theme.backgrounds.cardHover}`
                             }`}
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.99 }}
@@ -241,8 +237,8 @@ const ExperienceLevelStep: React.FC<{ onNext: () => void; onPrev: () => void; da
                     onClick={onNext}
                     disabled={!selectedLevel}
                     className={`px-8 py-3 rounded-xl font-semibold transition-all duration-200 ${selectedLevel
-                            ? `${theme.buttons.primary} hover:scale-105`
-                            : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                        ? `${theme.buttons.primary} hover:scale-105`
+                        : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                         }`}
                     whileHover={selectedLevel ? { scale: 1.05 } : {}}
                     whileTap={selectedLevel ? { scale: 0.95 } : {}}
@@ -256,7 +252,7 @@ const ExperienceLevelStep: React.FC<{ onNext: () => void; onPrev: () => void; da
 };
 
 // Time Commitment Selection Component
-const TimeCommitmentStep: React.FC<{ onNext: () => void; onPrev: () => void; data: any; setData: (data: any) => void }> = ({
+const TimeCommitmentStep: React.FC<{ onNext: () => void; onPrev: () => void; data: Record<string, unknown>; setData: (data: Record<string, unknown>) => void }> = ({
     onNext, onPrev, data, setData
 }) => {
     const timeOptions = [
@@ -276,7 +272,7 @@ const TimeCommitmentStep: React.FC<{ onNext: () => void; onPrev: () => void; dat
                     How much time can you commit daily?
                 </h2>
                 <p className={`text-lg ${theme.textColors.secondary}`}>
-                    We'll create a realistic learning schedule that fits your lifestyle.
+                    We&apos;ll create a realistic learning schedule that fits your lifestyle.
                 </p>
             </div>
 
@@ -286,8 +282,8 @@ const TimeCommitmentStep: React.FC<{ onNext: () => void; onPrev: () => void; dat
                         key={option.minutes}
                         onClick={() => setData({ ...data, timeCommitment: option.minutes, weeklyGoal: Math.floor(option.minutes / 10) * 7 })}
                         className={`w-full p-4 rounded-xl border-2 text-left transition-all duration-200 ${selectedTime === option.minutes
-                                ? `${theme.borderColors.accent} ${theme.backgrounds.cardHover}`
-                                : `${theme.borderColors.primary} ${theme.backgrounds.card} hover:${theme.backgrounds.cardHover}`
+                            ? `${theme.borderColors.accent} ${theme.backgrounds.cardHover}`
+                            : `${theme.borderColors.primary} ${theme.backgrounds.card} hover:${theme.backgrounds.cardHover}`
                             }`}
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.99 }}
@@ -330,8 +326,8 @@ const TimeCommitmentStep: React.FC<{ onNext: () => void; onPrev: () => void; dat
                     onClick={onNext}
                     disabled={!selectedTime}
                     className={`px-8 py-3 rounded-xl font-semibold transition-all duration-200 ${selectedTime
-                            ? `${theme.buttons.primary} hover:scale-105`
-                            : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                        ? `${theme.buttons.primary} hover:scale-105`
+                        : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                         }`}
                     whileHover={selectedTime ? { scale: 1.05 } : {}}
                     whileTap={selectedTime ? { scale: 0.95 } : {}}
@@ -345,7 +341,7 @@ const TimeCommitmentStep: React.FC<{ onNext: () => void; onPrev: () => void; dat
 };
 
 // Welcome & Summary Component
-const WelcomeStep: React.FC<{ onNext: () => void; onPrev: () => void; data: any; setData: (data: any) => void }> = ({
+const WelcomeStep: React.FC<{ onNext: () => void; onPrev: () => void; data: Record<string, unknown>; setData: (data: Record<string, unknown>) => void }> = ({
     onNext
 }) => {
     return (
@@ -356,7 +352,7 @@ const WelcomeStep: React.FC<{ onNext: () => void; onPrev: () => void; data: any;
                 transition={{ delay: 0.2 }}
                 className="mb-8"
             >
-                <div className={`w-24 h-24 ${theme.backgrounds.accent} rounded-full flex items-center justify-center mx-auto mb-6`}>
+                <div className={`w-24 h-24 ${theme.backgrounds.primary} rounded-full flex items-center justify-center mx-auto mb-6`}>
                     <DollarSign className="w-12 h-12 text-white" />
                 </div>
             </motion.div>
@@ -376,7 +372,7 @@ const WelcomeStep: React.FC<{ onNext: () => void; onPrev: () => void; data: any;
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
             >
-                Your journey to financial literacy starts here. Let's personalize your learning experience.
+                Your journey to financial literacy starts here. Let&apos;s personalize your learning experience.
             </motion.p>
 
             <motion.div
@@ -386,7 +382,7 @@ const WelcomeStep: React.FC<{ onNext: () => void; onPrev: () => void; data: any;
                 transition={{ delay: 0.5 }}
             >
                 <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
-                    What you'll get:
+                    What you&apos;ll get:
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {[

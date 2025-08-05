@@ -408,7 +408,7 @@ export const typographyUtils = {
     }
 } as const;
 
-export default {
+const typographyExport = {
     typography: advancedTypography,
     tokens: typographyTokens,
     classes: typographyClasses,
@@ -416,3 +416,5 @@ export default {
     animations: typographyAnimations,
     utils: typographyUtils
 };
+
+export default typographyExport;

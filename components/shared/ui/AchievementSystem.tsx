@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { Badge, Trophy, Star, Target, Calculator, TrendingUp, DollarSign, Award } from 'lucide-react';
 import { theme } from '@/lib/theme';
@@ -18,7 +18,7 @@ interface Achievement {
 }
 
 interface AchievementSystemProps {
-  userProgress: any; // From Zustand store
+  userProgress: Record<string, unknown>; // From Zustand store
   onAchievementUnlocked?: (achievement: Achievement) => void;
 }
 
@@ -27,7 +27,7 @@ export default function AchievementSystem({ userProgress, onAchievementUnlocked 
   const [showConfetti, setShowConfetti] = useState(false);
 
   // Define all available achievements
-  const allAchievements: Achievement[] = [
+  const allAchievements: Achievement[] = useMemo(() => [
     {
       id: 'first-calculation',
       title: 'Number Cruncher',
@@ -98,13 +98,13 @@ export default function AchievementSystem({ userProgress, onAchievementUnlocked 
       unlocked: false,
       rarity: 'rare'
     }
-  ];
+  ], []);
 
   // Check for new achievements based on user progress
   useEffect(() => {
     const checkAchievements = () => {
       const newUnlocked: Achievement[] = [];
-      
+
       // Check each achievement
       allAchievements.forEach(achievement => {
         const wasUnlocked = localStorage.getItem(`achievement-${achievement.id}`) === 'true';
@@ -112,32 +112,32 @@ export default function AchievementSystem({ userProgress, onAchievementUnlocked 
 
         switch (achievement.id) {
           case 'first-calculation':
-            shouldUnlock = userProgress?.calculatorUsage && Object.keys(userProgress.calculatorUsage).length > 0;
+            shouldUnlock = Boolean(userProgress?.calculatorUsage && Object.keys(userProgress.calculatorUsage).length > 0);
             break;
-          
+
           case 'paycheck-optimizer':
             // This would be set when user uses paycheck calculator with >10% 401k
             shouldUnlock = localStorage.getItem('paycheck-401k-optimized') === 'true';
             break;
-          
+
           case 'calculator-explorer':
-            shouldUnlock = userProgress?.calculatorUsage && Object.keys(userProgress.calculatorUsage).length >= 5;
+            shouldUnlock = Boolean(userProgress?.calculatorUsage && Object.keys(userProgress.calculatorUsage).length >= 5);
             break;
-          
+
           case 'quiz-streak-5':
             // This would need streak tracking in the progress store
-            shouldUnlock = userProgress?.quizStreak >= 5;
+            shouldUnlock = Boolean(userProgress?.quizStreak && (userProgress.quizStreak as number) >= 5);
             break;
-          
+
           case 'precision-master':
             // Auto-unlock when user sees the new decimal.js implementation
             shouldUnlock = localStorage.getItem('used-decimal-calculator') === 'true';
             break;
-          
+
           case 'financial-guru':
             const completedChapters = userProgress?.completedChapters || [];
-            const avgQuizScore = userProgress?.averageQuizScore || 0;
-            shouldUnlock = completedChapters.length >= 14 && avgQuizScore >= 90;
+            const avgQuizScore = (userProgress?.averageQuizScore as number) || 0;
+            shouldUnlock = Array.isArray(completedChapters) && completedChapters.length >= 14 && avgQuizScore >= 90;
             break;
         }
 
@@ -156,7 +156,7 @@ export default function AchievementSystem({ userProgress, onAchievementUnlocked 
       if (newUnlocked.length > 0) {
         setNewlyUnlocked(newUnlocked);
         setShowConfetti(true);
-        
+
         // Call callback for each new achievement
         newUnlocked.forEach(achievement => {
           onAchievementUnlocked?.(achievement);
@@ -171,7 +171,7 @@ export default function AchievementSystem({ userProgress, onAchievementUnlocked 
     };
 
     checkAchievements();
-  }, [userProgress, onAchievementUnlocked]);
+  }, [userProgress, onAchievementUnlocked, allAchievements]);
 
   const getRarityColor = (rarity: Achievement['rarity']) => {
     switch (rarity) {
@@ -198,7 +198,7 @@ export default function AchievementSystem({ userProgress, onAchievementUnlocked 
   return (
     <div className="fixed top-4 right-4 z-50 space-y-2">
       {showConfetti && <ConfettiExplosion />}
-      
+
       {newlyUnlocked.map((achievement, index) => (
         <div
           key={achievement.id}
@@ -216,7 +216,7 @@ export default function AchievementSystem({ userProgress, onAchievementUnlocked 
             `}>
               {achievement.icon}
             </div>
-            
+
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
                 <Badge className="w-4 h-4 text-yellow-400" />
@@ -224,15 +224,15 @@ export default function AchievementSystem({ userProgress, onAchievementUnlocked 
                   Achievement Unlocked!
                 </h3>
               </div>
-              
+
               <h4 className={`font-semibold ${getRarityColor(achievement.rarity)} text-sm mb-1`}>
                 {achievement.title}
               </h4>
-              
+
               <p className={`text-xs ${theme.textColors.secondary} mb-2`}>
                 {achievement.description}
               </p>
-              
+
               <div className="flex items-center justify-between">
                 <span className={`text-xs font-medium ${getRarityColor(achievement.rarity)} uppercase`}>
                   {achievement.rarity}

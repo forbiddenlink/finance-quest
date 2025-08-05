@@ -1,47 +1,39 @@
-'use client';
+'use client'
 
 import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { useProgressStore } from '@/lib/store/progressStore';
+import { Building, TrendingUp, DollarSign, BarChart3, AlertTriangle, CheckCircle, Info } from 'lucide-react';
 import { theme } from '@/lib/theme';
-import { useBusinessCalculator } from '@/lib/utils/calculatorHooks';
 import CalculatorWrapper, { CalculatorMetadata } from './CalculatorWrapper';
-import { CurrencyInput, PercentageInput, NumberInput } from './FormFields';
+import { useBusinessCalculator } from '@/lib/utils/calculatorHooks';
+import { CurrencyInput, PercentageInput } from './FormFields';
 import { InputGroup } from './FormFields';
 import { ResultCard } from './ResultComponents';
 import { formatCurrency, formatPercentage } from '@/lib/utils/financial';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
-import {
-    Building,
-    Calculator,
-    DollarSign,
-    TrendingUp,
-    Target,
-    BarChart3,
-    PieChart,
-    Activity,
-    AlertTriangle,
-    CheckCircle,
-    Zap,
-    Info,
-    TrendingDown,
-    ArrowUp,
-    ArrowDown
-} from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useProgressStore } from '@/lib/store/progressStore';
+
+/**
+ * BusinessCalculatorEnhanced - Comprehensive business financial analysis tool
+ * 
+ * Features:
+ * - Break-even analysis with contribution margin calculations
+ * - Financial ratio analysis (liquidity, leverage, profitability)
+ * - Cash flow projections with growth scenarios
+ * - Business health scoring with recommendations
+ * - Interactive visualizations and insights
+ */
 
 export default function BusinessCalculatorEnhanced() {
     const { recordCalculatorUsage } = useProgressStore();
+
     const {
         values,
+        errors,
         result,
-        validation,
-        isValid,
         updateField,
-        reset,
-        errors
+        reset
     } = useBusinessCalculator();
 
-    // Track calculator usage
     useEffect(() => {
         recordCalculatorUsage('business-calculator');
     }, [recordCalculatorUsage]);
@@ -55,516 +47,498 @@ export default function BusinessCalculatorEnhanced() {
         tags: ['Business Finance', 'Break-even Analysis', 'Financial Ratios', 'Cash Flow', 'Business Health'],
         educationalNotes: [
             {
-                title: 'Break-Even Analysis',
-                content: 'Understanding your break-even point is crucial for pricing decisions and business viability assessment.',
-                tips: [
-                    'Lower break-even point means faster profitability',
-                    'Higher contribution margin provides more flexibility',
-                    'Monitor margin of safety to assess business risk',
-                    'Fixed costs should be carefully managed to improve break-even'
-                ]
+                title: 'Break-even Analysis',
+                content: 'Break-even analysis helps determine the minimum sales needed to cover costs',
+                tips: ['Monitor fixed vs variable costs', 'Track contribution margin', 'Plan for growth scenarios']
             },
             {
                 title: 'Financial Ratios',
-                content: 'Key ratios help assess business financial health and compare performance against industry benchmarks.',
-                tips: [
-                    'Current ratio > 1.5 indicates good liquidity',
-                    'Debt-to-equity < 1.0 shows conservative financing',
-                    'ROE > 15% is considered excellent',
-                    'Gross margin varies by industry but should be stable'
-                ]
+                content: 'Financial ratios provide insights into business health and performance',
+                tips: ['Current ratio shows liquidity', 'Debt-to-equity shows leverage', 'ROE measures profitability']
             },
             {
-                title: 'Cash Flow Management',
-                content: 'Cash flow is the lifeblood of business. Positive cash flow ensures operational continuity and growth funding.',
-                tips: [
-                    'Maintain 3-6 months of operating expenses in cash',
-                    'Invoice promptly and follow up on collections',
-                    'Negotiate favorable payment terms with suppliers',
-                    'Plan for seasonal cash flow variations'
-                ]
+                title: 'Cash Flow Projections',
+                content: 'Cash flow projections help plan for future financial needs',
+                tips: ['Plan for seasonal variations', 'Consider growth scenarios', 'Monitor burn rate']
+            },
+            {
+                title: 'Business Monitoring',
+                content: 'Regular monitoring of these metrics is crucial for business success',
+                tips: ['Review monthly', 'Set target benchmarks', 'Track trends over time']
             }
         ]
     };
 
-    if (!result) {
-        return (
-            <CalculatorWrapper metadata={metadata}>
-                <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        {/* Input Controls */}
-                        <div className="space-y-6">
-                            <div>
-                                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-                                    <Calculator className={`w-5 h-5 ${theme.textColors.primary}`} />
-                                    Business Parameters
-                                </h3>
-
-                                <div className="space-y-4">
-                                    <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4 backdrop-blur-sm`}>
-                                        <h4 className={`font-semibold ${theme.textColors.secondary} mb-3`}>Break-Even Analysis</h4>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                            <CurrencyInput
-                                                label="Fixed Costs"
-                                                value={values.fixedCosts.toString()}
-                                                onChange={(value) => updateField('fixedCosts', value)}
-                                                error={errors.fixedCosts}
-                                                placeholder="10000"
-                                            />
-
-                                            <CurrencyInput
-                                                label="Variable Cost/Unit"
-                                                value={values.variableCostPerUnit.toString()}
-                                                onChange={(value) => updateField('variableCostPerUnit', value)}
-                                                error={errors.variableCostPerUnit}
-                                                placeholder="15"
-                                            />
-
-                                            <CurrencyInput
-                                                label="Price Per Unit"
-                                                value={values.pricePerUnit.toString()}
-                                                onChange={(value) => updateField('pricePerUnit', value)}
-                                                error={errors.pricePerUnit}
-                                                placeholder="25"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Placeholder for Results */}
-                        <div className="space-y-6">
-                            <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-6 backdrop-blur-sm`}>
-                                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-                                    <BarChart3 className={`w-5 h-5 ${theme.textColors.primary}`} />
-                                    Business Analysis
-                                </h3>
-                                <p className={`${theme.textColors.secondary} text-center py-8`}>
-                                    Enter business parameters to see comprehensive financial analysis
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </CalculatorWrapper>
-        );
-    }
-
     return (
         <CalculatorWrapper metadata={metadata}>
             <div className="space-y-8">
-                {/* Input Controls */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}
-                >
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        {/* Break-Even Analysis */}
-                        <div className="space-y-4">
-                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-                                <Target className={`w-5 h-5 ${theme.textColors.primary}`} />
-                                Break-Even Analysis
+                {/* Input Section */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Break-even Analysis */}
+                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className={`p-2 rounded-lg ${theme.backgrounds.card}`}>
+                                <TrendingUp className="w-5 h-5 text-amber-400" />
+                            </div>
+                            <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>
+                                Break-even Analysis
                             </h3>
-
-                            <InputGroup>
-                                <CurrencyInput
-                                    label="Fixed Costs"
-                                    value={values.fixedCosts.toString()}
-                                    onChange={(value) => updateField('fixedCosts', value)}
-                                    error={errors.fixedCosts}
-                                />
-
-                                <CurrencyInput
-                                    label="Variable Cost/Unit"
-                                    value={values.variableCostPerUnit.toString()}
-                                    onChange={(value) => updateField('variableCostPerUnit', value)}
-                                    error={errors.variableCostPerUnit}
-                                />
-
-                                <CurrencyInput
-                                    label="Price Per Unit"
-                                    value={values.pricePerUnit.toString()}
-                                    onChange={(value) => updateField('pricePerUnit', value)}
-                                    error={errors.pricePerUnit}
-                                />
-                            </InputGroup>
                         </div>
 
-                        {/* Financial Ratios */}
                         <div className="space-y-4">
-                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-                                <BarChart3 className={`w-5 h-5 ${theme.textColors.primary}`} />
-                                Financial Ratios
-                            </h3>
+                            <CurrencyInput
+                                id="fixedCosts"
+                                label="Fixed Costs (Monthly)"
+                                value={values.fixedCosts}
+                                onChange={(value: string) => updateField('fixedCosts', value)}
+                                error={errors.fixedCosts}
+                                placeholder="Enter monthly fixed costs"
+                            />
 
-                            <InputGroup>
+                            <CurrencyInput
+                                id="variableCostPerUnit"
+                                label="Variable Cost Per Unit"
+                                value={values.variableCostPerUnit}
+                                onChange={(value: string) => updateField('variableCostPerUnit', value)}
+                                error={errors.variableCostPerUnit}
+                                placeholder="Enter cost per unit"
+                            />
+
+                            <CurrencyInput
+                                id="pricePerUnit"
+                                label="Price Per Unit"
+                                value={values.pricePerUnit}
+                                onChange={(value: string) => updateField('pricePerUnit', value)}
+                                error={errors.pricePerUnit}
+                                placeholder="Enter selling price per unit"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Financial Position */}
+                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className={`p-2 rounded-lg ${theme.backgrounds.card}`}>
+                                <BarChart3 className="w-5 h-5 text-blue-400" />
+                            </div>
+                            <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>
+                                Financial Position
+                            </h3>
+                        </div>
+
+                        <div className="space-y-6">
+                            <InputGroup title="Liquidity">
                                 <CurrencyInput
+                                    id="currentAssets"
                                     label="Current Assets"
-                                    value={values.currentAssets.toString()}
-                                    onChange={(value) => updateField('currentAssets', value)}
+                                    value={values.currentAssets}
+                                    onChange={(value: string) => updateField('currentAssets', value)}
                                     error={errors.currentAssets}
                                 />
 
                                 <CurrencyInput
+                                    id="currentLiabilities"
                                     label="Current Liabilities"
-                                    value={values.currentLiabilities.toString()}
-                                    onChange={(value) => updateField('currentLiabilities', value)}
+                                    value={values.currentLiabilities}
+                                    onChange={(value: string) => updateField('currentLiabilities', value)}
                                     error={errors.currentLiabilities}
                                 />
+                            </InputGroup>
 
+                            <InputGroup title="Capital Structure">
                                 <CurrencyInput
+                                    id="totalDebt"
                                     label="Total Debt"
-                                    value={values.totalDebt.toString()}
-                                    onChange={(value) => updateField('totalDebt', value)}
+                                    value={values.totalDebt}
+                                    onChange={(value: string) => updateField('totalDebt', value)}
                                     error={errors.totalDebt}
                                 />
 
                                 <CurrencyInput
+                                    id="totalEquity"
                                     label="Total Equity"
-                                    value={values.totalEquity.toString()}
-                                    onChange={(value) => updateField('totalEquity', value)}
+                                    value={values.totalEquity}
+                                    onChange={(value: string) => updateField('totalEquity', value)}
                                     error={errors.totalEquity}
                                 />
+                            </InputGroup>
 
+                            <InputGroup title="Performance">
                                 <CurrencyInput
+                                    id="revenue"
                                     label="Annual Revenue"
-                                    value={values.revenue.toString()}
-                                    onChange={(value) => updateField('revenue', value)}
+                                    value={values.revenue}
+                                    onChange={(value: string) => updateField('revenue', value)}
                                     error={errors.revenue}
                                 />
 
                                 <CurrencyInput
+                                    id="netIncome"
                                     label="Net Income"
-                                    value={values.netIncome.toString()}
-                                    onChange={(value) => updateField('netIncome', value)}
+                                    value={values.netIncome}
+                                    onChange={(value: string) => updateField('netIncome', value)}
                                     error={errors.netIncome}
                                 />
                             </InputGroup>
                         </div>
+                    </div>
 
-                        {/* Cash Flow & Growth */}
-                        <div className="space-y-4">
-                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-                                <Activity className={`w-5 h-5 ${theme.textColors.primary}`} />
-                                Cash Flow & Growth
+                    {/* Cash Flow Projections */}
+                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6 lg:col-span-2`}>
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className={`p-2 rounded-lg ${theme.backgrounds.card}`}>
+                                <DollarSign className="w-5 h-5 text-emerald-400" />
+                            </div>
+                            <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>
+                                Cash Flow Projections
+                            </h3>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <CurrencyInput
+                                id="monthlyRevenue"
+                                label="Monthly Revenue"
+                                value={values.monthlyRevenue}
+                                onChange={(value: string) => updateField('monthlyRevenue', value)}
+                                error={errors.monthlyRevenue}
+                            />
+
+                            <CurrencyInput
+                                id="monthlyExpenses"
+                                label="Monthly Expenses"
+                                value={values.monthlyExpenses}
+                                onChange={(value: string) => updateField('monthlyExpenses', value)}
+                                error={errors.monthlyExpenses}
+                            />
+
+                            <CurrencyInput
+                                id="initialCash"
+                                label="Initial Cash"
+                                value={values.initialCash}
+                                onChange={(value: string) => updateField('initialCash', value)}
+                                error={errors.initialCash}
+                            />
+
+                            <PercentageInput
+                                id="revenueGrowthRate"
+                                label="Revenue Growth Rate"
+                                value={values.revenueGrowthRate}
+                                onChange={(value: string) => updateField('revenueGrowthRate', value)}
+                                error={errors.revenueGrowthRate}
+                            />
+
+                            <PercentageInput
+                                id="expenseGrowthRate"
+                                label="Expense Growth Rate"
+                                value={values.expenseGrowthRate}
+                                onChange={(value: string) => updateField('expenseGrowthRate', value)}
+                                error={errors.expenseGrowthRate}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Results Section */}
+                {result && (
+                    <div className="space-y-8">
+                        {/* Business Health Overview */}
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                            <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-6`}>
+                                Business Health Overview
                             </h3>
 
-                            <InputGroup>
-                                <CurrencyInput
-                                    label="Monthly Revenue"
-                                    value={values.monthlyRevenue.toString()}
-                                    onChange={(value) => updateField('monthlyRevenue', value)}
-                                    error={errors.monthlyRevenue}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <ResultCard
+                                    label="Business Health Score"
+                                    value={result.businessHealthScore}
+                                    format="number"
+                                    description={`Overall Rating: ${result.businessHealthScore >= 80 ? 'Excellent' : result.businessHealthScore >= 60 ? 'Good' : 'Needs Improvement'}`}
+                                    variant={result.businessHealthScore >= 80 ? 'success' : result.businessHealthScore >= 60 ? 'warning' : 'error'}
+                                    icon={result.businessHealthScore >= 80 ? CheckCircle : result.businessHealthScore >= 60 ? Info : AlertTriangle}
                                 />
 
-                                <CurrencyInput
-                                    label="Monthly Expenses"
-                                    value={values.monthlyExpenses.toString()}
-                                    onChange={(value) => updateField('monthlyExpenses', value)}
-                                    error={errors.monthlyExpenses}
+                                <ResultCard
+                                    label="Risk Level"
+                                    value={result.riskLevel === 'Low' ? 3 : result.riskLevel === 'Medium' ? 2 : 1}
+                                    format="number"
+                                    description={`Risk Assessment: ${result.riskLevel === 'Low' ? 'Stable Operations' : result.riskLevel === 'Medium' ? 'Monitor Closely' : 'Immediate Action Required'}`}
+                                    variant={result.riskLevel === 'Low' ? 'success' : result.riskLevel === 'Medium' ? 'warning' : 'error'}
+                                    icon={result.riskLevel === 'Low' ? CheckCircle : result.riskLevel === 'Medium' ? Info : AlertTriangle}
                                 />
 
-                                <CurrencyInput
-                                    label="Initial Cash"
-                                    value={values.initialCash.toString()}
-                                    onChange={(value) => updateField('initialCash', value)}
-                                    error={errors.initialCash}
+                                <ResultCard
+                                    label="Cash Runway"
+                                    value={result.runwayMonths}
+                                    format="months"
+                                    description={`Cash will last: ${result.runwayMonths >= 12 ? 'Well positioned' : result.runwayMonths >= 6 ? 'Monitor closely' : 'Critical'}`}
+                                    variant={result.runwayMonths >= 12 ? 'success' : result.runwayMonths >= 6 ? 'warning' : 'error'}
                                 />
 
-                                <PercentageInput
-                                    label="Revenue Growth Rate"
-                                    value={values.revenueGrowthRate.toString()}
-                                    onChange={(value) => updateField('revenueGrowthRate', value)}
-                                    error={errors.revenueGrowthRate}
+                                <ResultCard
+                                    label="Monthly Burn Rate"
+                                    value={result.burnRate}
+                                    format="currency"
+                                    description={`Burn rate: ${result.burnRate > 0 ? 'Burning cash' : 'Generating cash'}`}
+                                    variant={result.burnRate > 0 ? 'error' : 'success'}
                                 />
+                            </div>
 
-                                <PercentageInput
-                                    label="Expense Growth Rate"
-                                    value={values.expenseGrowthRate.toString()}
-                                    onChange={(value) => updateField('expenseGrowthRate', value)}
-                                    error={errors.expenseGrowthRate}
-                                />
-                            </InputGroup>
+                            {/* Recommendations */}
+                            <div className="mt-8">
+                                <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
+                                    Key Recommendations
+                                </h4>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {result.recommendations?.map((rec: string, index: number) => (
+                                        <div key={index} className={`p-3 rounded-lg ${theme.backgrounds.card} border-l-4 ${theme.borderColors.primary}`}>
+                                            <div className="flex items-start gap-3">
+                                                <Info className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                                                <p className={`text-sm ${theme.textColors.secondary}`}>{rec}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </motion.div>
 
-                {/* Business Health Overview */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}
-                >
-                    <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-6 flex items-center gap-2`}>
-                        <Zap className={`w-5 h-5 ${theme.textColors.primary}`} />
-                        Business Health Overview
-                    </h3>
+                        {/* Break-even Analysis Results */}
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                            <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-6`}>
+                                Break-even Analysis
+                            </h3>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                        <ResultCard
-                            title="Health Score"
-                            value={`${result.businessHealthScore.toFixed(0)}%`}
-                            subtitle="Overall health"
-                            icon={result.businessHealthScore >= 75 ? CheckCircle : result.businessHealthScore >= 50 ? AlertTriangle : TrendingDown}
-                            variant={result.businessHealthScore >= 75 ? "success" : result.businessHealthScore >= 50 ? "warning" : "danger"}
-                        />
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <ResultCard
+                                    label="Break-even Units"
+                                    value={result.breakEvenUnits}
+                                    format="number"
+                                    description="Units needed to break even"
+                                    icon={TrendingUp}
+                                />
 
-                        <ResultCard
-                            title="Risk Level"
-                            value={result.riskLevel}
-                            subtitle="Business risk"
-                            icon={result.riskLevel === 'Low' ? CheckCircle : result.riskLevel === 'Medium' ? AlertTriangle : TrendingDown}
-                            variant={result.riskLevel === 'Low' ? "success" : result.riskLevel === 'Medium' ? "warning" : "danger"}
-                        />
+                                <ResultCard
+                                    label="Break-even Revenue"
+                                    value={result.breakEvenRevenue}
+                                    format="currency"
+                                />
 
-                        <ResultCard
-                            title="Runway"
-                            value={result.runwayMonths === Infinity ? "Profitable" : `${result.runwayMonths.toFixed(1)} months`}
-                            subtitle="Cash runway"
-                            icon={result.runwayMonths >= 12 ? CheckCircle : result.runwayMonths >= 6 ? AlertTriangle : TrendingDown}
-                            variant={result.runwayMonths >= 12 ? "success" : result.runwayMonths >= 6 ? "warning" : "danger"}
-                        />
+                                <ResultCard
+                                    label="Contribution Margin"
+                                    value={result.contributionMargin}
+                                    format="currency"
+                                />
 
-                        <ResultCard
-                            title="Monthly Burn"
-                            value={formatCurrency(result.burnRate)}
-                            subtitle="Net cash burn"
-                            icon={result.burnRate <= 0 ? TrendingUp : TrendingDown}
-                            variant={result.burnRate <= 0 ? "success" : "danger"}
-                        />
-                    </div>
-
-                    {/* Recommendations */}
-                    {result.recommendations.length > 0 && (
-                        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4 backdrop-blur-sm`}>
-                            <h4 className={`font-semibold ${theme.textColors.secondary} mb-3 flex items-center gap-2`}>
-                                <Info className="w-4 h-4" />
-                                Recommendations
-                            </h4>
-                            <ul className="space-y-2">
-                                {result.recommendations.map((rec, index) => (
-                                    <li key={index} className={`text-sm ${theme.textColors.secondary} flex items-start gap-2`}>
-                                        <ArrowUp className="w-3 h-3 mt-0.5 text-blue-400 flex-shrink-0" />
-                                        {rec}
-                                    </li>
-                                ))}
-                            </ul>
+                                <ResultCard
+                                    label="Margin of Safety"
+                                    value={result.marginOfSafety}
+                                    format="percentage"
+                                    description={result.marginOfSafety > 20 ? 'Strong safety margin' : result.marginOfSafety > 10 ? 'Moderate safety margin' : 'Low safety margin'}
+                                    variant={result.marginOfSafety > 20 ? 'success' : result.marginOfSafety > 10 ? 'warning' : 'error'}
+                                />
+                            </div>
                         </div>
-                    )}
-                </motion.div>
 
-                {/* Break-Even Analysis */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}
-                >
-                    <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-6 flex items-center gap-2`}>
-                        <Target className={`w-5 h-5 ${theme.textColors.primary}`} />
-                        Break-Even Analysis
-                    </h3>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <ResultCard
-                            title="Break-Even Units"
-                            value={result.breakEvenUnits.toFixed(0)}
-                            subtitle="Units to break even"
-                            icon={Target}
-                        />
-
-                        <ResultCard
-                            title="Break-Even Revenue"
-                            value={formatCurrency(result.breakEvenRevenue)}
-                            subtitle="Revenue to break even"
-                            icon={DollarSign}
-                        />
-
-                        <ResultCard
-                            title="Contribution Margin"
-                            value={formatCurrency(result.contributionMargin)}
-                            subtitle="Per unit contribution"
-                            icon={TrendingUp}
-                        />
-
-                        <ResultCard
-                            title="Margin of Safety"
-                            value={`${result.marginOfSafety.toFixed(1)}%`}
-                            subtitle="Safety buffer"
-                            icon={result.marginOfSafety >= 20 ? CheckCircle : AlertTriangle}
-                            variant={result.marginOfSafety >= 20 ? "success" : "warning"}
-                        />
-                    </div>
-                </motion.div>
-
-                {/* Financial Ratios */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}
-                >
-                    <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-6 flex items-center gap-2`}>
-                        <BarChart3 className={`w-5 h-5 ${theme.textColors.primary}`} />
-                        Financial Ratios
-                    </h3>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {/* Liquidity Ratios */}
-                        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4 backdrop-blur-sm`}>
-                            <h4 className={`font-semibold ${theme.textColors.secondary} mb-3`}>Liquidity</h4>
-                            <div className="space-y-3">
-                                <div className={`flex justify-between ${theme.textColors.secondary}`}>
-                                    <span>Current Ratio:</span>
-                                    <span className={`font-medium ${result.currentRatio >= 1.5 ? 'text-green-400' : result.currentRatio >= 1 ? 'text-yellow-400' : 'text-red-400'}`}>
+                        {/* Financial Ratios */}
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                            <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-6`}>
+                                Financial Ratios
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <div className={`p-4 rounded-lg ${theme.backgrounds.card}`}>
+                                    <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Liquidity</h4>
+                                    <p className={`text-2xl font-bold ${theme.textColors.primary}`}>
                                         {result.currentRatio.toFixed(2)}
-                                    </span>
+                                    </p>
+                                    <p className={`text-sm ${theme.textColors.secondary}`}>
+                                        Current Ratio {result.currentRatio >= 2 ? '(Excellent)' : result.currentRatio >= 1 ? '(Good)' : '(Poor)'}
+                                    </p>
                                 </div>
-                                <div className={`flex justify-between ${theme.textColors.secondary}`}>
-                                    <span>Working Capital:</span>
-                                    <span className={`font-medium ${result.workingCapital >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                                        {formatCurrency(result.workingCapital)}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
 
-                        {/* Leverage Ratios */}
-                        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4 backdrop-blur-sm`}>
-                            <h4 className={`font-semibold ${theme.textColors.secondary} mb-3`}>Leverage</h4>
-                            <div className="space-y-3">
-                                <div className={`flex justify-between ${theme.textColors.secondary}`}>
-                                    <span>Debt-to-Equity:</span>
-                                    <span className={`font-medium ${result.debtToEquityRatio <= 1 ? 'text-green-400' : result.debtToEquityRatio <= 2 ? 'text-yellow-400' : 'text-red-400'}`}>
+                                <div className={`p-4 rounded-lg ${theme.backgrounds.card}`}>
+                                    <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Leverage</h4>
+                                    <p className={`text-2xl font-bold ${theme.textColors.primary}`}>
                                         {result.debtToEquityRatio.toFixed(2)}
-                                    </span>
+                                    </p>
+                                    <p className={`text-sm ${theme.textColors.secondary}`}>
+                                        Debt-to-Equity {result.debtToEquityRatio <= 0.5 ? '(Conservative)' : result.debtToEquityRatio <= 1 ? '(Moderate)' : '(High Risk)'}
+                                    </p>
+                                </div>
+
+                                <div className={`p-4 rounded-lg ${theme.backgrounds.card}`}>
+                                    <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Profitability</h4>
+                                    <p className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                        {formatPercentage(result.netProfitMargin)}
+                                    </p>
+                                    <p className={`text-sm ${theme.textColors.secondary}`}>
+                                        Net Profit Margin {result.netProfitMargin >= 0.15 ? '(Excellent)' : result.netProfitMargin >= 0.05 ? '(Good)' : '(Poor)'}
+                                    </p>
+                                </div>
+
+                                <div className={`p-4 rounded-lg ${theme.backgrounds.card}`}>
+                                    <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Efficiency</h4>
+                                    <p className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                        {formatPercentage(result.roe)}
+                                    </p>
+                                    <p className={`text-sm ${theme.textColors.secondary}`}>
+                                        Return on Equity {result.roe >= 0.15 ? '(Excellent)' : result.roe >= 0.10 ? '(Good)' : '(Poor)'}
+                                    </p>
+                                </div>
+
+                                <div className={`p-4 rounded-lg ${theme.backgrounds.card}`}>
+                                    <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Asset Utilization</h4>
+                                    <p className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                        {formatPercentage(result.roa)}
+                                    </p>
+                                    <p className={`text-sm ${theme.textColors.secondary}`}>
+                                        Return on Assets {result.roa >= 0.10 ? '(Excellent)' : result.roa >= 0.05 ? '(Good)' : '(Poor)'}
+                                    </p>
+                                </div>
+
+                                <div className={`p-4 rounded-lg ${theme.backgrounds.card}`}>
+                                    <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>Working Capital</h4>
+                                    <p className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                        {formatCurrency(result.workingCapital)}
+                                    </p>
+                                    <p className={`text-sm ${theme.textColors.secondary}`}>
+                                        Available for operations {result.workingCapital > 0 ? '(Positive)' : '(Negative)'}
+                                    </p>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Profitability Ratios */}
-                        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4 backdrop-blur-sm`}>
-                            <h4 className={`font-semibold ${theme.textColors.secondary} mb-3`}>Profitability</h4>
-                            <div className="space-y-3">
-                                <div className={`flex justify-between ${theme.textColors.secondary}`}>
-                                    <span>Net Profit Margin:</span>
-                                    <span className={`font-medium ${result.netProfitMargin >= 10 ? 'text-green-400' : result.netProfitMargin >= 5 ? 'text-yellow-400' : 'text-red-400'}`}>
-                                        {result.netProfitMargin.toFixed(1)}%
-                                    </span>
+                        {/* Cash Flow Projection Chart */}
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                            <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-6`}>
+                                12-Month Cash Flow Projection
+                            </h3>
+
+                            <div className="h-80">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <LineChart
+                                        data={result.cashFlowProjection}
+                                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                                    >
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                                        <XAxis
+                                            dataKey="month"
+                                            stroke="#94a3b8"
+                                            tick={{ fill: '#94a3b8' }}
+                                        />
+                                        <YAxis
+                                            stroke="#94a3b8"
+                                            tick={{ fill: '#94a3b8' }}
+                                            tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                                        />
+                                        <Tooltip
+                                            contentStyle={{
+                                                backgroundColor: '#1e293b',
+                                                border: '1px solid #334155',
+                                                borderRadius: '8px',
+                                                color: '#f8fafc'
+                                            }}
+                                            formatter={(value: number) => [formatCurrency(value), 'Cash Balance']}
+                                        />
+                                        <Line
+                                            type="monotone"
+                                            dataKey="cumulativeCash"
+                                            stroke="#3b82f6"
+                                            strokeWidth={2}
+                                            dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
+                                        />
+                                        <Line
+                                            type="monotone"
+                                            dataKey="revenue"
+                                            stroke="#10b981"
+                                            strokeWidth={2}
+                                            dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
+                                        />
+                                        <Line
+                                            type="monotone"
+                                            dataKey="expenses"
+                                            stroke="#f59e0b"
+                                            strokeWidth={2}
+                                            dot={{ fill: '#f59e0b', strokeWidth: 2, r: 4 }}
+                                        />
+                                    </LineChart>
+                                </ResponsiveContainer>
+                            </div>
+
+                            <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 bg-blue-500 rounded"></div>
+                                    <span className={theme.textColors.secondary}>Cash Balance</span>
                                 </div>
-                                <div className={`flex justify-between ${theme.textColors.secondary}`}>
-                                    <span>ROE:</span>
-                                    <span className={`font-medium ${result.roe >= 15 ? 'text-green-400' : result.roe >= 10 ? 'text-yellow-400' : 'text-red-400'}`}>
-                                        {result.roe.toFixed(1)}%
-                                    </span>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 bg-emerald-500 rounded"></div>
+                                    <span className={theme.textColors.secondary}>Revenue Growth: {formatPercentage(Number(values.revenueGrowthRate) / 100)} monthly</span>
                                 </div>
-                                <div className={`flex justify-between ${theme.textColors.secondary}`}>
-                                    <span>ROA:</span>
-                                    <span className={`font-medium ${result.roa >= 10 ? 'text-green-400' : result.roa >= 5 ? 'text-yellow-400' : 'text-red-400'}`}>
-                                        {result.roa.toFixed(1)}%
-                                    </span>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 bg-amber-500 rounded"></div>
+                                    <span className={theme.textColors.secondary}>Expense Growth: {formatPercentage(Number(values.expenseGrowthRate) / 100)} monthly</span>
                                 </div>
+                            </div>
+                        </div>
+
+                        {/* Key Performance Metrics */}
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
+                            <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-6`}>
+                                Key Performance Metrics
+                            </h3>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {result.cashFlowProjection && result.cashFlowProjection.length > 0 && (
+                                    <>
+                                        <div className="text-center">
+                                            <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                                {formatCurrency(result.cashFlowProjection[result.cashFlowProjection.length - 1]?.cumulativeCash)}
+                                            </div>
+                                            <div className={`text-sm ${theme.textColors.secondary} mt-1`}>
+                                                Year-end Cash Balance
+                                            </div>
+                                        </div>
+
+                                        <div className="text-center">
+                                            <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                                {formatCurrency(result.cashFlowProjection.reduce((sum, month) => sum + month.revenue, 0))}
+                                            </div>
+                                            <div className={`text-sm ${theme.textColors.secondary} mt-1`}>
+                                                Total Revenue Projected
+                                            </div>
+                                        </div>
+
+                                        <div className="text-center">
+                                            <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                                {formatCurrency(result.cashFlowProjection.reduce((sum, month) => sum + month.expenses, 0))}
+                                            </div>
+                                            <div className={`text-sm ${theme.textColors.secondary} mt-1`}>
+                                                Total Expenses Projected
+                                            </div>
+                                        </div>
+
+                                        <div className="text-center">
+                                            <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                                                {formatCurrency(result.cashFlowProjection.reduce((sum, month) => sum + month.netCashFlow, 0))}
+                                            </div>
+                                            <div className={`text-sm ${theme.textColors.secondary} mt-1`}>
+                                                Net Cash Flow
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
-                </motion.div>
+                )}
 
-                {/* Cash Flow Projection */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}
-                >
-                    <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-6 flex items-center gap-2`}>
-                        <Activity className={`w-5 h-5 ${theme.textColors.primary}`} />
-                        12-Month Cash Flow Projection
-                    </h3>
-
-                    <div className="h-80 mb-4">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={result.cashFlowProjection}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                                <XAxis
-                                    dataKey="month"
-                                    stroke="rgba(255,255,255,0.7)"
-                                    tick={{ fill: 'rgba(255,255,255,0.7)', fontSize: 12 }}
-                                    tickFormatter={(value) => `M${value}`}
-                                />
-                                <YAxis
-                                    stroke="rgba(255,255,255,0.7)"
-                                    tick={{ fill: 'rgba(255,255,255,0.7)', fontSize: 12 }}
-                                    tickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
-                                />
-                                <Tooltip
-                                    labelFormatter={(value) => `Month ${value}`}
-                                    formatter={(value: any, name: string) => {
-                                        const formattedValue = formatCurrency(Number(value));
-                                        return [formattedValue, name === 'cumulativeCash' ? 'Cumulative Cash' :
-                                            name === 'revenue' ? 'Revenue' :
-                                                name === 'expenses' ? 'Expenses' : 'Net Cash Flow'];
-                                    }}
-                                    contentStyle={{
-                                        backgroundColor: 'rgba(17, 24, 39, 0.95)',
-                                        border: '1px solid rgba(255, 255, 255, 0.1)',
-                                        borderRadius: '8px',
-                                        color: 'white'
-                                    }}
-                                />
-                                <Line
-                                    type="monotone"
-                                    dataKey="revenue"
-                                    stroke="#10b981"
-                                    strokeWidth={2}
-                                    name="revenue"
-                                />
-                                <Line
-                                    type="monotone"
-                                    dataKey="expenses"
-                                    stroke="#ef4444"
-                                    strokeWidth={2}
-                                    name="expenses"
-                                />
-                                <Line
-                                    type="monotone"
-                                    dataKey="cumulativeCash"
-                                    stroke="#3b82f6"
-                                    strokeWidth={3}
-                                    name="cumulativeCash"
-                                />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4 backdrop-blur-sm text-center`}>
-                            <TrendingUp className={`w-6 h-6 text-green-400 mx-auto mb-2`} />
-                            <div className={`text-sm font-medium ${theme.textColors.secondary}`}>Revenue Growth</div>
-                            <div className={`text-xs ${theme.textColors.secondary}`}>
-                                {formatPercentage(values.revenueGrowthRate)}
-                            </div>
-                        </div>
-
-                        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4 backdrop-blur-sm text-center`}>
-                            <TrendingDown className={`w-6 h-6 text-red-400 mx-auto mb-2`} />
-                            <div className={`text-sm font-medium ${theme.textColors.secondary}`}>Expense Growth</div>
-                            <div className={`text-xs ${theme.textColors.secondary}`}>
-                                {formatPercentage(values.expenseGrowthRate)}
-                            </div>
-                        </div>
-
-                        <div className={`${theme.backgrounds.cardHover} border ${theme.borderColors.primary} rounded-lg p-4 backdrop-blur-sm text-center`}>
-                            <DollarSign className={`w-6 h-6 text-blue-400 mx-auto mb-2`} />
-                            <div className={`text-sm font-medium ${theme.textColors.secondary}`}>Year-End Cash</div>
-                            <div className={`text-xs ${theme.textColors.secondary}`}>
-                                {formatCurrency(result.cashFlowProjection[11]?.cumulativeCash || 0)}
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <button
+                        onClick={reset}
+                        className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 ${theme.buttons.secondary} hover:scale-105`}
+                    >
+                        Reset Calculator
+                    </button>
+                </div>
             </div>
         </CalculatorWrapper>
     );

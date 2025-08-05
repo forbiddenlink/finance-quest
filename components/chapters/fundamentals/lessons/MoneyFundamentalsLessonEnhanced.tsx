@@ -96,10 +96,6 @@ export default function MoneyFundamentalsLessonEnhanced() {
   const { userProgress, completeLesson } = useProgressStore();
   const [currentLesson, setCurrentLesson] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<boolean[]>(new Array(enhancedLessons.length).fill(false));
-  const [timeSpentOnLesson, setTimeSpentOnLesson] = useState(0);
-  const [lessonStartTime, setLessonStartTime] = useState<number>(Date.now());
-  const [showAchievement, setShowAchievement] = useState(false);
-  const [achievementData, setAchievementData] = useState<{ title: string, description: string } | null>(null);
 
   // Load completed lessons from global state
   useEffect(() => {
@@ -108,23 +104,6 @@ export default function MoneyFundamentalsLessonEnhanced() {
     );
     setCompletedLessons(newCompleted);
   }, [userProgress.completedLessons]);
-
-  // Track time spent on current lesson
-  useEffect(() => {
-    setLessonStartTime(Date.now());
-    const interval = setInterval(() => {
-      setTimeSpentOnLesson(prev => prev + 1);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [currentLesson]);
-
-  // Achievement system for lesson completion
-  const triggerAchievement = (title: string, description: string) => {
-    setAchievementData({ title, description });
-    setShowAchievement(true);
-    setTimeout(() => setShowAchievement(false), 4000);
-  };
 
   const markComplete = () => {
     const lessonId = `money-fundamentals-enhanced-${currentLesson}`;

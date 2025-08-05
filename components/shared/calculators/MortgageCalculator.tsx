@@ -2,7 +2,7 @@
 
 import React from 'react';
 import CalculatorWrapper from './CalculatorWrapper';
-import { CurrencyInput, PercentageInput, NumberInput, SelectField } from './FormFields';
+import { CurrencyInput, PercentageInput, SelectField } from './FormFields';
 import { InputGroup } from './FormFields';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Home, TrendingUp, Calendar, DollarSign, Percent, Calculator } from 'lucide-react';
@@ -31,7 +31,6 @@ export default function MortgageCalculator() {
   const {
     values,
     results,
-    validation,
     updateField,
     reset,
     errors
@@ -146,7 +145,6 @@ export default function MortgageCalculator() {
 
     const insights = [];
     const loanToValue = (results.loanAmount / parseFloat(values.homePrice)) * 100;
-    const debtToIncomeRatio = 28; // Assume 28% as target ratio
 
     // LTV insight
     if (loanToValue >= 80) {
@@ -302,8 +300,8 @@ export default function MortgageCalculator() {
                   type="button"
                   onClick={() => setDownPaymentType('percentage')}
                   className={`px-3 py-1 text-xs rounded ${downPaymentType === 'percentage'
-                      ? theme.buttons.primary
-                      : theme.buttons.secondary
+                    ? theme.buttons.primary
+                    : theme.buttons.secondary
                     }`}
                 >
                   Percentage
@@ -312,8 +310,8 @@ export default function MortgageCalculator() {
                   type="button"
                   onClick={() => setDownPaymentType('amount')}
                   className={`px-3 py-1 text-xs rounded ${downPaymentType === 'amount'
-                      ? theme.buttons.primary
-                      : theme.buttons.secondary
+                    ? theme.buttons.primary
+                    : theme.buttons.secondary
                     }`}
                 >
                   Amount
@@ -496,7 +494,7 @@ export default function MortgageCalculator() {
               ) : (
                 <div className="text-center py-8">
                   <Calculator className={`w-12 h-12 mx-auto mb-4 ${theme.textColors.muted}`} />
-                  <p className={theme.textColors.secondary}>Enable "Include additional housing costs" to see payment breakdown</p>
+                  <p className={theme.textColors.secondary}>Enable &quot;Include additional housing costs&quot; to see payment breakdown</p>
                 </div>
               )}
 

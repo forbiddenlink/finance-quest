@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
 import { CurrencyInput, SelectField } from '@/components/shared/calculators/FormFields';
 import { InputGroup } from '@/components/shared/calculators/FormFields';
@@ -10,7 +10,6 @@ import { formatCurrency } from '@/lib/utils/financial';
 import { Progress } from '@/components/ui/progress';
 import { theme } from '@/lib/theme';
 import { useEmergencyFundCalculator } from '@/lib/utils/calculatorHooks';
-import { validateFields } from '@/lib/utils/calculatorValidation';
 
 interface ExpenseCategory {
   name: string;
@@ -52,9 +51,7 @@ export default function EmergencyFundCalculator() {
 
   // Use the simplified hook with calculated expenses
   const {
-    values,
     results,
-    validation,
     updateField,
     reset: resetHook
   } = useEmergencyFundCalculator();
@@ -479,7 +476,7 @@ export default function EmergencyFundCalculator() {
                   const achieved = parseFloat(currentSavings) >= milestone.amount;
                   return (
                     <div key={index} className={`flex items-center justify-between p-4 rounded-lg border-2 ${achieved ? theme.status.success.bg + ' ' + theme.status.success.border :
-                        theme.backgrounds.cardHover + ' ' + theme.borderColors.primary
+                      theme.backgrounds.cardHover + ' ' + theme.borderColors.primary
                       }`}>
                       <div className="flex items-center gap-3">
                         {achieved ? (

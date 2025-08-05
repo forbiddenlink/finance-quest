@@ -123,8 +123,6 @@ Welcome to the comprehensive documentation for Finance Quest - the AI-powered fi
 
 Historical documentation has been moved to `docs/archive/` for reference:
 - `VISUAL_COMPONENTS.md`: Legacy visual design documentation
-- `MARKET_INTEGRATION_COMPLETE.md`: Historical market data implementation
-- `ICON_MODERNIZATION.md`: Icon system upgrade documentation
 - `BENEFICIAL_LIBRARIES.md`: Library evaluation and recommendations
 
 ---

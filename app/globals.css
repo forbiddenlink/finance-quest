@@ -80,7 +80,6 @@
   --spacing-6xl: 6rem;
   /* 96px */
 }
-}
 
 @media (prefers-color-scheme: dark) {
   :root {

@@ -37,6 +37,7 @@ class AdaptiveLearningEngine {
     }
 
     // Analyze user's learning patterns and performance
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     analyzeUserPerformance(userProgress: any): {
         strengths: string[];
         weaknesses: string[];
@@ -83,6 +84,7 @@ class AdaptiveLearningEngine {
         };
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private identifyStrengths(userProgress: any): string[] {
         const strengths: string[] = [];
         const quizScores = userProgress.quizScores;
@@ -113,6 +115,7 @@ class AdaptiveLearningEngine {
         return strengths;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     generateRecommendations(userProgress: any): AdaptiveLearningRecommendation[] {
         const analysis = this.analyzeUserPerformance(userProgress);
         const recommendations: AdaptiveLearningRecommendation[] = [];
@@ -181,6 +184,7 @@ class AdaptiveLearningEngine {
     }
 
     // Predict optimal next chapter based on readiness
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     predictOptimalPath(userProgress: any): {
         recommendedChapter: number;
         confidence: number;
@@ -249,6 +253,7 @@ class AdaptiveLearningEngine {
     }
 
     // Generate personalized learning goals
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     generateLearningGoals(userProgress: any): Array<{
         id: string;
         title: string;
@@ -263,7 +268,6 @@ class AdaptiveLearningEngine {
         const goals = [];
 
         // Weekly lesson goal
-        const currentWeeklyRate = userProgress.learningAnalytics.learningVelocity;
         const recommendedWeeklyRate = analysis.pace === 'fast' ? 6 : analysis.pace === 'careful' ? 2 : 4;
 
         goals.push({

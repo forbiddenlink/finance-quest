@@ -5,12 +5,13 @@
 Finance Quest is a production-ready AI-powered financial literacy platform addressing the 64% financial illiteracy crisis. Built with **Next.js 15.4.4** + **OpenAI GPT-4o-mini**, it provides personalized learning paths through interactive calculators, real-time progress tracking, and contextual AI coaching.
 
 ### **Current Architecture Status**
-- ✅ **Production-Ready**: 14+ complete chapters with full educational content
+- ✅ **Production-Ready**: 17 available chapters with full educational content
 - ✅ **AI Integration**: Real OpenAI GPT-4o-mini integration with contextual coaching
 - ✅ **Calculator Suite**: 13+ professional financial calculators with Finance.js
-- ✅ **State Management**: Advanced Zustand store with localStorage persistence
-- ✅ **Market Data**: Multi-API integration with intelligent fallbacks
+- ✅ **State Management**: Advanced Zustand store with localStorage persistence and analytics
+- ✅ **Market Data**: Multi-API integration (Yahoo Finance + Finnhub) with intelligent fallbacks
 - ✅ **Theme System**: Centralized design system for consistent UI
+- ✅ **Gamification**: Achievement system with guided tours, confetti, and progress tracking
 
 ---
 
@@ -50,7 +51,7 @@ finance-quest/
 │   ├── api/                      # API Routes
 │   │   ├── ai-chat/             # OpenAI integration
 │   │   └── market-data/         # Multi-API market data
-│   ├── chapter[1-14]/           # Educational chapters
+│   ├── chapter[1-17]/           # Educational chapters (17 available)
 │   ├── calculators/             # Standalone calculator pages
 │   └── layout.tsx               # Root layout with theme
 │

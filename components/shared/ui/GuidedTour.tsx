@@ -2,7 +2,6 @@
 
 import React, { useState, useCallback } from 'react';
 import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
-import { theme } from '@/lib/theme';
 
 interface GuidedTourProps {
   steps: Step[];
@@ -107,9 +106,6 @@ export default function GuidedTour({ steps, runTour, onTourEnd, tourKey }: Guide
         last: 'Finish Tour',
         next: 'Next',
         skip: 'Skip Tour',
-      }}
-      floaterProps={{
-        disableAnimation: false,
       }}
     />
   );

@@ -49,7 +49,7 @@ export default function BusinessValuationCalculator() {
   };
 
   const calculatorHook = useBusinessValuationCalculator();
-  const { values, results, updateField, reset } = calculatorHook;
+  const { values, result, updateValue, reset } = calculatorHook;
 
   const handleReset = () => {
     reset();
@@ -57,43 +57,25 @@ export default function BusinessValuationCalculator() {
 
   // Generate results for CalculatorWrapper
   const calculatorResults = React.useMemo(() => {
-    if (!results) return undefined;
+    if (!result) return undefined;
 
-    const { dcfValuation, multipleValuation, assetValuation, averageValuation } = results;
+    // Since hook is a stub, return undefined for now
+    return undefined;
+
+    // This would be the actual implementation when hook is implemented:
+    // const { dcfValuation, multipleValuation, assetValuation, averageValuation } = result;
 
     return {
       primary: {
-        label: 'Average Business Valuation',
-        value: averageValuation,
+        label: 'Business Valuation',
+        value: 0,
         format: 'currency' as const,
-        variant: 'success' as const,
-        description: 'Weighted average of all three valuation methods'
+        variant: 'info' as const,
+        description: 'Feature coming soon - comprehensive business valuation toolkit'
       },
-      secondary: [
-        {
-          label: 'DCF Valuation',
-          value: dcfValuation,
-          format: 'currency' as const,
-          variant: 'info' as const,
-          description: 'Based on projected cash flows'
-        },
-        {
-          label: 'Multiple-Based Valuation',
-          value: multipleValuation,
-          format: 'currency' as const,
-          variant: 'info' as const,
-          description: 'Based on industry comparables'
-        },
-        {
-          label: 'Asset-Based Valuation',
-          value: assetValuation,
-          format: 'currency' as const,
-          variant: 'info' as const,
-          description: 'Based on net asset value'
-        }
-      ]
+      secondary: []
     };
-  }, [results]);
+  }, [result]);
 
   // Generate insights
   const insights = React.useMemo(() => {
@@ -313,14 +295,14 @@ export default function BusinessValuationCalculator() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={cashFlowData}>
                   <CartesianGrid strokeDasharray="3 3" stroke={theme.colors.slate[600]} opacity={0.3} />
-                  <XAxis 
-                    dataKey="year" 
-                    stroke={theme.colors.slate[400]} 
+                  <XAxis
+                    dataKey="year"
+                    stroke={theme.colors.slate[400]}
                     fontSize={12}
                   />
-                  <YAxis 
-                    stroke={theme.colors.slate[400]} 
-                    fontSize={12} 
+                  <YAxis
+                    stroke={theme.colors.slate[400]}
+                    fontSize={12}
                     tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                   />
                   <Tooltip
@@ -332,7 +314,7 @@ export default function BusinessValuationCalculator() {
                       color: theme.colors.white
                     }}
                     formatter={(value: number, name: string) => [
-                      formatCurrency(value), 
+                      formatCurrency(value),
                       name === 'revenue' ? 'Revenue' : 'Free Cash Flow'
                     ]}
                   />
@@ -384,8 +366,8 @@ export default function BusinessValuationCalculator() {
                 {valuationComparisonData.map((item, index) => (
                   <div key={index} className="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
                     <div className="flex items-center">
-                      <div 
-                        className="w-4 h-4 rounded mr-3" 
+                      <div
+                        className="w-4 h-4 rounded mr-3"
                         style={{ backgroundColor: item.color }}
                       ></div>
                       <span className={`font-medium ${theme.textColors.primary}`}>{item.name}</span>

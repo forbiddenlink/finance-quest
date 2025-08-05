@@ -6,14 +6,13 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useCryptocurrencyAllocationCalculator } from '@/lib/utils/calculatorHooks';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Coins, Shield, TrendingUp, AlertTriangle, CheckCircle2, RefreshCw, Target, Zap } from 'lucide-react';
+import { Coins, Shield, TrendingUp, AlertTriangle, CheckCircle2, RefreshCw, Target } from 'lucide-react';
 
 export default function CryptocurrencyAllocationCalculator() {
     const { recordCalculatorUsage } = useProgressStore();
@@ -408,7 +407,7 @@ export default function CryptocurrencyAllocationCalculator() {
                                                                     <Cell key={`cell-${index}`} fill={entry.color} />
                                                                 ))}
                                                             </Pie>
-                                                            <Tooltip formatter={(value: any) => [`${value}%`, 'Allocation']} />
+                                                            <Tooltip formatter={(value: unknown) => [`${value}%`, 'Allocation']} />
                                                         </PieChart>
                                                     </ResponsiveContainer>
                                                 </div>
@@ -509,7 +508,7 @@ export default function CryptocurrencyAllocationCalculator() {
                                                         <Alert>
                                                             <AlertTriangle className="h-4 w-4" />
                                                             <AlertDescription>
-                                                                Allocation doesn't equal 100%. Please adjust your allocations.
+                                                                Allocation doesn&apos;t equal 100%. Please adjust your allocations.
                                                             </AlertDescription>
                                                         </Alert>
                                                     )}
@@ -525,8 +524,8 @@ export default function CryptocurrencyAllocationCalculator() {
                                                             <CartesianGrid strokeDasharray="3 3" />
                                                             <XAxis dataKey="name" />
                                                             <YAxis />
-                                                            <Tooltip formatter={(value: any, name: string) => [
-                                                                `${value.toFixed(1)}%`,
+                                                            <Tooltip formatter={(value: unknown, name: string) => [
+                                                                `${Number(value).toFixed(1)}%`,
                                                                 name === 'risk' ? 'Volatility' : 'Expected Return'
                                                             ]} />
                                                             <Bar dataKey="return" fill="#10B981" name="Expected Return" />

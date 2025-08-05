@@ -411,13 +411,13 @@ export default function StockAnalysisCalculator() {
                               {results.valueGap > 10 && (
                                 <div className="flex items-center gap-2">
                                   <CheckCircle2 className="h-4 w-4 text-green-500" />
-                                  <span>Stock appears undervalued (value gap > 10%)</span>
+                                  <span>Stock appears undervalued (value gap &gt; 10%)</span>
                                 </div>
                               )}
                               {results.valueGap < -10 && (
                                 <div className="flex items-center gap-2">
                                   <AlertTriangle className="h-4 w-4 text-red-500" />
-                                  <span>Stock appears overvalued (value gap < -10%)</span>
+                                  <span>Stock appears overvalued (value gap &lt; -10%)</span>
                                 </div>
                               )}
                               {results.valueGap >= -10 && results.valueGap <= 10 && (
@@ -426,7 +426,7 @@ export default function StockAnalysisCalculator() {
                                   <span>Stock appears fairly valued (-10% to +10% range)</span>
                                 </div>
                               )}
-                              
+
                               <div className="mt-3 pt-3 border-t">
                                 <p><strong>Fair Value Calculation:</strong> EPS × (P/E Ratio + Growth Rate)</p>
                                 <p className="text-xs text-gray-600 mt-1">
@@ -446,7 +446,7 @@ export default function StockAnalysisCalculator() {
                 <Alert>
                   <AlertTriangle className="h-4 w-4" />
                   <AlertDescription className="font-medium">
-                    {(results.valueGap || 0) > 20 ? 
+                    {(results.valueGap || 0) > 20 ?
                       'Significant undervaluation detected. Consider researching fundamental factors before investing.' :
                       'Significant overvaluation detected. Current price may be too high relative to fundamentals.'
                     }
@@ -470,667 +470,670 @@ export default function StockAnalysisCalculator() {
   );
 }
 
-  // Record usage when component mounts
-  React.useEffect(() => {
-    recordCalculatorUsage('stock-analysis');
-  }, [recordCalculatorUsage]);
+// Utility functions
+const formatCurrency = (value: number): string => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
+};
 
-  const formatCurrency = (value: number): string => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(value);
-  };
+const formatPercentage = (value: number): string => {
+  return `${value.toFixed(2)}%`;
+};
 
-  const formatPercentage = (value: number): string => {
-    return `${value.toFixed(2)}%`;
-  };
+const formatRatio = (value: number): string => {
+  return value.toFixed(2);
+};
 
-  const formatRatio = (value: number): string => {
-    return value.toFixed(2);
-  };
+const getRecommendationColor = (action: string) => {
+  switch (action) {
+    case 'Strong Buy': return 'bg-green-100 text-green-800 border-green-300';
+    case 'Buy': return 'bg-green-50 text-green-700 border-green-200';
+    case 'Hold': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
+    case 'Sell': return 'bg-red-50 text-red-700 border-red-200';
+    case 'Strong Sell': return 'bg-red-100 text-red-800 border-red-300';
+    default: return 'bg-gray-100 text-gray-800 border-gray-300';
+  }
+};
 
-  const getRecommendationColor = (action: string) => {
-    switch (action) {
-      case 'Strong Buy': return 'bg-green-100 text-green-800 border-green-300';
-      case 'Buy': return 'bg-green-50 text-green-700 border-green-200';
-      case 'Hold': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
-      case 'Sell': return 'bg-red-50 text-red-700 border-red-200';
-      case 'Strong Sell': return 'bg-red-100 text-red-800 border-red-300';
-      default: return 'bg-gray-100 text-gray-800 border-gray-300';
-    }
-  };
+const getRiskLevelColor = (riskLevel: string) => {
+  switch (riskLevel) {
+    case 'Low': return 'text-green-600';
+    case 'Medium': return 'text-yellow-600';
+    case 'High': return 'text-orange-600';
+    case 'Very High': return 'text-red-600';
+    default: return 'text-gray-600';
+  }
+};
 
-  const getRiskLevelColor = (riskLevel: string) => {
-    switch (riskLevel) {
-      case 'Low': return 'text-green-600';
-      case 'Medium': return 'text-yellow-600';
-      case 'High': return 'text-orange-600';
-      case 'Very High': return 'text-red-600';
-      default: return 'text-gray-600';
-    }
-  };
+// Prepare chart data
+/*
+// Commented out due to scope issues - these variables reference 'result' and 'values' that are undefined
+const valuationData = result ? [
+  { name: 'Current Price', value: values.currentPrice },
+  { name: 'DCF Value', value: result.intrinsicValue.dcfValue },
+  { name: 'Graham Number', value: result.intrinsicValue.grahamNumber },
+  { name: 'Book Value', value: result.intrinsicValue.bookValue },
+  { name: 'Target Price', value: values.targetPrice }
+] : [];
 
-  // Prepare chart data
-  const valuationData = result ? [
-    { name: 'Current Price', value: values.currentPrice },
-    { name: 'DCF Value', value: result.intrinsicValue.dcfValue },
-    { name: 'Graham Number', value: result.intrinsicValue.grahamNumber },
-    { name: 'Book Value', value: result.intrinsicValue.bookValue },
-    { name: 'Target Price', value: values.targetPrice }
-  ] : [];
+const metricsRadarData = result ? [
+  { metric: 'PE Ratio', value: Math.min(result.valuationMetrics.peRatio, 50) },
+  { metric: 'ROE', value: result.valuationMetrics.roe },
+  { metric: 'ROA', value: result.valuationMetrics.roa * 10 },
+  { metric: 'FCF Yield', value: result.valuationMetrics.freeCashFlowYield * 100 },
+  { metric: 'Growth Rate', value: values.growthRate },
+  { metric: 'Dividend Yield', value: values.dividendYield }
+] : [];
+*/
 
-  const metricsRadarData = result ? [
-    { metric: 'PE Ratio', value: Math.min(result.valuationMetrics.peRatio, 50) },
-    { metric: 'ROE', value: result.valuationMetrics.roe },
-    { metric: 'ROA', value: result.valuationMetrics.roa * 10 },
-    { metric: 'FCF Yield', value: result.valuationMetrics.freeCashFlowYield * 100 },
-    { metric: 'Growth Rate', value: values.growthRate },
-    { metric: 'Dividend Yield', value: values.dividendYield }
-  ] : [];
+/*
+// The following return statement and all subsequent JSX is orphaned code outside any function
+// Commenting out to fix compilation errors
+return (
+  <div className="max-w-7xl mx-auto p-6 space-y-8">
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <TrendingUp className="h-5 w-5" />
+          Stock Analysis Calculator
+        </CardTitle>
+        <CardDescription>
+          Comprehensive stock valuation and analysis with DCF modeling, ratio analysis, and investment recommendations
+        </CardDescription>
+      </CardHeader>
+    </Card>
 
-  return (
-    <div className="max-w-7xl mx-auto p-6 space-y-8">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5" />
-            Stock Analysis Calculator
-          </CardTitle>
-          <CardDescription>
-            Comprehensive stock valuation and analysis with DCF modeling, ratio analysis, and investment recommendations
-          </CardDescription>
-        </CardHeader>
-      </Card>
-
-      <div className="grid lg:grid-cols-2 gap-8">
-        {/* Input Section */}
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Stock Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="currentPrice">Current Price ($)</Label>
-                  <Input
-                    id="currentPrice"
-                    type="number"
-                    value={values.currentPrice}
-                    onChange={(e) => updateValue('currentPrice', e.target.value)}
-                    placeholder="100.00"
-                  />
-                  {errors.currentPrice && (
-                    <p className="text-sm text-red-600 mt-1">{errors.currentPrice}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="targetPrice">Target Price ($)</Label>
-                  <Input
-                    id="targetPrice"
-                    type="number"
-                    value={values.targetPrice}
-                    onChange={(e) => updateValue('targetPrice', e.target.value)}
-                    placeholder="120.00"
-                  />
-                  {errors.targetPrice && (
-                    <p className="text-sm text-red-600 mt-1">{errors.targetPrice}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="marketCap">Market Cap ($M)</Label>
-                  <Input
-                    id="marketCap"
-                    type="number"
-                    value={values.marketCap}
-                    onChange={(e) => updateValue('marketCap', e.target.value)}
-                    placeholder="1000"
-                  />
-                  {errors.marketCap && (
-                    <p className="text-sm text-red-600 mt-1">{errors.marketCap}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="beta">Beta</Label>
-                  <Input
-                    id="beta"
-                    type="number"
-                    step="0.1"
-                    value={values.beta}
-                    onChange={(e) => updateValue('beta', e.target.value)}
-                    placeholder="1.2"
-                  />
-                  {errors.beta && (
-                    <p className="text-sm text-red-600 mt-1">{errors.beta}</p>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Financial Metrics</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="earnings">Earnings per Share ($)</Label>
-                  <Input
-                    id="earnings"
-                    type="number"
-                    value={values.earnings}
-                    onChange={(e) => updateValue('earnings', e.target.value)}
-                    placeholder="5.00"
-                  />
-                  {errors.earnings && (
-                    <p className="text-sm text-red-600 mt-1">{errors.earnings}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="bookValue">Book Value per Share ($)</Label>
-                  <Input
-                    id="bookValue"
-                    type="number"
-                    value={values.bookValue}
-                    onChange={(e) => updateValue('bookValue', e.target.value)}
-                    placeholder="50.00"
-                  />
-                  {errors.bookValue && (
-                    <p className="text-sm text-red-600 mt-1">{errors.bookValue}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="revenue">Revenue ($M)</Label>
-                  <Input
-                    id="revenue"
-                    type="number"
-                    value={values.revenue}
-                    onChange={(e) => updateValue('revenue', e.target.value)}
-                    placeholder="500"
-                  />
-                  {errors.revenue && (
-                    <p className="text-sm text-red-600 mt-1">{errors.revenue}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="freeCashFlow">Free Cash Flow ($M)</Label>
-                  <Input
-                    id="freeCashFlow"
-                    type="number"
-                    value={values.freeCashFlow}
-                    onChange={(e) => updateValue('freeCashFlow', e.target.value)}
-                    placeholder="50"
-                  />
-                  {errors.freeCashFlow && (
-                    <p className="text-sm text-red-600 mt-1">{errors.freeCashFlow}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="debt">Total Debt ($M)</Label>
-                  <Input
-                    id="debt"
-                    type="number"
-                    value={values.debt}
-                    onChange={(e) => updateValue('debt', e.target.value)}
-                    placeholder="100"
-                  />
-                  {errors.debt && (
-                    <p className="text-sm text-red-600 mt-1">{errors.debt}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="equity">Total Equity ($M)</Label>
-                  <Input
-                    id="equity"
-                    type="number"
-                    value={values.equity}
-                    onChange={(e) => updateValue('equity', e.target.value)}
-                    placeholder="200"
-                  />
-                  {errors.equity && (
-                    <p className="text-sm text-red-600 mt-1">{errors.equity}</p>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Growth & Returns</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="growthRate">Growth Rate (%)</Label>
-                  <Input
-                    id="growthRate"
-                    type="number"
-                    value={values.growthRate}
-                    onChange={(e) => updateValue('growthRate', e.target.value)}
-                    placeholder="10"
-                  />
-                  {errors.growthRate && (
-                    <p className="text-sm text-red-600 mt-1">{errors.growthRate}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="dividendYield">Dividend Yield (%)</Label>
-                  <Input
-                    id="dividendYield"
-                    type="number"
-                    value={values.dividendYield}
-                    onChange={(e) => updateValue('dividendYield', e.target.value)}
-                    placeholder="2.5"
-                  />
-                  {errors.dividendYield && (
-                    <p className="text-sm text-red-600 mt-1">{errors.dividendYield}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="industryPE">Industry PE Ratio</Label>
-                  <Input
-                    id="industryPE"
-                    type="number"
-                    value={values.industryPE}
-                    onChange={(e) => updateValue('industryPE', e.target.value)}
-                    placeholder="18"
-                  />
-                  {errors.industryPE && (
-                    <p className="text-sm text-red-600 mt-1">{errors.industryPE}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="riskFreeRate">Risk-Free Rate (%)</Label>
-                  <Input
-                    id="riskFreeRate"
-                    type="number"
-                    value={values.riskFreeRate}
-                    onChange={(e) => updateValue('riskFreeRate', e.target.value)}
-                    placeholder="3"
-                  />
-                  {errors.riskFreeRate && (
-                    <p className="text-sm text-red-600 mt-1">{errors.riskFreeRate}</p>
-                  )}
-                </div>
-
-                <div className="col-span-2">
-                  <Label htmlFor="marketReturn">Market Return (%)</Label>
-                  <Input
-                    id="marketReturn"
-                    type="number"
-                    value={values.marketReturn}
-                    onChange={(e) => updateValue('marketReturn', e.target.value)}
-                    placeholder="10"
-                  />
-                  {errors.marketReturn && (
-                    <p className="text-sm text-red-600 mt-1">{errors.marketReturn}</p>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Button onClick={reset} variant="outline" className="w-full">
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Reset to Defaults
-          </Button>
+    <div className="grid lg:grid-cols-2 gap-8">
+      {/* Input Section */}
+<div className="space-y-6">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-lg">Stock Information</CardTitle>
+    </CardHeader>
+    <CardContent className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="currentPrice">Current Price ($)</Label>
+          <Input
+            id="currentPrice"
+            type="number"
+            value={values.currentPrice}
+            onChange={(e) => updateValue('currentPrice', e.target.value)}
+            placeholder="100.00"
+          />
+          {errors.currentPrice && (
+            <p className="text-sm text-red-600 mt-1">{errors.currentPrice}</p>
+          )}
         </div>
 
-        {/* Results Section */}
-        <div className="space-y-6">
-          {result && (
-            <>
-              {/* Investment Recommendation */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Target className="h-5 w-5" />
-                    Investment Recommendation
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <Badge className={`text-lg px-4 py-2 ${getRecommendationColor(result.recommendation.action)}`}>
-                        {result.recommendation.action}
-                      </Badge>
-                      <div className="text-right">
-                        <div className="text-2xl font-bold">
-                          {result.recommendation.upside >= 0 ? '+' : ''}{formatPercentage(result.recommendation.upside)}
-                        </div>
-                        <div className="text-sm text-gray-600">Upside Potential</div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-sm font-medium">Confidence Level</span>
-                        <span className="text-sm text-gray-600">{result.recommendation.confidence}%</span>
-                      </div>
-                      <Progress value={result.recommendation.confidence} className="h-2" />
-                    </div>
-
-                    <div className="space-y-2">
-                      <h4 className="font-semibold">Key Reasoning:</h4>
-                      {result.recommendation.reasoning.map((reason, index) => (
-                        <div key={index} className="flex items-start gap-2">
-                          <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm">{reason}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Detailed Analysis */}
-              <Tabs defaultValue="valuation" className="space-y-4">
-                <TabsList className="grid w-full grid-cols-4">
-                  <TabsTrigger value="valuation">Valuation</TabsTrigger>
-                  <TabsTrigger value="metrics">Metrics</TabsTrigger>
-                  <TabsTrigger value="risk">Risk</TabsTrigger>
-                  <TabsTrigger value="swot">SWOT</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="valuation" className="space-y-4">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <DollarSign className="h-5 w-5" />
-                        Valuation Analysis
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-6">
-                        {/* Valuation Chart */}
-                        <div className="h-64">
-                          <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={valuationData}>
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey="name" />
-                              <YAxis />
-                              <Tooltip formatter={(value: any) => [formatCurrency(value), 'Value']} />
-                              <Bar dataKey="value" fill="#3B82F6" />
-                            </BarChart>
-                          </ResponsiveContainer>
-                        </div>
-
-                        {/* Intrinsic Values */}
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="p-4 bg-blue-50 rounded-lg">
-                            <h4 className="font-semibold text-blue-900">DCF Value</h4>
-                            <p className="text-2xl font-bold text-blue-600">
-                              {formatCurrency(result.intrinsicValue.dcfValue)}
-                            </p>
-                            <p className="text-sm text-blue-700">Discounted Cash Flow</p>
-                          </div>
-
-                          <div className="p-4 bg-green-50 rounded-lg">
-                            <h4 className="font-semibold text-green-900">Graham Number</h4>
-                            <p className="text-2xl font-bold text-green-600">
-                              {formatCurrency(result.intrinsicValue.grahamNumber)}
-                            </p>
-                            <p className="text-sm text-green-700">Value Investing Formula</p>
-                          </div>
-
-                          <div className="p-4 bg-purple-50 rounded-lg">
-                            <h4 className="font-semibold text-purple-900">Book Value</h4>
-                            <p className="text-2xl font-bold text-purple-600">
-                              {formatCurrency(result.intrinsicValue.bookValue)}
-                            </p>
-                            <p className="text-sm text-purple-700">Net Asset Value</p>
-                          </div>
-
-                          <div className="p-4 bg-orange-50 rounded-lg">
-                            <h4 className="font-semibold text-orange-900">Liquidation Value</h4>
-                            <p className="text-2xl font-bold text-orange-600">
-                              {formatCurrency(result.intrinsicValue.liquidationValue)}
-                            </p>
-                            <p className="text-sm text-orange-700">Conservative Estimate</p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-
-                <TabsContent value="metrics" className="space-y-4">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <BarChart3 className="h-5 w-5" />
-                        Financial Ratios
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-6">
-                        {/* Radar Chart */}
-                        <div className="h-64">
-                          <ResponsiveContainer width="100%" height="100%">
-                            <RadarChart data={metricsRadarData}>
-                              <PolarGrid />
-                              <PolarAngleAxis dataKey="metric" />
-                              <PolarRadiusAxis />
-                              <Radar name="Value" dataKey="value" stroke="#3B82F6" fill="#3B82F6" fillOpacity={0.6} />
-                            </RadarChart>
-                          </ResponsiveContainer>
-                        </div>
-
-                        {/* Metrics Grid */}
-                        <div className="grid grid-cols-3 gap-4">
-                          <div className="text-center p-3 border rounded-lg">
-                            <div className="text-lg font-bold">{formatRatio(result.valuationMetrics.peRatio)}</div>
-                            <div className="text-sm text-gray-600">P/E Ratio</div>
-                          </div>
-
-                          <div className="text-center p-3 border rounded-lg">
-                            <div className="text-lg font-bold">{formatRatio(result.valuationMetrics.pbRatio)}</div>
-                            <div className="text-sm text-gray-600">P/B Ratio</div>
-                          </div>
-
-                          <div className="text-center p-3 border rounded-lg">
-                            <div className="text-lg font-bold">{formatRatio(result.valuationMetrics.psRatio)}</div>
-                            <div className="text-sm text-gray-600">P/S Ratio</div>
-                          </div>
-
-                          <div className="text-center p-3 border rounded-lg">
-                            <div className="text-lg font-bold">{formatPercentage(result.valuationMetrics.roe)}</div>
-                            <div className="text-sm text-gray-600">ROE</div>
-                          </div>
-
-                          <div className="text-center p-3 border rounded-lg">
-                            <div className="text-lg font-bold">{formatPercentage(result.valuationMetrics.roa)}</div>
-                            <div className="text-sm text-gray-600">ROA</div>
-                          </div>
-
-                          <div className="text-center p-3 border rounded-lg">
-                            <div className="text-lg font-bold">{formatRatio(result.valuationMetrics.debtToEquity)}</div>
-                            <div className="text-sm text-gray-600">D/E Ratio</div>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-
-                <TabsContent value="risk" className="space-y-4">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Shield className="h-5 w-5" />
-                        Risk Assessment
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-2 gap-6">
-                        <div className="space-y-4">
-                          <div>
-                            <div className="flex justify-between items-center mb-2">
-                              <span className="text-sm font-medium">Risk Level</span>
-                              <span className={`text-sm font-bold ${getRiskLevelColor(result.riskMetrics.riskLevel)}`}>
-                                {result.riskMetrics.riskLevel}
-                              </span>
-                            </div>
-                            <Progress value={(result.riskMetrics.volatilityScore / 10) * 100} className="h-2" />
-                          </div>
-
-                          <div className="space-y-2">
-                            <div className="flex justify-between">
-                              <span>Beta:</span>
-                              <span className="font-medium">{formatRatio(result.riskMetrics.beta)}</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span>Expected Return:</span>
-                              <span className="font-medium">{formatPercentage(result.riskMetrics.expectedReturn)}</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span>Volatility Score:</span>
-                              <span className="font-medium">{result.riskMetrics.volatilityScore.toFixed(1)}/10</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="p-4 bg-gray-50 rounded-lg">
-                          <h4 className="font-semibold mb-3">Risk Interpretation</h4>
-                          <div className="space-y-2 text-sm">
-                            <p><strong>Beta {formatRatio(result.riskMetrics.beta)}:</strong> {
-                              result.riskMetrics.beta > 1.2 ? 'High volatility relative to market' :
-                              result.riskMetrics.beta > 0.8 ? 'Moderate volatility' : 'Low volatility'
-                            }</p>
-                            <p><strong>Expected Return:</strong> Based on CAPM model</p>
-                            <p><strong>Risk Level:</strong> Overall assessment of investment risk</p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-
-                <TabsContent value="swot" className="space-y-4">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Eye className="h-5 w-5" />
-                        SWOT Analysis
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-2 gap-6">
-                        <div className="space-y-4">
-                          {/* Strengths */}
-                          <div className="p-4 bg-green-50 rounded-lg">
-                            <h4 className="font-semibold text-green-900 mb-3 flex items-center gap-2">
-                              <CheckCircle2 className="h-4 w-4" />
-                              Strengths
-                            </h4>
-                            <div className="space-y-2">
-                              {result.analysis.strengths.length > 0 ? (
-                                result.analysis.strengths.map((strength, index) => (
-                                  <div key={index} className="text-sm text-green-700">• {strength}</div>
-                                ))
-                              ) : (
-                                <div className="text-sm text-green-700">No significant strengths identified</div>
-                              )}
-                            </div>
-                          </div>
-
-                          {/* Opportunities */}
-                          <div className="p-4 bg-blue-50 rounded-lg">
-                            <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
-                              <Lightbulb className="h-4 w-4" />
-                              Opportunities
-                            </h4>
-                            <div className="space-y-2">
-                              {result.analysis.opportunities.length > 0 ? (
-                                result.analysis.opportunities.map((opportunity, index) => (
-                                  <div key={index} className="text-sm text-blue-700">• {opportunity}</div>
-                                ))
-                              ) : (
-                                <div className="text-sm text-blue-700">No significant opportunities identified</div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="space-y-4">
-                          {/* Weaknesses */}
-                          <div className="p-4 bg-yellow-50 rounded-lg">
-                            <h4 className="font-semibold text-yellow-900 mb-3 flex items-center gap-2">
-                              <AlertTriangle className="h-4 w-4" />
-                              Weaknesses
-                            </h4>
-                            <div className="space-y-2">
-                              {result.analysis.weaknesses.length > 0 ? (
-                                result.analysis.weaknesses.map((weakness, index) => (
-                                  <div key={index} className="text-sm text-yellow-700">• {weakness}</div>
-                                ))
-                              ) : (
-                                <div className="text-sm text-yellow-700">No significant weaknesses identified</div>
-                              )}
-                            </div>
-                          </div>
-
-                          {/* Threats */}
-                          <div className="p-4 bg-red-50 rounded-lg">
-                            <h4 className="font-semibold text-red-900 mb-3 flex items-center gap-2">
-                              <Shield className="h-4 w-4" />
-                              Threats
-                            </h4>
-                            <div className="space-y-2">
-                              {result.analysis.threats.length > 0 ? (
-                                result.analysis.threats.map((threat, index) => (
-                                  <div key={index} className="text-sm text-red-700">• {threat}</div>
-                                ))
-                              ) : (
-                                <div className="text-sm text-red-700">No significant threats identified</div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              </Tabs>
-
-              {result.riskMetrics.volatilityScore > 8 && (
-                <Alert>
-                  <AlertTriangle className="h-4 w-4" />
-                  <AlertDescription className="font-medium">
-                    High Risk Investment: This stock shows high volatility with a beta of {formatRatio(result.riskMetrics.beta)}. 
-                    Consider your risk tolerance before investing.
-                  </AlertDescription>
-                </Alert>
-              )}
-            </>
+        <div>
+          <Label htmlFor="targetPrice">Target Price ($)</Label>
+          <Input
+            id="targetPrice"
+            type="number"
+            value={values.targetPrice}
+            onChange={(e) => updateValue('targetPrice', e.target.value)}
+            placeholder="120.00"
+          />
+          {errors.targetPrice && (
+            <p className="text-sm text-red-600 mt-1">{errors.targetPrice}</p>
           )}
+        </div>
 
-          {!isValid && Object.keys(errors).length > 0 && (
-            <Alert variant="destructive">
-              <AlertTriangle className="h-4 w-4" />
-              <AlertDescription>
-                Please correct the input errors to see your stock analysis.
-              </AlertDescription>
-            </Alert>
+        <div>
+          <Label htmlFor="marketCap">Market Cap ($M)</Label>
+          <Input
+            id="marketCap"
+            type="number"
+            value={values.marketCap}
+            onChange={(e) => updateValue('marketCap', e.target.value)}
+            placeholder="1000"
+          />
+          {errors.marketCap && (
+            <p className="text-sm text-red-600 mt-1">{errors.marketCap}</p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="beta">Beta</Label>
+          <Input
+            id="beta"
+            type="number"
+            step="0.1"
+            value={values.beta}
+            onChange={(e) => updateValue('beta', e.target.value)}
+            placeholder="1.2"
+          />
+          {errors.beta && (
+            <p className="text-sm text-red-600 mt-1">{errors.beta}</p>
           )}
         </div>
       </div>
-    </div>
-  );
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-lg">Financial Metrics</CardTitle>
+    </CardHeader>
+    <CardContent className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="earnings">Earnings per Share ($)</Label>
+          <Input
+            id="earnings"
+            type="number"
+            value={values.earnings}
+            onChange={(e) => updateValue('earnings', e.target.value)}
+            placeholder="5.00"
+          />
+          {errors.earnings && (
+            <p className="text-sm text-red-600 mt-1">{errors.earnings}</p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="bookValue">Book Value per Share ($)</Label>
+          <Input
+            id="bookValue"
+            type="number"
+            value={values.bookValue}
+            onChange={(e) => updateValue('bookValue', e.target.value)}
+            placeholder="50.00"
+          />
+          {errors.bookValue && (
+            <p className="text-sm text-red-600 mt-1">{errors.bookValue}</p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="revenue">Revenue ($M)</Label>
+          <Input
+            id="revenue"
+            type="number"
+            value={values.revenue}
+            onChange={(e) => updateValue('revenue', e.target.value)}
+            placeholder="500"
+          />
+          {errors.revenue && (
+            <p className="text-sm text-red-600 mt-1">{errors.revenue}</p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="freeCashFlow">Free Cash Flow ($M)</Label>
+          <Input
+            id="freeCashFlow"
+            type="number"
+            value={values.freeCashFlow}
+            onChange={(e) => updateValue('freeCashFlow', e.target.value)}
+            placeholder="50"
+          />
+          {errors.freeCashFlow && (
+            <p className="text-sm text-red-600 mt-1">{errors.freeCashFlow}</p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="debt">Total Debt ($M)</Label>
+          <Input
+            id="debt"
+            type="number"
+            value={values.debt}
+            onChange={(e) => updateValue('debt', e.target.value)}
+            placeholder="100"
+          />
+          {errors.debt && (
+            <p className="text-sm text-red-600 mt-1">{errors.debt}</p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="equity">Total Equity ($M)</Label>
+          <Input
+            id="equity"
+            type="number"
+            value={values.equity}
+            onChange={(e) => updateValue('equity', e.target.value)}
+            placeholder="200"
+          />
+          {errors.equity && (
+            <p className="text-sm text-red-600 mt-1">{errors.equity}</p>
+          )}
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-lg">Growth & Returns</CardTitle>
+    </CardHeader>
+    <CardContent className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="growthRate">Growth Rate (%)</Label>
+          <Input
+            id="growthRate"
+            type="number"
+            value={values.growthRate}
+            onChange={(e) => updateValue('growthRate', e.target.value)}
+            placeholder="10"
+          />
+          {errors.growthRate && (
+            <p className="text-sm text-red-600 mt-1">{errors.growthRate}</p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="dividendYield">Dividend Yield (%)</Label>
+          <Input
+            id="dividendYield"
+            type="number"
+            value={values.dividendYield}
+            onChange={(e) => updateValue('dividendYield', e.target.value)}
+            placeholder="2.5"
+          />
+          {errors.dividendYield && (
+            <p className="text-sm text-red-600 mt-1">{errors.dividendYield}</p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="industryPE">Industry PE Ratio</Label>
+          <Input
+            id="industryPE"
+            type="number"
+            value={values.industryPE}
+            onChange={(e) => updateValue('industryPE', e.target.value)}
+            placeholder="18"
+          />
+          {errors.industryPE && (
+            <p className="text-sm text-red-600 mt-1">{errors.industryPE}</p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="riskFreeRate">Risk-Free Rate (%)</Label>
+          <Input
+            id="riskFreeRate"
+            type="number"
+            value={values.riskFreeRate}
+            onChange={(e) => updateValue('riskFreeRate', e.target.value)}
+            placeholder="3"
+          />
+          {errors.riskFreeRate && (
+            <p className="text-sm text-red-600 mt-1">{errors.riskFreeRate}</p>
+          )}
+        </div>
+
+        <div className="col-span-2">
+          <Label htmlFor="marketReturn">Market Return (%)</Label>
+          <Input
+            id="marketReturn"
+            type="number"
+            value={values.marketReturn}
+            onChange={(e) => updateValue('marketReturn', e.target.value)}
+            placeholder="10"
+          />
+          {errors.marketReturn && (
+            <p className="text-sm text-red-600 mt-1">{errors.marketReturn}</p>
+          )}
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+
+  <Button onClick={reset} variant="outline" className="w-full">
+    <RefreshCw className="w-4 h-4 mr-2" />
+    Reset to Defaults
+  </Button>
+</div>
+
+{/* Results Section */ }
+<div className="space-y-6">
+  {result && (
+    <>
+      {/* Investment Recommendation */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            Investment Recommendation
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <Badge className={`text-lg px-4 py-2 ${getRecommendationColor(result.recommendation.action)}`}>
+                {result.recommendation.action}
+              </Badge>
+              <div className="text-right">
+                <div className="text-2xl font-bold">
+                  {result.recommendation.upside >= 0 ? '+' : ''}{formatPercentage(result.recommendation.upside)}
+                </div>
+                <div className="text-sm text-gray-600">Upside Potential</div>
+              </div>
+            </div>
+
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm font-medium">Confidence Level</span>
+                <span className="text-sm text-gray-600">{result.recommendation.confidence}%</span>
+              </div>
+              <Progress value={result.recommendation.confidence} className="h-2" />
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="font-semibold">Key Reasoning:</h4>
+              {result.recommendation.reasoning.map((reason, index) => (
+                <div key={index} className="flex items-start gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span className="text-sm">{reason}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Detailed Analysis */}
+      <Tabs defaultValue="valuation" className="space-y-4">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="valuation">Valuation</TabsTrigger>
+          <TabsTrigger value="metrics">Metrics</TabsTrigger>
+          <TabsTrigger value="risk">Risk</TabsTrigger>
+          <TabsTrigger value="swot">SWOT</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="valuation" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <DollarSign className="h-5 w-5" />
+                Valuation Analysis
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                {/* Valuation Chart */}
+                <div className="h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={valuationData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip formatter={(value: any) => [formatCurrency(value), 'Value']} />
+                      <Bar dataKey="value" fill="#3B82F6" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+
+                {/* Intrinsic Values */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 bg-blue-50 rounded-lg">
+                    <h4 className="font-semibold text-blue-900">DCF Value</h4>
+                    <p className="text-2xl font-bold text-blue-600">
+                      {formatCurrency(result.intrinsicValue.dcfValue)}
+                    </p>
+                    <p className="text-sm text-blue-700">Discounted Cash Flow</p>
+                  </div>
+
+                  <div className="p-4 bg-green-50 rounded-lg">
+                    <h4 className="font-semibold text-green-900">Graham Number</h4>
+                    <p className="text-2xl font-bold text-green-600">
+                      {formatCurrency(result.intrinsicValue.grahamNumber)}
+                    </p>
+                    <p className="text-sm text-green-700">Value Investing Formula</p>
+                  </div>
+
+                  <div className="p-4 bg-purple-50 rounded-lg">
+                    <h4 className="font-semibold text-purple-900">Book Value</h4>
+                    <p className="text-2xl font-bold text-purple-600">
+                      {formatCurrency(result.intrinsicValue.bookValue)}
+                    </p>
+                    <p className="text-sm text-purple-700">Net Asset Value</p>
+                  </div>
+
+                  <div className="p-4 bg-orange-50 rounded-lg">
+                    <h4 className="font-semibold text-orange-900">Liquidation Value</h4>
+                    <p className="text-2xl font-bold text-orange-600">
+                      {formatCurrency(result.intrinsicValue.liquidationValue)}
+                    </p>
+                    <p className="text-sm text-orange-700">Conservative Estimate</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="metrics" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                Financial Ratios
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                {/* Radar Chart */}
+                <div className="h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RadarChart data={metricsRadarData}>
+                      <PolarGrid />
+                      <PolarAngleAxis dataKey="metric" />
+                      <PolarRadiusAxis />
+                      <Radar name="Value" dataKey="value" stroke="#3B82F6" fill="#3B82F6" fillOpacity={0.6} />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                </div>
+
+                {/* Metrics Grid */}
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center p-3 border rounded-lg">
+                    <div className="text-lg font-bold">{formatRatio(result.valuationMetrics.peRatio)}</div>
+                    <div className="text-sm text-gray-600">P/E Ratio</div>
+                  </div>
+
+                  <div className="text-center p-3 border rounded-lg">
+                    <div className="text-lg font-bold">{formatRatio(result.valuationMetrics.pbRatio)}</div>
+                    <div className="text-sm text-gray-600">P/B Ratio</div>
+                  </div>
+
+                  <div className="text-center p-3 border rounded-lg">
+                    <div className="text-lg font-bold">{formatRatio(result.valuationMetrics.psRatio)}</div>
+                    <div className="text-sm text-gray-600">P/S Ratio</div>
+                  </div>
+
+                  <div className="text-center p-3 border rounded-lg">
+                    <div className="text-lg font-bold">{formatPercentage(result.valuationMetrics.roe)}</div>
+                    <div className="text-sm text-gray-600">ROE</div>
+                  </div>
+
+                  <div className="text-center p-3 border rounded-lg">
+                    <div className="text-lg font-bold">{formatPercentage(result.valuationMetrics.roa)}</div>
+                    <div className="text-sm text-gray-600">ROA</div>
+                  </div>
+
+                  <div className="text-center p-3 border rounded-lg">
+                    <div className="text-lg font-bold">{formatRatio(result.valuationMetrics.debtToEquity)}</div>
+                    <div className="text-sm text-gray-600">D/E Ratio</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="risk" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="h-5 w-5" />
+                Risk Assessment
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-sm font-medium">Risk Level</span>
+                      <span className={`text-sm font-bold ${getRiskLevelColor(result.riskMetrics.riskLevel)}`}>
+                        {result.riskMetrics.riskLevel}
+                      </span>
+                    </div>
+                    <Progress value={(result.riskMetrics.volatilityScore / 10) * 100} className="h-2" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span>Beta:</span>
+                      <span className="font-medium">{formatRatio(result.riskMetrics.beta)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Expected Return:</span>
+                      <span className="font-medium">{formatPercentage(result.riskMetrics.expectedReturn)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Volatility Score:</span>
+                      <span className="font-medium">{result.riskMetrics.volatilityScore.toFixed(1)}/10</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <h4 className="font-semibold mb-3">Risk Interpretation</h4>
+                  <div className="space-y-2 text-sm">
+                    <p><strong>Beta {formatRatio(result.riskMetrics.beta)}:</strong> {
+                      result.riskMetrics.beta > 1.2 ? 'High volatility relative to market' :
+                        result.riskMetrics.beta > 0.8 ? 'Moderate volatility' : 'Low volatility'
+                    }</p>
+                    <p><strong>Expected Return:</strong> Based on CAPM model</p>
+                    <p><strong>Risk Level:</strong> Overall assessment of investment risk</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="swot" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Eye className="h-5 w-5" />
+                SWOT Analysis
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  {/* Strengths */}
+                  <div className="p-4 bg-green-50 rounded-lg">
+                    <h4 className="font-semibold text-green-900 mb-3 flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4" />
+                      Strengths
+                    </h4>
+                    <div className="space-y-2">
+                      {result.analysis.strengths.length > 0 ? (
+                        result.analysis.strengths.map((strength, index) => (
+                          <div key={index} className="text-sm text-green-700">• {strength}</div>
+                        ))
+                      ) : (
+                        <div className="text-sm text-green-700">No significant strengths identified</div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Opportunities */}
+                  <div className="p-4 bg-blue-50 rounded-lg">
+                    <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+                      <Lightbulb className="h-4 w-4" />
+                      Opportunities
+                    </h4>
+                    <div className="space-y-2">
+                      {result.analysis.opportunities.length > 0 ? (
+                        result.analysis.opportunities.map((opportunity, index) => (
+                          <div key={index} className="text-sm text-blue-700">• {opportunity}</div>
+                        ))
+                      ) : (
+                        <div className="text-sm text-blue-700">No significant opportunities identified</div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  {/* Weaknesses */}
+                  <div className="p-4 bg-yellow-50 rounded-lg">
+                    <h4 className="font-semibold text-yellow-900 mb-3 flex items-center gap-2">
+                      <AlertTriangle className="h-4 w-4" />
+                      Weaknesses
+                    </h4>
+                    <div className="space-y-2">
+                      {result.analysis.weaknesses.length > 0 ? (
+                        result.analysis.weaknesses.map((weakness, index) => (
+                          <div key={index} className="text-sm text-yellow-700">• {weakness}</div>
+                        ))
+                      ) : (
+                        <div className="text-sm text-yellow-700">No significant weaknesses identified</div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Threats */}
+                  <div className="p-4 bg-red-50 rounded-lg">
+                    <h4 className="font-semibold text-red-900 mb-3 flex items-center gap-2">
+                      <Shield className="h-4 w-4" />
+                      Threats
+                    </h4>
+                    <div className="space-y-2">
+                      {result.analysis.threats.length > 0 ? (
+                        result.analysis.threats.map((threat, index) => (
+                          <div key={index} className="text-sm text-red-700">• {threat}</div>
+                        ))
+                      ) : (
+                        <div className="text-sm text-red-700">No significant threats identified</div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+
+      {result.riskMetrics.volatilityScore > 8 && (
+        <Alert>
+          <AlertTriangle className="h-4 w-4" />
+          <AlertDescription className="font-medium">
+            High Risk Investment: This stock shows high volatility with a beta of {formatRatio(result.riskMetrics.beta)}.
+            Consider your risk tolerance before investing.
+          </AlertDescription>
+        </Alert>
+      )}
+    </>
+  )}
+
+  {!isValid && Object.keys(errors).length > 0 && (
+    <Alert variant="destructive">
+      <AlertTriangle className="h-4 w-4" />
+      <AlertDescription>
+        Please correct the input errors to see your stock analysis.
+      </AlertDescription>
+    </Alert>
+  )}
+</div>
+    </div >
+  </div >
+);
 }
+*//

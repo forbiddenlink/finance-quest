@@ -17,11 +17,9 @@ import {
     Zap,
     Star,
     ChevronRight,
-    Calendar,
     BarChart3,
     Lightbulb,
-    CheckCircle,
-    ArrowUp
+    CheckCircle
 } from 'lucide-react';
 
 interface LearningInsight {
@@ -92,7 +90,6 @@ export const PersonalizedLearningDashboard: React.FC = () => {
 
         // Recent achievement
         if (userProgress.achievements.length > 0) {
-            const latestAchievement = userProgress.achievements[userProgress.achievements.length - 1];
             insights.push({
                 type: 'achievement',
                 title: 'Recent Achievement',
@@ -113,8 +110,7 @@ export const PersonalizedLearningDashboard: React.FC = () => {
 
         // Daily goal - based on current streak and engagement
         const dailyTarget = Math.max(1, Math.floor(userProgress.streakDays / 7) + 1);
-        const today = now.toDateString();
-        const dailyProgress = userProgress.completedLessons.filter(lessonId => {
+        const dailyProgress = userProgress.completedLessons.filter(() => {
             // For simplicity, assume recent lessons count toward daily progress
             return true; // This would need actual completion date tracking
         }).length > 0 ? 1 : 0;
@@ -168,7 +164,12 @@ export const PersonalizedLearningDashboard: React.FC = () => {
         const totalQuizzes = Object.keys(userProgress.quizScores).length;
         const quizScores = Object.values(userProgress.quizScores);
         const avgQuizScore = totalQuizzes > 0 ?
-            quizScores.reduce((sum: number, score: any) => sum + (score.score || score), 0) / totalQuizzes : 0;
+            quizScores.reduce((sum: number, score: unknown) => {
+                const scoreValue = typeof score === 'object' && score !== null && 'score' in score
+                    ? (score as { score: number }).score
+                    : typeof score === 'number' ? score : 0;
+                return sum + scoreValue;
+            }, 0) / totalQuizzes : 0;
 
         const rankInfo = getUserRank();
         const rank = typeof rankInfo === 'object' ? rankInfo.rank : rankInfo;
@@ -306,7 +307,7 @@ export const PersonalizedLearningDashboard: React.FC = () => {
                                         <div className={`w-full bg-slate-700/30 rounded-full h-2`}>
                                             <motion.div
                                                 className={`h-2 rounded-full ${goal.priority === 'high' ? 'bg-green-500' :
-                                                        goal.priority === 'medium' ? 'bg-blue-500' : 'bg-purple-500'
+                                                    goal.priority === 'medium' ? 'bg-blue-500' : 'bg-purple-500'
                                                     }`}
                                                 initial={{ width: 0 }}
                                                 animate={{ width: `${getGoalProgress(goal)}%` }}

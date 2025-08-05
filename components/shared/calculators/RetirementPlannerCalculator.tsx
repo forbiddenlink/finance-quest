@@ -11,8 +11,8 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useRetirementCalculator } from '@/lib/utils/calculatorHooks';
 import { useProgressStore } from '@/lib/store/progressStore';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
-import { PiggyBank, TrendingUp, Target, Calendar, DollarSign, AlertTriangle, CheckCircle2, RefreshCw, Clock, Calculator } from 'lucide-react';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell } from 'recharts';
+import { PiggyBank, TrendingUp, Target, DollarSign, AlertTriangle, CheckCircle2, RefreshCw, Clock, Calculator } from 'lucide-react';
 
 export default function RetirementPlannerCalculator() {
   const { recordCalculatorUsage } = useProgressStore();
@@ -323,7 +323,7 @@ export default function RetirementPlannerCalculator() {
                         <CheckCircle2 className="h-4 w-4" />
                         <AlertDescription>
                           <strong>Surplus:</strong> {formatCurrency(results.surplus)}
-                          <br />You're on track! Consider early retirement or lifestyle upgrades.
+                          <br />                          You&apos;re on track! Consider early retirement or lifestyle upgrades.
                         </AlertDescription>
                       </Alert>
                     )}
@@ -357,7 +357,7 @@ export default function RetirementPlannerCalculator() {
                               <XAxis dataKey="age" />
                               <YAxis tickFormatter={(value) => formatCurrency(value)} />
                               <Tooltip
-                                formatter={(value: any, name: string) => [formatCurrency(value), name === 'balance' ? 'Total Balance' : name]}
+                                formatter={(value: unknown, name: string) => [formatCurrency(Number(value)), name === 'balance' ? 'Total Balance' : name]}
                                 labelFormatter={(age) => `Age ${age}`}
                               />
                               <Area type="monotone" dataKey="balance" stroke="#3B82F6" fill="#3B82F6" fillOpacity={0.3} />
@@ -433,7 +433,7 @@ export default function RetirementPlannerCalculator() {
                                   <Cell key={`cell-${index}`} fill={entry.color} />
                                 ))}
                               </Pie>
-                              <Tooltip formatter={(value: any) => [formatCurrency(value), 'Amount']} />
+                              <Tooltip formatter={(value: unknown) => [formatCurrency(Number(value)), 'Amount']} />
                             </PieChart>
                           </ResponsiveContainer>
                         </div>
@@ -552,7 +552,7 @@ export default function RetirementPlannerCalculator() {
                             )}
                             {results.surplus > 0 && (
                               <>
-                                <div>• You're ahead of schedule! Consider early retirement</div>
+                                <div>• You&apos;re ahead of schedule! Consider early retirement</div>
                                 <div>• Increase lifestyle goals or leave a larger legacy</div>
                                 <div>• Consider reducing investment risk as you approach retirement</div>
                               </>

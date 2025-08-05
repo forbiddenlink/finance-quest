@@ -1,30 +1,15 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
-import { useOptionsCalculator } from '@/lib/utils/calculatorHooks';
-import { validateFields, CalculatorValidations } from '@/lib/utils/calculatorValidation';
-import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
-import { CurrencyInput, PercentageInput, NumberInput, SelectField } from '@/components/shared/calculators/FormFields';
-import { InputGroup } from '@/components/shared/calculators/FormFields';
-import { ResultCard } from '@/components/shared/calculators/ResultComponents';
-import { formatCurrency, formatPercentage } from '@/lib/utils/financial';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import {
   DollarSign,
   Target,
   Percent,
   Calendar,
   ArrowUp,
-  ArrowDown,
-  TrendingUp,
-  Calculator,
-  BarChart3,
-  AlertTriangle,
-  Info,
-  CheckCircle
+  ArrowDown
 } from 'lucide-react';
 
 interface OptionsResult {

@@ -1,24 +1,19 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import { Button } from '@/components/ui/button';
 import {
     Flame,
-    Zap,
     Star,
     Target,
-    Calendar,
     Trophy,
     Shield,
     AlertTriangle,
     Sparkles,
-    Clock,
-    TrendingUp,
     Award,
-    CheckCircle,
     X
 } from 'lucide-react';
 
@@ -38,7 +33,7 @@ export default function StreakMotivationWidget({
         getStreakMotivation,
         getPersonalizedEncouragement,
         getStudyRecommendation,
-        useStreakFreeze
+        useStreakFreeze: applyStreakFreeze
     } = useProgressStore();
 
     const [showDetails, setShowDetails] = useState(false);
@@ -102,7 +97,8 @@ export default function StreakMotivationWidget({
     const Icon = streakDisplay.icon;
 
     const handleStreakFreeze = () => {
-        if (useStreakFreeze()) {
+        const freezeSuccessful = applyStreakFreeze();
+        if (freezeSuccessful) {
             setJustUsedFreeze(true);
             setTimeout(() => setJustUsedFreeze(false), 3000);
         }
@@ -290,8 +286,8 @@ export default function StreakMotivationWidget({
             {recommendation.priority !== 'low' && (
                 <motion.div
                     className={`${recommendation.priority === 'high'
-                            ? theme.status.error.bg
-                            : theme.status.warning.bg
+                        ? theme.status.error.bg
+                        : theme.status.warning.bg
                         } border ${recommendation.priority === 'high'
                             ? theme.status.error.border
                             : theme.status.warning.border
@@ -302,13 +298,13 @@ export default function StreakMotivationWidget({
                 >
                     <div className="flex items-start space-x-3">
                         <Target className={`w-4 h-4 mt-0.5 ${recommendation.priority === 'high'
-                                ? theme.status.error.text
-                                : theme.status.warning.text
+                            ? theme.status.error.text
+                            : theme.status.warning.text
                             }`} />
                         <div className="flex-1">
                             <p className={`text-sm font-medium ${recommendation.priority === 'high'
-                                    ? theme.status.error.text
-                                    : theme.status.warning.text
+                                ? theme.status.error.text
+                                : theme.status.warning.text
                                 }`}>
                                 {recommendation.message}
                             </p>

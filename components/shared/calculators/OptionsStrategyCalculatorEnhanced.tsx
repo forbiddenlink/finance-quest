@@ -9,13 +9,11 @@ import CalculatorWrapper, { CalculatorMetadata } from './CalculatorWrapper';
 import { CurrencyInput, PercentageInput, NumberInput, SelectField } from './FormFields';
 import { InputGroup } from './FormFields';
 import { ResultCard } from './ResultComponents';
-import { formatCurrency, formatPercentage } from '@/lib/utils/financial';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { formatCurrency } from '@/lib/utils/financial';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import {
     DollarSign,
     Target,
-    Percent,
-    Calendar,
     ArrowUp,
     ArrowDown,
     TrendingUp,
@@ -33,10 +31,7 @@ export default function OptionsStrategyCalculatorEnhanced() {
     const {
         values,
         result,
-        validation,
-        isValid,
         updateField,
-        reset,
         errors
     } = useOptionsCalculator();
 
@@ -101,6 +96,7 @@ export default function OptionsStrategyCalculatorEnhanced() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <CurrencyInput
+                                        id="stockPrice"
                                         label="Stock Price"
                                         value={values.stockPrice.toString()}
                                         onChange={(value) => updateField('stockPrice', value)}
@@ -406,7 +402,7 @@ export default function OptionsStrategyCalculatorEnhanced() {
                                     <div className={`flex justify-between ${theme.textColors.secondary}`}>
                                         <span>Risk Level:</span>
                                         <span className={`font-medium ${result.strategyAnalysis.riskLevel === 'Low' ? 'text-green-400' :
-                                                result.strategyAnalysis.riskLevel === 'Medium' ? 'text-yellow-400' : 'text-red-400'
+                                            result.strategyAnalysis.riskLevel === 'Medium' ? 'text-yellow-400' : 'text-red-400'
                                             }`}>
                                             {result.strategyAnalysis.riskLevel}
                                         </span>
@@ -483,7 +479,7 @@ export default function OptionsStrategyCalculatorEnhanced() {
                                         />
                                         <Tooltip
                                             labelFormatter={(value) => `Stock Price: $${Number(value).toFixed(2)}`}
-                                            formatter={(value: any) => [`$${Number(value).toFixed(2)}`, 'P&L']}
+                                            formatter={(value: unknown) => [`$${Number(value).toFixed(2)}`, 'P&L']}
                                             contentStyle={{
                                                 backgroundColor: 'rgba(17, 24, 39, 0.95)',
                                                 border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -569,8 +565,8 @@ export default function OptionsStrategyCalculatorEnhanced() {
                                     <div className={`flex items-center justify-between ${theme.textColors.secondary}`}>
                                         <span>Risk Level:</span>
                                         <span className={`px-2 py-1 rounded text-xs font-medium ${result.strategyAnalysis.riskLevel === 'Low' ? 'bg-green-900/50 text-green-400' :
-                                                result.strategyAnalysis.riskLevel === 'Medium' ? 'bg-yellow-900/50 text-yellow-400' :
-                                                    'bg-red-900/50 text-red-400'
+                                            result.strategyAnalysis.riskLevel === 'Medium' ? 'bg-yellow-900/50 text-yellow-400' :
+                                                'bg-red-900/50 text-red-400'
                                             }`}>
                                             {result.strategyAnalysis.riskLevel}
                                         </span>

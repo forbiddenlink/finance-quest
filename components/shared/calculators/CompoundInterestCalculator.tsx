@@ -2,14 +2,13 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import CalculatorWrapper from '@/components/shared/calculators/CalculatorWrapper';
-import { CurrencyInput, NumberInput, SelectField } from '@/components/shared/calculators/FormFields';
+import { CurrencyInput, NumberInput } from '@/components/shared/calculators/FormFields';
 import { ResultCard } from '@/components/shared/calculators/ResultComponents';
 import { formatCurrency } from '@/lib/utils/financial';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Sparkles, TrendingUp, Calculator, Clock } from 'lucide-react';
 import { theme } from '@/lib/theme';
 import { useCompoundInterestCalculator } from '@/lib/utils/calculatorHooks';
-import { validateFields, CalculatorValidations } from '@/lib/utils/calculatorValidation';
 
 interface CompoundData {
     year: number;
@@ -21,17 +20,14 @@ interface CompoundData {
 export default function CompoundInterestCalculator() {
     const {
         values,
-        results,
-        validation,
-        isCalculating,
-        updateField,
+        result,
         reset
     } = useCompoundInterestCalculator();
 
     const [data, setData] = useState<CompoundData[]>([]);
 
     const calculateGrowth = useCallback(() => {
-        if (!results) return;
+        if (!result) return;
 
         const P = parseFloat(values.principal) || 0;
         const r = parseFloat(values.rate) || 0;
@@ -74,7 +70,7 @@ export default function CompoundInterestCalculator() {
         }
 
         setData(compoundData);
-    }, [values, results]);
+    }, [values, result]);
 
     useEffect(() => {
         calculateGrowth();
@@ -82,21 +78,22 @@ export default function CompoundInterestCalculator() {
 
     // Generate insights based on calculations
     const generateInsights = () => {
-        if (!results) return [];
+        if (!result) return [];
 
         const insights = [];
 
-        const rateNum = parseFloat(values.rate) || 0;
-        const timeNum = parseInt(values.time) || 0;
+        const rateNum = parseFloat(values.annualRate) || 0;
+        const timeNum = parseInt(values.years) || 0;
         const monthlyContributionNum = parseFloat(values.monthlyContribution) || 0;
         const principalNum = parseFloat(values.principal) || 0;
 
-        // High growth insight
-        if (results.effectiveReturn > 200) {
+        // High growth insight based on final amount vs contributions
+        const totalGrowth = result.totalContributions > 0 ? ((result.finalAmount - result.totalContributions) / result.totalContributions) * 100 : 0;
+        if (totalGrowth > 200) {
             insights.push({
                 type: 'success' as const,
                 title: 'Excellent Growth Potential',
-                message: `Your investments could grow by ${results.effectiveReturn.toFixed(0)}% over ${timeNum} years. The power of compound interest is working strongly in your favor!`
+                message: `Your investments could grow by ${totalGrowth.toFixed(0)}% over ${timeNum} years. The power of compound interest is working strongly in your favor!`
             });
         }
 
@@ -163,33 +160,34 @@ export default function CompoundInterestCalculator() {
     };
 
     // Results formatting for the wrapper
-    const calculatorResults = results ? {
+    const calculatorResults = result ? {
         primary: {
             label: 'Final Amount',
-            value: results.finalAmount,
+            value: result.finalAmount,
             format: 'currency' as const,
             variant: 'success' as const,
-            description: `After ${values.time} years of ${values.rate}% annual growth`
+            description: `After ${values.years} years of ${values.annualRate}% annual growth`
         },
         secondary: [
             {
                 label: 'Total Contributed',
-                value: results.totalContributed,
+                value: result.totalContributions,
                 format: 'currency' as const,
                 description: 'Your initial investment plus monthly contributions'
             },
             {
                 label: 'Interest Earned',
-                value: results.totalInterest,
+                value: result.totalInterest,
                 format: 'currency' as const,
                 variant: 'success' as const,
                 description: 'Pure profit from compound growth'
             },
             {
-                label: 'Effective Return',
-                value: results.effectiveReturn,
-                format: 'percentage' as const,
-                description: 'Total return on your investment'
+                label: 'Growth Multiple',
+                value: result.totalContributions > 0 ? (result.finalAmount / result.totalContributions) : 0,
+                format: 'number' as const,
+                suffix: 'x',
+                description: 'How many times your money has multiplied'
             }
         ]
     } : undefined;

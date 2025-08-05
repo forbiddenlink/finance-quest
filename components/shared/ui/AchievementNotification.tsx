@@ -12,7 +12,6 @@ import {
     Sparkles,
     Zap,
     Target,
-    CheckCircle,
     X,
     ExternalLink
 } from 'lucide-react';

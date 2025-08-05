@@ -94,7 +94,7 @@ export interface ProgressStore {
   startStudySession: () => void;
   endStudySession: (sessionLength: number) => void;
   updateWeeklyProgress: () => void;
-  awardXP: (amount: number, reason: string) => void;
+  awardXP: (amount: number) => void;
   checkLevelUp: () => boolean;
   unlockAchievement: (achievementId: string) => void;
 
@@ -179,7 +179,7 @@ export const useProgressStore = create<ProgressStore>()(
         });
 
         // Award XP for lesson completion
-        get().awardXP(100, `Completed ${lessonId}`);
+        get().awardXP(100);
 
         // Check for achievements
         const { userProgress } = get();
@@ -241,7 +241,7 @@ export const useProgressStore = create<ProgressStore>()(
         const baseXP = 200;
         const bonusXP = Math.floor((percentage - 80) * 5); // Bonus for scores above 80%
         const totalXP = Math.max(baseXP + bonusXP, 50); // Minimum 50 XP even for low scores
-        get().awardXP(totalXP, `Quiz: ${quizId} (${percentage}%)`);
+        get().awardXP(totalXP);
 
         // Check for quiz-related achievements
         if (percentage === 100) {
@@ -500,7 +500,7 @@ export const useProgressStore = create<ProgressStore>()(
           weekStart.setDate(weekStart.getDate() - weekStart.getDay());
           weekStart.setHours(0, 0, 0, 0);
 
-          const thisWeekLessons = state.userProgress.completedLessons.filter(lesson => {
+          const thisWeekLessons = state.userProgress.completedLessons.filter(() => {
             // This is a simplified check - in a real app you'd store lesson completion dates
             return true; // For now, count all recent activity as this week
           });
@@ -518,7 +518,7 @@ export const useProgressStore = create<ProgressStore>()(
         });
       },
 
-      awardXP: (amount: number, reason: string) => {
+      awardXP: (amount: number) => {
         set((state) => {
           const newTotalXP = state.userProgress.totalXP + amount;
           const newCurrentXP = state.userProgress.currentXP + amount;

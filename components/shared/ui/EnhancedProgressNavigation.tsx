@@ -23,9 +23,7 @@ import {
     BookOpen,
     BarChart3,
     Star,
-    ChevronDown,
-    Search,
-    Bell
+    ChevronDown
 } from 'lucide-react';
 
 interface NavigationItem {
@@ -96,8 +94,8 @@ const EnhancedProgressNavigation: React.FC = () => {
             {/* Enhanced Navigation Bar */}
             <motion.nav
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                        ? `${theme.backgrounds.headerFloating} shadow-2xl backdrop-blur-2xl`
-                        : `${theme.backgrounds.header} backdrop-blur-xl`
+                    ? `${theme.backgrounds.headerFloating} shadow-2xl backdrop-blur-2xl`
+                    : `${theme.backgrounds.header} backdrop-blur-xl`
                     }`}
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
@@ -152,12 +150,12 @@ const EnhancedProgressNavigation: React.FC = () => {
                                             <Link
                                                 href={item.href}
                                                 className={`relative flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 group ${isActive
-                                                        ? `${theme.status.info.bg} ${theme.status.info.text} ${theme.status.info.border} border`
-                                                        : `${theme.textColors.secondary} hover:${theme.textColors.primary} hover:${theme.backgrounds.cardHover}`
+                                                    ? `${theme.status.info.bg} ${theme.status.info.text} ${theme.status.info.border} border`
+                                                    : `${theme.textColors.secondary} hover:${theme.textColors.primary} hover:${theme.backgrounds.cardHover}`
                                                     }`}
                                             >
                                                 <IconComponent className={`w-4 h-4 ${item.isPro ? 'text-purple-400' :
-                                                        item.isNew ? 'text-green-400' : ''
+                                                    item.isNew ? 'text-green-400' : ''
                                                     }`} />
                                                 <span>{item.label}</span>
 
@@ -367,14 +365,14 @@ const EnhancedProgressNavigation: React.FC = () => {
                                                         key={item.href}
                                                         href={item.href}
                                                         className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${isActive
-                                                                ? `${theme.status.info.bg} ${theme.status.info.text}`
-                                                                : `hover:${theme.backgrounds.cardHover}`
+                                                            ? `${theme.status.info.bg} ${theme.status.info.text}`
+                                                            : `hover:${theme.backgrounds.cardHover}`
                                                             }`}
                                                         onClick={() => setIsMobileMenuOpen(false)}
                                                     >
                                                         <IconComponent className={`w-5 h-5 ${item.isPro ? 'text-purple-400' :
-                                                                item.isNew ? 'text-green-400' :
-                                                                    theme.textColors.brand
+                                                            item.isNew ? 'text-green-400' :
+                                                                theme.textColors.brand
                                                             }`} />
                                                         <div className="flex-1">
                                                             <div className={`font-medium ${theme.textColors.primary} flex items-center`}>

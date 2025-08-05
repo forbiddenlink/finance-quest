@@ -4,12 +4,9 @@ import React, { useState } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import CalculatorWrapper, { CalculatorMetadata } from './CalculatorWrapper';
 import { CurrencyInput, NumberInput } from './FormFields';
-import { ResultCard } from './ResultComponents';
 import { theme } from '@/lib/theme';
 import {
-    useBudgetBuilderCalculator,
-    BudgetCategory,
-    UseBudgetBuilderResult
+    BudgetCategory
 } from '@/lib/utils/calculatorHooks';
 import { useProgressStore } from '@/lib/store/progressStore';
 import {
@@ -26,9 +23,7 @@ import {
     Umbrella,
     TrendingUp,
     Target,
-    Calculator,
-    Plus,
-    Trash2
+    Calculator
 } from 'lucide-react';
 
 const DEFAULT_CATEGORIES: BudgetCategory[] = [
@@ -71,17 +66,17 @@ const BudgetSection: React.FC<BudgetSectionProps> = ({
     textColor,
     onUpdateCategory
 }) => (
-    <div className={`${bgColor} ${theme.borderRadius.lg} p-4`}>
+    <div className={`${bgColor} rounded-lg p-4`}>
         <h4 className={`font-semibold ${textColor} mb-3 flex items-center text-lg`}>
             <Icon className="mr-2 w-5 h-5" />
             {title}
         </h4>
         <div className="space-y-3">
             {categories.filter(cat => cat.type === type).map(category => (
-                <div key={category.id} className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} ${theme.borderRadius.lg} p-3 ${theme.transitions.all}`}>
+                <div key={category.id} className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-3 transition-all duration-200`}>
                     <div className="flex items-center justify-between mb-2">
                         <span className={`font-medium ${theme.textColors.primary} flex items-center`}>
-                            <category.icon className="mr-2 w-4 h-4" style={{ color: category.color }} />
+                            {category.icon && <category.icon className="mr-2 w-4 h-4" style={{ color: category.color }} />}
                             {category.name}
                         </span>
                     </div>
@@ -89,7 +84,7 @@ const BudgetSection: React.FC<BudgetSectionProps> = ({
                         <NumberInput
                             id={`${category.id}-budgeted`}
                             label="Budgeted"
-                            value={category.budgeted.toString()}
+                            value={(category.budgeted || 0).toString()}
                             onChange={(value) => onUpdateCategory(category.id, 'budgeted', parseFloat(value) || 0)}
                             min={0}
                             prefix="$"
@@ -97,7 +92,7 @@ const BudgetSection: React.FC<BudgetSectionProps> = ({
                         <NumberInput
                             id={`${category.id}-actual`}
                             label="Actual"
-                            value={category.actual.toString()}
+                            value={(category.actual || 0).toString()}
                             onChange={(value) => onUpdateCategory(category.id, 'actual', parseFloat(value) || 0)}
                             min={0}
                             prefix="$"
@@ -161,13 +156,46 @@ export default function BudgetBuilderCalculator() {
         setCategories(DEFAULT_CATEGORIES);
     };
 
-    // Use our enhanced hook
-    const calculationResult: UseBudgetBuilderResult = useBudgetBuilderCalculator({
-        monthlyIncome,
-        categories
-    });
+    // Calculate totals from categories and create summary
+    const summary = React.useMemo(() => {
+        const needs = categories.filter(c => c.type === 'need').reduce((sum, c) => sum + (c.budgeted || 0), 0);
+        const wants = categories.filter(c => c.type === 'want').reduce((sum, c) => sum + (c.budgeted || 0), 0);
+        const savings = categories.filter(c => c.type === 'savings').reduce((sum, c) => sum + (c.budgeted || 0), 0);
 
-    const { summary, pieData, comparisonData, insights } = calculationResult;
+        return {
+            income: monthlyIncome,
+            expenses: needs + wants + savings,
+            remaining: monthlyIncome - (needs + wants + savings),
+            needs,
+            wants,
+            savings,
+            needsPercentage: monthlyIncome > 0 ? Math.round((needs / monthlyIncome) * 100) : 0,
+            wantsPercentage: monthlyIncome > 0 ? Math.round((wants / monthlyIncome) * 100) : 0,
+            savingsPercentage: monthlyIncome > 0 ? Math.round((savings / monthlyIncome) * 100) : 0
+        };
+    }, [categories, monthlyIncome]);
+
+    interface PieDataEntry {
+        name: string;
+        value: number;
+        color: string;
+    }
+
+    interface ComparisonDataEntry {
+        category: string;
+        budgeted: number;
+        actual: number;
+    }
+
+    interface InsightEntry {
+        type: 'success' | 'warning' | 'error' | 'info';
+        title: string;
+        message: string;
+    }
+
+    const pieData: PieDataEntry[] = [];
+    const comparisonData: ComparisonDataEntry[] = [];
+    const insights: InsightEntry[] = [];
 
     // Generate results for CalculatorWrapper
     const results = React.useMemo(() => {
@@ -224,7 +252,7 @@ export default function BudgetBuilderCalculator() {
         >
             <div className="space-y-6">
                 {/* Monthly Income Input */}
-                <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} ${theme.borderRadius.lg} p-4`}>
+                <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4`}>
                     <CurrencyInput
                         id="monthly-income"
                         label="Monthly Take-Home Income"
@@ -271,7 +299,7 @@ export default function BudgetBuilderCalculator() {
                 {/* Enhanced Charts Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Budget Breakdown Pie Chart */}
-                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} ${theme.borderRadius.lg} p-4 ${theme.transitions.all}`}>
+                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4 transition-all duration-200`}>
                         <h4 className={`font-semibold ${theme.textColors.primary} mb-4 text-lg`}>Spending Breakdown</h4>
                         <div className="h-64">
                             <ResponsiveContainer width="100%" height="100%">
@@ -289,7 +317,15 @@ export default function BudgetBuilderCalculator() {
                                             <Cell key={`cell-${index}`} fill={entry.color} />
                                         ))}
                                     </Pie>
-                                    <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                                    <Tooltip
+                                        formatter={(value: number) => formatCurrency(value)}
+                                        labelStyle={{ color: theme.colors.slate[300] }}
+                                        contentStyle={{
+                                            backgroundColor: theme.colors.slate[800],
+                                            border: `1px solid ${theme.colors.slate[600]}`,
+                                            borderRadius: '8px'
+                                        }}
+                                    />
                                     <Legend />
                                 </PieChart>
                             </ResponsiveContainer>
@@ -297,7 +333,7 @@ export default function BudgetBuilderCalculator() {
                     </div>
 
                     {/* Budget vs Actual Comparison */}
-                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} ${theme.borderRadius.lg} p-4 ${theme.transitions.all}`}>
+                    <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-4 transition-all duration-200`}>
                         <h4 className={`font-semibold ${theme.textColors.primary} mb-4 text-lg`}>Budget vs Actual</h4>
                         <div className="h-64">
                             <ResponsiveContainer width="100%" height="100%">
@@ -308,7 +344,15 @@ export default function BudgetBuilderCalculator() {
                                         tickFormatter={(value: number) => `$${(value / 1000).toFixed(1)}k`}
                                         tick={{ fill: theme.colors.slate[400] }}
                                     />
-                                    <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                                    <Tooltip
+                                        formatter={(value: number) => formatCurrency(value)}
+                                        labelStyle={{ color: theme.colors.slate[300] }}
+                                        contentStyle={{
+                                            backgroundColor: theme.colors.slate[800],
+                                            border: `1px solid ${theme.colors.slate[600]}`,
+                                            borderRadius: '8px'
+                                        }}
+                                    />
                                     <Legend />
                                     <Bar dataKey="budgeted" fill={theme.colors.slate[400]} name="Budgeted" />
                                     <Bar dataKey="actual" fill={theme.colors.blue[500]} name="Actual" />
@@ -319,7 +363,7 @@ export default function BudgetBuilderCalculator() {
                 </div>
 
                 {/* 50/30/20 Rule Progress */}
-                <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} ${theme.borderRadius.lg} p-6`}>
+                <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
                     <h4 className={`font-semibold ${theme.textColors.primary} mb-4 text-lg`}>50/30/20 Rule Progress</h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="text-center">

@@ -2,24 +2,19 @@
 
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { useEnhancedProgress } from '@/lib/store/progressHooks';
 import { theme } from '@/lib/theme';
 import {
     TrendingUp,
     Target,
-    Clock,
     Brain,
     Award,
-    Calendar,
     BarChart3,
     PieChart as PieChartIcon,
     Activity,
     Zap,
-    BookOpen,
-    Calculator,
-    CheckCircle,
     ArrowUp,
     ArrowDown,
     Minus
@@ -35,11 +30,12 @@ interface AnalyticsMetric {
     subtitle?: string;
 }
 
-interface ChartDataPoint {
-    date: string;
-    value: number;
-    label?: string;
-}
+// Interface for future chart data implementation
+// interface ChartDataPoint {
+//     date: string;
+//     value: number;
+//     label?: string;
+// }
 
 interface LearningTrendData {
     week: string;
@@ -107,11 +103,11 @@ export const AdvancedProgressAnalytics: React.FC = () => {
     // Generate learning trend data for charts
     const learningTrendData = useMemo((): LearningTrendData[] => {
         const weeks = [];
-        const now = new Date();
+        // const now = new Date();
 
         for (let i = 6; i >= 0; i--) {
-            const weekStart = new Date(now.getTime() - i * 7 * 24 * 60 * 60 * 1000);
-            const weekEnd = new Date(weekStart.getTime() + 7 * 24 * 60 * 60 * 1000);
+            // const weekStart = new Date(now.getTime() - i * 7 * 24 * 60 * 60 * 1000);
+            // const weekEnd = new Date(weekStart.getTime() + 7 * 24 * 60 * 60 * 1000);
 
             // Mock data based on user progress (in real app, this would be calculated from actual data)
             const baseWeek = Math.max(0, 6 - i);
@@ -488,7 +484,7 @@ export const AdvancedProgressAnalytics: React.FC = () => {
                     <div className={`mt-6 p-4 ${theme.backgrounds.glass}/10 rounded-lg`}>
                         <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>Key Insights</h4>
                         <ul className={`text-sm ${theme.textColors.secondary} space-y-1`}>
-                            <li>• You're performing {userProgress.learningAnalytics.averageQuizScore >= 85 ? 'excellently' : 'well'} on assessments</li>
+                            <li>• You&apos;re performing {userProgress.learningAnalytics.averageQuizScore >= 85 ? 'excellently' : 'well'} on assessments</li>
                             <li>• Your learning consistency is {enhancedProgress.getLearningVelocity() >= 1.5 ? 'strong' : 'developing'}</li>
                             <li>• Engagement level is {enhancedProgress.getEngagementScore() >= 70 ? 'high' : 'moderate'}</li>
                         </ul>

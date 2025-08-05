@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
@@ -12,9 +12,6 @@ import {
     AlertTriangle,
     CheckCircle,
     X,
-    Settings,
-    Calendar,
-    Zap,
     Award
 } from 'lucide-react';
 
@@ -30,7 +27,7 @@ interface SmartNotification {
     expiresAt?: Date;
     dismissed?: boolean;
     persistent?: boolean;
-    data?: any;
+    data?: Record<string, unknown>;
 }
 
 interface NotificationConfig {

@@ -8,7 +8,6 @@ import { theme } from '@/lib/theme';
 import { validateField, ValidationPresets } from '@/lib/utils/calculatorValidation';
 import toast from 'react-hot-toast';
 import Decimal from 'decimal.js';
-import Dinero from 'dinero.js';
 import GuidedTour, { hasTourBeenCompleted } from '@/components/shared/ui/GuidedTour';
 import { Step } from 'react-joyride';
 import AchievementSystem, { triggerCalculatorUsage, triggerPaycheckOptimization, triggerTaxOptimization } from '@/components/shared/ui/AchievementSystem';
@@ -58,10 +57,6 @@ export default function PaycheckCalculator() {
   });
 
   // Utility functions for precise financial calculations
-  const toCents = useCallback((amount: number): Dinero.Dinero => {
-    return Dinero({ amount: Math.round(amount * 100), currency: 'USD' });
-  }, []);
-
   const toDecimal = useCallback((value: string | number): Decimal => {
     return new Decimal(value);
   }, []);
@@ -277,15 +272,15 @@ export default function PaycheckCalculator() {
     // Trigger achievement checks
     const retirement401kPercent = retirement401kPercentDecimal.toNumber();
     const effectiveTaxRate = ((toDecimal(federalTax).plus(stateTax)).div(grossDecimal)).mul(100).toNumber();
-    
+
     triggerPaycheckOptimization(retirement401kPercent);
     triggerTaxOptimization(effectiveTaxRate);
 
     // Show success message with key insight
     const takeHomePercentage = Math.round((netPay.div(grossDecimal)).mul(100).toNumber());
     toast.success(`💡 Your take-home rate is ${takeHomePercentage}%! ${takeHomePercentage > 75 ? 'Excellent!' :
-        takeHomePercentage > 70 ? 'Good rate!' :
-          'Consider optimizing deductions.'
+      takeHomePercentage > 70 ? 'Good rate!' :
+        'Consider optimizing deductions.'
       }`, {
       duration: 4000,
       position: 'top-center',
@@ -337,8 +332,8 @@ export default function PaycheckCalculator() {
 
   return (
     <div className={`max-w-7xl mx-auto ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg shadow-lg p-4 sm:p-6 lg:p-8`}>
-      <AchievementSystem 
-        userProgress={userProgress}
+      <AchievementSystem
+        userProgress={userProgress as unknown as Record<string, unknown>}
         onAchievementUnlocked={(achievement) => {
           toast.success(`🏆 Achievement Unlocked: ${achievement.title}! +${achievement.points} XP`, {
             duration: 3000,
@@ -346,14 +341,14 @@ export default function PaycheckCalculator() {
           });
         }}
       />
-      
+
       <GuidedTour
         steps={tourSteps}
         runTour={runTour}
         onTourEnd={handleTourEnd}
         tourKey="paycheck-calculator"
       />
-      
+
       <div className="mb-6 lg:mb-8">
         <h2 className={`paycheck-calculator-title ${theme.typography.heading2} ${theme.textColors.primary} mb-2 flex items-center gap-3 text-xl sm:text-2xl lg:text-3xl`}>
           <Calculator className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 ${theme.textColors.primary}`} />
@@ -386,8 +381,8 @@ export default function PaycheckCalculator() {
                     value={grossPay}
                     onChange={(e) => handleGrossPayChange(e.target.value)}
                     className={`pl-8 w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all text-lg ${errors.grossPay
-                        ? 'border-red-500 bg-red-50/5'
-                        : `${theme.borderColors.primary} bg-slate-800/50`
+                      ? 'border-red-500 bg-red-50/5'
+                      : `${theme.borderColors.primary} bg-slate-800/50`
                       }`}
                     placeholder="5000"
                     min="0"
@@ -476,8 +471,8 @@ export default function PaycheckCalculator() {
                     value={healthInsurance}
                     onChange={(e) => handleHealthInsuranceChange(e.target.value)}
                     className={`pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all ${errors.healthInsurance
-                        ? 'border-red-500 bg-red-50/5'
-                        : `${theme.borderColors.primary} bg-slate-800/50`
+                      ? 'border-red-500 bg-red-50/5'
+                      : `${theme.borderColors.primary} bg-slate-800/50`
                       }`}
                     placeholder="200"
                     min="0"
@@ -521,8 +516,8 @@ export default function PaycheckCalculator() {
                     value={retirement401k}
                     onChange={(e) => handleRetirement401kChange(e.target.value)}
                     className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all ${errors.retirement401k
-                        ? 'border-red-500 bg-red-50/5'
-                        : `${theme.borderColors.primary} bg-slate-800/50`
+                      ? 'border-red-500 bg-red-50/5'
+                      : `${theme.borderColors.primary} bg-slate-800/50`
                       }`}
                     placeholder="5"
                     min="0"
@@ -597,10 +592,10 @@ export default function PaycheckCalculator() {
                       Take-home percentage:
                     </span>
                     <span className={`font-semibold text-lg ${((breakdown.netPay / breakdown.grossPay) * 100) > 75
-                        ? theme.status.success.text
-                        : ((breakdown.netPay / breakdown.grossPay) * 100) > 70
-                          ? theme.status.warning.text
-                          : theme.status.error.text
+                      ? theme.status.success.text
+                      : ((breakdown.netPay / breakdown.grossPay) * 100) > 70
+                        ? theme.status.warning.text
+                        : theme.status.error.text
                       }`}>
                       {((breakdown.netPay / breakdown.grossPay) * 100).toFixed(1)}%
                     </span>
@@ -718,10 +713,10 @@ export default function PaycheckCalculator() {
             <div className={`p-4 ${theme.backgrounds.glass} rounded-lg border ${theme.borderColors.primary}`}>
               <h4 className="font-semibold mb-2 flex items-center gap-1">
                 <AlertCircle className={`w-4 h-4 ${((breakdown.federalTax + breakdown.stateTax) / breakdown.grossPay) > 0.25
-                    ? 'text-red-500'
-                    : ((breakdown.federalTax + breakdown.stateTax) / breakdown.grossPay) > 0.20
-                      ? 'text-yellow-500'
-                      : 'text-green-500'
+                  ? 'text-red-500'
+                  : ((breakdown.federalTax + breakdown.stateTax) / breakdown.grossPay) > 0.20
+                    ? 'text-yellow-500'
+                    : 'text-green-500'
                   }`} />
                 Tax Efficiency Analysis
               </h4>
@@ -748,18 +743,18 @@ export default function PaycheckCalculator() {
             <div className={`p-4 ${theme.backgrounds.glass} rounded-lg border ${theme.borderColors.primary}`}>
               <h4 className="font-semibold mb-2 flex items-center gap-1">
                 <TrendingDown className={`w-4 h-4 ${(breakdown.retirement401k || 0) >= breakdown.grossPay * 0.10
-                    ? 'text-green-500'
-                    : (breakdown.retirement401k || 0) >= breakdown.grossPay * 0.05
-                      ? 'text-yellow-500'
-                      : 'text-red-500'
+                  ? 'text-green-500'
+                  : (breakdown.retirement401k || 0) >= breakdown.grossPay * 0.05
+                    ? 'text-yellow-500'
+                    : 'text-red-500'
                   }`} />
                 Retirement Savings Analysis
               </h4>
               {breakdown.retirement401k && breakdown.retirement401k > 0 ? (
                 <div>
-                  <p className="mb-2">You're saving <strong>{formatCurrency(breakdown.retirement401k * 12)}</strong> annually for retirement!</p>
+                  <p className="mb-2">You&apos;re saving <strong>{formatCurrency(breakdown.retirement401k * 12)}</strong> annually for retirement!</p>
                   {(breakdown.retirement401k / breakdown.grossPay) >= 0.15 ? (
-                    <p className="text-green-400">🌟 <strong>Excellent!</strong> You're on track for a comfortable retirement.</p>
+                    <p className="text-green-400">🌟 <strong>Excellent!</strong> You&apos;re on track for a comfortable retirement.</p>
                   ) : (breakdown.retirement401k / breakdown.grossPay) >= 0.10 ? (
                     <p className="text-blue-400">👍 <strong>Good progress!</strong> Consider increasing to 15% if possible.</p>
                   ) : (
@@ -768,7 +763,7 @@ export default function PaycheckCalculator() {
                 </div>
               ) : (
                 <div>
-                  <p className="text-red-400 mb-2">⚠️ You're not contributing to retirement!</p>
+                  <p className="text-red-400 mb-2">⚠️ You&apos;re not contributing to retirement!</p>
                   <p>Starting with just 3% can save you thousands in taxes and build wealth. Every year you wait costs you compound growth!</p>
                 </div>
               )}
@@ -777,10 +772,10 @@ export default function PaycheckCalculator() {
             <div className={`p-4 ${theme.backgrounds.glass} rounded-lg border ${theme.borderColors.primary}`}>
               <h4 className="font-semibold mb-2 flex items-center gap-1">
                 <Calculator className={`w-4 h-4 ${(breakdown.netPay / breakdown.grossPay) > 0.75
-                    ? 'text-green-500'
-                    : (breakdown.netPay / breakdown.grossPay) > 0.70
-                      ? 'text-yellow-500'
-                      : 'text-red-500'
+                  ? 'text-green-500'
+                  : (breakdown.netPay / breakdown.grossPay) > 0.70
+                    ? 'text-yellow-500'
+                    : 'text-red-500'
                   }`} />
                 Take-Home Optimization
               </h4>
@@ -820,7 +815,7 @@ export default function PaycheckCalculator() {
               {!breakdown.healthInsurance && (
                 <li className="flex items-start gap-2">
                   <span className="text-green-500 mt-0.5">•</span>
-                  <span>Consider health insurance - it's a pre-tax deduction that reduces your tax burden</span>
+                  <span>Consider health insurance - it&apos;s a pre-tax deduction that reduces your tax burden</span>
                 </li>
               )}
               <li className="flex items-start gap-2">

@@ -16,6 +16,16 @@ import SuccessAnimation from '@/components/shared/ui/SuccessAnimation';
 import EnhancedProgressBar from '@/components/shared/ui/EnhancedProgressBar';
 import StreakMotivationWidget from '@/components/shared/ui/StreakMotivationWidget';
 import AchievementNotification from '@/components/shared/ui/AchievementNotification';
+
+interface Achievement {
+    id: string;
+    title: string;
+    description: string;
+    tier: 'bronze' | 'silver' | 'gold' | 'platinum' | 'legendary';
+    xpReward: number;
+    rarity: number;
+    category: 'learning' | 'consistency' | 'mastery' | 'milestone';
+}
 import {
     Calculator,
     BookOpen,
@@ -91,7 +101,7 @@ export default function ChapterLayout({
     const [activeCalculatorTab, setActiveCalculatorTab] = useState(0);
     const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
     const [showAchievementNotification, setShowAchievementNotification] = useState(false);
-    const [newAchievement, setNewAchievement] = useState<any>(null);
+    const [newAchievement, setNewAchievement] = useState<Record<string, unknown> | null>(null);
     const [lastAchievement, setLastAchievement] = useState<{
         type: 'lesson' | 'quiz' | 'chapter' | 'milestone';
         title: string;
@@ -507,8 +517,8 @@ export default function ChapterLayout({
                                                             key={tab.id}
                                                             onClick={() => setActiveCalculatorTab(index)}
                                                             className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors ${activeCalculatorTab === index
-                                                                    ? 'border-blue-500 text-blue-400'
-                                                                    : 'border-transparent text-slate-400 hover:text-slate-300 hover:border-slate-300'
+                                                                ? 'border-blue-500 text-blue-400'
+                                                                : 'border-transparent text-slate-400 hover:text-slate-300 hover:border-slate-300'
                                                                 }`}
                                                         >
                                                             <IconComponent className="w-4 h-4 mr-2" />
@@ -647,7 +657,7 @@ export default function ChapterLayout({
             {/* Achievement Notification */}
             {newAchievement && (
                 <AchievementNotification
-                    achievement={newAchievement}
+                    achievement={newAchievement as unknown as Achievement}
                     isVisible={showAchievementNotification}
                     onClose={() => {
                         setShowAchievementNotification(false);

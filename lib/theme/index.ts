@@ -493,7 +493,7 @@ export const themeUtils = {
 
     calculatorLoadingSpinner: () => 'animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-500',
 
-    calculatorProgressBar: (percentage: number) => `
+    calculatorProgressBar: () => `
         relative w-full bg-slate-700 rounded-full h-4 overflow-hidden
     `,
 

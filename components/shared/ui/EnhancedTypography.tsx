@@ -1,7 +1,7 @@
 'use client';
 
-import React, { forwardRef, HTMLAttributes } from 'react';
-import { motion, MotionProps } from 'framer-motion';
+import React, { forwardRef } from 'react';
+import { motion } from 'framer-motion';
 import { theme } from '@/lib/theme';
 import { typographyClasses } from '@/lib/theme/typography';
 import { microAnimations } from '@/lib/theme/advancedDesign';
