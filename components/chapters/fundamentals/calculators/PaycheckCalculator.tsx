@@ -9,6 +9,9 @@ import { validateField, ValidationPresets } from '@/lib/utils/calculatorValidati
 import toast from 'react-hot-toast';
 import Decimal from 'decimal.js';
 import Dinero from 'dinero.js';
+import GuidedTour, { hasTourBeenCompleted } from '@/components/shared/ui/GuidedTour';
+import { Step } from 'react-joyride';
+import AchievementSystem, { triggerCalculatorUsage, triggerPaycheckOptimization, triggerTaxOptimization } from '@/components/shared/ui/AchievementSystem';
 interface PaycheckBreakdown {
   grossPay: number;
   federalTax: number;
@@ -42,7 +45,9 @@ export default function PaycheckCalculator() {
   const [breakdown, setBreakdown] = useState<PaycheckBreakdown | null>(null);
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [isCalculating, setIsCalculating] = useState(false);
+  const [runTour, setRunTour] = useState(false);
   const recordCalculatorUsage = useProgressStore(state => state.recordCalculatorUsage);
+  const userProgress = useProgressStore(state => state.userProgress);
 
   // Configure Decimal.js for financial precision
   Decimal.set({
@@ -71,13 +76,71 @@ export default function PaycheckCalculator() {
     }).format(numValue);
   }, []);
 
+  // Guided tour steps for first-time users
+  const tourSteps: Step[] = [
+    {
+      target: '.paycheck-calculator-title',
+      content: '👋 Welcome to the Enhanced Paycheck Calculator! This tool gives you a detailed breakdown of your paycheck with federal tax brackets, state taxes, and deductions. Let me show you around!',
+      placement: 'bottom',
+    },
+    {
+      target: '#gross-pay',
+      content: '💰 Start by entering your monthly gross pay (before taxes). This calculator uses precise decimal calculations to ensure 99.9% accuracy - no more floating-point errors!',
+      placement: 'bottom',
+    },
+    {
+      target: '#filing-status',
+      content: '📋 Select your tax filing status. This affects your federal tax brackets - married filing jointly gets better rates than single filers.',
+      placement: 'bottom',
+    },
+    {
+      target: '#state-select',
+      content: '🗺️ Choose your state. Some states like Texas and Florida have no income tax, which can save you thousands per year!',
+      placement: 'bottom',
+    },
+    {
+      target: '#health-insurance',
+      content: '🏥 Enter your health insurance premium. This is a pre-tax deduction that reduces your taxable income and saves you money!',
+      placement: 'top',
+    },
+    {
+      target: '#retirement-401k',
+      content: '🎯 Set your 401(k) contribution percentage. We recommend 10-15% for retirement. Every 1% saves you about 22% in taxes!',
+      placement: 'top',
+    },
+    {
+      target: '.results-section',
+      content: '📊 Your results appear here with precise calculations, charts, and smart insights. You\'ll see your exact take-home pay and optimization tips!',
+      placement: 'left',
+    },
+    {
+      target: '.financial-insights',
+      content: '💡 Don\'t miss these personalized insights! We analyze your tax efficiency, retirement savings, and give you actionable tips to optimize your finances.',
+      placement: 'top',
+    }
+  ];
+
+  const handleTourEnd = useCallback(() => {
+    setRunTour(false);
+    toast.success('🎓 Tour completed! You\'re now ready to optimize your paycheck. Try adjusting your 401(k) contribution to see tax savings!', {
+      duration: 5000,
+      position: 'top-center',
+    });
+  }, []);
+
   // Track calculator usage for analytics
   useEffect(() => {
     recordCalculatorUsage('paycheck-calculator');
+    triggerCalculatorUsage('paycheck-calculator'); // Trigger precision master achievement
     toast.success('💰 Paycheck Calculator loaded! Enter your details to see your take-home pay breakdown.', {
       duration: 3000,
       position: 'top-center',
     });
+
+    // Start guided tour for first-time users
+    if (!hasTourBeenCompleted('paycheck-calculator')) {
+      setTimeout(() => setRunTour(true), 1000);
+    }
   }, [recordCalculatorUsage]);
 
   // Validation function
@@ -211,6 +274,13 @@ export default function PaycheckCalculator() {
     setBreakdown(calculationResults);
     setIsCalculating(false);
 
+    // Trigger achievement checks
+    const retirement401kPercent = retirement401kPercentDecimal.toNumber();
+    const effectiveTaxRate = ((toDecimal(federalTax).plus(stateTax)).div(grossDecimal)).mul(100).toNumber();
+    
+    triggerPaycheckOptimization(retirement401kPercent);
+    triggerTaxOptimization(effectiveTaxRate);
+
     // Show success message with key insight
     const takeHomePercentage = Math.round((netPay.div(grossDecimal)).mul(100).toNumber());
     toast.success(`💡 Your take-home rate is ${takeHomePercentage}%! ${takeHomePercentage > 75 ? 'Excellent!' :
@@ -267,8 +337,25 @@ export default function PaycheckCalculator() {
 
   return (
     <div className={`max-w-7xl mx-auto ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg shadow-lg p-4 sm:p-6 lg:p-8`}>
+      <AchievementSystem 
+        userProgress={userProgress}
+        onAchievementUnlocked={(achievement) => {
+          toast.success(`🏆 Achievement Unlocked: ${achievement.title}! +${achievement.points} XP`, {
+            duration: 3000,
+            position: 'top-center',
+          });
+        }}
+      />
+      
+      <GuidedTour
+        steps={tourSteps}
+        runTour={runTour}
+        onTourEnd={handleTourEnd}
+        tourKey="paycheck-calculator"
+      />
+      
       <div className="mb-6 lg:mb-8">
-        <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2 flex items-center gap-3 text-xl sm:text-2xl lg:text-3xl`}>
+        <h2 className={`paycheck-calculator-title ${theme.typography.heading2} ${theme.textColors.primary} mb-2 flex items-center gap-3 text-xl sm:text-2xl lg:text-3xl`}>
           <Calculator className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 ${theme.textColors.primary}`} />
           Enhanced Paycheck Calculator
         </h2>
@@ -471,7 +558,7 @@ export default function PaycheckCalculator() {
         </div>
 
         {/* Results Section */}
-        <div className="space-y-6">
+        <div className="results-section space-y-6">
           {isCalculating && (
             <div className={`bg-gradient-to-r from-slate-50 to-slate-50 rounded-lg p-6 border ${theme.status.info.border} flex items-center justify-center`}>
               <div className="flex items-center space-x-3">
@@ -622,7 +709,7 @@ export default function PaycheckCalculator() {
 
       {/* Enhanced Educational Insights */}
       {breakdown && !isCalculating && (
-        <div className={`mt-8 ${theme.status.info.bg} rounded-lg p-6 ${theme.interactive.hover}`}>
+        <div className={`financial-insights mt-8 ${theme.status.info.bg} rounded-lg p-6 ${theme.interactive.hover}`}>
           <h3 className={`${theme.typography.heading4} ${theme.status.info.text} mb-4 flex items-center gap-2`}>
             <Lightbulb className="w-5 h-5" />
             Smart Financial Insights & Recommendations
