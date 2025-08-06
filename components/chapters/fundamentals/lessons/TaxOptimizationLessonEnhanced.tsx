@@ -47,7 +47,7 @@ const enhancedLessons: LessonContent[] = [
     ],
     practicalAction: 'Maximize employer 401(k) match first (free money), then HSA if available, then Roth IRA up to limits. Young workers: prioritize Roth accounts for tax-free growth. High earners: use traditional accounts for immediate tax savings. Calculate your tax savings: multiply contribution by marginal tax rate.',
     realMoneyExample: 'Sarah earns $85,000 (22% tax bracket). She contributes $10,000 to traditional 401(k): saves $2,200 in taxes immediately. Her husband maxes Roth IRA at $7,000. After 30 years at 8% returns: 401(k) = $100,000 (taxable), Roth IRA = $70,000 (tax-free). Total tax savings at retirement: $15,400+ on Roth alone.',
-    warningTip: 'Don\'t contribute to traditional IRAs if you can\'t deduct them - you\'ll pay taxes twice. If your employer offers Roth 401(k), consider it for tax diversification. Never withdraw from retirement accounts early except extreme emergencies - penalties and lost compound growth are devastating.'
+    warningTip: "Don't contribute to traditional IRAs if you can't deduct them - you'll pay taxes twice. If your employer offers Roth 401(k), consider it for tax diversification. Never withdraw from retirement accounts early except extreme emergencies - penalties and lost compound growth are devastating."
   },
   {
     title: 'Strategic Tax Deductions & Credits: Maximizing Your Refund',
@@ -62,14 +62,14 @@ const enhancedLessons: LessonContent[] = [
     ],
     practicalAction: 'Track deductible expenses throughout the year: charitable donations, business mileage, medical expenses over 7.5% AGI. If self-employed, maximize business deductions and consider Solo 401(k). Bunch charitable donations in alternate years to exceed standard deduction. Time income and deductions around tax bracket thresholds.',
     realMoneyExample: 'Married couple earns $120,000. Itemized deductions: $15,000 mortgage interest + $10,000 SALT + $8,000 charity = $33,000 vs $29,200 standard deduction. Extra $3,800 deduction saves $836 in 22% bracket. Plus $4,000 Child Tax Credit for two kids. Total tax benefit: $4,836 vs standard deduction.',
-    warningTip: 'SALT deduction capped at $10,000 - expensive mistake for high earners in high-tax states. Keep receipts for all charitable donations. Don\'t confuse tax credits with deductions - credits are much more valuable. Audit risk increases with large charitable deductions relative to income.'
+    warningTip: "SALT deduction capped at $10,000 - expensive mistake for high earners in high-tax states. Keep receipts for all charitable donations. Don't confuse tax credits with deductions - credits are much more valuable. Audit risk increases with large charitable deductions relative to income."
   },
   {
     title: 'Tax-Loss Harvesting & Investment Tax Efficiency',
     icon: TrendingUp,
     content: 'Tax-loss harvesting involves selling losing investments to offset gains, reducing taxable income by up to $3,000 annually (excess losses carry forward). Asset location places tax-inefficient investments in tax-advantaged accounts and tax-efficient investments in taxable accounts. Index funds in taxable accounts, bonds and REITs in retirement accounts.',
     keyPoints: [
-      'Wash sale rule: Can\'t buy same/substantially identical security within 30 days',
+      "Wash sale rule: Can't buy same/substantially identical security within 30 days",
       'Long-term capital gains: 0%, 15%, or 20% based on income (much lower than ordinary rates)',
       'Tax-efficient funds: Index funds with low turnover minimize taxable distributions',
       'Asset location: Bonds/REITs in tax-advantaged, stocks in taxable accounts',
@@ -77,7 +77,7 @@ const enhancedLessons: LessonContent[] = [
     ],
     practicalAction: 'Review taxable investment accounts in November for tax-loss harvesting opportunities. Sell losing positions to offset any realized gains. If no gains, harvest up to $3,000 losses against ordinary income. Buy similar (not identical) investments to maintain market exposure. Use ETFs over mutual funds in taxable accounts for tax efficiency.',
     realMoneyExample: 'Investor realizes $20,000 capital gains from stock sale. Harvests $15,000 in losses from underperforming funds. Net taxable gain: $5,000 instead of $20,000. In 22% bracket with 15% capital gains rate: saves $2,250 in taxes ($15,000 × 15%). Uses losses to offset future gains or $3,000 annually against ordinary income.',
-    warningTip: 'Wash sale rule violations disallow loss deduction - wait 31 days or buy different asset class. Don\'t let tax tail wag investment dog - never hold bad investments just for tax losses. Frequent trading for tax benefits can trigger day trader status and ordinary income treatment.'
+    warningTip: "Wash sale rule violations disallow loss deduction - wait 31 days or buy different asset class. Don't let tax tail wag investment dog - never hold bad investments just for tax losses. Frequent trading for tax benefits can trigger day trader status and ordinary income treatment."
   },
   {
     title: 'Business & Side Hustle Tax Strategies',
@@ -92,7 +92,7 @@ const enhancedLessons: LessonContent[] = [
     ],
     practicalAction: 'Track all business expenses meticulously with receipts and documentation. Use separate business bank account and credit card. Consider Solo 401(k) if self-employed - higher contribution limits than regular IRA. If profitable side business, explore S-Corp election to save self-employment taxes on distributions.',
     realMoneyExample: 'Freelance consultant earns $60,000. Business deductions: $5,000 equipment + $3,000 home office + $2,000 travel + $4,000 health insurance = $14,000. Taxable income: $46,000 vs $60,000. Tax savings in 22% bracket: $3,080. Plus self-employment tax savings on deductions: additional $2,142 (15.3% × $14,000).',
-    warningTip: 'Business must be profitable in 3 of 5 years or IRS may classify as hobby, disallowing deductions. Keep detailed records - IRS scrutinizes home office and business travel deductions. Don\'t deduct personal expenses as business costs - potential fraud charges and penalties.'
+    warningTip: "Business must be profitable in 3 of 5 years or IRS may classify as hobby, disallowing deductions. Keep detailed records - IRS scrutinizes home office and business travel deductions. Don't deduct personal expenses as business costs - potential fraud charges and penalties."
   },
   {
     title: 'Advanced Tax Planning: Timing & Strategic Moves',
@@ -105,9 +105,9 @@ const enhancedLessons: LessonContent[] = [
       'Qualified Small Business Stock: Up to $10M gain exclusion for startup investments',
       'Charitable Remainder Trusts: Donate appreciated assets, receive income stream'
     ],
-    practicalAction: 'Project next year\'s income and tax bracket. If expecting lower income year, consider Roth conversions to fill lower brackets. Bunch charitable donations and medical expenses in alternating years. Time large asset sales around low-income periods or use installment sales to spread gains.',
+    practicalAction: "Project next year's income and tax bracket. If expecting lower income year, consider Roth conversions to fill lower brackets. Bunch charitable donations and medical expenses in alternating years. Time large asset sales around low-income periods or use installment sales to spread gains.",
     realMoneyExample: 'Early retiree has $30,000 annual expenses, $20,000 in taxable income. Converts $44,000 traditional IRA to Roth (fills 12% bracket to $94,300 married filing jointly). Pays $5,280 in taxes now vs 22-24% in later retirement. Over 20 years, saves $15,000+ in taxes on tax-free Roth growth.',
-    warningTip: 'Roth conversions increase current year taxes - ensure you have cash to pay without touching retirement funds. Don\'t convert too much and push into higher brackets. Complex strategies like CRTs require professional advice and significant assets to justify costs.'
+    warningTip: "Roth conversions increase current year taxes - ensure you have cash to pay without touching retirement funds. Don't convert too much and push into higher brackets. Complex strategies like CRTs require professional advice and significant assets to justify costs."
   },
   {
     title: 'Tax Planning Integration: Building Wealth-Maximizing Systems',
@@ -122,7 +122,7 @@ const enhancedLessons: LessonContent[] = [
     ],
     practicalAction: 'Conduct annual tax planning review by October to implement year-end strategies. Coordinate with financial advisor and CPA for comprehensive planning. Use tax software or professional for complex situations. Reinvest tax savings into investment accounts to accelerate wealth building.',
     realMoneyExample: 'High-earning couple ($300K) implements comprehensive tax strategy: Max 401(k)s ($46,000), HSA ($8,300), tax-loss harvesting ($3,000), charitable bunching ($20,000 vs $10,000 annually). Total tax savings: $24,000 annually in 32% bracket. Invested over 20 years at 8%: $1.17M additional wealth from tax optimization alone.',
-    warningTip: 'Tax laws change frequently - strategies legal today may not be tomorrow. Don\'t be penny-wise and pound-foolish: spending $5,000 on planning to save $500 doesn\'t make sense. Focus on highest-impact strategies first: retirement accounts, employer match, and basic deductions before complex strategies.'
+    warningTip: "Tax laws change frequently - strategies legal today may not be tomorrow. Don't be penny-wise and pound-foolish: spending $5,000 on planning to save $500 doesn't make sense. Focus on highest-impact strategies first: retirement accounts, employer match, and basic deductions before complex strategies."
   }
 ];
 
@@ -142,11 +142,11 @@ export default function TaxOptimizationLessonEnhanced({ onComplete }: TaxOptimiz
     if (lessonIndex === enhancedLessons.length - 1 && newCompleted.every(Boolean)) {
       const totalTime = Math.round((new Date().getTime() - startTime.getTime()) / 1000 / 60);
       completeLesson('chapter10-tax-optimization-lesson', totalTime);
-      
+
       if (onComplete) {
         onComplete();
       }
-      
+
       toast.success('Tax optimization mastery achieved! 🎯', {
         duration: 4000,
         position: 'top-center',

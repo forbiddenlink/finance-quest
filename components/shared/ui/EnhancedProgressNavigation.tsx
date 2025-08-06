@@ -18,13 +18,10 @@ import {
     User,
     Menu,
     X,
-    Zap,
     Crown,
     BookOpen,
     BarChart3,
-    Star,
-    ChevronDown,
-    Brain
+    ChevronDown
 } from 'lucide-react';
 
 interface NavigationItem {

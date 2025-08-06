@@ -82,37 +82,6 @@ export default function CreditUtilizationCalculator() {
     return Math.max(min, Math.min(max, parsed));
   };
 
-  const validateInputs = (): InputValidation => {
-    const errors: ValidationError[] = [];
-    
-    // Validate cards
-    cards.forEach((card) => {
-      if (card.creditLimit <= 0) {
-        errors.push({ field: `card-${card.id}-limit`, message: `Credit limit must be greater than $0` });
-      }
-      if (card.currentBalance < 0) {
-        errors.push({ field: `card-${card.id}-balance`, message: `Balance cannot be negative` });
-      }
-      if (card.currentBalance > card.creditLimit) {
-        errors.push({ field: `card-${card.id}-balance`, message: `Balance cannot exceed credit limit` });
-      }
-      if (card.statementDate < 1 || card.statementDate > 31) {
-        errors.push({ field: `card-${card.id}-statement`, message: `Statement date must be between 1-31` });
-      }
-    });
-
-    // Validate extra payment
-    if (availableExtraPayment < 0) {
-      errors.push({ field: 'extra-payment', message: 'Extra payment cannot be negative' });
-    }
-
-    setValidationErrors(errors);
-    return {
-      isValid: errors.length === 0,
-      errors
-    };
-  };
-
   // Handle input changes with validation
   const handleExtraPaymentChange = (value: string) => {
     const parsed = safeParseFloat(value, 0, 100000);
