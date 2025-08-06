@@ -6,6 +6,16 @@ import { theme } from '@/lib/theme';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { motion } from 'framer-motion';
 
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+interface InputValidation {
+  isValid: boolean;
+  errors: ValidationError[];
+}
+
 interface JobOffer {
   id: string;
   title: string;
@@ -57,6 +67,7 @@ export default function CareerValueCalculator() {
   const [selectedOffer, setSelectedOffer] = useState<string>('offer1');
   const [careerGrowthRate, setCareerGrowthRate] = useState<string>('3.5');
   const [yearsToProject, setYearsToProject] = useState<string>('10');
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
 
   const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
 
@@ -64,10 +75,30 @@ export default function CareerValueCalculator() {
     recordCalculatorUsage('career-value-calculator');
   }, [recordCalculatorUsage]);
 
+  // Safe parsing function with validation
+  const safeParseFloat = (value: string, fieldName: string, min: number = 0): number => {
+    const parsed = parseFloat(value);
+    if (isNaN(parsed) || parsed < min) {
+      const error: ValidationError = {
+        field: fieldName,
+        message: `Please enter a valid number${min > 0 ? ` (minimum: ${min})` : ''}`
+      };
+      setValidationErrors(prev => [
+        ...prev.filter(e => e.field !== fieldName),
+        error
+      ]);
+      return 0;
+    }
+    
+    // Clear error if validation passes
+    setValidationErrors(prev => prev.filter(e => e.field !== fieldName));
+    return parsed;
+  };
+
   const updateOffer = (offerId: string, field: keyof JobOffer, value: string | number) => {
     setOffers(prev => prev.map(offer => 
       offer.id === offerId 
-        ? { ...offer, [field]: typeof value === 'string' ? parseFloat(value) || 0 : value }
+        ? { ...offer, [field]: typeof value === 'string' ? safeParseFloat(value, `${offerId}-${field}`) : value }
         : offer
     ));
   };
@@ -176,93 +207,195 @@ export default function CareerValueCalculator() {
               
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-1`}>
+                  <label htmlFor={`${offer.id}-base-salary`} className={`block text-sm font-medium ${theme.textColors.secondary} mb-1`}>
                     Base Salary
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true">$</span>
                     <input
                       type="number"
+                      id={`${offer.id}-base-salary`}
                       value={offer.baseSalary}
                       onChange={(e) => updateOffer(offer.id, 'baseSalary', e.target.value)}
-                      className="pl-8 w-full px-3 py-2 bg-slate-800/50 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      className={`pl-8 w-full px-3 py-2 bg-slate-800/50 border rounded text-white text-sm focus:ring-2 focus:border-transparent transition-all ${
+                        validationErrors.some(e => e.field === `${offer.id}-baseSalary`) 
+                          ? 'border-red-500 focus:ring-red-500' 
+                          : 'border-slate-600 focus:ring-yellow-500'
+                      }`}
+                      aria-describedby={`${offer.id}-base-salary-help ${offer.id}-base-salary-error`}
+                      aria-invalid={validationErrors.some(e => e.field === `${offer.id}-baseSalary`)}
+                      min="0"
+                      step="1000"
                     />
                   </div>
+                  {validationErrors.some(e => e.field === `${offer.id}-baseSalary`) && (
+                    <p id={`${offer.id}-base-salary-error`} className="text-red-400 text-xs mt-1" role="alert">
+                      {validationErrors.find(e => e.field === `${offer.id}-baseSalary`)?.message}
+                    </p>
+                  )}
+                  <p id={`${offer.id}-base-salary-help`} className={`text-xs ${theme.textColors.muted} mt-1`}>
+                    Annual base salary before bonuses and benefits
+                  </p>
                 </div>
                 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-1`}>
+                  <label htmlFor={`${offer.id}-annual-bonus`} className={`block text-sm font-medium ${theme.textColors.secondary} mb-1`}>
                     Annual Bonus
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true">$</span>
                     <input
                       type="number"
+                      id={`${offer.id}-annual-bonus`}
                       value={offer.bonus}
                       onChange={(e) => updateOffer(offer.id, 'bonus', e.target.value)}
-                      className="pl-8 w-full px-3 py-2 bg-slate-800/50 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      className={`pl-8 w-full px-3 py-2 bg-slate-800/50 border rounded text-white text-sm focus:ring-2 focus:border-transparent transition-all ${
+                        validationErrors.some(e => e.field === `${offer.id}-bonus`) 
+                          ? 'border-red-500 focus:ring-red-500' 
+                          : 'border-slate-600 focus:ring-yellow-500'
+                      }`}
+                      aria-describedby={`${offer.id}-annual-bonus-help ${offer.id}-annual-bonus-error`}
+                      aria-invalid={validationErrors.some(e => e.field === `${offer.id}-bonus`)}
+                      min="0"
+                      step="500"
                     />
                   </div>
+                  {validationErrors.some(e => e.field === `${offer.id}-bonus`) && (
+                    <p id={`${offer.id}-annual-bonus-error`} className="text-red-400 text-xs mt-1" role="alert">
+                      {validationErrors.find(e => e.field === `${offer.id}-bonus`)?.message}
+                    </p>
+                  )}
+                  <p id={`${offer.id}-annual-bonus-help`} className={`text-xs ${theme.textColors.muted} mt-1`}>
+                    Expected annual bonus or performance incentives
+                  </p>
                 </div>
                 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-1`}>
+                  <label htmlFor={`${offer.id}-health-insurance`} className={`block text-sm font-medium ${theme.textColors.secondary} mb-1`}>
                     Health Insurance Value
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true">$</span>
                     <input
                       type="number"
+                      id={`${offer.id}-health-insurance`}
                       value={offer.healthInsurance}
                       onChange={(e) => updateOffer(offer.id, 'healthInsurance', e.target.value)}
-                      className="pl-8 w-full px-3 py-2 bg-slate-800/50 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      className={`pl-8 w-full px-3 py-2 bg-slate-800/50 border rounded text-white text-sm focus:ring-2 focus:border-transparent transition-all ${
+                        validationErrors.some(e => e.field === `${offer.id}-healthInsurance`) 
+                          ? 'border-red-500 focus:ring-red-500' 
+                          : 'border-slate-600 focus:ring-yellow-500'
+                      }`}
+                      aria-describedby={`${offer.id}-health-insurance-help ${offer.id}-health-insurance-error`}
+                      aria-invalid={validationErrors.some(e => e.field === `${offer.id}-healthInsurance`)}
+                      min="0"
+                      step="500"
                     />
                   </div>
+                  {validationErrors.some(e => e.field === `${offer.id}-healthInsurance`) && (
+                    <p id={`${offer.id}-health-insurance-error`} className="text-red-400 text-xs mt-1" role="alert">
+                      {validationErrors.find(e => e.field === `${offer.id}-healthInsurance`)?.message}
+                    </p>
+                  )}
+                  <p id={`${offer.id}-health-insurance-help`} className={`text-xs ${theme.textColors.muted} mt-1`}>
+                    Annual cost if purchased individually ($8,000-$15,000 typical)
+                  </p>
                 </div>
                 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-1`}>
+                  <label htmlFor={`${offer.id}-401k-match`} className={`block text-sm font-medium ${theme.textColors.secondary} mb-1`}>
                     401k Match
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true">$</span>
                     <input
                       type="number"
+                      id={`${offer.id}-401k-match`}
                       value={offer.retirement401k}
                       onChange={(e) => updateOffer(offer.id, 'retirement401k', e.target.value)}
-                      className="pl-8 w-full px-3 py-2 bg-slate-800/50 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      className={`pl-8 w-full px-3 py-2 bg-slate-800/50 border rounded text-white text-sm focus:ring-2 focus:border-transparent transition-all ${
+                        validationErrors.some(e => e.field === `${offer.id}-retirement401k`) 
+                          ? 'border-red-500 focus:ring-red-500' 
+                          : 'border-slate-600 focus:ring-yellow-500'
+                      }`}
+                      aria-describedby={`${offer.id}-401k-match-help ${offer.id}-401k-match-error`}
+                      aria-invalid={validationErrors.some(e => e.field === `${offer.id}-retirement401k`)}
+                      min="0"
+                      step="250"
                     />
                   </div>
+                  {validationErrors.some(e => e.field === `${offer.id}-retirement401k`) && (
+                    <p id={`${offer.id}-401k-match-error`} className="text-red-400 text-xs mt-1" role="alert">
+                      {validationErrors.find(e => e.field === `${offer.id}-retirement401k`)?.message}
+                    </p>
+                  )}
+                  <p id={`${offer.id}-401k-match-help`} className={`text-xs ${theme.textColors.muted} mt-1`}>
+                    Annual employer 401k matching contribution (typically 3-6% of salary)
+                  </p>
                 </div>
                 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-1`}>
+                  <label htmlFor={`${offer.id}-pto-value`} className={`block text-sm font-medium ${theme.textColors.secondary} mb-1`}>
                     PTO Value
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true">$</span>
                     <input
                       type="number"
+                      id={`${offer.id}-pto-value`}
                       value={offer.paidTimeOff}
                       onChange={(e) => updateOffer(offer.id, 'paidTimeOff', e.target.value)}
-                      className="pl-8 w-full px-3 py-2 bg-slate-800/50 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      className={`pl-8 w-full px-3 py-2 bg-slate-800/50 border rounded text-white text-sm focus:ring-2 focus:border-transparent transition-all ${
+                        validationErrors.some(e => e.field === `${offer.id}-paidTimeOff`) 
+                          ? 'border-red-500 focus:ring-red-500' 
+                          : 'border-slate-600 focus:ring-yellow-500'
+                      }`}
+                      aria-describedby={`${offer.id}-pto-value-help ${offer.id}-pto-value-error`}
+                      aria-invalid={validationErrors.some(e => e.field === `${offer.id}-paidTimeOff`)}
+                      min="0"
+                      step="100"
                     />
                   </div>
+                  {validationErrors.some(e => e.field === `${offer.id}-paidTimeOff`) && (
+                    <p id={`${offer.id}-pto-value-error`} className="text-red-400 text-xs mt-1" role="alert">
+                      {validationErrors.find(e => e.field === `${offer.id}-paidTimeOff`)?.message}
+                    </p>
+                  )}
+                  <p id={`${offer.id}-pto-value-help`} className={`text-xs ${theme.textColors.muted} mt-1`}>
+                    Value of paid time off (days × daily salary rate)
+                  </p>
                 </div>
                 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-1`}>
+                  <label htmlFor={`${offer.id}-stock-options`} className={`block text-sm font-medium ${theme.textColors.secondary} mb-1`}>
                     Stock Options
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true">$</span>
                     <input
                       type="number"
+                      id={`${offer.id}-stock-options`}
                       value={offer.stockOptions}
                       onChange={(e) => updateOffer(offer.id, 'stockOptions', e.target.value)}
-                      className="pl-8 w-full px-3 py-2 bg-slate-800/50 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                      className={`pl-8 w-full px-3 py-2 bg-slate-800/50 border rounded text-white text-sm focus:ring-2 focus:border-transparent transition-all ${
+                        validationErrors.some(e => e.field === `${offer.id}-stockOptions`) 
+                          ? 'border-red-500 focus:ring-red-500' 
+                          : 'border-slate-600 focus:ring-yellow-500'
+                      }`}
+                      aria-describedby={`${offer.id}-stock-options-help ${offer.id}-stock-options-error`}
+                      aria-invalid={validationErrors.some(e => e.field === `${offer.id}-stockOptions`)}
+                      min="0"
+                      step="500"
                     />
                   </div>
+                  {validationErrors.some(e => e.field === `${offer.id}-stockOptions`) && (
+                    <p id={`${offer.id}-stock-options-error`} className="text-red-400 text-xs mt-1" role="alert">
+                      {validationErrors.find(e => e.field === `${offer.id}-stockOptions`)?.message}
+                    </p>
+                  )}
+                  <p id={`${offer.id}-stock-options-help`} className={`text-xs ${theme.textColors.muted} mt-1`}>
+                    Estimated annual value of stock options or equity compensation
+                  </p>
                 </div>
               </div>
               
@@ -279,36 +412,70 @@ export default function CareerValueCalculator() {
 
           {/* Projection Settings */}
           <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
-            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
+            <h3 id="projection-settings-label" className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Career Projection Settings
             </h3>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4" role="group" aria-labelledby="projection-settings-label">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                <label htmlFor="annual-growth-rate" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                   Annual Growth Rate
                 </label>
                 <div className="relative">
                   <input
                     type="number"
+                    id="annual-growth-rate"
                     step="0.1"
                     value={careerGrowthRate}
                     onChange={(e) => setCareerGrowthRate(e.target.value)}
-                    className="pr-8 w-full px-3 py-2 bg-slate-800/50 border border-slate-600 rounded text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className={`pr-8 w-full px-3 py-2 bg-slate-800/50 border rounded text-white focus:ring-2 focus:border-transparent transition-all ${
+                      validationErrors.some(e => e.field === 'careerGrowthRate') 
+                        ? 'border-red-500 focus:ring-red-500' 
+                        : 'border-slate-600 focus:ring-yellow-500'
+                    }`}
+                    aria-describedby="annual-growth-rate-help annual-growth-rate-error"
+                    aria-invalid={validationErrors.some(e => e.field === 'careerGrowthRate')}
+                    min="0"
+                    max="20"
                   />
-                  <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">%</span>
+                  <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true">%</span>
                 </div>
+                {validationErrors.some(e => e.field === 'careerGrowthRate') && (
+                  <p id="annual-growth-rate-error" className="text-red-400 text-xs mt-1" role="alert">
+                    {validationErrors.find(e => e.field === 'careerGrowthRate')?.message}
+                  </p>
+                )}
+                <p id="annual-growth-rate-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                  Expected annual salary increase percentage (typical: 2-5%)
+                </p>
               </div>
               
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                <label htmlFor="years-to-project" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                   Years to Project
                 </label>
                 <input
                   type="number"
+                  id="years-to-project"
                   value={yearsToProject}
                   onChange={(e) => setYearsToProject(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-800/50 border border-slate-600 rounded text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className={`w-full px-3 py-2 bg-slate-800/50 border rounded text-white focus:ring-2 focus:border-transparent transition-all ${
+                    validationErrors.some(e => e.field === 'yearsToProject') 
+                      ? 'border-red-500 focus:ring-red-500' 
+                      : 'border-slate-600 focus:ring-yellow-500'
+                  }`}
+                  aria-describedby="years-to-project-help years-to-project-error"
+                  aria-invalid={validationErrors.some(e => e.field === 'yearsToProject')}
+                  min="1"
+                  max="40"
                 />
+                {validationErrors.some(e => e.field === 'yearsToProject') && (
+                  <p id="years-to-project-error" className="text-red-400 text-xs mt-1" role="alert">
+                    {validationErrors.find(e => e.field === 'yearsToProject')?.message}
+                  </p>
+                )}
+                <p id="years-to-project-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                  Number of years to project career growth (1-40 years)
+                </p>
               </div>
             </div>
           </div>

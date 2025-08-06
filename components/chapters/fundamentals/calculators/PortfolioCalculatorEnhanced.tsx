@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import PortfolioAnalyzerCalculator from '@/components/shared/calculators/PortfolioAnalyzerCalculator';
@@ -19,10 +19,41 @@ import {
 const PortfolioCalculatorEnhanced: React.FC = () => {
   const { recordCalculatorUsage } = useProgressStore();
   const [activeTab, setActiveTab] = useState<'overview' | 'diversification' | 'rebalancing' | 'analysis'>('overview');
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   React.useEffect(() => {
     recordCalculatorUsage('portfolio-calculator-enhanced');
   }, [recordCalculatorUsage]);
+
+  // Enhanced keyboard navigation
+  const handleKeyDown = (event: React.KeyboardEvent, currentIndex: number) => {
+    const tabs = ['overview', 'diversification', 'rebalancing', 'analysis'];
+    let newIndex = currentIndex;
+
+    switch (event.key) {
+      case 'ArrowLeft':
+        event.preventDefault();
+        newIndex = currentIndex === 0 ? tabs.length - 1 : currentIndex - 1;
+        break;
+      case 'ArrowRight':
+        event.preventDefault();
+        newIndex = currentIndex === tabs.length - 1 ? 0 : currentIndex + 1;
+        break;
+      case 'Home':
+        event.preventDefault();
+        newIndex = 0;
+        break;
+      case 'End':
+        event.preventDefault();
+        newIndex = tabs.length - 1;
+        break;
+      default:
+        return;
+    }
+
+    setActiveTab(tabs[newIndex] as typeof activeTab);
+    tabRefs.current[newIndex]?.focus();
+  };
 
   const tabs = [
     {
@@ -92,22 +123,34 @@ const PortfolioCalculatorEnhanced: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Tab Navigation */}
+      {/* Tab Navigation with ARIA */}
       <div className={`p-1 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-        <nav className="grid grid-cols-2 lg:grid-cols-4 gap-1">
-          {tabs.map((tab) => {
+        <nav 
+          className="grid grid-cols-2 lg:grid-cols-4 gap-1"
+          role="tablist"
+          aria-label="Portfolio calculator tools"
+        >
+          {tabs.map((tab, index) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
             
             return (
               <button
                 key={tab.id}
+                ref={(el) => { tabRefs.current[index] = el; }}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative p-4 rounded-lg transition-all duration-200 ${
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                role="tab"
+                aria-selected={isActive}
+                aria-controls={`portfolio-panel-${tab.id}`}
+                id={`portfolio-tab-${tab.id}`}
+                tabIndex={isActive ? 0 : -1}
+                className={`relative p-4 rounded-lg transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 ${
                   isActive
                     ? `${theme.backgrounds.cardHover} ${theme.textColors.primary}`
                     : `${theme.textColors.secondary} hover:${theme.backgrounds.cardHover} hover:${theme.textColors.primary}`
                 }`}
+                aria-label={`${tab.label}: ${tab.description}`}
               >
                 <div className="flex flex-col items-center gap-2">
                   <Icon className={`w-5 h-5 ${isActive ? 'text-blue-400' : ''}`} />
@@ -138,14 +181,21 @@ const PortfolioCalculatorEnhanced: React.FC = () => {
       </div>
 
       {/* Tab Content */}
-      <motion.div
-        key={activeTab}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
+      <div
+        role="tabpanel"
+        id={`portfolio-panel-${activeTab}`}
+        aria-labelledby={`portfolio-tab-${activeTab}`}
+        tabIndex={0}
       >
-        {renderTabContent()}
-      </motion.div>
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {renderTabContent()}
+        </motion.div>
+      </div>
 
       {/* Educational Footer */}
       <div className={`p-4 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>

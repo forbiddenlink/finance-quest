@@ -42,6 +42,19 @@ const RetirementAccountOptimizer: React.FC = () => {
   const [currentTaxBracket, setCurrentTaxBracket] = useState<number>(22);
   const [expectedRetirementTaxBracket, setExpectedRetirementTaxBracket] = useState<number>(15);
   
+  // Validation state
+  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
+  
+  const validateInput = (field: string, value: number, min: number, max: number) => {
+    const errors = { ...validationErrors };
+    if (value < min || value > max) {
+      errors[field] = `Value must be between ${min} and ${max}`;
+    } else {
+      delete errors[field];
+    }
+    setValidationErrors(errors);
+  };
+  
   const [accounts, setAccounts] = useState<Account[]>([
     {
       type: 'Traditional 401k',
@@ -228,156 +241,231 @@ const RetirementAccountOptimizer: React.FC = () => {
 
   return (
     <div className={`p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-      <div className="flex items-center gap-3 mb-6">
-        <Target className="w-6 h-6 text-orange-400" />
-        <h2 className={`text-xl font-bold ${theme.textColors.primary}`}>
+      <header className="flex items-center gap-3 mb-6">
+        <Target className="w-6 h-6 text-orange-400" aria-hidden="true" />
+        <h1 className={`text-xl font-bold ${theme.textColors.primary}`}>
           Retirement Account Optimizer
-        </h2>
-      </div>
+        </h1>
+      </header>
 
       {/* Personal Information */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
-            Current Age
-          </label>
-          <input
-            type="number"
-            value={currentAge}
-            onChange={(e) => setCurrentAge(Number(e.target.value))}
-            className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
-            min="18"
-            max="100"
-          />
-        </div>
-
-        <div>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
-            Retirement Age
-          </label>
-          <input
-            type="number"
-            value={retirementAge}
-            onChange={(e) => setRetirementAge(Number(e.target.value))}
-            className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
-            min="50"
-            max="100"
-          />
-        </div>
-
-        <div>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
-            Current Income
-          </label>
-          <div className="relative">
-            <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+      <section aria-labelledby="personal-info-heading">
+        <h2 id="personal-info-heading" className="sr-only">Personal Information</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div>
+            <label htmlFor="current-age-input" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Current Age
+            </label>
             <input
+              id="current-age-input"
               type="number"
-              value={currentIncome}
-              onChange={(e) => setCurrentIncome(Number(e.target.value))}
-              className={`pl-10 w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+              value={currentAge}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                setCurrentAge(value);
+                validateInput('currentAge', value, 18, 100);
+              }}
+              onBlur={(e) => {
+                const value = Number(e.target.value);
+                validateInput('currentAge', value, 18, 100);
+              }}
+              className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+              min="18"
+              max="100"
+              aria-describedby="current-age-help"
+              aria-invalid={validationErrors.currentAge ? 'true' : 'false'}
             />
+            <div id="current-age-help" className="sr-only">Enter your current age for retirement calculations</div>
+            {validationErrors.currentAge && (
+              <div className="text-red-500 text-xs mt-1" role="alert">
+                {validationErrors.currentAge}
+              </div>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="retirement-age-input" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Retirement Age
+            </label>
+            <input
+              id="retirement-age-input"
+              type="number"
+              value={retirementAge}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                setRetirementAge(value);
+                validateInput('retirementAge', value, 50, 100);
+              }}
+              onBlur={(e) => {
+                const value = Number(e.target.value);
+                validateInput('retirementAge', value, 50, 100);
+              }}
+              className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+              min="50"
+              max="100"
+              aria-describedby="retirement-age-help"
+              aria-invalid={validationErrors.retirementAge ? 'true' : 'false'}
+            />
+            <div id="retirement-age-help" className="sr-only">Enter your planned retirement age</div>
+            {validationErrors.retirementAge && (
+              <div className="text-red-500 text-xs mt-1" role="alert">
+                {validationErrors.retirementAge}
+              </div>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="current-income-input" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Current Income
+            </label>
+            <div className="relative">
+              <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" aria-hidden="true" />
+              <input
+                id="current-income-input"
+                type="number"
+                value={currentIncome}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  setCurrentIncome(value);
+                  validateInput('currentIncome', value, 0, 1000000);
+                }}
+                onBlur={(e) => {
+                  const value = Number(e.target.value);
+                  validateInput('currentIncome', value, 0, 1000000);
+                }}
+                className={`pl-10 w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                aria-describedby="current-income-help"
+                aria-invalid={validationErrors.currentIncome ? 'true' : 'false'}
+                step="1000"
+              />
+            </div>
+            <div id="current-income-help" className="sr-only">Enter your current annual income for tax optimization</div>
+            {validationErrors.currentIncome && (
+              <div className="text-red-500 text-xs mt-1" role="alert">
+                {validationErrors.currentIncome}
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Tax Information */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
-            Current Tax Bracket (%)
-          </label>
-          <select
-            value={currentTaxBracket}
-            onChange={(e) => setCurrentTaxBracket(Number(e.target.value))}
-            className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
-          >
-            <option value={10}>10% - Up to $11,000</option>
-            <option value={12}>12% - $11,001 to $44,725</option>
-            <option value={22}>22% - $44,726 to $95,375</option>
-            <option value={24}>24% - $95,376 to $182,050</option>
-            <option value={32}>32% - $182,051 to $231,250</option>
-            <option value={35}>35% - $231,251 to $578,125</option>
-            <option value={37}>37% - $578,126+</option>
-          </select>
-        </div>
+      <section aria-labelledby="tax-info-heading">
+        <h2 id="tax-info-heading" className="sr-only">Tax Information</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div>
+            <label htmlFor="current-tax-bracket" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Current Tax Bracket (%)
+            </label>
+            <select
+              id="current-tax-bracket"
+              value={currentTaxBracket}
+              onChange={(e) => setCurrentTaxBracket(Number(e.target.value))}
+              className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+              aria-describedby="current-tax-bracket-help"
+            >
+              <option value={10}>10% - Up to $11,000</option>
+              <option value={12}>12% - $11,001 to $44,725</option>
+              <option value={22}>22% - $44,726 to $95,375</option>
+              <option value={24}>24% - $95,376 to $182,050</option>
+              <option value={32}>32% - $182,051 to $231,250</option>
+              <option value={35}>35% - $231,251 to $578,125</option>
+              <option value={37}>37% - $578,126+</option>
+            </select>
+            <div id="current-tax-bracket-help" className="sr-only">Select your current marginal tax bracket for optimization</div>
+          </div>
 
-        <div>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
-            Expected Retirement Tax Bracket (%)
-          </label>
-          <select
-            value={expectedRetirementTaxBracket}
-            onChange={(e) => setExpectedRetirementTaxBracket(Number(e.target.value))}
-            className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
-          >
-            <option value={0}>0% - Very Low Income</option>
-            <option value={10}>10% - Low Income</option>
-            <option value={12}>12% - Lower-Middle Income</option>
-            <option value={22}>22% - Middle Income</option>
-            <option value={24}>24% - Upper-Middle Income</option>
-            <option value={32}>32% - High Income</option>
-            <option value={35}>35% - Very High Income</option>
-          </select>
+          <div>
+            <label htmlFor="retirement-tax-bracket" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Expected Retirement Tax Bracket (%)
+            </label>
+            <select
+              id="retirement-tax-bracket"
+              value={expectedRetirementTaxBracket}
+              onChange={(e) => setExpectedRetirementTaxBracket(Number(e.target.value))}
+              className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+              aria-describedby="retirement-tax-bracket-help"
+            >
+              <option value={0}>0% - Very Low Income</option>
+              <option value={10}>10% - Low Income</option>
+              <option value={12}>12% - Lower-Middle Income</option>
+              <option value={22}>22% - Middle Income</option>
+              <option value={24}>24% - Upper-Middle Income</option>
+              <option value={32}>32% - High Income</option>
+              <option value={35}>35% - Very High Income</option>
+            </select>
+            <div id="retirement-tax-bracket-help" className="sr-only">Select your expected tax bracket in retirement</div>
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* Optimization Results */}
       {optimization && (
-        <div className="mb-8">
-          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
+        <section aria-labelledby="optimization-results-heading">
+          <h2 id="optimization-results-heading" className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
             Tax Optimization Analysis
-          </h3>
+          </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6" role="group" aria-labelledby="optimization-summary">
+            <h3 id="optimization-summary" className="sr-only">Optimization Summary</h3>
+            
             <div className={`p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg text-center`}>
-              <div className={`text-2xl font-bold ${theme.status.info.text} mb-1`}>
+              <div className={`text-2xl font-bold ${theme.status.info.text} mb-1`} aria-label={`Recommended strategy: ${optimization.recommendedStrategy}`}>
                 {optimization.recommendedStrategy}
               </div>
               <div className={`text-sm ${theme.textColors.secondary}`}>Recommended Strategy</div>
             </div>
             
             <div className={`p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg text-center`}>
-              <div className={`text-2xl font-bold ${theme.status.success.text} mb-1`}>
+              <div className={`text-2xl font-bold ${theme.status.success.text} mb-1`} aria-label={`Annual tax savings: $${optimization.currentTaxSavings.toLocaleString()}`}>
                 ${optimization.currentTaxSavings.toLocaleString()}
               </div>
               <div className={`text-sm ${theme.textColors.secondary}`}>Annual Tax Savings</div>
             </div>
 
             <div className={`p-4 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg text-center`}>
-              <div className={`text-2xl font-bold ${theme.textColors.primary} mb-1`}>
+              <div className={`text-2xl font-bold ${theme.textColors.primary} mb-1`} aria-label={`Catch-up contributions eligibility: ${currentAge >= 50 ? 'Eligible' : `${50 - currentAge} years until eligible`}`}>
                 {currentAge >= 50 ? 'Eligible' : `${50 - currentAge} years`}
               </div>
               <div className={`text-sm ${theme.textColors.secondary}`}>Catch-up Contributions</div>
             </div>
           </div>
-        </div>
+        </section>
       )}
 
       {/* Account Management */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>Retirement Accounts</h3>
+      <section aria-labelledby="account-management-heading">
+        <header className="flex items-center justify-between mb-4">
+          <h2 id="account-management-heading" className={`text-lg font-semibold ${theme.textColors.primary}`}>
+            Retirement Accounts
+          </h2>
           <button
             onClick={addAccount}
             className={`px-4 py-2 ${theme.buttons.primary} text-white rounded-lg hover:opacity-90 transition-opacity`}
+            aria-describedby="add-account-desc"
           >
             Add Account
           </button>
-        </div>
+          <div id="add-account-desc" className="sr-only">Add a new retirement account to your optimization analysis</div>
+        </header>
 
-        <div className="space-y-4">
+        <div className="space-y-4" role="group" aria-labelledby="account-list-heading">
+          <h3 id="account-list-heading" className="sr-only">Your Retirement Accounts</h3>
           {accounts.map((account, index) => (
             <div key={index} className={`p-4 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-              <div className="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
+              <fieldset className="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
+                <legend className="sr-only">Account {index + 1} details</legend>
+                
                 <div className="md:col-span-2">
-                  <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                  <label htmlFor={`account-type-${index}`} className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                     Account Type
                   </label>
                   <select
+                    id={`account-type-${index}`}
                     value={account.type}
                     onChange={(e) => updateAccount(index, 'type', e.target.value)}
                     className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                    aria-describedby={`account-type-desc-${index}`}
                   >
                     <option value="Traditional 401k">Traditional 401(k)</option>
                     <option value="Roth 401k">Roth 401(k)</option>
@@ -386,37 +474,57 @@ const RetirementAccountOptimizer: React.FC = () => {
                     <option value="HSA">HSA</option>
                     <option value="Taxable">Taxable Account</option>
                   </select>
+                  <div id={`account-type-desc-${index}`} className="sr-only">
+                    Select the type of retirement account for optimization analysis
+                  </div>
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                  <label htmlFor={`current-balance-${index}`} className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                     Current Balance
                   </label>
                   <input
+                    id={`current-balance-${index}`}
                     type="number"
+                    min="0"
+                    step="1000"
                     value={account.currentBalance}
                     onChange={(e) => updateAccount(index, 'currentBalance', Number(e.target.value))}
                     className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                    aria-describedby={`current-balance-desc-${index}`}
                   />
+                  <div id={`current-balance-desc-${index}`} className="sr-only">
+                    Enter current account balance for projection calculations
+                  </div>
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                  <label htmlFor={`monthly-contribution-${index}`} className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                     Monthly Contribution
                   </label>
                   <input
+                    id={`monthly-contribution-${index}`}
                     type="number"
+                    min="0"
+                    step="50"
                     value={account.monthlyContribution}
                     onChange={(e) => updateAccount(index, 'monthlyContribution', Number(e.target.value))}
                     className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                    aria-describedby={`monthly-contribution-desc-${index}`}
                   />
+                  <div id={`monthly-contribution-desc-${index}`} className="sr-only">
+                    Enter monthly contribution amount for this account
+                  </div>
                 </div>
 
                 <div>
                   <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                     Tax Treatment
                   </label>
-                  <span className={`px-2 py-1 rounded text-sm font-medium ${getTaxTreatmentColor(account.taxTreatment)}`}>
+                  <span 
+                    className={`px-2 py-1 rounded text-sm font-medium ${getTaxTreatmentColor(account.taxTreatment)}`}
+                    aria-label={`Tax treatment: ${getTaxTreatmentLabel(account.taxTreatment)}`}
+                  >
                     {getTaxTreatmentLabel(account.taxTreatment)}
                   </span>
                 </div>
@@ -426,77 +534,101 @@ const RetirementAccountOptimizer: React.FC = () => {
                     onClick={() => removeAccount(index)}
                     className={`w-full px-3 py-2 ${theme.status.error.bg} ${theme.status.error.text} rounded-lg hover:opacity-80 transition-opacity`}
                     disabled={accounts.length <= 1}
+                    aria-label={`Remove account ${index + 1}`}
+                    aria-describedby={`remove-account-desc-${index}`}
                   >
                     Remove
                   </button>
+                  <div id={`remove-account-desc-${index}`} className="sr-only">
+                    Remove this retirement account from the analysis
+                  </div>
                 </div>
-              </div>
+              </fieldset>
 
               {account.type.includes('401k') && (
                 <div className="mt-4">
-                  <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                  <label htmlFor={`employer-match-${index}`} className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                     Monthly Employer Match
                   </label>
                   <input
+                    id={`employer-match-${index}`}
                     type="number"
+                    min="0"
+                    step="50"
                     value={account.employerMatch || 0}
                     onChange={(e) => updateAccount(index, 'employerMatch', Number(e.target.value))}
                     className={`w-32 px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                    aria-describedby={`employer-match-desc-${index}`}
                   />
+                  <div id={`employer-match-desc-${index}`} className="sr-only">
+                    Enter monthly employer matching contribution amount
+                  </div>
                 </div>
               )}
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
       {/* Recommendations */}
       {optimization && optimization.recommendations.length > 0 && (
-        <div className="mb-8">
-          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-            <Calculator className="w-5 h-5" />
+        <section aria-labelledby="recommendations-heading">
+          <h2 id="recommendations-heading" className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+            <Calculator className="w-5 h-5" aria-hidden="true" />
             Optimization Recommendations
-          </h3>
+          </h2>
           
-          <div className="space-y-3">
+          <div className="space-y-3" role="list" aria-label="Retirement account optimization recommendations">
             {optimization.recommendations.map((recommendation, index) => (
-              <div key={index} className={`p-3 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg flex items-start gap-3`}>
-                <CheckCircle className={`w-4 h-4 ${theme.status.info.text} mt-0.5 flex-shrink-0`} />
+              <div key={index} className={`p-3 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg flex items-start gap-3`} role="listitem">
+                <CheckCircle className={`w-4 h-4 ${theme.status.info.text} mt-0.5 flex-shrink-0`} aria-hidden="true" />
                 <p className={`text-sm ${theme.status.info.text}`}>
                   {recommendation}
                 </p>
               </div>
             ))}
           </div>
-        </div>
+        </section>
       )}
 
       {/* Education Section */}
-      <div className={`p-4 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-        <h4 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-          <PiggyBank className="w-4 h-4" />
+      <section aria-labelledby="education-heading" className={`p-4 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+        <h2 id="education-heading" className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
+          <PiggyBank className="w-4 h-4" aria-hidden="true" />
           Account Type Guide
-        </h4>
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
-            <h5 className={`font-medium ${theme.textColors.primary} mb-2`}>Traditional Accounts:</h5>
-            <ul className={`space-y-1 ${theme.textColors.secondary}`}>
-              <li>• Tax deduction on contributions</li>
-              <li>• Tax-deferred growth</li>
-              <li>• Taxed on withdrawals</li>
-              <li>• Required distributions at 73</li>
+            <h3 className={`font-medium ${theme.textColors.primary} mb-2`}>Traditional Accounts:</h3>
+            <ul className={`space-y-1 ${theme.textColors.secondary}`} role="list">
+              <li role="listitem">• Tax deduction on contributions</li>
+              <li role="listitem">• Tax-deferred growth</li>
+              <li role="listitem">• Taxed on withdrawals</li>
+              <li role="listitem">• Required distributions at 73</li>
             </ul>
           </div>
           <div>
-            <h5 className={`font-medium ${theme.textColors.primary} mb-2`}>Roth Accounts:</h5>
-            <ul className={`space-y-1 ${theme.textColors.secondary}`}>
-              <li>• No tax deduction on contributions</li>
-              <li>• Tax-free growth</li>
-              <li>• Tax-free withdrawals in retirement</li>
-              <li>• No required distributions</li>
+            <h3 className={`font-medium ${theme.textColors.primary} mb-2`}>Roth Accounts:</h3>
+            <ul className={`space-y-1 ${theme.textColors.secondary}`} role="list">
+              <li role="listitem">• No tax deduction on contributions</li>
+              <li role="listitem">• Tax-free growth</li>
+              <li role="listitem">• Tax-free withdrawals in retirement</li>
+              <li role="listitem">• No required distributions</li>
             </ul>
           </div>
         </div>
+      </section>
+
+      {/* Screen Reader Status Updates */}
+      <div 
+        role="status" 
+        aria-live="polite" 
+        className="sr-only"
+      >
+        {optimization ? 
+          `Optimization analysis complete. ${optimization.recommendations.length} recommendations available.` :
+          'Enter your retirement information to begin analysis.'
+        }
       </div>
     </div>
   );

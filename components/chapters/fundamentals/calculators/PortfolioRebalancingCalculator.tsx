@@ -12,6 +12,16 @@ import {
   Scale
 } from 'lucide-react';
 
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+interface InputValidation {
+  isValid: boolean;
+  errors: ValidationError[];
+}
+
 interface HoldingInput {
   name: string;
   currentValue: number;
@@ -41,12 +51,75 @@ const PortfolioRebalancingCalculator: React.FC = () => {
   
   const [rebalanceActions, setRebalanceActions] = useState<RebalanceAction[]>([]);
   const [totalCost, setTotalCost] = useState<number>(0);
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
+
+  useEffect(() => {
+    recordCalculatorUsage('portfolio-rebalancing-calculator');
+  }, [recordCalculatorUsage]);
+
+  // Safe parsing utility
+  const safeParseFloat = (value: string): number => {
+    const parsed = parseFloat(value);
+    return isNaN(parsed) ? 0 : parsed;
+  };
+
+  // Validation functions
+  const validateInput = React.useCallback((): InputValidation => {
+    const errors: ValidationError[] = [];
+
+    if (totalPortfolioValue <= 0 || totalPortfolioValue > 10000000) {
+      errors.push({
+        field: 'totalPortfolioValue',
+        message: 'Portfolio value must be between $1 and $10,000,000'
+      });
+    }
+
+    if (rebalanceThreshold < 1 || rebalanceThreshold > 50) {
+      errors.push({
+        field: 'rebalanceThreshold',
+        message: 'Rebalance threshold must be between 1% and 50%'
+      });
+    }
+
+    holdings.forEach((holding, index) => {
+      if (holding.currentValue < 0) {
+        errors.push({
+          field: `holding-${index}-value`,
+          message: `${holding.name} value cannot be negative`
+        });
+      }
+
+      if (holding.targetPercentage < 0 || holding.targetPercentage > 100) {
+        errors.push({
+          field: `holding-${index}-target`,
+          message: `${holding.name} target must be between 0% and 100%`
+        });
+      }
+    });
+
+    const totalTargetPercentage = holdings.reduce((sum, holding) => sum + holding.targetPercentage, 0);
+    if (Math.abs(totalTargetPercentage - 100) > 0.1) {
+      errors.push({
+        field: 'total-percentage',
+        message: 'Target allocations must sum to 100%'
+      });
+    }
+
+    setValidationErrors(errors);
+    return { isValid: errors.length === 0, errors };
+  }, [totalPortfolioValue, rebalanceThreshold, holdings]);
+
+  const getValidationError = (field: string): string | null => {
+    const error = validationErrors.find(err => err.field === field);
+    return error ? error.message : null;
+  };
 
   useEffect(() => {
     recordCalculatorUsage('portfolio-rebalancing-calculator');
   }, [recordCalculatorUsage]);
 
   const calculateRebalancing = React.useCallback(() => {
+    validateInput();
     const actions: RebalanceAction[] = [];
     let estimatedCost = 0;
 
@@ -80,11 +153,11 @@ const PortfolioRebalancingCalculator: React.FC = () => {
 
     setRebalanceActions(actions);
     setTotalCost(estimatedCost);
-  }, [holdings, totalPortfolioValue, rebalanceThreshold]);
+  }, [holdings, totalPortfolioValue, rebalanceThreshold, validateInput]);
 
   useEffect(() => {
     calculateRebalancing();
-  }, [calculateRebalancing]); // Remove calculateRebalancing from dependencies
+  }, [calculateRebalancing]);
 
   const updateHolding = (index: number, field: string, value: string | number) => {
     const newHoldings = [...holdings];
@@ -144,37 +217,71 @@ const PortfolioRebalancingCalculator: React.FC = () => {
       {/* Portfolio Settings */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+          <label 
+            htmlFor="total-portfolio-value"
+            className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}
+          >
             Total Portfolio Value
           </label>
           <div className="relative">
-            <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`} aria-hidden="true">$</span>
             <input
+              id="total-portfolio-value"
               type="number"
               value={totalPortfolioValue}
-              onChange={(e) => setTotalPortfolioValue(Number(e.target.value))}
-              className={`pl-10 w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+              onChange={(e) => setTotalPortfolioValue(safeParseFloat(e.target.value))}
+              className={`pl-10 w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary} ${
+                getValidationError('totalPortfolioValue') ? 'border-red-500' : ''
+              }`}
               placeholder="100000"
+              min="1"
+              max="10000000"
+              aria-describedby={getValidationError('totalPortfolioValue') ? 'total-portfolio-value-error' : 'total-portfolio-value-help'}
+              aria-invalid={!!getValidationError('totalPortfolioValue')}
             />
           </div>
+          <div id="total-portfolio-value-help" className={`mt-1 text-xs ${theme.textColors.muted}`}>
+            Enter value between $1 - $10,000,000
+          </div>
+          {getValidationError('totalPortfolioValue') && (
+            <div id="total-portfolio-value-error" role="alert" className="mt-1 text-sm text-red-500">
+              {getValidationError('totalPortfolioValue')}
+            </div>
+          )}
         </div>
         
         <div>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+          <label 
+            htmlFor="rebalance-threshold"
+            className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}
+          >
             Rebalance Threshold (%)
           </label>
-          <input
-            type="number"
-            value={rebalanceThreshold}
-            onChange={(e) => setRebalanceThreshold(Number(e.target.value))}
-            className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
-            placeholder="5"
-            min="1"
-            max="20"
-          />
-          <p className={`text-xs ${theme.textColors.secondary} mt-1`}>
+          <div className="relative">
+            <input
+              id="rebalance-threshold"
+              type="number"
+              value={rebalanceThreshold}
+              onChange={(e) => setRebalanceThreshold(safeParseFloat(e.target.value))}
+              className={`w-full px-3 py-2 pr-8 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary} ${
+                getValidationError('rebalanceThreshold') ? 'border-red-500' : ''
+              }`}
+              placeholder="5"
+              min="1"
+              max="50"
+              aria-describedby={getValidationError('rebalanceThreshold') ? 'rebalance-threshold-error' : 'rebalance-threshold-help'}
+              aria-invalid={!!getValidationError('rebalanceThreshold')}
+            />
+            <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`} aria-hidden="true">%</span>
+          </div>
+          <div id="rebalance-threshold-help" className={`mt-1 text-xs ${theme.textColors.muted}`}>
             Rebalance when allocation deviates by this percentage
-          </p>
+          </div>
+          {getValidationError('rebalanceThreshold') && (
+            <div id="rebalance-threshold-error" role="alert" className="mt-1 text-sm text-red-500">
+              {getValidationError('rebalanceThreshold')}
+            </div>
+          )}
         </div>
       </div>
 
@@ -200,62 +307,87 @@ const PortfolioRebalancingCalculator: React.FC = () => {
           <button
             onClick={addHolding}
             className={`px-4 py-2 ${theme.buttons.primary} text-white rounded-lg hover:opacity-90 transition-opacity`}
+            aria-label="Add new asset to portfolio holdings"
           >
             Add Asset
           </button>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+          <table className="w-full border-collapse" role="table" aria-label="Portfolio holdings for rebalancing analysis">
             <thead>
               <tr className={`border-b ${theme.borderColors.primary}`}>
-                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`}>Asset</th>
-                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`}>Current Value</th>
-                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`}>Current %</th>
-                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`}>Target %</th>
-                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`}>Deviation</th>
-                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`}>Action</th>
+                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`} scope="col">Asset</th>
+                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`} scope="col">Current Value</th>
+                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`} scope="col">Current %</th>
+                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`} scope="col">Target %</th>
+                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`} scope="col">Deviation</th>
+                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`} scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
               {holdings.map((holding, index) => (
                 <tr key={index} className={`border-b ${theme.borderColors.primary}`}>
                   <td className="p-3">
+                    <label className="sr-only" htmlFor={`asset-name-${index}`}>
+                      Asset name for holding {index + 1}
+                    </label>
                     <input
+                      id={`asset-name-${index}`}
                       type="text"
                       value={holding.name}
                       onChange={(e) => updateHolding(index, 'name', e.target.value)}
                       className={`w-full px-2 py-1 border rounded ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                      aria-label={`Asset name for holding ${index + 1}`}
+                      placeholder="e.g., S&P 500"
                     />
                   </td>
                   <td className="p-3">
                     <div className="relative">
+                      <label className="sr-only" htmlFor={`asset-value-${index}`}>
+                        Current value for {holding.name || `holding ${index + 1}`}
+                      </label>
                       <DollarSign className="absolute left-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gray-400" />
                       <input
+                        id={`asset-value-${index}`}
                         type="number"
                         value={holding.currentValue}
                         onChange={(e) => updateHolding(index, 'currentValue', Number(e.target.value))}
                         className={`pl-6 w-full px-2 py-1 border rounded ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                        aria-label={`Current value for ${holding.name || `holding ${index + 1}`}`}
+                        min="0"
+                        step="0.01"
+                        placeholder="10000"
                       />
                     </div>
                   </td>
                   <td className="p-3">
-                    <span className={`font-medium ${theme.textColors.primary}`}>
+                    <span className={`font-medium ${theme.textColors.primary}`} aria-label={`Current allocation: ${holding.currentPercentage.toFixed(1)} percent`}>
                       {holding.currentPercentage.toFixed(1)}%
                     </span>
                   </td>
                   <td className="p-3">
+                    <label className="sr-only" htmlFor={`asset-target-${index}`}>
+                      Target percentage for {holding.name || `holding ${index + 1}`}
+                    </label>
                     <input
+                      id={`asset-target-${index}`}
                       type="number"
                       value={holding.targetPercentage}
                       onChange={(e) => updateHolding(index, 'targetPercentage', Number(e.target.value))}
                       className={`w-16 px-2 py-1 border rounded ${theme.backgrounds.card} ${theme.textColors.primary}`}
                       min="0"
                       max="100"
+                      step="0.1"
+                      aria-label={`Target percentage for ${holding.name || `holding ${index + 1}`}`}
+                      placeholder="25"
                     />
                   </td>
                   <td className="p-3">
-                    <span className={`font-semibold ${getDeviationColor(holding.deviation)}`}>
+                    <span 
+                      className={`font-semibold ${getDeviationColor(holding.deviation)}`}
+                      aria-label={`Deviation from target: ${holding.deviation > 0 ? 'positive' : 'negative'} ${Math.abs(holding.deviation).toFixed(1)} percent`}
+                    >
                       {holding.deviation > 0 ? '+' : ''}{holding.deviation.toFixed(1)}%
                     </span>
                   </td>
@@ -264,6 +396,7 @@ const PortfolioRebalancingCalculator: React.FC = () => {
                       onClick={() => removeHolding(index)}
                       className={`px-2 py-1 ${theme.status.error.bg} ${theme.status.error.text} rounded hover:opacity-80 transition-opacity`}
                       disabled={holdings.length <= 1}
+                      aria-label={`Remove ${holding.name || `holding ${index + 1}`} from portfolio`}
                     >
                       Remove
                     </button>
@@ -277,15 +410,20 @@ const PortfolioRebalancingCalculator: React.FC = () => {
 
       {/* Rebalancing Actions */}
       {rebalanceActions.length > 0 && (
-        <div className="mb-8">
-          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-            <Target className="w-5 h-5" />
+        <div className="mb-8" role="region" aria-labelledby="rebalancing-actions-heading">
+          <h3 id="rebalancing-actions-heading" className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+            <Target className="w-5 h-5" aria-hidden="true" />
             Recommended Rebalancing Actions
           </h3>
           
-          <div className="space-y-3">
+          <div className="space-y-3" role="list" aria-label="List of recommended rebalancing actions">
             {rebalanceActions.map((action, index) => (
-              <div key={index} className={`p-4 rounded-lg border ${action.action === 'buy' ? theme.status.success.bg : theme.status.warning.bg}`}>
+              <div 
+                key={index} 
+                className={`p-4 rounded-lg border ${action.action === 'buy' ? theme.status.success.bg : theme.status.warning.bg}`}
+                role="listitem"
+                aria-label={`${action.action === 'buy' ? 'Buy' : 'Sell'} $${action.amount.toFixed(0)} of ${action.holding}. ${action.reason}`}
+              >
                 <div className="flex items-center justify-between">
                   <div>
                     <span className={`font-semibold ${action.action === 'buy' ? theme.status.success.text : theme.status.warning.text} capitalize`}>
@@ -295,7 +433,7 @@ const PortfolioRebalancingCalculator: React.FC = () => {
                       {action.reason}
                     </p>
                   </div>
-                  <div className={`text-2xl ${action.action === 'buy' ? theme.status.success.text : theme.status.warning.text}`}>
+                  <div className={`text-2xl ${action.action === 'buy' ? theme.status.success.text : theme.status.warning.text}`} aria-hidden="true">
                     {action.action === 'buy' ? '+' : '-'}
                   </div>
                 </div>
@@ -303,7 +441,7 @@ const PortfolioRebalancingCalculator: React.FC = () => {
             ))}
           </div>
 
-          <div className={`mt-4 p-3 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`}>
+          <div className={`mt-4 p-3 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`} role="note" aria-label="Rebalancing strategy tip">
             <p className={`text-sm ${theme.status.info.text} font-medium`}>
               💡 <strong>Rebalancing Strategy:</strong> Consider tax implications and transaction costs. 
               For taxable accounts, use new contributions to rebalance rather than selling appreciated assets.
@@ -313,28 +451,28 @@ const PortfolioRebalancingCalculator: React.FC = () => {
       )}
 
       {/* Rebalancing Education */}
-      <div className={`p-4 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-        <h4 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-          <Calendar className="w-4 h-4" />
+      <div className={`p-4 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`} role="region" aria-labelledby="rebalancing-education-heading">
+        <h4 id="rebalancing-education-heading" className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
+          <Calendar className="w-4 h-4" aria-hidden="true" />
           Rebalancing Best Practices
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
             <h5 className={`font-medium ${theme.textColors.primary} mb-2`}>When to Rebalance:</h5>
-            <ul className={`space-y-1 ${theme.textColors.secondary}`}>
-              <li>• Quarterly or semi-annually</li>
-              <li>• When deviation exceeds 5-10%</li>
-              <li>• During major life changes</li>
-              <li>• After significant market moves</li>
+            <ul className={`space-y-1 ${theme.textColors.secondary}`} role="list">
+              <li role="listitem">• Quarterly or semi-annually</li>
+              <li role="listitem">• When deviation exceeds 5-10%</li>
+              <li role="listitem">• During major life changes</li>
+              <li role="listitem">• After significant market moves</li>
             </ul>
           </div>
           <div>
             <h5 className={`font-medium ${theme.textColors.primary} mb-2`}>Cost Considerations:</h5>
-            <ul className={`space-y-1 ${theme.textColors.secondary}`}>
-              <li>• Transaction fees and spreads</li>
-              <li>• Tax implications (capital gains)</li>
-              <li>• Market impact on large trades</li>
-              <li>• Use new contributions first</li>
+            <ul className={`space-y-1 ${theme.textColors.secondary}`} role="list">
+              <li role="listitem">• Transaction fees and spreads</li>
+              <li role="listitem">• Tax implications (capital gains)</li>
+              <li role="listitem">• Market impact on large trades</li>
+              <li role="listitem">• Use new contributions first</li>
             </ul>
           </div>
         </div>

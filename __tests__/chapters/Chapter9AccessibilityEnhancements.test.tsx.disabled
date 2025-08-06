@@ -1,0 +1,329 @@
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { axe, toHaveNoViolations } from 'jest-axe';
+import RetirementPlanningLessonEnhanced from '@/components/chapters/fundamentals/lessons/RetirementPlanningLessonEnhanced';
+import RetirementAccountOptimizer from '@/components/chapters/fundamentals/calculators/RetirementAccountOptimizer';
+import WithdrawalStrategyPlanner from '@/components/chapters/fundamentals/calculators/WithdrawalStrategyPlanner';
+import LongevityRiskAnalyzer from '@/components/chapters/fundamentals/calculators/LongevityRiskAnalyzer';
+import RetirementPlanningQuizEnhanced from '@/components/chapters/fundamentals/quizzes/RetirementPlanningQuizEnhanced';
+
+// Extend Jest matchers
+expect.extend(toHaveNoViolations);
+
+// Mock Zustand store
+const mockUseProgressStore = {
+  completeLesson: jest.fn(),
+  recordCalculatorUsage: jest.fn(),
+  recordQuizScore: jest.fn(),
+  userProgress: {
+    lessonsCompleted: {},
+    quizScores: {},
+    calculatorsUsed: [],
+    currentChapter: 9
+  }
+};
+
+jest.mock('@/lib/store/progressStore', () => ({
+  useProgressStore: () => mockUseProgressStore
+}));
+
+// Mock recharts for testing
+jest.mock('recharts', () => ({
+  ResponsiveContainer: ({ children }: any) => <div data-testid="responsive-container">{children}</div>,
+  LineChart: ({ children }: any) => <div data-testid="line-chart">{children}</div>,
+  Line: () => <div data-testid="line" />,
+  XAxis: () => <div data-testid="x-axis" />,
+  YAxis: () => <div data-testid="y-axis" />,
+  CartesianGrid: () => <div data-testid="cartesian-grid" />,
+  Tooltip: () => <div data-testid="tooltip" />,
+  AreaChart: ({ children }: any) => <div data-testid="area-chart">{children}</div>,
+  Area: () => <div data-testid="area" />,
+  PieChart: ({ children }: any) => <div data-testid="pie-chart">{children}</div>,
+  Pie: () => <div data-testid="pie" />,
+  Cell: () => <div data-testid="cell" />
+}));
+
+describe('Chapter 9: Retirement Planning - Accessibility Enhancements', () => {
+  
+  describe('RetirementPlanningLessonEnhanced Accessibility', () => {
+    test('should have proper semantic HTML structure', () => {
+      render(<RetirementPlanningLessonEnhanced />);
+      
+      // Check for proper heading hierarchy
+      expect(screen.getByRole('heading', { level: 1, name: /retirement planning & wealth building/i })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 2, name: /learning progress overview/i })).toBeInTheDocument();
+      
+      // Check for proper navigation
+      expect(screen.getByRole('navigation', { name: /lesson navigation/i })).toBeInTheDocument();
+    });
+
+    test('should have accessible progress indicators', () => {
+      render(<RetirementPlanningLessonEnhanced />);
+      
+      // Check progress ring has proper labeling
+      const progressContainer = screen.getByLabelText(/overall progress:/i);
+      expect(progressContainer).toBeInTheDocument();
+      
+      // Check lesson completion counters
+      expect(screen.getByLabelText(/\d+ of \d+ lessons completed/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/currently on lesson \d+/i)).toBeInTheDocument();
+    });
+
+    test('should have accessible lesson navigation', () => {
+      render(<RetirementPlanningLessonEnhanced />);
+      
+      const prevButton = screen.getByRole('button', { name: /previous lesson/i });
+      const nextButton = screen.getByRole('button', { name: /next lesson/i });
+      
+      expect(prevButton).toBeInTheDocument();
+      expect(nextButton).toBeInTheDocument();
+      
+      // Check lesson indicators
+      const lessonGroup = screen.getByRole('group', { name: /lesson indicators/i });
+      expect(lessonGroup).toBeInTheDocument();
+    });
+
+    test('should handle keyboard navigation', async () => {
+      const user = userEvent.setup();
+      render(<RetirementPlanningLessonEnhanced />);
+      
+      const markCompleteButton = screen.getByRole('button', { name: /mark lesson complete/i });
+      
+      // Should be focusable
+      await user.tab();
+      expect(markCompleteButton).toHaveFocus();
+      
+      // Should activate with Enter or Space
+      await user.keyboard('{Enter}');
+      await waitFor(() => {
+        expect(mockUseProgressStore.completeLesson).toHaveBeenCalled();
+      });
+    });
+
+    test('should have no accessibility violations', async () => {
+      const { container } = render(<RetirementPlanningLessonEnhanced />);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
+  describe('RetirementAccountOptimizer Accessibility', () => {
+    test('should have proper form structure with labels', () => {
+      render(<RetirementAccountOptimizer />);
+      
+      // Check for proper form labeling
+      expect(screen.getByLabelText(/current age/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/retirement age/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/current income/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/current tax bracket/i)).toBeInTheDocument();
+    });
+
+    test('should provide helpful descriptions for form fields', () => {
+      render(<RetirementAccountOptimizer />);
+      
+      const ageInput = screen.getByLabelText(/current age/i);
+      expect(ageInput).toHaveAttribute('aria-describedby');
+      
+      const incomeInput = screen.getByLabelText(/current income/i);
+      expect(incomeInput).toHaveAttribute('aria-describedby');
+    });
+
+    test('should have accessible sections and headings', () => {
+      render(<RetirementAccountOptimizer />);
+      
+      expect(screen.getByRole('heading', { level: 1, name: /retirement account optimizer/i })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 2, name: /personal information/i })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 2, name: /tax information/i })).toBeInTheDocument();
+    });
+
+    test('should validate input accessibility', async () => {
+      const user = userEvent.setup();
+      render(<RetirementAccountOptimizer />);
+      
+      const ageInput = screen.getByLabelText(/current age/i);
+      
+      // Test invalid input handling
+      await user.clear(ageInput);
+      await user.type(ageInput, '150');
+      
+      // Should respect min/max constraints
+      expect(ageInput).toHaveAttribute('min', '18');
+      expect(ageInput).toHaveAttribute('max', '100');
+    });
+
+    test('should have no accessibility violations', async () => {
+      const { container } = render(<RetirementAccountOptimizer />);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
+  describe('WithdrawalStrategyPlanner Accessibility', () => {
+    test('should have accessible strategy selection', () => {
+      render(<WithdrawalStrategyPlanner />);
+      
+      // Should have proper heading structure
+      expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
+      
+      // Strategy options should be accessible
+      const strategyOptions = screen.getAllByRole('button');
+      expect(strategyOptions.length).toBeGreaterThan(0);
+    });
+
+    test('should provide clear result descriptions', () => {
+      render(<WithdrawalStrategyPlanner />);
+      
+      // Results should be properly labeled and described
+      const results = screen.queryAllByRole('region');
+      results.forEach(result => {
+        expect(result).toHaveAttribute('aria-labelledby');
+      });
+    });
+
+    test('should have no accessibility violations', async () => {
+      const { container } = render(<WithdrawalStrategyPlanner />);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
+  describe('LongevityRiskAnalyzer Accessibility', () => {
+    test('should have accessible factor inputs', () => {
+      render(<LongevityRiskAnalyzer />);
+      
+      // Check for proper form structure
+      const inputs = screen.getAllByRole('combobox');
+      inputs.forEach(input => {
+        expect(input).toHaveAccessibleName();
+      });
+    });
+
+    test('should provide clear data visualization alternatives', () => {
+      render(<LongevityRiskAnalyzer />);
+      
+      // Charts should have text alternatives or data tables
+      const chartContainers = screen.getAllByTestId(/chart|graph/i);
+      chartContainers.forEach(chart => {
+        // Should have accessible description or alternative
+        expect(chart).toHaveAttribute('aria-label', expect.stringMatching(/.+/));
+      });
+    });
+
+    test('should have no accessibility violations', async () => {
+      const { container } = render(<LongevityRiskAnalyzer />);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
+  describe('RetirementPlanningQuizEnhanced Accessibility', () => {
+    test('should have accessible quiz structure', () => {
+      render(<RetirementPlanningQuizEnhanced />);
+      
+      // Should have proper heading
+      expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
+      
+      // Questions should be accessible
+      const questions = screen.queryAllByRole('group');
+      questions.forEach(question => {
+        expect(question).toHaveAttribute('aria-labelledby');
+      });
+    });
+
+    test('should provide clear feedback', async () => {
+      const user = userEvent.setup();
+      render(<RetirementPlanningQuizEnhanced />);
+      
+      // Answer options should be accessible
+      const radioButtons = screen.getAllByRole('radio');
+      expect(radioButtons.length).toBeGreaterThan(0);
+      
+      // Should be able to select and submit
+      if (radioButtons.length > 0) {
+        await user.click(radioButtons[0]);
+        expect(radioButtons[0]).toBeChecked();
+      }
+    });
+
+    test('should have no accessibility violations', async () => {
+      const { container } = render(<RetirementPlanningQuizEnhanced />);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
+  describe('Keyboard Navigation Integration', () => {
+    test('should support tab navigation through all interactive elements', async () => {
+      const user = userEvent.setup();
+      render(<RetirementPlanningLessonEnhanced />);
+      
+      // Should be able to tab through navigation elements
+      await user.tab();
+      expect(document.activeElement).toHaveAttribute('role', 'button');
+      
+      await user.tab();
+      // Should continue to next focusable element
+      expect(document.activeElement).toBeDefined();
+    });
+
+    test('should handle focus management properly', async () => {
+      const user = userEvent.setup();
+      render(<RetirementAccountOptimizer />);
+      
+      // Focus should move logically through form fields
+      const firstInput = screen.getByLabelText(/current age/i);
+      await user.click(firstInput);
+      expect(firstInput).toHaveFocus();
+      
+      await user.tab();
+      // Should move to next input
+      expect(document.activeElement).not.toBe(firstInput);
+    });
+  });
+
+  describe('Screen Reader Compatibility', () => {
+    test('should provide comprehensive aria labels and descriptions', () => {
+      render(<RetirementPlanningLessonEnhanced />);
+      
+      // Check for proper ARIA labeling
+      const progressElements = screen.getAllByLabelText(/progress|complete|lesson/i);
+      expect(progressElements.length).toBeGreaterThan(0);
+      
+      // Navigation should be clearly labeled
+      const navigation = screen.getByRole('navigation');
+      expect(navigation).toHaveAttribute('aria-label');
+    });
+
+    test('should use proper heading hierarchy', () => {
+      render(<RetirementAccountOptimizer />);
+      
+      const h1 = screen.getByRole('heading', { level: 1 });
+      const h2s = screen.getAllByRole('heading', { level: 2 });
+      
+      expect(h1).toBeInTheDocument();
+      expect(h2s.length).toBeGreaterThan(0);
+      
+      // No skipped heading levels
+      const h3s = screen.queryAllByRole('heading', { level: 3 });
+      const h4s = screen.queryAllByRole('heading', { level: 4 });
+      
+      if (h4s.length > 0) {
+        expect(h3s.length).toBeGreaterThan(0);
+      }
+    });
+
+    test('should provide status updates for dynamic content', async () => {
+      const user = userEvent.setup();
+      render(<RetirementPlanningLessonEnhanced />);
+      
+      const completeButton = screen.getByRole('button', { name: /mark lesson complete/i });
+      await user.click(completeButton);
+      
+      // Should have status region for completion feedback
+      await waitFor(() => {
+        const statusElements = screen.queryAllByRole('status');
+        expect(statusElements.length).toBeGreaterThan(0);
+      });
+    });
+  });
+});

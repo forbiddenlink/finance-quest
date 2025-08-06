@@ -185,9 +185,11 @@ const DiversificationAnalyzer: React.FC = () => {
       </div>
 
       {/* Diversification Scores */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" role="region" aria-labelledby="diversification-scores-heading">
+        <h3 id="diversification-scores-heading" className="sr-only">Portfolio diversification scores</h3>
+        
         <div className={`p-4 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg text-center`}>
-          <div className={`text-2xl font-bold ${getScoreColor(diversificationScore.overall)} mb-1`}>
+          <div className={`text-2xl font-bold ${getScoreColor(diversificationScore.overall)} mb-1`} aria-label={`Overall diversification score: ${diversificationScore.overall} out of 100`}>
             {diversificationScore.overall}
           </div>
           <div className={`text-sm ${theme.textColors.secondary} mb-1`}>Overall Score</div>
@@ -197,7 +199,7 @@ const DiversificationAnalyzer: React.FC = () => {
         </div>
         
         <div className={`p-4 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg text-center`}>
-          <div className={`text-2xl font-bold ${getScoreColor(diversificationScore.assetClass)} mb-1`}>
+          <div className={`text-2xl font-bold ${getScoreColor(diversificationScore.assetClass)} mb-1`} aria-label={`Asset class diversification score: ${diversificationScore.assetClass} out of 100`}>
             {diversificationScore.assetClass}
           </div>
           <div className={`text-sm ${theme.textColors.secondary} mb-1`}>Asset Classes</div>
@@ -207,7 +209,7 @@ const DiversificationAnalyzer: React.FC = () => {
         </div>
 
         <div className={`p-4 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg text-center`}>
-          <div className={`text-2xl font-bold ${getScoreColor(diversificationScore.geographic)} mb-1`}>
+          <div className={`text-2xl font-bold ${getScoreColor(diversificationScore.geographic)} mb-1`} aria-label={`Geographic diversification score: ${diversificationScore.geographic} out of 100`}>
             {diversificationScore.geographic}
           </div>
           <div className={`text-sm ${theme.textColors.secondary} mb-1`}>Geography</div>
@@ -217,7 +219,7 @@ const DiversificationAnalyzer: React.FC = () => {
         </div>
 
         <div className={`p-4 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg text-center`}>
-          <div className={`text-2xl font-bold ${getScoreColor(diversificationScore.sector)} mb-1`}>
+          <div className={`text-2xl font-bold ${getScoreColor(diversificationScore.sector)} mb-1`} aria-label={`Holdings count diversification score: ${diversificationScore.sector} out of 100`}>
             {diversificationScore.sector}
           </div>
           <div className={`text-sm ${theme.textColors.secondary} mb-1`}>Holdings Count</div>
@@ -238,6 +240,7 @@ const DiversificationAnalyzer: React.FC = () => {
             <button
               onClick={addHolding}
               className={`px-4 py-2 ${theme.buttons.primary} text-white rounded-lg hover:opacity-90 transition-opacity`}
+              aria-label="Add new holding to portfolio for diversification analysis"
             >
               Add Holding
             </button>
@@ -245,42 +248,61 @@ const DiversificationAnalyzer: React.FC = () => {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+          <table className="w-full border-collapse" role="table" aria-label="Portfolio holdings for diversification analysis">
             <thead>
               <tr className={`border-b ${theme.borderColors.primary}`}>
-                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`}>Holding Name</th>
-                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`}>Value</th>
-                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`}>Category</th>
-                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`}>Sub-Category</th>
-                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`}>Region</th>
-                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`}>%</th>
-                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`}>Action</th>
+                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`} scope="col">Holding Name</th>
+                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`} scope="col">Value</th>
+                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`} scope="col">Category</th>
+                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`} scope="col">Sub-Category</th>
+                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`} scope="col">Region</th>
+                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`} scope="col">%</th>
+                <th className={`text-left p-3 ${theme.textColors.secondary} font-medium`} scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
               {holdings.map((holding, index) => (
                 <tr key={index} className={`border-b ${theme.borderColors.primary}`}>
                   <td className="p-3">
+                    <label className="sr-only" htmlFor={`holding-name-${index}`}>
+                      Holding name for holding {index + 1}
+                    </label>
                     <input
+                      id={`holding-name-${index}`}
                       type="text"
                       value={holding.name}
                       onChange={(e) => updateHolding(index, 'name', e.target.value)}
                       className={`w-full px-2 py-1 border rounded ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                      aria-label={`Holding name for holding ${index + 1}`}
+                      placeholder="e.g., S&P 500 ETF"
                     />
                   </td>
                   <td className="p-3">
+                    <label className="sr-only" htmlFor={`holding-value-${index}`}>
+                      Value for {holding.name || `holding ${index + 1}`}
+                    </label>
                     <input
+                      id={`holding-value-${index}`}
                       type="number"
                       value={holding.value}
                       onChange={(e) => updateHolding(index, 'value', Number(e.target.value))}
                       className={`w-full px-2 py-1 border rounded ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                      aria-label={`Value for ${holding.name || `holding ${index + 1}`}`}
+                      min="0"
+                      step="0.01"
+                      placeholder="10000"
                     />
                   </td>
                   <td className="p-3">
+                    <label className="sr-only" htmlFor={`holding-category-${index}`}>
+                      Asset category for {holding.name || `holding ${index + 1}`}
+                    </label>
                     <select
+                      id={`holding-category-${index}`}
                       value={holding.category}
                       onChange={(e) => updateHolding(index, 'category', e.target.value)}
                       className={`w-full px-2 py-1 border rounded ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                      aria-label={`Asset category for ${holding.name || `holding ${index + 1}`}`}
                     >
                       <option value="Stocks">Stocks</option>
                       <option value="Bonds">Bonds</option>
@@ -291,10 +313,15 @@ const DiversificationAnalyzer: React.FC = () => {
                     </select>
                   </td>
                   <td className="p-3">
+                    <label className="sr-only" htmlFor={`holding-subcategory-${index}`}>
+                      Sub-category for {holding.name || `holding ${index + 1}`}
+                    </label>
                     <select
+                      id={`holding-subcategory-${index}`}
                       value={holding.subCategory}
                       onChange={(e) => updateHolding(index, 'subCategory', e.target.value)}
                       className={`w-full px-2 py-1 border rounded ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                      aria-label={`Sub-category for ${holding.name || `holding ${index + 1}`}`}
                     >
                       <option value="Large Cap">Large Cap</option>
                       <option value="Mid Cap">Mid Cap</option>
@@ -306,10 +333,15 @@ const DiversificationAnalyzer: React.FC = () => {
                     </select>
                   </td>
                   <td className="p-3">
+                    <label className="sr-only" htmlFor={`holding-region-${index}`}>
+                      Geographic region for {holding.name || `holding ${index + 1}`}
+                    </label>
                     <select
+                      id={`holding-region-${index}`}
                       value={holding.region}
                       onChange={(e) => updateHolding(index, 'region', e.target.value)}
                       className={`w-full px-2 py-1 border rounded ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                      aria-label={`Geographic region for ${holding.name || `holding ${index + 1}`}`}
                     >
                       <option value="US">US</option>
                       <option value="International">International</option>
@@ -318,7 +350,10 @@ const DiversificationAnalyzer: React.FC = () => {
                     </select>
                   </td>
                   <td className="p-3">
-                    <span className={`font-medium ${theme.textColors.primary}`}>
+                    <span 
+                      className={`font-medium ${theme.textColors.primary}`}
+                      aria-label={`Allocation percentage for ${holding.name || `holding ${index + 1}`}: ${totalValue > 0 ? ((holding.value / totalValue) * 100).toFixed(1) : 0} percent`}
+                    >
                       {totalValue > 0 ? ((holding.value / totalValue) * 100).toFixed(1) : 0}%
                     </span>
                   </td>
@@ -327,6 +362,7 @@ const DiversificationAnalyzer: React.FC = () => {
                       onClick={() => removeHolding(index)}
                       className={`px-2 py-1 ${theme.status.error.bg} ${theme.status.error.text} rounded hover:opacity-80 transition-opacity`}
                       disabled={holdings.length <= 1}
+                      aria-label={`Remove ${holding.name || `holding ${index + 1}`} from portfolio`}
                     >
                       Remove
                     </button>
@@ -340,16 +376,21 @@ const DiversificationAnalyzer: React.FC = () => {
 
       {/* Recommendations */}
       {diversificationScore.recommendations.length > 0 && (
-        <div className="mb-8">
-          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-            <Shield className="w-5 h-5" />
+        <div className="mb-8" role="region" aria-labelledby="diversification-recommendations-heading">
+          <h3 id="diversification-recommendations-heading" className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+            <Shield className="w-5 h-5" aria-hidden="true" />
             Diversification Recommendations
           </h3>
           
-          <div className="space-y-3">
+          <div className="space-y-3" role="list" aria-label="List of diversification recommendations">
             {diversificationScore.recommendations.map((recommendation, index) => (
-              <div key={index} className={`p-3 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg flex items-start gap-3`}>
-                <AlertTriangle className={`w-4 h-4 ${theme.status.info.text} mt-0.5 flex-shrink-0`} />
+              <div 
+                key={index} 
+                className={`p-3 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg flex items-start gap-3`}
+                role="listitem"
+                aria-label={`Recommendation ${index + 1}: ${recommendation}`}
+              >
+                <AlertTriangle className={`w-4 h-4 ${theme.status.info.text} mt-0.5 flex-shrink-0`} aria-hidden="true" />
                 <p className={`text-sm ${theme.status.info.text}`}>
                   {recommendation}
                 </p>
@@ -360,27 +401,27 @@ const DiversificationAnalyzer: React.FC = () => {
       )}
 
       {/* Education Section */}
-      <div className={`p-4 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-        <h4 className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
-          <PieChart className="w-4 h-4" />
+      <div className={`p-4 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`} role="region" aria-labelledby="diversification-education-heading">
+        <h4 id="diversification-education-heading" className={`font-semibold ${theme.textColors.primary} mb-3 flex items-center gap-2`}>
+          <PieChart className="w-4 h-4" aria-hidden="true" />
           Understanding Diversification Scores
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
             <h5 className={`font-medium ${theme.textColors.primary} mb-2`}>Score Meanings:</h5>
-            <ul className={`space-y-1 ${theme.textColors.secondary}`}>
-              <li>• <span className={theme.status.success.text}>80-100:</span> Excellent diversification</li>
-              <li>• <span className={theme.status.warning.text}>60-79:</span> Good with room for improvement</li>
-              <li>• <span className={theme.status.error.text}>0-59:</span> Concentrated, needs attention</li>
+            <ul className={`space-y-1 ${theme.textColors.secondary}`} role="list">
+              <li role="listitem">• <span className={theme.status.success.text}>80-100:</span> Excellent diversification</li>
+              <li role="listitem">• <span className={theme.status.warning.text}>60-79:</span> Good with room for improvement</li>
+              <li role="listitem">• <span className={theme.status.error.text}>0-59:</span> Concentrated, needs attention</li>
             </ul>
           </div>
           <div>
             <h5 className={`font-medium ${theme.textColors.primary} mb-2`}>Key Principles:</h5>
-            <ul className={`space-y-1 ${theme.textColors.secondary}`}>
-              <li>• Spread across asset classes</li>
-              <li>• Include international exposure</li>
-              <li>• Avoid concentration in one sector</li>
-              <li>• Regular rebalancing maintains targets</li>
+            <ul className={`space-y-1 ${theme.textColors.secondary}`} role="list">
+              <li role="listitem">• Spread across asset classes</li>
+              <li role="listitem">• Include international exposure</li>
+              <li role="listitem">• Avoid concentration in one sector</li>
+              <li role="listitem">• Regular rebalancing maintains targets</li>
             </ul>
           </div>
         </div>

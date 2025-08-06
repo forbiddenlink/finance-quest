@@ -5,6 +5,16 @@ import { TrendingUp, Target } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 
+interface ValidationError {
+    field: string;
+    message: string;
+}
+
+interface InputValidation {
+    isValid: boolean;
+    errors: ValidationError[];
+}
+
 interface NegotiationAnalysis {
     currentSalary: number;
     requestedSalary: number;
@@ -20,6 +30,7 @@ export default function SalaryNegotiationCalculator() {
     const [yearsOfService, setYearsOfService] = useState<string>('');
     const [marketResearch, setMarketResearch] = useState<boolean>(false);
     const [analysis, setAnalysis] = useState<NegotiationAnalysis | null>(null);
+    const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
 
     const recordCalculatorUsage = useProgressStore(state => state.recordCalculatorUsage);
 
@@ -28,12 +39,49 @@ export default function SalaryNegotiationCalculator() {
         recordCalculatorUsage('salary-negotiation-calculator');
     }, [recordCalculatorUsage]);
 
-    const calculateNegotiation = () => {
-        const current = parseFloat(currentSalary);
-        const target = parseFloat(targetSalary);
-        const years = parseFloat(yearsOfService);
+    // Safe parsing function with validation
+    const safeParseFloat = (value: string, fieldName: string, min: number = 0): number => {
+        const parsed = parseFloat(value);
+        if (isNaN(parsed) || parsed < min) {
+            const error: ValidationError = {
+                field: fieldName,
+                message: `Please enter a valid number${min > 0 ? ` (minimum: $${min.toLocaleString()})` : ''}`
+            };
+            setValidationErrors(prev => [
+                ...prev.filter(e => e.field !== fieldName),
+                error
+            ]);
+            return 0;
+        }
+        
+        // Clear error if validation passes
+        setValidationErrors(prev => prev.filter(e => e.field !== fieldName));
+        return parsed;
+    };
 
-        if (isNaN(current) || isNaN(target) || current <= 0 || target <= 0) return;
+    const handleInputChange = (field: string, value: string) => {
+        switch (field) {
+            case 'currentSalary':
+                setCurrentSalary(value);
+                if (value) safeParseFloat(value, field, 20000);
+                break;
+            case 'targetSalary':
+                setTargetSalary(value);
+                if (value) safeParseFloat(value, field, 20000);
+                break;
+            case 'yearsOfService':
+                setYearsOfService(value);
+                if (value) safeParseFloat(value, field, 0);
+                break;
+        }
+    };
+
+    const calculateNegotiation = () => {
+        const current = safeParseFloat(currentSalary, 'currentSalary', 20000);
+        const target = safeParseFloat(targetSalary, 'targetSalary', 20000);
+        const years = safeParseFloat(yearsOfService, 'yearsOfService', 0);
+
+        if (current <= 0 || target <= 0) return;
 
         const increaseAmount = target - current;
         const increasePercentage = (increaseAmount / current) * 100;
@@ -73,16 +121,32 @@ export default function SalaryNegotiationCalculator() {
                         Current Annual Salary
                     </label>
                     <div className="relative">
-                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`} aria-hidden="true">$</span>
                         <input
                             type="number"
                             id="currentSalary"
                             value={currentSalary}
-                            onChange={(e) => setCurrentSalary(e.target.value)}
+                            onChange={(e) => handleInputChange('currentSalary', e.target.value)}
                             placeholder="65000"
-                            className={`pl-8 w-full px-4 py-2 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent`}
+                            className={`pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:border-transparent transition-all ${
+                                validationErrors.some(e => e.field === 'currentSalary') 
+                                    ? 'border-red-500 focus:ring-red-500' 
+                                    : `${theme.borderColors.primary} focus:ring-emerald-500`
+                            }`}
+                            aria-describedby="currentSalary-help currentSalary-error"
+                            aria-invalid={validationErrors.some(e => e.field === 'currentSalary')}
+                            min="20000"
+                            step="1000"
                         />
                     </div>
+                    {validationErrors.some(e => e.field === 'currentSalary') && (
+                        <p id="currentSalary-error" className="text-red-400 text-sm mt-1" role="alert">
+                            {validationErrors.find(e => e.field === 'currentSalary')?.message}
+                        </p>
+                    )}
+                    <p id="currentSalary-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                        Your current annual salary before any proposed increase
+                    </p>
                 </div>
 
                 <div>
@@ -90,16 +154,32 @@ export default function SalaryNegotiationCalculator() {
                         Target Annual Salary
                     </label>
                     <div className="relative">
-                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`} aria-hidden="true">$</span>
                         <input
                             type="number"
                             id="targetSalary"
                             value={targetSalary}
-                            onChange={(e) => setTargetSalary(e.target.value)}
+                            onChange={(e) => handleInputChange('targetSalary', e.target.value)}
                             placeholder="75000"
-                            className={`pl-8 w-full px-4 py-2 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent`}
+                            className={`pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:border-transparent transition-all ${
+                                validationErrors.some(e => e.field === 'targetSalary') 
+                                    ? 'border-red-500 focus:ring-red-500' 
+                                    : `${theme.borderColors.primary} focus:ring-emerald-500`
+                            }`}
+                            aria-describedby="targetSalary-help targetSalary-error"
+                            aria-invalid={validationErrors.some(e => e.field === 'targetSalary')}
+                            min="20000"
+                            step="1000"
                         />
                     </div>
+                    {validationErrors.some(e => e.field === 'targetSalary') && (
+                        <p id="targetSalary-error" className="text-red-400 text-sm mt-1" role="alert">
+                            {validationErrors.find(e => e.field === 'targetSalary')?.message}
+                        </p>
+                    )}
+                    <p id="targetSalary-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                        The salary amount you want to negotiate for
+                    </p>
                 </div>
 
                 <div>
@@ -110,10 +190,27 @@ export default function SalaryNegotiationCalculator() {
                         type="number"
                         id="yearsOfService"
                         value={yearsOfService}
-                        onChange={(e) => setYearsOfService(e.target.value)}
+                        onChange={(e) => handleInputChange('yearsOfService', e.target.value)}
                         placeholder="2"
-                        className={`w-full px-4 py-2 border ${theme.borderColors.primary} rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent`}
+                        className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:border-transparent transition-all ${
+                            validationErrors.some(e => e.field === 'yearsOfService') 
+                                ? 'border-red-500 focus:ring-red-500' 
+                                : `${theme.borderColors.primary} focus:ring-emerald-500`
+                        }`}
+                        aria-describedby="yearsOfService-help yearsOfService-error"
+                        aria-invalid={validationErrors.some(e => e.field === 'yearsOfService')}
+                        min="0"
+                        max="50"
+                        step="0.5"
                     />
+                    {validationErrors.some(e => e.field === 'yearsOfService') && (
+                        <p id="yearsOfService-error" className="text-red-400 text-sm mt-1" role="alert">
+                            {validationErrors.find(e => e.field === 'yearsOfService')?.message}
+                        </p>
+                    )}
+                    <p id="yearsOfService-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                        How long you've been in your current position (strengthens negotiation)
+                    </p>
                 </div>
 
                 <div className="flex items-center">

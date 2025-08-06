@@ -16,6 +16,16 @@ import {
   Award
 } from 'lucide-react';
 
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+interface InputValidation {
+  isValid: boolean;
+  errors: ValidationError[];
+}
+
 interface RiskQuestion {
   id: string;
   question: string;
@@ -53,10 +63,41 @@ export default function RiskToleranceCalculator() {
   const [ageRange, setAgeRange] = useState('20-30');
   const [investmentGoal, setInvestmentGoal] = useState('retirement');
   const [timeHorizon, setTimeHorizon] = useState('20+');
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
 
   useEffect(() => {
     recordCalculatorUsage('risk-tolerance-calculator');
   }, [recordCalculatorUsage]);
+
+  // Validation functions
+  const validateDemographics = (): InputValidation => {
+    const errors: ValidationError[] = [];
+    
+    if (!ageRange) {
+      errors.push({ field: 'ageRange', message: 'Please select your age range' });
+    }
+    
+    if (!investmentGoal) {
+      errors.push({ field: 'investmentGoal', message: 'Please select your investment goal' });
+    }
+    
+    if (!timeHorizon) {
+      errors.push({ field: 'timeHorizon', message: 'Please select your time horizon' });
+    }
+    
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  };
+
+  const clearValidationError = (field: string) => {
+    setValidationErrors(prev => prev.filter(error => error.field !== field));
+  };
+
+  const getValidationError = (field: string): string | undefined => {
+    return validationErrors.find(error => error.field === field)?.message;
+  };
 
   const riskQuestions: RiskQuestion[] = [
     {
@@ -498,7 +539,8 @@ export default function RiskToleranceCalculator() {
         <div className="text-center">
           <button
             onClick={resetAssessment}
-            className={`${theme.buttons.primary} px-6 py-3 rounded-lg transition-all hover-lift`}
+            aria-label="Retake the risk tolerance assessment"
+            className={`${theme.buttons.primary} px-6 py-3 rounded-lg transition-all hover-lift focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900`}
           >
             Take Assessment Again
           </button>
@@ -525,7 +567,7 @@ export default function RiskToleranceCalculator() {
       </div>
 
       {/* Progress Bar */}
-      <div className="mb-8">
+      <div className="mb-8" role="progressbar" aria-valuenow={Math.round(progressPercent)} aria-valuemin={0} aria-valuemax={100} aria-label="Assessment progress">
         <div className="flex items-center justify-between mb-2">
           <span className={`text-sm font-medium ${theme.textColors.secondary}`}>
             Question {currentQuestion + 1} of {riskQuestions.length}
@@ -538,6 +580,7 @@ export default function RiskToleranceCalculator() {
           <div 
             className={`${theme.status.info.bg.replace('/20', '')} h-2 rounded-full transition-all duration-300`}
             style={{ width: `${progressPercent}%` }}
+            aria-hidden="true"
           ></div>
         </div>
       </div>
@@ -546,19 +589,28 @@ export default function RiskToleranceCalculator() {
       {currentQuestion === 0 && Object.keys(answers).length === 0 && (
         <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
           <h3 className={`${theme.typography.heading3} ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-            <Calendar className="w-5 h-5" />
+            <Calendar className="w-5 h-5" aria-hidden="true" />
             Quick Background Information
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div>
-              <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              <label 
+                htmlFor="age-range-select"
+                className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}
+              >
                 Age Range
               </label>
               <select
+                id="age-range-select"
                 value={ageRange}
-                onChange={(e) => setAgeRange(e.target.value)}
-                className={`w-full px-3 py-2 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500`}
+                onChange={(e) => {
+                  setAgeRange(e.target.value);
+                  clearValidationError('ageRange');
+                }}
+                aria-describedby={getValidationError('ageRange') ? 'age-range-error' : undefined}
+                aria-invalid={!!getValidationError('ageRange')}
+                className={`w-full px-3 py-2 border ${getValidationError('ageRange') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
               >
                 <option value="20-30">20-30</option>
                 <option value="31-40">31-40</option>
@@ -566,37 +618,70 @@ export default function RiskToleranceCalculator() {
                 <option value="51-60">51-60</option>
                 <option value="60+">60+</option>
               </select>
+              {getValidationError('ageRange') && (
+                <div id="age-range-error" role="alert" className="mt-1 text-sm text-red-500">
+                  {getValidationError('ageRange')}
+                </div>
+              )}
             </div>
             
             <div>
-              <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              <label 
+                htmlFor="investment-goal-select"
+                className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}
+              >
                 Investment Goal
               </label>
               <select
+                id="investment-goal-select"
                 value={investmentGoal}
-                onChange={(e) => setInvestmentGoal(e.target.value)}
-                className={`w-full px-3 py-2 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500`}
+                onChange={(e) => {
+                  setInvestmentGoal(e.target.value);
+                  clearValidationError('investmentGoal');
+                }}
+                aria-describedby={getValidationError('investmentGoal') ? 'investment-goal-error' : undefined}
+                aria-invalid={!!getValidationError('investmentGoal')}
+                className={`w-full px-3 py-2 border ${getValidationError('investmentGoal') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
               >
                 <option value="retirement">Retirement</option>
                 <option value="house">House Purchase</option>
                 <option value="education">Education</option>
                 <option value="general">General Wealth</option>
               </select>
+              {getValidationError('investmentGoal') && (
+                <div id="investment-goal-error" role="alert" className="mt-1 text-sm text-red-500">
+                  {getValidationError('investmentGoal')}
+                </div>
+              )}
             </div>
             
             <div>
-              <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              <label 
+                htmlFor="time-horizon-select"
+                className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}
+              >
                 Time Horizon
               </label>
               <select
+                id="time-horizon-select"
                 value={timeHorizon}
-                onChange={(e) => setTimeHorizon(e.target.value)}
-                className={`w-full px-3 py-2 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500`}
+                onChange={(e) => {
+                  setTimeHorizon(e.target.value);
+                  clearValidationError('timeHorizon');
+                }}
+                aria-describedby={getValidationError('timeHorizon') ? 'time-horizon-error' : undefined}
+                aria-invalid={!!getValidationError('timeHorizon')}
+                className={`w-full px-3 py-2 border ${getValidationError('timeHorizon') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
               >
                 <option value="5-10">5-10 years</option>
                 <option value="10-20">10-20 years</option>
                 <option value="20+">20+ years</option>
               </select>
+              {getValidationError('timeHorizon') && (
+                <div id="time-horizon-error" role="alert" className="mt-1 text-sm text-red-500">
+                  {getValidationError('timeHorizon')}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -604,38 +689,56 @@ export default function RiskToleranceCalculator() {
 
       {/* Current Question */}
       <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-6 mb-6`}>
-        <h3 className={`${theme.typography.heading3} ${theme.textColors.primary} mb-2`}>
-          {question.question}
-        </h3>
-        <p className={`text-sm ${theme.textColors.muted} mb-6`}>
-          {question.description}
-        </p>
-        
-        <div className="space-y-3">
-          {question.answers.map((answer, index) => (
-            <button
-              key={index}
-              onClick={() => handleAnswer(question.id, answer.score)}
-              className={`w-full text-left p-4 border-2 ${theme.borderColors.primary} rounded-lg hover:${theme.borderColors.primary.replace('border-', 'border-blue-')} hover:bg-blue-50 transition-all group`}
-            >
-              <div className="flex items-start gap-3">
-                <div className={`w-6 h-6 border-2 ${theme.borderColors.primary} rounded-full flex items-center justify-center group-hover:border-blue-500 transition-colors`}>
-                  <span className={`text-sm font-bold ${theme.textColors.secondary} group-hover:text-blue-600`}>
-                    {index + 1}
-                  </span>
+        <fieldset>
+          <legend className={`${theme.typography.heading3} ${theme.textColors.primary} mb-2`}>
+            {question.question}
+          </legend>
+          <p className={`text-sm ${theme.textColors.muted} mb-6`} id={`question-${question.id}-description`}>
+            {question.description}
+          </p>
+          
+          <div 
+            role="radiogroup" 
+            aria-labelledby={`question-${question.id}-description`}
+            className="space-y-3"
+          >
+            {question.answers.map((answer, index) => (
+              <button
+                key={index}
+                role="radio"
+                aria-checked={false}
+                onClick={() => handleAnswer(question.id, answer.score)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleAnswer(question.id, answer.score);
+                  }
+                }}
+                className={`w-full text-left p-4 border-2 ${theme.borderColors.primary} rounded-lg hover:border-blue-500 hover:bg-blue-50/10 transition-all group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900`}
+                aria-describedby={`answer-${question.id}-${index}-explanation`}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`w-6 h-6 border-2 ${theme.borderColors.primary} rounded-full flex items-center justify-center group-hover:border-blue-500 transition-colors`}>
+                    <span className={`text-sm font-bold ${theme.textColors.secondary} group-hover:text-blue-400`}>
+                      {index + 1}
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <p className={`font-medium ${theme.textColors.primary} mb-1`}>
+                      {answer.text}
+                    </p>
+                    <p 
+                      id={`answer-${question.id}-${index}-explanation`}
+                      className={`text-sm ${theme.textColors.muted}`}
+                    >
+                      {answer.explanation}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className={`font-medium ${theme.textColors.primary} mb-1`}>
-                    {answer.text}
-                  </p>
-                  <p className={`text-sm ${theme.textColors.muted}`}>
-                    {answer.explanation}
-                  </p>
-                </div>
-              </div>
-            </button>
-          ))}
-        </div>
+              </button>
+            ))}
+          </div>
+        </fieldset>
       </div>
 
       {/* Progress Info */}

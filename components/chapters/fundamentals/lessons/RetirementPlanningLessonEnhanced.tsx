@@ -157,9 +157,12 @@ export default function RetirementPlanningLessonEnhanced({ onComplete }: Retirem
   return (
     <div className="max-w-4xl mx-auto">
       {/* Header */}
-      <div className="text-center mb-8">
-        <div className={`w-16 h-16 ${theme.status.success.bg} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-          <Icon className={`w-8 h-8 ${theme.status.success.text}`} />
+      <header className="text-center mb-8">
+        <div 
+          className={`w-16 h-16 ${theme.status.success.bg} rounded-2xl flex items-center justify-center mx-auto mb-4`}
+          aria-label="Retirement planning lesson icon"
+        >
+          <Icon className={`w-8 h-8 ${theme.status.success.text}`} aria-hidden="true" />
         </div>
         <h1 className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>
           Retirement Planning & Wealth Building
@@ -167,62 +170,85 @@ export default function RetirementPlanningLessonEnhanced({ onComplete }: Retirem
         <p className={`${theme.textColors.secondary} max-w-2xl mx-auto`}>
           Master the strategies to build wealth and retire with financial security through tax-advantaged accounts and smart withdrawal planning.
         </p>
-      </div>
+      </header>
 
       {/* Progress Overview */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" aria-labelledby="progress-overview">
+        <h2 id="progress-overview" className="sr-only">Learning Progress Overview</h2>
+        
         <GradientCard variant="glass" gradient="blue" className="p-4 text-center">
-          <ProgressRing progress={progress} size={60} strokeWidth={4} />
+          <div aria-label={`Overall progress: ${Math.round(progress)}%`}>
+            <ProgressRing progress={progress} size={60} strokeWidth={4} />
+          </div>
           <p className={`text-sm ${theme.textColors.primary} font-medium mt-2`}>Overall Progress</p>
         </GradientCard>
         
         <GradientCard variant="glass" gradient="green" className="p-4 text-center">
-          <div className={`text-2xl font-bold ${theme.textColors.primary}`}>{completedCount}/{enhancedLessons.length}</div>
+          <div className={`text-2xl font-bold ${theme.textColors.primary}`} aria-label={`${completedCount} of ${enhancedLessons.length} lessons completed`}>
+            {completedCount}/{enhancedLessons.length}
+          </div>
           <p className={`text-sm ${theme.textColors.secondary}`}>Lessons Complete</p>
         </GradientCard>
         
         <GradientCard variant="glass" gradient="purple" className="p-4 text-center">
-          <div className={`text-2xl font-bold ${theme.textColors.primary}`}>{currentLesson + 1}</div>
+          <div className={`text-2xl font-bold ${theme.textColors.primary}`} aria-label={`Currently on lesson ${currentLesson + 1}`}>
+            {currentLesson + 1}
+          </div>
           <p className={`text-sm ${theme.textColors.secondary}`}>Current Lesson</p>
         </GradientCard>
         
         <GradientCard variant="glass" gradient="yellow" className="p-4 text-center">
-          <PiggyBank className={`w-8 h-8 ${theme.textColors.primary} mx-auto`} />
+          <PiggyBank className={`w-8 h-8 ${theme.textColors.primary} mx-auto`} aria-hidden="true" />
           <p className={`text-sm ${theme.textColors.secondary}`}>Retirement Expert</p>
         </GradientCard>
-      </div>
+      </section>
 
       {/* Main Lesson Content */}
-      <GradientCard variant="glass" gradient="blue" className="p-8 mb-6">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center">
-            <div className={`w-12 h-12 ${theme.status.info.bg} rounded-xl flex items-center justify-center mr-4`}>
-              <Icon className={`w-6 h-6 ${theme.status.info.text}`} />
+      <main>
+        <GradientCard variant="glass" gradient="blue" className="p-8 mb-6">
+          <header className="flex items-center justify-between mb-6">
+            <div className="flex items-center">
+              <div className={`w-12 h-12 ${theme.status.info.bg} rounded-xl flex items-center justify-center mr-4`} aria-hidden="true">
+                <Icon className={`w-6 h-6 ${theme.status.info.text}`} />
+              </div>
+              <div>
+                <h2 className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                  {currentLessonContent.title}
+                </h2>
+                <p className={`text-sm ${theme.textColors.muted}`} aria-label={`Lesson ${currentLesson + 1} of ${enhancedLessons.length}`}>
+                  Lesson {currentLesson + 1} of {enhancedLessons.length}
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 className={`text-2xl font-bold ${theme.textColors.primary}`}>
-                {currentLessonContent.title}
-              </h2>
-              <p className={`text-sm ${theme.textColors.muted}`}>
-                Lesson {currentLesson + 1} of {enhancedLessons.length}
-              </p>
-            </div>
-          </div>
-          
-          {completedLessons[currentLesson] && (
-            <div className={`w-8 h-8 ${theme.status.success.bg} rounded-full flex items-center justify-center`}>
-              <CheckCircle className={`w-5 h-5 ${theme.status.success.text}`} />
-            </div>
-          )}
-        </div>
+            
+            {completedLessons[currentLesson] && (
+              <div 
+                className={`w-8 h-8 ${theme.status.success.bg} rounded-full flex items-center justify-center`}
+                aria-label="Lesson completed"
+                role="status"
+              >
+                <CheckCircle className={`w-5 h-5 ${theme.status.success.text}`} aria-hidden="true" />
+              </div>
+            )}
+          </header>
 
-        {/* Progress Bar */}
-        <div className={`w-full bg-slate-800/50 rounded-full h-2 mb-8`}>
-          <div
-            className={`h-2 ${theme.status.success.bg} rounded-full transition-all duration-500`}
-            style={{ width: `${((currentLesson + 1) / enhancedLessons.length) * 100}%` }}
-          />
-        </div>
+          {/* Progress Bar */}
+          <div className={`w-full bg-slate-800/50 rounded-full h-2 mb-8`} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(((currentLesson + 1) / enhancedLessons.length) * 100)} aria-label={`Lesson progress: ${Math.round(((currentLesson + 1) / enhancedLessons.length) * 100)}%`}>
+            <div
+              className={`h-2 ${theme.status.success.bg} rounded-full transition-all duration-500`}
+              style={{ width: `${((currentLesson + 1) / enhancedLessons.length) * 100}%` }}
+            />
+          </div>
+
+          {/* Progress Status Announcement */}
+          <div 
+            role="status" 
+            aria-live="polite" 
+            className="sr-only"
+            aria-atomic="true"
+          >
+            {`Currently on lesson ${currentLesson + 1} of ${enhancedLessons.length}. ${completedCount} lessons completed.`}
+          </div>
 
         {/* Lesson Content */}
         <div className="space-y-6">
@@ -267,32 +293,38 @@ export default function RetirementPlanningLessonEnhanced({ onComplete }: Retirem
           </div>
         </div>
 
-        {/* Action Button */}
-        {!completedLessons[currentLesson] && (
-          <div className="mt-8 text-center">
-            <button
-              onClick={handleLessonComplete}
-              className={`px-8 py-3 ${theme.buttons.primary} rounded-xl transition-all hover-lift flex items-center mx-auto`}
-            >
-              <CheckCircle className="w-5 h-5 mr-2" />
-              Mark Lesson Complete
-            </button>
-          </div>
-        )}
-      </GradientCard>
+          {/* Action Button */}
+          {!completedLessons[currentLesson] && (
+            <div className="mt-8 text-center">
+              <button
+                onClick={handleLessonComplete}
+                className={`px-8 py-3 ${theme.buttons.primary} rounded-xl transition-all hover-lift flex items-center mx-auto`}
+                aria-describedby={`lesson-complete-desc-${currentLesson}`}
+              >
+                <CheckCircle className="w-5 h-5 mr-2" aria-hidden="true" />
+                Mark Lesson Complete
+              </button>
+              <div id={`lesson-complete-desc-${currentLesson}`} className="sr-only">
+                Mark lesson {currentLesson + 1} as completed to track your progress
+              </div>
+            </div>
+          )}
+        </GradientCard>
+      </main>
 
       {/* Navigation */}
-      <div className="flex items-center justify-between mb-8">
+      <nav className="flex items-center justify-between mb-8" aria-label="Lesson navigation">
         <button
           onClick={prevLesson}
           disabled={currentLesson === 0}
           className={`flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all`}
+          aria-label={currentLesson === 0 ? "No previous lesson available" : `Go to lesson ${currentLesson}`}
         >
-          <ChevronLeft className="w-5 h-5 mr-2" />
+          <ChevronLeft className="w-5 h-5 mr-2" aria-hidden="true" />
           Previous Lesson
         </button>
 
-        <div className="flex space-x-2">
+        <div className="flex space-x-2" role="group" aria-label="Lesson indicators">
           {enhancedLessons.map((_, index) => (
             <button
               key={index}
@@ -304,6 +336,8 @@ export default function RetirementPlanningLessonEnhanced({ onComplete }: Retirem
                   ? theme.status.success.bg
                   : `bg-slate-800/50 opacity-50`
               }`}
+              aria-label={`Lesson ${index + 1} indicator${completedLessons[index] ? ' (completed)' : ''}${index === currentLesson ? ' (current)' : ''}`}
+              aria-current={index === currentLesson ? 'step' : undefined}
             />
           ))}
         </div>
@@ -312,11 +346,12 @@ export default function RetirementPlanningLessonEnhanced({ onComplete }: Retirem
           onClick={nextLesson}
           disabled={currentLesson === enhancedLessons.length - 1}
           className={`flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all`}
+          aria-label={currentLesson === enhancedLessons.length - 1 ? "No next lesson available" : `Navigate to lesson ${currentLesson + 2}`}
         >
           Next Lesson
-          <ChevronRight className="w-5 h-5 ml-2" />
+          <ChevronRight className="w-5 h-5 ml-2" aria-hidden="true" />
         </button>
-      </div>
+      </nav>
 
       {/* Completion Status */}
       {completedCount === enhancedLessons.length && (

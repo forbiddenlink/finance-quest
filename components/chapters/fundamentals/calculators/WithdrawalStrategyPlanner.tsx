@@ -44,6 +44,22 @@ const WithdrawalStrategyPlanner: React.FC = () => {
   const [selectedStrategy, setSelectedStrategy] = useState<string>('4% Rule');
   const [projections, setProjections] = useState<WithdrawalProjection[]>([]);
 
+  // Validation state
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+
+  // Validation function
+  const validateInput = (field: string, value: number, min: number, max: number) => {
+    const newErrors = { ...validationErrors };
+    
+    if (value < min || value > max) {
+      newErrors[field] = `Value must be between ${min} and ${max}`;
+    } else {
+      delete newErrors[field];
+    }
+    
+    setValidationErrors(newErrors);
+  };
+
   const strategies: WithdrawalStrategy[] = [
     {
       name: '4% Rule',
@@ -220,14 +236,74 @@ const WithdrawalStrategyPlanner: React.FC = () => {
 
   return (
     <div className={`p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-      <div className="flex items-center gap-3 mb-6">
-        <TrendingDown className="w-6 h-6 text-red-400" />
-        <h2 className={`text-xl font-bold ${theme.textColors.primary}`}>
+      <header className="flex items-center gap-3 mb-6">
+        <TrendingDown className="w-6 h-6 text-purple-400" aria-hidden="true" />
+        <h1 className={`text-xl font-bold ${theme.textColors.primary}`}>
           Withdrawal Strategy Planner
-        </h2>
-      </div>
+        </h1>
+      </header>
 
       {/* Input Parameters */}
+      <section aria-labelledby="input-parameters-heading">
+        <h2 id="input-parameters-heading" className="sr-only">Input Parameters</h2>
+        <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div>
+            <label htmlFor="retirement-portfolio" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Retirement Portfolio Value
+            </label>
+            <div className="relative">
+              <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" aria-hidden="true" />
+              <input
+                id="retirement-portfolio"
+                type="number"
+                min="0"
+                step="10000"
+                value={retirementPortfolio}
+                onChange={(e) => setRetirementPortfolio(Number(e.target.value))}
+                className={`pl-10 w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                aria-describedby="retirement-portfolio-help"
+              />
+            </div>
+            <div id="retirement-portfolio-help" className="sr-only">Enter total retirement portfolio value for withdrawal planning</div>
+          </div>
+
+          <div>
+            <label htmlFor="current-age-withdrawal" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Current Age
+            </label>
+            <input
+              id="current-age-withdrawal"
+              type="number"
+              min="50"
+              max="100"
+              value={currentAge}
+              onChange={(e) => setCurrentAge(Number(e.target.value))}
+              className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+              aria-describedby="current-age-help"
+            />
+            <div id="current-age-help" className="sr-only">Enter your current age for withdrawal strategy planning</div>
+          </div>
+
+          <div>
+            <label htmlFor="life-expectancy" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Life Expectancy
+            </label>
+            <input
+              id="life-expectancy"
+              type="number"
+              min="65"
+              max="110"
+              value={lifeExpectancy}
+              onChange={(e) => setLifeExpectancy(Number(e.target.value))}
+              className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+              aria-describedby="life-expectancy-help"
+            />
+            <div id="life-expectancy-help" className="sr-only">Enter expected life expectancy for portfolio duration planning</div>
+          </div>
+        </form>
+      </section>
+
+      {/* Strategy Selection */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div>
           <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
@@ -456,6 +532,18 @@ const WithdrawalStrategyPlanner: React.FC = () => {
             </ul>
           </div>
         </div>
+      </div>
+
+      {/* Screen Reader Status Updates */}
+      <div 
+        role="status" 
+        aria-live="polite" 
+        className="sr-only"
+      >
+        {projections && projections.length > 0 ? 
+          `Withdrawal strategy analysis complete. ${projections.length} projection years analyzed.` :
+          'Configure your retirement parameters to begin withdrawal strategy analysis.'
+        }
       </div>
     </div>
   );

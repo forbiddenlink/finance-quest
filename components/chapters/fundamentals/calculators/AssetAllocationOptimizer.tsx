@@ -13,6 +13,16 @@ import {
   Shield
 } from 'lucide-react';
 
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+interface InputValidation {
+  isValid: boolean;
+  errors: ValidationError[];
+}
+
 interface AssetClass {
   id: string;
   name: string;
@@ -45,6 +55,60 @@ export default function AssetAllocationOptimizer() {
   const [age, setAge] = useState(35);
   const [riskLevel, setRiskLevel] = useState<'conservative' | 'moderate' | 'aggressive'>('moderate');
   const [rebalanceThreshold, setRebalanceThreshold] = useState(5);
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
+
+  // Validation functions
+  const safeParseFloat = (value: string, min: number = 0, max: number = Infinity): number => {
+    const parsed = parseFloat(value);
+    return isNaN(parsed) ? min : Math.max(min, Math.min(max, parsed));
+  };
+
+  const validateInput = (field: string, value: string): InputValidation => {
+    const errors: ValidationError[] = [];
+    
+    switch (field) {
+      case 'portfolioValue':
+        const portfolioVal = safeParseFloat(value, 1, 10000000);
+        if (portfolioVal < 1) {
+          errors.push({ field, message: 'Portfolio value must be at least $1' });
+        }
+        if (portfolioVal > 10000000) {
+          errors.push({ field, message: 'Portfolio value cannot exceed $10,000,000' });
+        }
+        break;
+      case 'age':
+        const ageVal = safeParseFloat(value, 18, 100);
+        if (ageVal < 18) {
+          errors.push({ field, message: 'Age must be at least 18' });
+        }
+        if (ageVal > 100) {
+          errors.push({ field, message: 'Age cannot exceed 100' });
+        }
+        break;
+      case 'rebalanceThreshold':
+        const thresholdVal = safeParseFloat(value, 1, 50);
+        if (thresholdVal < 1) {
+          errors.push({ field, message: 'Threshold must be at least 1%' });
+        }
+        if (thresholdVal > 50) {
+          errors.push({ field, message: 'Threshold cannot exceed 50%' });
+        }
+        break;
+    }
+    
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  };
+
+  const clearValidationError = (field: string) => {
+    setValidationErrors(prev => prev.filter(error => error.field !== field));
+  };
+
+  const getValidationError = (field: string): string | undefined => {
+    return validationErrors.find(error => error.field === field)?.message;
+  };
   
   const [assetClasses, setAssetClasses] = useState<AssetClass[]>([
     {
@@ -225,66 +289,141 @@ export default function AssetAllocationOptimizer() {
       {/* Configuration */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+          <label 
+            htmlFor="portfolio-value-input"
+            className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}
+          >
             Portfolio Value
           </label>
           <div className="relative">
-            <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+            <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`} aria-hidden="true">$</span>
             <input
+              id="portfolio-value-input"
               type="number"
               value={portfolioValue}
-              onChange={(e) => setPortfolioValue(Number(e.target.value))}
-              className={`w-full pl-8 pr-4 py-2 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500`}
-              min="1000"
+              onChange={(e) => {
+                const validation = validateInput('portfolioValue', e.target.value);
+                setValidationErrors(prev => prev.filter(error => error.field !== 'portfolioValue').concat(validation.errors));
+                setPortfolioValue(safeParseFloat(e.target.value, 1, 10000000));
+              }}
+              onBlur={(e) => {
+                const validation = validateInput('portfolioValue', e.target.value);
+                setValidationErrors(prev => prev.filter(error => error.field !== 'portfolioValue').concat(validation.errors));
+              }}
+              aria-describedby={getValidationError('portfolioValue') ? 'portfolio-value-error' : 'portfolio-value-help'}
+              aria-invalid={!!getValidationError('portfolioValue')}
+              className={`w-full pl-8 pr-4 py-2 border ${getValidationError('portfolioValue') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
+              min="1"
+              max="10000000"
               step="1000"
             />
           </div>
+          <div id="portfolio-value-help" className={`mt-1 text-xs ${theme.textColors.muted}`}>
+            Enter value between $1 - $10,000,000
+          </div>
+          {getValidationError('portfolioValue') && (
+            <div id="portfolio-value-error" role="alert" className="mt-1 text-sm text-red-500">
+              {getValidationError('portfolioValue')}
+            </div>
+          )}
         </div>
 
         <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+          <label 
+            htmlFor="age-input"
+            className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}
+          >
             Your Age
           </label>
           <input
+            id="age-input"
             type="number"
             value={age}
-            onChange={(e) => setAge(Number(e.target.value))}
-            className={`w-full px-3 py-2 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500`}
+            onChange={(e) => {
+              const validation = validateInput('age', e.target.value);
+              setValidationErrors(prev => prev.filter(error => error.field !== 'age').concat(validation.errors));
+              setAge(safeParseFloat(e.target.value, 18, 100));
+            }}
+            onBlur={(e) => {
+              const validation = validateInput('age', e.target.value);
+              setValidationErrors(prev => prev.filter(error => error.field !== 'age').concat(validation.errors));
+            }}
+            aria-describedby={getValidationError('age') ? 'age-error' : 'age-help'}
+            aria-invalid={!!getValidationError('age')}
+            className={`w-full px-3 py-2 border ${getValidationError('age') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
             min="18"
             max="100"
           />
+          <div id="age-help" className={`mt-1 text-xs ${theme.textColors.muted}`}>
+            Age 18-100 (affects allocation strategy)
+          </div>
+          {getValidationError('age') && (
+            <div id="age-error" role="alert" className="mt-1 text-sm text-red-500">
+              {getValidationError('age')}
+            </div>
+          )}
         </div>
 
         <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+          <label 
+            htmlFor="risk-level-select"
+            className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}
+          >
             Risk Level
           </label>
           <select
+            id="risk-level-select"
             value={riskLevel}
             onChange={(e) => setRiskLevel(e.target.value as 'conservative' | 'moderate' | 'aggressive')}
-            className={`w-full px-3 py-2 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500`}
+            aria-describedby="risk-level-help"
+            className={`w-full px-3 py-2 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
           >
             <option value="conservative">Conservative</option>
             <option value="moderate">Moderate</option>
             <option value="aggressive">Aggressive</option>
           </select>
+          <div id="risk-level-help" className={`mt-1 text-xs ${theme.textColors.muted}`}>
+            Conservative = Lower risk, Aggressive = Higher risk
+          </div>
         </div>
 
         <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+          <label 
+            htmlFor="rebalance-threshold-input"
+            className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}
+          >
             Rebalance Threshold
           </label>
           <div className="relative">
             <input
+              id="rebalance-threshold-input"
               type="number"
               value={rebalanceThreshold}
-              onChange={(e) => setRebalanceThreshold(Number(e.target.value))}
-              className={`w-full pl-3 pr-8 py-2 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500`}
+              onChange={(e) => {
+                const validation = validateInput('rebalanceThreshold', e.target.value);
+                setValidationErrors(prev => prev.filter(error => error.field !== 'rebalanceThreshold').concat(validation.errors));
+                setRebalanceThreshold(safeParseFloat(e.target.value, 1, 50));
+              }}
+              onBlur={(e) => {
+                const validation = validateInput('rebalanceThreshold', e.target.value);
+                setValidationErrors(prev => prev.filter(error => error.field !== 'rebalanceThreshold').concat(validation.errors));
+              }}
+              aria-describedby={getValidationError('rebalanceThreshold') ? 'rebalance-threshold-error' : 'rebalance-threshold-help'}
+              aria-invalid={!!getValidationError('rebalanceThreshold')}
+              className={`w-full pl-3 pr-8 py-2 border ${getValidationError('rebalanceThreshold') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
               min="1"
-              max="20"
+              max="50"
             />
-            <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>%</span>
+            <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`} aria-hidden="true">%</span>
           </div>
+          <div id="rebalance-threshold-help" className={`mt-1 text-xs ${theme.textColors.muted}`}>
+            Trigger rebalancing when assets drift by this %
+          </div>
+          {getValidationError('rebalanceThreshold') && (
+            <div id="rebalance-threshold-error" role="alert" className="mt-1 text-sm text-red-500">
+              {getValidationError('rebalanceThreshold')}
+            </div>
+          )}
         </div>
       </div>
 

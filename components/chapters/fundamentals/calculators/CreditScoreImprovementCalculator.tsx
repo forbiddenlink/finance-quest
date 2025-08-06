@@ -17,6 +17,16 @@ import {
   Award
 } from 'lucide-react';
 
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+interface InputValidation {
+  isValid: boolean;
+  errors: ValidationError[];
+}
+
 interface CreditFactor {
   id: string;
   name: string;
@@ -122,6 +132,69 @@ export default function CreditScoreImprovementCalculator() {
       timeframe: '6-24 months'
     }
   ]);
+  
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
+
+  // Validation function
+  const safeParseFloat = (value: string | number, min: number = 0, max: number = 100): number => {
+    const parsed = typeof value === 'string' ? parseFloat(value) : value;
+    if (isNaN(parsed)) return min;
+    return Math.max(min, Math.min(max, parsed));
+  };
+
+  const validateInputs = (): InputValidation => {
+    const errors: ValidationError[] = [];
+    
+    creditFactors.forEach(factor => {
+      // Validate current value
+      if (factor.currentValue < 0 || factor.currentValue > 100) {
+        errors.push({ 
+          field: `${factor.id}-current`, 
+          message: `${factor.name} current value must be between 0-100` 
+        });
+      }
+      
+      // Validate target value
+      if (factor.targetValue < 0 || factor.targetValue > 100) {
+        errors.push({ 
+          field: `${factor.id}-target`, 
+          message: `${factor.name} target value must be between 0-100` 
+        });
+      }
+
+      // Special validation for credit age (years)
+      if (factor.id === 'credit_age') {
+        if (factor.currentValue > 50) {
+          errors.push({ 
+            field: `${factor.id}-current`, 
+            message: 'Credit age cannot exceed 50 years' 
+          });
+        }
+        if (factor.targetValue > 50) {
+          errors.push({ 
+            field: `${factor.id}-target`, 
+            message: 'Target credit age cannot exceed 50 years' 
+          });
+        }
+      }
+
+      // Special validation for new credit inquiries
+      if (factor.id === 'new_credit') {
+        if (factor.currentValue > 20) {
+          errors.push({ 
+            field: `${factor.id}-current`, 
+            message: 'Hard inquiries cannot exceed 20' 
+          });
+        }
+      }
+    });
+
+    setValidationErrors(errors);
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  };
 
   useEffect(() => {
     recordCalculatorUsage('credit-score-improvement-calculator');
@@ -131,6 +204,8 @@ export default function CreditScoreImprovementCalculator() {
     setCreditFactors(prev => prev.map(factor =>
       factor.id === id ? { ...factor, [field]: value } : factor
     ));
+    // Validate after update
+    setTimeout(() => validateInputs(), 100);
   };
 
   const calculateEstimatedScore = (factors: CreditFactor[]) => {
@@ -354,43 +429,73 @@ export default function CreditScoreImprovementCalculator() {
                 {/* Current vs Target Values */}
                 <div className="space-y-4">
                   <div>
-                    <label className={`text-sm font-medium ${theme.textColors.secondary} mb-2 block`}>
+                    <label htmlFor={`${factor.id}-current`} className={`text-sm font-medium ${theme.textColors.secondary} mb-2 block`}>
                       Current Value
                     </label>
                     <div className="relative">
                       <input
+                        id={`${factor.id}-current`}
                         type="number"
                         value={factor.currentValue}
-                        onChange={(e) => updateFactor(factor.id, 'currentValue', Number(e.target.value))}
-                        className={`w-full px-3 py-2 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500`}
+                        onChange={(e) => updateFactor(factor.id, 'currentValue', safeParseFloat(e.target.value, 0, factor.id === 'credit_age' ? 50 : factor.id === 'new_credit' ? 20 : 100))}
+                        className={`w-full px-3 py-2 border ${
+                          validationErrors.some(e => e.field === `${factor.id}-current`) 
+                            ? 'border-red-500' 
+                            : theme.borderColors.primary
+                        } rounded-lg focus:ring-2 focus:ring-blue-500`}
                         min="0"
-                        max={factor.id === 'credit_age' ? '50' : '100'}
+                        max={factor.id === 'credit_age' ? '50' : factor.id === 'new_credit' ? '20' : '100'}
                         step={factor.id === 'credit_age' ? '0.5' : '1'}
+                        aria-describedby={`${factor.id}-current-help ${validationErrors.some(e => e.field === `${factor.id}-current`) ? `${factor.id}-current-error` : ''}`}
+                        aria-invalid={validationErrors.some(e => e.field === `${factor.id}-current`)}
                       />
                       <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-sm`}>
                         {factor.id === 'credit_age' ? 'years' : factor.id === 'new_credit' ? 'inquiries' : '%'}
                       </span>
                     </div>
+                    <div id={`${factor.id}-current-help`} className="sr-only">
+                      Enter your current {factor.name.toLowerCase()}
+                    </div>
+                    {validationErrors.some(e => e.field === `${factor.id}-current`) && (
+                      <div id={`${factor.id}-current-error`} role="alert" className="text-red-500 text-sm mt-1">
+                        {validationErrors.find(e => e.field === `${factor.id}-current`)?.message}
+                      </div>
+                    )}
                   </div>
 
                   <div>
-                    <label className={`text-sm font-medium ${theme.textColors.secondary} mb-2 block`}>
+                    <label htmlFor={`${factor.id}-target`} className={`text-sm font-medium ${theme.textColors.secondary} mb-2 block`}>
                       Target Value
                     </label>
                     <div className="relative">
                       <input
+                        id={`${factor.id}-target`}
                         type="number"
                         value={factor.targetValue}
-                        onChange={(e) => updateFactor(factor.id, 'targetValue', Number(e.target.value))}
-                        className={`w-full px-3 py-2 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-green-500`}
+                        onChange={(e) => updateFactor(factor.id, 'targetValue', safeParseFloat(e.target.value, 0, factor.id === 'credit_age' ? 50 : factor.id === 'new_credit' ? 20 : 100))}
+                        className={`w-full px-3 py-2 border ${
+                          validationErrors.some(e => e.field === `${factor.id}-target`) 
+                            ? 'border-red-500' 
+                            : theme.borderColors.primary
+                        } rounded-lg focus:ring-2 focus:ring-green-500`}
                         min="0"
-                        max={factor.id === 'credit_age' ? '50' : '100'}
+                        max={factor.id === 'credit_age' ? '50' : factor.id === 'new_credit' ? '20' : '100'}
                         step={factor.id === 'credit_age' ? '0.5' : '1'}
+                        aria-describedby={`${factor.id}-target-help ${validationErrors.some(e => e.field === `${factor.id}-target`) ? `${factor.id}-target-error` : ''}`}
+                        aria-invalid={validationErrors.some(e => e.field === `${factor.id}-target`)}
                       />
                       <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-sm`}>
                         {factor.id === 'credit_age' ? 'years' : factor.id === 'new_credit' ? 'inquiries' : '%'}
                       </span>
                     </div>
+                    <div id={`${factor.id}-target-help`} className="sr-only">
+                      Enter your target {factor.name.toLowerCase()}
+                    </div>
+                    {validationErrors.some(e => e.field === `${factor.id}-target`) && (
+                      <div id={`${factor.id}-target-error`} role="alert" className="text-red-500 text-sm mt-1">
+                        {validationErrors.find(e => e.field === `${factor.id}-target`)?.message}
+                      </div>
+                    )}
                   </div>
                 </div>
 

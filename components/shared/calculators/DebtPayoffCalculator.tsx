@@ -26,6 +26,16 @@ import {
   Clock
 } from 'lucide-react';
 
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+interface InputValidation {
+  isValid: boolean;
+  errors: ValidationError[];
+}
+
 interface Debt {
   id: string;
   name: string;
@@ -62,6 +72,7 @@ export default function DebtPayoffCalculator() {
   const [extraPayment, setExtraPayment] = useState('200');
   const [strategy, setStrategy] = useState<'avalanche' | 'snowball'>('avalanche');
   const [projectionData, setProjectionData] = useState<PayoffProjection[]>([]);
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
   const [results, setResults] = useState({
     totalBalance: 0,
     payoffMonths: 0,
@@ -69,6 +80,54 @@ export default function DebtPayoffCalculator() {
     totalPayment: 0,
     minimumPaymentTotal: 0
   });
+
+  // Validation function
+  const safeParseFloat = (value: string | number, min: number = 0, max: number = 1000000): number => {
+    const parsed = typeof value === 'string' ? parseFloat(value) : value;
+    if (isNaN(parsed)) return 0;
+    return Math.max(min, Math.min(max, parsed));
+  };
+
+  const validateInputs = (): InputValidation => {
+    const errors: ValidationError[] = [];
+    
+    // Validate debts
+    debts.forEach((debt, index) => {
+      if (debt.balance <= 0) {
+        errors.push({ field: `debt-${debt.id}-balance`, message: `Debt ${index + 1}: Balance must be greater than $0` });
+      }
+      if (debt.minimumPayment <= 0) {
+        errors.push({ field: `debt-${debt.id}-minimum`, message: `Debt ${index + 1}: Minimum payment must be greater than $0` });
+      }
+      if (debt.minimumPayment > debt.balance) {
+        errors.push({ field: `debt-${debt.id}-minimum`, message: `Debt ${index + 1}: Minimum payment cannot exceed balance` });
+      }
+      if (debt.interestRate < 0 || debt.interestRate > 100) {
+        errors.push({ field: `debt-${debt.id}-rate`, message: `Debt ${index + 1}: Interest rate must be between 0-100%` });
+      }
+      if (!debt.name.trim()) {
+        errors.push({ field: `debt-${debt.id}-name`, message: `Debt ${index + 1}: Name is required` });
+      }
+    });
+
+    // Validate extra payment
+    const extraPaymentNum = parseFloat(extraPayment);
+    if (isNaN(extraPaymentNum) || extraPaymentNum < 0) {
+      errors.push({ field: 'extra-payment', message: 'Extra payment must be $0 or greater' });
+    }
+
+    setValidationErrors(errors);
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  };
+
+  // Handle input changes with validation
+  const handleExtraPaymentChange = (value: string) => {
+    setExtraPayment(value);
+    validateInputs();
+  };
 
   // Calculate payoff strategy
   const calculatePayoffStrategy = useCallback(() => {

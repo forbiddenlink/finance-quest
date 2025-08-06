@@ -6,6 +6,16 @@ import { theme } from '@/lib/theme';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { motion } from 'framer-motion';
 
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+interface InputValidation {
+  isValid: boolean;
+  errors: ValidationError[];
+}
+
 interface SkillInvestment {
   id: string;
   skillName: string;
@@ -28,6 +38,49 @@ interface ROIAnalysis {
 
 export default function SkillInvestmentROICalculator() {
   const [currentSalary, setCurrentSalary] = useState<string>('75000');
+  const [validation, setValidation] = useState<InputValidation>({
+    isValid: true,
+    errors: []
+  });
+
+  // Enhanced input validation function
+  const safeParseFloat = (value: string, min?: number, max?: number): number => {
+    const parsed = parseFloat(value);
+    if (isNaN(parsed)) return 0;
+    if (min !== undefined && parsed < min) return 0;
+    if (max !== undefined && parsed > max) return max;
+    return parsed;
+  };
+
+  const validateCurrentSalary = (value: string): ValidationError[] => {
+    const errors: ValidationError[] = [];
+    const numValue = parseFloat(value);
+    
+    if (isNaN(numValue) || numValue < 20000) {
+      errors.push({
+        field: 'currentSalary',
+        message: 'Please enter a valid salary (minimum: $20,000)'
+      });
+    }
+    
+    if (numValue > 1000000) {
+      errors.push({
+        field: 'currentSalary',
+        message: 'Please enter a reasonable salary (maximum: $1,000,000)'
+      });
+    }
+    
+    return errors;
+  };
+
+  const handleCurrentSalaryChange = (value: string) => {
+    setCurrentSalary(value);
+    const errors = validateCurrentSalary(value);
+    setValidation({
+      isValid: errors.length === 0,
+      errors
+    });
+  };
   const [skillInvestments, setSkillInvestments] = useState<SkillInvestment[]>([
     {
       id: '1',
@@ -78,7 +131,7 @@ export default function SkillInvestmentROICalculator() {
   }, [recordCalculatorUsage]);
 
   const calculateROI = (skill: SkillInvestment): ROIAnalysis => {
-    const salary = parseFloat(currentSalary) || 0;
+    const salary = safeParseFloat(currentSalary, 20000, 1000000);
     const yearlyIncrease = salary * (skill.salaryIncrease / 100);
     const lifetimeBenefit = yearlyIncrease * skill.yearsOfBenefit;
     
@@ -193,19 +246,49 @@ export default function SkillInvestmentROICalculator() {
               Current Financial Situation
             </h3>
             <div>
-              <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              <label 
+                htmlFor="currentSalary"
+                className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}
+              >
                 Current Annual Salary
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                <span 
+                  aria-hidden="true"
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                >
+                  $
+                </span>
                 <input
+                  id="currentSalary"
                   type="number"
+                  min="20000"
+                  max="1000000"
+                  step="1000"
                   value={currentSalary}
-                  onChange={(e) => setCurrentSalary(e.target.value)}
-                  className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  onChange={(e) => handleCurrentSalaryChange(e.target.value)}
+                  aria-describedby="currentSalary-help currentSalary-error"
+                  aria-invalid={!validation.isValid}
+                  className={`pl-8 w-full px-4 py-3 bg-slate-800/50 border rounded-md text-white placeholder-gray-400 focus:ring-2 focus:border-transparent transition-all ${
+                    !validation.isValid 
+                      ? 'border-red-500 focus:ring-red-500' 
+                      : 'border-slate-600 focus:ring-yellow-500'
+                  }`}
                   placeholder="75000"
                 />
               </div>
+              <p id="currentSalary-help" className="text-xs text-slate-500 mt-1">
+                Your current annual salary used to calculate skill investment returns
+              </p>
+              {!validation.isValid && validation.errors.some(error => error.field === 'currentSalary') && (
+                <div 
+                  id="currentSalary-error" 
+                  role="alert" 
+                  className="text-xs text-red-400 mt-1"
+                >
+                  {validation.errors.find(error => error.field === 'currentSalary')?.message}
+                </div>
+              )}
             </div>
           </div>
 
@@ -215,71 +298,158 @@ export default function SkillInvestmentROICalculator() {
               Add Custom Skill Investment
             </h3>
             <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="Skill/Certification Name"
-                value={newSkill.skillName}
-                onChange={(e) => setNewSkill({...newSkill, skillName: e.target.value})}
-                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-              />
+              <div>
+                <label 
+                  htmlFor="skillName"
+                  className="block text-sm font-medium text-white mb-2"
+                >
+                  Skill/Certification Name
+                </label>
+                <input
+                  id="skillName"
+                  type="text"
+                  placeholder="e.g., AWS Certification, Project Management"
+                  value={newSkill.skillName}
+                  onChange={(e) => setNewSkill({...newSkill, skillName: e.target.value})}
+                  aria-describedby="skillName-help"
+                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                />
+                <p id="skillName-help" className="text-xs text-slate-500 mt-1">
+                  Name of the skill, certification, or education you want to invest in
+                </p>
+              </div>
               
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={`block text-xs ${theme.textColors.secondary} mb-1`}>Cost ($)</label>
+                  <label 
+                    htmlFor="investmentCost"
+                    className={`block text-xs ${theme.textColors.secondary} mb-1`}
+                  >
+                    Cost ($)
+                  </label>
                   <input
+                    id="investmentCost"
                     type="number"
+                    min="0"
+                    max="500000"
+                    step="100"
                     value={newSkill.investmentCost}
-                    onChange={(e) => setNewSkill({...newSkill, investmentCost: parseFloat(e.target.value) || 0})}
+                    onChange={(e) => setNewSkill({...newSkill, investmentCost: safeParseFloat(e.target.value, 0, 500000)})}
+                    aria-describedby="investmentCost-help"
                     className="w-full px-3 py-2 bg-slate-800/50 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                   />
+                  <p id="investmentCost-help" className="text-xs text-slate-500 mt-1">
+                    Total monetary cost
+                  </p>
                 </div>
                 <div>
-                  <label className={`block text-xs ${theme.textColors.secondary} mb-1`}>Time (hours)</label>
+                  <label 
+                    htmlFor="timeInvested"
+                    className={`block text-xs ${theme.textColors.secondary} mb-1`}
+                  >
+                    Time (hours)
+                  </label>
                   <input
+                    id="timeInvested"
                     type="number"
+                    min="0"
+                    max="5000"
+                    step="10"
                     value={newSkill.timeInvested}
-                    onChange={(e) => setNewSkill({...newSkill, timeInvested: parseFloat(e.target.value) || 0})}
+                    onChange={(e) => setNewSkill({...newSkill, timeInvested: safeParseFloat(e.target.value, 0, 5000)})}
+                    aria-describedby="timeInvested-help"
                     className="w-full px-3 py-2 bg-slate-800/50 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                   />
+                  <p id="timeInvested-help" className="text-xs text-slate-500 mt-1">
+                    Hours to complete
+                  </p>
                 </div>
                 <div>
-                  <label className={`block text-xs ${theme.textColors.secondary} mb-1`}>Salary Increase (%)</label>
+                  <label 
+                    htmlFor="salaryIncrease"
+                    className={`block text-xs ${theme.textColors.secondary} mb-1`}
+                  >
+                    Salary Increase (%)
+                  </label>
                   <input
+                    id="salaryIncrease"
                     type="number"
+                    min="0"
+                    max="100"
+                    step="1"
                     value={newSkill.salaryIncrease}
-                    onChange={(e) => setNewSkill({...newSkill, salaryIncrease: parseFloat(e.target.value) || 0})}
+                    onChange={(e) => setNewSkill({...newSkill, salaryIncrease: safeParseFloat(e.target.value, 0, 100)})}
+                    aria-describedby="salaryIncrease-help"
                     className="w-full px-3 py-2 bg-slate-800/50 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                   />
+                  <p id="salaryIncrease-help" className="text-xs text-slate-500 mt-1">
+                    Expected raise %
+                  </p>
                 </div>
                 <div>
-                  <label className={`block text-xs ${theme.textColors.secondary} mb-1`}>Years of Benefit</label>
+                  <label 
+                    htmlFor="yearsOfBenefit"
+                    className={`block text-xs ${theme.textColors.secondary} mb-1`}
+                  >
+                    Years of Benefit
+                  </label>
                   <input
+                    id="yearsOfBenefit"
                     type="number"
+                    min="1"
+                    max="40"
+                    step="1"
                     value={newSkill.yearsOfBenefit}
-                    onChange={(e) => setNewSkill({...newSkill, yearsOfBenefit: parseFloat(e.target.value) || 5})}
+                    onChange={(e) => setNewSkill({...newSkill, yearsOfBenefit: safeParseFloat(e.target.value, 1, 40)})}
+                    aria-describedby="yearsOfBenefit-help"
                     className="w-full px-3 py-2 bg-slate-800/50 border border-slate-600 rounded text-white text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                   />
+                  <p id="yearsOfBenefit-help" className="text-xs text-slate-500 mt-1">
+                    Career impact duration
+                  </p>
                 </div>
               </div>
               
-              <select
-                value={newSkill.category}
-                onChange={(e) => setNewSkill({...newSkill, category: e.target.value as SkillInvestment['category']})}
-                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-              >
-                <option value="technical">Technical Skills</option>
-                <option value="leadership">Leadership</option>
-                <option value="business">Business Skills</option>
-                <option value="certification">Certification</option>
-                <option value="degree">Degree/Education</option>
-              </select>
+              <div>
+                <label 
+                  htmlFor="skillCategory"
+                  className="block text-sm font-medium text-white mb-2"
+                >
+                  Skill Category
+                </label>
+                <select
+                  id="skillCategory"
+                  value={newSkill.category}
+                  onChange={(e) => setNewSkill({...newSkill, category: e.target.value as SkillInvestment['category']})}
+                  aria-describedby="skillCategory-help"
+                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                >
+                  <option value="technical">Technical Skills</option>
+                  <option value="leadership">Leadership</option>
+                  <option value="business">Business Skills</option>
+                  <option value="certification">Certification</option>
+                  <option value="degree">Degree/Education</option>
+                </select>
+                <p id="skillCategory-help" className="text-xs text-slate-500 mt-1">
+                  Choose the category that best describes this skill investment
+                </p>
+              </div>
               
               <button
                 onClick={addSkill}
-                className={`w-full px-4 py-3 ${theme.buttons.accent} rounded-md transition-colors`}
+                disabled={!newSkill.skillName || !newSkill.investmentCost}
+                aria-describedby="addSkill-help"
+                className={`w-full px-4 py-3 rounded-md transition-colors ${
+                  !newSkill.skillName || !newSkill.investmentCost
+                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                    : `${theme.buttons.accent} hover:bg-yellow-600`
+                }`}
               >
                 Add Skill Investment
               </button>
+              <p id="addSkill-help" className="text-xs text-slate-500 mt-1">
+                Add this skill to your investment analysis portfolio
+              </p>
             </div>
           </div>
         </motion.div>
@@ -352,7 +522,8 @@ export default function SkillInvestmentROICalculator() {
                         <div className={`text-sm ${theme.textColors.secondary}`}>ROI</div>
                         <button
                           onClick={() => removeSkill(skill.id)}
-                          className="mt-2 text-xs text-red-400 hover:text-red-300"
+                          aria-label={`Remove ${skill.skillName} from analysis`}
+                          className="mt-2 text-xs text-red-400 hover:text-red-300 focus:ring-2 focus:ring-red-500 focus:outline-none rounded px-2 py-1"
                         >
                           Remove
                         </button>

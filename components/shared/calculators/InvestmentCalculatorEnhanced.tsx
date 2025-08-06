@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import {
@@ -24,10 +24,48 @@ type CalculatorTab = 'overview' | 'risk-assessment' | 'asset-allocation' | 'comp
 export default function InvestmentCalculatorEnhanced() {
   const [activeTab, setActiveTab] = useState<CalculatorTab>('overview');
   const { recordCalculatorUsage } = useProgressStore();
+  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const contentId = `tab-content-${activeTab}`;
 
   React.useEffect(() => {
     recordCalculatorUsage('investment-calculator-enhanced');
   }, [recordCalculatorUsage]);
+
+  // Enhanced keyboard navigation for tabs
+  const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, tabId: CalculatorTab, index: number) => {
+    const tabIds = tabs.map(tab => tab.id);
+    
+    switch (event.key) {
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        event.preventDefault();
+        const prevIndex = index > 0 ? index - 1 : tabIds.length - 1;
+        const prevTab = tabIds[prevIndex];
+        tabRefs.current[prevTab]?.focus();
+        setActiveTab(prevTab);
+        break;
+      case 'ArrowRight':
+      case 'ArrowDown':
+        event.preventDefault();
+        const nextIndex = index < tabIds.length - 1 ? index + 1 : 0;
+        const nextTab = tabIds[nextIndex];
+        tabRefs.current[nextTab]?.focus();
+        setActiveTab(nextTab);
+        break;
+      case 'Home':
+        event.preventDefault();
+        const firstTab = tabIds[0];
+        tabRefs.current[firstTab]?.focus();
+        setActiveTab(firstTab);
+        break;
+      case 'End':
+        event.preventDefault();
+        const lastTab = tabIds[tabIds.length - 1];
+        tabRefs.current[lastTab]?.focus();
+        setActiveTab(lastTab);
+        break;
+    }
+  };
 
   const tabs = [
     {
@@ -240,9 +278,10 @@ export default function InvestmentCalculatorEnhanced() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
+              aria-label={`Switch to ${tab.label}: ${tab.description}`}
               className={`flex items-center gap-2 px-4 py-2 ${theme.buttons.primary} rounded-lg transition-all hover-lift`}
             >
-              <tab.icon className="w-4 h-4" />
+              <tab.icon className="w-4 h-4" aria-hidden="true" />
               {tab.label}
             </button>
           ))}
@@ -268,20 +307,31 @@ export default function InvestmentCalculatorEnhanced() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      {/* Tab Navigation */}
+      {/* Tab Navigation with ARIA support */}
       <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-2`}>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
-          {tabs.map((tab) => (
+        <div 
+          role="tablist" 
+          aria-label="Investment calculator tools"
+          className="grid grid-cols-2 md:grid-cols-4 gap-1"
+        >
+          {tabs.map((tab, index) => (
             <button
               key={tab.id}
+              ref={(el) => (tabRefs.current[tab.id] = el)}
+              role="tab"
+              tabIndex={activeTab === tab.id ? 0 : -1}
+              aria-selected={activeTab === tab.id}
+              aria-controls={contentId}
+              id={`tab-${tab.id}`}
               onClick={() => setActiveTab(tab.id)}
+              onKeyDown={(e) => handleTabKeyDown(e, tab.id, index)}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                 activeTab === tab.id
                   ? `${theme.buttons.primary} shadow-lg`
                   : `${theme.textColors.secondary} hover:${theme.backgrounds.card} hover:${theme.textColors.primary}`
               }`}
             >
-              <tab.icon className="w-5 h-5" />
+              <tab.icon className="w-5 h-5" aria-hidden="true" />
               <div className="text-left hidden sm:block">
                 <div className="font-medium">{tab.label}</div>
                 <div className="text-xs opacity-75">{tab.description}</div>
@@ -294,8 +344,13 @@ export default function InvestmentCalculatorEnhanced() {
         </div>
       </div>
 
-      {/* Content */}
-      <div className="min-h-[600px]">
+      {/* Content with ARIA support */}
+      <div 
+        role="tabpanel"
+        id={contentId}
+        aria-labelledby={`tab-${activeTab}`}
+        className="min-h-[600px]"
+      >
         {renderContent()}
       </div>
     </div>

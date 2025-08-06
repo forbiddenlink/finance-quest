@@ -46,6 +46,22 @@ const LongevityRiskAnalyzer: React.FC = () => {
   const [inflationRate] = useState<number>(3);
   const [portfolioReturn, setPortfolioReturn] = useState<number>(7);
 
+  // Validation state
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+
+  // Validation function
+  const validateInput = (field: string, value: number, min: number, max: number) => {
+    const newErrors = { ...validationErrors };
+    
+    if (value < min || value > max) {
+      newErrors[field] = `Value must be between ${min} and ${max}`;
+    } else {
+      delete newErrors[field];
+    }
+    
+    setValidationErrors(newErrors);
+  };
+
   const [factors, setFactors] = useState<LifeExpectancyFactors>({
     baseAge: 80,
     gender: 'male',
@@ -246,255 +262,375 @@ const LongevityRiskAnalyzer: React.FC = () => {
 
   return (
     <div className={`p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-      <div className="flex items-center gap-3 mb-6">
-        <Heart className="w-6 h-6 text-red-400" />
-        <h2 className={`text-xl font-bold ${theme.textColors.primary}`}>
+      <header className="flex items-center gap-3 mb-6">
+        <Heart className="w-6 h-6 text-red-400" aria-hidden="true" />
+        <h1 className={`text-xl font-bold ${theme.textColors.primary}`}>
           Longevity Risk Analyzer
-        </h2>
-      </div>
+        </h1>
+      </header>
 
       {/* Life Expectancy Factors */}
-      <div className="mb-8">
-        <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-          <Activity className="w-5 h-5" />
+      <section className="mb-8">
+        <h2 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+          <Activity className="w-5 h-5" aria-hidden="true" />
           Life Expectancy Factors
-        </h3>
+        </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <form className="grid grid-cols-1 md:grid-cols-3 gap-6" role="group" aria-labelledby="longevity-factors">
           <div className="space-y-4">
             <div>
-              <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              <label htmlFor="base-age-input" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                 Base Age
               </label>
               <input
+                id="base-age-input"
                 type="number"
                 value={factors.baseAge}
                 onChange={(e) => setFactors({...factors, baseAge: Number(e.target.value)})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
                 min="65"
                 max="100"
+                aria-describedby="base-age-help"
               />
+              <span id="base-age-help" className="sr-only">
+                Enter your anticipated base life expectancy age between 65 and 100 years
+              </span>
             </div>
 
             <div>
-              <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              <label htmlFor="gender-select" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                 Gender
               </label>
               <select
+                id="gender-select"
                 value={factors.gender}
                 onChange={(e) => setFactors({...factors, gender: e.target.value as 'male' | 'female'})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                aria-describedby="gender-help"
               >
                 <option value="male">Male</option>
                 <option value="female">Female</option>
               </select>
+              <span id="gender-help" className="sr-only">
+                Gender affects life expectancy calculations based on statistical data
+              </span>
             </div>
 
             <div>
-              <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              <label htmlFor="smoking-select" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                 Smoking Status
               </label>
               <select
+                id="smoking-select"
                 value={factors.smoker.toString()}
                 onChange={(e) => setFactors({...factors, smoker: e.target.value === 'true'})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                aria-describedby="smoking-help"
               >
                 <option value="false">Non-smoker</option>
                 <option value="true">Smoker</option>
               </select>
+              <span id="smoking-help" className="sr-only">
+                Smoking significantly impacts life expectancy calculations
+              </span>
             </div>
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              <label htmlFor="exercise-select" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                 Exercise Level
               </label>
               <select
+                id="exercise-select"
                 value={factors.exercise}
                 onChange={(e) => setFactors({...factors, exercise: e.target.value as LifeExpectancyFactors['exercise']})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                aria-describedby="exercise-help"
               >
                 <option value="none">None</option>
                 <option value="light">Light (1-2 days/week)</option>
                 <option value="moderate">Moderate (3-4 days/week)</option>
                 <option value="heavy">Heavy (5+ days/week)</option>
               </select>
+              <span id="exercise-help" className="sr-only">
+                Regular exercise can significantly improve life expectancy
+              </span>
             </div>
 
             <div>
-              <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              <label htmlFor="diet-select" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                 Diet Quality
               </label>
               <select
+                id="diet-select"
                 value={factors.diet}
                 onChange={(e) => setFactors({...factors, diet: e.target.value as LifeExpectancyFactors['diet']})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                aria-describedby="diet-help"
               >
                 <option value="poor">Poor</option>
                 <option value="average">Average</option>
                 <option value="good">Good</option>
                 <option value="excellent">Excellent</option>
               </select>
+              <span id="diet-help" className="sr-only">
+                Healthy diet contributes to increased longevity
+              </span>
             </div>
 
             <div>
-              <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              <label htmlFor="family-history-select" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                 Family History
               </label>
               <select
+                id="family-history-select"
                 value={factors.familyHistory}
                 onChange={(e) => setFactors({...factors, familyHistory: e.target.value as LifeExpectancyFactors['familyHistory']})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                aria-describedby="family-history-help"
               >
                 <option value="poor">Poor longevity</option>
                 <option value="average">Average longevity</option>
                 <option value="good">Good longevity</option>
                 <option value="excellent">Excellent longevity</option>
               </select>
+              <span id="family-history-help" className="sr-only">
+                Family history of longevity is a strong genetic predictor
+              </span>
             </div>
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              <label htmlFor="stress-select" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                 Stress Level
               </label>
               <select
+                id="stress-select"
                 value={factors.stress}
                 onChange={(e) => setFactors({...factors, stress: e.target.value as LifeExpectancyFactors['stress']})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                aria-describedby="stress-help"
               >
                 <option value="high">High stress</option>
                 <option value="moderate">Moderate stress</option>
                 <option value="low">Low stress</option>
               </select>
+              <span id="stress-help" className="sr-only">
+                Chronic stress can negatively impact longevity
+              </span>
             </div>
 
             <div>
-              <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              <label htmlFor="income-select" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                 Income Level
               </label>
               <select
+                id="income-select"
                 value={factors.income}
                 onChange={(e) => setFactors({...factors, income: e.target.value as LifeExpectancyFactors['income']})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                aria-describedby="income-help"
               >
                 <option value="low">Low income</option>
                 <option value="middle">Middle income</option>
                 <option value="high">High income</option>
               </select>
+              <span id="income-help" className="sr-only">
+                Higher income is associated with better healthcare access and longevity
+              </span>
             </div>
 
             <div>
-              <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              <label htmlFor="education-select" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                 Education Level
               </label>
               <select
+                id="education-select"
                 value={factors.education}
                 onChange={(e) => setFactors({...factors, education: e.target.value as LifeExpectancyFactors['education']})}
                 className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                aria-describedby="education-help"
               >
                 <option value="high-school">High School</option>
                 <option value="college">College</option>
                 <option value="graduate">Graduate Degree</option>
               </select>
+              <span id="education-help" className="sr-only">
+                Higher education levels correlate with increased life expectancy
+              </span>
             </div>
           </div>
-        </div>
+        </form>
 
-        <div className={`mt-6 p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg text-center`}>
+        <div className={`mt-6 p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg text-center`} role="status" aria-live="polite">
           <div className={`text-2xl font-bold ${theme.status.info.text} mb-1`}>
             {adjustedLifeExpectancy} years
           </div>
           <div className={`text-sm ${theme.textColors.secondary}`}>Adjusted Life Expectancy</div>
         </div>
-      </div>
+      </section>
 
       {/* Financial Parameters */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
-            Current Age
-          </label>
-          <input
-            type="number"
-            value={currentAge}
-            onChange={(e) => setCurrentAge(Number(e.target.value))}
-            className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
-          />
-        </div>
-
-        <div>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
-            Retirement Age
-          </label>
-          <input
-            type="number"
-            value={retirementAge}
-            onChange={(e) => setRetirementAge(Number(e.target.value))}
-            className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
-          />
-        </div>
-
-        <div>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
-            Current Portfolio
-          </label>
-          <div className="relative">
-            <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+      <section className="mb-8">
+        <h2 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+          <DollarSign className="w-5 h-5" aria-hidden="true" />
+          Financial Parameters
+        </h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <label htmlFor="current-age-longevity" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Current Age
+            </label>
             <input
+              id="current-age-longevity"
               type="number"
-              value={currentPortfolio}
-              onChange={(e) => setCurrentPortfolio(Number(e.target.value))}
-              className={`pl-10 w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+              value={currentAge}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                setCurrentAge(value);
+                validateInput('currentAge', value, 18, 80);
+              }}
+              onBlur={() => {
+                validateInput('currentAge', currentAge, 18, 80);
+              }}
+              className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+              min="18"
+              max="80"
+              aria-describedby="current-age-longevity-help"
+              aria-invalid={validationErrors.currentAge ? 'true' : 'false'}
             />
+            {validationErrors.currentAge && (
+              <div className="text-red-500 text-xs mt-1" role="alert">
+                {validationErrors.currentAge}
+              </div>
+            )}
+            <span id="current-age-longevity-help" className="sr-only">
+              Enter your current age for longevity analysis calculations
+            </span>
+          </div>
+
+          <div>
+            <label htmlFor="retirement-age-longevity" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Retirement Age
+            </label>
+            <input
+              id="retirement-age-longevity"
+              type="number"
+              value={retirementAge}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                setRetirementAge(value);
+                validateInput('retirementAge', value, 50, 80);
+              }}
+              onBlur={() => {
+                validateInput('retirementAge', retirementAge, 50, 80);
+              }}
+              className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+              min="50"
+              max="80"
+              aria-describedby="retirement-age-longevity-help"
+              aria-invalid={validationErrors.retirementAge ? 'true' : 'false'}
+            />
+            {validationErrors.retirementAge && (
+              <div className="text-red-500 text-xs mt-1" role="alert">
+                {validationErrors.retirementAge}
+              </div>
+            )}
+            <span id="retirement-age-longevity-help" className="sr-only">
+              Enter your planned retirement age
+            </span>
+          </div>
+
+          <div>
+            <label htmlFor="current-portfolio-longevity" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Current Portfolio
+            </label>
+            <div className="relative">
+              <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" aria-hidden="true" />
+              <input
+                id="current-portfolio-longevity"
+                type="number"
+                value={currentPortfolio}
+                onChange={(e) => setCurrentPortfolio(Number(e.target.value))}
+                className={`pl-10 w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                min="0"
+                step="10000"
+                aria-describedby="current-portfolio-longevity-help"
+              />
+              <span id="current-portfolio-longevity-help" className="sr-only">
+                Enter your current retirement portfolio value in dollars
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="annual-savings-longevity" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Annual Savings
+            </label>
+            <div className="relative">
+              <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" aria-hidden="true" />
+              <input
+                id="annual-savings-longevity"
+                type="number"
+                value={annualSavings}
+                onChange={(e) => setAnnualSavings(Number(e.target.value))}
+                className={`pl-10 w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                min="0"
+                step="5000"
+                aria-describedby="annual-savings-longevity-help"
+              />
+              <span id="annual-savings-longevity-help" className="sr-only">
+                Enter your annual retirement savings contribution
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="desired-income-longevity" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Desired Retirement Income
+            </label>
+            <div className="relative">
+              <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" aria-hidden="true" />
+              <input
+                id="desired-income-longevity"
+                type="number"
+                value={desiredIncome}
+                onChange={(e) => setDesiredIncome(Number(e.target.value))}
+                className={`pl-10 w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+                min="0"
+                step="5000"
+                aria-describedby="desired-income-longevity-help"
+              />
+              <span id="desired-income-longevity-help" className="sr-only">
+                Enter your desired annual retirement income in today's dollars
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="portfolio-return-longevity" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+              Expected Portfolio Return (%)
+            </label>
+            <input
+              id="portfolio-return-longevity"
+              type="number"
+              value={portfolioReturn}
+              onChange={(e) => setPortfolioReturn(Number(e.target.value))}
+              className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
+              min="0"
+              max="15"
+              step="0.1"
+              aria-describedby="portfolio-return-longevity-help"
+            />
+            <span id="portfolio-return-longevity-help" className="sr-only">
+              Enter expected annual portfolio return as a percentage
+            </span>
           </div>
         </div>
-
-        <div>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
-            Annual Savings
-          </label>
-          <div className="relative">
-            <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input
-              type="number"
-              value={annualSavings}
-              onChange={(e) => setAnnualSavings(Number(e.target.value))}
-              className={`pl-10 w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
-            Desired Retirement Income
-          </label>
-          <div className="relative">
-            <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input
-              type="number"
-              value={desiredIncome}
-              onChange={(e) => setDesiredIncome(Number(e.target.value))}
-              className={`pl-10 w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
-            Expected Portfolio Return (%)
-          </label>
-          <input
-            type="number"
-            value={portfolioReturn}
-            onChange={(e) => setPortfolioReturn(Number(e.target.value))}
-            step="0.1"
-            className={`w-full px-3 py-2 border rounded-lg ${theme.backgrounds.card} ${theme.textColors.primary}`}
-          />
-        </div>
-      </div>
+      </section>
 
       {/* Longevity Risk Chart */}
       {chartData.length > 0 && (
@@ -639,6 +775,18 @@ const LongevityRiskAnalyzer: React.FC = () => {
             </ul>
           </div>
         </div>
+      </div>
+
+      {/* Screen Reader Status Updates */}
+      <div 
+        role="status" 
+        aria-live="polite" 
+        className="sr-only"
+      >
+        {projections.length > 0 ? 
+          `Longevity analysis complete. Analysis covers ${projections.length} projection years.` :
+          'Enter your retirement details to begin longevity analysis.'
+        }
       </div>
     </div>
   );

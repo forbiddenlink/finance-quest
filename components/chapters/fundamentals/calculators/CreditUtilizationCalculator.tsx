@@ -18,6 +18,16 @@ import {
   Trash2
 } from 'lucide-react';
 
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+interface InputValidation {
+  isValid: boolean;
+  errors: ValidationError[];
+}
+
 interface CreditCard {
   id: string;
   name: string;
@@ -63,10 +73,62 @@ export default function CreditUtilizationCalculator() {
 
   const [availableExtraPayment, setAvailableExtraPayment] = useState(300);
   const [selectedStrategy, setSelectedStrategy] = useState('balanced');
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
+
+  // Validation function
+  const safeParseFloat = (value: string | number, min: number = 0, max: number = 1000000): number => {
+    const parsed = typeof value === 'string' ? parseFloat(value) : value;
+    if (isNaN(parsed)) return 0;
+    return Math.max(min, Math.min(max, parsed));
+  };
+
+  const validateInputs = (): InputValidation => {
+    const errors: ValidationError[] = [];
+    
+    // Validate cards
+    cards.forEach((card, index) => {
+      if (card.creditLimit <= 0) {
+        errors.push({ field: `card-${card.id}-limit`, message: `Credit limit must be greater than $0` });
+      }
+      if (card.currentBalance < 0) {
+        errors.push({ field: `card-${card.id}-balance`, message: `Balance cannot be negative` });
+      }
+      if (card.currentBalance > card.creditLimit) {
+        errors.push({ field: `card-${card.id}-balance`, message: `Balance cannot exceed credit limit` });
+      }
+      if (card.statementDate < 1 || card.statementDate > 31) {
+        errors.push({ field: `card-${card.id}-statement`, message: `Statement date must be between 1-31` });
+      }
+    });
+
+    // Validate extra payment
+    if (availableExtraPayment < 0) {
+      errors.push({ field: 'extra-payment', message: 'Extra payment cannot be negative' });
+    }
+
+    setValidationErrors(errors);
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  };
+
+  // Handle input changes with validation
+  const handleExtraPaymentChange = (value: string) => {
+    const parsed = safeParseFloat(value, 0, 100000);
+    setAvailableExtraPayment(parsed);
+    validateInputs();
+  };
 
   useEffect(() => {
     recordCalculatorUsage('credit-utilization-calculator');
   }, [recordCalculatorUsage]);
+
+  // Validate inputs when cards or extra payment changes
+  useEffect(() => {
+    const validation = validateInputs();
+    setValidationErrors(validation.errors);
+  }, [cards, availableExtraPayment]);
 
   const addCard = () => {
     const newCard: CreditCard = {
@@ -85,6 +147,8 @@ export default function CreditUtilizationCalculator() {
     setCards(prev => prev.map(card =>
       card.id === id ? { ...card, [field]: value } : card
     ));
+    // Validate after update
+    setTimeout(() => validateInputs(), 100);
   };
 
   const removeCard = (id: string) => {
@@ -265,19 +329,35 @@ export default function CreditUtilizationCalculator() {
               Available Extra Payment
             </h4>
             <div className="relative">
+              <label htmlFor="extra-payment-input" className="sr-only">
+                Available Extra Payment Amount
+              </label>
               <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
               <input
+                id="extra-payment-input"
                 type="number"
                 value={availableExtraPayment}
-                onChange={(e) => setAvailableExtraPayment(Number(e.target.value))}
-                className={`w-full pl-8 pr-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500`}
+                onChange={(e) => handleExtraPaymentChange(e.target.value)}
+                className={`w-full pl-8 pr-4 py-3 border ${
+                  validationErrors.some(e => e.field === 'extra-payment') 
+                    ? 'border-red-500' 
+                    : theme.borderColors.primary
+                } rounded-lg focus:ring-2 focus:ring-blue-500`}
                 min="0"
+                max="100000"
                 step="50"
+                aria-describedby="extra-payment-help extra-payment-error"
+                aria-invalid={validationErrors.some(e => e.field === 'extra-payment')}
               />
             </div>
-            <p className={`text-sm ${theme.textColors.secondary} mt-2`}>
+            <p id="extra-payment-help" className={`text-sm ${theme.textColors.secondary} mt-2`}>
               Additional payment beyond minimums to optimize utilization
             </p>
+            {validationErrors.some(e => e.field === 'extra-payment') && (
+              <div id="extra-payment-error" role="alert" className="text-red-500 text-sm mt-1">
+                {validationErrors.find(e => e.field === 'extra-payment')?.message}
+              </div>
+            )}
           </div>
 
           <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg p-4`}>
@@ -285,16 +365,21 @@ export default function CreditUtilizationCalculator() {
               <Calculator className="w-5 h-5" />
               Payment Strategy
             </h4>
+            <label htmlFor="strategy-select" className="sr-only">
+              Payment Strategy Selection
+            </label>
             <select
+              id="strategy-select"
               value={selectedStrategy}
               onChange={(e) => setSelectedStrategy(e.target.value)}
               className={`w-full px-4 py-3 border ${theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500`}
+              aria-describedby="strategy-help"
             >
               <option value="balanced">Balanced Utilization</option>
               <option value="highest_utilization">Highest Utilization First</option>
               <option value="highest_balance">Highest Balance First</option>
             </select>
-            <p className={`text-sm ${theme.textColors.secondary} mt-2`}>
+            <p id="strategy-help" className={`text-sm ${theme.textColors.secondary} mt-2`}>
               Choose how to distribute your extra payments
             </p>
           </div>
@@ -311,6 +396,7 @@ export default function CreditUtilizationCalculator() {
           <button
             onClick={addCard}
             className={`${theme.status.info.bg.replace('/20', '')} ${theme.textColors.primary} px-4 py-2 rounded-lg hover:opacity-80 transition-opacity text-sm flex items-center gap-2`}
+            aria-label="Add new credit card to analyze"
           >
             <Plus className="w-4 h-4" />
             Add Card
@@ -328,46 +414,90 @@ export default function CreditUtilizationCalculator() {
                   {/* Card Details */}
                   <div>
                     <div className="flex items-center justify-between mb-3">
+                      <label htmlFor={`card-name-${card.id}`} className="sr-only">
+                        Credit Card Name
+                      </label>
                       <input
+                        id={`card-name-${card.id}`}
                         type="text"
                         value={card.name}
                         onChange={(e) => updateCard(card.id, 'name', e.target.value)}
                         className={`font-medium ${theme.textColors.primary} bg-transparent border-none focus:outline-none focus:ring-1 focus:ring-blue-500 rounded px-2 py-1`}
+                        aria-describedby={`card-name-help-${card.id}`}
                       />
                       <button
                         onClick={() => removeCard(card.id)}
                         className={`${theme.status.error.text} hover:${theme.status.error.bg} p-1 rounded transition-colors`}
+                        aria-label={`Remove ${card.name} credit card`}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
+                    <div id={`card-name-help-${card.id}`} className="sr-only">
+                      Enter a name for this credit card to identify it
+                    </div>
                     
                     <div className="space-y-2">
                       <div>
-                        <label className={`text-xs ${theme.textColors.secondary}`}>Credit Limit</label>
+                        <label htmlFor={`credit-limit-${card.id}`} className={`text-xs ${theme.textColors.secondary}`}>
+                          Credit Limit
+                        </label>
                         <div className="relative">
                           <span className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>$</span>
                           <input
+                            id={`credit-limit-${card.id}`}
                             type="number"
                             value={card.creditLimit}
-                            onChange={(e) => updateCard(card.id, 'creditLimit', Number(e.target.value))}
-                            className={`w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
-                            min="0"
+                            onChange={(e) => updateCard(card.id, 'creditLimit', safeParseFloat(e.target.value, 1, 100000))}
+                            className={`w-full pl-6 pr-2 py-1 border ${
+                              validationErrors.some(e => e.field === `card-${card.id}-limit`) 
+                                ? 'border-red-500' 
+                                : theme.borderColors.primary
+                            } rounded text-sm`}
+                            min="1"
+                            max="100000"
                             step="100"
+                            aria-describedby={`credit-limit-help-${card.id} ${validationErrors.some(e => e.field === `card-${card.id}-limit`) ? `credit-limit-error-${card.id}` : ''}`}
+                            aria-invalid={validationErrors.some(e => e.field === `card-${card.id}-limit`)}
                           />
                         </div>
+                        <div id={`credit-limit-help-${card.id}`} className="sr-only">
+                          Enter the total credit limit for this card
+                        </div>
+                        {validationErrors.some(e => e.field === `card-${card.id}-limit`) && (
+                          <div id={`credit-limit-error-${card.id}`} role="alert" className="text-red-500 text-xs mt-1">
+                            {validationErrors.find(e => e.field === `card-${card.id}-limit`)?.message}
+                          </div>
+                        )}
                       </div>
                       
                       <div>
-                        <label className={`text-xs ${theme.textColors.secondary}`}>Statement Date</label>
+                        <label htmlFor={`statement-date-${card.id}`} className={`text-xs ${theme.textColors.secondary}`}>
+                          Statement Date
+                        </label>
                         <input
+                          id={`statement-date-${card.id}`}
                           type="number"
                           value={card.statementDate}
-                          onChange={(e) => updateCard(card.id, 'statementDate', Number(e.target.value))}
-                          className={`w-full px-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
+                          onChange={(e) => updateCard(card.id, 'statementDate', safeParseFloat(e.target.value, 1, 31))}
+                          className={`w-full px-2 py-1 border ${
+                            validationErrors.some(e => e.field === `card-${card.id}-statement`) 
+                              ? 'border-red-500' 
+                              : theme.borderColors.primary
+                          } rounded text-sm`}
                           min="1"
                           max="31"
+                          aria-describedby={`statement-date-help-${card.id} ${validationErrors.some(e => e.field === `card-${card.id}-statement`) ? `statement-date-error-${card.id}` : ''}`}
+                          aria-invalid={validationErrors.some(e => e.field === `card-${card.id}-statement`)}
                         />
+                        <div id={`statement-date-help-${card.id}`} className="sr-only">
+                          Enter the day of the month when your statement closes (1-31)
+                        </div>
+                        {validationErrors.some(e => e.field === `card-${card.id}-statement`) && (
+                          <div id={`statement-date-error-${card.id}`} role="alert" className="text-red-500 text-xs mt-1">
+                            {validationErrors.find(e => e.field === `card-${card.id}-statement`)?.message}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -377,18 +507,36 @@ export default function CreditUtilizationCalculator() {
                     <h5 className={`font-medium ${theme.textColors.primary} mb-3`}>Current Status</h5>
                     <div className="space-y-2">
                       <div>
-                        <label className={`text-xs ${theme.textColors.secondary}`}>Balance</label>
+                        <label htmlFor={`current-balance-${card.id}`} className={`text-xs ${theme.textColors.secondary}`}>
+                          Balance
+                        </label>
                         <div className="relative">
                           <span className={`absolute left-2 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs`}>$</span>
                           <input
+                            id={`current-balance-${card.id}`}
                             type="number"
                             value={card.currentBalance}
-                            onChange={(e) => updateCard(card.id, 'currentBalance', Number(e.target.value))}
-                            className={`w-full pl-6 pr-2 py-1 border ${theme.borderColors.primary} rounded text-sm`}
+                            onChange={(e) => updateCard(card.id, 'currentBalance', safeParseFloat(e.target.value, 0, card.creditLimit))}
+                            className={`w-full pl-6 pr-2 py-1 border ${
+                              validationErrors.some(e => e.field === `card-${card.id}-balance`) 
+                                ? 'border-red-500' 
+                                : theme.borderColors.primary
+                            } rounded text-sm`}
                             min="0"
+                            max={card.creditLimit}
                             step="10"
+                            aria-describedby={`current-balance-help-${card.id} ${validationErrors.some(e => e.field === `card-${card.id}-balance`) ? `current-balance-error-${card.id}` : ''}`}
+                            aria-invalid={validationErrors.some(e => e.field === `card-${card.id}-balance`)}
                           />
                         </div>
+                        <div id={`current-balance-help-${card.id}`} className="sr-only">
+                          Enter the current balance on this credit card
+                        </div>
+                        {validationErrors.some(e => e.field === `card-${card.id}-balance`) && (
+                          <div id={`current-balance-error-${card.id}`} role="alert" className="text-red-500 text-xs mt-1">
+                            {validationErrors.find(e => e.field === `card-${card.id}-balance`)?.message}
+                          </div>
+                        )}
                       </div>
                       
                       <div className={`p-2 ${currentUtil <= 10 ? theme.status.success.bg : currentUtil <= 30 ? theme.status.warning.bg : theme.status.error.bg} rounded text-center`}>
