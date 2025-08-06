@@ -324,7 +324,7 @@ export default function AssetAllocationOptimizer() {
                 setValidationErrors(prev => prev.filter(error => error.field !== 'portfolioValue').concat(validation.errors));
               }}
               aria-describedby={getValidationError('portfolioValue') ? 'portfolio-value-error' : 'portfolio-value-help'}
-              aria-invalid={getValidationError('portfolioValue') ? "true" : "false"}
+              aria-invalid={getValidationError('portfolioValue') ? 'true' : 'false'}
               className={`w-full pl-8 pr-4 py-2 border ${getValidationError('portfolioValue') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
               min="1"
               max="10000000"
@@ -362,7 +362,7 @@ export default function AssetAllocationOptimizer() {
               setValidationErrors(prev => prev.filter(error => error.field !== 'age').concat(validation.errors));
             }}
             aria-describedby={getValidationError('age') ? 'age-error' : 'age-help'}
-            aria-invalid={getValidationError('age') ? "true" : "false"}
+            aria-invalid={getValidationError('age') ? 'true' : 'false'}
             className={`w-full px-3 py-2 border ${getValidationError('age') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
             min="18"
             max="100"
@@ -422,7 +422,7 @@ export default function AssetAllocationOptimizer() {
                 setValidationErrors(prev => prev.filter(error => error.field !== 'rebalanceThreshold').concat(validation.errors));
               }}
               aria-describedby={getValidationError('rebalanceThreshold') ? 'rebalance-threshold-error' : 'rebalance-threshold-help'}
-              aria-invalid={getValidationError('rebalanceThreshold') ? "true" : "false"}
+              aria-invalid={getValidationError('rebalanceThreshold') ? 'true' : 'false'}
               className={`w-full pl-3 pr-8 py-2 border ${getValidationError('rebalanceThreshold') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
               min="1"
               max="50"
@@ -534,7 +534,7 @@ export default function AssetAllocationOptimizer() {
                       >
                         <div 
                           className={`h-2 rounded-full dynamic-width ${getAssetColorClass(asset.id, 'bg')}`}
-                          style={{ "--dynamic-width": `${targetWeight}%` } as React.CSSProperties}
+                          style={{ "--dynamic-width": `${targetWeight}%` } as React.CSSProperties} // eslint-disable-line react/forbid-dom-props
                         ></div>
                       </div>
                       {Math.abs(difference) >= rebalanceThreshold && (

@@ -67,8 +67,14 @@ export const metadata: Metadata = {
     google: "google-site-verification",
   },
   icons: {
-    icon: '/favicon.svg',
-    apple: '/favicon.svg',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' }
+    ],
+    apple: [
+      { url: '/favicon.svg', sizes: '180x180', type: 'image/svg+xml' }
+    ],
+    shortcut: '/favicon.ico'
   },
   other: {
     'mobile-web-app-capable': 'yes',
@@ -89,14 +95,14 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* Apple touch icons */}
+        {/* Apple touch icon for legacy validation tools */}
         <link rel="apple-touch-icon" href="/favicon.svg" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-        {/* Theme and viewport */}
-        <meta name="theme-color" content="#0f172a" />
-        <meta name="color-scheme" content="dark" />
+        {/* Theme and viewport - Progressive enhancement for supported browsers */}
+        {/* Note: theme-color not supported in Firefox/Opera but provides enhanced UX in Chrome/Safari */}
+        <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+        <meta name="color-scheme" content="dark light" />
 
         {/* PWA support */}
         <link rel="manifest" href="/manifest.json" />
