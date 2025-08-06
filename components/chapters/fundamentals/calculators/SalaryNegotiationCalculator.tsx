@@ -135,7 +135,7 @@ export default function SalaryNegotiationCalculator() {
                                     : `${theme.borderColors.primary} focus:ring-emerald-500`
                             }`}
                             aria-describedby="currentSalary-help currentSalary-error"
-                            {...(validationErrors.some(e => e.field === 'currentSalary') ? { "aria-invalid": "true" } : {})}
+                            aria-invalid={validationErrors.some(e => e.field === 'currentSalary') ? 'true' : 'false'}
                             min="20000"
                             step="1000"
                         />
@@ -168,7 +168,7 @@ export default function SalaryNegotiationCalculator() {
                                     : `${theme.borderColors.primary} focus:ring-emerald-500`
                             }`}
                             aria-describedby="targetSalary-help targetSalary-error"
-                            {...(validationErrors.some(e => e.field === 'targetSalary') ? { "aria-invalid": "true" } : {})}
+                            aria-invalid={validationErrors.some(e => e.field === 'targetSalary') ? 'true' : 'false'}
                             min="20000"
                             step="1000"
                         />
@@ -199,7 +199,7 @@ export default function SalaryNegotiationCalculator() {
                                 : `${theme.borderColors.primary} focus:ring-emerald-500`
                         }`}
                         aria-describedby="yearsOfService-help yearsOfService-error"
-                        {...(validationErrors.some(e => e.field === 'yearsOfService') ? { "aria-invalid": "true" } : {})}
+                        aria-invalid={validationErrors.some(e => e.field === 'yearsOfService') ? 'true' : 'false'}
                         min="0"
                         max="50"
                         step="0.5"

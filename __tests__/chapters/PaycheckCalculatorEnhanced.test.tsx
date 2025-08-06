@@ -236,10 +236,10 @@ describe('PaycheckCalculator', () => {
     // Look for specific analysis content with flexible matching
     const taxAnalysis = screen.queryByText(/Tax Efficiency Analysis/i) || 
                        screen.queryByText(/tax efficiency/i) ||
-                       screen.queryByText(/tax/i);
+                       screen.queryAllByText(/tax/i)[0]; // Use queryAllByText to handle multiple matches
     const retirementAnalysis = screen.queryByText(/Retirement Savings Analysis/i) ||
                               screen.queryByText(/retirement/i) ||
-                              screen.queryByText(/401.*k/i);
+                              screen.queryAllByText(/401.*k/i)[0]; // Use queryAllByText to handle multiple matches
     
     expect(taxAnalysis || retirementAnalysis).toBeTruthy();
   });

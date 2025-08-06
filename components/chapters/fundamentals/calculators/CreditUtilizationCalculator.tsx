@@ -117,7 +117,6 @@ export default function CreditUtilizationCalculator() {
   const handleExtraPaymentChange = (value: string) => {
     const parsed = safeParseFloat(value, 0, 100000);
     setAvailableExtraPayment(parsed);
-    validateInputs();
   };
 
   useEffect(() => {
@@ -126,9 +125,34 @@ export default function CreditUtilizationCalculator() {
 
   // Validate inputs when cards or extra payment changes
   useEffect(() => {
-    const validation = validateInputs();
-    setValidationErrors(validation.errors);
-  }, [cards, availableExtraPayment, validateInputs]);
+    const errors: ValidationError[] = [];
+    
+    // Validate cards
+    cards.forEach((card) => {
+      // Since safeParseFloat ensures credit limit is at least 1, we only check for invalid stored values
+      // This prevents validation errors on auto-corrected inputs
+      if (card.creditLimit < 1) {
+        errors.push({ field: `card-${card.id}-limit`, message: `Credit limit must be greater than $0` });
+      }
+      if (card.currentBalance < 0) {
+        errors.push({ field: `card-${card.id}-balance`, message: `Balance cannot be negative` });
+      }
+      if (card.currentBalance > card.creditLimit) {
+        errors.push({ field: `card-${card.id}-balance`, message: `Balance cannot exceed credit limit` });
+      }
+      // Since safeParseFloat ensures statement date is between 1-31, we only check for invalid stored values
+      if (card.statementDate < 1 || card.statementDate > 31) {
+        errors.push({ field: `card-${card.id}-statement`, message: `Statement date must be between 1-31` });
+      }
+    });
+
+    // Validate extra payment
+    if (availableExtraPayment < 0) {
+      errors.push({ field: 'extra-payment', message: 'Extra payment cannot be negative' });
+    }
+
+    setValidationErrors(errors);
+  }, [cards, availableExtraPayment]);
 
   const addCard = () => {
     const newCard: CreditCard = {
@@ -147,8 +171,6 @@ export default function CreditUtilizationCalculator() {
     setCards(prev => prev.map(card =>
       card.id === id ? { ...card, [field]: value } : card
     ));
-    // Validate after update
-    setTimeout(() => validateInputs(), 100);
   };
 
   const removeCard = (id: string) => {
@@ -347,7 +369,7 @@ export default function CreditUtilizationCalculator() {
                 max="100000"
                 step="50"
                 aria-describedby="extra-payment-help extra-payment-error"
-                {...(validationErrors.some(e => e.field === 'extra-payment') ? { 'aria-invalid': 'true' } : {})}
+                aria-invalid={validationErrors.some(e => e.field === 'extra-payment') ? 'true' : 'false'}
               />
             </div>
             <p id="extra-payment-help" className={`text-sm ${theme.textColors.secondary} mt-2`}>
@@ -458,7 +480,7 @@ export default function CreditUtilizationCalculator() {
                             max="100000"
                             step="100"
                             aria-describedby={`credit-limit-help-${card.id} ${validationErrors.some(e => e.field === `card-${card.id}-limit`) ? `credit-limit-error-${card.id}` : ''}`}
-                            {...(validationErrors.some(e => e.field === `card-${card.id}-limit`) ? { 'aria-invalid': 'true' } : {})}
+                            aria-invalid={validationErrors.some(e => e.field === `card-${card.id}-limit`) ? 'true' : 'false'}
                           />
                         </div>
                         <div id={`credit-limit-help-${card.id}`} className="sr-only">
@@ -488,7 +510,7 @@ export default function CreditUtilizationCalculator() {
                           min="1"
                           max="31"
                           aria-describedby={`statement-date-help-${card.id} ${validationErrors.some(e => e.field === `card-${card.id}-statement`) ? `statement-date-error-${card.id}` : ''}`}
-                          {...(validationErrors.some(e => e.field === `card-${card.id}-statement`) ? { 'aria-invalid': 'true' } : {})}
+                          aria-invalid={validationErrors.some(e => e.field === `card-${card.id}-statement`) ? 'true' : 'false'}
                         />
                         <div id={`statement-date-help-${card.id}`} className="sr-only">
                           Enter the day of the month when your statement closes (1-31)
@@ -526,7 +548,7 @@ export default function CreditUtilizationCalculator() {
                             max={card.creditLimit}
                             step="10"
                             aria-describedby={`current-balance-help-${card.id} ${validationErrors.some(e => e.field === `card-${card.id}-balance`) ? `current-balance-error-${card.id}` : ''}`}
-                            {...(validationErrors.some(e => e.field === `card-${card.id}-balance`) ? { 'aria-invalid': 'true' } : {})}
+                            aria-invalid={validationErrors.some(e => e.field === `card-${card.id}-balance`) ? 'true' : 'false'}
                           />
                         </div>
                         <div id={`current-balance-help-${card.id}`} className="sr-only">
