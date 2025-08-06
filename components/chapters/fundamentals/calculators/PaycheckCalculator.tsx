@@ -405,7 +405,7 @@ export default function PaycheckCalculator() {
                     min="0"
                     max="100000"
                     step="100"
-                    aria-invalid={!!errors.grossPay}
+                    aria-invalid={errors.grossPay ? "true" : "false"}
                     aria-describedby={errors.grossPay ? "gross-pay-error" : undefined}
                   />
                   {errors.grossPay && (
@@ -495,7 +495,7 @@ export default function PaycheckCalculator() {
                     min="0"
                     max="2000"
                     step="25"
-                    aria-invalid={!!errors.healthInsurance}
+                    aria-invalid={errors.healthInsurance ? "true" : "false"}
                     aria-describedby={errors.healthInsurance ? "health-insurance-error" : "health-insurance-help"}
                   />
                   {errors.healthInsurance && (
@@ -539,7 +539,7 @@ export default function PaycheckCalculator() {
                     placeholder="5"
                     min="0"
                     max="50"
-                    aria-invalid={!!errors.retirement401k}
+                    aria-invalid={errors.retirement401k ? "true" : "false"}
                     aria-describedby={errors.retirement401k ? "retirement-401k-error" : "retirement-401k-help"}
                   />
                   <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>%</span>
