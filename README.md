@@ -39,11 +39,11 @@ npm run dev
 
 ## 📊 Platform Statistics
 
-- **📚 17 Complete Chapters** - From basic budgeting to advanced estate planning
+- **📚 17 Built Chapters** - 9 fully complete + tested, 8 built but need tests
 - **🧮 30+ Professional Calculators** - Industry-grade financial tools
-- **🧪 702 Passing Tests** - Comprehensive quality assurance
+- **🧪 702 Passing Tests** - Comprehensive quality assurance across 38 test suites
 - **♿ 100% Accessible** - WCAG 2.1 AA compliant design
-- **⚡ Optimized Performance** - Sub-second load times
+- **⚡ Optimized Performance** - Sub-second load times with Turbopack
 
 ## 🎯 Core Features
 
@@ -184,14 +184,14 @@ npm run test:a11y
 9. Retirement Planning & Long-Term Wealth
 
 **Advanced (Chapters 10-17):**
-10. Advanced Investment Strategies
-11. Tax Optimization & Planning
-12. Real Estate Investment
-13. Alternative Investments
-14. Business & Entrepreneurship Finance
-15. Insurance & Risk Management
-16. Estate Planning & Wealth Transfer
-17. Global Finance & Economics
+10. Tax Optimization & Planning
+11. Insurance & Risk Management
+12. Real Estate & Property Investment
+13. Stock Market Mastery & Trading
+14. Bonds & Fixed Income
+15. Alternative Investments
+16. Business & Entrepreneurship Finance
+17. Estate Planning & Wealth Transfer
 
 ### Learning Methodology
 

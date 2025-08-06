@@ -50,7 +50,7 @@ Each chapter includes:
 
 ## 🧮 **Professional Calculator Suite**
 
-### **13+ Production-Ready Calculators**
+### **30+ Production-Ready Calculators**
 1. **💰 Compound Interest Calculator**
    - Future value projections with multiple compounding frequencies
    - Monthly contribution tracking and growth visualization
