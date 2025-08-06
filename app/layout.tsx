@@ -89,6 +89,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
+        {/* Apple touch icons */}
+        <link rel="apple-touch-icon" href="/favicon.svg" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
         {/* Theme and viewport */}
         <meta name="theme-color" content="#0f172a" />
         <meta name="color-scheme" content="dark" />
@@ -113,13 +118,7 @@ export default function RootLayout({
                 <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 opacity-90" />
 
                 {/* Subtle grid pattern */}
-                <div
-                  className="absolute inset-0 opacity-[0.02]"
-                  style={{
-                    backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-                    backgroundSize: '24px 24px'
-                  }}
-                />
+                <div className="absolute inset-0 opacity-[0.02] bg-grid-pattern" />
 
                 {/* Ambient glow effects */}
                 <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />

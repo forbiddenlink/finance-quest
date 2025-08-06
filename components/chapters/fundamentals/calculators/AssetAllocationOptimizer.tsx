@@ -102,12 +102,25 @@ export default function AssetAllocationOptimizer() {
     };
   };
 
-  const clearValidationError = (field: string) => {
-    setValidationErrors(prev => prev.filter(error => error.field !== field));
-  };
+  // const clearValidationError = (field: string) => {
+  //   setValidationErrors(prev => prev.filter(error => error.field !== field));
+  // };
 
   const getValidationError = (field: string): string | undefined => {
     return validationErrors.find(error => error.field === field)?.message;
+  };
+
+  // Helper function to get CSS class for asset colors
+  const getAssetColorClass = (assetId: string, type: 'bg' | 'accent'): string => {
+    const colorMap: Record<string, string> = {
+      'us_stocks': 'stocks',
+      'intl_stocks': 'stocks', 
+      'bonds': 'bonds',
+      'reits': 'reits',
+      'commodities': 'commodities'
+    };
+    const colorType = colorMap[assetId] || 'stocks';
+    return `asset-${colorType}-${type}`;
   };
   
   const [assetClasses, setAssetClasses] = useState<AssetClass[]>([
@@ -311,7 +324,7 @@ export default function AssetAllocationOptimizer() {
                 setValidationErrors(prev => prev.filter(error => error.field !== 'portfolioValue').concat(validation.errors));
               }}
               aria-describedby={getValidationError('portfolioValue') ? 'portfolio-value-error' : 'portfolio-value-help'}
-              aria-invalid={!!getValidationError('portfolioValue')}
+              aria-invalid={getValidationError('portfolioValue') ? "true" : "false"}
               className={`w-full pl-8 pr-4 py-2 border ${getValidationError('portfolioValue') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
               min="1"
               max="10000000"
@@ -349,7 +362,7 @@ export default function AssetAllocationOptimizer() {
               setValidationErrors(prev => prev.filter(error => error.field !== 'age').concat(validation.errors));
             }}
             aria-describedby={getValidationError('age') ? 'age-error' : 'age-help'}
-            aria-invalid={!!getValidationError('age')}
+            aria-invalid={getValidationError('age') ? "true" : "false"}
             className={`w-full px-3 py-2 border ${getValidationError('age') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
             min="18"
             max="100"
@@ -409,7 +422,7 @@ export default function AssetAllocationOptimizer() {
                 setValidationErrors(prev => prev.filter(error => error.field !== 'rebalanceThreshold').concat(validation.errors));
               }}
               aria-describedby={getValidationError('rebalanceThreshold') ? 'rebalance-threshold-error' : 'rebalance-threshold-help'}
-              aria-invalid={!!getValidationError('rebalanceThreshold')}
+              aria-invalid={getValidationError('rebalanceThreshold') ? "true" : "false"}
               className={`w-full pl-3 pr-8 py-2 border ${getValidationError('rebalanceThreshold') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
               min="1"
               max="50"
@@ -452,8 +465,8 @@ export default function AssetAllocationOptimizer() {
                     max="100"
                     value={asset.percentage}
                     onChange={(e) => updateAssetPercentage(asset.id, Number(e.target.value))}
-                    className="flex-1"
-                    style={{ accentColor: asset.color }}
+                    className={`flex-1 ${getAssetColorClass(asset.id, 'accent')}`}
+                    aria-label={`${asset.name} allocation percentage slider`}
                   />
                   <input
                     type="number"
@@ -463,6 +476,7 @@ export default function AssetAllocationOptimizer() {
                     min="0"
                     max="100"
                     step="0.1"
+                    aria-label={`${asset.name} allocation percentage input`}
                   />
                 </div>
                 <p className={`text-xs ${theme.textColors.muted} mt-1`}>
@@ -519,11 +533,8 @@ export default function AssetAllocationOptimizer() {
                         className="h-2 bg-gray-200 rounded-full flex-1"
                       >
                         <div 
-                          className="h-2 rounded-full"
-                          style={{ 
-                            width: `${targetWeight}%`,
-                            backgroundColor: asset.color
-                          }}
+                          className={`h-2 rounded-full dynamic-width ${getAssetColorClass(asset.id, 'bg')}`}
+                          style={{ "--dynamic-width": `${targetWeight}%` } as React.CSSProperties}
                         ></div>
                       </div>
                       {Math.abs(difference) >= rebalanceThreshold && (

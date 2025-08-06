@@ -277,6 +277,7 @@ body {
 /* Glass Morphism */
 .glass-card {
   background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -455,6 +456,7 @@ body {
 /* Premium Card Styles */
 .premium-card {
   background: rgba(255, 255, 255, 0.95);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -530,4 +532,26 @@ body {
 
 .btn-hover-glow:hover::before {
   left: 100%;
+}
+
+/* Background grid pattern */
+.bg-grid-pattern {
+  background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Asset allocation colors */
+.asset-stocks-bg { background-color: #10B981; }
+.asset-bonds-bg { background-color: #3B82F6; }
+.asset-reits-bg { background-color: #F59E0B; }
+.asset-commodities-bg { background-color: #EF4444; }
+
+.asset-stocks-accent { accent-color: #10B981; }
+.asset-bonds-accent { accent-color: #3B82F6; }
+.asset-reits-accent { accent-color: #F59E0B; }
+.asset-commodities-accent { accent-color: #EF4444; }
+
+/* Dynamic width utility */
+.dynamic-width {
+  width: var(--dynamic-width, 0%);
 }

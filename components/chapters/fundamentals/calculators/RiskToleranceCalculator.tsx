@@ -56,7 +56,7 @@ interface RiskProfile {
 
 export default function RiskToleranceCalculator() {
   const { recordCalculatorUsage } = useProgressStore();
-  
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [showResults, setShowResults] = useState(false);
@@ -72,19 +72,19 @@ export default function RiskToleranceCalculator() {
   // Validation functions
   const validateDemographics = (): InputValidation => {
     const errors: ValidationError[] = [];
-    
+
     if (!ageRange) {
       errors.push({ field: 'ageRange', message: 'Please select your age range' });
     }
-    
+
     if (!investmentGoal) {
       errors.push({ field: 'investmentGoal', message: 'Please select your investment goal' });
     }
-    
+
     if (!timeHorizon) {
       errors.push({ field: 'timeHorizon', message: 'Please select your time horizon' });
     }
-    
+
     return {
       isValid: errors.length === 0,
       errors
@@ -105,22 +105,22 @@ export default function RiskToleranceCalculator() {
       question: 'If your investment portfolio lost 20% of its value in one month, what would you do?',
       description: 'This tests your emotional response to market volatility',
       answers: [
-        { 
+        {
           text: 'Sell everything immediately to prevent further losses',
           score: 1,
           explanation: 'Conservative response - prioritizes capital preservation'
         },
-        { 
+        {
           text: 'Sell some investments to reduce risk',
           score: 2,
           explanation: 'Moderate response - seeks balance between growth and safety'
         },
-        { 
+        {
           text: 'Hold steady and wait for recovery',
           score: 3,
           explanation: 'Moderate-aggressive response - understands market cycles'
         },
-        { 
+        {
           text: 'Buy more investments at lower prices',
           score: 4,
           explanation: 'Aggressive response - sees opportunity in market volatility'
@@ -132,22 +132,22 @@ export default function RiskToleranceCalculator() {
       question: 'How would you describe your investment experience?',
       description: 'Experience affects comfort with complex investment strategies',
       answers: [
-        { 
+        {
           text: 'No experience - completely new to investing',
           score: 1,
           explanation: 'Start with simple, diversified investments'
         },
-        { 
+        {
           text: 'Some experience with basic investments (savings, CDs)',
           score: 2,
           explanation: 'Ready for index funds and target-date funds'
         },
-        { 
+        {
           text: 'Moderate experience with stocks and bonds',
           score: 3,
           explanation: 'Can handle more complex asset allocation'
         },
-        { 
+        {
           text: 'Extensive experience with various investments',
           score: 4,
           explanation: 'Comfortable with advanced strategies and higher risk'
@@ -159,22 +159,22 @@ export default function RiskToleranceCalculator() {
       question: 'What is your primary financial priority for this money?',
       description: 'Your goal affects the appropriate risk level',
       answers: [
-        { 
+        {
           text: 'Preserve my money and avoid any losses',
           score: 1,
           explanation: 'Capital preservation - focus on bonds and CDs'
         },
-        { 
+        {
           text: 'Generate steady income with modest growth',
           score: 2,
           explanation: 'Income focus - dividend stocks and bonds'
         },
-        { 
+        {
           text: 'Balance growth with some income and stability',
           score: 3,
           explanation: 'Balanced approach - mix of stocks and bonds'
         },
-        { 
+        {
           text: 'Maximize long-term growth regardless of volatility',
           score: 4,
           explanation: 'Growth focus - primarily stocks and growth assets'
@@ -186,22 +186,22 @@ export default function RiskToleranceCalculator() {
       question: 'What is the maximum loss you could tolerate in one year?',
       description: 'This measures your practical risk tolerance',
       answers: [
-        { 
+        {
           text: 'I cannot accept any losses',
           score: 1,
           explanation: 'Very conservative - money market and CDs only'
         },
-        { 
+        {
           text: '5% loss maximum',
           score: 2,
           explanation: 'Conservative - mostly bonds with some stocks'
         },
-        { 
+        {
           text: '15% loss is acceptable',
           score: 3,
           explanation: 'Moderate - balanced stock/bond portfolio'
         },
-        { 
+        {
           text: '25%+ loss is acceptable for higher returns',
           score: 4,
           explanation: 'Aggressive - stock-heavy portfolio'
@@ -213,22 +213,22 @@ export default function RiskToleranceCalculator() {
       question: 'How do you typically react to market news and volatility?',
       description: 'Emotional stability affects investment success',
       answers: [
-        { 
+        {
           text: 'I get very anxious and check my accounts frequently',
           score: 1,
           explanation: 'Consider automatic investing to reduce emotional decisions'
         },
-        { 
+        {
           text: 'I worry but try not to make hasty decisions',
           score: 2,
           explanation: 'Moderate emotional control - good for balanced approach'
         },
-        { 
+        {
           text: 'I stay calm and focus on long-term goals',
           score: 3,
           explanation: 'Good emotional discipline for growth investing'
         },
-        { 
+        {
           text: 'I see volatility as opportunity to buy more',
           score: 4,
           explanation: 'Excellent mindset for aggressive growth strategies'
@@ -306,7 +306,7 @@ export default function RiskToleranceCalculator() {
   const calculateRiskScore = () => {
     const totalScore = Object.values(answers).reduce((sum, score) => sum + score, 0);
     const averageScore = totalScore / riskQuestions.length;
-    
+
     if (averageScore <= 2) return 'conservative';
     if (averageScore <= 3) return 'moderate';
     return 'aggressive';
@@ -314,7 +314,7 @@ export default function RiskToleranceCalculator() {
 
   const handleAnswer = (questionId: string, score: number) => {
     setAnswers(prev => ({ ...prev, [questionId]: score }));
-    
+
     if (currentQuestion < riskQuestions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
@@ -336,9 +336,9 @@ export default function RiskToleranceCalculator() {
       '51-60': { stockBoost: -10, bondReduce: -10 },
       '60+': { stockBoost: -20, bondReduce: -20 }
     };
-    
+
     const factor = ageFactors[ageRange as keyof typeof ageFactors] || { stockBoost: 0, bondReduce: 0 };
-    
+
     return {
       ...baseProfile.allocation,
       stocks: Math.max(20, Math.min(90, baseProfile.allocation.stocks + factor.stockBoost)),
@@ -350,7 +350,7 @@ export default function RiskToleranceCalculator() {
     const riskLevel = calculateRiskScore();
     const profile = riskProfiles[riskLevel];
     const adjustedAllocation = getAgeAdjustedAllocation(profile);
-    
+
     return (
       <div className={`max-w-6xl mx-auto ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg p-6`}>
         <div className="mb-6">
@@ -388,7 +388,7 @@ export default function RiskToleranceCalculator() {
               <PieChart className="w-5 h-5" />
               Recommended Asset Allocation
             </h3>
-            
+
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                 <span className={`font-medium ${theme.textColors.primary}`}>US Stocks</span>
@@ -397,7 +397,7 @@ export default function RiskToleranceCalculator() {
                   <p className={`text-xs ${theme.textColors.muted}`}>Growth potential</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                 <span className={`font-medium ${theme.textColors.primary}`}>Bonds</span>
                 <div className="text-right">
@@ -405,7 +405,7 @@ export default function RiskToleranceCalculator() {
                   <p className={`text-xs ${theme.textColors.muted}`}>Stability</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
                 <span className={`font-medium ${theme.textColors.primary}`}>International</span>
                 <div className="text-right">
@@ -413,7 +413,7 @@ export default function RiskToleranceCalculator() {
                   <p className={`text-xs ${theme.textColors.muted}`}>Diversification</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
                 <span className={`font-medium ${theme.textColors.primary}`}>REITs</span>
                 <div className="text-right">
@@ -429,20 +429,20 @@ export default function RiskToleranceCalculator() {
               <BarChart3 className="w-5 h-5" />
               Risk & Return Profile
             </h3>
-            
+
             <div className="space-y-4">
               <div className={`p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg`}>
                 <h4 className={`font-semibold ${theme.status.success.text} mb-2`}>Expected Return</h4>
                 <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{profile.expectedReturn}% annually</p>
                 <p className={`text-sm ${theme.textColors.secondary}`}>Historical 20-year average</p>
               </div>
-              
+
               <div className={`p-4 ${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg`}>
                 <h4 className={`font-semibold ${theme.status.warning.text} mb-2`}>Volatility Range</h4>
                 <p className={`text-lg font-bold ${theme.textColors.primary}`}>±{profile.volatility}%</p>
                 <p className={`text-sm ${theme.textColors.secondary}`}>Typical annual variation</p>
               </div>
-              
+
               <div className={`p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`}>
                 <h4 className={`font-semibold ${theme.status.info.text} mb-2`}>Time Horizon</h4>
                 <p className={`text-lg font-bold ${theme.textColors.primary}`}>{timeHorizon} years</p>
@@ -491,7 +491,7 @@ export default function RiskToleranceCalculator() {
             <Target className="w-5 h-5" />
             Specific Investment Recommendations
           </h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Simple 3-Fund Portfolio</h4>
@@ -501,7 +501,7 @@ export default function RiskToleranceCalculator() {
                 <li>• <strong>International Stock Index:</strong> {adjustedAllocation.international}%</li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Target-Date Fund Alternative</h4>
               <p className={`text-sm ${theme.textColors.secondary} mb-2`}>
@@ -577,7 +577,7 @@ export default function RiskToleranceCalculator() {
           </span>
         </div>
         <div className={`w-full bg-gray-200 rounded-full h-2`}>
-          <div 
+          <div
             className={`${theme.status.info.bg.replace('/20', '')} h-2 rounded-full transition-all duration-300`}
             style={{ width: `${progressPercent}%` }}
             aria-hidden="true"
@@ -592,10 +592,10 @@ export default function RiskToleranceCalculator() {
             <Calendar className="w-5 h-5" aria-hidden="true" />
             Quick Background Information
           </h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div>
-              <label 
+              <label
                 htmlFor="age-range-select"
                 className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}
               >
@@ -624,9 +624,9 @@ export default function RiskToleranceCalculator() {
                 </div>
               )}
             </div>
-            
+
             <div>
-              <label 
+              <label
                 htmlFor="investment-goal-select"
                 className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}
               >
@@ -654,9 +654,9 @@ export default function RiskToleranceCalculator() {
                 </div>
               )}
             </div>
-            
+
             <div>
-              <label 
+              <label
                 htmlFor="time-horizon-select"
                 className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}
               >
@@ -696,9 +696,9 @@ export default function RiskToleranceCalculator() {
           <p className={`text-sm ${theme.textColors.muted} mb-6`} id={`question-${question.id}-description`}>
             {question.description}
           </p>
-          
-          <div 
-            role="radiogroup" 
+
+          <div
+            role="radiogroup"
             aria-labelledby={`question-${question.id}-description`}
             className="space-y-3"
           >
@@ -727,7 +727,7 @@ export default function RiskToleranceCalculator() {
                     <p className={`font-medium ${theme.textColors.primary} mb-1`}>
                       {answer.text}
                     </p>
-                    <p 
+                    <p
                       id={`answer-${question.id}-${index}-explanation`}
                       className={`text-sm ${theme.textColors.muted}`}
                     >

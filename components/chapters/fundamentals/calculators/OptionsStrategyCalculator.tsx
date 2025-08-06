@@ -437,10 +437,11 @@ export default function OptionsStrategyCalculator() {
 
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="options-strategy" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Options Strategy
                 </label>
                 <select
+                  id="options-strategy"
                   value={selectedStrategy}
                   onChange={(e) => setSelectedStrategy(e.target.value)}
                   className={`w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
@@ -464,10 +465,11 @@ export default function OptionsStrategyCalculator() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="option-type" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Option Type
                   </label>
                   <select
+                    id="option-type"
                     value={optionType}
                     onChange={(e) => setOptionType(e.target.value as 'call' | 'put')}
                     className={`w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
@@ -478,10 +480,11 @@ export default function OptionsStrategyCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="position" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Position
                   </label>
                   <select
+                    id="position"
                     value={position}
                     onChange={(e) => setPosition(e.target.value as 'long' | 'short')}
                     className={`w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
@@ -493,10 +496,11 @@ export default function OptionsStrategyCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="contracts" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Number of Contracts
                 </label>
                 <input
+                  id="contracts"
                   type="number"
                   min="1"
                   value={contracts}
@@ -515,12 +519,13 @@ export default function OptionsStrategyCalculator() {
 
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="stock-price" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Current Stock Price
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="stock-price"
                     type="number"
                     step="0.01"
                     value={stockPrice}
@@ -532,12 +537,13 @@ export default function OptionsStrategyCalculator() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="strike-price" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Strike Price
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="strike-price"
                       type="number"
                       step="0.01"
                       value={strikePrice}

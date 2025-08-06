@@ -447,7 +447,7 @@ export default function CreditScoreImprovementCalculator() {
                         max={factor.id === 'credit_age' ? '50' : factor.id === 'new_credit' ? '20' : '100'}
                         step={factor.id === 'credit_age' ? '0.5' : '1'}
                         aria-describedby={`${factor.id}-current-help ${validationErrors.some(e => e.field === `${factor.id}-current`) ? `${factor.id}-current-error` : ''}`}
-                        aria-invalid={validationErrors.some(e => e.field === `${factor.id}-current`)}
+                        aria-invalid={validationErrors.some(e => e.field === `${factor.id}-current`) ? "true" : "false"}
                       />
                       <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-sm`}>
                         {factor.id === 'credit_age' ? 'years' : factor.id === 'new_credit' ? 'inquiries' : '%'}
@@ -482,7 +482,7 @@ export default function CreditScoreImprovementCalculator() {
                         max={factor.id === 'credit_age' ? '50' : factor.id === 'new_credit' ? '20' : '100'}
                         step={factor.id === 'credit_age' ? '0.5' : '1'}
                         aria-describedby={`${factor.id}-target-help ${validationErrors.some(e => e.field === `${factor.id}-target`) ? `${factor.id}-target-error` : ''}`}
-                        aria-invalid={validationErrors.some(e => e.field === `${factor.id}-target`)}
+                        aria-invalid={validationErrors.some(e => e.field === `${factor.id}-target`) ? "true" : "false"}
                       />
                       <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-sm`}>
                         {factor.id === 'credit_age' ? 'years' : factor.id === 'new_credit' ? 'inquiries' : '%'}

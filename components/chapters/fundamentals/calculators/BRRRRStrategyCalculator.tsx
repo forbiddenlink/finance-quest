@@ -292,12 +292,13 @@ export default function BRRRRStrategyCalculator() {
               
               <div className="space-y-4">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="purchase-price" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Purchase Price
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="purchase-price"
                       type="number"
                       value={purchasePrice}
                       onChange={(e) => setPurchasePrice(Number(e.target.value))}
@@ -307,12 +308,13 @@ export default function BRRRRStrategyCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="down-payment" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Down Payment
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="down-payment"
                       type="number"
                       value={downPayment}
                       onChange={(e) => setDownPayment(Number(e.target.value))}
@@ -322,12 +324,13 @@ export default function BRRRRStrategyCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="closing-costs" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Closing Costs
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="closing-costs"
                       type="number"
                       value={closingCosts}
                       onChange={(e) => setClosingCosts(Number(e.target.value))}
@@ -337,12 +340,13 @@ export default function BRRRRStrategyCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="inspection-costs" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Inspection & Due Diligence
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="inspection-costs"
                       type="number"
                       value={inspectionCosts}
                       onChange={(e) => setInspectionCosts(Number(e.target.value))}
@@ -364,12 +368,13 @@ export default function BRRRRStrategyCalculator() {
               
               <div className="space-y-4">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="rehab-budget" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Rehab Budget
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="rehab-budget"
                       type="number"
                       value={rehabBudget}
                       onChange={(e) => setRehabBudget(Number(e.target.value))}
@@ -379,12 +384,13 @@ export default function BRRRRStrategyCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="contingency-reserve" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Contingency Reserve %
                   </label>
                   <div className="relative">
                     <Calculator className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="contingency-reserve"
                       type="number"
                       value={rehabContingency}
                       onChange={(e) => setRehabContingency(Number(e.target.value))}
@@ -560,12 +566,13 @@ export default function BRRRRStrategyCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="refinance-term" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Refinance Term (years)
                   </label>
                   <div className="relative">
                     <Calculator className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <select
+                      id="refinance-term"
                       value={refinanceTerm}
                       onChange={(e) => setRefinanceTerm(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
