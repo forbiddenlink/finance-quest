@@ -25,21 +25,90 @@ interface SavingsStrategy {
   tips: string[];
 }
 
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+interface InputValidation {
+  isValid: boolean;
+  errors: ValidationError[];
+}
+
 export default function EmergencyFundBuildingTimeline() {
   const [monthlyExpenses, setMonthlyExpenses] = useState<string>('4000');
   const [currentSavings, setCurrentSavings] = useState<string>('500');
   const [monthlyIncome, setMonthlyIncome] = useState<string>('6000');
   const [selectedStrategy, setSelectedStrategy] = useState<string>('moderate');
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
   
   const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
+
+  // Validation function
+  const validateInputs = (): InputValidation => {
+    const errors: ValidationError[] = [];
+    const expensesNum = parseFloat(monthlyExpenses);
+    const incomeNum = parseFloat(monthlyIncome);
+    const savingsNum = parseFloat(currentSavings);
+
+    if (!monthlyExpenses || isNaN(expensesNum) || expensesNum <= 0) {
+      errors.push({ field: 'monthlyExpenses', message: 'Monthly expenses must be greater than $0' });
+    }
+
+    if (!monthlyIncome || isNaN(incomeNum) || incomeNum <= 0) {
+      errors.push({ field: 'monthlyIncome', message: 'Monthly income must be greater than $0' });
+    }
+
+    if (isNaN(savingsNum) || savingsNum < 0) {
+      errors.push({ field: 'currentSavings', message: 'Current savings cannot be negative' });
+    }
+
+    if (incomeNum > 0 && expensesNum > 0 && expensesNum >= incomeNum) {
+      errors.push({ field: 'monthlyExpenses', message: 'Expenses should be less than income for building emergency fund' });
+    }
+
+    return { isValid: errors.length === 0, errors };
+  };
+
+  // Handle input changes with validation
+  const handleInputChange = (field: string, value: string) => {
+    switch (field) {
+      case 'monthlyExpenses':
+        setMonthlyExpenses(value);
+        break;
+      case 'monthlyIncome':
+        setMonthlyIncome(value);
+        break;
+      case 'currentSavings':
+        setCurrentSavings(value);
+        break;
+    }
+    
+    // Update validation errors
+    setTimeout(() => {
+      const validation = validateInputs();
+      setValidationErrors(validation.errors);
+    }, 0);
+  };
 
   useEffect(() => {
     recordCalculatorUsage('emergency-fund-building-timeline');
   }, [recordCalculatorUsage]);
 
-  const monthlyExpensesNum = parseFloat(monthlyExpenses) || 0;
-  const currentSavingsNum = parseFloat(currentSavings) || 0;
-  const monthlyIncomeNum = parseFloat(monthlyIncome) || 0;
+  // Safe calculation functions with error handling
+  const safeParseFloat = (value: string, fallback: number = 0): number => {
+    try {
+      const parsed = parseFloat(value);
+      return isNaN(parsed) ? fallback : parsed;
+    } catch (error) {
+      console.error('Error parsing float:', error);
+      return fallback;
+    }
+  };
+
+  const monthlyExpensesNum = safeParseFloat(monthlyExpenses);
+  const currentSavingsNum = safeParseFloat(currentSavings);
+  const monthlyIncomeNum = safeParseFloat(monthlyIncome);
 
   const buildingPhases: BuildingPhase[] = [
     {
@@ -208,56 +277,107 @@ export default function EmergencyFundBuildingTimeline() {
         >
           {/* Current Situation */}
           <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
-            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
+            <h3 id="financial-situation-label" className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Current Financial Situation
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-4" role="group" aria-labelledby="financial-situation-label">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                <label htmlFor="monthly-income-input" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                   Monthly Income
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true">$</span>
                   <input
                     type="number"
+                    id="monthly-income-input"
                     value={monthlyIncome}
-                    onChange={(e) => setMonthlyIncome(e.target.value)}
-                    className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    onChange={(e) => handleInputChange('monthlyIncome', e.target.value)}
+                    className={`pl-8 w-full px-4 py-3 bg-slate-800/50 border rounded-md text-white placeholder-gray-400 focus:ring-2 focus:border-transparent transition-all ${
+                      validationErrors.some(e => e.field === 'monthlyIncome') 
+                        ? 'border-red-500 focus:ring-red-500' 
+                        : 'border-slate-600 focus:ring-amber-500'
+                    }`}
                     placeholder="6000"
+                    aria-describedby="monthly-income-help monthly-income-error"
+                    aria-invalid={validationErrors.some(e => e.field === 'monthlyIncome')}
+                    min="0"
+                    step="100"
                   />
                 </div>
+                {validationErrors.some(e => e.field === 'monthlyIncome') && (
+                  <p id="monthly-income-error" className="text-red-400 text-sm mt-1" role="alert">
+                    {validationErrors.find(e => e.field === 'monthlyIncome')?.message}
+                  </p>
+                )}
+                <p id="monthly-income-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                  Your total monthly income after taxes
+                </p>
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                <label htmlFor="monthly-expenses-input" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                   Monthly Essential Expenses
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true">$</span>
                   <input
                     type="number"
+                    id="monthly-expenses-input"
                     value={monthlyExpenses}
-                    onChange={(e) => setMonthlyExpenses(e.target.value)}
-                    className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    onChange={(e) => handleInputChange('monthlyExpenses', e.target.value)}
+                    className={`pl-8 w-full px-4 py-3 bg-slate-800/50 border rounded-md text-white placeholder-gray-400 focus:ring-2 focus:border-transparent transition-all ${
+                      validationErrors.some(e => e.field === 'monthlyExpenses') 
+                        ? 'border-red-500 focus:ring-red-500' 
+                        : 'border-slate-600 focus:ring-amber-500'
+                    }`}
                     placeholder="4000"
+                    aria-describedby="monthly-expenses-help monthly-expenses-error"
+                    aria-invalid={validationErrors.some(e => e.field === 'monthlyExpenses')}
+                    min="0"
+                    step="100"
                   />
                 </div>
+                {validationErrors.some(e => e.field === 'monthlyExpenses') && (
+                  <p id="monthly-expenses-error" className="text-red-400 text-sm mt-1" role="alert">
+                    {validationErrors.find(e => e.field === 'monthlyExpenses')?.message}
+                  </p>
+                )}
+                <p id="monthly-expenses-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                  Your essential monthly expenses (rent, utilities, food, insurance)
+                </p>
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                <label htmlFor="current-savings-input" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                   Current Emergency Savings
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true">$</span>
                   <input
                     type="number"
+                    id="current-savings-input"
                     value={currentSavings}
-                    onChange={(e) => setCurrentSavings(e.target.value)}
-                    className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    onChange={(e) => handleInputChange('currentSavings', e.target.value)}
+                    className={`pl-8 w-full px-4 py-3 bg-slate-800/50 border rounded-md text-white placeholder-gray-400 focus:ring-2 focus:border-transparent transition-all ${
+                      validationErrors.some(e => e.field === 'currentSavings') 
+                        ? 'border-red-500 focus:ring-red-500' 
+                        : 'border-slate-600 focus:ring-amber-500'
+                    }`}
                     placeholder="500"
+                    aria-describedby="current-savings-help current-savings-error"
+                    aria-invalid={validationErrors.some(e => e.field === 'currentSavings')}
+                    min="0"
+                    step="100"
                   />
                 </div>
+                {validationErrors.some(e => e.field === 'currentSavings') && (
+                  <p id="current-savings-error" className="text-red-400 text-sm mt-1" role="alert">
+                    {validationErrors.find(e => e.field === 'currentSavings')?.message}
+                  </p>
+                )}
+                <p id="current-savings-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                  Your current emergency fund or available savings amount
+                </p>
               </div>
 
               <div className="pt-4 border-t border-white/10">
@@ -273,10 +393,10 @@ export default function EmergencyFundBuildingTimeline() {
 
           {/* Savings Strategy Selection */}
           <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
-            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
+            <h3 id="strategy-selection-label" className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Choose Your Strategy
             </h3>
-            <div className="space-y-3">
+            <div className="space-y-3" role="radiogroup" aria-labelledby="strategy-selection-label">
               {savingsStrategies.map((strategy) => (
                 <div key={strategy.id} className="space-y-2">
                   <div
@@ -291,24 +411,27 @@ export default function EmergencyFundBuildingTimeline() {
                       <div className="flex items-center gap-3">
                         <input
                           type="radio"
+                          id={`strategy-${strategy.id}`}
+                          name="savings-strategy"
                           checked={selectedStrategy === strategy.id}
                           onChange={() => setSelectedStrategy(strategy.id)}
                           className="w-4 h-4 text-amber-600 bg-gray-800 border-gray-600 focus:ring-amber-500"
+                          aria-describedby={`strategy-${strategy.id}-description`}
                         />
-                        <div>
+                        <label htmlFor={`strategy-${strategy.id}`} className="cursor-pointer">
                           <div className={`font-medium ${theme.textColors.primary}`}>
                             {strategy.name}
                           </div>
                           <div className={`text-sm ${theme.textColors.secondary}`}>
                             {formatCurrency(strategy.monthlyAmount)}/month
                           </div>
-                        </div>
+                        </label>
                       </div>
                       <div className={`px-2 py-1 text-xs rounded ${getDifficultyColor(strategy.difficulty)}`}>
                         {strategy.difficulty}
                       </div>
                     </div>
-                    <p className={`text-sm ${theme.textColors.secondary} mt-2`}>
+                    <p id={`strategy-${strategy.id}-description`} className={`text-sm ${theme.textColors.secondary} mt-2`}>
                       {strategy.description}
                     </p>
                   </div>

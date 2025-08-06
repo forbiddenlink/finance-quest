@@ -46,9 +46,9 @@ describe('EmergencyFundBuildingTimeline', () => {
     render(<EmergencyFundBuildingTimeline />);
     
     expect(screen.getByText(/Current Financial Situation/i)).toBeInTheDocument();
-    expect(screen.getByText(/Monthly Income/i)).toBeInTheDocument();
-    expect(screen.getByText(/Monthly Essential Expenses/i)).toBeInTheDocument();
-    expect(screen.getByText(/Current Emergency Savings/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Monthly Income/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Monthly Essential Expenses/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Current Emergency Savings/i)).toBeInTheDocument();
   });
 
   test('shows default input values', () => {

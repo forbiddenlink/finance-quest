@@ -26,8 +26,19 @@ interface PersonalProfile {
   debtLevel: 'low' | 'medium' | 'high';
 }
 
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+interface InputValidation {
+  isValid: boolean;
+  errors: ValidationError[];
+}
+
 export default function EmergencyFundScenarioAnalyzer() {
   const [monthlyExpenses, setMonthlyExpenses] = useState<string>('4000');
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
   const [profile, setProfile] = useState<PersonalProfile>({
     jobStability: 'stable',
     incomeType: 'single',
@@ -39,6 +50,33 @@ export default function EmergencyFundScenarioAnalyzer() {
   const [selectedScenarios, setSelectedScenarios] = useState<string[]>([]);
   
   const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
+
+  // Validation function
+  const validateInputs = (): InputValidation => {
+    const errors: ValidationError[] = [];
+    const expensesNum = parseFloat(monthlyExpenses);
+
+    if (!monthlyExpenses || isNaN(expensesNum)) {
+      errors.push({ field: 'monthlyExpenses', message: 'Monthly expenses is required' });
+    } else if (expensesNum <= 0) {
+      errors.push({ field: 'monthlyExpenses', message: 'Monthly expenses must be greater than $0' });
+    } else if (expensesNum > 50000) {
+      errors.push({ field: 'monthlyExpenses', message: 'Monthly expenses seems unusually high. Please verify.' });
+    }
+
+    if (profile.dependents < 0 || profile.dependents > 20) {
+      errors.push({ field: 'dependents', message: 'Number of dependents must be between 0 and 20' });
+    }
+
+    return { isValid: errors.length === 0, errors };
+  };
+
+  // Handle input changes with validation
+  const handleExpensesChange = (value: string) => {
+    setMonthlyExpenses(value);
+    const validation = validateInputs();
+    setValidationErrors(validation.errors);
+  };
 
   useEffect(() => {
     recordCalculatorUsage('emergency-fund-scenario-analyzer');
@@ -108,41 +146,59 @@ export default function EmergencyFundScenarioAnalyzer() {
   ];
 
   const calculateRiskScore = (): number => {
-    let baseScore = 3; // Base 3 months
+    try {
+      let baseScore = 3; // Base 3 months
 
-    // Job stability adjustment
-    if (profile.jobStability === 'variable') baseScore += 1;
-    if (profile.jobStability === 'unstable') baseScore += 2;
+      // Job stability adjustment
+      if (profile.jobStability === 'variable') baseScore += 1;
+      if (profile.jobStability === 'unstable') baseScore += 2;
 
-    // Income type adjustment
-    if (profile.incomeType === 'single') baseScore += 1;
-    
-    // Dependents adjustment
-    baseScore += profile.dependents * 0.5;
+      // Income type adjustment
+      if (profile.incomeType === 'single') baseScore += 1;
+      
+      // Dependents adjustment
+      baseScore += profile.dependents * 0.5;
 
-    // Health conditions
-    if (profile.healthConditions) baseScore += 1;
+      // Health conditions
+      if (profile.healthConditions) baseScore += 1;
 
-    // Home ownership
-    if (profile.homeOwnership === 'own' || profile.homeOwnership === 'mortgage') baseScore += 0.5;
+      // Home ownership
+      if (profile.homeOwnership === 'own' || profile.homeOwnership === 'mortgage') baseScore += 0.5;
 
-    // Debt level
-    if (profile.debtLevel === 'medium') baseScore += 0.5;
-    if (profile.debtLevel === 'high') baseScore += 1;
+      // Debt level
+      if (profile.debtLevel === 'medium') baseScore += 0.5;
+      if (profile.debtLevel === 'high') baseScore += 1;
 
-    // Selected scenarios
-    selectedScenarios.forEach(scenarioId => {
-      const scenario = riskScenarios.find(s => s.id === scenarioId);
-      if (scenario) {
-        baseScore += scenario.fundMultiplier;
-      }
-    });
+      // Selected scenarios
+      selectedScenarios.forEach(scenarioId => {
+        const scenario = riskScenarios.find(s => s.id === scenarioId);
+        if (scenario) {
+          baseScore += scenario.fundMultiplier;
+        }
+      });
 
-    return Math.min(Math.max(baseScore, 1), 12); // Cap between 1-12 months
+      return Math.min(Math.max(baseScore, 1), 12); // Cap between 1-12 months
+    } catch (error) {
+      console.error('Error calculating risk score:', error);
+      return 3; // Default fallback
+    }
+  };
+
+  const calculateRecommendedFund = (): number => {
+    try {
+      const expenses = parseFloat(monthlyExpenses);
+      if (isNaN(expenses) || expenses <= 0) return 0;
+      
+      const riskScore = calculateRiskScore();
+      return expenses * riskScore;
+    } catch (error) {
+      console.error('Error calculating recommended fund:', error);
+      return 0;
+    }
   };
 
   const riskScore = calculateRiskScore();
-  const recommendedFund = parseFloat(monthlyExpenses) * riskScore;
+  const recommendedFund = calculateRecommendedFund();
 
   const getRiskLevel = (score: number): { level: string; color: string; description: string } => {
     if (score <= 3) return { 
@@ -223,131 +279,177 @@ export default function EmergencyFundScenarioAnalyzer() {
         >
           {/* Monthly Expenses */}
           <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
-            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
+            <h3 id="monthly-expenses-label" className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Monthly Essential Expenses
             </h3>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true">$</span>
               <input
                 type="number"
+                id="monthly-expenses-input"
                 value={monthlyExpenses}
-                onChange={(e) => setMonthlyExpenses(e.target.value)}
-                className="pl-8 w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                onChange={(e) => handleExpensesChange(e.target.value)}
+                className={`pl-8 w-full px-4 py-3 bg-slate-800/50 border rounded-md text-white placeholder-gray-400 focus:ring-2 focus:border-transparent transition-all ${
+                  validationErrors.some(e => e.field === 'monthlyExpenses') 
+                    ? 'border-red-500 focus:ring-red-500' 
+                    : 'border-slate-600 focus:ring-amber-500'
+                }`}
                 placeholder="4000"
+                aria-labelledby="monthly-expenses-label"
+                aria-describedby="monthly-expenses-help monthly-expenses-error"
+                aria-invalid={validationErrors.some(e => e.field === 'monthlyExpenses')}
+                min="0"
+                step="100"
               />
             </div>
-            <p className={`text-sm ${theme.textColors.secondary} mt-2`}>
+            {validationErrors.some(e => e.field === 'monthlyExpenses') && (
+              <p id="monthly-expenses-error" className="text-red-400 text-sm mt-1" role="alert">
+                {validationErrors.find(e => e.field === 'monthlyExpenses')?.message}
+              </p>
+            )}
+            <p id="monthly-expenses-help" className={`text-sm ${theme.textColors.secondary} mt-2`}>
               Include only essential expenses: housing, utilities, groceries, insurance, minimum debt payments
             </p>
           </div>
 
           {/* Personal Risk Profile */}
           <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
-            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
+            <h3 id="risk-profile-label" className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Personal Risk Profile
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-4" role="group" aria-labelledby="risk-profile-label">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                <label htmlFor="job-stability-select" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                   Job Stability
                 </label>
                 <select
+                  id="job-stability-select"
                   value={profile.jobStability}
                   onChange={(e) => setProfile({...profile, jobStability: e.target.value as PersonalProfile['jobStability']})}
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                  aria-describedby="job-stability-help"
                 >
                   <option value="stable">Stable (government, tenured, large corp)</option>
                   <option value="variable">Variable (sales, seasonal, contract)</option>
                   <option value="unstable">Unstable (startup, commission only)</option>
                 </select>
+                <p id="job-stability-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                  Higher job security means smaller emergency fund needed
+                </p>
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                <label htmlFor="income-type-select" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                   Household Income Type
                 </label>
                 <select
+                  id="income-type-select"
                   value={profile.incomeType}
                   onChange={(e) => setProfile({...profile, incomeType: e.target.value as PersonalProfile['incomeType']})}
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                  aria-describedby="income-type-help"
                 >
                   <option value="single">Single income earner</option>
                   <option value="dual">Dual income household</option>
                   <option value="multiple">Multiple income sources</option>
                 </select>
+                <p id="income-type-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                  Single income households need larger emergency funds
+                </p>
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                <label htmlFor="dependents-input" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                   Number of Dependents
                 </label>
                 <input
                   type="number"
+                  id="dependents-input"
                   min="0"
                   max="10"
                   value={profile.dependents}
                   onChange={(e) => setProfile({...profile, dependents: parseInt(e.target.value) || 0})}
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                  aria-describedby="dependents-help"
                 />
+                <p id="dependents-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                  More dependents require larger emergency funds for family protection
+                </p>
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                <label htmlFor="housing-select" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                   Housing Situation
                 </label>
                 <select
+                  id="housing-select"
                   value={profile.homeOwnership}
                   onChange={(e) => setProfile({...profile, homeOwnership: e.target.value as PersonalProfile['homeOwnership']})}
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                  aria-describedby="housing-help"
                 >
                   <option value="rent">Renting</option>
                   <option value="own">Own home (no mortgage)</option>
                   <option value="mortgage">Own home (with mortgage)</option>
                 </select>
+                <p id="housing-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                  Homeowners need larger funds for maintenance and repairs
+                </p>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-start gap-3">
                 <input
                   type="checkbox"
                   id="healthConditions"
                   checked={profile.healthConditions}
                   onChange={(e) => setProfile({...profile, healthConditions: e.target.checked})}
-                  className="w-4 h-4 text-amber-600 bg-gray-800 border-gray-600 rounded focus:ring-amber-500"
+                  className="w-4 h-4 text-amber-600 bg-gray-800 border-gray-600 rounded focus:ring-amber-500 focus:ring-2 mt-0.5"
+                  aria-describedby="health-help"
                 />
-                <label htmlFor="healthConditions" className={`text-sm ${theme.textColors.secondary}`}>
-                  Chronic health conditions or high medical risks
-                </label>
+                <div className="flex-1">
+                  <label htmlFor="healthConditions" className={`text-sm ${theme.textColors.secondary} cursor-pointer`}>
+                    Chronic health conditions or high medical risks
+                  </label>
+                  <p id="health-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                    Medical conditions increase emergency fund needs
+                  </p>
+                </div>
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                <label htmlFor="debt-level-select" className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
                   Current Debt Level
                 </label>
                 <select
+                  id="debt-level-select"
                   value={profile.debtLevel}
                   onChange={(e) => setProfile({...profile, debtLevel: e.target.value as PersonalProfile['debtLevel']})}
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-md text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                  aria-describedby="debt-level-help"
                 >
                   <option value="low">Low (&lt;20% of income)</option>
                   <option value="medium">Medium (20-40% of income)</option>
                   <option value="high">High (&gt;40% of income)</option>
                 </select>
+                <p id="debt-level-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
+                  Higher debt levels require larger emergency funds for security
+                </p>
               </div>
             </div>
           </div>
 
           {/* Risk Scenarios */}
           <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}>
-            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
+            <h3 id="scenarios-label" className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Potential Emergency Scenarios
             </h3>
             <p className={`text-sm ${theme.textColors.secondary} mb-4`}>
               Select scenarios that are relevant to your situation:
             </p>
-            <div className="space-y-3">
+            <div className="space-y-3" role="group" aria-labelledby="scenarios-label">
               {riskScenarios.map((scenario) => (
                 <div key={scenario.id} className="space-y-2">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-start gap-3">
                     <input
                       type="checkbox"
                       id={scenario.id}
@@ -359,9 +461,10 @@ export default function EmergencyFundScenarioAnalyzer() {
                           setSelectedScenarios(selectedScenarios.filter(id => id !== scenario.id));
                         }
                       }}
-                      className="w-4 h-4 text-amber-600 bg-gray-800 border-gray-600 rounded focus:ring-amber-500"
+                      className="w-4 h-4 text-amber-600 bg-gray-800 border-gray-600 rounded focus:ring-amber-500 focus:ring-2 mt-1"
+                      aria-describedby={`${scenario.id}-description`}
                     />
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-1">
                       {scenario.icon}
                       <label htmlFor={scenario.id} className={`text-sm font-medium ${theme.textColors.primary} cursor-pointer`}>
                         {scenario.name}
@@ -376,7 +479,7 @@ export default function EmergencyFundScenarioAnalyzer() {
                       </span>
                     </div>
                   </div>
-                  <p className={`text-xs ${theme.textColors.secondary} ml-7`}>
+                  <p id={`${scenario.id}-description`} className={`text-xs ${theme.textColors.secondary} ml-7`}>
                     {scenario.description}
                   </p>
                 </div>
