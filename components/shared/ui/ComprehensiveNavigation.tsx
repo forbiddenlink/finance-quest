@@ -228,7 +228,7 @@ const ComprehensiveNavigation = () => {
             ]
         },
         {
-            id: 'protection',
+            id: 'protection-planning',
             title: 'Protection & Planning Track',
             description: 'Protect your wealth with insurance, healthcare planning, and risk management',
             icon: <Shield className="w-6 h-6" />,

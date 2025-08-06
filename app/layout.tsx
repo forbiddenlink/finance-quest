@@ -72,12 +72,13 @@ export const metadata: Metadata = {
       { url: '/icons/favicon-32x32.png', sizes: '32x32', type: 'image/png' }
     ],
     apple: [
-      { url: '/icons/apple-touch-icon.png', type: 'image/png' },
-      { url: '/icons/apple-touch-icon-152x152.png', sizes: '152x152', type: 'image/png' },
+      { url: '/icons/apple-touch-icon-180x180.png', sizes: '180x180', type: 'image/png' },
       { url: '/icons/apple-touch-icon-167x167.png', sizes: '167x167', type: 'image/png' },
-      { url: '/icons/apple-touch-icon-180x180.png', sizes: '180x180', type: 'image/png' }
+      { url: '/icons/apple-touch-icon-152x152.png', sizes: '152x152', type: 'image/png' }
     ],
-    shortcut: '/favicon.svg'
+    other: [
+      { rel: 'apple-touch-icon', url: '/icons/apple-touch-icon.png' }
+    ]
   },
   themeColor: [
     { media: '(prefers-color-scheme: dark)', color: '#0f172a' },
@@ -96,41 +97,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
-      <head>
-        {/* Performance optimizations */}
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
-        {/* PWA support and color scheme */}
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="color-scheme" content="dark light" />
-      </head>
-      <body className={`font-sans antialiased ${theme.utils.pageBackground()}`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${jetbrainsMono.variable} overflow-y-auto`}>
+      <body className={`font-sans antialiased relative ${theme.utils.pageBackground()}`}>
         <ErrorBoundary>
           <ToastProvider>
+            {/* Background Effects */}
+            <div className="fixed inset-0 -z-10 pointer-events-none">
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 opacity-90" />
+              <div className="absolute inset-0 opacity-[0.02] bg-grid-pattern" />
+              <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
+              <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-blue-500/3 to-purple-500/3 rounded-full blur-3xl" />
+            </div>
+
             {/* Enhanced Navigation System */}
             <EnhancedProgressNavigation />
 
-            {/* Main Content Area with Professional Styling */}
-            <main className="relative">
-              {/* Background Effects */}
-              <div className="fixed inset-0 -z-10">
-                {/* Animated gradient background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 opacity-90" />
-
-                {/* Subtle grid pattern */}
-                <div className="absolute inset-0 opacity-[0.02] bg-grid-pattern" />
-
-                {/* Ambient glow effects */}
-                <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
-                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-blue-500/3 to-purple-500/3 rounded-full blur-3xl" />
-              </div>
-
-              {/* Content wrapper */}
-              <div className="relative z-10 min-h-screen">
+            {/* Main Content */}
+            <main className="relative z-10 min-h-screen">
+              <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {children}
               </div>
             </main>

@@ -59,32 +59,16 @@ const EnhancedProgressNavigation: React.FC = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Navigation sections
+    // Navigation sections - Optimized for header space
     const navigationSections: NavigationSection[] = [
         {
-            title: 'Learn',
+            title: 'Core',
             items: [
-                { label: 'Dashboard', href: '/', icon: Home, description: 'Your learning overview' },
-                { label: 'Curriculum', href: '/curriculum', icon: BookOpen, description: 'All 17 chapters' },
-                { label: 'Progress', href: '/progress', icon: TrendingUp, description: 'Track your journey' },
-                { label: 'AI Analytics', href: '/learning-analytics', icon: Brain, isNew: true, description: 'AI-powered learning insights' }
-            ]
-        },
-        {
-            title: 'Tools',
-            items: [
-                { label: 'Calculators', href: '/calculators', icon: Calculator, badge: '13+', description: 'Financial calculators' },
-                { label: 'Market Dashboard', href: '/market-dashboard', icon: BarChart3, isNew: true, description: 'Live market data & education' },
-                { label: 'Market Data', href: '/market', icon: TrendingUp, description: 'Market insights' },
-                { label: 'Assessment', href: '/assessment', icon: Star, description: 'Test your knowledge' }
-            ]
-        },
-        {
-            title: 'Advanced',
-            items: [
-                { label: 'Enhanced Analytics', href: '/advanced-progress', icon: BarChart3, isPro: true, description: 'Deep learning insights' },
-                { label: 'Professional Charts', href: '/calculators/business-valuation', icon: TrendingUp, isPro: true, description: 'Professional financial analysis' },
-                { label: 'Crisis Sim', href: '/crisis-simulation', icon: Zap, isPro: true, description: 'Financial crisis scenarios' }
+                { label: 'Home', href: '/', icon: Home, description: 'Dashboard overview' },
+                { label: 'Learn', href: '/curriculum', icon: BookOpen, description: 'All chapters' },
+                { label: 'Progress', href: '/progress', icon: TrendingUp, description: 'Track journey' },
+                { label: 'Tools', href: '/calculators', icon: Calculator, badge: '13+', description: 'Calculators' },
+                { label: 'Market', href: '/market-dashboard', icon: BarChart3, description: 'Live data' }
             ]
         }
     ];
@@ -105,21 +89,21 @@ const EnhancedProgressNavigation: React.FC = () => {
                 animate={{ y: 0 }}
                 transition={microAnimations.spring}
             >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-16">
+                <div className="w-full max-w-6xl mx-auto px-3 sm:px-4 lg:px-6">
+                    <div className="flex items-center justify-between h-16 lg:h-20">
                         {/* Logo and Brand */}
                         <motion.div
-                            className="flex items-center space-x-4"
+                            className="flex items-center space-x-2 lg:space-x-3 shrink-0 min-w-0"
                             whileHover={{ scale: 1.02 }}
                             transition={{ duration: 0.2, ease: "easeOut" }}
                         >
-                            <Link href="/" className="flex items-center space-x-3">
+                            <Link href="/" className="flex items-center space-x-2 lg:space-x-3">
                                 <motion.div
-                                    className={`w-10 h-10 ${theme.buttons.primary} rounded-xl flex items-center justify-center relative overflow-hidden`}
+                                    className={`w-8 h-8 lg:w-10 lg:h-10 ${theme.buttons.primary} rounded-xl flex items-center justify-center relative overflow-hidden`}
                                     whileHover={{ rotate: 360 }}
                                     transition={{ duration: 0.8, ease: "easeInOut" }}
                                 >
-                                    <DollarSign className="w-6 h-6 text-white font-bold" />
+                                    <DollarSign className="w-4 h-4 lg:w-6 lg:h-6 text-white font-bold" />
                                     <motion.div
                                         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                                         animate={{ x: ['-100%', '200%'] }}
@@ -127,10 +111,10 @@ const EnhancedProgressNavigation: React.FC = () => {
                                     />
                                 </motion.div>
                                 <div className="hidden sm:block">
-                                    <h1 className={`text-xl font-bold ${theme.textColors.primary}`}>
+                                    <h1 className={`text-base lg:text-lg font-bold ${theme.textColors.primary} truncate`}>
                                         Finance Quest
                                     </h1>
-                                    <p className={`text-xs ${theme.textColors.muted} -mt-1`}>
+                                    <p className={`text-xs ${theme.textColors.muted} -mt-1 hidden lg:block`}>
                                         Master Your Money
                                     </p>
                                 </div>
@@ -138,7 +122,7 @@ const EnhancedProgressNavigation: React.FC = () => {
                         </motion.div>
 
                         {/* Desktop Navigation Links */}
-                        <div className="hidden lg:flex items-center space-x-8">
+                        <div className="hidden lg:flex items-center space-x-2 xl:space-x-4 flex-1 justify-center max-w-3xl mx-4">
                             {navigationSections.map((section) =>
                                 section.items.map((item) => {
                                     const IconComponent = item.icon;
@@ -153,35 +137,25 @@ const EnhancedProgressNavigation: React.FC = () => {
                                         >
                                             <Link
                                                 href={item.href}
-                                                className={`relative flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 group ${isActive
+                                                className={`relative flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 group min-w-0 ${isActive
                                                     ? `${theme.status.info.bg} ${theme.status.info.text} ${theme.status.info.border} border`
                                                     : `${theme.textColors.secondary} hover:${theme.textColors.primary} hover:${theme.backgrounds.cardHover}`
                                                     }`}
                                             >
-                                                <IconComponent className={`w-4 h-4 ${item.isPro ? 'text-purple-400' :
+                                                <IconComponent className={`w-4 h-4 flex-shrink-0 ${item.isPro ? 'text-purple-400' :
                                                     item.isNew ? 'text-green-400' : ''
                                                     }`} />
-                                                <span>{item.label}</span>
+                                                <span className="whitespace-nowrap text-sm">{item.label}</span>
 
                                                 {/* Badges */}
                                                 {item.badge && (
                                                     <motion.span
-                                                        className={`ml-1 px-1.5 py-0.5 text-xs font-semibold rounded-full ${theme.status.warning.bg} ${theme.status.warning.text}`}
+                                                        className={`ml-2 px-2 py-0.5 text-xs font-semibold rounded-full ${theme.status.warning.bg} ${theme.status.warning.text} flex-shrink-0`}
                                                         initial={{ scale: 0 }}
                                                         animate={{ scale: 1 }}
                                                         transition={{ delay: 0.2, type: "spring" }}
                                                     >
                                                         {item.badge}
-                                                    </motion.span>
-                                                )}
-
-                                                {item.isNew && (
-                                                    <motion.span
-                                                        className={`ml-1 px-1.5 py-0.5 text-xs font-semibold rounded-full ${theme.status.success.bg} ${theme.status.success.text}`}
-                                                        animate={{ scale: [1, 1.1, 1] }}
-                                                        transition={{ duration: 2, repeat: Infinity }}
-                                                    >
-                                                        NEW
                                                     </motion.span>
                                                 )}
 
@@ -205,12 +179,7 @@ const EnhancedProgressNavigation: React.FC = () => {
                         </div>
 
                         {/* Right side items */}
-                        <div className="flex items-center space-x-4">
-                            {/* Streak Widget - Compact for Navigation */}
-                            <div className="hidden md:block">
-                                <StreakMotivationWidget size="compact" />
-                            </div>
-
+                        <div className="flex items-center space-x-2 xl:space-x-3 shrink-0 min-w-0">
                             {/* Notifications */}
                             <NotificationBell className="hidden sm:block" />
 
@@ -269,19 +238,19 @@ const EnhancedProgressNavigation: React.FC = () => {
                                                 <div className="grid grid-cols-3 gap-4 mt-4">
                                                     <div className="text-center">
                                                         <div className={`text-lg font-bold ${theme.textColors.brand}`}>
-                                                            {totalXP.toLocaleString()}
+                                                            {(totalXP || 0).toLocaleString()}
                                                         </div>
                                                         <div className={`text-xs ${theme.textColors.muted}`}>XP</div>
                                                     </div>
                                                     <div className="text-center">
                                                         <div className={`text-lg font-bold ${theme.textColors.primary}`}>
-                                                            {completedChapters}
+                                                            {completedChapters || 0}
                                                         </div>
                                                         <div className={`text-xs ${theme.textColors.muted}`}>Lessons</div>
                                                     </div>
                                                     <div className="text-center">
                                                         <div className={`text-lg font-bold ${theme.status.success.text}`}>
-                                                            {engagementScore}%
+                                                            {engagementScore || 0}%
                                                         </div>
                                                         <div className={`text-xs ${theme.textColors.muted}`}>Engagement</div>
                                                     </div>
@@ -414,7 +383,7 @@ const EnhancedProgressNavigation: React.FC = () => {
             </motion.nav>
 
             {/* Spacer for fixed navigation */}
-            <div className="h-16"></div>
+            <div className="h-16 lg:h-20 w-full"></div>
         </>
     );
 };

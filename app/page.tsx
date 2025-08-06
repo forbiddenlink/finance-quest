@@ -83,8 +83,8 @@ export default function HomePage() {
 
       {/* Enhanced Header */}
       <header className={`${theme.backgrounds.header} ${theme.borderColors.primary} border-b relative z-10 bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <div className="flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+          <div className="flex items-center justify-between min-h-[60px]">
             {/* Left side - Platform info */}
             <div className="flex items-center space-x-4 min-w-0 flex-1">
               <div className="flex items-center space-x-2 group">
@@ -145,7 +145,7 @@ export default function HomePage() {
           </div>
 
           {/* Mobile-only feature badges - more compact */}
-          <div className={`md:hidden mt-2.5 pt-2.5 border-t ${theme.borderColors.muted}`}>
+          <div className={`md:hidden mt-2 pt-2 border-t ${theme.borderColors.muted}`}>
             <div className="flex items-center justify-center space-x-2 text-xs">
               <div className="flex items-center space-x-1">
                 <div className={`w-1 h-1 ${theme.status.info.text} rounded-full`}></div>
