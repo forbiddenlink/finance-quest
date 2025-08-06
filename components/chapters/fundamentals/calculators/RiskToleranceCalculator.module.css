@@ -1,0 +1,17 @@
+.progressBarFill {
+  width: var(--progress-width);
+  transition: width 0.3s ease;
+}
+
+/* Define progress widths for each percentage value */
+[data-progress="0"] .progressBarFill { --progress-width: 0%; }
+[data-progress="10"] .progressBarFill { --progress-width: 10%; }
+[data-progress="20"] .progressBarFill { --progress-width: 20%; }
+[data-progress="30"] .progressBarFill { --progress-width: 30%; }
+[data-progress="40"] .progressBarFill { --progress-width: 40%; }
+[data-progress="50"] .progressBarFill { --progress-width: 50%; }
+[data-progress="60"] .progressBarFill { --progress-width: 60%; }
+[data-progress="70"] .progressBarFill { --progress-width: 70%; }
+[data-progress="80"] .progressBarFill { --progress-width: 80%; }
+[data-progress="90"] .progressBarFill { --progress-width: 90%; }
+[data-progress="100"] .progressBarFill { --progress-width: 100%; }

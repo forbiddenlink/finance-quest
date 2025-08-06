@@ -34,7 +34,7 @@ export default function InvestmentCalculatorEnhanced() {
   // Enhanced keyboard navigation for tabs
   const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, tabId: CalculatorTab, index: number) => {
     const tabIds = tabs.map(tab => tab.id);
-    
+
     switch (event.key) {
       case 'ArrowLeft':
       case 'ArrowUp':
@@ -309,8 +309,8 @@ export default function InvestmentCalculatorEnhanced() {
     <div className="max-w-7xl mx-auto space-y-6">
       {/* Tab Navigation with ARIA support */}
       <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-2`}>
-        <div 
-          role="tablist" 
+        <div
+          role="tablist"
           aria-label="Investment calculator tools"
           className="grid grid-cols-2 md:grid-cols-4 gap-1"
         >
@@ -324,16 +324,15 @@ export default function InvestmentCalculatorEnhanced() {
               }}
               role="tab"
               tabIndex={activeTab === tab.id ? 0 : -1}
-              aria-selected={activeTab === tab.id}
+              {...{ "aria-selected": activeTab === tab.id ? "true" : "false" }}
               aria-controls={contentId}
               id={`tab-${tab.id}`}
               onClick={() => setActiveTab(tab.id)}
               onKeyDown={(e) => handleTabKeyDown(e, tab.id, index)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
-                activeTab === tab.id
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${activeTab === tab.id
                   ? `${theme.buttons.primary} shadow-lg`
                   : `${theme.textColors.secondary} hover:${theme.backgrounds.card} hover:${theme.textColors.primary}`
-              }`}
+                }`}
             >
               <tab.icon className="w-5 h-5" aria-hidden="true" />
               <div className="text-left hidden sm:block">
@@ -349,7 +348,7 @@ export default function InvestmentCalculatorEnhanced() {
       </div>
 
       {/* Content with ARIA support */}
-      <div 
+      <div
         role="tabpanel"
         id={contentId}
         aria-labelledby={`tab-${activeTab}`}

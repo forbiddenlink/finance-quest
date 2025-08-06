@@ -297,7 +297,7 @@ export default function EmergencyFundScenarioAnalyzer() {
                 placeholder="4000"
                 aria-labelledby="monthly-expenses-label"
                 aria-describedby="monthly-expenses-help monthly-expenses-error"
-                aria-invalid={validationErrors.some(e => e.field === 'monthlyExpenses') ? "true" : "false"}
+                {...(validationErrors.some(e => e.field === 'monthlyExpenses') ? { "aria-invalid": "true" } : {})}
                 min="0"
                 step="100"
               />

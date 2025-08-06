@@ -69,16 +69,24 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' }
+      { url: '/icons/favicon-32x32.png', sizes: '32x32', type: 'image/png' }
     ],
     apple: [
-      { url: '/favicon.svg', sizes: '180x180', type: 'image/svg+xml' }
+      { url: '/icons/apple-touch-icon.png', type: 'image/png' },
+      { url: '/icons/apple-touch-icon-152x152.png', sizes: '152x152', type: 'image/png' },
+      { url: '/icons/apple-touch-icon-167x167.png', sizes: '167x167', type: 'image/png' },
+      { url: '/icons/apple-touch-icon-180x180.png', sizes: '180x180', type: 'image/png' }
     ],
-    shortcut: '/favicon.ico'
+    shortcut: '/favicon.svg'
   },
-  other: {
-    'mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-status-bar-style': 'black-translucent'
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#0f172a' },
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' }
+  ],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Finance Quest'
   }
 };
 
@@ -95,20 +103,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* Apple touch icon for legacy validation tools */}
-        <link rel="apple-touch-icon" href="/favicon.svg" />
-
-        {/* Theme and viewport - Progressive enhancement for supported browsers */}
-        {/* Note: theme-color not supported in Firefox/Opera but provides enhanced UX in Chrome/Safari */}
-        <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
-        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-        <meta name="color-scheme" content="dark light" />
-
-        {/* PWA support */}
+        {/* PWA support and color scheme */}
         <link rel="manifest" href="/manifest.json" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="Finance Quest" />
+        <meta name="color-scheme" content="dark light" />
       </head>
       <body className={`font-sans antialiased ${theme.utils.pageBackground()}`}>
         <ErrorBoundary>

@@ -64,24 +64,28 @@ npm run dev
 ### 🧮 Professional Financial Tools
 
 **Banking & Savings:**
+
 - Paycheck Calculator with tax optimization
 - Savings Calculator with real bank rates
 - Emergency Fund Scenario Analyzer
 - Budget Builder with drag-and-drop interface
 
 **Investment & Portfolio:**
+
 - Portfolio Analyzer with correlation matrices
 - Stock Analysis with technical indicators
 - Asset Allocation Optimizer
 - Risk Tolerance Assessment
 
 **Credit & Debt:**
+
 - Credit Score Simulator
 - Debt Payoff Calculator (avalanche/snowball)
 - Credit Utilization Optimizer
 - Rewards Optimization Tool
 
 **Advanced Finance:**
+
 - Estate Planning Calculator
 - Tax Optimization Strategies
 - Business Valuation Tools
@@ -136,6 +140,7 @@ npm run test:a11y
 ```
 
 **Test Coverage:**
+
 - **Component Tests**: All calculators and UI components
 - **Integration Tests**: End-to-end user workflows
 - **Accessibility Tests**: WCAG 2.1 compliance verification
@@ -171,6 +176,7 @@ npm run test:a11y
 ### Curriculum Structure
 
 **Beginner (Chapters 1-4):**
+
 1. Money Psychology & Mindset
 2. Banking & Account Fundamentals
 3. Budgeting & Cash Flow Mastery
@@ -205,7 +211,7 @@ npm run test:a11y
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 - Git
 
@@ -236,7 +242,7 @@ npm run type-check   # Run TypeScript compiler
 
 ### Project Structure
 
-```
+```txt
 finance-quest/
 ├── app/                    # Next.js App Router pages
 │   ├── chapter1-17/       # Individual chapter pages

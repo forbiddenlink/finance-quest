@@ -225,7 +225,7 @@ export default function CareerValueCalculator() {
                           : 'border-slate-600 focus:ring-yellow-500'
                       }`}
                       aria-describedby={`${offer.id}-base-salary-help ${offer.id}-base-salary-error`}
-                      aria-invalid={validationErrors.some(e => e.field === `${offer.id}-baseSalary`) ? "true" : "false"}
+                      {...(validationErrors.some(e => e.field === `${offer.id}-baseSalary`) ? { 'aria-invalid': 'true' } : {})}
                       min="0"
                       step="1000"
                     />
@@ -257,7 +257,7 @@ export default function CareerValueCalculator() {
                           : 'border-slate-600 focus:ring-yellow-500'
                       }`}
                       aria-describedby={`${offer.id}-annual-bonus-help ${offer.id}-annual-bonus-error`}
-                      aria-invalid={validationErrors.some(e => e.field === `${offer.id}-bonus`) ? "true" : "false"}
+                      {...(validationErrors.some(e => e.field === `${offer.id}-bonus`) ? { 'aria-invalid': 'true' } : {})}
                       min="0"
                       step="500"
                     />
@@ -289,7 +289,7 @@ export default function CareerValueCalculator() {
                           : 'border-slate-600 focus:ring-yellow-500'
                       }`}
                       aria-describedby={`${offer.id}-health-insurance-help ${offer.id}-health-insurance-error`}
-                      aria-invalid={validationErrors.some(e => e.field === `${offer.id}-healthInsurance`) ? "true" : "false"}
+                      {...(validationErrors.some(e => e.field === `${offer.id}-healthInsurance`) ? { 'aria-invalid': 'true' } : {})}
                       min="0"
                       step="500"
                     />
@@ -321,7 +321,7 @@ export default function CareerValueCalculator() {
                           : 'border-slate-600 focus:ring-yellow-500'
                       }`}
                       aria-describedby={`${offer.id}-401k-match-help ${offer.id}-401k-match-error`}
-                      aria-invalid={validationErrors.some(e => e.field === `${offer.id}-retirement401k`) ? "true" : "false"}
+                      {...(validationErrors.some(e => e.field === `${offer.id}-retirement401k`) ? { 'aria-invalid': 'true' } : {})}
                       min="0"
                       step="250"
                     />
@@ -353,7 +353,7 @@ export default function CareerValueCalculator() {
                           : 'border-slate-600 focus:ring-yellow-500'
                       }`}
                       aria-describedby={`${offer.id}-pto-value-help ${offer.id}-pto-value-error`}
-                      aria-invalid={validationErrors.some(e => e.field === `${offer.id}-paidTimeOff`) ? "true" : "false"}
+                      {...(validationErrors.some(e => e.field === `${offer.id}-paidTimeOff`) ? { 'aria-invalid': 'true' } : {})}
                       min="0"
                       step="100"
                     />
@@ -385,7 +385,7 @@ export default function CareerValueCalculator() {
                           : 'border-slate-600 focus:ring-yellow-500'
                       }`}
                       aria-describedby={`${offer.id}-stock-options-help ${offer.id}-stock-options-error`}
-                      aria-invalid={validationErrors.some(e => e.field === `${offer.id}-stockOptions`) ? "true" : "false"}
+                      {...(validationErrors.some(e => e.field === `${offer.id}-stockOptions`) ? { 'aria-invalid': 'true' } : {})}
                       min="0"
                       step="500"
                     />
@@ -435,7 +435,7 @@ export default function CareerValueCalculator() {
                         : 'border-slate-600 focus:ring-yellow-500'
                     }`}
                     aria-describedby="annual-growth-rate-help annual-growth-rate-error"
-                    aria-invalid={validationErrors.some(e => e.field === 'careerGrowthRate') ? "true" : "false"}
+                    {...(validationErrors.some(e => e.field === 'careerGrowthRate') ? { 'aria-invalid': 'true' } : {})}
                     min="0"
                     max="20"
                   />
@@ -466,7 +466,7 @@ export default function CareerValueCalculator() {
                       : 'border-slate-600 focus:ring-yellow-500'
                   }`}
                   aria-describedby="years-to-project-help years-to-project-error"
-                  aria-invalid={validationErrors.some(e => e.field === 'yearsToProject') ? "true" : "false"}
+                  {...(validationErrors.some(e => e.field === 'yearsToProject') ? { 'aria-invalid': 'true' } : {})}
                   min="1"
                   max="40"
                 />

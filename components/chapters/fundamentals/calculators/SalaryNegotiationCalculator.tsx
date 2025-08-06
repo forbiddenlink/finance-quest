@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { TrendingUp, Target } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
+import type { ProgressStore } from '@/lib/store/progressStore';
 
 interface ValidationError {
     field: string;
@@ -32,7 +33,7 @@ export default function SalaryNegotiationCalculator() {
     const [analysis, setAnalysis] = useState<NegotiationAnalysis | null>(null);
     const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
 
-    const recordCalculatorUsage = useProgressStore(state => state.recordCalculatorUsage);
+    const recordCalculatorUsage = useProgressStore((state: ProgressStore) => state.recordCalculatorUsage);
 
     useEffect(() => {
         // Track calculator usage when component mounts
@@ -134,7 +135,7 @@ export default function SalaryNegotiationCalculator() {
                                     : `${theme.borderColors.primary} focus:ring-emerald-500`
                             }`}
                             aria-describedby="currentSalary-help currentSalary-error"
-                            aria-invalid={validationErrors.some(e => e.field === 'currentSalary')}
+                            {...(validationErrors.some(e => e.field === 'currentSalary') ? { "aria-invalid": "true" } : {})}
                             min="20000"
                             step="1000"
                         />
@@ -167,7 +168,7 @@ export default function SalaryNegotiationCalculator() {
                                     : `${theme.borderColors.primary} focus:ring-emerald-500`
                             }`}
                             aria-describedby="targetSalary-help targetSalary-error"
-                            aria-invalid={validationErrors.some(e => e.field === 'targetSalary')}
+                            {...(validationErrors.some(e => e.field === 'targetSalary') ? { "aria-invalid": "true" } : {})}
                             min="20000"
                             step="1000"
                         />
@@ -198,7 +199,7 @@ export default function SalaryNegotiationCalculator() {
                                 : `${theme.borderColors.primary} focus:ring-emerald-500`
                         }`}
                         aria-describedby="yearsOfService-help yearsOfService-error"
-                        aria-invalid={validationErrors.some(e => e.field === 'yearsOfService')}
+                        {...(validationErrors.some(e => e.field === 'yearsOfService') ? { "aria-invalid": "true" } : {})}
                         min="0"
                         max="50"
                         step="0.5"
@@ -269,13 +270,13 @@ export default function SalaryNegotiationCalculator() {
                         <div className="flex items-center gap-3">
                             <div className={`flex-1 ${theme.backgrounds.cardDisabled} rounded-full h-3`}>
                                 <div
-                                    className={`h-3 rounded-full ${analysis.confidenceScore >= 70
-                                        ? '${theme.status.success.bg.replace("/20", "")}'
-                                        : analysis.confidenceScore >= 50
-                                            ? '${theme.status.warning.bg.replace("/20", "")}'
-                                            : '${theme.status.error.bg.replace("/20", "")}'
-                                        }`}
-                                    style={{ width: `${analysis.confidenceScore}%` }}
+                                    className={`h-3 rounded-full ${
+                                        analysis.confidenceScore >= 70
+                                            ? theme.status.success.bg.replace("/20", "")
+                                            : analysis.confidenceScore >= 50
+                                                ? theme.status.warning.bg.replace("/20", "")
+                                                : theme.status.error.bg.replace("/20", "")
+                                    } w-[${analysis.confidenceScore}%]`}
                                 ></div>
                             </div>
                             <span className={`font-semibold ${theme.textColors.primary}`}>

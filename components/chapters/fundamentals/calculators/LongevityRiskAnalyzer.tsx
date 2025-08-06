@@ -500,7 +500,7 @@ const LongevityRiskAnalyzer: React.FC = () => {
               min="18"
               max="80"
               aria-describedby="current-age-longevity-help"
-              aria-invalid={validationErrors.currentAge ? 'true' : 'false'}
+              {...(validationErrors.currentAge ? { "aria-invalid": "true" } : {})}
             />
             {validationErrors.currentAge && (
               <div className="text-red-500 text-xs mt-1" role="alert">
@@ -532,7 +532,7 @@ const LongevityRiskAnalyzer: React.FC = () => {
               min="50"
               max="80"
               aria-describedby="retirement-age-longevity-help"
-              aria-invalid={validationErrors.retirementAge ? 'true' : 'false'}
+              {...(validationErrors.retirementAge ? { "aria-invalid": "true" } : {})}
             />
             {validationErrors.retirementAge && (
               <div className="text-red-500 text-xs mt-1" role="alert">

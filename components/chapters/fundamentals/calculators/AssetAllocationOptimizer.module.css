@@ -1,0 +1,37 @@
+.progressBar {
+  width: var(--progress-percent);
+  transition: width 0.3s ease;
+}
+
+.progressBarContainer {
+  width: 100%;
+  background-color: var(--bg-color, #e5e7eb);
+  border-radius: 9999px;
+  height: 0.5rem;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+  width: 0;
+}
+
+.progressBarFill[data-progress] {
+  width: calc(var(--progress, 0) * 1%);
+}
+
+/* Asset color classes for backgrounds */
+.assetStocksBg {
+  background-color: var(--asset-stocks-color, #10B981);
+}
+.assetBondsBg {
+  background-color: var(--asset-bonds-color, #F59E0B);
+}
+.assetReitsBg {
+  background-color: var(--asset-reits-color, #EF4444);
+}
+.assetCommoditiesBg {
+  background-color: var(--asset-commodities-color, #8B5CF6);
+}

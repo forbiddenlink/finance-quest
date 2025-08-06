@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
+import styles from './RiskToleranceCalculator.module.css';
 import {
   AlertTriangle,
   Target,
@@ -567,7 +568,7 @@ export default function RiskToleranceCalculator() {
       </div>
 
       {/* Progress Bar */}
-      <div className="mb-8" role="progressbar" aria-valuenow={Math.round(progressPercent)} aria-valuemin={0} aria-valuemax={100} aria-label="Assessment progress">
+      <div className="mb-8">
         <div className="flex items-center justify-between mb-2">
           <span className={`text-sm font-medium ${theme.textColors.secondary}`}>
             Question {currentQuestion + 1} of {riskQuestions.length}
@@ -576,10 +577,12 @@ export default function RiskToleranceCalculator() {
             {progressPercent.toFixed(0)}% Complete
           </span>
         </div>
-        <div className={`w-full bg-gray-200 rounded-full h-2`}>
+        <div 
+          className={`w-full bg-gray-200 rounded-full h-2`}
+          data-progress={Math.round(progressPercent / 10) * 10}
+        >
           <div
-            className={`${theme.status.info.bg.replace('/20', '')} h-2 rounded-full transition-all duration-300`}
-            style={{ width: `${progressPercent}%` }}
+            className={`${theme.status.info.bg.replace('/20', '')} h-2 rounded-full ${styles.progressBarFill}`}
             aria-hidden="true"
           ></div>
         </div>
@@ -609,7 +612,7 @@ export default function RiskToleranceCalculator() {
                   clearValidationError('ageRange');
                 }}
                 aria-describedby={getValidationError('ageRange') ? 'age-range-error' : undefined}
-                aria-invalid={!!getValidationError('ageRange')}
+                {...(!!getValidationError('ageRange') ? { 'aria-invalid': 'true' } : {})}
                 className={`w-full px-3 py-2 border ${getValidationError('ageRange') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
               >
                 <option value="20-30">20-30</option>
@@ -640,7 +643,7 @@ export default function RiskToleranceCalculator() {
                   clearValidationError('investmentGoal');
                 }}
                 aria-describedby={getValidationError('investmentGoal') ? 'investment-goal-error' : undefined}
-                aria-invalid={!!getValidationError('investmentGoal')}
+                {...(!!getValidationError('investmentGoal') ? { 'aria-invalid': 'true' } : {})}
                 className={`w-full px-3 py-2 border ${getValidationError('investmentGoal') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
               >
                 <option value="retirement">Retirement</option>
@@ -670,7 +673,7 @@ export default function RiskToleranceCalculator() {
                   clearValidationError('timeHorizon');
                 }}
                 aria-describedby={getValidationError('timeHorizon') ? 'time-horizon-error' : undefined}
-                aria-invalid={!!getValidationError('timeHorizon')}
+                {...(!!getValidationError('timeHorizon') ? { 'aria-invalid': 'true' } : {})}
                 className={`w-full px-3 py-2 border ${getValidationError('timeHorizon') ? 'border-red-500' : theme.borderColors.primary} rounded-lg focus:ring-2 focus:ring-blue-500 ${theme.textColors.primary} bg-slate-800`}
               >
                 <option value="5-10">5-10 years</option>
@@ -706,7 +709,7 @@ export default function RiskToleranceCalculator() {
               <button
                 key={index}
                 role="radio"
-                aria-checked={false}
+                aria-checked="false"
                 onClick={() => handleAnswer(question.id, answer.score)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {

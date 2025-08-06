@@ -402,31 +402,36 @@ export default function BRRRRStrategyCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="carrying-costs" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Carrying Costs (utilities, insurance, etc.)
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="carrying-costs"
                       type="number"
                       value={carryingCosts}
                       onChange={(e) => setCarryingCosts(Number(e.target.value))}
+                      placeholder="Enter monthly carrying costs"
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="permits-costs" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Permits & Professional Fees
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="permits-costs"
                       type="number"
                       value={permitsCosts}
                       onChange={(e) => setPermitsCosts(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                      aria-label="Permits and Professional Fees"
+                      placeholder="Enter total permit and professional fees"
                     />
                   </div>
                 </div>
@@ -444,63 +449,75 @@ export default function BRRRRStrategyCalculator() {
               
               <div className="space-y-4">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="monthly-rent" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Monthly Rent
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="monthly-rent"
                       type="number"
                       value={monthlyRent}
                       onChange={(e) => setMonthlyRent(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                      aria-label="Monthly Rent Amount"
+                      placeholder="Enter expected monthly rental income"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="security-deposit" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Security Deposit
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="security-deposit"
                       type="number"
                       value={securityDeposit}
                       onChange={(e) => setSecurityDeposit(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                      aria-label="Security Deposit Amount"
+                      placeholder="Enter required security deposit"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="monthly-expenses" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Monthly Operating Expenses
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="monthly-expenses"
                       type="number"
                       value={monthlyExpenses}
                       onChange={(e) => setMonthlyExpenses(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                      aria-label="Monthly Operating Expenses"
+                      placeholder="Enter monthly operating costs"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="vacancy-rate" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Vacancy Rate %
                   </label>
                   <div className="relative">
                     <Calculator className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="vacancy-rate"
                       type="number"
                       value={vacancyRate}
                       onChange={(e) => setVacancyRate(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                       min="0"
                       max="50"
+                      aria-label="Vacancy Rate Percentage"
+                      placeholder="Enter expected vacancy rate"
                     />
                   </div>
                 </div>
@@ -518,49 +535,58 @@ export default function BRRRRStrategyCalculator() {
               
               <div className="space-y-4">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="after-repair-value" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     After Repair Value (ARV)
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="after-repair-value"
                       type="number"
                       value={afterRepairValue}
                       onChange={(e) => setAfterRepairValue(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                      aria-label="After Repair Value"
+                      placeholder="Enter estimated value after repairs"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="refinance-ltv" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Refinance LTV %
                   </label>
                   <div className="relative">
                     <Calculator className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="refinance-ltv"
                       type="number"
                       value={refinanceLTV}
                       onChange={(e) => setRefinanceLTV(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                       min="0"
                       max="100"
+                      aria-label="Refinance Loan to Value Percentage"
+                      placeholder="Enter refinance LTV percentage"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="refinance-rate" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Refinance Interest Rate %
                   </label>
                   <div className="relative">
                     <Calculator className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="refinance-rate"
                       type="number"
                       step="0.1"
                       value={refinanceRate}
                       onChange={(e) => setRefinanceRate(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                      aria-label="Refinance Interest Rate"
+                      placeholder="Enter refinance interest rate"
                     />
                   </div>
                 </div>
@@ -586,16 +612,19 @@ export default function BRRRRStrategyCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="refinance-closing-costs" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Refinance Closing Costs
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="refinance-closing-costs"
                       type="number"
                       value={refinanceClosingCosts}
                       onChange={(e) => setRefinanceClosingCosts(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                      aria-label="Refinance Closing Costs"
+                      placeholder="Enter refinance closing costs"
                     />
                   </div>
                 </div>
@@ -613,33 +642,39 @@ export default function BRRRRStrategyCalculator() {
               
               <div className="space-y-4">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="rent-growth-rate" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Annual Rent Growth %
                   </label>
                   <div className="relative">
                     <TrendingUp className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="rent-growth-rate"
                       type="number"
                       step="0.1"
                       value={rentGrowthRate}
                       onChange={(e) => setRentGrowthRate(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                      aria-label="Annual Rent Growth Rate"
+                      placeholder="Enter expected annual rent increase"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="appreciation-rate" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Annual Appreciation %
                   </label>
                   <div className="relative">
                     <TrendingUp className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="appreciation-rate"
                       type="number"
                       step="0.1"
                       value={appreciationRate}
                       onChange={(e) => setAppreciationRate(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                      aria-label="Annual Property Appreciation Rate"
+                      placeholder="Enter expected property appreciation"
                     />
                   </div>
                 </div>

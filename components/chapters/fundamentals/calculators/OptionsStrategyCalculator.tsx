@@ -555,16 +555,19 @@ export default function OptionsStrategyCalculator() {
 
                 {(selectedStrategy.includes('spread') || selectedStrategy.includes('condor')) && (
                   <div>
-                    <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                    <label htmlFor="strike-price-2" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                       Strike Price 2
                     </label>
                     <div className="relative">
                       <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                       <input
+                        id="strike-price-2"
                         type="number"
                         step="0.01"
                         value={strikePrice2}
                         onChange={(e) => setStrikePrice2(Number(e.target.value))}
+                        aria-label="Strike Price 2"
+                        placeholder="Enter second strike price"
                         className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                       />
                     </div>
@@ -573,50 +576,59 @@ export default function OptionsStrategyCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="option-premium" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Option Premium
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="option-premium"
                     type="number"
                     step="0.01"
                     value={premiumPaid}
                     onChange={(e) => setPremiumPaid(Number(e.target.value))}
                     className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                    aria-label="Option Premium"
+                    placeholder="Enter option premium amount"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="days-to-expiration" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Days to Expiration
                   </label>
                   <div className="relative">
                     <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="days-to-expiration"
                       type="number"
                       min="1"
                       value={timeToExpiration}
                       onChange={(e) => setTimeToExpiration(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                      aria-label="Days to Expiration"
+                      placeholder="Enter days until expiration"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="implied-volatility" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Implied Volatility %
                   </label>
                   <div className="relative">
                     <Percent className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="implied-volatility"
                       type="number"
                       step="0.1"
                       value={volatility}
                       onChange={(e) => setVolatility(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                      aria-label="Implied Volatility Percentage"
+                      placeholder="Enter implied volatility percentage"
                     />
                   </div>
                 </div>
@@ -624,33 +636,39 @@ export default function OptionsStrategyCalculator() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="risk-free-rate" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Risk-Free Rate %
                   </label>
                   <div className="relative">
                     <Percent className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="risk-free-rate"
                       type="number"
                       step="0.01"
                       value={riskFreeRate}
                       onChange={(e) => setRiskFreeRate(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                      aria-label="Risk-Free Rate Percentage"
+                      placeholder="Enter risk-free rate percentage"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="dividend-yield" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Dividend Yield %
                   </label>
                   <div className="relative">
                     <Percent className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="dividend-yield"
                       type="number"
                       step="0.01"
                       value={dividendYield}
                       onChange={(e) => setDividendYield(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                      aria-label="Dividend Yield Percentage"
+                      placeholder="Enter dividend yield percentage"
                     />
                   </div>
                 </div>
