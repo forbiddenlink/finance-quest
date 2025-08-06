@@ -301,12 +301,13 @@ export default function PropertyInvestmentAnalyzer() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="down-payment-percent" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Down Payment %
                   </label>
                   <div className="relative">
                     <Percent className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="down-payment-percent"
                       type="number"
                       value={downPaymentPercent}
                       onChange={(e) => setDownPaymentPercent(Number(e.target.value))}
@@ -318,12 +319,13 @@ export default function PropertyInvestmentAnalyzer() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="interest-rate" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Interest Rate %
                   </label>
                   <div className="relative">
                     <Percent className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="interest-rate"
                       type="number"
                       step="0.1"
                       value={interestRate}
@@ -336,12 +338,13 @@ export default function PropertyInvestmentAnalyzer() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="loan-term" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Loan Term (years)
                   </label>
                   <div className="relative">
                     <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <select
+                      id="loan-term"
                       value={loanTerm}
                       onChange={(e) => setLoanTerm(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
@@ -355,12 +358,13 @@ export default function PropertyInvestmentAnalyzer() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="closing-costs" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Closing Costs
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="closing-costs"
                       type="number"
                       value={closingCosts}
                       onChange={(e) => setClosingCosts(Number(e.target.value))}
@@ -395,12 +399,13 @@ export default function PropertyInvestmentAnalyzer() {
             
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="monthly-rent" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Monthly Rent
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="monthly-rent"
                     type="number"
                     value={monthlyRent}
                     onChange={(e) => setMonthlyRent(Number(e.target.value))}
@@ -411,12 +416,13 @@ export default function PropertyInvestmentAnalyzer() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="vacancy-rate" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Vacancy Rate %
                   </label>
                   <div className="relative">
                     <Percent className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="vacancy-rate"
                       type="number"
                       value={vacancyRate}
                       onChange={(e) => setVacancyRate(Number(e.target.value))}
@@ -487,12 +493,13 @@ export default function PropertyInvestmentAnalyzer() {
             
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="rent-growth-rate" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Rent Growth Rate % (Annual)
                 </label>
                 <div className="relative">
                   <TrendingUp className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="rent-growth-rate"
                     type="number"
                     step="0.1"
                     value={rentGrowthRate}
@@ -503,12 +510,13 @@ export default function PropertyInvestmentAnalyzer() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="property-appreciation-rate" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Property Appreciation % (Annual)
                 </label>
                 <div className="relative">
                   <Home className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="property-appreciation-rate"
                     type="number"
                     step="0.1"
                     value={propertyAppreciationRate}
@@ -519,12 +527,13 @@ export default function PropertyInvestmentAnalyzer() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="expense-growth-rate" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Expense Growth Rate % (Annual)
                 </label>
                 <div className="relative">
                   <TrendingUp className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="expense-growth-rate"
                     type="number"
                     step="0.1"
                     value={expenseGrowthRate}

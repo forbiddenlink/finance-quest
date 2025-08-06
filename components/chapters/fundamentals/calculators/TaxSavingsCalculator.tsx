@@ -197,10 +197,11 @@ export default function TaxSavingsCalculator() {
           </div>
 
           <div>
-            <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+            <label htmlFor="filing-status" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
               Filing Status
             </label>
             <select
+              id="filing-status"
               value={filingStatus}
               onChange={(e) => setFilingStatus(e.target.value as 'single' | 'marriedJoint' | 'marriedSeparate' | 'headOfHousehold')}
               className={`w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}

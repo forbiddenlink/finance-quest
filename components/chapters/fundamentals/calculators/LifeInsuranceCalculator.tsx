@@ -375,11 +375,14 @@ export default function LifeInsuranceCalculator() {
               {familyMembers.map((member) => (
                 <div key={member.id} className={`p-3 bg-slate-800/50 border ${theme.borderColors.primary} rounded-lg`}>
                   <div className="flex items-center justify-between mb-2">
+                    <label htmlFor={`member-name-${member.id}`} className="sr-only">Family member name</label>
                     <input
+                      id={`member-name-${member.id}`}
                       type="text"
                       value={member.name}
                       onChange={(e) => updateFamilyMember(member.id, 'name', e.target.value)}
                       className={`bg-transparent ${theme.textColors.primary} font-medium border-none outline-none`}
+                      placeholder="Family member name"
                     />
                     <button
                       onClick={() => removeFamilyMember(member.id)}
@@ -391,8 +394,9 @@ export default function LifeInsuranceCalculator() {
                   
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     <div>
-                      <label className={`${theme.textColors.secondary}`}>Age</label>
+                      <label htmlFor={`member-age-${member.id}`} className={`${theme.textColors.secondary}`}>Age</label>
                       <input
+                        id={`member-age-${member.id}`}
                         type="number"
                         value={member.age}
                         onChange={(e) => updateFamilyMember(member.id, 'age', Number(e.target.value))}
@@ -400,8 +404,9 @@ export default function LifeInsuranceCalculator() {
                       />
                     </div>
                     <div>
-                      <label className={`${theme.textColors.secondary}`}>Relationship</label>
+                      <label htmlFor={`member-relationship-${member.id}`} className={`${theme.textColors.secondary}`}>Relationship</label>
                       <select
+                        id={`member-relationship-${member.id}`}
                         value={member.relationship}
                         onChange={(e) => updateFamilyMember(member.id, 'relationship', e.target.value)}
                         className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs`}
@@ -412,8 +417,9 @@ export default function LifeInsuranceCalculator() {
                       </select>
                     </div>
                     <div>
-                      <label className={`${theme.textColors.secondary}`}>Monthly Expenses</label>
+                      <label htmlFor={`member-expenses-${member.id}`} className={`${theme.textColors.secondary}`}>Monthly Expenses</label>
                       <input
+                        id={`member-expenses-${member.id}`}
                         type="number"
                         value={member.monthlyExpenses}
                         onChange={(e) => updateFamilyMember(member.id, 'monthlyExpenses', Number(e.target.value))}
@@ -421,8 +427,9 @@ export default function LifeInsuranceCalculator() {
                       />
                     </div>
                     <div>
-                      <label className={`${theme.textColors.secondary}`}>Years of Support</label>
+                      <label htmlFor={`member-support-${member.id}`} className={`${theme.textColors.secondary}`}>Years of Support</label>
                       <input
+                        id={`member-support-${member.id}`}
                         type="number"
                         value={member.yearsOfSupport}
                         onChange={(e) => updateFamilyMember(member.id, 'yearsOfSupport', Number(e.target.value))}
