@@ -317,7 +317,11 @@ export default function InvestmentCalculatorEnhanced() {
           {tabs.map((tab, index) => (
             <button
               key={tab.id}
-              ref={(el) => (tabRefs.current[tab.id] = el)}
+              ref={(el) => {
+                if (el) {
+                  tabRefs.current[tab.id] = el;
+                }
+              }}
               role="tab"
               tabIndex={activeTab === tab.id ? 0 : -1}
               aria-selected={activeTab === tab.id}

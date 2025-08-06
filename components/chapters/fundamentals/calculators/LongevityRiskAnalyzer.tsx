@@ -605,7 +605,7 @@ const LongevityRiskAnalyzer: React.FC = () => {
                 aria-describedby="desired-income-longevity-help"
               />
               <span id="desired-income-longevity-help" className="sr-only">
-                Enter your desired annual retirement income in today's dollars
+                Enter your desired annual retirement income in today&apos;s dollars
               </span>
             </div>
           </div>

@@ -209,7 +209,7 @@ export default function SalaryNegotiationCalculator() {
                         </p>
                     )}
                     <p id="yearsOfService-help" className={`text-xs ${theme.textColors.muted} mt-1`}>
-                        How long you've been in your current position (strengthens negotiation)
+                        How long you&apos;ve been in your current position (strengthens negotiation)
                     </p>
                 </div>
 
