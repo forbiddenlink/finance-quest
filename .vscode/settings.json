@@ -1,7 +1,7 @@
 {
     // Terminal Shell Integration Settings
     "terminal.integrated.shellIntegration.enabled": true,
-    "terminal.integrated.shellIntegration.showWelcome": false,
+    "terminal.integrated.shellIntegration.showWelcome": true,
     "terminal.integrated.shellIntegration.decorationsEnabled": "both",
     // Enhanced PowerShell Integration
     "terminal.integrated.profiles.windows": {
@@ -73,5 +73,6 @@
     "terminal.integrated.suggest.enabled": true,
     "terminal.integrated.suggest.suggestOnTriggerCharacters": true,
     "terminal.integrated.suggest.runOnEnter": "never",
-    "terminal.integrated.suggest.showStatusBar": true
+    "terminal.integrated.suggest.showStatusBar": true,
+    "terminal.integrated.accessibleViewFocusOnCommandExecution": true
 }
