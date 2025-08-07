@@ -2,7 +2,7 @@
 
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
 import BudgetingMasteryLessonEnhanced from '@/components/chapters/fundamentals/lessons/BudgetingMasteryLessonEnhanced';
-import BudgetBuilderCalculator from '@/components/shared/calculators/BudgetBuilderCalculator';
+import BudgetingCalculatorSuite from '@/components/chapters/fundamentals/calculators/BudgetingCalculatorSuite';
 import BudgetingMasteryQuizEnhanced from '@/components/chapters/fundamentals/quizzes/BudgetingMasteryQuizEnhanced';
 import { Target } from 'lucide-react';
 
@@ -15,10 +15,10 @@ export default function Chapter3Page() {
             icon={Target}
             iconColor="text-purple-400"
             lessonComponent={<BudgetingMasteryLessonEnhanced />}
-            calculatorComponent={<BudgetBuilderCalculator />}
+            calculatorComponent={<BudgetingCalculatorSuite />}
             quizComponent={<BudgetingMasteryQuizEnhanced />}
-            calculatorTitle="Advanced Budget Builder"
-            calculatorDescription="Build, track, and optimize your budget with interactive analysis and 50/30/20 guidance"
+            calculatorTitle="Advanced Budgeting Suite"
+            calculatorDescription="Master budgeting with 4 professional tools: Budget Builder, Optimizer, Cash Flow Tracker, and Savings Goal Planner"
             quizTitle="Cash Flow Mastery Quiz"
             quizDescription="Prove your budgeting expertise and unlock emergency fund strategies! You need 80% to unlock Chapter 4."
         />

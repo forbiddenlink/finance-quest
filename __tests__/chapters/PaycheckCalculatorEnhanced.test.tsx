@@ -278,20 +278,24 @@ describe('PaycheckCalculator', () => {
   test('shows take-home percentage with appropriate status', async () => {
     render(<PaycheckCalculator />);
     
-    // Wait for the calculation to complete (has 300ms delay)
+    // Trigger calculation by changing input to ensure debounce timer fires
+    const grossPayInput = screen.getByLabelText(/Monthly Gross Pay/i);
+    fireEvent.change(grossPayInput, { target: { value: '5000' } });
+    
+    // Wait longer for the debounce timer (500ms) + calculation time (300ms) + buffer
     await waitFor(() => {
       expect(screen.queryByText(/Calculating your paycheck/i)).not.toBeInTheDocument();
-    }, { timeout: 5000 });
+    }, { timeout: 10000 });
     
     await waitFor(() => {
       expect(screen.getByText(/Take-home percentage:/i)).toBeInTheDocument();
-    }, { timeout: 1000 });
+    }, { timeout: 2000 });
     
     // Should show percentage value - look for specific patterns
     await waitFor(() => {
       const percentagePattern = /\d+(\.\d+)?%/;
       expect(screen.getByText(percentagePattern)).toBeInTheDocument();
-    }, { timeout: 1000 });
+    }, { timeout: 2000 });
   });
 
   test('provides actionable optimization recommendations', async () => {
