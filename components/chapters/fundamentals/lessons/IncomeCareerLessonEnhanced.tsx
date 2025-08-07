@@ -9,6 +9,7 @@ import ProgressRing from '@/components/shared/ui/ProgressRing';
 import CareerPersonalityAssessment from './CareerPersonalityAssessment';
 import SalaryNegotiationSimulator from './SalaryNegotiationSimulator';
 import SkillInvestmentCalculator from './SkillInvestmentCalculator';
+import CareerGrowthROICalculator from './CareerGrowthROICalculator';
 import {
   Briefcase,
   TrendingUp,
@@ -375,6 +376,19 @@ export default function IncomeCareerLessonEnhanced({ onComplete }: IncomeCareerL
                   🎓 <strong>Use the Calculator tab&apos;s &quot;Skill Investment&quot;</strong> tool to calculate the ROI of developing side hustle skills vs other career investments.
                 </p>
               </div>
+            </div>
+          )}
+
+          {currentLesson === 3 && (
+            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                <BarChart3 className="w-5 h-5" />
+                Career Growth ROI Calculator
+              </h3>
+              <p className={`${theme.textColors.secondary} mb-4`}>
+                Compare different career paths and calculate the lifetime ROI of strategic career moves including job changes, education, and skill development.
+              </p>
+              <CareerGrowthROICalculator />
             </div>
           )}
 
