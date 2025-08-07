@@ -133,7 +133,7 @@ export default function PortfolioConstructionLessonEnhanced({ onComplete }: Port
       const totalTime = Math.round((new Date().getTime() - startTime.getTime()) / 1000 / 60);
       completeLesson('portfolio-construction-enhanced-lesson', totalTime);
     }
-    
+
     onComplete?.();
     toast.success('Portfolio Construction mastery achieved! Time for advanced practice! 🏆', {
       duration: 4000,
@@ -179,17 +179,17 @@ export default function PortfolioConstructionLessonEnhanced({ onComplete }: Port
           <ProgressRing progress={progress} size={60} strokeWidth={4} />
           <p className={`text-sm ${theme.textColors.primary} font-medium mt-2`}>Overall Progress</p>
         </GradientCard>
-        
+
         <GradientCard variant="glass" gradient="green" className="p-4 text-center">
           <div className={`text-2xl font-bold ${theme.textColors.primary}`}>{completedCount}/{enhancedLessons.length}</div>
           <p className={`text-sm ${theme.textColors.secondary}`}>Lessons Complete</p>
         </GradientCard>
-        
+
         <GradientCard variant="glass" gradient="purple" className="p-4 text-center">
           <div className={`text-2xl font-bold ${theme.textColors.primary}`}>{currentLesson + 1}</div>
           <p className={`text-sm ${theme.textColors.secondary}`}>Current Lesson</p>
         </GradientCard>
-        
+
         <GradientCard variant="glass" gradient="yellow" className="p-4 text-center">
           <Award className={`w-8 h-8 ${theme.textColors.primary} mx-auto`} />
           <p className={`text-sm ${theme.textColors.secondary}`}>Portfolio Builder</p>
@@ -212,7 +212,7 @@ export default function PortfolioConstructionLessonEnhanced({ onComplete }: Port
               </p>
             </div>
           </div>
-          
+
           {completedLessons[currentLesson] && (
             <div className={`w-8 h-8 ${theme.status.success.bg} rounded-full flex items-center justify-center`}>
               <CheckCircle className={`w-5 h-5 ${theme.status.success.text}`} />
@@ -220,14 +220,14 @@ export default function PortfolioConstructionLessonEnhanced({ onComplete }: Port
           )}
         </div>
 
-          {/* Progress Bar */}
-          <div className={`w-full bg-slate-800/50 rounded-full h-2 mb-8`}>
-            <div
-              className={`h-2 ${theme.status.success.bg} rounded-full transition-all duration-500`}
-              style={{ width: `${((currentLesson + 1) / enhancedLessons.length) * 100}%` }}
-              aria-hidden="true"
-            />
-          </div>        {/* Lesson Content */}
+        {/* Progress Bar */}
+        <div className={`w-full bg-slate-800/50 rounded-full h-2 mb-8`}>
+          <div
+            className={`h-2 ${theme.status.success.bg} rounded-full transition-all duration-500`}
+            style={{ width: `${((currentLesson + 1) / enhancedLessons.length) * 100}%` }}
+            aria-hidden="true"
+          />
+        </div>        {/* Lesson Content */}
         <div className="space-y-6">
           <div>
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
@@ -345,13 +345,12 @@ export default function PortfolioConstructionLessonEnhanced({ onComplete }: Port
             <button
               key={index}
               onClick={() => setCurrentLesson(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === currentLesson
-                  ? theme.status.info.bg
-                  : completedLessons[index]
+              className={`w-3 h-3 rounded-full transition-all ${index === currentLesson
+                ? theme.status.info.bg
+                : completedLessons[index]
                   ? theme.status.success.bg
                   : `bg-slate-800/50 opacity-50`
-              }`}
+                }`}
               title={`Go to lesson ${index + 1}`}
               aria-label={`Lesson ${index + 1} navigation dot`}
             />
@@ -377,7 +376,7 @@ export default function PortfolioConstructionLessonEnhanced({ onComplete }: Port
             🛠️ Interactive Portfolio Construction Suite
           </h2>
           <p className={`text-lg ${theme.textColors.secondary} mb-8 max-w-4xl mx-auto`}>
-            Master portfolio construction with these advanced tools. Analyze diversification, 
+            Master portfolio construction with these advanced tools. Analyze diversification,
             optimize rebalancing strategies, and explore Modern Portfolio Theory principles with real-time calculations.
           </p>
         </GradientCard>

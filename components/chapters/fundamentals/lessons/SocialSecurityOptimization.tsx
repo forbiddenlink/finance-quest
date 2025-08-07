@@ -44,21 +44,21 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
   const calculateBenefits = (): ClaimingStrategy[] => {
     const fra = fullRetirementAge;
     const baseMonthly = estimatedBenefit;
-    
+
     const strategies: ClaimingStrategy[] = [];
-    
+
     // Age 62 (early claiming)
     const age62Monthly = baseMonthly * 0.75; // 25% reduction
     const age62Lifetime = age62Monthly * (lifeExpectancy - 62) * 12;
-    
+
     // Full Retirement Age
     const fraMonthly = baseMonthly;
     const fraLifetime = baseMonthly * (lifeExpectancy - fra) * 12;
-    
+
     // Age 70 (delayed retirement credits)
     const age70Monthly = baseMonthly * 1.32; // 32% increase (8% per year * 4 years)
     const age70Lifetime = age70Monthly * (lifeExpectancy - 70) * 12;
-    
+
     strategies.push(
       {
         age: 62,
@@ -85,7 +85,7 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
         breakEven: 'Age 83'
       }
     );
-    
+
     return strategies;
   };
 
@@ -93,28 +93,28 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
   const generateChartData = () => {
     const strategies = calculateBenefits();
     const chartData = [];
-    
+
     for (let age = 62; age <= lifeExpectancy; age++) {
-      const data: { age: number; [key: string]: number } = { age };
-      
+      const data: { age: number;[key: string]: number } = { age };
+
       // Age 62 claiming
       if (age >= 62) {
         data.claimAt62 = strategies[0].monthlyBenefit * (age - 62 + 1) * 12;
       }
-      
+
       // FRA claiming
       if (age >= fullRetirementAge) {
         data.claimAtFRA = strategies[1].monthlyBenefit * (age - fullRetirementAge + 1) * 12;
       }
-      
+
       // Age 70 claiming
       if (age >= 70) {
         data.claimAt70 = strategies[2].monthlyBenefit * (age - 70 + 1) * 12;
       }
-      
+
       chartData.push(data);
     }
-    
+
     return chartData;
   };
 
@@ -291,7 +291,7 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
                   Optimal Strategy Recommendation
                 </h4>
               </div>
-              
+
               <div className={`p-4 ${theme.status.success.bg} border-l-4 ${theme.status.success.border} rounded-lg mb-4`}>
                 <p className={`text-lg font-semibold ${theme.status.success.text} mb-2`}>
                   Optimal Claiming Age: {optimal.age} years
@@ -334,7 +334,7 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
               <h4 className={`text-xl font-bold ${theme.textColors.primary} mb-6 text-center`}>
                 Claiming Strategy Comparison
               </h4>
-              
+
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -360,9 +360,8 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
-                        className={`border-b ${theme.borderColors.muted} ${
-                          strategy.age === optimal.age ? theme.status.success.bg : ''
-                        }`}
+                        className={`border-b ${theme.borderColors.muted} ${strategy.age === optimal.age ? theme.status.success.bg : ''
+                          }`}
                       >
                         <td className={`py-3 px-4 ${theme.textColors.primary} font-medium`}>
                           {strategy.age}
@@ -376,9 +375,9 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
                           ${strategy.monthlyBenefit.toLocaleString()}
                         </td>
                         <td className={`py-3 px-4 ${theme.textColors.secondary}`}>
-                          ${(strategy.age === 62 ? strategy.lifetime62 : 
-                             strategy.age === fullRetirementAge ? strategy.lifetime67 : 
-                             strategy.lifetime70).toLocaleString()}
+                          ${(strategy.age === 62 ? strategy.lifetime62 :
+                            strategy.age === fullRetirementAge ? strategy.lifetime67 :
+                              strategy.lifetime70).toLocaleString()}
                         </td>
                         <td className={`py-3 px-4 ${theme.textColors.secondary}`}>
                           {strategy.breakEven}
@@ -395,27 +394,27 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
               <h4 className={`text-xl font-bold ${theme.textColors.primary} mb-6 text-center`}>
                 Cumulative Benefits by Claiming Age
               </h4>
-              
+
               <div className="h-96">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={chartData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                    <XAxis 
-                      dataKey="age" 
+                    <XAxis
+                      dataKey="age"
                       stroke="#9CA3AF"
                       label={{ value: 'Age', position: 'insideBottom', offset: -5 }}
                     />
-                    <YAxis 
+                    <YAxis
                       stroke="#9CA3AF"
                       tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                       label={{ value: 'Cumulative Benefits', angle: -90, position: 'insideLeft' }}
                     />
-                    <Tooltip 
+                    <Tooltip
                       formatter={(value: number, name: string) => [
                         `$${value?.toLocaleString() || 0}`,
                         name === 'claimAt62' ? 'Claim at 62' :
-                        name === 'claimAtFRA' ? `Claim at ${fullRetirementAge}` :
-                        'Claim at 70'
+                          name === 'claimAtFRA' ? `Claim at ${fullRetirementAge}` :
+                            'Claim at 70'
                       ]}
                       labelFormatter={(age) => `Age: ${age}`}
                       contentStyle={{
@@ -465,7 +464,7 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
                   Important Considerations
                 </h4>
               </div>
-              
+
               <div className="space-y-4">
                 <div className={`p-4 ${theme.status.info.bg} border-l-4 ${theme.status.info.border} rounded-lg`}>
                   <h5 className={`font-semibold ${theme.status.info.text} mb-2`}>
@@ -475,7 +474,7 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
                     If you have health concerns or family history of shorter lifespans, claiming earlier might be beneficial. If you&apos;re healthy with good longevity genetics, delaying often pays off.
                   </p>
                 </div>
-                
+
                 <div className={`p-4 ${theme.status.warning.bg} border-l-4 ${theme.status.warning.border} rounded-lg`}>
                   <h5 className={`font-semibold ${theme.status.warning.text} mb-2`}>
                     Financial Need
@@ -484,7 +483,7 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
                     If you need income immediately and don&apos;t have other retirement savings, claiming at 62 might be necessary despite the reduction in benefits.
                   </p>
                 </div>
-                
+
                 <div className={`p-4 ${theme.status.success.bg} border-l-4 ${theme.status.success.border} rounded-lg`}>
                   <h5 className={`font-semibold ${theme.status.success.text} mb-2`}>
                     Working in Retirement

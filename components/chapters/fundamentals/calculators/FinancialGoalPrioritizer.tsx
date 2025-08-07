@@ -95,7 +95,7 @@ export default function FinancialGoalPrioritizer() {
     const analysisResults: GoalAnalysis[] = sortedGoals.map(goal => {
       const remainingAmount = goal.targetAmount - goal.currentAmount;
       const monthlyRequired = remainingAmount / goal.timeframe;
-      const feasibilityScore = availableForGoals > 0 ? 
+      const feasibilityScore = availableForGoals > 0 ?
         Math.min(100, (availableForGoals / monthlyRequired) * 100) : 0;
 
       const recommendations: string[] = [];
@@ -447,11 +447,10 @@ export default function FinancialGoalPrioritizer() {
                       Feasibility
                     </span>
                   </div>
-                  <p className={`text-xl font-bold ${
-                    item.feasibilityScore >= 80 ? 'text-green-400' :
-                    item.feasibilityScore >= 60 ? 'text-yellow-400' :
-                    item.feasibilityScore >= 40 ? 'text-orange-400' : 'text-red-400'
-                  }`}>
+                  <p className={`text-xl font-bold ${item.feasibilityScore >= 80 ? 'text-green-400' :
+                      item.feasibilityScore >= 60 ? 'text-yellow-400' :
+                        item.feasibilityScore >= 40 ? 'text-orange-400' : 'text-red-400'
+                    }`}>
                     {Math.round(item.feasibilityScore)}%
                   </p>
                 </div>

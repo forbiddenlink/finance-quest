@@ -80,8 +80,8 @@ export default function SpendingMindsetAnalyzer() {
   };
 
   const toggleTrigger = (trigger: string) => {
-    setTriggers(prev => 
-      prev.includes(trigger) 
+    setTriggers(prev =>
+      prev.includes(trigger)
         ? prev.filter(t => t !== trigger)
         : [...prev, trigger]
     );
@@ -96,7 +96,7 @@ export default function SpendingMindsetAnalyzer() {
       .filter(cat => cat.amount > cat.budget)
       .map(cat => cat.name);
 
-    const overspendingAmount = categories.reduce((sum, cat) => 
+    const overspendingAmount = categories.reduce((sum, cat) =>
       cat.amount > cat.budget ? sum + (cat.amount - cat.budget) : sum, 0
     );
 
@@ -219,7 +219,7 @@ export default function SpendingMindsetAnalyzer() {
           {categories.map((category, index) => (
             <div key={category.name} className="space-y-2">
               <div className="flex items-center space-x-2">
-                <div 
+                <div
                   className="w-4 h-4 rounded-full border-2"
                   style={{ backgroundColor: category.color, borderColor: category.color }}
                 />
@@ -273,18 +273,16 @@ export default function SpendingMindsetAnalyzer() {
             <button
               key={trigger}
               onClick={() => toggleTrigger(trigger)}
-              className={`p-3 rounded-lg border text-left transition-all duration-200 ${
-                triggers.includes(trigger)
+              className={`p-3 rounded-lg border text-left transition-all duration-200 ${triggers.includes(trigger)
                   ? `border-blue-400 bg-blue-400/10 ${theme.textColors.primary}`
                   : `${theme.borderColors.primary} ${theme.textColors.secondary} hover:border-blue-400/50 hover:bg-blue-400/5`
-              }`}
+                }`}
             >
               <div className="flex items-center space-x-3">
-                <div className={`w-4 h-4 rounded border-2 ${
-                  triggers.includes(trigger)
+                <div className={`w-4 h-4 rounded border-2 ${triggers.includes(trigger)
                     ? 'border-blue-400 bg-blue-400'
                     : 'border-slate-400'
-                }`}>
+                  }`}>
                   {triggers.includes(trigger) && (
                     <CheckCircle className="w-4 h-4 text-white" />
                   )}
@@ -380,7 +378,7 @@ export default function SpendingMindsetAnalyzer() {
                     outerRadius={100}
                     fill="#8884d8"
                     dataKey="value"
-                    label={({ name, percent }: { name: string; percent?: number }) => 
+                    label={({ name, percent }: { name: string; percent?: number }) =>
                       `${name} ${percent ? (percent * 100).toFixed(1) : '0.0'}%`}
                   >
                     {pieData.map((entry, index) => (
@@ -402,9 +400,9 @@ export default function SpendingMindsetAnalyzer() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                   <XAxis dataKey="name" stroke="#9CA3AF" fontSize={12} />
                   <YAxis stroke="#9CA3AF" fontSize={12} />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1F2937', 
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#1F2937',
                       border: '1px solid #374151',
                       borderRadius: '8px'
                     }}

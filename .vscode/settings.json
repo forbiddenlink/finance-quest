@@ -1,0 +1,77 @@
+{
+    // Terminal Shell Integration Settings
+    "terminal.integrated.shellIntegration.enabled": true,
+    "terminal.integrated.shellIntegration.showWelcome": false,
+    "terminal.integrated.shellIntegration.decorationsEnabled": "both",
+    // Enhanced PowerShell Integration
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell",
+            "args": [
+                "-NoLogo",
+                "-ExecutionPolicy", "Bypass"
+            ]
+        },
+        "PowerShell Core": {
+            "path": "pwsh.exe",
+            "icon": "terminal-powershell",
+            "args": [
+                "-NoLogo",
+                "-ExecutionPolicy", "Bypass"
+            ]
+        },
+        "Command Prompt": {
+            "path": "cmd.exe",
+            "icon": "terminal-cmd",
+            "args": ["/k", "echo Finance Quest Development Environment"]
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    // Command Detection and History
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
+    "terminal.integrated.copyOnSelection": true,
+    "terminal.integrated.rightClickBehavior": "copyPaste",
+    // Enhanced Command Palette Integration
+    "terminal.integrated.commandsToSkipShell": [
+        "language-julia.interrupt",
+        "workbench.action.terminal.runRecentCommand",
+        "workbench.action.terminal.goToRecentDirectory"
+    ],
+    // Better Command Feedback
+    "terminal.integrated.enableVisualBell": false,
+    "accessibility.signals.terminalBell": {
+        "sound": "off"
+    },
+    "terminal.integrated.localEchoEnabled": "auto",
+    "terminal.integrated.localEchoLatencyThreshold": 30,
+    // PowerShell Specific Settings
+    "powershell.integratedConsole.showOnStartup": false,
+    "powershell.integratedConsole.focusConsoleOnExecute": false,
+    // Enhanced Terminal Features
+    "terminal.integrated.tabs.enabled": true,
+    "terminal.integrated.tabs.showActions": "singleTerminal",
+    "terminal.integrated.smoothScrolling": true,
+    // Command Detection Improvements
+    "terminal.integrated.detectLocale": "auto",
+    "terminal.integrated.inheritEnv": true,
+    "terminal.integrated.allowMnemonics": true,
+    
+    // Terminal Safety and Error Handling
+    "terminal.integrated.persistentSessionReviveProcess": "onExit",
+    "terminal.integrated.enablePersistentSessions": true,
+    "terminal.integrated.showExitAlert": true,
+    "terminal.integrated.confirmOnExit": "hasChildProcesses",
+    "terminal.integrated.confirmOnKill": "editor",
+    
+    // Enhanced Shell Integration Features
+    "terminal.integrated.shellIntegration.showCommandGuide": true,
+    "terminal.integrated.shellIntegration.history": 100,
+    "terminal.integrated.stickyScroll.enabled": true,
+    
+    // IntelliSense in Terminal (Preview Features)
+    "terminal.integrated.suggest.enabled": true,
+    "terminal.integrated.suggest.suggestOnTriggerCharacters": true,
+    "terminal.integrated.suggest.runOnEnter": "never",
+    "terminal.integrated.suggest.showStatusBar": true
+}

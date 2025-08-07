@@ -239,7 +239,7 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
     setSelectedOption(optionId);
     const option = cognitiveBiases[currentBias].options.find(opt => opt.id === optionId);
     setShowResult(true);
-    
+
     if (option) {
       const score = option.isRational ? 100 : (option.impact === 'high' ? 0 : option.impact === 'medium' ? 50 : 75);
       const result: BiasResult = {
@@ -248,7 +248,7 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
         isRational: option.isRational,
         score
       };
-      
+
       setCompletedBiases(prev => [...prev, result]);
     }
   };
@@ -338,24 +338,24 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={chartData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                    <XAxis 
-                      dataKey="name" 
+                    <XAxis
+                      dataKey="name"
                       stroke="#9CA3AF"
                       fontSize={12}
                     />
-                    <YAxis 
+                    <YAxis
                       stroke="#9CA3AF"
                       domain={[0, 100]}
                     />
-                    <Tooltip 
+                    <Tooltip
                       contentStyle={{
                         backgroundColor: '#1F2937',
                         border: '1px solid #374151',
                         borderRadius: '8px'
                       }}
                     />
-                    <Bar 
-                      dataKey="score" 
+                    <Bar
+                      dataKey="score"
                       fill="#3B82F6"
                       radius={[4, 4, 0, 0]}
                     />
@@ -398,22 +398,20 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
             {completedBiases.map((result) => {
               const bias = cognitiveBiases.find(b => b.id === result.biasId);
               return (
-                <div 
+                <div
                   key={result.biasId}
-                  className={`p-4 border rounded-lg ${
-                    result.isRational ? 
-                    `${theme.status.success.bg} ${theme.status.success.border}` :
-                    `${theme.status.error.bg} ${theme.status.error.border}`
-                  }`}
+                  className={`p-4 border rounded-lg ${result.isRational ?
+                      `${theme.status.success.bg} ${theme.status.success.border}` :
+                      `${theme.status.error.bg} ${theme.status.error.border}`
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <h5 className={`font-semibold ${theme.textColors.primary}`}>
                       {bias?.name}
                     </h5>
                     <div className="flex items-center gap-2">
-                      <span className={`text-sm font-medium ${
-                        result.isRational ? theme.status.success.text : theme.status.error.text
-                      }`}>
+                      <span className={`text-sm font-medium ${result.isRational ? theme.status.success.text : theme.status.error.text
+                        }`}>
                         {result.score}/100
                       </span>
                       {result.isRational ? (
@@ -480,12 +478,12 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
               </span>
             </div>
             <div className="w-full bg-slate-800 rounded-full h-2 relative overflow-hidden">
-              <div 
+              <div
                 className={`h-2 ${theme.status.info.bg} rounded-full transition-all duration-300 absolute top-0 left-0`}
-                style={((currentBias + 1) / cognitiveBiases.length) * 100 >= 100 ? {width: '100%'} : 
-                       ((currentBias + 1) / cognitiveBiases.length) * 100 >= 75 ? {width: '75%'} :
-                       ((currentBias + 1) / cognitiveBiases.length) * 100 >= 50 ? {width: '50%'} :
-                       ((currentBias + 1) / cognitiveBiases.length) * 100 >= 25 ? {width: '25%'} : {width: '20%'}}
+                style={((currentBias + 1) / cognitiveBiases.length) * 100 >= 100 ? { width: '100%' } :
+                  ((currentBias + 1) / cognitiveBiases.length) * 100 >= 75 ? { width: '75%' } :
+                    ((currentBias + 1) / cognitiveBiases.length) * 100 >= 50 ? { width: '50%' } :
+                      ((currentBias + 1) / cognitiveBiases.length) * 100 >= 25 ? { width: '25%' } : { width: '20%' }}
               />
             </div>
           </div>
@@ -525,11 +523,10 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
                 whileTap={{ scale: 0.99 }}
                 onClick={() => handleOptionSelect(option.id)}
                 disabled={showResult}
-                className={`w-full p-4 text-left border-2 rounded-lg transition-all ${
-                  selectedOption === option.id
+                className={`w-full p-4 text-left border-2 rounded-lg transition-all ${selectedOption === option.id
                     ? `${theme.borderColors.primary} ${theme.status.info.bg}`
                     : `${theme.borderColors.muted} hover:${theme.borderColors.primary}`
-                } ${showResult ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                  } ${showResult ? 'cursor-not-allowed' : 'cursor-pointer'}`}
               >
                 <p className={`${theme.textColors.primary} font-medium`}>
                   {option.text}
@@ -548,20 +545,18 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
                 className="space-y-4 mb-6"
               >
                 {/* Result */}
-                <div className={`p-4 border-l-4 rounded-lg ${
-                  selectedOptionData.isRational 
+                <div className={`p-4 border-l-4 rounded-lg ${selectedOptionData.isRational
                     ? `${theme.status.success.bg} ${theme.status.success.border}`
                     : `${theme.status.error.bg} ${theme.status.error.border}`
-                }`}>
+                  }`}>
                   <div className="flex items-center gap-2 mb-2">
                     {selectedOptionData.isRational ? (
                       <CheckCircle className={`w-5 h-5 ${theme.status.success.text}`} />
                     ) : (
                       <AlertTriangle className={`w-5 h-5 ${theme.status.error.text}`} />
                     )}
-                    <h6 className={`font-semibold ${
-                      selectedOptionData.isRational ? theme.status.success.text : theme.status.error.text
-                    }`}>
+                    <h6 className={`font-semibold ${selectedOptionData.isRational ? theme.status.success.text : theme.status.error.text
+                      }`}>
                       {selectedOptionData.isRational ? 'Rational Decision!' : 'Cognitive Bias Detected'}
                     </h6>
                   </div>

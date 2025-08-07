@@ -39,7 +39,7 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
     timeHorizon: 30,
     withdrawalRate: 4
   });
-  
+
   const [simulationResults, setSimulationResults] = useState<SimulationResult[]>([]);
   const [isSimulating, setIsSimulating] = useState(false);
   const [successRate, setSuccessRate] = useState(0);
@@ -65,11 +65,11 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
   const generateCorrelatedReturns = (): [number, number] => {
     const stockReturn = generateRandomReturn(STOCK_RETURN_MEAN, STOCK_VOLATILITY);
     const independentBondReturn = generateRandomReturn(BOND_RETURN_MEAN, BOND_VOLATILITY);
-    
+
     // Apply correlation
-    const correlatedBondReturn = CORRELATION * stockReturn + 
+    const correlatedBondReturn = CORRELATION * stockReturn +
       Math.sqrt(1 - CORRELATION * CORRELATION) * independentBondReturn;
-    
+
     return [stockReturn, correlatedBondReturn];
   };
 
@@ -77,25 +77,25 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
   const runSimulation = async () => {
     setIsSimulating(true);
     setShowResults(false);
-    
+
     // Simulate in batches to keep UI responsive
     const batchSize = 50;
     const allSimulations: number[][] = [];
-    
+
     for (let batch = 0; batch < SIMULATIONS / batchSize; batch++) {
       await new Promise(resolve => setTimeout(resolve, 10)); // Keep UI responsive
-      
+
       for (let sim = 0; sim < batchSize; sim++) {
         const simulation = runSingleSimulation();
         allSimulations.push(simulation);
       }
     }
-    
+
     // Calculate percentiles for each year
     const results: SimulationResult[] = [];
     for (let year = 0; year <= portfolioConfig.timeHorizon; year++) {
       const yearValues = allSimulations.map(sim => sim[year]).sort((a, b) => a - b);
-      
+
       results.push({
         year,
         percentile10: yearValues[Math.floor(0.10 * SIMULATIONS)],
@@ -106,15 +106,15 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
         median: yearValues[Math.floor(0.50 * SIMULATIONS)]
       });
     }
-    
+
     // Calculate success rate (portfolios that meet withdrawal goals)
     const finalYearValues = allSimulations.map(sim => sim[portfolioConfig.timeHorizon]);
-    const withdrawalGoal = portfolioConfig.withdrawalRate * 
+    const withdrawalGoal = portfolioConfig.withdrawalRate *
       (portfolioConfig.initialAmount + portfolioConfig.monthlyContribution * 12 * portfolioConfig.timeHorizon) / 100;
-    const successfulSimulations = finalYearValues.filter(value => 
+    const successfulSimulations = finalYearValues.filter(value =>
       value * portfolioConfig.withdrawalRate / 100 >= withdrawalGoal
     ).length;
-    
+
     setSimulationResults(results);
     setSuccessRate((successfulSimulations / SIMULATIONS) * 100);
     setIsSimulating(false);
@@ -125,37 +125,37 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
   const runSingleSimulation = (): number[] => {
     const path: number[] = [portfolioConfig.initialAmount];
     let currentValue = portfolioConfig.initialAmount;
-    
+
     for (let year = 1; year <= portfolioConfig.timeHorizon; year++) {
       const [stockReturn, bondReturn] = generateCorrelatedReturns();
-      
+
       // Calculate weighted portfolio return
-      const portfolioReturn = (portfolioConfig.stocks / 100) * stockReturn + 
-                             (portfolioConfig.bonds / 100) * bondReturn;
-      
+      const portfolioReturn = (portfolioConfig.stocks / 100) * stockReturn +
+        (portfolioConfig.bonds / 100) * bondReturn;
+
       // Apply return to current value
       currentValue *= (1 + portfolioReturn);
-      
+
       // Add monthly contributions throughout the year
       currentValue += portfolioConfig.monthlyContribution * 12;
-      
+
       path.push(Math.max(0, currentValue)); // Prevent negative values
     }
-    
+
     return path;
   };
 
   const handleConfigChange = (field: keyof PortfolioInput, value: number) => {
     setPortfolioConfig(prev => {
       const updated = { ...prev, [field]: value };
-      
+
       // Ensure stocks + bonds = 100%
       if (field === 'stocks') {
         updated.bonds = 100 - value;
       } else if (field === 'bonds') {
         updated.stocks = 100 - value;
       }
-      
+
       return updated;
     });
   };
@@ -322,9 +322,8 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
             whileTap={{ scale: 0.98 }}
             onClick={runSimulation}
             disabled={isSimulating}
-            className={`w-full md:w-auto px-8 py-3 ${theme.buttons.primary} rounded-xl transition-all hover-lift flex items-center justify-center mx-auto ${
-              isSimulating ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
+            className={`w-full md:w-auto px-8 py-3 ${theme.buttons.primary} rounded-xl transition-all hover-lift flex items-center justify-center mx-auto ${isSimulating ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
           >
             {isSimulating ? (
               <>
@@ -358,14 +357,13 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
                   Simulation Results Summary
                 </h4>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
-                  <p className={`text-4xl font-bold mb-2 ${
-                    successRate >= 90 ? theme.status.success.text :
-                    successRate >= 75 ? theme.status.warning.text :
-                    theme.status.error.text
-                  }`}>
+                  <p className={`text-4xl font-bold mb-2 ${successRate >= 90 ? theme.status.success.text :
+                      successRate >= 75 ? theme.status.warning.text :
+                        theme.status.error.text
+                    }`}>
                     {successRate.toFixed(1)}%
                   </p>
                   <p className={`text-sm ${theme.textColors.secondary} mb-2`}>
@@ -375,7 +373,7 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
                     {getSuccessRateMessage(successRate)}
                   </p>
                 </div>
-                
+
                 <div className="text-center">
                   <p className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>
                     ${simulationResults[simulationResults.length - 1]?.percentile50.toLocaleString() || 0}
@@ -384,11 +382,11 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
                     Median Final Value
                   </p>
                 </div>
-                
+
                 <div className="text-center">
                   <p className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>
-                    ${((simulationResults[simulationResults.length - 1]?.percentile90 || 0) - 
-                       (simulationResults[simulationResults.length - 1]?.percentile10 || 0)).toLocaleString()}
+                    ${((simulationResults[simulationResults.length - 1]?.percentile90 || 0) -
+                      (simulationResults[simulationResults.length - 1]?.percentile10 || 0)).toLocaleString()}
                   </p>
                   <p className={`text-sm ${theme.textColors.secondary}`}>
                     Range (10th-90th percentile)
@@ -402,29 +400,29 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
               <h4 className={`text-xl font-bold ${theme.textColors.primary} mb-6 text-center`}>
                 Portfolio Value Projections (1,000 Simulations)
               </h4>
-              
+
               <div className="h-96">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={simulationResults}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                    <XAxis 
-                      dataKey="year" 
+                    <XAxis
+                      dataKey="year"
                       stroke="#9CA3AF"
                       label={{ value: 'Years', position: 'insideBottom', offset: -5 }}
                     />
-                    <YAxis 
+                    <YAxis
                       stroke="#9CA3AF"
                       tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                       label={{ value: 'Portfolio Value', angle: -90, position: 'insideLeft' }}
                     />
-                    <Tooltip 
+                    <Tooltip
                       formatter={(value: number, name: string) => [
                         `$${value?.toLocaleString() || 0}`,
                         name === 'percentile90' ? '90th Percentile' :
-                        name === 'percentile75' ? '75th Percentile' :
-                        name === 'percentile50' ? 'Median (50th)' :
-                        name === 'percentile25' ? '25th Percentile' :
-                        '10th Percentile'
+                          name === 'percentile75' ? '75th Percentile' :
+                            name === 'percentile50' ? 'Median (50th)' :
+                              name === 'percentile25' ? '25th Percentile' :
+                                '10th Percentile'
                       ]}
                       labelFormatter={(year) => `Year: ${year}`}
                       contentStyle={{
@@ -434,7 +432,7 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
                       }}
                     />
                     <Legend />
-                    
+
                     <Area
                       type="monotone"
                       dataKey="percentile90"
@@ -492,7 +490,7 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
                   Key Insights & Recommendations
                 </h4>
               </div>
-              
+
               <div className="space-y-4">
                 {successRate < 75 && (
                   <div className={`p-4 ${theme.status.warning.bg} border-l-4 ${theme.status.warning.border} rounded-lg`}>
@@ -500,44 +498,44 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
                       Success Rate Below Target
                     </h5>
                     <p className={`${theme.textColors.secondary} text-sm`}>
-                      Consider: Increasing contributions, extending time horizon, reducing withdrawal rate, 
+                      Consider: Increasing contributions, extending time horizon, reducing withdrawal rate,
                       or increasing stock allocation for higher expected returns.
                     </p>
                   </div>
                 )}
-                
+
                 {portfolioConfig.stocks < 60 && portfolioConfig.timeHorizon > 20 && (
                   <div className={`p-4 ${theme.status.info.bg} border-l-4 ${theme.status.info.border} rounded-lg`}>
                     <h5 className={`font-semibold ${theme.status.info.text} mb-2`}>
                       Conservative Allocation for Long Timeline
                     </h5>
                     <p className={`${theme.textColors.secondary} text-sm`}>
-                      With {portfolioConfig.timeHorizon} years until withdrawal, consider increasing stock allocation 
-                      to capture growth potential. Historical data suggests higher equity allocations 
+                      With {portfolioConfig.timeHorizon} years until withdrawal, consider increasing stock allocation
+                      to capture growth potential. Historical data suggests higher equity allocations
                       improve outcomes over long periods.
                     </p>
                   </div>
                 )}
-                
+
                 {portfolioConfig.withdrawalRate > 4 && (
                   <div className={`p-4 ${theme.status.error.bg} border-l-4 ${theme.status.error.border} rounded-lg`}>
                     <h5 className={`font-semibold ${theme.status.error.text} mb-2`}>
                       High Withdrawal Rate
                     </h5>
                     <p className={`${theme.textColors.secondary} text-sm`}>
-                      {portfolioConfig.withdrawalRate}% withdrawal rate significantly increases failure risk. 
+                      {portfolioConfig.withdrawalRate}% withdrawal rate significantly increases failure risk.
                       The 4% rule suggests safer withdrawal rates. Consider reducing to 3.5-4% for better outcomes.
                     </p>
                   </div>
                 )}
-                
+
                 {successRate >= 90 && (
                   <div className={`p-4 ${theme.status.success.bg} border-l-4 ${theme.status.success.border} rounded-lg`}>
                     <h5 className={`font-semibold ${theme.status.success.text} mb-2`}>
                       Excellent Portfolio Strategy
                     </h5>
                     <p className={`${theme.textColors.secondary} text-sm`}>
-                      Your portfolio configuration shows strong probability of success. Consider this 
+                      Your portfolio configuration shows strong probability of success. Consider this
                       allocation as a foundation, with periodic rebalancing and review as circumstances change.
                     </p>
                   </div>

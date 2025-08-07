@@ -91,27 +91,27 @@ const DollarCostAveragingCalculator: React.FC = () => {
           const bullGrowth = 1 + (Math.random() * 0.08 + 0.02); // 2-10% monthly growth
           currentPrice *= bullGrowth;
           break;
-        
+
         case 'bear':
           // Downward trend with occasional rebounds
-          const bearChange = Math.random() < 0.3 ? 
+          const bearChange = Math.random() < 0.3 ?
             1 + (Math.random() * 0.1) : // 30% chance of rebound
             1 - (Math.random() * 0.08 + 0.02); // 70% chance of decline
           currentPrice *= bearChange;
           break;
-        
+
         case 'volatile':
           // High volatility
           const volatileChange = 1 + (Math.random() - 0.5) * 0.3; // ±15% swings
           currentPrice *= volatileChange;
           break;
-        
+
         case 'steady':
           // Steady growth
           const steadyGrowth = 1 + (Math.random() * 0.04 + 0.005); // 0.5-4.5% monthly
           currentPrice *= steadyGrowth;
           break;
-        
+
         default:
           currentPrice *= 1.02;
       }
@@ -154,7 +154,7 @@ const DollarCostAveragingCalculator: React.FC = () => {
     const lumpSumAmount = monthlyInvestment * investmentPeriod;
     const lumpSumShares = lumpSumAmount / marketPrices[0];
     const lumpSumFinalValue = lumpSumShares * marketPrices[marketPrices.length - 1];
-    
+
     const dcaFinalValue = data[data.length - 1].portfolioValue;
     const dcaAdvantage = dcaFinalValue - lumpSumFinalValue;
     const dcaReturn = ((dcaFinalValue - totalInvested) / totalInvested) * 100;
@@ -271,11 +271,10 @@ const DollarCostAveragingCalculator: React.FC = () => {
                 <button
                   key={scenario.id}
                   onClick={() => setSelectedScenario(scenario.id)}
-                  className={`w-full p-3 rounded-lg border text-left transition-all ${
-                    selectedScenario === scenario.id
+                  className={`w-full p-3 rounded-lg border text-left transition-all ${selectedScenario === scenario.id
                       ? `${theme.buttons.primary} border-blue-500 shadow-md`
                       : `${theme.backgrounds.card} border ${theme.borderColors.primary} hover:${theme.backgrounds.cardHover}`
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">{scenario.icon}</span>
@@ -300,17 +299,15 @@ const DollarCostAveragingCalculator: React.FC = () => {
             </label>
             <button
               onClick={() => setLumpSumComparison(!lumpSumComparison)}
-              className={`relative inline-flex w-11 h-6 rounded-full transition-colors ${
-                lumpSumComparison ? 'bg-blue-600' : 'bg-gray-600'
-              }`}
+              className={`relative inline-flex w-11 h-6 rounded-full transition-colors ${lumpSumComparison ? 'bg-blue-600' : 'bg-gray-600'
+                }`}
               aria-pressed={lumpSumComparison ? 'true' : 'false'}
               aria-label={`Toggle lump sum comparison ${lumpSumComparison ? 'off' : 'on'}`}
               title={`${lumpSumComparison ? 'Disable' : 'Enable'} lump sum comparison`}
             >
               <span
-                className={`inline-block w-4 h-4 rounded-full bg-white transition-transform transform ${
-                  lumpSumComparison ? 'translate-x-6' : 'translate-x-1'
-                } mt-1`}
+                className={`inline-block w-4 h-4 rounded-full bg-white transition-transform transform ${lumpSumComparison ? 'translate-x-6' : 'translate-x-1'
+                  } mt-1`}
               />
             </button>
           </div>
@@ -377,12 +374,12 @@ const DollarCostAveragingCalculator: React.FC = () => {
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={calculationData.data}>
                   <CartesianGrid strokeDasharray="3 3" stroke={theme.borderColors.primary} />
-                  <XAxis 
-                    dataKey="monthName" 
+                  <XAxis
+                    dataKey="monthName"
                     stroke={theme.textColors.secondary}
                     fontSize={12}
                   />
-                  <YAxis 
+                  <YAxis
                     stroke={theme.textColors.secondary}
                     fontSize={12}
                     tickFormatter={(value) => formatCurrency(value)}
@@ -395,35 +392,35 @@ const DollarCostAveragingCalculator: React.FC = () => {
                       color: theme.textColors.primary
                     }}
                     formatter={(value: number, name: string) => [
-                      name === 'portfolioValue' ? formatCurrency(value) : 
-                      name === 'marketPrice' ? `$${value.toFixed(2)}` :
-                      formatCurrency(value),
+                      name === 'portfolioValue' ? formatCurrency(value) :
+                        name === 'marketPrice' ? `$${value.toFixed(2)}` :
+                          formatCurrency(value),
                       name === 'portfolioValue' ? 'Portfolio Value' :
-                      name === 'marketPrice' ? 'Market Price' :
-                      name === 'totalInvested' ? 'Total Invested' : name
+                        name === 'marketPrice' ? 'Market Price' :
+                          name === 'totalInvested' ? 'Total Invested' : name
                     ]}
                   />
-                  <Line 
-                    type="monotone" 
-                    dataKey="portfolioValue" 
-                    stroke="#10B981" 
+                  <Line
+                    type="monotone"
+                    dataKey="portfolioValue"
+                    stroke="#10B981"
                     strokeWidth={3}
                     dot={false}
                     name="portfolioValue"
                   />
-                  <Line 
-                    type="monotone" 
-                    dataKey="totalInvested" 
-                    stroke="#6B7280" 
+                  <Line
+                    type="monotone"
+                    dataKey="totalInvested"
+                    stroke="#6B7280"
                     strokeWidth={2}
                     strokeDasharray="5 5"
                     dot={false}
                     name="totalInvested"
                   />
-                  <Line 
-                    type="monotone" 
-                    dataKey="marketPrice" 
-                    stroke="#3B82F6" 
+                  <Line
+                    type="monotone"
+                    dataKey="marketPrice"
+                    stroke="#3B82F6"
                     strokeWidth={1}
                     dot={false}
                     name="marketPrice"
@@ -492,22 +489,20 @@ const DollarCostAveragingCalculator: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className={`mt-4 p-4 rounded-lg ${
-                calculationData.lumpSum.advantage > 0 
+              <div className={`mt-4 p-4 rounded-lg ${calculationData.lumpSum.advantage > 0
                   ? theme.status.warning.bg + ' border ' + theme.status.warning.border
                   : theme.status.success.bg + ' border ' + theme.status.success.border
-              }`}>
+                }`}>
                 <div className="flex items-center gap-2">
                   {calculationData.lumpSum.advantage > 0 ? (
                     <AlertCircle className={`w-5 h-5 ${theme.status.warning.text}`} />
                   ) : (
                     <Info className={`w-5 h-5 ${theme.status.success.text}`} />
                   )}
-                  <span className={`font-semibold ${
-                    calculationData.lumpSum.advantage > 0 ? theme.status.warning.text : theme.status.success.text
-                  }`}>
-                    {calculationData.lumpSum.advantage > 0 
-                      ? `Lump sum would have been better by ${formatCurrency(Math.abs(calculationData.lumpSum.advantage))}` 
+                  <span className={`font-semibold ${calculationData.lumpSum.advantage > 0 ? theme.status.warning.text : theme.status.success.text
+                    }`}>
+                    {calculationData.lumpSum.advantage > 0
+                      ? `Lump sum would have been better by ${formatCurrency(Math.abs(calculationData.lumpSum.advantage))}`
                       : `DCA performed better by ${formatCurrency(Math.abs(calculationData.lumpSum.advantage))}`
                     }
                   </span>
@@ -528,35 +523,35 @@ const DollarCostAveragingCalculator: React.FC = () => {
           <div>
             <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>🎯 Reduces Timing Risk</h4>
             <p className={`text-sm ${theme.textColors.secondary}`}>
-              By investing regularly, you avoid the risk of investing all your money at market peaks. 
+              By investing regularly, you avoid the risk of investing all your money at market peaks.
               You&apos;ll buy more shares when prices are low and fewer when prices are high.
             </p>
           </div>
           <div>
             <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>📈 Smooths Volatility</h4>
             <p className={`text-sm ${theme.textColors.secondary}`}>
-              Market ups and downs become less impactful on your portfolio. Consistent investing 
+              Market ups and downs become less impactful on your portfolio. Consistent investing
               helps you stay disciplined and avoid emotional investment decisions.
             </p>
           </div>
           <div>
             <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>💪 Builds Discipline</h4>
             <p className={`text-sm ${theme.textColors.secondary}`}>
-              Automatic monthly investments create a habit of saving and investing. This systematic 
+              Automatic monthly investments create a habit of saving and investing. This systematic
               approach often leads to better long-term outcomes than sporadic large investments.
             </p>
           </div>
         </div>
-        
+
         <div className={`mt-6 p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`}>
           <h4 className={`font-medium ${theme.status.info.text} mb-2 flex items-center gap-2`}>
             <Info className="w-4 h-4" />
             Pro Tip: When to Use DCA vs. Lump Sum
           </h4>
           <p className={`text-sm ${theme.textColors.secondary}`}>
-            <strong>Use DCA when:</strong> You receive regular income and want to invest over time, 
+            <strong>Use DCA when:</strong> You receive regular income and want to invest over time,
             you&apos;re nervous about market timing, or you want to build consistent investment habits.<br />
-            <strong>Use Lump Sum when:</strong> You have a large amount available (like inheritance or bonus), 
+            <strong>Use Lump Sum when:</strong> You have a large amount available (like inheritance or bonus),
             markets are clearly undervalued, or you want maximum time in market for compound growth.
           </p>
         </div>

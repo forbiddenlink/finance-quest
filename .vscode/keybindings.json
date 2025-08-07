@@ -1,0 +1,65 @@
+[
+    // Enhanced Terminal Shell Integration Shortcuts
+    {
+        "key": "ctrl+r",
+        "command": "workbench.action.terminal.runRecentCommand",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+alt+r",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": { "text": "\u0012" },
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+g",
+        "command": "workbench.action.terminal.goToRecentDirectory",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+alt+g",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": { "text": "\u0007" },
+        "when": "terminalFocus"
+    },
+    // Command Navigation
+    {
+        "key": "ctrl+up",
+        "command": "workbench.action.terminal.scrollToPreviousCommand",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+down",
+        "command": "workbench.action.terminal.scrollToNextCommand",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "shift+ctrl+up",
+        "command": "workbench.action.terminal.selectToPreviousCommand",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "shift+ctrl+down",
+        "command": "workbench.action.terminal.selectToNextCommand",
+        "when": "terminalFocus"
+    },
+    // PowerShell Enhanced Shortcuts (when shell integration is active)
+    {
+        "key": "ctrl+space",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": { "text": "\u0000" },
+        "when": "terminalFocus && terminalShellType == 'pwsh'"
+    },
+    {
+        "key": "alt+space",
+        "command": "workbench.action.terminal.sendSequence", 
+        "args": { "text": "\u001b " },
+        "when": "terminalFocus && terminalShellType == 'pwsh'"
+    },
+    {
+        "key": "shift+enter",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": { "text": "\u000a" },
+        "when": "terminalFocus && terminalShellType == 'pwsh'"
+    }
+]

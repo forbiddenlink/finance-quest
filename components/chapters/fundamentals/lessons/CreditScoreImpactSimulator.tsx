@@ -141,22 +141,22 @@ export default function CreditScoreImpactSimulator() {
   const calculateLifetimeSavings = (initialScore: number, finalScore: number, loanAmount: number): number => {
     const initialRate = getMortgageRate(initialScore);
     const finalRate = getMortgageRate(finalScore);
-    
+
     const monthlyRateInitial = initialRate / 100 / 12;
     const monthlyRateFinal = finalRate / 100 / 12;
     const numPayments = 360;
-    
-    const monthlyInitial = loanAmount * 
+
+    const monthlyInitial = loanAmount *
       (monthlyRateInitial * Math.pow(1 + monthlyRateInitial, numPayments)) /
       (Math.pow(1 + monthlyRateInitial, numPayments) - 1);
-    
-    const monthlyFinal = loanAmount * 
+
+    const monthlyFinal = loanAmount *
       (monthlyRateFinal * Math.pow(1 + monthlyRateFinal, numPayments)) /
       (Math.pow(1 + monthlyRateFinal, numPayments) - 1);
-    
+
     const totalInitial = monthlyInitial * 360;
     const totalFinal = monthlyFinal * 360;
-    
+
     return totalInitial - totalFinal;
   };
 
@@ -167,23 +167,23 @@ export default function CreditScoreImpactSimulator() {
   }> => {
     const timeline = [];
     let currentScore = baseScore;
-    
+
     // Initial state
     timeline.push({ month: 0, score: currentScore });
-    
+
     // Apply immediate impacts
     scenarios.forEach((scenario, index) => {
       const impactMonth = (index + 1) * 2; // Stagger events
       currentScore += scenario.scoreImpact;
       currentScore = Math.max(300, Math.min(850, currentScore)); // Keep within bounds
-      
+
       timeline.push({
         month: impactMonth,
         score: currentScore,
         event: scenario.name
       });
     });
-    
+
     // Recovery over time
     const finalScore = currentScore;
     for (let month = timeline[timeline.length - 1].month + 1; month <= 36; month++) {
@@ -192,29 +192,29 @@ export default function CreditScoreImpactSimulator() {
       const targetScore = baseScore + scenarios.reduce((sum, s) => sum + s.scoreImpact * 0.2, 0);
       currentScore = finalScore + (targetScore - finalScore) * recoveryProgress;
       currentScore = Math.max(300, Math.min(850, Math.round(currentScore)));
-      
+
       timeline.push({ month, score: currentScore });
     }
-    
+
     return timeline;
   };
 
   const runSimulation = async () => {
     if (selectedScenarios.length === 0) return;
-    
+
     setIsSimulating(true);
-    
+
     // Simulate processing time
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     const scenarios = creditScenarios.filter(s => selectedScenarios.includes(s.id));
     const totalImpact = scenarios.reduce((sum, scenario) => sum + scenario.scoreImpact, 0);
     const finalScore = Math.max(300, Math.min(850, currentScore + totalImpact));
-    
+
     const timeline = generateScoreTimeline(currentScore, scenarios);
     const rateDiff = getMortgageRate(currentScore) - getMortgageRate(finalScore);
     const lifetimeSavings = calculateLifetimeSavings(currentScore, finalScore, loanAmount);
-    
+
     const result: CreditSimulationResult = {
       scenario: scenarios.map(s => s.name).join(', '),
       initialScore: currentScore,
@@ -223,10 +223,10 @@ export default function CreditScoreImpactSimulator() {
       lifetimeSavings,
       timeline
     };
-    
+
     setSimulationResult(result);
     setIsSimulating(false);
-    
+
     // Record for analytics
     recordSimulationResult({
       scenarioId: selectedScenarios.join(','),
@@ -248,7 +248,7 @@ export default function CreditScoreImpactSimulator() {
   };
 
   const toggleScenario = (scenarioId: string) => {
-    setSelectedScenarios(prev => 
+    setSelectedScenarios(prev =>
       prev.includes(scenarioId)
         ? prev.filter(id => id !== scenarioId)
         : [...prev, scenarioId]
@@ -307,7 +307,7 @@ export default function CreditScoreImpactSimulator() {
           <Calculator className="w-5 h-5" />
           Your Current Credit Profile
         </h4>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
@@ -330,7 +330,7 @@ export default function CreditScoreImpactSimulator() {
               <span>850</span>
             </div>
           </div>
-          
+
           <div>
             <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
               Mortgage Amount
@@ -353,7 +353,7 @@ export default function CreditScoreImpactSimulator() {
           <Zap className="w-5 h-5" />
           Select Credit Scenarios to Simulate
         </h4>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {creditScenarios.map((scenario) => (
             <motion.div
@@ -361,18 +361,16 @@ export default function CreditScoreImpactSimulator() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => toggleScenario(scenario.id)}
-              className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                selectedScenarios.includes(scenario.id)
+              className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${selectedScenarios.includes(scenario.id)
                   ? 'border-blue-500 bg-blue-500/10'
                   : 'border-slate-700 hover:border-slate-600'
-              }`}
+                }`}
             >
               <div className="flex items-start gap-3">
-                <div className={`p-2 rounded-lg ${
-                  scenario.severity === 'positive' ? theme.status.success.bg :
-                  scenario.severity === 'negative' ? theme.status.error.bg :
-                  theme.status.warning.bg
-                }`}>
+                <div className={`p-2 rounded-lg ${scenario.severity === 'positive' ? theme.status.success.bg :
+                    scenario.severity === 'negative' ? theme.status.error.bg :
+                      theme.status.warning.bg
+                  }`}>
                   {scenario.icon}
                 </div>
                 <div className="flex-1">
@@ -383,9 +381,8 @@ export default function CreditScoreImpactSimulator() {
                     {scenario.description}
                   </p>
                   <div className="flex items-center justify-between text-xs">
-                    <span className={`font-medium ${
-                      scenario.scoreImpact > 0 ? 'text-emerald-400' : 'text-red-400'
-                    }`}>
+                    <span className={`font-medium ${scenario.scoreImpact > 0 ? 'text-emerald-400' : 'text-red-400'
+                      }`}>
                       {scenario.scoreImpact > 0 ? '+' : ''}{scenario.scoreImpact} points
                     </span>
                     <span className="text-slate-400">
@@ -420,7 +417,7 @@ export default function CreditScoreImpactSimulator() {
             </>
           )}
         </motion.button>
-        
+
         {simulationResult && (
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -447,7 +444,7 @@ export default function CreditScoreImpactSimulator() {
               <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
                 Credit Score Impact Analysis
               </h4>
-              
+
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center">
                   <div className={`text-2xl font-bold ${getScoreColor(simulationResult.initialScore)} mb-1`}>
@@ -455,28 +452,26 @@ export default function CreditScoreImpactSimulator() {
                   </div>
                   <div className="text-sm text-slate-400">Initial Score</div>
                 </div>
-                
+
                 <div className="text-center">
                   <div className={`text-2xl font-bold ${getScoreColor(simulationResult.finalScore)} mb-1`}>
                     {simulationResult.finalScore}
                   </div>
                   <div className="text-sm text-slate-400">Final Score</div>
                 </div>
-                
+
                 <div className="text-center">
-                  <div className={`text-2xl font-bold ${
-                    simulationResult.finalScore > simulationResult.initialScore ? 'text-emerald-400' : 'text-red-400'
-                  } mb-1`}>
+                  <div className={`text-2xl font-bold ${simulationResult.finalScore > simulationResult.initialScore ? 'text-emerald-400' : 'text-red-400'
+                    } mb-1`}>
                     {simulationResult.finalScore > simulationResult.initialScore ? '+' : ''}
                     {simulationResult.finalScore - simulationResult.initialScore}
                   </div>
                   <div className="text-sm text-slate-400">Point Change</div>
                 </div>
-                
+
                 <div className="text-center">
-                  <div className={`text-2xl font-bold ${
-                    simulationResult.lifetimeSavings > 0 ? 'text-emerald-400' : 'text-red-400'
-                  } mb-1`}>
+                  <div className={`text-2xl font-bold ${simulationResult.lifetimeSavings > 0 ? 'text-emerald-400' : 'text-red-400'
+                    } mb-1`}>
                     {simulationResult.lifetimeSavings > 0 ? '+' : ''}
                     {formatCurrency(Math.abs(simulationResult.lifetimeSavings))}
                   </div>
@@ -492,22 +487,22 @@ export default function CreditScoreImpactSimulator() {
               <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
                 Credit Score Recovery Timeline
               </h4>
-              
+
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={simulationResult.timeline}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                    <XAxis 
-                      dataKey="month" 
+                    <XAxis
+                      dataKey="month"
                       stroke="#9CA3AF"
                       label={{ value: 'Months', position: 'insideBottom', offset: -5 }}
                     />
-                    <YAxis 
+                    <YAxis
                       stroke="#9CA3AF"
                       domain={[300, 850]}
                       label={{ value: 'Credit Score', angle: -90, position: 'insideLeft' }}
                     />
-                    <Tooltip 
+                    <Tooltip
                       contentStyle={{
                         backgroundColor: '#1F2937',
                         border: '1px solid #374151',
@@ -538,7 +533,7 @@ export default function CreditScoreImpactSimulator() {
                 <DollarSign className="w-5 h-5" />
                 Lifetime Financial Impact
               </h4>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <h5 className="font-semibold text-white mb-3">Mortgage Rate Impact</h5>
@@ -551,7 +546,7 @@ export default function CreditScoreImpactSimulator() {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className={`p-4 ${theme.status.info.bg} rounded-lg`}>
                     <h6 className="font-semibold text-white mb-2">Key Insights</h6>
@@ -562,16 +557,15 @@ export default function CreditScoreImpactSimulator() {
                       <li>• Length of credit history matters - keep old accounts open</li>
                     </ul>
                   </div>
-                  
+
                   {Math.abs(simulationResult.lifetimeSavings) > 10000 && (
-                    <div className={`p-4 ${
-                      simulationResult.lifetimeSavings > 0 ? theme.status.success.bg : theme.status.error.bg
-                    } rounded-lg`}>
+                    <div className={`p-4 ${simulationResult.lifetimeSavings > 0 ? theme.status.success.bg : theme.status.error.bg
+                      } rounded-lg`}>
                       <h6 className="font-semibold text-white mb-2">
                         {simulationResult.lifetimeSavings > 0 ? '💡 Smart Move!' : '⚠️ Consider the Cost'}
                       </h6>
                       <p className="text-sm text-white">
-                        {simulationResult.lifetimeSavings > 0 
+                        {simulationResult.lifetimeSavings > 0
                           ? `This credit improvement could save you ${formatCurrency(simulationResult.lifetimeSavings)} over the life of your mortgage!`
                           : `This credit damage could cost you ${formatCurrency(Math.abs(simulationResult.lifetimeSavings))} in extra interest payments.`
                         }

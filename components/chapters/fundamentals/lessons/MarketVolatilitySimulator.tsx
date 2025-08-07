@@ -164,22 +164,22 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
   const generateMarketReturn = useCallback((month: number, event: MarketEvent | null): number => {
     const baseReturn = 0.007; // ~8.4% annual average
     const volatility = 0.04; // Monthly volatility
-    
+
     // Random normal return
     let monthlyReturn = baseReturn + (Math.random() - 0.5) * volatility * 2;
-    
+
     // Apply event impact if in crisis
     if (event && eventPhase === 'crisis') {
       const eventProgress = (currentMonth % event.duration) / event.duration;
       const eventImpact = event.impact * eventProgress / event.duration; // Spread impact over duration
       monthlyReturn += eventImpact;
     }
-    
+
     // Recovery phase - slightly better returns
     if (event && eventPhase === 'recovery') {
       monthlyReturn += 0.003; // Slight recovery boost
     }
-    
+
     return monthlyReturn;
   }, [eventPhase, currentMonth]);
 
@@ -225,7 +225,7 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
 
     setSimulationData(prev => [...prev, newDataPoint]);
     setPortfolioValue(newPortfolioValue);
-    
+
     // Handle event phases
     if (currentEvent) {
       if (eventPhase === 'crisis' && currentMonth % currentEvent.duration === 0) {
@@ -240,7 +240,7 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
 
     // Check for new events
     triggerRandomEvent();
-    
+
     setCurrentMonth(prev => prev + 1);
   }, [currentMonth, totalMonths, currentEvent, eventPhase, portfolioValue, selectedStrategy, triggerRandomEvent, generateMarketReturn]);
 
@@ -272,11 +272,11 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
 
   const getPerformanceComparison = () => {
     if (simulationData.length === 0) return null;
-    
+
     const finalValue = simulationData[simulationData.length - 1]?.portfolioValue || portfolioValue;
     const totalContributions = 100000 + (currentMonth * 1000);
     const totalReturn = ((finalValue - totalContributions) / totalContributions) * 100;
-    
+
     return {
       finalValue,
       totalContributions,
@@ -321,11 +321,10 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setSelectedStrategy(strategy)}
-                  className={`p-4 border-2 rounded-lg transition-all text-left ${
-                    selectedStrategy.id === strategy.id
+                  className={`p-4 border-2 rounded-lg transition-all text-left ${selectedStrategy.id === strategy.id
                       ? `border-[${strategy.color}] bg-[${strategy.color}]/10`
                       : `${theme.borderColors.muted} hover:${theme.borderColors.primary}`
-                  }`}
+                    }`}
                 >
                   <h5 className={`font-semibold ${theme.textColors.primary} mb-2`}>
                     {strategy.name}
@@ -469,16 +468,16 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={simulationData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis 
-                    dataKey="month" 
+                  <XAxis
+                    dataKey="month"
                     stroke="#9CA3AF"
                     tickFormatter={(value) => `${Math.floor(value / 12)}y`}
                   />
-                  <YAxis 
+                  <YAxis
                     stroke="#9CA3AF"
                     tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                   />
-                  <Tooltip 
+                  <Tooltip
                     contentStyle={{
                       backgroundColor: '#1F2937',
                       border: '1px solid #374151',
@@ -487,9 +486,9 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
                     formatter={(value: number) => [`$${value.toLocaleString()}`, 'Portfolio Value']}
                     labelFormatter={(value) => `Month ${value}`}
                   />
-                  <Area 
-                    type="monotone" 
-                    dataKey="portfolioValue" 
+                  <Area
+                    type="monotone"
+                    dataKey="portfolioValue"
                     stroke={selectedStrategy.color}
                     fill={`${selectedStrategy.color}20`}
                     strokeWidth={2}
