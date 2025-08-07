@@ -1,12 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { Calculator, Users, Calendar, DollarSign, TrendingUp, Info } from 'lucide-react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Calculator, Users, DollarSign, TrendingUp, Info } from 'lucide-react';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
-import { Decimal } from 'decimal.js';
 
 interface SocialSecurityOptimizationProps {
   className?: string;
@@ -28,7 +27,6 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
   const [spouseAge, setSpouseAge] = useState('');
   const [spouseBenefit, setSpouseBenefit] = useState(1800);
   const [marriedFiling, setMarriedFiling] = useState(false);
-  const [currentAge, setCurrentAge] = useState(43);
   const [showResults, setShowResults] = useState(false);
 
   // Calculate Full Retirement Age based on birth year
@@ -45,23 +43,21 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
   // Calculate benefits at different claiming ages
   const calculateBenefits = (): ClaimingStrategy[] => {
     const fra = fullRetirementAge;
-    const baseMonthly = new Decimal(estimatedBenefit);
+    const baseMonthly = estimatedBenefit;
     
     const strategies: ClaimingStrategy[] = [];
     
     // Age 62 (early claiming)
-    const age62Reduction = baseMonthly.mul(0.75); // 25% reduction
-    const age62Monthly = age62Reduction.toNumber();
-    const age62Lifetime = age62Reduction.mul((lifeExpectancy - 62) * 12).toNumber();
+    const age62Monthly = baseMonthly * 0.75; // 25% reduction
+    const age62Lifetime = age62Monthly * (lifeExpectancy - 62) * 12;
     
     // Full Retirement Age
-    const fraMonthly = baseMonthly.toNumber();
-    const fraLifetime = baseMonthly.mul((lifeExpectancy - fra) * 12).toNumber();
+    const fraMonthly = baseMonthly;
+    const fraLifetime = baseMonthly * (lifeExpectancy - fra) * 12;
     
     // Age 70 (delayed retirement credits)
-    const age70Increase = baseMonthly.mul(1.32); // 32% increase (8% per year * 4 years)
-    const age70Monthly = age70Increase.toNumber();
-    const age70Lifetime = age70Increase.mul((lifeExpectancy - 70) * 12).toNumber();
+    const age70Monthly = baseMonthly * 1.32; // 32% increase (8% per year * 4 years)
+    const age70Lifetime = age70Monthly * (lifeExpectancy - 70) * 12;
     
     strategies.push(
       {
@@ -99,7 +95,7 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
     const chartData = [];
     
     for (let age = 62; age <= lifeExpectancy; age++) {
-      const data: any = { age };
+      const data: { age: number; [key: string]: number } = { age };
       
       // Age 62 claiming
       if (age >= 62) {
@@ -415,7 +411,7 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
                       label={{ value: 'Cumulative Benefits', angle: -90, position: 'insideLeft' }}
                     />
                     <Tooltip 
-                      formatter={(value: any, name: string) => [
+                      formatter={(value: number, name: string) => [
                         `$${value?.toLocaleString() || 0}`,
                         name === 'claimAt62' ? 'Claim at 62' :
                         name === 'claimAtFRA' ? `Claim at ${fullRetirementAge}` :
@@ -476,7 +472,7 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
                     Health & Longevity
                   </h5>
                   <p className={`${theme.textColors.secondary} text-sm`}>
-                    If you have health concerns or family history of shorter lifespans, claiming earlier might be beneficial. If you're healthy with good longevity genetics, delaying often pays off.
+                    If you have health concerns or family history of shorter lifespans, claiming earlier might be beneficial. If you&apos;re healthy with good longevity genetics, delaying often pays off.
                   </p>
                 </div>
                 
@@ -485,7 +481,7 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
                     Financial Need
                   </h5>
                   <p className={`${theme.textColors.secondary} text-sm`}>
-                    If you need income immediately and don't have other retirement savings, claiming at 62 might be necessary despite the reduction in benefits.
+                    If you need income immediately and don&apos;t have other retirement savings, claiming at 62 might be necessary despite the reduction in benefits.
                   </p>
                 </div>
                 

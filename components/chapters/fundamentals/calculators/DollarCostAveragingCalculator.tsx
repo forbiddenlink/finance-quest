@@ -14,7 +14,7 @@ import {
   Lightbulb,
   AlertCircle
 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface InvestmentData {
   month: number;
@@ -394,7 +394,7 @@ const DollarCostAveragingCalculator: React.FC = () => {
                       borderRadius: '8px',
                       color: theme.textColors.primary
                     }}
-                    formatter={(value: any, name: string) => [
+                    formatter={(value: number, name: string) => [
                       name === 'portfolioValue' ? formatCurrency(value) : 
                       name === 'marketPrice' ? `$${value.toFixed(2)}` :
                       formatCurrency(value),
@@ -529,7 +529,7 @@ const DollarCostAveragingCalculator: React.FC = () => {
             <h4 className={`font-medium ${theme.textColors.primary} mb-2`}>🎯 Reduces Timing Risk</h4>
             <p className={`text-sm ${theme.textColors.secondary}`}>
               By investing regularly, you avoid the risk of investing all your money at market peaks. 
-              You'll buy more shares when prices are low and fewer when prices are high.
+              You&apos;ll buy more shares when prices are low and fewer when prices are high.
             </p>
           </div>
           <div>
@@ -555,7 +555,7 @@ const DollarCostAveragingCalculator: React.FC = () => {
           </h4>
           <p className={`text-sm ${theme.textColors.secondary}`}>
             <strong>Use DCA when:</strong> You receive regular income and want to invest over time, 
-            you're nervous about market timing, or you want to build consistent investment habits.<br />
+            you&apos;re nervous about market timing, or you want to build consistent investment habits.<br />
             <strong>Use Lump Sum when:</strong> You have a large amount available (like inheritance or bonus), 
             markets are clearly undervalued, or you want maximum time in market for compound growth.
           </p>

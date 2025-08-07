@@ -13,24 +13,19 @@ import {
   Award,
   Briefcase,
   Target,
-  ChevronRight,
   BarChart3,
-  PieChart,
-  ArrowUpRight,
   AlertCircle,
   CheckCircle,
   Star,
-  Users,
   Clock,
   Zap
 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
-import Decimal from 'decimal.js';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 interface CareerOption {
   id: string;
   name: string;
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   currentSalary: number;
   projectedSalary: number;
   timeToPromote: number; // years
@@ -160,7 +155,7 @@ export default function CareerGrowthROICalculator() {
     
     let currentPathSalary = currentSalary;
     let newPathSalary = currentSalary;
-    let totalInvestment = selectedOption.educationCost;
+    const totalInvestment = selectedOption.educationCost;
     
     for (let year = 0; year <= projectionYears; year++) {
       // Current path earnings
@@ -576,7 +571,7 @@ export default function CareerGrowthROICalculator() {
                         borderRadius: '8px',
                         color: 'white'
                       }}
-                      formatter={(value: any, name: string) => [
+                      formatter={(value: number, name: string) => [
                         formatCurrency(value),
                         name === 'stayCurrentPath' ? 'Current Path' : 'New Path'
                       ]}

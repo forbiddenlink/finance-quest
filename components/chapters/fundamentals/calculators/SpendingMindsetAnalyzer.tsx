@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, ShoppingCart, PieChart, AlertCircle, CheckCircle, Target, Brain } from 'lucide-react';
+import { ShoppingCart, PieChart, AlertCircle, CheckCircle, Target, Brain } from 'lucide-react';
 import { PieChart as RechartsPieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
@@ -183,16 +183,6 @@ export default function SpendingMindsetAnalyzer() {
     budget: cat.budget,
     overspending: Math.max(0, cat.amount - cat.budget)
   }));
-
-  const getMindsetColor = (type: SpendingAnalysis['mindsetType']) => {
-    switch (type) {
-      case 'balanced': return 'text-green-400';
-      case 'impulsive': return 'text-red-400';
-      case 'conservative': return 'text-blue-400';
-      case 'inconsistent': return 'text-yellow-400';
-      default: return 'text-gray-400';
-    }
-  };
 
   const getMindsetDescription = (type: SpendingAnalysis['mindsetType']) => {
     switch (type) {
@@ -390,7 +380,8 @@ export default function SpendingMindsetAnalyzer() {
                     outerRadius={100}
                     fill="#8884d8"
                     dataKey="value"
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(1)}%`}
+                    label={({ name, percent }: { name: string; percent?: number }) => 
+                      `${name} ${percent ? (percent * 100).toFixed(1) : '0.0'}%`}
                   >
                     {pieData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
@@ -451,7 +442,7 @@ export default function SpendingMindsetAnalyzer() {
                 Overspending Alert
               </h4>
               <p className={`${theme.textColors.secondary} mb-3`}>
-                You're overspending in the following categories:
+                You&apos;re overspending in the following categories:
               </p>
               <div className="flex flex-wrap gap-2">
                 {analysis.overspendingCategories.map((category) => (

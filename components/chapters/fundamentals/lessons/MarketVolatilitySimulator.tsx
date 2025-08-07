@@ -1,12 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TrendingUp, TrendingDown, Play, Pause, RotateCcw, DollarSign, AlertTriangle, CheckCircle, Zap, Brain } from 'lucide-react';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
-import { Decimal } from 'decimal.js';
 
 interface MarketVolatilitySimulatorProps {
   className?: string;
@@ -162,7 +161,7 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
   const [emotionalState, setEmotionalState] = useState<'calm' | 'fear' | 'greed' | 'panic'>('calm');
   const [eventPhase, setEventPhase] = useState<'normal' | 'crisis' | 'recovery'>('normal');
 
-  const generateMarketReturn = (month: number, event: MarketEvent | null): number => {
+  const generateMarketReturn = useCallback((month: number, event: MarketEvent | null): number => {
     const baseReturn = 0.007; // ~8.4% annual average
     const volatility = 0.04; // Monthly volatility
     
@@ -182,18 +181,18 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
     }
     
     return monthlyReturn;
-  };
+  }, [eventPhase, currentMonth]);
 
-  const triggerRandomEvent = () => {
+  const triggerRandomEvent = useCallback(() => {
     if (Math.random() < 0.02 && !currentEvent) { // 2% chance per month
       const randomEvent = marketEvents[Math.floor(Math.random() * marketEvents.length)];
       setCurrentEvent(randomEvent);
       setEventPhase('crisis');
       setEmotionalState('panic');
     }
-  };
+  }, [currentEvent]);
 
-  const updateSimulation = () => {
+  const updateSimulation = useCallback(() => {
     if (currentMonth >= totalMonths) {
       setIsSimulating(false);
       return;
@@ -243,14 +242,14 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
     triggerRandomEvent();
     
     setCurrentMonth(prev => prev + 1);
-  };
+  }, [currentMonth, totalMonths, currentEvent, eventPhase, portfolioValue, selectedStrategy, triggerRandomEvent, generateMarketReturn]);
 
   useEffect(() => {
     if (isSimulating) {
       const interval = setInterval(updateSimulation, 200); // Faster simulation
       return () => clearInterval(interval);
     }
-  }, [isSimulating, currentMonth, portfolioValue, currentEvent, eventPhase]);
+  }, [isSimulating, currentMonth, portfolioValue, currentEvent, eventPhase, updateSimulation]);
 
   const resetSimulation = () => {
     setIsSimulating(false);

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Target, Plus, Trash2, ChevronUp, ChevronDown, CheckCircle, Clock, DollarSign } from 'lucide-react';
 import { useProgressStore } from '@/lib/store/progressStore';
@@ -57,17 +57,7 @@ export default function FinancialGoalPrioritizer() {
     urgency: 'medium' as FinancialGoal['urgency']
   });
 
-  useEffect(() => {
-    recordCalculatorUsage('financial-goal-prioritizer');
-  }, [recordCalculatorUsage]);
-
-  useEffect(() => {
-    if (goals.length > 0) {
-      analyzeGoals();
-    }
-  }, [goals, monthlyIncome, monthlyExpenses]);
-
-  const analyzeGoals = () => {
+  const analyzeGoals = useCallback(() => {
     const income = parseFloat(monthlyIncome) || 0;
     const expenses = parseFloat(monthlyExpenses) || 0;
     const availableForGoals = income - expenses;
@@ -92,13 +82,13 @@ export default function FinancialGoalPrioritizer() {
         case 'low': priorityScore += 10; break;
       }
 
-      // Timeframe urgency (shorter timeframe = higher priority)
-      priorityScore += Math.max(0, 50 - goal.timeframe);
+      // Timeframe consideration (shorter = higher priority for debts, longer for investments)
+      if (goal.category === 'debt' && goal.timeframe <= 12) priorityScore += 20;
+      if (goal.category === 'investment' && goal.timeframe >= 24) priorityScore += 15;
 
       return { ...goal, priorityScore };
     });
 
-    // Sort by priority score
     const sortedGoals = scoredGoals.sort((a, b) => b.priorityScore - a.priorityScore);
 
     // Analyze feasibility
@@ -141,7 +131,17 @@ export default function FinancialGoalPrioritizer() {
     });
 
     setAnalysis(analysisResults);
-  };
+  }, [goals, monthlyIncome, monthlyExpenses]);
+
+  useEffect(() => {
+    recordCalculatorUsage('financial-goal-prioritizer');
+  }, [recordCalculatorUsage]);
+
+  useEffect(() => {
+    if (goals.length > 0) {
+      analyzeGoals();
+    }
+  }, [goals.length, analyzeGoals]);
 
   const addGoal = () => {
     if (!newGoal.name || !newGoal.targetAmount || !newGoal.timeframe) {

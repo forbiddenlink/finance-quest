@@ -14,27 +14,19 @@ import {
   CheckCircle,
   Calculator,
   BarChart3,
-  Home,
-  Car,
   Zap,
   Target,
   Clock
 } from 'lucide-react';
 import {
   ResponsiveContainer,
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   AreaChart,
-  Area,
-  BarChart,
-  Bar
+  Area
 } from 'recharts';
-import Decimal from 'decimal.js';
 
 interface CreditScenario {
   id: string;
@@ -135,7 +127,7 @@ export default function CreditScoreImpactSimulator() {
 
   useEffect(() => {
     recordCalculatorUsage('credit-score-impact-simulator');
-  }, []);
+  }, [recordCalculatorUsage]);
 
   const getMortgageRate = (score: number): number => {
     if (score >= 760) return 6.8;
@@ -150,20 +142,22 @@ export default function CreditScoreImpactSimulator() {
     const initialRate = getMortgageRate(initialScore);
     const finalRate = getMortgageRate(finalScore);
     
-    const monthlyInitial = new Decimal(loanAmount)
-      .mul(new Decimal(initialRate / 100 / 12))
-      .mul(new Decimal(1 + initialRate / 100 / 12).pow(360))
-      .div(new Decimal(1 + initialRate / 100 / 12).pow(360).minus(1));
+    const monthlyRateInitial = initialRate / 100 / 12;
+    const monthlyRateFinal = finalRate / 100 / 12;
+    const numPayments = 360;
     
-    const monthlyFinal = new Decimal(loanAmount)
-      .mul(new Decimal(finalRate / 100 / 12))
-      .mul(new Decimal(1 + finalRate / 100 / 12).pow(360))
-      .div(new Decimal(1 + finalRate / 100 / 12).pow(360).minus(1));
+    const monthlyInitial = loanAmount * 
+      (monthlyRateInitial * Math.pow(1 + monthlyRateInitial, numPayments)) /
+      (Math.pow(1 + monthlyRateInitial, numPayments) - 1);
     
-    const totalInitial = monthlyInitial.mul(360);
-    const totalFinal = monthlyFinal.mul(360);
+    const monthlyFinal = loanAmount * 
+      (monthlyRateFinal * Math.pow(1 + monthlyRateFinal, numPayments)) /
+      (Math.pow(1 + monthlyRateFinal, numPayments) - 1);
     
-    return totalInitial.minus(totalFinal).toNumber();
+    const totalInitial = monthlyInitial * 360;
+    const totalFinal = monthlyFinal * 360;
+    
+    return totalInitial - totalFinal;
   };
 
   const generateScoreTimeline = (baseScore: number, scenarios: CreditScenario[]): Array<{
@@ -520,7 +514,7 @@ export default function CreditScoreImpactSimulator() {
                         borderRadius: '8px',
                         color: '#F9FAFB'
                       }}
-                      formatter={(value: any, name: string) => [
+                      formatter={(value: number) => [
                         `${value} (${getScoreGrade(value)})`,
                         'Credit Score'
                       ]}

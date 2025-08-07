@@ -1,12 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Brain, AlertTriangle, CheckCircle, TrendingUp, DollarSign, Eye, Lightbulb, RefreshCw } from 'lucide-react';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Brain, AlertTriangle, CheckCircle, DollarSign, Eye, Lightbulb, RefreshCw } from 'lucide-react';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
-import { Decimal } from 'decimal.js';
 
 interface BehavioralFinanceSimulatorProps {
   className?: string;
@@ -294,7 +293,7 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
   const selectedOptionData = bias?.options.find(opt => opt.id === selectedOption);
 
   // Generate chart data for summary
-  const chartData = cognitiveBiases.map((bias, index) => {
+  const chartData = cognitiveBiases.map((bias) => {
     const result = completedBiases.find(r => r.biasId === bias.id);
     return {
       name: bias.name.split(' ').slice(0, 2).join(' '), // Shortened names
@@ -396,7 +395,7 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
             <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Detailed Analysis
             </h4>
-            {completedBiases.map((result, index) => {
+            {completedBiases.map((result) => {
               const bias = cognitiveBiases.find(b => b.id === result.biasId);
               return (
                 <div 

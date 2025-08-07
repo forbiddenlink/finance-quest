@@ -1,12 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { BarChart, Play, RefreshCw, TrendingUp, TrendingDown, Info, AlertTriangle } from 'lucide-react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } from 'recharts';
+import { BarChart, Play, RefreshCw, TrendingUp, Info } from 'lucide-react';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
-import { Decimal } from 'decimal.js';
 
 interface MonteCarloSimulationProps {
   className?: string;
@@ -45,7 +44,6 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
   const [isSimulating, setIsSimulating] = useState(false);
   const [successRate, setSuccessRate] = useState(0);
   const [showResults, setShowResults] = useState(false);
-  const [finalValues, setFinalValues] = useState<number[]>([]);
 
   // Monte Carlo parameters
   const SIMULATIONS = 1000;
@@ -118,7 +116,6 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
     ).length;
     
     setSimulationResults(results);
-    setFinalValues(finalYearValues);
     setSuccessRate((successfulSimulations / SIMULATIONS) * 100);
     setIsSimulating(false);
     setShowResults(true);
@@ -161,12 +158,6 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
       
       return updated;
     });
-  };
-
-  const getSuccessRateColor = (rate: number) => {
-    if (rate >= 90) return theme.status.success.text;
-    if (rate >= 75) return theme.status.warning.text;
-    return theme.status.error.text;
   };
 
   const getSuccessRateMessage = (rate: number) => {
@@ -427,7 +418,7 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
                       label={{ value: 'Portfolio Value', angle: -90, position: 'insideLeft' }}
                     />
                     <Tooltip 
-                      formatter={(value: any, name: string) => [
+                      formatter={(value: number, name: string) => [
                         `$${value?.toLocaleString() || 0}`,
                         name === 'percentile90' ? '90th Percentile' :
                         name === 'percentile75' ? '75th Percentile' :
