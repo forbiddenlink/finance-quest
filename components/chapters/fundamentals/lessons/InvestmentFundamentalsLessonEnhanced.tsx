@@ -5,6 +5,9 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
+import RiskToleranceAssessment from './RiskToleranceAssessment';
+import AssetAllocationOptimizer from './AssetAllocationOptimizer';
+import CompoundGrowthVisualizer from './CompoundGrowthVisualizer';
 import {
   TrendingUp,
   PieChart,
@@ -18,9 +21,7 @@ import {
   Star,
   Award,
   Zap,
-  Shield,
-  BarChart3,
-  Globe
+  Shield
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -268,38 +269,17 @@ export default function InvestmentFundamentalsLessonEnhanced({ onComplete }: Inv
 
           {/* Interactive Content */}
           {currentLesson === 0 && (
-            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+            <div className={`mb-8`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
                 <Calculator className="w-5 h-5" />
-                Compound Interest Power Demonstration
+                Interactive: Compound Growth Power
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className={`p-4 ${theme.status.success.bg} rounded-lg text-center`}>
-                  <h4 className={`font-bold ${theme.status.success.text} mb-2`}>Start Early (Age 25)</h4>
-                  <p className={`text-sm ${theme.textColors.secondary} mb-2`}>$500/month for 10 years</p>
-                  <p className={`text-lg font-bold ${theme.status.success.text}`}>Total: $60,000 invested</p>
-                  <p className={`text-2xl font-bold ${theme.status.success.text} mt-2`}>Value at 65: $1.37M</p>
-                </div>
-                <div className={`p-4 ${theme.status.warning.bg} rounded-lg text-center`}>
-                  <h4 className={`font-bold ${theme.status.warning.text} mb-2`}>Start Later (Age 35)</h4>
-                  <p className={`text-sm ${theme.textColors.secondary} mb-2`}>$500/month for 30 years</p>
-                  <p className={`text-lg font-bold ${theme.status.warning.text}`}>Total: $180,000 invested</p>
-                  <p className={`text-2xl font-bold ${theme.status.warning.text} mt-2`}>Value at 65: $1.13M</p>
-                </div>
-              </div>
-              <p className={`mt-4 text-center font-bold ${theme.textColors.primary}`}>
-                💡 Early starter invested $120,000 LESS but ended with $240,000 MORE!
-              </p>
-              <div className={`mt-4 p-3 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg text-center`}>
-                <p className={`text-sm ${theme.status.info.text} font-medium`}>
-                  📊 Use our <strong>Compound Growth Calculator</strong> in the Calculator tab to model your investment timeline!
-                </p>
-              </div>
+              <CompoundGrowthVisualizer />
             </div>
           )}
 
           {currentLesson === 1 && (
-            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+            <div className={`mb-8`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
                 <PieChart className="w-5 h-5" />
                 Asset Class Performance (20-Year Averages)
@@ -335,45 +315,12 @@ export default function InvestmentFundamentalsLessonEnhanced({ onComplete }: Inv
           )}
 
           {currentLesson === 2 && (
-            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+            <div className={`mb-8`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-                <BarChart3 className="w-5 h-5" />
-                Age-Based Portfolio Allocations
+                <Target className="w-5 h-5" />
+                Interactive: Build Your Portfolio
               </h3>
-              <div className="space-y-4">
-                <div className={`p-4 ${theme.status.success.bg} rounded-lg`}>
-                  <h4 className={`font-bold ${theme.status.success.text} mb-2`}>Age 20-30: Aggressive Growth</h4>
-                  <div className="flex justify-between text-sm">
-                    <span>US Stocks: 60%</span>
-                    <span>International: 25%</span>
-                    <span>Bonds: 10%</span>
-                    <span>REITs: 5%</span>
-                  </div>
-                </div>
-                <div className={`p-4 ${theme.status.info.bg} rounded-lg`}>
-                  <h4 className={`font-bold ${theme.status.info.text} mb-2`}>Age 40-50: Balanced Growth</h4>
-                  <div className="flex justify-between text-sm">
-                    <span>US Stocks: 50%</span>
-                    <span>International: 20%</span>
-                    <span>Bonds: 25%</span>
-                    <span>REITs: 5%</span>
-                  </div>
-                </div>
-                <div className={`p-4 ${theme.status.warning.bg} rounded-lg`}>
-                  <h4 className={`font-bold ${theme.status.warning.text} mb-2`}>Age 55+: Conservative</h4>
-                  <div className="flex justify-between text-sm">
-                    <span>US Stocks: 35%</span>
-                    <span>International: 15%</span>
-                    <span>Bonds: 45%</span>
-                    <span>REITs: 5%</span>
-                  </div>
-                </div>
-              </div>
-              <div className={`mt-4 p-3 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg text-center`}>
-                <p className={`text-sm ${theme.status.info.text} font-medium`}>
-                  📊 Use our <strong>Asset Allocation Optimizer</strong> in the Calculator tab to build your personalized portfolio!
-                </p>
-              </div>
+              <AssetAllocationOptimizer />
             </div>
           )}
 
@@ -436,25 +383,12 @@ export default function InvestmentFundamentalsLessonEnhanced({ onComplete }: Inv
           )}
 
           {currentLesson === 5 && (
-            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+            <div className={`mb-8`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-                <Globe className="w-5 h-5" />
-                Behavioral Investment Mistakes to Avoid
+                <Star className="w-5 h-5" />
+                Interactive: Discover Your Risk Profile
               </h3>
-              <div className="space-y-4">
-                <div className={`p-4 ${theme.status.error.bg} rounded-lg`}>
-                  <h4 className={`font-bold ${theme.status.error.text} mb-2`}>❌ Panic Selling During Crashes</h4>
-                  <p className={`${theme.textColors.secondary} text-sm`}>Selling at market bottoms locks in losses and misses recoveries</p>
-                </div>
-                <div className={`p-4 ${theme.status.warning.bg} rounded-lg`}>
-                  <h4 className={`font-bold ${theme.status.warning.text} mb-2`}>⚠️ Chasing Hot Performance</h4>
-                  <p className={`${theme.textColors.secondary} text-sm`}>Last year&apos;s winners often become this year&apos;s losers</p>
-                </div>
-                <div className={`p-4 ${theme.status.success.bg} rounded-lg`}>
-                  <h4 className={`font-bold ${theme.status.success.text} mb-2`}>✅ Systematic Dollar-Cost Averaging</h4>
-                  <p className={`${theme.textColors.secondary} text-sm`}>Invest fixed amounts regularly regardless of market conditions</p>
-                </div>
-              </div>
+              <RiskToleranceAssessment />
             </div>
           )}
         </div>
