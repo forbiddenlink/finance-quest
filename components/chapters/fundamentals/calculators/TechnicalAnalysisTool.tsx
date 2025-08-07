@@ -587,10 +587,11 @@ export default function TechnicalAnalysisTool() {
             
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="stock-symbol" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Stock Symbol
                 </label>
                 <input
+                  id="stock-symbol"
                   type="text"
                   value={symbol}
                   onChange={(e) => setSymbol(e.target.value.toUpperCase())}
@@ -600,12 +601,13 @@ export default function TechnicalAnalysisTool() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="current-price" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Current Price
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="current-price"
                     type="number"
                     step="0.01"
                     value={currentPrice}
@@ -617,10 +619,11 @@ export default function TechnicalAnalysisTool() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="timeframe" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Timeframe
                   </label>
                   <select
+                    id="timeframe"
                     value={timeframe}
                     onChange={(e) => setTimeframe(e.target.value)}
                     className={`w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
@@ -632,10 +635,11 @@ export default function TechnicalAnalysisTool() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="lookback-days" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Lookback Days
                   </label>
                   <input
+                    id="lookback-days"
                     type="number"
                     min="50"
                     max="500"
@@ -656,10 +660,11 @@ export default function TechnicalAnalysisTool() {
             
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="rsi-period" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   RSI Period
                 </label>
                 <input
+                  id="rsi-period"
                   type="number"
                   min="5"
                   max="50"
@@ -671,10 +676,11 @@ export default function TechnicalAnalysisTool() {
 
               <div className="grid grid-cols-3 gap-2">
                 <div>
-                  <label className={`block text-xs font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor="macd-fast" className={`block text-xs font-medium ${theme.textColors.primary} mb-1`}>
                     MACD Fast
                   </label>
                   <input
+                    id="macd-fast"
                     type="number"
                     min="5"
                     max="20"
@@ -685,10 +691,11 @@ export default function TechnicalAnalysisTool() {
                 </div>
 
                 <div>
-                  <label className={`block text-xs font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor="macd-slow" className={`block text-xs font-medium ${theme.textColors.primary} mb-1`}>
                     MACD Slow
                   </label>
                   <input
+                    id="macd-slow"
                     type="number"
                     min="20"
                     max="40"

@@ -18,10 +18,7 @@ const BusinessFinanceLesson: React.FC<BusinessFinanceLessonProps> = ({ onComplet
   const sections = [
     'Business Finance Fundamentals',
     'Business Valuation Methods',
-    'Startup Funding & Capital Raising',
-    'Cash Flow Management',
-    'Financial Planning & Projections',
-    'Exit Strategies & Value Creation'
+    'Startup Funding & Capital Raising'
   ];
 
   const handleNext = () => {
