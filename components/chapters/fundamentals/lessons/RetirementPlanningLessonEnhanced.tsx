@@ -5,6 +5,9 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
+import RetirementGoalOptimizer from './RetirementGoalOptimizer';
+import TaxAdvantageMaximizer from './TaxAdvantageMaximizer';
+import WithdrawalStrategySimulator from './WithdrawalStrategySimulator';
 import {
   PiggyBank,
   TrendingUp,
@@ -233,7 +236,7 @@ export default function RetirementPlanningLessonEnhanced({ onComplete }: Retirem
           </header>
 
           {/* Progress Bar */}
-          <div className={`w-full bg-slate-800/50 rounded-full h-2 mb-8`} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(((currentLesson + 1) / enhancedLessons.length) * 100)} aria-label={`Lesson progress: ${Math.round(((currentLesson + 1) / enhancedLessons.length) * 100)}%`}>
+          <div className={`w-full bg-slate-800/50 rounded-full h-2 mb-8`}>
             <div
               className={`h-2 ${theme.status.success.bg} rounded-full transition-all duration-500`}
               style={{ width: `${((currentLesson + 1) / enhancedLessons.length) * 100}%` }}
@@ -371,6 +374,72 @@ export default function RetirementPlanningLessonEnhanced({ onComplete }: Retirem
           </div>
         </GradientCard>
       )}
+
+      {/* Interactive Learning Tools */}
+      <div className="space-y-8 mt-8">
+        <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}>
+          <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-4 text-center`}>
+            🎯 Interactive Retirement Planning Tools
+          </h3>
+          <p className={`${theme.textColors.secondary} text-center mb-8`}>
+            Apply what you&apos;ve learned with these advanced retirement planning simulators
+          </p>
+        </div>
+
+        {/* Retirement Goal Optimizer */}
+        <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}>
+          <div className="flex items-center gap-3 mb-6">
+            <div className={`${theme.status.info.bg} p-3 rounded-lg`}>
+              <Target className={`w-6 h-6 ${theme.status.info.text}`} />
+            </div>
+            <div>
+              <h4 className={`text-xl font-bold ${theme.textColors.primary}`}>
+                Goal Planning & Optimization
+              </h4>
+              <p className={`${theme.textColors.secondary}`}>
+                Calculate your retirement savings target and optimize your contribution strategy
+              </p>
+            </div>
+          </div>
+          <RetirementGoalOptimizer />
+        </div>
+
+        {/* Tax Advantage Maximizer */}
+        <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}>
+          <div className="flex items-center gap-3 mb-6">
+            <div className={`${theme.status.success.bg} p-3 rounded-lg`}>
+              <Shield className={`w-6 h-6 ${theme.status.success.text}`} />
+            </div>
+            <div>
+              <h4 className={`text-xl font-bold ${theme.textColors.primary}`}>
+                Tax Advantage Optimization
+              </h4>
+              <p className={`${theme.textColors.secondary}`}>
+                Maximize your tax-advantaged account strategy for optimal savings
+              </p>
+            </div>
+          </div>
+          <TaxAdvantageMaximizer />
+        </div>
+
+        {/* Withdrawal Strategy Simulator */}
+        <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}>
+          <div className="flex items-center gap-3 mb-6">
+            <div className={`${theme.status.warning.bg} p-3 rounded-lg`}>
+              <TrendingUp className={`w-6 h-6 ${theme.status.warning.text}`} />
+            </div>
+            <div>
+              <h4 className={`text-xl font-bold ${theme.textColors.primary}`}>
+                Withdrawal Strategy Testing
+              </h4>
+              <p className={`${theme.textColors.secondary}`}>
+                Simulate retirement withdrawal strategies and test against market scenarios
+              </p>
+            </div>
+          </div>
+          <WithdrawalStrategySimulator />
+        </div>
+      </div>
     </div>
   );
 }
