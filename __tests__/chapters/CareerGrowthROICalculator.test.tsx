@@ -8,35 +8,6 @@ import { useProgressStore } from '@/lib/store/progressStore';
 jest.mock('@/lib/store/progressStore');
 const mockUseProgressStore = useProgressStore as jest.MockedFunction<typeof useProgressStore>;
 
-// Mock Recharts to avoid canvas issues in tests
-jest.mock('recharts', () => ({
-  ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="responsive-container">{children}</div>
-  ),
-  LineChart: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="line-chart">{children}</div>
-  ),
-  Line: () => <div data-testid="line" />,
-  XAxis: () => <div data-testid="x-axis" />,
-  YAxis: () => <div data-testid="y-axis" />,
-  CartesianGrid: () => <div data-testid="cartesian-grid" />,
-  Tooltip: () => <div data-testid="tooltip" />,
-  Legend: () => <div data-testid="legend" />,
-  BarChart: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="bar-chart">{children}</div>
-  ),
-  Bar: () => <div data-testid="bar" />
-}));
-
-// Mock Framer Motion
-jest.mock('framer-motion', () => ({
-  motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    button: ({ children, ...props }: any) => <button {...props}>{children}</button>
-  },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>
-}));
-
 // Mock decimal.js
 jest.mock('decimal.js', () => {
   return jest.fn().mockImplementation((value) => ({

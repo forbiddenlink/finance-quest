@@ -299,7 +299,7 @@ export default function EmergencyFundBuildingTimeline() {
                     }`}
                     placeholder="6000"
                     aria-describedby="monthly-income-help monthly-income-error"
-                    aria-invalid={validationErrors.some(e => e.field === 'monthlyIncome')}
+                    aria-invalid={validationErrors.some(e => e.field === 'monthlyIncome') ? 'true' : 'false'}
                     min="0"
                     step="100"
                   />
@@ -332,7 +332,7 @@ export default function EmergencyFundBuildingTimeline() {
                     }`}
                     placeholder="4000"
                     aria-describedby="monthly-expenses-help monthly-expenses-error"
-                    aria-invalid={validationErrors.some(e => e.field === 'monthlyExpenses')}
+                    aria-invalid={validationErrors.some(e => e.field === 'monthlyExpenses') ? 'true' : 'false'}
                     min="0"
                     step="100"
                   />
@@ -365,7 +365,7 @@ export default function EmergencyFundBuildingTimeline() {
                     }`}
                     placeholder="500"
                     aria-describedby="current-savings-help current-savings-error"
-                    aria-invalid={validationErrors.some(e => e.field === 'currentSavings')}
+                    aria-invalid={validationErrors.some(e => e.field === 'currentSavings') ? 'true' : 'false'}
                     min="0"
                     step="100"
                   />
@@ -532,8 +532,9 @@ export default function EmergencyFundBuildingTimeline() {
                             isCurrent ? 'bg-amber-500' :
                             'bg-gray-600'
                           }`}
-                          style={{ 
-                            width: `${Math.min(100, (currentSavingsNum / phase.targetAmount) * 100)}%` 
+                          data-progress={Math.min(100, (currentSavingsNum / phase.targetAmount) * 100)}
+                          style={{
+                            width: `${Math.min(100, (currentSavingsNum / phase.targetAmount) * 100)}%`
                           }}
                         ></div>
                       </div>

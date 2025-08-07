@@ -11,17 +11,6 @@ jest.mock('@/lib/store/progressStore', () => ({
   })
 }));
 
-// Mock Framer Motion
-jest.mock('framer-motion', () => ({
-  motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
-    h3: ({ children, ...props }: any) => <h3 {...props}>{children}</h3>,
-    p: ({ children, ...props }: any) => <p {...props}>{children}</p>
-  },
-  AnimatePresence: ({ children }: any) => <div>{children}</div>
-}));
-
 // Mock react-hot-toast
 jest.mock('react-hot-toast', () => ({
   __esModule: true,

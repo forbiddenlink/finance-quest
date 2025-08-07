@@ -25,7 +25,7 @@ interface PortfolioPoint {
   return: number;
   sharpeRatio: number;
   volatility: number;
-  allocation: {[key: string]: number};
+  allocation: { [key: string]: number };
   color: string;
 }
 
@@ -61,19 +61,19 @@ export default function ModernPortfolioTheoryVisualizer() {
     const normalizedAllocations = allocations.map(alloc => alloc / total);
 
     // Calculate expected return (weighted average)
-    const expectedReturn = assets.reduce((sum, asset, index) => 
+    const expectedReturn = assets.reduce((sum, asset, index) =>
       sum + (normalizedAllocations[index] * asset.expectedReturn), 0
     );
 
     // Calculate portfolio variance (simplified - assuming zero correlation)
-    const variance = assets.reduce((sum, asset, index) => 
+    const variance = assets.reduce((sum, asset, index) =>
       sum + Math.pow(normalizedAllocations[index] * asset.volatility, 2), 0
     );
-    
+
     const volatility = Math.sqrt(variance);
     const sharpeRatio = (expectedReturn - riskFreeRate) / volatility;
 
-    const allocation: {[key: string]: number} = {};
+    const allocation: { [key: string]: number } = {};
     assets.forEach((asset, index) => {
       allocation[asset.name] = normalizedAllocations[index] * 100;
     });
@@ -98,7 +98,7 @@ export default function ModernPortfolioTheoryVisualizer() {
       // Create different allocation strategies
       const stockWeight = i / steps;
       const bondWeight = 1 - stockWeight;
-      
+
       // Distribute between asset classes based on risk level
       const allocations = [
         stockWeight * 0.7, // US Stocks
@@ -154,7 +154,7 @@ export default function ModernPortfolioTheoryVisualizer() {
   const currentMetrics = calculatePortfolioMetrics(assets.map(asset => asset.allocation));
 
   const updateAssetAllocation = (index: number, allocation: number) => {
-    const updatedAssets = assets.map((asset, i) => 
+    const updatedAssets = assets.map((asset, i) =>
       i === index ? { ...asset, allocation } : asset
     );
     setAssets(updatedAssets);
@@ -208,7 +208,7 @@ export default function ModernPortfolioTheoryVisualizer() {
               </p>
             </div>
           </div>
-          
+
           <button
             onClick={resetToDefault}
             className={`flex items-center gap-2 px-4 py-2 border ${theme.borderColors.primary} ${theme.textColors.secondary} rounded-lg hover:${theme.borderColors.accent} transition-all`}
@@ -227,7 +227,7 @@ export default function ModernPortfolioTheoryVisualizer() {
             </div>
             <div className={`text-sm ${theme.textColors.secondary}`}>Expected Return</div>
           </div>
-          
+
           <div className={`p-4 ${getRiskLevel(currentMetrics.volatility).color === theme.status.success.text ? theme.status.success.bg : getRiskLevel(currentMetrics.volatility).color === theme.status.warning.text ? theme.status.warning.bg : theme.status.error.bg} rounded-lg text-center`}>
             <Shield className={`w-6 h-6 ${getRiskLevel(currentMetrics.volatility).color} mx-auto mb-2`} />
             <div className={`text-xl font-bold ${getRiskLevel(currentMetrics.volatility).color}`}>
@@ -235,7 +235,7 @@ export default function ModernPortfolioTheoryVisualizer() {
             </div>
             <div className={`text-sm ${theme.textColors.secondary}`}>Risk (Volatility)</div>
           </div>
-          
+
           <div className={`p-4 ${currentMetrics.sharpeRatio > 1 ? theme.status.success.bg : currentMetrics.sharpeRatio > 0.5 ? theme.status.warning.bg : theme.status.error.bg} rounded-lg text-center`}>
             <Award className={`w-6 h-6 ${currentMetrics.sharpeRatio > 1 ? theme.status.success.text : currentMetrics.sharpeRatio > 0.5 ? theme.status.warning.text : theme.status.error.text} mx-auto mb-2`} />
             <div className={`text-xl font-bold ${currentMetrics.sharpeRatio > 1 ? theme.status.success.text : currentMetrics.sharpeRatio > 0.5 ? theme.status.warning.text : theme.status.error.text}`}>
@@ -243,7 +243,7 @@ export default function ModernPortfolioTheoryVisualizer() {
             </div>
             <div className={`text-sm ${theme.textColors.secondary}`}>Sharpe Ratio</div>
           </div>
-          
+
           <div className={`p-4 ${allocationWarning ? theme.status.error.bg : theme.status.success.bg} rounded-lg text-center`}>
             <Target className={`w-6 h-6 ${allocationWarning ? theme.status.error.text : theme.status.success.text} mx-auto mb-2`} />
             <div className={`text-xl font-bold ${allocationWarning ? theme.status.error.text : theme.status.success.text}`}>
@@ -260,30 +260,30 @@ export default function ModernPortfolioTheoryVisualizer() {
           <BarChart3 className="w-5 h-5" />
           Efficient Frontier & Portfolio Comparison
         </h3>
-        
+
         <div className="h-96 mb-6">
           <ResponsiveContainer width="100%" height="100%">
             <ScatterChart margin={{ top: 20, right: 30, bottom: 20, left: 20 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis 
-                type="number" 
-                domain={['dataMin - 1', 'dataMax + 1']} 
-                dataKey="risk" 
-                name="Risk" 
-                unit="%" 
+              <XAxis
+                type="number"
+                domain={['dataMin - 1', 'dataMax + 1']}
+                dataKey="risk"
+                name="Risk"
+                unit="%"
                 stroke="#9CA3AF"
                 label={{ value: 'Risk (Volatility %)', position: 'insideBottom', offset: -10 }}
               />
-              <YAxis 
-                type="number" 
-                domain={['dataMin - 1', 'dataMax + 1']} 
-                dataKey="return" 
-                name="Return" 
-                unit="%" 
+              <YAxis
+                type="number"
+                domain={['dataMin - 1', 'dataMax + 1']}
+                dataKey="return"
+                name="Return"
+                unit="%"
                 stroke="#9CA3AF"
                 label={{ value: 'Expected Return %', angle: -90, position: 'insideLeft' }}
               />
-              <Tooltip 
+              <Tooltip
                 formatter={(value: number, name: string) => [
                   name === 'risk' ? `${value.toFixed(1)}%` : `${value.toFixed(1)}%`,
                   name === 'risk' ? 'Risk' : 'Return'
@@ -297,25 +297,25 @@ export default function ModernPortfolioTheoryVisualizer() {
                 }}
                 contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }}
               />
-              
+
               {/* Efficient Frontier Line */}
-              <Scatter 
-                data={efficientFrontier} 
-                fill="#6B7280" 
+              <Scatter
+                data={efficientFrontier}
+                fill="#6B7280"
                 fillOpacity={0.3}
                 name="Efficient Frontier"
               />
-              
+
               {/* Preset Portfolios */}
-              <Scatter 
-                data={presetPortfolios} 
+              <Scatter
+                data={presetPortfolios}
                 fill="#F59E0B"
                 name="Preset Portfolios"
               />
-              
+
               {/* Current Portfolio */}
-              <Scatter 
-                data={[currentMetrics]} 
+              <Scatter
+                data={[currentMetrics]}
                 fill="#3B82F6"
                 fillOpacity={1}
                 name="Your Portfolio"
@@ -323,7 +323,7 @@ export default function ModernPortfolioTheoryVisualizer() {
             </ScatterChart>
           </ResponsiveContainer>
         </div>
-        
+
         {/* Legend */}
         <div className="flex flex-wrap gap-6 justify-center">
           <div className="flex items-center gap-2">
@@ -347,13 +347,13 @@ export default function ModernPortfolioTheoryVisualizer() {
           <Sliders className="w-5 h-5" />
           Portfolio Allocation
         </h3>
-        
+
         <div className="space-y-6">
           {assets.map((asset, index) => (
             <div key={index} className="space-y-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div 
+                  <div
                     className="w-4 h-4 rounded"
                     style={{ backgroundColor: asset.color }}
                     aria-label={`${asset.name} color indicator`}
@@ -380,7 +380,7 @@ export default function ModernPortfolioTheoryVisualizer() {
                   />
                 </div>
               </div>
-              
+
               <div className="relative">
                 <input
                   type="range"
@@ -399,7 +399,7 @@ export default function ModernPortfolioTheoryVisualizer() {
             </div>
           ))}
         </div>
-        
+
         {allocationWarning && (
           <div className={`mt-4 p-3 ${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg`}>
             <div className="flex items-center gap-2">
@@ -418,19 +418,19 @@ export default function ModernPortfolioTheoryVisualizer() {
           <Target className="w-5 h-5" />
           Sample Portfolio Strategies
         </h3>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {presetPortfolios.map((portfolio, index) => (
             <div key={index} className={`p-4 border ${theme.borderColors.primary} rounded-lg hover:border-blue-500 transition-all cursor-pointer`} onClick={() => applyPresetPortfolio(portfolio)}>
               <div className="flex items-center justify-between mb-3">
                 <h4 className={`font-semibold ${theme.textColors.primary}`}>{portfolio.name}</h4>
-                <div 
+                <div
                   className="w-3 h-3 rounded-full"
                   style={{ backgroundColor: portfolio.color }}
                   aria-label={`${portfolio.name} color indicator`}
                 />
               </div>
-              
+
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className={`${theme.textColors.secondary}`}>Return:</span>
@@ -445,7 +445,7 @@ export default function ModernPortfolioTheoryVisualizer() {
                   <span className={`font-medium ${theme.textColors.primary}`}>{formatRatio(portfolio.sharpeRatio)}</span>
                 </div>
               </div>
-              
+
               <div className="mt-3 space-y-1">
                 {Object.entries(portfolio.allocation).map(([assetName, allocation]) => (
                   <div key={assetName} className="flex justify-between text-xs">
@@ -454,7 +454,7 @@ export default function ModernPortfolioTheoryVisualizer() {
                   </div>
                 ))}
               </div>
-              
+
               <button
                 className={`w-full mt-3 px-3 py-1 ${theme.buttons.primary} rounded text-sm hover:shadow-lg transition-all`}
                 title={`Apply ${portfolio.name} portfolio allocation`}
@@ -473,14 +473,14 @@ export default function ModernPortfolioTheoryVisualizer() {
           <Activity className="w-5 h-5" />
           Portfolio Analysis & Recommendations
         </h3>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className={`p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`}>
             <h4 className={`font-semibold ${theme.status.info.text} mb-3`}>Risk Assessment</h4>
             <div className="space-y-2 text-sm">
               <p className={`${theme.textColors.secondary}`}>
                 Your portfolio has <strong className={`${getRiskLevel(currentMetrics.volatility).color}`}>
-                {getRiskLevel(currentMetrics.volatility).level}</strong> risk with {formatPercent(currentMetrics.volatility)} volatility.
+                  {getRiskLevel(currentMetrics.volatility).level}</strong> risk with {formatPercent(currentMetrics.volatility)} volatility.
               </p>
               {currentMetrics.volatility > 15 && (
                 <p className={`${theme.status.warning.text}`}>
@@ -494,7 +494,7 @@ export default function ModernPortfolioTheoryVisualizer() {
               )}
             </div>
           </div>
-          
+
           <div className={`p-4 ${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg`}>
             <h4 className={`font-semibold ${theme.status.warning.text} mb-3`}>Optimization Suggestions</h4>
             <div className="space-y-2 text-sm">
@@ -514,7 +514,7 @@ export default function ModernPortfolioTheoryVisualizer() {
             </div>
           </div>
         </div>
-        
+
         <div className={`mt-6 p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg`}>
           <div className="flex items-center gap-2 mb-2">
             <Zap className={`w-5 h-5 ${theme.status.success.text}`} />
