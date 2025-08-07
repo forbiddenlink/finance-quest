@@ -43,7 +43,7 @@ describe('InvestmentCalculatorEnhanced', () => {
       render(<InvestmentCalculatorEnhanced />);
       
       const tabs = screen.getAllByRole('tab');
-      expect(tabs).toHaveLength(4);
+      expect(tabs).toHaveLength(5);
       
       tabs.forEach(tab => {
         expect(tab).toHaveAttribute('aria-selected');
@@ -159,6 +159,18 @@ describe('InvestmentCalculatorEnhanced', () => {
       });
     });
 
+    it('switches to Dollar Cost Averaging tab when clicked', async () => {
+      render(<InvestmentCalculatorEnhanced />);
+      
+      const dcaTab = screen.getByRole('tab', { name: /dollar cost averaging/i });
+      fireEvent.click(dcaTab);
+      
+      await waitFor(() => {
+        expect(dcaTab).toHaveAttribute('aria-selected', 'true');
+        expect(screen.getByText('Dollar Cost Averaging Calculator')).toBeInTheDocument();
+      });
+    });
+
     it('supports circular keyboard navigation', () => {
       render(<InvestmentCalculatorEnhanced />);
       
@@ -236,7 +248,7 @@ describe('InvestmentCalculatorEnhanced', () => {
       render(<InvestmentCalculatorEnhanced />);
       
       const navigationButtons = screen.getAllByRole('button', { name: /switch to/i });
-      expect(navigationButtons).toHaveLength(3); // Risk Assessment, Asset Allocation, Compound Growth
+      expect(navigationButtons).toHaveLength(4); // Risk Assessment, Asset Allocation, Compound Growth, Dollar Cost Averaging
       
       navigationButtons.forEach(button => {
         expect(button).toHaveAttribute('aria-label');

@@ -18,8 +18,9 @@ import {
 import RiskToleranceCalculator from '@/components/chapters/fundamentals/calculators/RiskToleranceCalculator';
 import AssetAllocationOptimizer from '@/components/chapters/fundamentals/calculators/AssetAllocationOptimizer';
 import CompoundInterestCalculator from '@/components/shared/calculators/CompoundInterestCalculator';
+import DollarCostAveragingCalculator from '@/components/chapters/fundamentals/calculators/DollarCostAveragingCalculator';
 
-type CalculatorTab = 'overview' | 'risk-assessment' | 'asset-allocation' | 'compound-growth';
+type CalculatorTab = 'overview' | 'risk-assessment' | 'asset-allocation' | 'compound-growth' | 'dollar-cost-averaging';
 
 export default function InvestmentCalculatorEnhanced() {
   const [activeTab, setActiveTab] = useState<CalculatorTab>('overview');
@@ -91,6 +92,12 @@ export default function InvestmentCalculatorEnhanced() {
       label: 'Compound Growth',
       icon: TrendingUp,
       description: 'Calculate investment growth'
+    },
+    {
+      id: 'dollar-cost-averaging' as CalculatorTab,
+      label: 'Dollar Cost Averaging',
+      icon: BarChart3,
+      description: 'Smooth market volatility with regular investing'
     }
   ];
 
@@ -108,7 +115,7 @@ export default function InvestmentCalculatorEnhanced() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-6 text-center`}>
           <Brain className={`w-8 h-8 ${theme.status.info.text} mx-auto mb-3`} />
           <h3 className={`font-semibold ${theme.status.info.text} mb-2`}>Risk Assessment</h3>
@@ -130,6 +137,14 @@ export default function InvestmentCalculatorEnhanced() {
           <h3 className={`font-semibold ${theme.status.success.text} mb-2`}>Growth Projection</h3>
           <p className={`text-sm ${theme.textColors.secondary}`}>
             Calculate compound interest and long-term wealth building
+          </p>
+        </div>
+
+        <div className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-6 text-center`}>
+          <BarChart3 className={`w-8 h-8 ${theme.status.info.text} mx-auto mb-3`} />
+          <h3 className={`font-semibold ${theme.status.info.text} mb-2`}>Dollar Cost Averaging</h3>
+          <p className={`text-sm ${theme.textColors.secondary}`}>
+            Smooth market volatility with consistent investing
           </p>
         </div>
       </div>
@@ -300,6 +315,8 @@ export default function InvestmentCalculatorEnhanced() {
         return <AssetAllocationOptimizer />;
       case 'compound-growth':
         return <CompoundInterestCalculator />;
+      case 'dollar-cost-averaging':
+        return <DollarCostAveragingCalculator />;
       default:
         return renderOverview();
     }
@@ -312,7 +329,7 @@ export default function InvestmentCalculatorEnhanced() {
         <div
           role="tablist"
           aria-label="Investment calculator tools"
-          className="grid grid-cols-2 md:grid-cols-4 gap-1"
+          className="grid grid-cols-2 md:grid-cols-5 gap-1"
         >
           {tabs.map((tab, index) => (
             <button
