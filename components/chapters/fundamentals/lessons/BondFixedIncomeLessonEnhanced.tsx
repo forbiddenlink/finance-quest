@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,6 +20,7 @@ import {
   Lightbulb
 } from 'lucide-react';
 import { theme } from '@/lib/theme';
+import { useProgressStore } from '@/lib/store/progressStore';
 
 interface BondFixedIncomeLessonEnhancedProps {
   onComplete?: () => void;
@@ -28,6 +29,14 @@ interface BondFixedIncomeLessonEnhancedProps {
 export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedIncomeLessonEnhancedProps) {
   const [currentLesson, setCurrentLesson] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<boolean[]>(new Array(6).fill(false));
+  
+  // Progress store integration
+  const { completeLesson, recordCalculatorUsage } = useProgressStore();
+
+  // Record calculator usage on mount
+  useEffect(() => {
+    recordCalculatorUsage('bond-fixed-income-lesson');
+  }, [recordCalculatorUsage]);
 
   const lessons = [
     {
@@ -650,6 +659,9 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
     const newCompleted = [...completedLessons];
     newCompleted[lessonIndex] = true;
     setCompletedLessons(newCompleted);
+
+    // Record lesson completion in progress store
+    completeLesson(`chapter14-lesson-${lessonIndex + 1}`, 0);
 
     if (lessonIndex === lessons.length - 1 && onComplete) {
       onComplete();
