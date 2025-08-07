@@ -11,11 +11,6 @@ interface ValidationError {
     message: string;
 }
 
-interface InputValidation {
-    isValid: boolean;
-    errors: ValidationError[];
-}
-
 interface NegotiationAnalysis {
     currentSalary: number;
     requestedSalary: number;

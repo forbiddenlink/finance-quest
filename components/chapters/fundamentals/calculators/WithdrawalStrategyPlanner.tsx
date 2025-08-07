@@ -48,6 +48,7 @@ const WithdrawalStrategyPlanner: React.FC = () => {
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   // Validation function
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const validateInput = (field: string, value: number, min: number, max: number) => {
     const newErrors = { ...validationErrors };
     

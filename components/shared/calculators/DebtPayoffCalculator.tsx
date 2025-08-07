@@ -72,6 +72,7 @@ export default function DebtPayoffCalculator() {
   const [extraPayment, setExtraPayment] = useState('200');
   const [strategy, setStrategy] = useState<'avalanche' | 'snowball'>('avalanche');
   const [projectionData, setProjectionData] = useState<PayoffProjection[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
   const [results, setResults] = useState({
     totalBalance: 0,
@@ -82,6 +83,7 @@ export default function DebtPayoffCalculator() {
   });
 
   // Validation function
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const safeParseFloat = (value: string | number, min: number = 0, max: number = 1000000): number => {
     const parsed = typeof value === 'string' ? parseFloat(value) : value;
     if (isNaN(parsed)) return 0;
@@ -124,6 +126,7 @@ export default function DebtPayoffCalculator() {
   };
 
   // Handle input changes with validation
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleExtraPaymentChange = (value: string) => {
     setExtraPayment(value);
     validateInputs();

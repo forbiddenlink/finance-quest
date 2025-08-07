@@ -71,6 +71,7 @@ export default function RiskToleranceCalculator() {
   }, [recordCalculatorUsage]);
 
   // Validation functions
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const validateDemographics = (): InputValidation => {
     const errors: ValidationError[] = [];
 

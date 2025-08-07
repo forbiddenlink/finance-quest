@@ -6,9 +6,6 @@ import { theme } from '@/lib/theme';
 import { useProgressStore } from '@/lib/store/progressStore';
 import {
   Target,
-  TrendingUp,
-  Calendar,
-  DollarSign,
   Zap,
   Calculator,
   ArrowUp,
@@ -209,7 +206,7 @@ export default function EmergencyFundOptimizer() {
                     step="1000"
                     value={targetAmount}
                     onChange={(e) => setTargetAmount(parseFloat(e.target.value) || 1000)}
-                    className={`pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${theme.backgrounds.input} ${theme.borderColors.primary}`}
+                    className="pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white/5 border-white/10 text-white"
                     placeholder="15000"
                     aria-label="Target emergency fund amount"
                   />
@@ -230,7 +227,7 @@ export default function EmergencyFundOptimizer() {
                     step="100"
                     value={currentSavings}
                     onChange={(e) => setCurrentSavings(parseFloat(e.target.value) || 0)}
-                    className={`pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${theme.backgrounds.input} ${theme.borderColors.primary}`}
+                    className="pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white/5 border-white/10 text-white"
                     placeholder="2000"
                     aria-label="Current savings amount"
                   />
@@ -251,7 +248,7 @@ export default function EmergencyFundOptimizer() {
                     step="50"
                     value={monthlyContribution}
                     onChange={(e) => setMonthlyContribution(parseFloat(e.target.value) || 50)}
-                    className={`pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${theme.backgrounds.input} ${theme.borderColors.primary}`}
+                    className="pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white/5 border-white/10 text-white"
                     placeholder="500"
                     aria-label="Monthly contribution amount"
                   />
@@ -264,8 +261,8 @@ export default function EmergencyFundOptimizer() {
                 </label>
                 <select
                   value={optimizationGoal}
-                  onChange={(e) => setOptimizationGoal(e.target.value as any)}
-                  className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${theme.backgrounds.input} ${theme.borderColors.primary}`}
+                  onChange={(e) => setOptimizationGoal(e.target.value as 'speed' | 'interest' | 'balance')}
+                  className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white/5 border-white/10 text-white"
                   aria-label="Optimization priority"
                 >
                   <option value="speed">Fastest Time to Goal</option>
@@ -289,7 +286,7 @@ export default function EmergencyFundOptimizer() {
             </div>
 
             <div className="space-y-4">
-              {accountOptions.map((account, index) => (
+              {accountOptions.map((account) => (
                 <div
                   key={account.name}
                   className={`p-4 border rounded-lg cursor-pointer transition-all hover:border-green-400/50 ${

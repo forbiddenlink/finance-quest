@@ -8,13 +8,11 @@ import {
   Shield,
   DollarSign,
   Users,
-  Home,
   Calculator,
   AlertCircle,
   CheckCircle,
   TrendingUp
 } from 'lucide-react';
-import toast from 'react-hot-toast';
 
 interface ExpenseCategory {
   name: string;
@@ -66,8 +64,6 @@ export default function EmergencyFundCoreCalculator() {
   const essentialExpenses = monthlyExpenses
     .filter(expense => expense.isEssential)
     .reduce((sum, expense) => sum + expense.amount, 0);
-
-  const totalExpenses = monthlyExpenses.reduce((sum, expense) => sum + expense.amount, 0);
 
   // Calculate recommended emergency fund based on personal factors
   const calculateRecommendedFund = () => {
@@ -153,7 +149,7 @@ export default function EmergencyFundCoreCalculator() {
                       step="25"
                       value={expense.amount}
                       onChange={(e) => updateExpense(index, parseFloat(e.target.value) || 0)}
-                      className={`pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${theme.backgrounds.input} ${theme.borderColors.primary}`}
+                      className="pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all bg-white/5 border-white/10 text-white"
                       placeholder="0"
                       aria-label={`Monthly amount for ${expense.name}`}
                     />
@@ -197,9 +193,9 @@ export default function EmergencyFundCoreCalculator() {
                   value={personalFactors.jobStability}
                   onChange={(e) => setPersonalFactors(prev => ({ 
                     ...prev, 
-                    jobStability: e.target.value as any 
+                    jobStability: e.target.value as 'stable' | 'variable' | 'unstable' 
                   }))}
-                  className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${theme.backgrounds.input} ${theme.borderColors.primary}`}
+                  className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white/5 border-white/10 text-white"
                   aria-label="Job stability level"
                 >
                   <option value="stable">Stable (Salaried, secure job)</option>
@@ -221,7 +217,7 @@ export default function EmergencyFundCoreCalculator() {
                     ...prev, 
                     dependents: parseInt(e.target.value) || 0 
                   }))}
-                  className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${theme.backgrounds.input} ${theme.borderColors.primary}`}
+                  className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white/5 border-white/10 text-white"
                   placeholder="0"
                   aria-label="Number of dependents"
                 />
@@ -279,7 +275,7 @@ export default function EmergencyFundCoreCalculator() {
                 step="100"
                 value={currentSavings}
                 onChange={(e) => setCurrentSavings(parseFloat(e.target.value) || 0)}
-                className={`pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-lg ${theme.backgrounds.input} ${theme.borderColors.primary}`}
+                className="pl-8 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-lg bg-white/5 border-white/10 text-white"
                 placeholder="0"
               />
             </div>

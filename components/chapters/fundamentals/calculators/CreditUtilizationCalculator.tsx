@@ -23,11 +23,6 @@ interface ValidationError {
   message: string;
 }
 
-interface InputValidation {
-  isValid: boolean;
-  errors: ValidationError[];
-}
-
 interface CreditCard {
   id: string;
   name: string;
