@@ -7,7 +7,29 @@ import MoneyMindsetCalculatorSuite from '@/components/chapters/fundamentals/calc
 jest.mock('@/lib/store/progressStore', () => ({
   useProgressStore: () => ({
     recordCalculatorUsage: jest.fn(),
+    userProgress: {
+      lessonsCompleted: [],
+      quizScores: {},
+      calculatorUsage: {},
+      financialLiteracyScore: 750,
+    },
   })
+}));
+
+// Mock guided tour
+jest.mock('@/components/shared/ui/GuidedTour', () => ({
+  __esModule: true,
+  default: ({ children }: any) => <div data-testid="guided-tour">{children}</div>,
+  hasTourBeenCompleted: jest.fn(() => true), // Skip tours in tests
+}));
+
+// Mock achievement system
+jest.mock('@/components/shared/ui/AchievementSystem', () => ({
+  __esModule: true,
+  default: ({ children }: any) => <div data-testid="achievement-system">{children}</div>,
+  triggerCalculatorUsage: jest.fn(),
+  triggerPaycheckOptimization: jest.fn(),
+  triggerTaxOptimization: jest.fn(),
 }));
 
 // Mock toast
