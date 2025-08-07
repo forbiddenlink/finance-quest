@@ -32,6 +32,44 @@ jest.mock('@/components/shared/ui/AchievementSystem', () => {
   };
 });
 
+jest.mock('@/components/chapters/fundamentals/lessons/RiskToleranceAssessment', () => {
+  return function MockRiskToleranceAssessment() {
+    return <div data-testid="risk-tolerance-assessment">Risk Tolerance Assessment Component</div>;
+  };
+});
+
+jest.mock('@/components/chapters/fundamentals/lessons/AssetAllocationOptimizer', () => {
+  return function MockAssetAllocationOptimizer() {
+    return <div data-testid="asset-allocation-optimizer">Asset Allocation Optimizer Component</div>;
+  };
+});
+
+jest.mock('@/components/chapters/fundamentals/lessons/CompoundGrowthVisualizer', () => {
+  return function MockCompoundGrowthVisualizer() {
+    return <div data-testid="compound-growth-visualizer">Compound Growth Visualizer Component</div>;
+  };
+});
+
+jest.mock('@/components/chapters/fundamentals/lessons/MarketVolatilitySimulator', () => {
+  return function MockMarketVolatilitySimulator() {
+    return <div data-testid="market-volatility-simulator">Market Volatility Simulator Component</div>;
+  };
+});
+
+// Mock Recharts
+jest.mock('recharts', () => ({
+  ResponsiveContainer: ({ children }: any) => <div data-testid="responsive-container">{children}</div>,
+  LineChart: ({ children }: any) => <div data-testid="line-chart">{children}</div>,
+  Line: () => <div data-testid="line" />,
+  AreaChart: ({ children }: any) => <div data-testid="area-chart">{children}</div>,
+  Area: () => <div data-testid="area" />,
+  XAxis: () => <div data-testid="x-axis" />,
+  YAxis: () => <div data-testid="y-axis" />,
+  CartesianGrid: () => <div data-testid="cartesian-grid" />,
+  Tooltip: () => <div data-testid="tooltip" />,
+  Legend: () => <div data-testid="legend" />,
+}));
+
 const mockProgressStore = {
   userProgress: {
     completedLessons: [],
@@ -362,5 +400,245 @@ describe('InvestmentFundamentalsLessonEnhanced', () => {
   it('unmounts without errors', () => {
     const { unmount } = render(<InvestmentFundamentalsLessonEnhanced />);
     expect(() => unmount()).not.toThrow();
+  });
+
+  // NEW ADVANCED TESTS FOR MARKET VOLATILITY SIMULATOR INTEGRATION
+
+  it('displays market volatility simulator on lesson 5', () => {
+    render(<InvestmentFundamentalsLessonEnhanced />);
+    
+    // Navigate to lesson 5 (Investment Psychology)
+    const nextButton = screen.getByText(/Next/i);
+    for (let i = 0; i < 5; i++) {
+      fireEvent.click(nextButton);
+    }
+    
+    expect(screen.getByTestId('market-volatility-simulator')).toBeInTheDocument();
+  });
+
+  it('shows advanced market crisis simulation component', () => {
+    render(<InvestmentFundamentalsLessonEnhanced />);
+    
+    // Navigate to lesson 5
+    const nextButton = screen.getByText(/Next/i);
+    for (let i = 0; i < 5; i++) {
+      fireEvent.click(nextButton);
+    }
+    
+    expect(screen.getByText(/Advanced: Market Crisis Simulation/i)).toBeInTheDocument();
+    expect(screen.getByText(/Test different investment strategies during historical market crises/i)).toBeInTheDocument();
+  });
+
+  it('displays risk tolerance assessment on lesson 5', () => {
+    render(<InvestmentFundamentalsLessonEnhanced />);
+    
+    // Navigate to lesson 5
+    const nextButton = screen.getByText(/Next/i);
+    for (let i = 0; i < 5; i++) {
+      fireEvent.click(nextButton);
+    }
+    
+    expect(screen.getByTestId('risk-tolerance-assessment')).toBeInTheDocument();
+    expect(screen.getByText(/Interactive: Discover Your Risk Profile/i)).toBeInTheDocument();
+  });
+
+  it('shows compound growth visualizer on lesson 0', () => {
+    render(<InvestmentFundamentalsLessonEnhanced />);
+    
+    // Should be on lesson 0 initially
+    expect(screen.getByTestId('compound-growth-visualizer')).toBeInTheDocument();
+  });
+
+  it('displays asset allocation optimizer on lesson 2', () => {
+    render(<InvestmentFundamentalsLessonEnhanced />);
+    
+    // Navigate to lesson 2
+    const nextButton = screen.getByText(/Next/i);
+    fireEvent.click(nextButton); // Lesson 1
+    fireEvent.click(nextButton); // Lesson 2
+    
+    expect(screen.getByTestId('asset-allocation-optimizer')).toBeInTheDocument();
+  });
+
+  it('covers investment psychology content with market volatility education', () => {
+    render(<InvestmentFundamentalsLessonEnhanced />);
+    
+    // Navigate to lesson 5 (Investment Psychology)
+    const nextButton = screen.getByText(/Next/i);
+    for (let i = 0; i < 5; i++) {
+      fireEvent.click(nextButton);
+    }
+    
+    expect(screen.getByText(/Investment Psychology: Mastering Your Mind for Market Success/i)).toBeInTheDocument();
+  });
+
+  it('validates proper lesson count and structure', () => {
+    render(<InvestmentFundamentalsLessonEnhanced />);
+    
+    // Should have 6 lessons total
+    expect(screen.getByText(/Lesson.*1.*of.*6/i)).toBeInTheDocument();
+    
+    // Navigate through all lessons
+    const nextButton = screen.getByText(/Next/i);
+    for (let i = 1; i <= 5; i++) {
+      fireEvent.click(nextButton);
+      expect(screen.getByText(new RegExp(`Lesson.*${i + 1}.*of.*6`, 'i'))).toBeInTheDocument();
+    }
+  });
+
+  it('has proper accessibility attributes for interactive components', () => {
+    render(<InvestmentFundamentalsLessonEnhanced />);
+    
+    // Check for progress ring accessibility
+    const progressRing = screen.getByRole('progressbar');
+    expect(progressRing).toHaveAttribute('aria-valuemin', '0');
+    expect(progressRing).toHaveAttribute('aria-valuemax', '100');
+  });
+
+  it('handles lesson completion tracking for all 6 lessons', () => {
+    render(<InvestmentFundamentalsLessonEnhanced />);
+    
+    const nextButton = screen.getByText(/Next/i);
+    
+    // Test completion tracking for each lesson
+    for (let i = 0; i < 6; i++) {
+      const completeButton = screen.getByText(/Mark Complete/i);
+      fireEvent.click(completeButton);
+      
+      expect(mockProgressStore.completeLesson).toHaveBeenCalledWith(
+        `investment-fundamentals-enhanced-${i}`,
+        expect.any(Number)
+      );
+      
+      if (i < 5) {
+        fireEvent.click(nextButton);
+      }
+    }
+  });
+
+  it('shows enhanced lesson titles for all chapters', () => {
+    render(<InvestmentFundamentalsLessonEnhanced />);
+    
+    const expectedTitles = [
+      'Investment Fundamentals: From Saver to Wealth Builder',
+      'Asset Classes: Building Your Investment Portfolio Foundation',
+      'Portfolio Construction: The Science of Asset Allocation',
+      'Investment Accounts: Maximizing Tax-Advantaged Growth',
+      'Index Fund Investing: Passive Strategy That Beats Most Professionals',
+      'Investment Psychology: Mastering Your Mind for Market Success'
+    ];
+    
+    const nextButton = screen.getByText(/Next/i);
+    
+    expectedTitles.forEach((title, index) => {
+      expect(screen.getByText(title)).toBeInTheDocument();
+      
+      if (index < expectedTitles.length - 1) {
+        fireEvent.click(nextButton);
+      }
+    });
+  });
+
+  it('validates navigation boundary conditions', () => {
+    render(<InvestmentFundamentalsLessonEnhanced />);
+    
+    // Initially on first lesson, previous should be disabled
+    const prevButton = screen.getByText(/Previous/i);
+    expect(prevButton.closest('button')).toBeDisabled();
+    
+    // Navigate to last lesson
+    const nextButton = screen.getByText(/Next/i);
+    for (let i = 0; i < 5; i++) {
+      fireEvent.click(nextButton);
+    }
+    
+    // On last lesson, next should be disabled
+    expect(nextButton.closest('button')).toBeDisabled();
+    expect(screen.getByText(/Lesson.*6.*of.*6/i)).toBeInTheDocument();
+  });
+
+  it('displays mastery completion message when all lessons are done', () => {
+    const allCompletedMockStore = {
+      ...mockProgressStore,
+      userProgress: {
+        ...mockProgressStore.userProgress,
+        completedLessons: [
+          'investment-fundamentals-enhanced-0',
+          'investment-fundamentals-enhanced-1', 
+          'investment-fundamentals-enhanced-2',
+          'investment-fundamentals-enhanced-3',
+          'investment-fundamentals-enhanced-4',
+          'investment-fundamentals-enhanced-5',
+        ],
+      },
+    };
+
+    const useProgressStore = require('@/lib/store/progressStore').useProgressStore;
+    useProgressStore.mockImplementation((selector: any) => {
+      const state = allCompletedMockStore;
+      return selector ? selector(state) : state;
+    });
+
+    render(<InvestmentFundamentalsLessonEnhanced />);
+
+    expect(screen.getByText(/Investment Mastery Complete/i)).toBeInTheDocument();
+    expect(screen.getByText(/Ready for the advanced calculators and quiz/i)).toBeInTheDocument();
+  });
+
+  it('calls onComplete callback when provided', () => {
+    const mockOnComplete = jest.fn();
+    render(<InvestmentFundamentalsLessonEnhanced onComplete={mockOnComplete} />);
+    
+    const completeButton = screen.getByText(/Mark Complete/i);
+    fireEvent.click(completeButton);
+    
+    expect(mockOnComplete).toHaveBeenCalled();
+  });
+
+  it('validates interactive component integration throughout lessons', () => {
+    render(<InvestmentFundamentalsLessonEnhanced />);
+    
+    const nextButton = screen.getByText(/Next/i);
+    
+    // Lesson 0: Should have Compound Growth Visualizer initially
+    expect(screen.getByTestId('compound-growth-visualizer')).toBeInTheDocument();
+    
+    // Lesson 1: Asset class content
+    fireEvent.click(nextButton);
+    
+    // Lesson 2: Should have Asset Allocation Optimizer  
+    fireEvent.click(nextButton);
+    expect(screen.getByTestId('asset-allocation-optimizer')).toBeInTheDocument();
+    
+    // Lesson 3: Investment account content
+    fireEvent.click(nextButton);
+    
+    // Lesson 4: Index fund content
+    fireEvent.click(nextButton);
+    
+    // Lesson 5: Should have both Risk Tolerance Assessment and Market Volatility Simulator
+    fireEvent.click(nextButton);
+    expect(screen.getByTestId('risk-tolerance-assessment')).toBeInTheDocument();
+    expect(screen.getByTestId('market-volatility-simulator')).toBeInTheDocument();
+  });
+
+  it('handles progress store edge cases', () => {
+    const emptyMockStore = {
+      userProgress: {
+        completedLessons: [], // Provide empty array instead of undefined
+      },
+      completeLesson: jest.fn(),
+      recordQuizScore: jest.fn(),
+      recordCalculatorUsage: jest.fn(),
+      isChapterUnlocked: jest.fn(() => true),
+    };
+
+    const useProgressStore = require('@/lib/store/progressStore').useProgressStore;
+    useProgressStore.mockImplementation((selector: any) => {
+      const state = emptyMockStore;
+      return selector ? selector(state) : state;
+    });
+
+    expect(() => render(<InvestmentFundamentalsLessonEnhanced />)).not.toThrow();
   });
 });

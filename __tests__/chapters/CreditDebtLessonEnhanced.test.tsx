@@ -262,11 +262,14 @@ describe('CreditDebtLessonEnhanced', () => {
     const mockOnComplete = jest.fn();
     render(<CreditDebtLessonEnhanced onComplete={mockOnComplete} />);
     
-    // Navigate to last lesson
+    // Navigate to last lesson using getAllByText to handle multiple Next buttons
     for (let i = 0; i < 6; i++) {
-      const nextButton = screen.queryByText(/Next/i);
-      if (nextButton && !nextButton.closest('button')?.disabled) {
-        fireEvent.click(nextButton);
+      const nextButtons = screen.queryAllByText(/Next/i);
+      const navButton = nextButtons.find(button => 
+        button.closest('button') && !button.textContent?.includes('Question')
+      );
+      if (navButton && !navButton.closest('button')?.disabled) {
+        fireEvent.click(navButton);
       }
     }
     
@@ -285,9 +288,14 @@ describe('CreditDebtLessonEnhanced', () => {
     const completeButton = screen.getByText(/Mark Complete/i);
     fireEvent.click(completeButton);
     
-    // Navigate away and back
-    const nextButton = screen.getByText(/Next/i);
-    fireEvent.click(nextButton);
+    // Navigate away and back using more specific selector
+    const nextButtons = screen.getAllByText(/Next/i);
+    const navButton = nextButtons.find(button => 
+      button.closest('button') && !button.textContent?.includes('Question')
+    );
+    if (navButton) {
+      fireEvent.click(navButton);
+    }
     
     const prevButton = screen.getByText(/Previous/i);
     fireEvent.click(prevButton);

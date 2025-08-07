@@ -8,6 +8,7 @@ import ProgressRing from '@/components/shared/ui/ProgressRing';
 import RiskToleranceAssessment from './RiskToleranceAssessment';
 import AssetAllocationOptimizer from './AssetAllocationOptimizer';
 import CompoundGrowthVisualizer from './CompoundGrowthVisualizer';
+import MarketVolatilitySimulator from './MarketVolatilitySimulator';
 import {
   TrendingUp,
   PieChart,
@@ -133,7 +134,7 @@ export default function InvestmentFundamentalsLessonEnhanced({ onComplete }: Inv
   // Load completed lessons from global state
   useEffect(() => {
     const newCompleted = enhancedLessons.map((lesson, index) =>
-      userProgress.completedLessons.includes(`investment-fundamentals-enhanced-${index}`)
+      userProgress.completedLessons?.includes(`investment-fundamentals-enhanced-${index}`) || false
     );
     setCompletedLessons(newCompleted);
   }, [userProgress.completedLessons]);
@@ -151,10 +152,8 @@ export default function InvestmentFundamentalsLessonEnhanced({ onComplete }: Inv
       position: 'top-center',
     });
 
-    // Call parent completion callback when all lessons are done
-    if (currentLesson === enhancedLessons.length - 1) {
-      onComplete?.();
-    }
+    // Call parent completion callback
+    onComplete?.();
   };
 
   const nextLesson = () => {
@@ -383,12 +382,26 @@ export default function InvestmentFundamentalsLessonEnhanced({ onComplete }: Inv
           )}
 
           {currentLesson === 5 && (
-            <div className={`mb-8`}>
-              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-                <Star className="w-5 h-5" />
-                Interactive: Discover Your Risk Profile
-              </h3>
-              <RiskToleranceAssessment />
+            <div className={`mb-8 space-y-8`}>
+              <div>
+                <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                  <Star className="w-5 h-5" />
+                  Interactive: Discover Your Risk Profile
+                </h3>
+                <RiskToleranceAssessment />
+              </div>
+              
+              <div>
+                <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                  <Zap className="w-5 h-5" />
+                  Advanced: Market Crisis Simulation
+                </h3>
+                <p className={`${theme.textColors.secondary} mb-6`}>
+                  Test different investment strategies during historical market crises. See how emotional decisions impact 
+                  long-term wealth building and learn why staying disciplined during volatility is crucial for success.
+                </p>
+                <MarketVolatilitySimulator />
+              </div>
             </div>
           )}
         </div>
@@ -444,7 +457,7 @@ export default function InvestmentFundamentalsLessonEnhanced({ onComplete }: Inv
             <div className={`mt-4 p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg text-center`}>
               <p className={`font-bold ${theme.status.success.text} flex items-center justify-center gap-2`}>
                 <Award className="w-5 h-5" />
-                Investment Fundamentals Mastery Complete! Ready for calculator and quiz.
+                Investment Mastery Complete! Ready for the advanced calculators and quiz.
               </p>
             </div>
           )}

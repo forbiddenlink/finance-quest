@@ -191,7 +191,7 @@ describe('PortfolioConstructionLessonEnhanced', () => {
       }
     }
     
-    const rebalancingContent = screen.queryByText(/rebalancing/i) ||
+    const rebalancingContent = screen.queryAllByText(/rebalancing/i)[0] ||
                               screen.queryByText(/rebalance/i) ||
                               screen.queryByText(/quarterly/i) ||
                               screen.queryAllByText(/annual/i)[0] ||
@@ -212,7 +212,7 @@ describe('PortfolioConstructionLessonEnhanced', () => {
       }
     }
     
-    const mptContent = screen.queryByText(/modern portfolio/i) ||
+    const mptContent = screen.queryAllByText(/modern portfolio/i)[0] ||
                       screen.queryByText(/efficient frontier/i) ||
                       screen.queryByText(/correlation/i) ||
                       screen.queryByText(/return.*risk/i) ||
