@@ -5,6 +5,9 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
+import PortfolioDiversificationAnalyzer from './PortfolioDiversificationAnalyzer';
+import RebalancingOptimizer from './RebalancingOptimizer';
+import ModernPortfolioTheoryVisualizer from './ModernPortfolioTheoryVisualizer';
 import {
   PieChart,
   Target,
@@ -349,6 +352,8 @@ export default function PortfolioConstructionLessonEnhanced({ onComplete }: Port
                   ? theme.status.success.bg
                   : `bg-slate-800/50 opacity-50`
               }`}
+              title={`Go to lesson ${index + 1}`}
+              aria-label={`Lesson ${index + 1} navigation dot`}
             />
           ))}
         </div>
@@ -357,10 +362,40 @@ export default function PortfolioConstructionLessonEnhanced({ onComplete }: Port
           onClick={nextLesson}
           disabled={currentLesson === enhancedLessons.length - 1}
           className={`flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.muted} rounded-xl hover:${theme.borderColors.primary} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all`}
+          title="Go to next lesson"
+          aria-label="Next lesson navigation"
         >
           Next Lesson
           <ChevronRight className="w-5 h-5 ml-2" />
         </button>
+      </div>
+
+      {/* Interactive Portfolio Construction Tools */}
+      <div className="space-y-8 mb-8">
+        <GradientCard className="text-center">
+          <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-4`}>
+            🛠️ Interactive Portfolio Construction Suite
+          </h2>
+          <p className={`text-lg ${theme.textColors.secondary} mb-8 max-w-4xl mx-auto`}>
+            Master portfolio construction with these advanced tools. Analyze diversification, 
+            optimize rebalancing strategies, and explore Modern Portfolio Theory principles with real-time calculations.
+          </p>
+        </GradientCard>
+
+        {/* Portfolio Diversification Analyzer */}
+        <GradientCard>
+          <PortfolioDiversificationAnalyzer />
+        </GradientCard>
+
+        {/* Rebalancing Optimizer */}
+        <GradientCard>
+          <RebalancingOptimizer />
+        </GradientCard>
+
+        {/* Modern Portfolio Theory Visualizer */}
+        <GradientCard>
+          <ModernPortfolioTheoryVisualizer />
+        </GradientCard>
       </div>
 
       {/* Completion Status */}
