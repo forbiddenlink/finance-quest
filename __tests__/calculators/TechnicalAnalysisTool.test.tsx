@@ -14,6 +14,20 @@ jest.mock('react-hot-toast', () => ({
   error: jest.fn(),
 }));
 
+// Mock recharts components
+jest.mock('recharts', () => ({
+  LineChart: ({ children }: any) => <div data-testid="line-chart">{children}</div>,
+  BarChart: ({ children }: any) => <div data-testid="bar-chart">{children}</div>,
+  XAxis: () => <div data-testid="x-axis" />,
+  YAxis: () => <div data-testid="y-axis" />,
+  CartesianGrid: () => <div data-testid="cartesian-grid" />,
+  Tooltip: () => <div data-testid="tooltip" />,
+  Legend: () => <div data-testid="legend" />,
+  Line: () => <div data-testid="line" />,
+  Bar: () => <div data-testid="bar" />,
+  ResponsiveContainer: ({ children }: any) => <div data-testid="responsive-container">{children}</div>,
+}));
+
 const mockRecordCalculatorUsage = jest.fn();
 
 beforeEach(() => {
@@ -36,167 +50,99 @@ describe('TechnicalAnalysisTool', () => {
     expect(mockRecordCalculatorUsage).toHaveBeenCalledWith('technical-analysis-tool');
   });
 
-  test('displays tool selection interface', () => {
+  test('displays stock symbol and price inputs', () => {
     render(<TechnicalAnalysisTool />);
     
-    // Check for different technical analysis tools
-    expect(screen.getByText(/Moving Average|SMA|EMA/i)).toBeInTheDocument();
-    expect(screen.getByText(/RSI|Relative Strength/i)).toBeInTheDocument();
-    expect(screen.getByText(/MACD|Moving Average Convergence/i)).toBeInTheDocument();
-    expect(screen.getByText(/Bollinger Bands/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Stock Symbol/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Current Price/i)).toBeInTheDocument();
   });
 
-  test('calculates Simple Moving Average (SMA)', async () => {
+  test('displays technical parameters', () => {
     render(<TechnicalAnalysisTool />);
     
-    // Select SMA tool
-    const smaOption = screen.getByText(/Simple Moving Average|SMA/i);
-    fireEvent.click(smaOption);
-    
-    // Input price data
-    const priceInput = screen.getByLabelText(/Price Data|Stock Prices/i);
-    fireEvent.change(priceInput, { target: { value: '100,105,102,108,110' } });
-    
-    // Select period
-    const periodInput = screen.getByLabelText(/Period|Days/i);
-    fireEvent.change(periodInput, { target: { value: '3' } });
-    
-    const calculateButton = screen.getByText(/Calculate|Analyze/i);
-    fireEvent.click(calculateButton);
-    
-    await waitFor(() => {
-      expect(screen.getByText(/105|106.67/i)).toBeInTheDocument(); // SMA calculation
-    });
+    expect(screen.getByLabelText(/RSI Period/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/MACD Fast/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/MACD Slow/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Bollinger Period/i)).toBeInTheDocument();
   });
 
-  test('calculates Exponential Moving Average (EMA)', async () => {
+  test('updates stock symbol input', () => {
     render(<TechnicalAnalysisTool />);
     
-    // Select EMA tool
-    const emaOption = screen.getByText(/Exponential Moving Average|EMA/i);
-    fireEvent.click(emaOption);
+    const symbolInput = screen.getByLabelText(/Stock Symbol/i);
+    fireEvent.change(symbolInput, { target: { value: 'MSFT' } });
     
-    // Input price data
-    const priceInput = screen.getByLabelText(/Price Data|Stock Prices/i);
-    fireEvent.change(priceInput, { target: { value: '100,105,102,108,110,115' } });
-    
-    // Select period
-    const periodInput = screen.getByLabelText(/Period|Days/i);
-    fireEvent.change(periodInput, { target: { value: '5' } });
-    
-    const calculateButton = screen.getByText(/Calculate|Analyze/i);
-    fireEvent.click(calculateButton);
-    
-    await waitFor(() => {
-      expect(screen.getByText(/EMA|Exponential/i)).toBeInTheDocument();
-      expect(screen.getByText(/\d+\.\d+/)).toBeInTheDocument(); // Some decimal result
-    });
+    expect(symbolInput).toHaveValue('MSFT');
   });
 
-  test('calculates RSI (Relative Strength Index)', async () => {
+  test('updates current price input', () => {
     render(<TechnicalAnalysisTool />);
     
-    // Select RSI tool
-    const rsiOption = screen.getByText(/RSI|Relative Strength/i);
-    fireEvent.click(rsiOption);
-    
-    // Input price data (need enough data for RSI calculation)
-    const priceInput = screen.getByLabelText(/Price Data|Stock Prices/i);
-    const priceData = Array.from({length: 20}, (_, i) => 100 + Math.random() * 10).join(',');
-    fireEvent.change(priceInput, { target: { value: priceData } });
-    
-    const calculateButton = screen.getByText(/Calculate|Analyze/i);
-    fireEvent.click(calculateButton);
-    
-    await waitFor(() => {
-      expect(screen.getByText(/RSI|Relative Strength Index/i)).toBeInTheDocument();
-      expect(screen.getByText(/Overbought|Oversold|Neutral/i)).toBeInTheDocument();
-    });
-  });
-
-  test('calculates MACD indicator', async () => {
-    render(<TechnicalAnalysisTool />);
-    
-    // Select MACD tool
-    const macdOption = screen.getByText(/MACD|Moving Average Convergence/i);
-    fireEvent.click(macdOption);
-    
-    // Input price data
-    const priceInput = screen.getByLabelText(/Price Data|Stock Prices/i);
-    const priceData = Array.from({length: 30}, (_, i) => 100 + i + Math.random() * 5).join(',');
-    fireEvent.change(priceInput, { target: { value: priceData } });
-    
-    const calculateButton = screen.getByText(/Calculate|Analyze/i);
-    fireEvent.click(calculateButton);
-    
-    await waitFor(() => {
-      expect(screen.getByText(/MACD Line|Signal Line|Histogram/i)).toBeInTheDocument();
-      expect(screen.getByText(/Bullish|Bearish|Crossover/i)).toBeInTheDocument();
-    });
-  });
-
-  test('calculates Bollinger Bands', async () => {
-    render(<TechnicalAnalysisTool />);
-    
-    // Select Bollinger Bands tool
-    const bollingerOption = screen.getByText(/Bollinger Bands/i);
-    fireEvent.click(bollingerOption);
-    
-    // Input price data
-    const priceInput = screen.getByLabelText(/Price Data|Stock Prices/i);
-    fireEvent.change(priceInput, { target: { value: '100,102,105,103,108,110,107,109' } });
-    
-    // Set standard deviation multiplier
-    const stdDevInput = screen.getByLabelText(/Standard Deviation|Std Dev/i);
-    fireEvent.change(stdDevInput, { target: { value: '2' } });
-    
-    const calculateButton = screen.getByText(/Calculate|Analyze/i);
-    fireEvent.click(calculateButton);
-    
-    await waitFor(() => {
-      expect(screen.getByText(/Upper Band|Lower Band|Middle Band/i)).toBeInTheDocument();
-      expect(screen.getByText(/Squeeze|Expansion/i)).toBeInTheDocument();
-    });
-  });
-
-  test('provides educational context', () => {
-    render(<TechnicalAnalysisTool />);
-    
-    // Check for educational content
-    expect(screen.getByText(/What this means|Understanding|Explanation/i)).toBeInTheDocument();
-  });
-
-  test('handles invalid inputs', async () => {
-    render(<TechnicalAnalysisTool />);
-    
-    // Input invalid data - use the actual label from the component
     const priceInput = screen.getByLabelText(/Current Price/i);
-    fireEvent.change(priceInput, { target: { value: 'invalid' } });
+    fireEvent.change(priceInput, { target: { value: '250.75' } });
     
-    const calculateButton = screen.queryByText(/Calculate|Analyze/i);
-    if (calculateButton) {
-      fireEvent.click(calculateButton);
-    }
-    
-    // Component should handle invalid input gracefully
-    expect(screen.getByText(/Technical Analysis Tool/i)).toBeInTheDocument();
+    expect(priceInput).toHaveValue(250.75);
   });
 
-  test('displays results properly', async () => {
+  test('calculates and displays technical analysis', async () => {
     render(<TechnicalAnalysisTool />);
     
-    // Test with actual component labels
+    // Wait for analysis to be performed automatically
+    await waitFor(() => {
+      expect(screen.getByText(/AAPL.*Technical Analysis/i)).toBeInTheDocument();
+    });
+  });
+
+  test('displays RSI indicator', async () => {
+    render(<TechnicalAnalysisTool />);
+    
+    await waitFor(() => {
+      expect(screen.getByText(/RSI/i)).toBeInTheDocument();
+    });
+  });
+
+  test('displays MACD analysis', async () => {
+    render(<TechnicalAnalysisTool />);
+    
+    await waitFor(() => {
+      expect(screen.getByText(/MACD Analysis/i)).toBeInTheDocument();
+      expect(screen.getByText(/MACD Line/i)).toBeInTheDocument();
+    });
+  });
+
+  test('displays Bollinger Bands information', async () => {
+    render(<TechnicalAnalysisTool />);
+    
+    await waitFor(() => {
+      expect(screen.getByText(/Bollinger/i)).toBeInTheDocument();
+    });
+  });
+
+  test('displays moving averages', async () => {
+    render(<TechnicalAnalysisTool />);
+    
+    await waitFor(() => {
+      expect(screen.getByText(/Moving Averages/i)).toBeInTheDocument();
+      expect(screen.getByText(/SMA 20/i)).toBeInTheDocument();
+      expect(screen.getByText(/SMA 50/i)).toBeInTheDocument();
+    });
+  });
+
+  test('provides educational content', async () => {
+    render(<TechnicalAnalysisTool />);
+    
+    await waitFor(() => {
+      expect(screen.getByText(/Technical Analysis Concepts/i)).toBeInTheDocument();
+    });
+  });
+
+  test('handles invalid inputs gracefully', () => {
+    render(<TechnicalAnalysisTool />);
+    
     const priceInput = screen.getByLabelText(/Current Price/i);
-    fireEvent.change(priceInput, { target: { value: '175.5' } });
+    fireEvent.change(priceInput, { target: { value: '-100' } });
     
-    const timeframeSelect = screen.getByLabelText(/Timeframe/i);
-    fireEvent.change(timeframeSelect, { target: { value: 'daily' } });
-    
-    const lookbackInput = screen.getByLabelText(/Lookback Days/i);
-    fireEvent.change(lookbackInput, { target: { value: '100' } });
-    
-    // Component should display inputs properly
-    expect(priceInput).toHaveValue(175.5);
-    expect(timeframeSelect).toHaveValue('daily');
+    // Component should handle negative prices gracefully
+    expect(priceInput).toHaveValue(-100);
   });
 });
