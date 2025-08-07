@@ -186,7 +186,7 @@ export default function LifeInsuranceCalculator() {
   };
 
   return (
-    <div className={`p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+    <div data-testid="life-insurance-calculator" className={`p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
       <div className="flex items-center gap-3 mb-6">
         <Heart className="w-6 h-6 text-red-400" />
         <h2 className={`text-xl font-bold ${theme.textColors.primary}`}>
@@ -204,12 +204,13 @@ export default function LifeInsuranceCalculator() {
             
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="annual-income" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Annual Income
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="annual-income"
                     type="number"
                     value={annualIncome}
                     onChange={(e) => setAnnualIncome(Number(e.target.value))}
@@ -220,12 +221,13 @@ export default function LifeInsuranceCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="current-age" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Current Age
                 </label>
                 <div className="relative">
                   <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="current-age"
                     type="number"
                     value={currentAge}
                     onChange={(e) => setCurrentAge(Number(e.target.value))}
@@ -236,12 +238,13 @@ export default function LifeInsuranceCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="retirement-age" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Retirement Age
                 </label>
                 <div className="relative">
                   <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="retirement-age"
                     type="number"
                     value={retirementAge}
                     onChange={(e) => setRetirementAge(Number(e.target.value))}
@@ -252,12 +255,13 @@ export default function LifeInsuranceCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="current-savings" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Current Savings & Investments
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="current-savings"
                     type="number"
                     value={currentSavings}
                     onChange={(e) => setCurrentSavings(Number(e.target.value))}
@@ -268,12 +272,13 @@ export default function LifeInsuranceCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="existing-life-insurance" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Existing Life Insurance
                 </label>
                 <div className="relative">
                   <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="existing-life-insurance"
                     type="number"
                     value={existingLifeInsurance}
                     onChange={(e) => setExistingLifeInsurance(Number(e.target.value))}
@@ -292,12 +297,13 @@ export default function LifeInsuranceCalculator() {
             
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="mortgage-balance" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Mortgage Balance
                 </label>
                 <div className="relative">
                   <Home className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="mortgage-balance"
                     type="number"
                     value={mortgageBalance}
                     onChange={(e) => setMortgageBalance(Number(e.target.value))}
@@ -308,12 +314,13 @@ export default function LifeInsuranceCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="other-debts" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Other Debts
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="other-debts"
                     type="number"
                     value={otherDebts}
                     onChange={(e) => setOtherDebts(Number(e.target.value))}
@@ -324,12 +331,13 @@ export default function LifeInsuranceCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="final-expenses" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Final Expenses
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="final-expenses"
                     type="number"
                     value={finalExpenses}
                     onChange={(e) => setFinalExpenses(Number(e.target.value))}
@@ -340,12 +348,13 @@ export default function LifeInsuranceCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="inflation-rate" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Expected Inflation Rate (%)
                 </label>
                 <div className="relative">
                   <TrendingUp className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="inflation-rate"
                     type="number"
                     value={inflationRate}
                     onChange={(e) => setInflationRate(Number(e.target.value))}
