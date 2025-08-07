@@ -60,7 +60,7 @@ function DraggableItem({ id, amount, color }: DraggableItemProps) {
         ${isDragging ? 'opacity-50 scale-105' : 'opacity-100'} 
         cursor-grab active:cursor-grabbing
         ${theme.backgrounds.cardHover} 
-        transition-all duration-200 hover:scale-105 hover:shadow-lg
+        transition-all duration-200
       `}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
@@ -92,7 +92,7 @@ function DroppableZone({ category }: DroppableZoneProps) {
   return (
     <motion.div
       ref={setNodeRef}
-      layout
+      layoutId={category.id}
       className={`
         p-6 rounded-xl border-2 border-dashed 
         ${isOver ? 'border-blue-400 bg-blue-400/20 scale-105' : ''}
@@ -101,7 +101,6 @@ function DroppableZone({ category }: DroppableZoneProps) {
           'border-emerald-500 bg-emerald-500/10'}
         ${theme.backgrounds.card} 
         transition-all duration-300 min-h-[200px]
-        hover:shadow-lg hover:scale-102
       `}
       whileHover={{ scale: 1.02 }}
     >

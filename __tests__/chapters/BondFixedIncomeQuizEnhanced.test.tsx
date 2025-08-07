@@ -54,7 +54,7 @@ describe('BondFixedIncomeQuizEnhanced', () => {
   test('displays correct quiz description', () => {
     render(<BondFixedIncomeQuizEnhanced />);
     
-    expect(screen.getByText(/Test your understanding of bonds, fixed income securities/i)).toBeInTheDocument();
+    expect(screen.getByText(/Test your understanding of bonds, fixed income investments/i)).toBeInTheDocument();
   });
 
   test('renders quiz questions', () => {
@@ -97,7 +97,8 @@ describe('BondFixedIncomeQuizEnhanced', () => {
   test('includes questions about government vs corporate bonds', () => {
     render(<BondFixedIncomeQuizEnhanced />);
     
-    expect(screen.getByText(/Treasury bonds/i)).toBeInTheDocument();
+    const treasuryBondOptions = screen.getAllByText(/Treasury bonds/i);
+    expect(treasuryBondOptions.length).toBeGreaterThan(0);
   });
 
   test('includes questions about bond portfolio strategies', () => {

@@ -266,7 +266,7 @@ export default function PropertyInvestmentAnalyzer() {
   };
 
   return (
-    <div className={`p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+    <div role="main" className={`p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg grid`}>
       <div className="flex items-center gap-3 mb-6">
         <Home className="w-6 h-6 text-emerald-400" />
         <h2 className={`text-xl font-bold ${theme.textColors.primary}`}>
@@ -284,12 +284,13 @@ export default function PropertyInvestmentAnalyzer() {
             
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="purchase-price" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Purchase Price
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="purchase-price"
                     type="number"
                     value={purchasePrice}
                     onChange={(e) => setPurchasePrice(Number(e.target.value))}
@@ -375,12 +376,13 @@ export default function PropertyInvestmentAnalyzer() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="rehab-costs" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Rehab/Renovation Costs
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="rehab-costs"
                     type="number"
                     value={rehabCosts}
                     onChange={(e) => setRehabCosts(Number(e.target.value))}
@@ -434,12 +436,13 @@ export default function PropertyInvestmentAnalyzer() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="other-income" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Other Income (Annual)
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="other-income"
                       type="number"
                       value={otherIncome}
                       onChange={(e) => setOtherIncome(Number(e.target.value))}
@@ -459,21 +462,22 @@ export default function PropertyInvestmentAnalyzer() {
             
             <div className="space-y-3">
               {[
-                { label: 'Property Taxes', value: propertyTaxes, setter: setPropertyTaxes },
-                { label: 'Insurance', value: insurance, setter: setInsurance },
-                { label: 'Maintenance & Repairs', value: maintenance, setter: setMaintenance },
-                { label: 'Property Management', value: propertyManagement, setter: setPropertyManagement },
-                { label: 'Utilities (if paid)', value: utilities, setter: setUtilities },
-                { label: 'HOA Fees', value: hoaFees, setter: setHoaFees },
-                { label: 'Other Expenses', value: otherExpenses, setter: setOtherExpenses }
+                { label: 'Property Taxes', value: propertyTaxes, setter: setPropertyTaxes, id: 'property-taxes' },
+                { label: 'Insurance', value: insurance, setter: setInsurance, id: 'insurance' },
+                { label: 'Maintenance & Repairs', value: maintenance, setter: setMaintenance, id: 'maintenance' },
+                { label: 'Property Management', value: propertyManagement, setter: setPropertyManagement, id: 'property-management' },
+                { label: 'Utilities (if paid)', value: utilities, setter: setUtilities, id: 'utilities' },
+                { label: 'HOA Fees', value: hoaFees, setter: setHoaFees, id: 'hoa-fees' },
+                { label: 'Other Expenses', value: otherExpenses, setter: setOtherExpenses, id: 'other-expenses' }
               ].map((expense, index) => (
                 <div key={index}>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor={expense.id} className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     {expense.label}
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id={expense.id}
                       type="number"
                       value={expense.value}
                       onChange={(e) => expense.setter(Number(e.target.value))}

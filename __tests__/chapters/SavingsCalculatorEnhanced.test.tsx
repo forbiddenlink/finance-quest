@@ -3,6 +3,18 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import SavingsCalculator from '@/components/chapters/fundamentals/calculators/SavingsCalculator';
 
+// Mock Recharts components to prevent SVG rendering issues
+jest.mock('recharts', () => ({
+  LineChart: ({ children }: any) => <div data-testid="line-chart">{children}</div>,
+  Line: () => null,
+  XAxis: () => null,
+  YAxis: () => null,
+  CartesianGrid: () => null,
+  Tooltip: () => null,
+  Legend: () => null,
+  ResponsiveContainer: ({ children }: any) => <div data-testid="responsive-container">{children}</div>,
+}));
+
 // Mock the progress store
 const mockRecordCalculatorUsage = jest.fn();
 const mockProgressStore = {

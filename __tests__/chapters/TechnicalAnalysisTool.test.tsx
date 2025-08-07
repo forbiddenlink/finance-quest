@@ -3,6 +3,20 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import TechnicalAnalysisTool from '@/components/chapters/fundamentals/calculators/TechnicalAnalysisTool';
 
+// Mock Recharts components to prevent SVG rendering issues
+jest.mock('recharts', () => ({
+  LineChart: ({ children }: any) => <div data-testid="line-chart">{children}</div>,
+  Line: () => null,
+  XAxis: () => null,
+  YAxis: () => null,
+  CartesianGrid: () => null,
+  Tooltip: () => null,
+  Legend: () => null,
+  ResponsiveContainer: ({ children }: any) => <div data-testid="responsive-container">{children}</div>,
+  BarChart: ({ children }: any) => <div data-testid="bar-chart">{children}</div>,
+  Bar: () => null,
+}));
+
 // Mock the progress store
 jest.mock('@/lib/store/progressStore', () => ({
   useProgressStore: jest.fn(),
