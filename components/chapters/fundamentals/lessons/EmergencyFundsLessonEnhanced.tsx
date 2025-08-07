@@ -5,6 +5,10 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
+// Import the new interactive components
+import EmergencyFundPersonalityAssessment from './EmergencyFundPersonalityAssessment';
+import EmergencyScenarioSimulator from './EmergencyScenarioSimulator';
+import RiskToleranceVisualizer from './RiskToleranceVisualizer';
 import {
   Shield,
   Target,
@@ -17,7 +21,10 @@ import {
   ChevronRight,
   Star,
   Award,
-  Zap
+  Zap,
+  Users,
+  Gamepad2,
+  BarChart3
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -264,7 +271,69 @@ export default function EmergencyFundsLessonEnhanced({ onComplete }: EmergencyFu
           </div>
 
           {/* Interactive Content */}
+          {currentLesson === 0 && (
+            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                <Users className="w-5 h-5" />
+                Discover Your Emergency Fund Personality
+              </h3>
+              <p className={`${theme.textColors.secondary} mb-4`}>
+                Take our comprehensive assessment to determine your ideal emergency fund strategy based on your unique risk factors and life situation.
+              </p>
+              <EmergencyFundPersonalityAssessment 
+                onComplete={(profile) => {
+                  toast.success(`Assessment complete! Your strategy: ${profile.emergencyFundMonths} emergency fund.`, {
+                    duration: 4000,
+                    position: 'top-center',
+                  });
+                }}
+              />
+            </div>
+          )}
+
           {currentLesson === 1 && (
+            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                <BarChart3 className="w-5 h-5" />
+                Interactive Risk Tolerance Visualizer
+              </h3>
+              <p className={`${theme.textColors.secondary} mb-4`}>
+                Visualize how different emergency fund sizes protect you from financial risk. See the impact of 1, 3, 6, and 12-month emergency funds on your financial security.
+              </p>
+              <RiskToleranceVisualizer 
+                onComplete={(scenario) => {
+                  toast.success(`Perfect! ${scenario.months}-month fund selected for ${scenario.protection}% protection.`, {
+                    duration: 4000,
+                    position: 'top-center',
+                  });
+                }}
+              />
+            </div>
+          )}
+
+          {currentLesson === 5 && (
+            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                <Gamepad2 className="w-5 h-5" />
+                Emergency Scenario Simulator
+              </h3>
+              <p className={`${theme.textColors.secondary} mb-4`}>
+                Experience real emergency scenarios and see firsthand how emergency funds protect you from debt and financial stress. 
+                Learn from mistakes without real-world consequences.
+              </p>
+              <EmergencyScenarioSimulator 
+                onComplete={(results) => {
+                  const successCount = results.filter(r => r.outcome === 'success').length;
+                  toast.success(`Simulation complete! Successfully handled ${successCount} out of ${results.length} emergencies.`, {
+                    duration: 4000,
+                    position: 'top-center',
+                  });
+                }}
+              />
+            </div>
+          )}
+
+          {currentLesson === 2 && (
             <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
                 <Calculator className="w-5 h-5" />
