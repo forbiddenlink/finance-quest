@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
@@ -10,6 +11,7 @@ import toast from 'react-hot-toast';
 import MoneyPersonalityAssessment from './MoneyPersonalityAssessment';
 import InteractiveCompoundVisualization from './InteractiveCompoundVisualization';
 import InteractiveBudgetAllocation from './InteractiveBudgetAllocation';
+import BehavioralFinanceSimulator from './BehavioralFinanceSimulator';
 
 interface LessonContent {
   title: string;
@@ -305,6 +307,51 @@ export default function MoneyFundamentalsLessonEnhanced() {
               </p>
               <InteractiveBudgetAllocation />
             </div>
+          )}
+
+          {currentLesson === 5 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className={`mb-8 p-6 ${theme.utils.glass('normal')} border ${theme.borderColors.primary} rounded-lg`}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="bg-purple-500/20 p-3 rounded-lg">
+                  <Brain className="w-6 h-6 text-purple-400" />
+                </div>
+                <div>
+                  <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>
+                    Interactive Behavioral Finance Assessment
+                  </h3>
+                  <p className={`${theme.textColors.secondary}`}>
+                    Test your resistance to cognitive biases that affect financial decisions
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                  <h5 className="font-semibold text-blue-400 mb-2">Why This Matters</h5>
+                  <p className="text-slate-300 text-sm">
+                    Nobel Prize-winning research shows that cognitive biases cause investors to lose 2-3% annually. 
+                    Learning to recognize these patterns can save you thousands over your lifetime.
+                  </p>
+                </div>
+
+                <BehavioralFinanceSimulator />
+
+                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+                  <h5 className="font-semibold text-green-400 mb-2">After the Assessment</h5>
+                  <ul className="space-y-2 text-slate-300 text-sm">
+                    <li>• Review each bias and its prevention strategy</li>
+                    <li>• Create automated systems to reduce emotional decisions</li>
+                    <li>• Practice seeking contrary evidence before major financial choices</li>
+                    <li>• Remember: awareness is the first step to overcoming bias</li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
           )}
         </div>
 

@@ -8,6 +8,7 @@ import ProgressRing from '@/components/shared/ui/ProgressRing';
 import PortfolioDiversificationAnalyzer from './PortfolioDiversificationAnalyzer';
 import RebalancingOptimizer from './RebalancingOptimizer';
 import ModernPortfolioTheoryVisualizer from './ModernPortfolioTheoryVisualizer';
+import MonteCarloSimulation from './MonteCarloSimulation';
 import {
   PieChart,
   Target,
@@ -219,15 +220,14 @@ export default function PortfolioConstructionLessonEnhanced({ onComplete }: Port
           )}
         </div>
 
-        {/* Progress Bar */}
-        <div className={`w-full bg-slate-800/50 rounded-full h-2 mb-8`}>
-          <div
-            className={`h-2 ${theme.status.success.bg} rounded-full transition-all duration-500`}
-            style={{ width: `${((currentLesson + 1) / enhancedLessons.length) * 100}%` }}
-          />
-        </div>
-
-        {/* Lesson Content */}
+          {/* Progress Bar */}
+          <div className={`w-full bg-slate-800/50 rounded-full h-2 mb-8`}>
+            <div
+              className={`h-2 ${theme.status.success.bg} rounded-full transition-all duration-500`}
+              style={{ width: `${((currentLesson + 1) / enhancedLessons.length) * 100}%` }}
+              aria-hidden="true"
+            />
+          </div>        {/* Lesson Content */}
         <div className="space-y-6">
           <div>
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
@@ -395,6 +395,11 @@ export default function PortfolioConstructionLessonEnhanced({ onComplete }: Port
         {/* Modern Portfolio Theory Visualizer */}
         <GradientCard>
           <ModernPortfolioTheoryVisualizer />
+        </GradientCard>
+
+        {/* Monte Carlo Portfolio Simulation */}
+        <GradientCard>
+          <MonteCarloSimulation />
         </GradientCard>
       </div>
 

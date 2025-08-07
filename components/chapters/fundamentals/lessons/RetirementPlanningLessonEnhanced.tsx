@@ -8,6 +8,7 @@ import ProgressRing from '@/components/shared/ui/ProgressRing';
 import RetirementGoalOptimizer from './RetirementGoalOptimizer';
 import TaxAdvantageMaximizer from './TaxAdvantageMaximizer';
 import WithdrawalStrategySimulator from './WithdrawalStrategySimulator';
+import SocialSecurityOptimization from './SocialSecurityOptimization';
 import {
   PiggyBank,
   TrendingUp,
@@ -22,7 +23,8 @@ import {
   DollarSign,
   Zap,
   Award,
-  AlertTriangle
+  AlertTriangle,
+  Users
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -240,6 +242,7 @@ export default function RetirementPlanningLessonEnhanced({ onComplete }: Retirem
             <div
               className={`h-2 ${theme.status.success.bg} rounded-full transition-all duration-500`}
               style={{ width: `${((currentLesson + 1) / enhancedLessons.length) * 100}%` }}
+              aria-hidden="true"
             />
           </div>
 
@@ -438,6 +441,24 @@ export default function RetirementPlanningLessonEnhanced({ onComplete }: Retirem
             </div>
           </div>
           <WithdrawalStrategySimulator />
+        </div>
+
+        {/* Social Security Optimization */}
+        <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}>
+          <div className="flex items-center gap-3 mb-6">
+            <div className={`${theme.status.info.bg} p-3 rounded-lg`}>
+              <Users className={`w-6 h-6 ${theme.status.info.text}`} />
+            </div>
+            <div>
+              <h4 className={`text-xl font-bold ${theme.textColors.primary}`}>
+                Social Security Claiming Strategy
+              </h4>
+              <p className={`${theme.textColors.secondary}`}>
+                Optimize your Social Security claiming timing for maximum lifetime benefits
+              </p>
+            </div>
+          </div>
+          <SocialSecurityOptimization />
         </div>
       </div>
     </div>
