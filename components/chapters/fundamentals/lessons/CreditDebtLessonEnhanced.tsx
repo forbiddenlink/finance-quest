@@ -7,6 +7,7 @@ import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
 import CreditProfileAnalyzer from './CreditProfileAnalyzer';
 import DebtStrategySimulator from './DebtStrategySimulator';
+import CreditScoreImpactSimulator from './CreditScoreImpactSimulator';
 import CreditCardRewardsOptimizer from './CreditCardRewardsOptimizer';
 import {
   CreditCard,
@@ -306,7 +307,22 @@ export default function CreditDebtLessonEnhanced({ onComplete }: CreditDebtLesso
             </div>
           )}
 
-          {currentLesson === 1 && (
+          {currentLesson === 0 && (
+          <div className="mt-8">
+            <div className={`mb-6 p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg text-center`}>
+              <h3 className={`font-bold ${theme.status.info.text} mb-2 flex items-center justify-center gap-2`}>
+                <BarChart3 className="w-5 h-5" />
+                Credit Score Impact Simulator
+              </h3>
+              <p className={`text-sm ${theme.textColors.secondary}`}>
+                See how credit decisions affect your score and lifetime savings
+              </p>
+            </div>
+            <CreditScoreImpactSimulator />
+          </div>
+        )}
+
+        {currentLesson === 1 && (
             <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
                 <TrendingUp className="w-5 h-5" />
