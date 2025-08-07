@@ -5,6 +5,10 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
+// Import the new interactive components
+import CareerPersonalityAssessment from './CareerPersonalityAssessment';
+import SalaryNegotiationSimulator from './SalaryNegotiationSimulator';
+import SkillInvestmentCalculator from './SkillInvestmentCalculator';
 import {
   Briefcase,
   TrendingUp,
@@ -16,7 +20,10 @@ import {
   ChevronRight,
   Star,
   AlertCircle,
-  Award
+  Award,
+  Users,
+  Gamepad2,
+  BarChart3
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -249,6 +256,66 @@ export default function IncomeCareerLessonEnhanced({ onComplete }: IncomeCareerL
           </div>
 
           {/* Interactive Content */}
+          {currentLesson === 0 && (
+            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                <Users className="w-5 h-5" />
+                Discover Your Career Advancement Style
+              </h3>
+              <p className={`${theme.textColors.secondary} mb-4`}>
+                Take our comprehensive assessment to identify your natural career progression style and get personalized income optimization strategies.
+              </p>
+              <CareerPersonalityAssessment 
+                onComplete={(profile) => {
+                  toast.success(`Assessment complete! You're a ${profile.title}.`, {
+                    duration: 4000,
+                    position: 'top-center',
+                  });
+                }}
+              />
+            </div>
+          )}
+
+          {currentLesson === 1 && (
+            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                <Gamepad2 className="w-5 h-5" />
+                Salary Negotiation Simulator
+              </h3>
+              <p className={`${theme.textColors.secondary} mb-4`}>
+                Practice real negotiation scenarios and learn what works (and what doesn&apos;t!). Experience different situations without real-world consequences.
+              </p>
+              <SalaryNegotiationSimulator 
+                onComplete={(results) => {
+                  toast.success(`Simulation complete! ${results.outcome} performance in ${results.scenario}.`, {
+                    duration: 4000,
+                    position: 'top-center',
+                  });
+                }}
+              />
+            </div>
+          )}
+
+          {currentLesson === 4 && (
+            <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
+              <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
+                <BarChart3 className="w-5 h-5" />
+                Skill Investment ROI Calculator
+              </h3>
+              <p className={`${theme.textColors.secondary} mb-4`}>
+                Calculate the return on investment for different skill development paths. See which skills offer the best career and financial returns.
+              </p>
+              <SkillInvestmentCalculator 
+                onComplete={(results) => {
+                  toast.success(`Analysis complete! ${results.roi.toFixed(0)}% ROI with ${results.paybackMonths.toFixed(1)} month payback.`, {
+                    duration: 4000,
+                    position: 'top-center',
+                  });
+                }}
+              />
+            </div>
+          )}
+
           {currentLesson === 1 && (
             <div className={`mb-8 p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
               <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
