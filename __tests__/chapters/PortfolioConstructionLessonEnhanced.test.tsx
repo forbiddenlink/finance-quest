@@ -175,7 +175,7 @@ describe('PortfolioConstructionLessonEnhanced', () => {
                        screen.queryByText(/moderate/i) ||
                        screen.queryByText(/risk assessment/i) ||
                        screen.queryByText(/comfort/i) ||
-                       screen.queryByText(/risk/i); // Fallback to just "risk"
+                       screen.queryAllByText(/risk/i)[0]; // Use getAllByText and pick first element
                              
     expect(riskContent).toBeTruthy();
   });

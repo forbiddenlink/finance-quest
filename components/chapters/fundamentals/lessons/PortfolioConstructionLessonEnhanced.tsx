@@ -7,7 +7,7 @@ import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
 import PortfolioDiversificationAnalyzer from './PortfolioDiversificationAnalyzer';
 import RebalancingOptimizer from './RebalancingOptimizer';
-import ModernPortfolioTheoryVisualizer from './ModernPortfolioTheoryVisualizer';
+// import ModernPortfolioTheoryVisualizer from './ModernPortfolioTheoryVisualizer';
 import MonteCarloSimulation from './MonteCarloSimulation';
 import {
   PieChart,
@@ -393,9 +393,9 @@ export default function PortfolioConstructionLessonEnhanced({ onComplete }: Port
         </GradientCard>
 
         {/* Modern Portfolio Theory Visualizer */}
-        <GradientCard>
+        {/*<GradientCard>
           <ModernPortfolioTheoryVisualizer />
-        </GradientCard>
+        </GradientCard>*/}
 
         {/* Monte Carlo Portfolio Simulation */}
         <GradientCard>
