@@ -19,6 +19,11 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+// Import interactive components
+import TaxBracketVisualizerEngine from './TaxBracketVisualizerEngine';
+import DeductionMaximizerPro from './DeductionMaximizerPro';
+import TaxStrategySimulator from './TaxStrategySimulator';
+
 interface TaxOptimizationLessonProps {
   onComplete?: () => void;
 }
@@ -31,6 +36,7 @@ interface LessonContent {
   practicalAction: string;
   realMoneyExample: string;
   warningTip: string;
+  interactiveComponent?: React.ComponentType;
 }
 
 const enhancedLessons: LessonContent[] = [
@@ -47,7 +53,8 @@ const enhancedLessons: LessonContent[] = [
     ],
     practicalAction: 'Maximize employer 401(k) match first (free money), then HSA if available, then Roth IRA up to limits. Young workers: prioritize Roth accounts for tax-free growth. High earners: use traditional accounts for immediate tax savings. Calculate your tax savings: multiply contribution by marginal tax rate.',
     realMoneyExample: 'Sarah earns $85,000 (22% tax bracket). She contributes $10,000 to traditional 401(k): saves $2,200 in taxes immediately. Her husband maxes Roth IRA at $7,000. After 30 years at 8% returns: 401(k) = $100,000 (taxable), Roth IRA = $70,000 (tax-free). Total tax savings at retirement: $15,400+ on Roth alone.',
-    warningTip: "Don't contribute to traditional IRAs if you can't deduct them - you'll pay taxes twice. If your employer offers Roth 401(k), consider it for tax diversification. Never withdraw from retirement accounts early except extreme emergencies - penalties and lost compound growth are devastating."
+    warningTip: "Don't contribute to traditional IRAs if you can't deduct them - you'll pay taxes twice. If your employer offers Roth 401(k), consider it for tax diversification. Never withdraw from retirement accounts early except extreme emergencies - penalties and lost compound growth are devastating.",
+    interactiveComponent: TaxBracketVisualizerEngine
   },
   {
     title: 'Strategic Tax Deductions & Credits: Maximizing Your Refund',
@@ -62,7 +69,8 @@ const enhancedLessons: LessonContent[] = [
     ],
     practicalAction: 'Track deductible expenses throughout the year: charitable donations, business mileage, medical expenses over 7.5% AGI. If self-employed, maximize business deductions and consider Solo 401(k). Bunch charitable donations in alternate years to exceed standard deduction. Time income and deductions around tax bracket thresholds.',
     realMoneyExample: 'Married couple earns $120,000. Itemized deductions: $15,000 mortgage interest + $10,000 SALT + $8,000 charity = $33,000 vs $29,200 standard deduction. Extra $3,800 deduction saves $836 in 22% bracket. Plus $4,000 Child Tax Credit for two kids. Total tax benefit: $4,836 vs standard deduction.',
-    warningTip: "SALT deduction capped at $10,000 - expensive mistake for high earners in high-tax states. Keep receipts for all charitable donations. Don't confuse tax credits with deductions - credits are much more valuable. Audit risk increases with large charitable deductions relative to income."
+    warningTip: "SALT deduction capped at $10,000 - expensive mistake for high earners in high-tax states. Keep receipts for all charitable donations. Don't confuse tax credits with deductions - credits are much more valuable. Audit risk increases with large charitable deductions relative to income.",
+    interactiveComponent: DeductionMaximizerPro
   },
   {
     title: 'Tax-Loss Harvesting & Investment Tax Efficiency',
@@ -122,7 +130,8 @@ const enhancedLessons: LessonContent[] = [
     ],
     practicalAction: 'Conduct annual tax planning review by October to implement year-end strategies. Coordinate with financial advisor and CPA for comprehensive planning. Use tax software or professional for complex situations. Reinvest tax savings into investment accounts to accelerate wealth building.',
     realMoneyExample: 'High-earning couple ($300K) implements comprehensive tax strategy: Max 401(k)s ($46,000), HSA ($8,300), tax-loss harvesting ($3,000), charitable bunching ($20,000 vs $10,000 annually). Total tax savings: $24,000 annually in 32% bracket. Invested over 20 years at 8%: $1.17M additional wealth from tax optimization alone.',
-    warningTip: "Tax laws change frequently - strategies legal today may not be tomorrow. Don't be penny-wise and pound-foolish: spending $5,000 on planning to save $500 doesn't make sense. Focus on highest-impact strategies first: retirement accounts, employer match, and basic deductions before complex strategies."
+    warningTip: "Tax laws change frequently - strategies legal today may not be tomorrow. Don't be penny-wise and pound-foolish: spending $5,000 on planning to save $500 doesn't make sense. Focus on highest-impact strategies first: retirement accounts, employer match, and basic deductions before complex strategies.",
+    interactiveComponent: TaxStrategySimulator
   }
 ];
 
@@ -217,6 +226,23 @@ export default function TaxOptimizationLessonEnhanced({ onComplete }: TaxOptimiz
             </p>
           </div>
 
+          {/* Interactive Component */}
+          {currentLessonContent.interactiveComponent && (
+            <div className="my-8">
+              <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-xl p-1 mb-4`}>
+                <div className="flex items-center justify-center py-3">
+                  <div className={`w-8 h-8 ${theme.status.info.bg} rounded-lg flex items-center justify-center mr-3`}>
+                    <Icon className={`w-4 h-4 ${theme.status.info.text}`} />
+                  </div>
+                  <h4 className={`text-lg font-semibold ${theme.textColors.primary}`}>
+                    Interactive Learning Tool
+                  </h4>
+                </div>
+              </div>
+              <currentLessonContent.interactiveComponent />
+            </div>
+          )}
+
           <div>
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
               <Target className={`w-5 h-5 ${theme.status.warning.text} mr-2`} />
@@ -251,6 +277,22 @@ export default function TaxOptimizationLessonEnhanced({ onComplete }: TaxOptimiz
               {currentLessonContent.realMoneyExample}
             </p>
           </div>
+
+          {/* Interactive Component */}
+          {currentLessonContent.interactiveComponent && (
+            <div className="mt-8">
+              <div className={`mb-4 p-4 ${theme.status.info.bg}/10 border ${theme.status.info.border} rounded-lg`}>
+                <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-2 flex items-center`}>
+                  <Target className={`w-5 h-5 ${theme.status.info.text} mr-2`} />
+                  Interactive Learning Tool
+                </h3>
+                <p className={`text-sm ${theme.textColors.secondary}`}>
+                  Practice the concepts you just learned with this hands-on tool. Experiment with different scenarios to deepen your understanding.
+                </p>
+              </div>
+              <currentLessonContent.interactiveComponent />
+            </div>
+          )}
 
           <div className={`${theme.status.warning.bg}/10 border ${theme.status.warning.border} p-4 rounded-lg`}>
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-3 flex items-center`}>
