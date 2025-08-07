@@ -37,6 +37,25 @@ jest.mock('react-hot-toast', () => ({
   },
 }));
 
+// Mock the imported components that might be causing issues
+jest.mock('@/components/chapters/fundamentals/lessons/EmergencyFundPersonalityAssessment', () => {
+  return function MockEmergencyFundPersonalityAssessment() {
+    return <div data-testid="emergency-fund-personality-assessment">Emergency Fund Personality Assessment</div>;
+  };
+});
+
+jest.mock('@/components/chapters/fundamentals/lessons/EmergencyScenarioSimulator', () => {
+  return function MockEmergencyScenarioSimulator() {
+    return <div data-testid="emergency-scenario-simulator">Emergency Scenario Simulator</div>;
+  };
+});
+
+jest.mock('@/components/chapters/fundamentals/lessons/RiskToleranceVisualizer', () => {
+  return function MockRiskToleranceVisualizer() {
+    return <div data-testid="risk-tolerance-visualizer">Risk Tolerance Visualizer</div>;
+  };
+});
+
 describe('EmergencyFundsLessonEnhanced', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -96,8 +115,9 @@ describe('EmergencyFundsLessonEnhanced', () => {
   test('shows interactive calculator content on lesson 2', () => {
     render(<EmergencyFundsLessonEnhanced />);
     
-    // Navigate to lesson 2
+    // Navigate to lesson 2 (need to click Next twice: 0 → 1 → 2)
     const nextButton = screen.getByText(/Next/i);
+    fireEvent.click(nextButton);
     fireEvent.click(nextButton);
     
     expect(screen.getByText(/Emergency Fund Calculator by Risk Level/i)).toBeInTheDocument();

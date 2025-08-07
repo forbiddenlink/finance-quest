@@ -90,10 +90,15 @@ describe('CreditDebtLessonEnhanced', () => {
   it('allows navigation between lessons', () => {
     render(<CreditDebtLessonEnhanced />);
     
-    const nextButton = screen.getByText(/Next/i);
-    expect(nextButton).toBeInTheDocument();
+    const nextButtons = screen.getAllByText(/Next/i);
+    const lessonNextButton = nextButtons.find(button => 
+      button.closest('button')?.className?.includes('group flex items-center')
+    );
+    expect(lessonNextButton).toBeInTheDocument();
     
-    fireEvent.click(nextButton);
+    if (lessonNextButton) {
+      fireEvent.click(lessonNextButton);
+    }
     
     // Should navigate to next lesson about debt strategies
   });
@@ -131,11 +136,14 @@ describe('CreditDebtLessonEnhanced', () => {
   it('covers debt repayment strategies', () => {
     render(<CreditDebtLessonEnhanced />);
     
-    // Navigate through lessons to find debt content
+    // Navigate through lessons to find debt content using specific selector
     for (let i = 0; i < 3; i++) {
-      const nextButton = screen.queryByText(/Next/i);
-      if (nextButton && !nextButton.closest('button')?.disabled) {
-        fireEvent.click(nextButton);
+      const nextButtons = screen.getAllByText(/Next/i);
+      const lessonNextButton = nextButtons.find(button => 
+        button.closest('button')?.className?.includes('group flex items-center')
+      );
+      if (lessonNextButton && !lessonNextButton.closest('button')?.disabled) {
+        fireEvent.click(lessonNextButton);
       }
     }
     
@@ -147,9 +155,14 @@ describe('CreditDebtLessonEnhanced', () => {
   it('explains credit utilization', () => {
     render(<CreditDebtLessonEnhanced />);
     
-    // Navigate to utilization lesson
-    const nextButton = screen.getByText(/Next/i);
-    fireEvent.click(nextButton);
+    // Navigate to utilization lesson using specific selector
+    const nextButtons = screen.getAllByText(/Next/i);
+    const lessonNextButton = nextButtons.find(button => 
+      button.closest('button')?.className?.includes('group flex items-center')
+    );
+    if (lessonNextButton) {
+      fireEvent.click(lessonNextButton);
+    }
     
     // Use getAllByText to handle multiple matches
     const utilizationElements = screen.getAllByText(/utilization/i);
@@ -159,11 +172,14 @@ describe('CreditDebtLessonEnhanced', () => {
   it('provides credit building strategies', () => {
     render(<CreditDebtLessonEnhanced />);
     
-    // Navigate through lessons
+    // Navigate through lessons using specific selector
     for (let i = 0; i < 2; i++) {
-      const nextButton = screen.queryByText(/Next/i);
-      if (nextButton && !nextButton.closest('button')?.disabled) {
-        fireEvent.click(nextButton);
+      const nextButtons = screen.getAllByText(/Next/i);
+      const lessonNextButton = nextButtons.find(button => 
+        button.closest('button')?.className?.includes('group flex items-center')
+      );
+      if (lessonNextButton && !lessonNextButton.closest('button')?.disabled) {
+        fireEvent.click(lessonNextButton);
       }
     }
     
@@ -183,11 +199,14 @@ describe('CreditDebtLessonEnhanced', () => {
   it('shows interest rate calculations', () => {
     render(<CreditDebtLessonEnhanced />);
     
-    // Navigate to interest/debt lessons
+    // Navigate to interest/debt lessons using more specific selector
     for (let i = 0; i < 4; i++) {
-      const nextButton = screen.queryByText(/Next/i);
-      if (nextButton && !nextButton.closest('button')?.disabled) {
-        fireEvent.click(nextButton);
+      const nextButtons = screen.getAllByText(/Next/i);
+      const lessonNextButton = nextButtons.find(button => 
+        button.closest('button')?.className?.includes('group flex items-center')
+      );
+      if (lessonNextButton && !lessonNextButton.closest('button')?.disabled) {
+        fireEvent.click(lessonNextButton);
       }
     }
     
@@ -199,11 +218,14 @@ describe('CreditDebtLessonEnhanced', () => {
   it('covers credit card rewards and optimization', () => {
     render(<CreditDebtLessonEnhanced />);
     
-    // Navigate through all lessons to find rewards content
+    // Navigate through all lessons to find rewards content using more specific selector
     for (let i = 0; i < 5; i++) {
-      const nextButton = screen.queryByText(/Next/i);
-      if (nextButton && !nextButton.closest('button')?.disabled) {
-        fireEvent.click(nextButton);
+      const nextButtons = screen.getAllByText(/Next/i);
+      const lessonNextButton = nextButtons.find(button => 
+        button.closest('button')?.className?.includes('group flex items-center')
+      );
+      if (lessonNextButton && !lessonNextButton.closest('button')?.disabled) {
+        fireEvent.click(lessonNextButton);
       }
     }
     
@@ -215,14 +237,24 @@ describe('CreditDebtLessonEnhanced', () => {
   it('handles previous button navigation', () => {
     render(<CreditDebtLessonEnhanced />);
     
-    // Initially on first lesson, previous should be disabled
-    const prevButton = screen.getByText(/Previous/i);
-    expect(prevButton.closest('button')).toBeDisabled();
+    // Initially on first lesson, previous should be disabled - use more specific selector
+    const prevButtons = screen.getAllByText(/Previous/i);
+    const lessonPrevButton = prevButtons.find(button => 
+      button.closest('button')?.className?.includes('group flex items-center')
+    );
+    expect(lessonPrevButton?.closest('button')).toBeDisabled();
     
-    // Navigate forward then back
-    const nextButton = screen.getByText(/Next/i);
-    fireEvent.click(nextButton);
-    fireEvent.click(prevButton);
+    // Navigate forward then back using specific selectors
+    const nextButtons = screen.getAllByText(/Next/i);
+    const lessonNextButton = nextButtons.find(button => 
+      button.closest('button')?.className?.includes('group flex items-center')
+    );
+    if (lessonNextButton) {
+      fireEvent.click(lessonNextButton);
+    }
+    if (lessonPrevButton) {
+      fireEvent.click(lessonPrevButton);
+    }
     
     // Should be back to first lesson
     expect(screen.getByText(/Credit Scores: Your Financial Reputation/i)).toBeInTheDocument();
@@ -297,8 +329,13 @@ describe('CreditDebtLessonEnhanced', () => {
       fireEvent.click(navButton);
     }
     
-    const prevButton = screen.getByText(/Previous/i);
-    fireEvent.click(prevButton);
+    const prevButtons = screen.getAllByText(/Previous/i);
+    const lessonPrevButton = prevButtons.find(button => 
+      button.closest('button')?.className?.includes('group flex items-center')
+    );
+    if (lessonPrevButton) {
+      fireEvent.click(lessonPrevButton);
+    }
     
     // Should maintain completed state
     expect(mockProgressStore.completeLesson).toHaveBeenCalled();

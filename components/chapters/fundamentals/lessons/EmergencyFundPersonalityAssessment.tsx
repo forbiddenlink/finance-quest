@@ -180,7 +180,7 @@ export default function EmergencyFundPersonalityAssessment({ onComplete }: Emerg
     try {
       const newAnswers = { ...answers, [assessmentQuestions[currentQuestion].id]: option.text };
       setAnswers(newAnswers);
-      
+
       const newScore = totalScore + option.points;
       setTotalScore(newScore);
 
@@ -201,7 +201,7 @@ export default function EmergencyFundPersonalityAssessment({ onComplete }: Emerg
         const personalityResult = emergencyProfiles[profileType];
         setProfile(personalityResult);
         setShowResult(true);
-        
+
         // Record completion in progress store
         recordSimulationResult({
           scenarioId: 'emergency-fund-personality-assessment',
@@ -215,7 +215,7 @@ export default function EmergencyFundPersonalityAssessment({ onComplete }: Emerg
           improvements: [],
           completedAt: new Date()
         });
-        
+
         toast.success(`Assessment complete! You're "${personalityResult.title}" 🛡️`, {
           duration: 4000,
           position: 'top-center',
@@ -261,7 +261,7 @@ export default function EmergencyFundPersonalityAssessment({ onComplete }: Emerg
           >
             <Shield className={`w-10 h-10 ${theme.status.success.text}`} />
           </motion.div>
-          
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -270,7 +270,7 @@ export default function EmergencyFundPersonalityAssessment({ onComplete }: Emerg
           >
             {profile.title}
           </motion.h2>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -393,7 +393,7 @@ export default function EmergencyFundPersonalityAssessment({ onComplete }: Emerg
             <RotateCcw className="w-5 h-5 mr-2" />
             Retake Assessment
           </button>
-          
+
           <button
             onClick={() => {
               toast.success('Emergency fund plan saved! Use the Calculator tab to build your timeline.', {

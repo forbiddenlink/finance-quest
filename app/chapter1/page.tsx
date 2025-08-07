@@ -2,7 +2,7 @@
 
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
 import MoneyFundamentalsLessonEnhanced from '@/components/chapters/fundamentals/lessons/MoneyFundamentalsLessonEnhanced';
-import PaycheckCalculator from '@/components/chapters/fundamentals/calculators/PaycheckCalculator';
+import MoneyMindsetCalculatorSuite from '@/components/chapters/fundamentals/calculators/MoneyMindsetCalculatorSuite';
 import MoneyFundamentalsQuizEnhanced from '@/components/chapters/fundamentals/quizzes/MoneyFundamentalsQuizEnhanced';
 import { Brain } from 'lucide-react';
 
@@ -15,10 +15,10 @@ export default function Chapter1Page() {
             icon={Brain}
             iconColor="text-blue-400"
             lessonComponent={<MoneyFundamentalsLessonEnhanced />}
-            calculatorComponent={<PaycheckCalculator />}
+            calculatorComponent={<MoneyMindsetCalculatorSuite />}
             quizComponent={<MoneyFundamentalsQuizEnhanced />}
-            calculatorTitle="Paycheck Calculator"
-            calculatorDescription="Calculate your take-home pay and understand deductions"
+            calculatorTitle="Money Mindset Calculator Suite"
+            calculatorDescription="Complete toolkit for paycheck analysis, personality assessment, goal prioritization, and spending mindset analysis"
             quizTitle="Money Psychology Quiz"
             quizDescription="Test your understanding of financial psychology and money mindset"
             requiresPreviousChapters={false}
