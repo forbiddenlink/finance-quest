@@ -5,6 +5,9 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import { theme } from '@/lib/theme';
 import GradientCard from '@/components/shared/ui/GradientCard';
 import ProgressRing from '@/components/shared/ui/ProgressRing';
+import CreditProfileAnalyzer from './CreditProfileAnalyzer';
+import DebtStrategySimulator from './DebtStrategySimulator';
+import CreditCardRewardsOptimizer from './CreditCardRewardsOptimizer';
 import {
   CreditCard,
   Shield,
@@ -20,7 +23,9 @@ import {
   Award,
   Zap,
   Brain,
-  Lock
+  Lock,
+  BarChart3,
+  Gift
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -438,6 +443,52 @@ export default function CreditDebtLessonEnhanced({ onComplete }: CreditDebtLesso
             </div>
           )}
         </div>
+
+        {/* Interactive Components */}
+        {currentLesson === 0 && (
+          <div className="mt-8">
+            <div className={`mb-6 p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg text-center`}>
+              <h3 className={`font-bold ${theme.status.info.text} mb-2 flex items-center justify-center gap-2`}>
+                <BarChart3 className="w-5 h-5" />
+                Analyze Your Credit Profile
+              </h3>
+              <p className={`text-sm ${theme.textColors.secondary}`}>
+                Get a personalized credit score improvement plan based on your current profile
+              </p>
+            </div>
+            <CreditProfileAnalyzer />
+          </div>
+        )}
+
+        {currentLesson === 3 && (
+          <div className="mt-8">
+            <div className={`mb-6 p-4 ${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg text-center`}>
+              <h3 className={`font-bold ${theme.status.warning.text} mb-2 flex items-center justify-center gap-2`}>
+                <Target className="w-5 h-5" />
+                Compare Debt Elimination Strategies
+              </h3>
+              <p className={`text-sm ${theme.textColors.secondary}`}>
+                Calculate the exact cost and timeline for Snowball vs Avalanche debt payoff methods
+              </p>
+            </div>
+            <DebtStrategySimulator />
+          </div>
+        )}
+
+        {currentLesson === 5 && (
+          <div className="mt-8">
+            <div className={`mb-6 p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg text-center`}>
+              <h3 className={`font-bold ${theme.status.success.text} mb-2 flex items-center justify-center gap-2`}>
+                <Gift className="w-5 h-5" />
+                Optimize Your Credit Card Rewards
+              </h3>
+              <p className={`text-sm ${theme.textColors.secondary}`}>
+                Find the perfect credit cards based on your spending patterns to maximize rewards
+              </p>
+            </div>
+            <CreditCardRewardsOptimizer />
+          </div>
+        )}
 
         {/* Navigation */}
         <div className="flex items-center justify-between">
