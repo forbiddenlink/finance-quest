@@ -457,10 +457,11 @@ export default function StockValuationCalculator() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor="eps-input" className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     EPS
                   </label>
                   <input
+                    id="eps-input"
                     type="number"
                     step="0.01"
                     value={earnings}
@@ -470,10 +471,11 @@ export default function StockValuationCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor="book-value-input" className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Book Value/Share
                   </label>
                   <input
+                    id="book-value-input"
                     type="number"
                     step="0.01"
                     value={bookValue}
@@ -485,10 +487,11 @@ export default function StockValuationCalculator() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor="free-cash-flow-input" className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Free Cash Flow (B)
                   </label>
                   <input
+                    id="free-cash-flow-input"
                     type="number"
                     step="0.01"
                     value={freeCashFlow}
@@ -498,10 +501,11 @@ export default function StockValuationCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor="dividend-per-share-input" className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Dividend/Share
                   </label>
                   <input
+                    id="dividend-per-share-input"
                     type="number"
                     step="0.01"
                     value={dividendPerShare}
@@ -550,12 +554,13 @@ export default function StockValuationCalculator() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor="revenue-growth-input" className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Revenue Growth %
                   </label>
                   <div className="relative">
                     <Percent className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="revenue-growth-input"
                       type="number"
                       step="0.1"
                       value={revenueGrowthRate}
@@ -566,12 +571,13 @@ export default function StockValuationCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor="earnings-growth-input" className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Earnings Growth %
                   </label>
                   <div className="relative">
                     <Percent className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="earnings-growth-input"
                       type="number"
                       step="0.1"
                       value={earningsGrowthRate}
@@ -584,12 +590,13 @@ export default function StockValuationCalculator() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor="discount-rate-input" className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Discount Rate %
                   </label>
                   <div className="relative">
                     <Percent className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="discount-rate-input"
                       type="number"
                       step="0.1"
                       value={discountRate}
@@ -618,10 +625,11 @@ export default function StockValuationCalculator() {
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor="industry-pe-input" className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Industry P/E
                   </label>
                   <input
+                    id="industry-pe-input"
                     type="number"
                     step="0.1"
                     value={industryPE}
@@ -631,10 +639,11 @@ export default function StockValuationCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor="industry-pb-input" className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Industry P/B
                   </label>
                   <input
+                    id="industry-pb-input"
                     type="number"
                     step="0.1"
                     value={industryPB}

@@ -305,12 +305,13 @@ export default function PropertyInsuranceCalculator() {
             
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="net-worth" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Net Worth
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="net-worth"
                     type="number"
                     value={netWorth}
                     onChange={(e) => setNetWorth(Number(e.target.value))}
@@ -321,12 +322,13 @@ export default function PropertyInsuranceCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="annual-income" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Annual Income
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="annual-income"
                     type="number"
                     value={annualIncome}
                     onChange={(e) => setAnnualIncome(Number(e.target.value))}
@@ -337,10 +339,11 @@ export default function PropertyInsuranceCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label htmlFor="risk-tolerance" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                   Risk Tolerance
                 </label>
                 <select
+                  id="risk-tolerance"
                   value={riskTolerance}
                   onChange={(e) => setRiskTolerance(e.target.value)}
                   className={`w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
@@ -371,12 +374,13 @@ export default function PropertyInsuranceCalculator() {
               
               {hasUmbrellaPolicy && (
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label htmlFor="umbrella-amount" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
                     Umbrella Coverage Amount
                   </label>
                   <div className="relative">
                     <Umbrella className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <select
+                      id="umbrella-amount"
                       value={umbrellaAmount}
                       onChange={(e) => setUmbrellaAmount(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
@@ -430,8 +434,9 @@ export default function PropertyInsuranceCalculator() {
                     
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div>
-                        <label className={`${theme.textColors.secondary}`}>Type</label>
+                        <label htmlFor={`type-${property.id}`} className={`${theme.textColors.secondary}`}>Type</label>
                         <select
+                          id={`type-${property.id}`}
                           value={property.type}
                           onChange={(e) => updateProperty(property.id, 'type', e.target.value)}
                           className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs`}
@@ -445,8 +450,9 @@ export default function PropertyInsuranceCalculator() {
                         </select>
                       </div>
                       <div>
-                        <label className={`${theme.textColors.secondary}`}>Value</label>
+                        <label htmlFor={`value-${property.id}`} className={`${theme.textColors.secondary}`}>Value</label>
                         <input
+                          id={`value-${property.id}`}
                           type="number"
                           value={property.value}
                           onChange={(e) => updateProperty(property.id, 'value', Number(e.target.value))}
@@ -454,8 +460,9 @@ export default function PropertyInsuranceCalculator() {
                         />
                       </div>
                       <div>
-                        <label className={`${theme.textColors.secondary}`}>Liability Limit</label>
+                        <label htmlFor={`liability-${property.id}`} className={`${theme.textColors.secondary}`}>Liability Limit</label>
                         <input
+                          id={`liability-${property.id}`}
                           type="number"
                           value={property.liability}
                           onChange={(e) => updateProperty(property.id, 'liability', Number(e.target.value))}
@@ -463,8 +470,9 @@ export default function PropertyInsuranceCalculator() {
                         />
                       </div>
                       <div>
-                        <label className={`${theme.textColors.secondary}`}>Deductible</label>
+                        <label htmlFor={`deductible-${property.id}`} className={`${theme.textColors.secondary}`}>Deductible</label>
                         <input
+                          id={`deductible-${property.id}`}
                           type="number"
                           value={property.deductible}
                           onChange={(e) => updateProperty(property.id, 'deductible', Number(e.target.value))}
@@ -472,8 +480,9 @@ export default function PropertyInsuranceCalculator() {
                         />
                       </div>
                       <div>
-                        <label className={`${theme.textColors.secondary}`}>Location</label>
+                        <label htmlFor={`location-${property.id}`} className={`${theme.textColors.secondary}`}>Location</label>
                         <select
+                          id={`location-${property.id}`}
                           value={property.location}
                           onChange={(e) => updateProperty(property.id, 'location', e.target.value)}
                           className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs`}
@@ -486,8 +495,9 @@ export default function PropertyInsuranceCalculator() {
                         </select>
                       </div>
                       <div>
-                        <label className={`${theme.textColors.secondary}`}>Age (years)</label>
+                        <label htmlFor={`age-${property.id}`} className={`${theme.textColors.secondary}`}>Age (years)</label>
                         <input
+                          id={`age-${property.id}`}
                           type="number"
                           value={property.age}
                           onChange={(e) => updateProperty(property.id, 'age', Number(e.target.value))}
