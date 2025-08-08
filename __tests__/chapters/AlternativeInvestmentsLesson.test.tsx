@@ -79,7 +79,7 @@ describe('AlternativeInvestmentsLesson', () => {
 
   test('renders lesson component without crashing', () => {
     render(<AlternativeInvestmentsLesson />);
-    expect(screen.getByTestId('card')).toBeInTheDocument();
+    expect(screen.getAllByTestId('card')).toHaveLength(3);
   });
 
   test('displays lesson introduction correctly', () => {
@@ -151,7 +151,8 @@ describe('AlternativeInvestmentsLesson', () => {
     fireEvent.click(nextButton); // Section 2: Commodities
     
     await waitFor(() => {
-      expect(screen.getByText(/Commodities & Natural Resources/i)).toBeInTheDocument();
+      const commoditiesTexts = screen.getAllByText(/Commodities & Natural Resources/i);
+      expect(commoditiesTexts).toHaveLength(2); // h1 and h2
     });
   });
 
