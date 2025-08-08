@@ -852,7 +852,7 @@ For $60,000 annual income, 30-year-old with mortgage:
                 <Icon className="w-5 h-5 mx-auto mb-1" />
                 <div className="text-xs font-medium">{lesson.title.split(' ')[0]}</div>
                 {completedLessons[index] && (
-                  <CheckCircle className={`w-3 h-3 ${theme.status.success.text} mx-auto mt-1`} />
+                  <CheckCircle className={`w-3 h-3 ${theme.status?.success?.text || 'text-emerald-400'} mx-auto mt-1`} />
                 )}
               </button>
             );
@@ -886,7 +886,7 @@ For $60,000 annual income, 30-year-old with mortgage:
               <ul className="space-y-2">
                 {lessons[currentLesson].content.keyPoints.map((point, index) => (
                   <li key={index} className={`flex items-start gap-2 ${theme.textColors.secondary}`}>
-                    <CheckCircle className={`w-4 h-4 ${theme.status.success.text} mt-0.5 flex-shrink-0`} />
+                    <CheckCircle className={`w-4 h-4 ${theme.status?.success?.text || 'text-emerald-400'} mt-0.5 flex-shrink-0`} />
                     {point}
                   </li>
                 ))}
