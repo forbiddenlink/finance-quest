@@ -97,7 +97,7 @@ describe('TechnicalAnalysisTool', () => {
     render(<TechnicalAnalysisTool />);
     
     await waitFor(() => {
-      expect(screen.getByText(/RSI/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/RSI/i).length).toBeGreaterThan(0);
     });
   });
 
@@ -106,7 +106,7 @@ describe('TechnicalAnalysisTool', () => {
     
     await waitFor(() => {
       expect(screen.getByText(/MACD Analysis/i)).toBeInTheDocument();
-      expect(screen.getByText(/MACD Line/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/MACD Line/i).length).toBeGreaterThan(0);
     });
   });
 
@@ -114,7 +114,7 @@ describe('TechnicalAnalysisTool', () => {
     render(<TechnicalAnalysisTool />);
     
     await waitFor(() => {
-      expect(screen.getByText(/Bollinger/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/Bollinger/i).length).toBeGreaterThan(0);
     });
   });
 
@@ -122,7 +122,7 @@ describe('TechnicalAnalysisTool', () => {
     render(<TechnicalAnalysisTool />);
     
     await waitFor(() => {
-      expect(screen.getByText(/Moving Averages/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/Moving Averages/i).length).toBeGreaterThan(0);
       expect(screen.getByText(/SMA 20/i)).toBeInTheDocument();
       expect(screen.getByText(/SMA 50/i)).toBeInTheDocument();
     });

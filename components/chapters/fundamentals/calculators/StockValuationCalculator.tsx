@@ -356,10 +356,14 @@ export default function StockValuationCalculator() {
             
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label 
+                  htmlFor="stock-symbol"
+                  className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}
+                >
                   Stock Symbol
                 </label>
                 <input
+                  id="stock-symbol"
                   type="text"
                   value={stockSymbol}
                   onChange={(e) => setStockSymbol(e.target.value.toUpperCase())}
@@ -369,12 +373,16 @@ export default function StockValuationCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label 
+                  htmlFor="current-stock-price"
+                  className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}
+                >
                   Current Stock Price
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="current-stock-price"
                     type="number"
                     step="0.01"
                     value={currentPrice}

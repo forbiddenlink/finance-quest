@@ -207,12 +207,16 @@ export default function DisabilityInsuranceCalculator() {
             
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label 
+                  htmlFor="gross-annual-income"
+                  className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}
+                >
                   Gross Annual Income
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="gross-annual-income"
                     type="number"
                     value={grossIncome}
                     onChange={(e) => setGrossIncome(Number(e.target.value))}
@@ -223,12 +227,16 @@ export default function DisabilityInsuranceCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label 
+                  htmlFor="current-age"
+                  className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}
+                >
                   Current Age
                 </label>
                 <div className="relative">
                   <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="current-age"
                     type="number"
                     value={currentAge}
                     onChange={(e) => setCurrentAge(Number(e.target.value))}
@@ -239,12 +247,16 @@ export default function DisabilityInsuranceCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label 
+                  htmlFor="occupation-category"
+                  className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}
+                >
                   Occupation Category
                 </label>
                 <div className="relative">
                   <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <select
+                    id="occupation-category"
                     value={occupation}
                     onChange={(e) => setOccupation(e.target.value)}
                     className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}

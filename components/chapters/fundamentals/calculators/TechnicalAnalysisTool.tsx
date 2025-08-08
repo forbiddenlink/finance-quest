@@ -722,10 +722,14 @@ export default function TechnicalAnalysisTool() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label 
+                    htmlFor="bollinger-period"
+                    className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}
+                  >
                     Bollinger Period
                   </label>
                   <input
+                    id="bollinger-period"
                     type="number"
                     min="10"
                     max="50"
@@ -736,10 +740,14 @@ export default function TechnicalAnalysisTool() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label 
+                    htmlFor="bollinger-std-dev"
+                    className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}
+                  >
                     Std Deviation
                   </label>
                   <input
+                    id="bollinger-std-dev"
                     type="number"
                     step="0.1"
                     min="1"

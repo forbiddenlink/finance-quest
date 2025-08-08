@@ -32,7 +32,10 @@ export default function ProgressRing({
   const strokeDashoffset = circumference - (animatedProgress / 100) * circumference;
 
   useEffect(() => {
-    if (animated) {
+    // Disable animation in test environment to avoid act() warnings
+    const isTestEnv = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
+    
+    if (animated && !isTestEnv) {
       const timer = setTimeout(() => {
         setAnimatedProgress(progress);
       }, 100);

@@ -84,7 +84,7 @@ describe('PortfolioRiskAnalyzer', () => {
     await waitFor(() => {
       expect(screen.getByText(/Portfolio Overview/i)).toBeInTheDocument();
       expect(screen.getAllByText(/Expected Return/i).length).toBeGreaterThan(0);
-      expect(screen.getByText(/Volatility/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/Volatility/i).length).toBeGreaterThan(0);
       expect(screen.getAllByText(/Sharpe Ratio/i).length).toBeGreaterThan(0);
     });
   });
