@@ -10,11 +10,11 @@ jest.mock('@/lib/store/progressStore');
 // Mock the EnhancedQuizEngine component
 jest.mock('@/components/shared/quiz/EnhancedQuizEngine', () => {
   return function MockEnhancedQuizEngine({ config, onComplete }: any) {
+    const { recordQuizScore } = useProgressStore();
+    
     const handleComplete = () => {
+      recordQuizScore('chapter15-quiz', 85, 10);
       onComplete?.(85);
-      // Also simulate the actual quiz engine calling recordQuizScore
-      const mockStore = require('@/lib/store/progressStore');
-      mockStore.useProgressStore.getState().recordQuizScore('chapter15-quiz', 85, 10);
     };
 
     return (
@@ -22,7 +22,7 @@ jest.mock('@/components/shared/quiz/EnhancedQuizEngine', () => {
         <h2 data-testid="quiz-title">{config.title}</h2>
         <p data-testid="quiz-description">{config.description}</p>
         <div data-testid="quiz-questions">
-          {config.questions.slice(0, 8).map((question: any, index: number) => (
+          {config.questions.map((question: any, index: number) => (
             <div key={question.id} data-testid={`question-${question.id}`}>
               <p data-testid={`question-text-${question.id}`}>{question.question}</p>
               <div data-testid={`question-options-${question.id}`}>
