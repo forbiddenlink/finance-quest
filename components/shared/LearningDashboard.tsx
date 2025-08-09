@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
     useLearningAnalytics,
@@ -27,6 +27,47 @@ export default function LearningDashboard() {
     const learningAnalytics = useLearningAnalytics();
     const { dueCards, updateCard } = useSpacedRepetition('dashboard');
     const [selectedTimeframe, setSelectedTimeframe] = useState<'week' | 'month' | 'quarter'>('month');
+    const [chartHeights, setChartHeights] = useState({
+        progress: 200,
+        allocation: 200,
+        mastery: 200
+    });
+    
+    const progressChartRef = useRef<HTMLDivElement>(null);
+    const allocationChartRef = useRef<HTMLDivElement>(null);
+    const masteryChartRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const updateChartHeight = (ref: HTMLDivElement | null, key: keyof typeof chartHeights) => {
+            if (ref) {
+                const height = ref.clientHeight;
+                setChartHeights(prev => ({ ...prev, [key]: height }));
+            }
+        };
+
+        const resizeObserver = new ResizeObserver(entries => {
+            entries.forEach(entry => {
+                const element = entry.target as HTMLDivElement;
+                if (element === progressChartRef.current) {
+                    updateChartHeight(element, 'progress');
+                } else if (element === allocationChartRef.current) {
+                    updateChartHeight(element, 'allocation');
+                } else if (element === masteryChartRef.current) {
+                    updateChartHeight(element, 'mastery');
+                }
+            });
+        });
+
+        [progressChartRef, allocationChartRef, masteryChartRef].forEach(ref => {
+            if (ref.current) {
+                resizeObserver.observe(ref.current);
+                updateChartHeight(ref.current, ref === progressChartRef ? 'progress' : 
+                                             ref === allocationChartRef ? 'allocation' : 'mastery');
+            }
+        });
+
+        return () => resizeObserver.disconnect();
+    }, []);
 
     // Generate mock progress data for charts
     const progressData = React.useMemo(() => {
@@ -197,11 +238,11 @@ export default function LearningDashboard() {
                                 ))}
                             </div>
                         </div>
-                        <div className="h-[200px] sm:h-[250px] lg:h-[300px]">
+                        <div ref={progressChartRef} className="h-[200px] sm:h-[250px] lg:h-[300px]">
                             <AreaChart
                                 data={progressData}
                                 color={theme.colors.blue[500]}
-                                height="100%"
+                                height={chartHeights.progress}
                                 fillGradient={true}
                             />
                         </div>
@@ -218,10 +259,10 @@ export default function LearningDashboard() {
                             <Clock className="mr-2 w-5 h-5 sm:w-6 sm:h-6" />
                             Learning Time Allocation
                         </h3>
-                        <div className="h-[200px] sm:h-[250px] lg:h-[300px]">
+                        <div ref={allocationChartRef} className="h-[200px] sm:h-[250px] lg:h-[300px]">
                             <DonutChart
                                 data={timeAllocationData}
-                                height="100%"
+                                height={chartHeights.allocation}
                                 showLegend={true}
                             />
                         </div>
@@ -242,11 +283,11 @@ export default function LearningDashboard() {
                             <Award className="mr-2 w-5 h-5 sm:w-6 sm:h-6" />
                             Concept Mastery Levels
                         </h3>
-                        <div className="h-[200px] sm:h-[250px] lg:h-[300px]">
+                        <div ref={masteryChartRef} className="h-[200px] sm:h-[250px] lg:h-[300px]">
                             <BarChart
                                 data={conceptMasteryData}
                                 title="Mastery by Topic"
-                                height="100%"
+                                height={chartHeights.mastery}
                             />
                         </div>
                     </motion.div>

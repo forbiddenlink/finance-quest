@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, JetBrains_Mono } from "next/font/google";
+import { viewport } from './viewport';
 import "./globals.css";
 import { ToastProvider } from "@/components/shared/ui/ToastProvider";
 import EnhancedProgressNavigation from "@/components/shared/ui/EnhancedProgressNavigation";
@@ -29,6 +30,8 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
   variable: '--font-jetbrains-mono',
 });
+
+export { viewport };
 
 export const metadata: Metadata = {
   title: "Finance Quest - Master Your Money, Master Your Future",
@@ -80,10 +83,7 @@ export const metadata: Metadata = {
       { rel: 'apple-touch-icon', url: '/icons/apple-touch-icon.png' }
     ]
   },
-  themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#0f172a' },
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' }
-  ],
+
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
