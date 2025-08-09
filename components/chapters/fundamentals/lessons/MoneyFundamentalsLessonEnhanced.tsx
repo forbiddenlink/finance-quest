@@ -167,24 +167,24 @@ export default function MoneyFundamentalsLessonEnhanced() {
         />
       </div>
 
-      <GradientCard variant="glass" gradient="blue" className="p-8">
+      <GradientCard variant="glass" gradient="blue" className="p-4 sm:p-6 md:p-8">
         {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-3">
-              <div className={`${theme.status.info.bg} p-2 rounded-lg animate-float`}>
-                <Brain className={`w-6 h-6 ${theme.status.info.text}`} />
+        <div className="mb-4 sm:mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mb-3 sm:mb-4">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className={`${theme.status.info.bg} p-1.5 sm:p-2 rounded-lg animate-float`}>
+                <Brain className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.info.text}`} />
               </div>
-              <span className={`text-sm font-medium ${theme.status.info.text}`}>
+              <span className={`text-xs sm:text-sm font-medium ${theme.status.info.text}`}>
                 Lesson {currentLesson + 1} of {enhancedLessons.length}
               </span>
             </div>
-            <span className={`text-sm ${theme.textColors.muted}`}>
+            <span className={`text-xs sm:text-sm ${theme.textColors.muted}`}>
               Chapter 1: Money Psychology & Practical Foundations
             </span>
           </div>
 
-          <h1 className={`text-3xl font-bold ${theme.textColors.primary} mb-4 gradient-text-purple`}>
+          <h1 className={`text-xl sm:text-2xl md:text-3xl font-bold ${theme.textColors.primary} mb-3 sm:mb-4 gradient-text-purple line-clamp-2 sm:line-clamp-none`}>
             {lesson.title}
           </h1>
         </div>
@@ -267,23 +267,32 @@ export default function MoneyFundamentalsLessonEnhanced() {
               />
               
               {/* Enhanced Visual Learning Examples */}
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 border border-emerald-500/20 rounded-lg p-4">
-                  <h6 className="text-sm font-medium text-emerald-400 mb-2">Starting at 25</h6>
-                  <p className="text-xs text-slate-300 mb-1">$200/month for 40 years</p>
-                  <p className="text-lg font-bold text-emerald-400">$1.75M</p>
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+                <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 border border-emerald-500/20 rounded-lg p-3 sm:p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h6 className="text-sm font-medium text-emerald-400">Starting at 25</h6>
+                    <span className="text-xs text-emerald-400 font-medium">40 years</span>
+                  </div>
+                  <p className="text-xs text-slate-300 mb-1">$200/month</p>
+                  <p className="text-base sm:text-lg font-bold text-emerald-400">$1.75M</p>
                   <p className="text-xs text-slate-400">Total invested: $96k</p>
                 </div>
-                <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-lg p-4">
-                  <h6 className="text-sm font-medium text-amber-400 mb-2">Starting at 35</h6>
-                  <p className="text-xs text-slate-300 mb-1">$400/month for 30 years</p>
-                  <p className="text-lg font-bold text-amber-400">$1.22M</p>
+                <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-lg p-3 sm:p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h6 className="text-sm font-medium text-amber-400">Starting at 35</h6>
+                    <span className="text-xs text-amber-400 font-medium">30 years</span>
+                  </div>
+                  <p className="text-xs text-slate-300 mb-1">$400/month</p>
+                  <p className="text-base sm:text-lg font-bold text-amber-400">$1.22M</p>
                   <p className="text-xs text-slate-400">Total invested: $144k</p>
                 </div>
-                <div className="bg-gradient-to-br from-red-500/10 to-red-600/10 border border-red-500/20 rounded-lg p-4">
-                  <h6 className="text-sm font-medium text-red-400 mb-2">Starting at 45</h6>
-                  <p className="text-xs text-slate-300 mb-1">$800/month for 20 years</p>
-                  <p className="text-lg font-bold text-red-400">$656k</p>
+                <div className="bg-gradient-to-br from-red-500/10 to-red-600/10 border border-red-500/20 rounded-lg p-3 sm:p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h6 className="text-sm font-medium text-red-400">Starting at 45</h6>
+                    <span className="text-xs text-red-400 font-medium">20 years</span>
+                  </div>
+                  <p className="text-xs text-slate-300 mb-1">$800/month</p>
+                  <p className="text-base sm:text-lg font-bold text-red-400">$656k</p>
                   <p className="text-xs text-slate-400">Total invested: $192k</p>
                 </div>
               </div>
@@ -356,56 +365,62 @@ export default function MoneyFundamentalsLessonEnhanced() {
         </div>
 
         {/* Navigation */}
-        <div className="flex items-center justify-between">
-          <div className="flex space-x-3">
+        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+          <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
             <button
               onClick={prevLesson}
               disabled={currentLesson === 0}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.primary} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all`}
+              className={`group flex items-center px-3 sm:px-4 py-2 sm:py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.primary} rounded-lg sm:rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all flex-1 sm:flex-none justify-center sm:justify-start`}
             >
-              <ChevronLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-              Previous
+              <ChevronLeft className="w-4 h-4 sm:mr-2 group-hover:-translate-x-1 transition-transform" />
+              <span className="hidden sm:inline">Previous</span>
             </button>
             <button
               onClick={nextLesson}
               disabled={currentLesson === enhancedLessons.length - 1}
-              className={`group flex items-center px-6 py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.primary} rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all`}
+              className={`group flex items-center px-3 sm:px-4 py-2 sm:py-3 ${theme.textColors.secondary} border-2 ${theme.borderColors.primary} rounded-lg sm:rounded-xl hover:${theme.borderColors.accent} hover:${theme.textColors.primary} disabled:opacity-50 disabled:cursor-not-allowed transition-all flex-1 sm:flex-none justify-center sm:justify-start`}
             >
-              Next
-              <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              <span className="hidden sm:inline">Next</span>
+              <ChevronRight className="w-4 h-4 sm:ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
 
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center w-full sm:w-auto">
             {!completedLessons[currentLesson] && (
               <button
                 onClick={markComplete}
-                className={`group flex items-center px-6 py-3 ${theme.buttons.primary} rounded-xl transition-all shadow-lg hover-lift`}
+                className={`group flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 ${theme.buttons.primary} rounded-lg sm:rounded-xl transition-all shadow-lg hover-lift w-full sm:w-auto`}
               >
-                <CheckCircle className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                Mark Complete
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:scale-110 transition-transform" />
+                <span className="text-sm sm:text-base">Mark Complete</span>
               </button>
             )}
             {completedLessons[currentLesson] && (
-              <div className={`flex items-center px-6 py-3 ${theme.status.success.bg} ${theme.status.success.text} rounded-xl font-medium`}>
-                <CheckCircle className="w-5 h-5 mr-2" />
-                Completed
+              <div className={`flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 ${theme.status.success.bg} ${theme.status.success.text} rounded-lg sm:rounded-xl font-medium w-full sm:w-auto`}>
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                <span className="text-sm sm:text-base">Completed</span>
               </div>
             )}
           </div>
         </div>
 
         {/* Progress Summary */}
-        <div className={`mt-6 pt-6 border-t ${theme.borderColors.primary}`}>
-          <div className={`flex items-center justify-between text-sm ${theme.textColors.secondary}`}>
-            <span>Progress: {completedLessons.filter(Boolean).length} of {enhancedLessons.length} lessons completed</span>
-            <span>{progress.toFixed(0)}% Complete</span>
+        <div className={`mt-4 sm:mt-6 pt-4 sm:pt-6 border-t ${theme.borderColors.primary}`}>
+          <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0 text-xs sm:text-sm ${theme.textColors.secondary}`}>
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="font-medium">Progress:</span>
+              <span>{completedLessons.filter(Boolean).length} of {enhancedLessons.length} lessons</span>
+            </div>
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="font-medium">Completion:</span>
+              <span>{progress.toFixed(0)}%</span>
+            </div>
           </div>
 
           {completedLessons.filter(Boolean).length === enhancedLessons.length && (
-            <div className={`mt-4 p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg text-center`}>
-              <p className={`font-bold ${theme.status.success.text} flex items-center justify-center gap-2`}>
-                <Shield className="w-5 h-5" />
+            <div className={`mt-3 sm:mt-4 p-3 sm:p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg text-center`}>
+              <p className={`font-bold ${theme.status.success.text} flex items-center justify-center gap-1.5 sm:gap-2 text-sm sm:text-base`}>
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5" />
                 Foundation Complete! You&apos;re ready for the paycheck calculator and quiz.
               </p>
             </div>

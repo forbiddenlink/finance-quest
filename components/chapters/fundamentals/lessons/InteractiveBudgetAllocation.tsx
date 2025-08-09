@@ -56,22 +56,22 @@ function DraggableItem({ id, amount, color }: DraggableItemProps) {
       {...attributes}
       {...listeners}
       className={`
-        p-4 rounded-lg border-2 border-dashed ${color} 
+        p-2.5 sm:p-4 rounded-lg border-2 border-dashed ${color} 
         ${isDragging ? 'opacity-50 scale-105' : 'opacity-100'} 
-        cursor-grab active:cursor-grabbing
+        cursor-grab active:cursor-grabbing touch-none
         ${theme.backgrounds.cardHover} 
         transition-all duration-200
       `}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
-      <div className="flex items-center justify-center gap-2">
-        <DollarSign className="w-5 h-5 text-emerald-400" />
-        <span className={`font-bold ${theme.textColors.primary}`}>
+      <div className="flex items-center justify-center gap-1.5 sm:gap-2">
+        <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+        <span className={`font-bold ${theme.textColors.primary} text-sm sm:text-base`}>
           ${amount.toLocaleString()}
         </span>
       </div>
-      <p className={`text-xs ${theme.textColors.muted} text-center mt-1`}>
+      <p className={`text-[10px] sm:text-xs ${theme.textColors.muted} text-center mt-1`}>
         Drag to allocate
       </p>
     </motion.div>
@@ -326,32 +326,32 @@ export default function InteractiveBudgetAllocation() {
         </p>
         
         {/* Budget Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-slate-800/50 rounded-lg">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 p-3 sm:p-4 bg-slate-800/50 rounded-lg">
           <div className="text-center">
-            <div className={`text-2xl font-bold ${theme.textColors.primary}`}>
+            <div className={`text-lg sm:text-xl md:text-2xl font-bold ${theme.textColors.primary}`}>
               ${MONTHLY_INCOME.toLocaleString()}
             </div>
-            <p className={`text-xs ${theme.textColors.muted}`}>Monthly Income</p>
+            <p className={`text-[10px] sm:text-xs ${theme.textColors.muted}`}>Monthly Income</p>
           </div>
           <div className="text-center">
-            <div className={`text-2xl font-bold ${
+            <div className={`text-lg sm:text-xl md:text-2xl font-bold ${
               remainingBudget < 0 ? 'text-red-400' : 
               remainingBudget < 10 ? 'text-amber-400' : 
               'text-emerald-400'
             }`}>
               {remainingBudget.toFixed(1)}%
             </div>
-            <p className={`text-xs ${theme.textColors.muted}`}>Budget Remaining</p>
+            <p className={`text-[10px] sm:text-xs ${theme.textColors.muted}`}>Budget Remaining</p>
           </div>
-          <div className="text-center">
-            <div className={`text-2xl font-bold ${
+          <div className="text-center col-span-2 sm:col-span-1">
+            <div className={`text-lg sm:text-xl md:text-2xl font-bold ${
               overallScore >= 80 ? 'text-emerald-400' : 
               overallScore >= 60 ? 'text-amber-400' : 
               'text-red-400'
             }`}>
               {overallScore}%
             </div>
-            <p className={`text-xs ${theme.textColors.muted}`}>Allocation Score</p>
+            <p className={`text-[10px] sm:text-xs ${theme.textColors.muted}`}>Allocation Score</p>
           </div>
         </div>
       </div>
@@ -370,7 +370,7 @@ export default function InteractiveBudgetAllocation() {
           
           {availableAmounts.length > 0 ? (
             <SortableContext items={availableAmounts.map(String)} strategy={verticalListSortingStrategy}>
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3">
                 <AnimatePresence>
                   {availableAmounts.map(amount => (
                     <motion.div
@@ -391,13 +391,13 @@ export default function InteractiveBudgetAllocation() {
               </div>
             </SortableContext>
           ) : (
-            <div className={`text-center py-8 ${theme.backgrounds.cardHover} rounded-lg border ${theme.borderColors.primary}`}>
-              <p className={`${theme.textColors.secondary} mb-2`}>All money allocated!</p>
+            <div className={`text-center py-6 sm:py-8 ${theme.backgrounds.cardHover} rounded-lg border ${theme.borderColors.primary}`}>
+              <p className={`${theme.textColors.secondary} text-sm sm:text-base mb-2 sm:mb-3`}>All money allocated!</p>
               <button
                 onClick={resetBudget}
-                className={`flex items-center gap-2 px-4 py-2 ${theme.buttons.ghost} rounded-lg font-medium transition-all mx-auto`}
+                className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 ${theme.buttons.ghost} rounded-lg font-medium transition-all mx-auto text-sm sm:text-base`}
               >
-                <RefreshCw className="w-4 h-4" />
+                <RefreshCw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 Try Again
               </button>
             </div>
@@ -434,21 +434,21 @@ export default function InteractiveBudgetAllocation() {
               theme.status.error.border
             }`}
           >
-            <div className="flex items-center justify-between mb-4">
-              <h4 className={`font-bold ${
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-3 sm:mb-4">
+              <h4 className={`font-bold text-sm sm:text-base ${
                 overallScore >= 80 ? theme.status.success.text : 
                 overallScore >= 60 ? theme.status.warning.text : 
                 theme.status.error.text
               }`}>
                 Budget Allocation Results
               </h4>
-              <div className="flex items-center gap-2">
-                <Trophy className={`w-5 h-5 ${
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <Trophy className={`w-4 h-4 sm:w-5 sm:h-5 ${
                   overallScore >= 80 ? theme.status.success.text : 
                   overallScore >= 60 ? theme.status.warning.text : 
                   theme.status.error.text
                 }`} />
-                <span className={`font-bold ${
+                <span className={`font-bold text-sm sm:text-base ${
                   overallScore >= 80 ? theme.status.success.text : 
                   overallScore >= 60 ? theme.status.warning.text : 
                   theme.status.error.text

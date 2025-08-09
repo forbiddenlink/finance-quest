@@ -187,9 +187,9 @@ export default function LifeInsuranceCalculator() {
 
   return (
     <div data-testid="life-insurance-calculator" className={`p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-      <div className="flex items-center gap-3 mb-6">
-        <Heart className="w-6 h-6 text-red-400" />
-        <h2 className={`text-xl font-bold ${theme.textColors.primary}`}>
+      <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+        <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-red-400 flex-shrink-0" />
+        <h2 className={`text-lg sm:text-xl font-bold ${theme.textColors.primary} leading-tight`}>
           Life Insurance Needs Calculator
         </h2>
       </div>
@@ -382,43 +382,43 @@ export default function LifeInsuranceCalculator() {
 
             <div className="space-y-3 max-h-96 overflow-y-auto">
               {familyMembers.map((member) => (
-                <div key={member.id} className={`p-3 bg-slate-800/50 border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center justify-between mb-2">
+                <div key={member.id} className={`p-2 sm:p-3 bg-slate-800/50 border ${theme.borderColors.primary} rounded-lg`}>
+                  <div className="flex items-center justify-between mb-1.5 sm:mb-2">
                     <label htmlFor={`member-name-${member.id}`} className="sr-only">Family member name</label>
                     <input
                       id={`member-name-${member.id}`}
                       type="text"
                       value={member.name}
                       onChange={(e) => updateFamilyMember(member.id, 'name', e.target.value)}
-                      className={`bg-transparent ${theme.textColors.primary} font-medium border-none outline-none`}
+                      className={`bg-transparent ${theme.textColors.primary} text-xs sm:text-sm font-medium border-none outline-none`}
                       placeholder="Family member name"
                     />
                     <button
                       onClick={() => removeFamilyMember(member.id)}
-                      className="text-red-400 hover:text-red-300 text-sm"
+                      className="text-red-400 hover:text-red-300 text-[10px] sm:text-xs ml-2"
                     >
                       Remove
                     </button>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] sm:text-xs">
                     <div>
-                      <label htmlFor={`member-age-${member.id}`} className={`${theme.textColors.secondary}`}>Age</label>
+                      <label htmlFor={`member-age-${member.id}`} className={`${theme.textColors.secondary} block mb-1`}>Age</label>
                       <input
                         id={`member-age-${member.id}`}
                         type="number"
                         value={member.age}
                         onChange={(e) => updateFamilyMember(member.id, 'age', Number(e.target.value))}
-                        className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs`}
+                        className={`w-full px-2 py-1.5 sm:py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
                       />
                     </div>
                     <div>
-                      <label htmlFor={`member-relationship-${member.id}`} className={`${theme.textColors.secondary}`}>Relationship</label>
+                      <label htmlFor={`member-relationship-${member.id}`} className={`${theme.textColors.secondary} block mb-1`}>Relationship</label>
                       <select
                         id={`member-relationship-${member.id}`}
                         value={member.relationship}
                         onChange={(e) => updateFamilyMember(member.id, 'relationship', e.target.value)}
-                        className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs`}
+                        className={`w-full px-2 py-1.5 sm:py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
                       >
                         <option value="spouse">Spouse</option>
                         <option value="child">Child</option>
@@ -426,23 +426,23 @@ export default function LifeInsuranceCalculator() {
                       </select>
                     </div>
                     <div>
-                      <label htmlFor={`member-expenses-${member.id}`} className={`${theme.textColors.secondary}`}>Monthly Expenses</label>
+                      <label htmlFor={`member-expenses-${member.id}`} className={`${theme.textColors.secondary} block mb-1`}>Monthly Expenses</label>
                       <input
                         id={`member-expenses-${member.id}`}
                         type="number"
                         value={member.monthlyExpenses}
                         onChange={(e) => updateFamilyMember(member.id, 'monthlyExpenses', Number(e.target.value))}
-                        className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs`}
+                        className={`w-full px-2 py-1.5 sm:py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
                       />
                     </div>
                     <div>
-                      <label htmlFor={`member-support-${member.id}`} className={`${theme.textColors.secondary}`}>Years of Support</label>
+                      <label htmlFor={`member-support-${member.id}`} className={`${theme.textColors.secondary} block mb-1`}>Years of Support</label>
                       <input
                         id={`member-support-${member.id}`}
                         type="number"
                         value={member.yearsOfSupport}
                         onChange={(e) => updateFamilyMember(member.id, 'yearsOfSupport', Number(e.target.value))}
-                        className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs`}
+                        className={`w-full px-2 py-1.5 sm:py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
                       />
                     </div>
                   </div>
@@ -457,33 +457,33 @@ export default function LifeInsuranceCalculator() {
           {insuranceNeeds && (
             <>
               {/* Summary Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className={`p-4 bg-red-900/20 border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Calculator className="w-5 h-5 text-red-400" />
-                    <h4 className={`font-semibold ${theme.textColors.primary}`}>Total Needs</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+                <div className={`p-3 sm:p-4 bg-red-900/20 border ${theme.borderColors.primary} rounded-lg`}>
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                    <Calculator className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+                    <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary}`}>Total Needs</h4>
                   </div>
-                  <div className="text-xl font-bold text-red-400">
+                  <div className="text-lg sm:text-xl font-bold text-red-400">
                     {formatCurrency(insuranceNeeds.totalNeeds)}
                   </div>
                 </div>
 
-                <div className={`p-4 bg-blue-900/20 border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Shield className="w-5 h-5 text-blue-400" />
-                    <h4 className={`font-semibold ${theme.textColors.primary}`}>Insurance Gap</h4>
+                <div className={`p-3 sm:p-4 bg-blue-900/20 border ${theme.borderColors.primary} rounded-lg`}>
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                    <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
+                    <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary}`}>Insurance Gap</h4>
                   </div>
-                  <div className="text-xl font-bold text-blue-400">
+                  <div className="text-lg sm:text-xl font-bold text-blue-400">
                     {formatCurrency(insuranceNeeds.insuranceGap)}
                   </div>
                 </div>
 
-                <div className={`p-4 bg-green-900/20 border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Heart className="w-5 h-5 text-green-400" />
-                    <h4 className={`font-semibold ${theme.textColors.primary}`}>Recommended</h4>
+                <div className={`p-3 sm:p-4 bg-green-900/20 border ${theme.borderColors.primary} rounded-lg sm:col-span-2 md:col-span-1`}>
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                    <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
+                    <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary}`}>Recommended</h4>
                   </div>
-                  <div className="text-xl font-bold text-green-400">
+                  <div className="text-lg sm:text-xl font-bold text-green-400">
                     {formatCurrency(insuranceNeeds.recommendedCoverage)}
                   </div>
                 </div>
@@ -497,31 +497,31 @@ export default function LifeInsuranceCalculator() {
                   </h3>
                 </div>
                 
-                <div className="p-4 space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="p-3 sm:p-4 space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     <div>
-                      <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Needs Analysis</h4>
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span className={`${theme.textColors.secondary}`}>Immediate Expenses</span>
-                          <span className={`${theme.textColors.primary}`}>
+                      <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary} mb-2 sm:mb-3`}>Needs Analysis</h4>
+                      <div className="space-y-1.5 sm:space-y-2">
+                        <div className="flex justify-between text-xs sm:text-sm">
+                          <span className={`${theme.textColors.secondary} truncate mr-2`}>Immediate Expenses</span>
+                          <span className={`${theme.textColors.primary} flex-shrink-0`}>
                             {formatCurrency(insuranceNeeds.immediateExpenses)}
                           </span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className={`${theme.textColors.secondary}`}>Income Replacement</span>
-                          <span className={`${theme.textColors.primary}`}>
+                        <div className="flex justify-between text-xs sm:text-sm">
+                          <span className={`${theme.textColors.secondary} truncate mr-2`}>Income Replacement</span>
+                          <span className={`${theme.textColors.primary} flex-shrink-0`}>
                             {formatCurrency(insuranceNeeds.incomeReplacement)}
                           </span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className={`${theme.textColors.secondary}`}>Future Obligations</span>
-                          <span className={`${theme.textColors.primary}`}>
+                        <div className="flex justify-between text-xs sm:text-sm">
+                          <span className={`${theme.textColors.secondary} truncate mr-2`}>Future Obligations</span>
+                          <span className={`${theme.textColors.primary} flex-shrink-0`}>
                             {formatCurrency(insuranceNeeds.futureObligations)}
                           </span>
                         </div>
-                        <div className={`border-t ${theme.borderColors.primary} pt-2`}>
-                          <div className="flex justify-between font-semibold">
+                        <div className={`border-t ${theme.borderColors.primary} pt-1.5 sm:pt-2`}>
+                          <div className="flex justify-between font-semibold text-xs sm:text-sm">
                             <span className={`${theme.textColors.primary}`}>Total Needs</span>
                             <span className={`${theme.textColors.primary}`}>
                               {formatCurrency(insuranceNeeds.totalNeeds)}
@@ -532,22 +532,22 @@ export default function LifeInsuranceCalculator() {
                     </div>
 
                     <div>
-                      <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Available Resources</h4>
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span className={`${theme.textColors.secondary}`}>Current Savings (Future Value)</span>
-                          <span className={`${theme.textColors.primary}`}>
+                      <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary} mb-2 sm:mb-3`}>Available Resources</h4>
+                      <div className="space-y-1.5 sm:space-y-2">
+                        <div className="flex justify-between text-xs sm:text-sm">
+                          <span className={`${theme.textColors.secondary} truncate mr-2`}>Current Savings (Future Value)</span>
+                          <span className={`${theme.textColors.primary} flex-shrink-0`}>
                             {formatCurrency(currentSavings * Math.pow(1.07, retirementAge - currentAge))}
                           </span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className={`${theme.textColors.secondary}`}>Existing Life Insurance</span>
-                          <span className={`${theme.textColors.primary}`}>
+                        <div className="flex justify-between text-xs sm:text-sm">
+                          <span className={`${theme.textColors.secondary} truncate mr-2`}>Existing Life Insurance</span>
+                          <span className={`${theme.textColors.primary} flex-shrink-0`}>
                             {formatCurrency(existingLifeInsurance)}
                           </span>
                         </div>
-                        <div className={`border-t ${theme.borderColors.primary} pt-2`}>
-                          <div className="flex justify-between font-semibold">
+                        <div className={`border-t ${theme.borderColors.primary} pt-1.5 sm:pt-2`}>
+                          <div className="flex justify-between font-semibold text-xs sm:text-sm">
                             <span className={`${theme.textColors.primary}`}>Total Assets</span>
                             <span className={`${theme.textColors.primary}`}>
                               {formatCurrency(insuranceNeeds.existingAssets)}

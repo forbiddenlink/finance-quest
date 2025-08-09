@@ -249,7 +249,7 @@ export default function AIGoalSetter({ className = '' }: AIGoalSetterProps) {
 
     return (
       <motion.div
-        className={`${theme.utils.glass()} p-6 group ${theme.interactive.card}`}
+        className={`${theme.utils.glass()} p-3 sm:p-4 lg:p-6 group ${theme.interactive.card}`}
         layout
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -257,34 +257,34 @@ export default function AIGoalSetter({ className = '' }: AIGoalSetterProps) {
         whileHover={{ scale: 1.02 }}
       >
         {/* Header */}
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex-1">
-            <div className="flex items-center space-x-2 mb-2">
-              <h3 className={`${theme.textColors.primary} ${theme.typography.heading5}`}>
+        <div className="flex flex-col gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex-1 min-w-0">
+              <h3 className={`${theme.textColors.primary} ${theme.typography.heading5} text-base sm:text-lg truncate`}>
                 {goal.title}
               </h3>
-              <span className={`px-2 py-1 rounded-full text-xs ${priorityColors[goal.priority].bg} ${priorityColors[goal.priority].text}`}>
-                {goal.priority.toUpperCase()}
-              </span>
+              <p className={`${theme.textColors.tertiary} ${theme.typography.bodySmall} text-xs mt-0.5 line-clamp-2`}>
+                {goal.description}
+              </p>
             </div>
-            <p className={`${theme.textColors.tertiary} ${theme.typography.bodySmall} mb-3`}>
-              {goal.description}
-            </p>
+            <span className={`flex-shrink-0 px-2 py-0.5 rounded-full text-xs ${priorityColors[goal.priority].bg} ${priorityColors[goal.priority].text}`}>
+              {goal.priority.toUpperCase()}
+            </span>
           </div>
           
-          <div className="flex items-center space-x-2">
-            <InteractiveButton variant="ghost" size="sm" icon={Edit3}>Edit</InteractiveButton>
-            <InteractiveButton variant="ghost" size="sm" icon={Trash2}>Delete</InteractiveButton>
+          <div className="flex items-center gap-2">
+            <InteractiveButton variant="ghost" size="sm" icon={Edit3} className="text-xs py-1 px-2">Edit</InteractiveButton>
+            <InteractiveButton variant="ghost" size="sm" icon={Trash2} className="text-xs py-1 px-2">Delete</InteractiveButton>
           </div>
         </div>
 
         {/* Progress */}
-        <div className="mb-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className={`${theme.typography.label} ${theme.textColors.secondary}`}>
+        <div className="mb-3">
+          <div className="flex items-center justify-between mb-1">
+            <span className={`${theme.typography.label} ${theme.textColors.secondary} text-xs`}>
               Progress
             </span>
-            <span className={`${theme.typography.label} ${theme.textColors.primary}`}>
+            <span className={`${theme.typography.label} ${theme.textColors.primary} text-xs`}>
               {Math.round(progress)}%
             </span>
           </div>
@@ -298,12 +298,12 @@ export default function AIGoalSetter({ className = '' }: AIGoalSetterProps) {
 
         {/* Amount Progress (if applicable) */}
         {goal.targetAmount && (
-          <div className="mb-4">
+          <div className="mb-3">
             <div className="flex items-center justify-between">
-              <span className={`${theme.typography.bodySmall} ${theme.textColors.secondary}`}>
+              <span className={`${theme.typography.bodySmall} ${theme.textColors.secondary} text-xs`}>
                 ${goal.currentAmount?.toLocaleString()} / ${goal.targetAmount.toLocaleString()}
               </span>
-              <span className={`${theme.typography.bodySmall} ${statusColors[goal.status].text}`}>
+              <span className={`${theme.typography.bodySmall} ${statusColors[goal.status].text} text-xs`}>
                 {goal.status.replace('_', ' ').toUpperCase()}
               </span>
             </div>
@@ -311,49 +311,49 @@ export default function AIGoalSetter({ className = '' }: AIGoalSetterProps) {
         )}
 
         {/* Timeline */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-2">
-            <Calendar className={`w-4 h-4 ${theme.textColors.muted}`} />
-            <span className={`${theme.typography.bodySmall} ${theme.textColors.tertiary}`}>
-              Target: {goal.targetDate.toLocaleDateString()}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-1.5">
+            <Calendar className={`w-3.5 h-3.5 ${theme.textColors.muted}`} />
+            <span className={`${theme.typography.bodySmall} ${theme.textColors.tertiary} text-xs`}>
+              {goal.targetDate.toLocaleDateString()}
             </span>
           </div>
           {daysRemaining > 0 ? (
-            <span className={`${theme.typography.bodySmall} ${isOverdue ? theme.status.error.text : theme.textColors.accent}`}>
-              {daysRemaining} days left
+            <span className={`${theme.typography.bodySmall} ${isOverdue ? theme.status.error.text : theme.textColors.accent} text-xs`}>
+              {daysRemaining}d left
             </span>
           ) : (
-            <span className={`${theme.typography.bodySmall} ${theme.status.error.text} flex items-center`}>
-              <AlertCircle className="w-4 h-4 mr-1" />
+            <span className={`${theme.typography.bodySmall} ${theme.status.error.text} flex items-center text-xs`}>
+              <AlertCircle className="w-3.5 h-3.5 mr-1" />
               Overdue
             </span>
           )}
         </div>
 
         {/* AI Suggestions */}
-        <div className={`${theme.status.info.bg} rounded-lg p-3 mb-4`}>
-          <div className="flex items-center space-x-2 mb-2">
-            <Brain className={`w-4 h-4 ${theme.status.info.text}`} />
-            <span className={`${theme.typography.label} ${theme.status.info.text}`}>
+        <div className={`${theme.status.info.bg} rounded-lg p-2.5 mb-3`}>
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <Brain className={`w-3.5 h-3.5 ${theme.status.info.text}`} />
+            <span className={`${theme.typography.label} ${theme.status.info.text} text-xs`}>
               AI Recommendations
             </span>
           </div>
-          <ul className="space-y-1">
+          <ul className="space-y-1.5">
             {goal.aiSuggestions.slice(0, 2).map((suggestion, index) => (
-              <li key={index} className={`${theme.typography.bodySmall} ${theme.textColors.tertiary} flex items-start`}>
-                <span className="mr-2">•</span>
-                {suggestion}
+              <li key={index} className={`${theme.typography.bodySmall} ${theme.textColors.tertiary} flex items-start text-xs`}>
+                <span className="mr-1.5 flex-shrink-0">•</span>
+                <span className="flex-1">{suggestion}</span>
               </li>
             ))}
           </ul>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex space-x-2">
-          <InteractiveButton variant="primary" size="sm" fullWidth>
+        <div className="flex flex-col gap-2">
+          <InteractiveButton variant="primary" size="sm" fullWidth className="text-xs py-1.5">
             Update Progress
           </InteractiveButton>
-          <InteractiveButton variant="ghost" size="sm" icon={BookOpen}>
+          <InteractiveButton variant="ghost" size="sm" icon={BookOpen} fullWidth className="text-xs py-1.5">
             Related Lessons
           </InteractiveButton>
         </div>
@@ -364,13 +364,13 @@ export default function AIGoalSetter({ className = '' }: AIGoalSetterProps) {
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-4 sm:px-0">
         <div>
-          <h2 className={`${theme.textColors.primary} ${theme.typography.heading2} mb-2 flex items-center`}>
-            <Target className="w-8 h-8 mr-3 text-amber-400" />
+          <h2 className={`${theme.textColors.primary} ${theme.typography.heading2} mb-2 flex items-center text-xl sm:text-2xl md:text-3xl`}>
+            <Target className="w-6 h-6 sm:w-8 sm:h-8 mr-2 sm:mr-3 text-amber-400" />
             AI-Powered Goal Setting
           </h2>
-          <p className={`${theme.textColors.tertiary}`}>
+          <p className={`${theme.textColors.tertiary} text-sm sm:text-base`}>
             Set smart financial goals with AI-powered recommendations and tracking
           </p>
         </div>
@@ -380,97 +380,110 @@ export default function AIGoalSetter({ className = '' }: AIGoalSetterProps) {
           icon={Plus}
           onClick={() => setShowCreateGoal(true)}
           withGlow
+          className="w-full sm:w-auto"
         >
           Create Goal
         </InteractiveButton>
       </div>
 
       {/* Goal Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 px-4 sm:px-0">
         <motion.div
-          className={`${theme.utils.glass()} p-4 text-center`}
+          className={`${theme.utils.glass()} p-3 sm:p-4 text-center`}
           whileHover={{ scale: 1.02 }}
         >
-          <Trophy className={`w-8 h-8 ${theme.status.success.text} mx-auto mb-2`} />
-          <div className={`${theme.typography.heading4} ${theme.textColors.primary}`}>
+          <Trophy className={`w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 ${theme.status.success.text} mx-auto mb-1 sm:mb-2`} />
+          <div className={`${theme.typography.heading4} ${theme.textColors.primary} text-base sm:text-lg lg:text-xl`}>
             {goals.filter(g => g.status === 'completed').length}
           </div>
-          <div className={`${theme.typography.bodySmall} ${theme.textColors.tertiary}`}>
+          <div className={`${theme.typography.bodySmall} ${theme.textColors.tertiary} text-xs`}>
             Completed
           </div>
         </motion.div>
         
         <motion.div
-          className={`${theme.utils.glass()} p-4 text-center`}
+          className={`${theme.utils.glass()} p-3 sm:p-4 text-center`}
           whileHover={{ scale: 1.02 }}
         >
-          <Zap className={`w-8 h-8 ${theme.status.info.text} mx-auto mb-2`} />
-          <div className={`${theme.typography.heading4} ${theme.textColors.primary}`}>
+          <Zap className={`w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 ${theme.status.info.text} mx-auto mb-1 sm:mb-2`} />
+          <div className={`${theme.typography.heading4} ${theme.textColors.primary} text-base sm:text-lg lg:text-xl`}>
             {goals.filter(g => g.status === 'in_progress').length}
           </div>
-          <div className={`${theme.typography.bodySmall} ${theme.textColors.tertiary}`}>
+          <div className={`${theme.typography.bodySmall} ${theme.textColors.tertiary} text-xs`}>
             In Progress
           </div>
         </motion.div>
         
         <motion.div
-          className={`${theme.utils.glass()} p-4 text-center`}
+          className={`${theme.utils.glass()} p-3 sm:p-4 text-center`}
           whileHover={{ scale: 1.02 }}
         >
-          <Clock className={`w-8 h-8 ${theme.status.warning.text} mx-auto mb-2`} />
-          <div className={`${theme.typography.heading4} ${theme.textColors.primary}`}>
+          <Clock className={`w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 ${theme.status.warning.text} mx-auto mb-1 sm:mb-2`} />
+          <div className={`${theme.typography.heading4} ${theme.textColors.primary} text-base sm:text-lg lg:text-xl`}>
             {goals.filter(g => new Date() > g.targetDate && g.status !== 'completed').length}
           </div>
-          <div className={`${theme.typography.bodySmall} ${theme.textColors.tertiary}`}>
+          <div className={`${theme.typography.bodySmall} ${theme.textColors.tertiary} text-xs`}>
             Overdue
           </div>
         </motion.div>
         
         <motion.div
-          className={`${theme.utils.glass()} p-4 text-center`}
+          className={`${theme.utils.glass()} p-3 sm:p-4 text-center`}
           whileHover={{ scale: 1.02 }}
         >
-          <Star className={`w-8 h-8 ${theme.status.warning.text} mx-auto mb-2`} />
-          <div className={`${theme.typography.heading4} ${theme.textColors.primary}`}>
+          <Star className={`w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 ${theme.status.warning.text} mx-auto mb-1 sm:mb-2`} />
+          <div className={`${theme.typography.heading4} ${theme.textColors.primary} text-base sm:text-lg lg:text-xl`}>
             {Math.round(goals.reduce((acc, goal) => acc + getProgress(goal), 0) / goals.length || 0)}%
           </div>
-          <div className={`${theme.typography.bodySmall} ${theme.textColors.tertiary}`}>
+          <div className={`${theme.typography.bodySmall} ${theme.textColors.tertiary} text-xs`}>
             Avg Progress
           </div>
         </motion.div>
       </div>
 
       {/* Category Filter */}
-      <div className="flex flex-wrap gap-2">
-        {categories.map(category => {
-          const Icon = category.icon;
-          const isActive = selectedCategory === category.id;
-          
-          return (
-            <motion.button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
-                isActive
-                  ? theme.buttons.accent
-                  : theme.buttons.ghost
-              }`}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Icon className="w-4 h-4" />
-              <span>{category.label}</span>
-            </motion.button>
-          );
-        })}
+      <div className="px-4 sm:px-0 -mx-4 sm:mx-0">
+        <div className="flex overflow-x-auto pb-2 sm:pb-0 sm:flex-wrap gap-2 px-4 sm:px-0 hide-scrollbar">
+          {categories.map(category => {
+            const Icon = category.icon;
+            const isActive = selectedCategory === category.id;
+            
+            return (
+              <motion.button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg font-medium text-xs sm:text-sm whitespace-nowrap transition-all duration-200 ${
+                  isActive
+                    ? theme.buttons.accent
+                    : theme.buttons.ghost
+                }`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                <span>{category.label}</span>
+              </motion.button>
+            );
+          })}
+        </div>
       </div>
+
+      <style jsx global>{`
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
 
       {/* Goals Grid */}
       <motion.div 
-        className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
+        className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-0"
         layout
       >
-        <AnimatePresence>
+        <AnimatePresence mode="popLayout">
           {filteredGoals.map(goal => (
             <GoalCard key={goal.id} goal={goal} />
           ))}
@@ -500,39 +513,39 @@ export default function AIGoalSetter({ className = '' }: AIGoalSetterProps) {
               
               <div className="space-y-4">
                 <div>
-                  <label className={`block ${theme.typography.label} ${theme.textColors.secondary} mb-2`}>
+                  <label className={`block ${theme.typography.label} ${theme.textColors.secondary} mb-1.5 sm:mb-2 text-xs sm:text-sm`}>
                     Goal Title
                   </label>
                   <input
                     type="text"
                     value={newGoal.title}
                     onChange={(e) => setNewGoal(prev => ({ ...prev, title: e.target.value }))}
-                    className={theme.utils.input()}
+                    className={`${theme.utils.input()} text-sm sm:text-base py-1.5 sm:py-2`}
                     placeholder="e.g., Build Emergency Fund"
                   />
                 </div>
                 
                 <div>
-                  <label className={`block ${theme.typography.label} ${theme.textColors.secondary} mb-2`}>
+                  <label className={`block ${theme.typography.label} ${theme.textColors.secondary} mb-1.5 sm:mb-2 text-xs sm:text-sm`}>
                     Description
                   </label>
                   <textarea
                     value={newGoal.description}
                     onChange={(e) => setNewGoal(prev => ({ ...prev, description: e.target.value }))}
-                    className={`${theme.utils.input()} min-h-[80px] resize-none`}
+                    className={`${theme.utils.input()} min-h-[60px] sm:min-h-[80px] resize-none text-sm sm:text-base py-1.5 sm:py-2`}
                     placeholder="Describe your goal in detail..."
                   />
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
-                    <label className={`block ${theme.typography.label} ${theme.textColors.secondary} mb-2`}>
+                    <label className={`block ${theme.typography.label} ${theme.textColors.secondary} mb-1.5 sm:mb-2 text-xs sm:text-sm`}>
                       Category
                     </label>
                     <select
                       value={newGoal.category}
                       onChange={(e) => setNewGoal(prev => ({ ...prev, category: e.target.value as FinancialGoal['category'] }))}
-                      className={theme.utils.input()}
+                      className={`${theme.utils.input()} text-sm sm:text-base py-1.5 sm:py-2`}
                     >
                       <option value="saving">Savings</option>
                       <option value="debt">Debt Payoff</option>
@@ -543,13 +556,13 @@ export default function AIGoalSetter({ className = '' }: AIGoalSetterProps) {
                   </div>
                   
                   <div>
-                    <label className={`block ${theme.typography.label} ${theme.textColors.secondary} mb-2`}>
+                    <label className={`block ${theme.typography.label} ${theme.textColors.secondary} mb-1.5 sm:mb-2 text-xs sm:text-sm`}>
                       Priority
                     </label>
                     <select
                       value={newGoal.priority}
                       onChange={(e) => setNewGoal(prev => ({ ...prev, priority: e.target.value as FinancialGoal['priority'] }))}
-                      className={theme.utils.input()}
+                      className={`${theme.utils.input()} text-sm sm:text-base py-1.5 sm:py-2`}
                     >
                       <option value="low">Low</option>
                       <option value="medium">Medium</option>
@@ -558,29 +571,29 @@ export default function AIGoalSetter({ className = '' }: AIGoalSetterProps) {
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
-                    <label className={`block ${theme.typography.label} ${theme.textColors.secondary} mb-2`}>
+                    <label className={`block ${theme.typography.label} ${theme.textColors.secondary} mb-1.5 sm:mb-2 text-xs sm:text-sm`}>
                       Target Amount (optional)
                     </label>
                     <input
                       type="number"
                       value={newGoal.targetAmount}
                       onChange={(e) => setNewGoal(prev => ({ ...prev, targetAmount: e.target.value }))}
-                      className={theme.utils.input()}
+                      className={`${theme.utils.input()} text-sm sm:text-base py-1.5 sm:py-2`}
                       placeholder="$10,000"
                     />
                   </div>
                   
                   <div>
-                    <label className={`block ${theme.typography.label} ${theme.textColors.secondary} mb-2`}>
+                    <label className={`block ${theme.typography.label} ${theme.textColors.secondary} mb-1.5 sm:mb-2 text-xs sm:text-sm`}>
                       Target Date
                     </label>
                     <input
                       type="date"
                       value={newGoal.targetDate}
                       onChange={(e) => setNewGoal(prev => ({ ...prev, targetDate: e.target.value }))}
-                      className={theme.utils.input()}
+                      className={`${theme.utils.input()} text-sm sm:text-base py-1.5 sm:py-2`}
                     />
                   </div>
                 </div>

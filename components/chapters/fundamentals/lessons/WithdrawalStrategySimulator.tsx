@@ -246,61 +246,61 @@ export default function WithdrawalStrategySimulator() {
     >
       {/* Header */}
       <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}>
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className={`${theme.status.warning.bg} p-3 rounded-lg`}>
-              <TrendingDown className={`w-6 h-6 ${theme.status.warning.text}`} />
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-4 sm:mb-6">
+          <div className="flex items-start sm:items-center gap-2 sm:gap-3">
+            <div className={`${theme.status.warning.bg} p-2 sm:p-3 rounded-lg flex-shrink-0`}>
+              <TrendingDown className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.warning.text}`} />
             </div>
             <div>
-              <h2 className={`text-2xl font-bold ${theme.textColors.primary}`}>
+              <h2 className={`text-lg sm:text-xl md:text-2xl font-bold ${theme.textColors.primary} mb-0.5 sm:mb-1 leading-tight`}>
                 Withdrawal Strategy Simulator
               </h2>
-              <p className={`${theme.textColors.secondary}`}>
+              <p className={`${theme.textColors.secondary} text-sm sm:text-base`}>
                 Test retirement withdrawal strategies against various market scenarios and sequence risk
               </p>
             </div>
           </div>
           
-          <div className="text-right">
-            <div className={`text-sm ${theme.textColors.secondary}`}>Current Strategy</div>
-            <div className={`text-xl font-bold ${theme.textColors.primary} capitalize`}>
+          <div className="text-left sm:text-right">
+            <div className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Current Strategy</div>
+            <div className={`text-base sm:text-xl font-bold ${theme.textColors.primary} capitalize`}>
               {scenario.sequenceRiskPlan.replace('_', ' ')}
             </div>
           </div>
         </div>
 
         {/* Key Metrics Summary */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className={`p-4 ${theme.status.info.bg} rounded-lg text-center`}>
-            <DollarSign className={`w-6 h-6 ${theme.status.info.text} mx-auto mb-2`} />
-            <div className={`text-xl font-bold ${theme.status.info.text}`}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+          <div className={`p-3 sm:p-4 ${theme.status.info.bg} rounded-lg text-center`}>
+            <DollarSign className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.info.text} mx-auto mb-1.5 sm:mb-2`} />
+            <div className={`text-lg sm:text-xl font-bold ${theme.status.info.text} mb-0.5 sm:mb-1`}>
               {formatCurrency(averageAnnualIncome)}
             </div>
-            <div className={`text-sm ${theme.textColors.secondary}`}>Avg Annual Income</div>
+            <div className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Avg Annual Income</div>
           </div>
           
-          <div className={`p-4 ${getSuccessBackground(successRate)} rounded-lg text-center`}>
-            <Target className={`w-6 h-6 ${getSuccessColor(successRate)} mx-auto mb-2`} />
-            <div className={`text-xl font-bold ${getSuccessColor(successRate)}`}>
+          <div className={`p-3 sm:p-4 ${getSuccessBackground(successRate)} rounded-lg text-center`}>
+            <Target className={`w-5 h-5 sm:w-6 sm:h-6 ${getSuccessColor(successRate)} mx-auto mb-1.5 sm:mb-2`} />
+            <div className={`text-lg sm:text-xl font-bold ${getSuccessColor(successRate)} mb-0.5 sm:mb-1`}>
               {formatPercent(successRate)}
             </div>
-            <div className={`text-sm ${theme.textColors.secondary}`}>Success Rate</div>
+            <div className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Success Rate</div>
           </div>
           
-          <div className={`p-4 ${theme.status.success.bg} rounded-lg text-center`}>
-            <PiggyBank className={`w-6 h-6 ${theme.status.success.text} mx-auto mb-2`} />
-            <div className={`text-xl font-bold ${theme.status.success.text}`}>
+          <div className={`p-3 sm:p-4 ${theme.status.success.bg} rounded-lg text-center`}>
+            <PiggyBank className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.success.text} mx-auto mb-1.5 sm:mb-2`} />
+            <div className={`text-lg sm:text-xl font-bold ${theme.status.success.text} mb-0.5 sm:mb-1`}>
               {formatCurrency(finalPortfolioValue)}
             </div>
-            <div className={`text-sm ${theme.textColors.secondary}`}>Final Portfolio Value</div>
+            <div className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Final Portfolio Value</div>
           </div>
           
-          <div className={`p-4 ${theme.status.error.bg} rounded-lg text-center`}>
-            <AlertTriangle className={`w-6 h-6 ${theme.status.error.text} mx-auto mb-2`} />
-            <div className={`text-xl font-bold ${theme.status.error.text}`}>
+          <div className={`p-3 sm:p-4 ${theme.status.error.bg} rounded-lg text-center`}>
+            <AlertTriangle className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.error.text} mx-auto mb-1.5 sm:mb-2`} />
+            <div className={`text-lg sm:text-xl font-bold ${theme.status.error.text} mb-0.5 sm:mb-1`}>
               {formatCurrency(worstYear?.portfolioValue || 0)}
             </div>
-            <div className={`text-sm ${theme.textColors.secondary}`}>Lowest Portfolio Value</div>
+            <div className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Lowest Portfolio Value</div>
           </div>
         </div>
       </div>

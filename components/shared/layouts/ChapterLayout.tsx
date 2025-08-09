@@ -265,28 +265,40 @@ export default function ChapterLayout({
         <div className={`min-h-screen ${theme.backgrounds.primary}`}>
             {/* Sticky Header */}
             <div className={`${theme.backgrounds.header} border-b ${theme.borderColors.primary} sticky top-0 z-50`}>
-                <div className="max-w-7xl mx-auto px-6 py-4">
-                    <div className="flex items-center justify-between">
-                        <Link href="/" className={`flex items-center ${theme.textColors.primary} hover:${theme.textColors.primary} transition-colors`}>
-                            <ArrowLeft className="w-5 h-5 mr-2" />
-                            Back to Home
-                        </Link>
-                        <div className="flex items-center space-x-4">
+                <div className="max-w-7xl mx-auto px-3 sm:px-6 py-3 sm:py-4">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+                        <div className="flex items-center justify-between w-full sm:w-auto">
+                            <Link href="/" className={`flex items-center ${theme.textColors.primary} hover:${theme.textColors.primary} transition-colors`}>
+                                <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
+                                <span className="text-sm sm:text-base">Back to Home</span>
+                            </Link>
+                            <motion.div
+                                className={`${theme.status.info.bg} px-2 sm:px-3 py-1 rounded-full sm:hidden`}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                <span className={`${theme.status.info.text} text-xs sm:text-sm font-medium`}>
+                                    Ch. {chapterNumber}
+                                </span>
+                            </motion.div>
+                        </div>
+                        
+                        <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
                             {/* Enhanced Progress Indicator with Progress Bar */}
-                            <div className={`${theme.backgrounds.cardHover} px-4 py-3 rounded-lg border ${theme.borderColors.primary} min-w-[200px]`}>
-                                <div className="flex items-center justify-between mb-2">
-                                    <div className="flex items-center space-x-2">
+                            <div className={`${theme.backgrounds.cardHover} px-3 sm:px-4 py-2 sm:py-3 rounded-lg border ${theme.borderColors.primary} flex-1 sm:min-w-[200px]`}>
+                                <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+                                    <div className="flex items-center gap-1.5 sm:gap-2">
                                         <motion.div
-                                            className={`w-2 h-2 rounded-full transition-colors duration-300 ${lessonCompleted ? theme.status.success.bg : theme.status.warning.bg
+                                            className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-colors duration-300 ${lessonCompleted ? theme.status.success.bg : theme.status.warning.bg
                                                 }`}
                                             animate={lessonCompleted ? { scale: [1, 1.2, 1] } : {}}
                                             transition={{ duration: 0.5 }}
                                         />
-                                        <span className={`${theme.textColors.secondary} text-sm font-medium`}>
+                                        <span className={`${theme.textColors.secondary} text-xs sm:text-sm font-medium truncate`}>
                                             {lessonCompleted ? 'Ready for Quiz' : 'In Progress'}
                                         </span>
                                     </div>
-                                    <span className={`${theme.textColors.primary} text-xs font-semibold`}>
+                                    <span className={`${theme.textColors.primary} text-[10px] sm:text-xs font-semibold`}>
                                         {Math.round((lessonCompleted ? 70 : 35))}%
                                     </span>
                                 </div>
@@ -299,66 +311,68 @@ export default function ChapterLayout({
                                 />
                             </div>
 
-                            <motion.div
-                                className={`${theme.status.info.bg} px-3 py-1 rounded-full`}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <span className={`${theme.status.info.text} text-sm font-medium`}>
-                                    Chapter {chapterNumber}
-                                </span>
-                            </motion.div>
-
-                            {/* Advanced Features Badge */}
-                            {hasCompletedContent && (
+                            <div className="hidden sm:flex items-center gap-2">
                                 <motion.div
-                                    className={`${theme.status.warning.bg} px-3 py-1 rounded-full relative overflow-hidden`}
+                                    className={`${theme.status.info.bg} px-3 py-1 rounded-full`}
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    initial={{ opacity: 0, scale: 0 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{ delay: 0.5, type: "spring" }}
                                 >
-                                    <span className={`${theme.status.warning.text} text-xs font-medium flex items-center relative z-10`}>
-                                        <Star className="w-3 h-3 mr-1" />
-                                        Pro Features
+                                    <span className={`${theme.status.info.text} text-sm font-medium`}>
+                                        Chapter {chapterNumber}
                                     </span>
-                                    {/* Animated shine effect */}
-                                    <motion.div
-                                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                                        animate={{ x: ['-100%', '200%'] }}
-                                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                                    />
                                 </motion.div>
-                            )}
+
+                                {/* Advanced Features Badge */}
+                                {hasCompletedContent && (
+                                    <motion.div
+                                        className={`${theme.status.warning.bg} px-3 py-1 rounded-full relative overflow-hidden`}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{ delay: 0.5, type: "spring" }}
+                                    >
+                                        <span className={`${theme.status.warning.text} text-xs font-medium flex items-center relative z-10`}>
+                                            <Star className="w-3 h-3 mr-1" />
+                                            Pro Features
+                                        </span>
+                                        {/* Animated shine effect */}
+                                        <motion.div
+                                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                                            animate={{ x: ['-100%', '200%'] }}
+                                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                        />
+                                    </motion.div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="max-w-4xl mx-auto px-6 py-8">
+            <div className="max-w-4xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
                 {/* Chapter Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="text-center mb-8"
+                    className="text-center mb-6 sm:mb-8"
                 >
                     <motion.div
-                        className={`w-16 h-16 ${theme.status.info.bg} rounded-2xl flex items-center justify-center mx-auto mb-4 relative overflow-hidden`}
+                        className={`w-12 h-12 sm:w-16 sm:h-16 ${theme.status.info.bg} rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 relative overflow-hidden`}
                         whileHover={{ scale: 1.1, rotate: 5 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        <Icon className={`w-8 h-8 ${iconColor} relative z-10`} />
+                        <Icon className={`w-6 h-6 sm:w-8 sm:h-8 ${iconColor} relative z-10`} />
                         {/* Animated background pulse */}
                         <motion.div
-                            className="absolute inset-0 bg-white/10 rounded-2xl"
+                            className="absolute inset-0 bg-white/10 rounded-xl sm:rounded-2xl"
                             animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
                             transition={{ duration: 2, repeat: Infinity }}
                         />
                     </motion.div>
                     <motion.h1
-                        className="text-4xl font-bold mb-2"
+                        className="text-2xl sm:text-4xl font-bold mb-2"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
@@ -370,7 +384,7 @@ export default function ChapterLayout({
                         </span>
                     </motion.h1>
                     <motion.p
-                        className={`${theme.textColors.muted} max-w-2xl mx-auto`}
+                        className={`${theme.textColors.muted} max-w-2xl mx-auto text-sm sm:text-base`}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.5 }}
@@ -385,10 +399,10 @@ export default function ChapterLayout({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6 }}
-                        className="mb-8"
+                        className="mb-6 sm:mb-8"
                     >
                         <StreakMotivationWidget
-                            size="default"
+                            size="compact"
                             showMotivation={true}
                             className="max-w-2xl mx-auto"
                         />
@@ -397,16 +411,16 @@ export default function ChapterLayout({
 
                 {/* Tab Navigation - Dynamic based on user progress */}
                 <Tabs value={currentSection} onValueChange={(value) => setCurrentSection(value as 'lesson' | 'calculator' | 'quiz' | 'assistant' | 'analytics' | 'review')} className="w-full">
-                    <TabsList className={`grid w-full ${hasCompletedContent ? 'grid-cols-6' : 'grid-cols-4'} ${theme.backgrounds.header} border ${theme.borderColors.primary} relative overflow-hidden`}>
+                    <TabsList className={`grid w-full grid-cols-2 sm:grid-cols-4 ${hasCompletedContent ? 'lg:grid-cols-6' : ''} gap-1 sm:gap-0 ${theme.backgrounds.header} border ${theme.borderColors.primary} relative overflow-hidden p-1 sm:p-0`}>
                         <TabsTrigger
                             value="lesson"
-                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} relative transition-all duration-300 hover:scale-105`}
+                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} relative transition-all duration-300 text-xs sm:text-sm`}
                         >
-                            <BookOpen className="w-4 h-4 mr-2" />
+                            <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
                             Lesson
                             {lessonCompleted && (
                                 <motion.div
-                                    className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full"
+                                    className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-400 rounded-full"
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
                                     transition={{ type: "spring", stiffness: 300 }}
@@ -415,17 +429,18 @@ export default function ChapterLayout({
                         </TabsTrigger>
                         <TabsTrigger
                             value="calculator"
-                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 hover:scale-105`}
+                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 text-xs sm:text-sm`}
                         >
-                            <Calculator className="w-4 h-4 mr-2" />
-                            Calculator
+                            <Calculator className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
+                            <span className="hidden sm:inline">Calculator</span>
+                            <span className="sm:hidden">Calc</span>
                         </TabsTrigger>
                         <TabsTrigger
                             value="quiz"
-                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 relative hover:scale-105`}
+                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 relative text-xs sm:text-sm`}
                             disabled={!lessonCompleted && chapterNumber > 1}
                         >
-                            <Trophy className="w-4 h-4 mr-2" />
+                            <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
                             Quiz
                             {(!lessonCompleted && chapterNumber > 1) && (
                                 <motion.div
@@ -439,10 +454,11 @@ export default function ChapterLayout({
                         </TabsTrigger>
                         <TabsTrigger
                             value="assistant"
-                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 hover:scale-105`}
+                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 text-xs sm:text-sm`}
                         >
-                            <Bot className="w-4 h-4 mr-2" />
-                            AI Coach
+                            <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
+                            <span className="hidden sm:inline">AI Coach</span>
+                            <span className="sm:hidden">AI</span>
                         </TabsTrigger>
 
                         {/* Advanced Features - Only show after user has some progress */}
@@ -452,14 +468,14 @@ export default function ChapterLayout({
                                     initial={{ opacity: 0, x: 20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: 0.2 }}
+                                    className="hidden lg:block"
                                 >
                                     <TabsTrigger
                                         value="review"
-                                        className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 hover:scale-105`}
+                                        className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 text-xs sm:text-sm`}
                                     >
-                                        <Brain className="w-4 h-4 mr-2" />
-                                        <span className="hidden sm:inline">Review</span>
-                                        <span className="sm:hidden">Review</span>
+                                        <Brain className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
+                                        Review
                                     </TabsTrigger>
                                 </motion.div>
 
@@ -468,14 +484,14 @@ export default function ChapterLayout({
                                         initial={{ opacity: 0, x: 20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.4 }}
+                                        className="hidden lg:block"
                                     >
                                         <TabsTrigger
                                             value="analytics"
-                                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 hover:scale-105`}
+                                            className={`data-[state=active]:${theme.status.info.bg} data-[state=active]:${theme.status.info.text} transition-all duration-300 text-xs sm:text-sm`}
                                         >
-                                            <BarChart3 className="w-4 h-4 mr-2" />
-                                            <span className="hidden sm:inline">Analytics</span>
-                                            <span className="sm:hidden">Stats</span>
+                                            <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
+                                            Stats
                                         </TabsTrigger>
                                     </motion.div>
                                 )}

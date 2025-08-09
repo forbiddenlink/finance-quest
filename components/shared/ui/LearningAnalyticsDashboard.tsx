@@ -128,29 +128,29 @@ export default function LearningAnalyticsDashboard() {
     <div className="space-y-6">
       {/* Header */}
       <div className="text-center">
-        <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-2`}>Learning Analytics Dashboard</h2>
-        <p className={`${theme.textColors.secondary}`}>Advanced insights into your financial education journey</p>
+        <h2 className={`text-2xl sm:text-3xl font-bold ${theme.textColors.primary} mb-2`}>Learning Analytics Dashboard</h2>
+        <p className={`${theme.textColors.secondary} text-sm sm:text-base`}>Advanced insights into your financial education journey</p>
       </div>
 
       {/* Key Metrics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <GradientCard variant="glass" gradient="blue" className="p-6">
+          <GradientCard variant="glass" gradient="blue" className="p-3 sm:p-4 lg:p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className={`text-sm font-medium ${theme.status.info.text}`}>Session Time</p>
-                <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{metrics.sessionTime}min</p>
-                <p className={`text-xs ${theme.status.info.text} flex items-center mt-1`}>
-                  <TrendingUp className="w-3 h-3 mr-1" />
+                <p className={`text-xs sm:text-sm font-medium ${theme.status.info.text}`}>Session Time</p>
+                <p className={`text-lg sm:text-xl lg:text-2xl font-bold ${theme.textColors.primary}`}>{metrics.sessionTime}min</p>
+                <p className={`text-[10px] sm:text-xs ${theme.status.info.text} flex items-center mt-0.5 sm:mt-1`}>
+                  <TrendingUp className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-1" />
                   +12% vs last week
                 </p>
               </div>
-              <div className={`${theme.status.info.bg} p-3 rounded-lg`}>
-                <Clock className={`w-6 h-6 ${theme.status.info.text}`} />
+              <div className={`${theme.status.info.bg} p-2 sm:p-3 rounded-lg`}>
+                <Clock className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.info.text}`} />
               </div>
             </div>
           </GradientCard>
@@ -161,18 +161,18 @@ export default function LearningAnalyticsDashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <GradientCard variant="glass" gradient="purple" className="p-6">
+          <GradientCard variant="glass" gradient="purple" className="p-3 sm:p-4 lg:p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className={`text-sm font-medium ${theme.status.info.text}`}>Concepts Mastered</p>
-                <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{metrics.conceptsMastered}</p>
-                <p className={`text-xs ${theme.status.info.text} flex items-center mt-1`}>
-                  <Brain className="w-3 h-3 mr-1" />
+                <p className={`text-xs sm:text-sm font-medium ${theme.status.info.text}`}>Concepts Mastered</p>
+                <p className={`text-lg sm:text-xl lg:text-2xl font-bold ${theme.textColors.primary}`}>{metrics.conceptsMastered}</p>
+                <p className={`text-[10px] sm:text-xs ${theme.status.info.text} flex items-center mt-0.5 sm:mt-1`}>
+                  <Brain className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-1" />
                   Excellent progress
                 </p>
               </div>
-              <div className={`${theme.status.info.bg} p-3 rounded-lg`}>
-                <Target className={`w-6 h-6 ${theme.status.info.text}`} />
+              <div className={`${theme.status.info.bg} p-2 sm:p-3 rounded-lg`}>
+                <Target className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.info.text}`} />
               </div>
             </div>
           </GradientCard>
@@ -183,18 +183,18 @@ export default function LearningAnalyticsDashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <GradientCard variant="glass" gradient="green" className="p-6">
+          <GradientCard variant="glass" gradient="green" className="p-3 sm:p-4 lg:p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className={`text-sm font-medium ${theme.status.success.text}`}>Retention Rate</p>
-                <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{metrics.retentionRate}%</p>
-                <p className={`text-xs ${theme.status.success.text} flex items-center mt-1`}>
-                  <Award className="w-3 h-3 mr-1" />
+                <p className={`text-xs sm:text-sm font-medium ${theme.status.success.text}`}>Retention Rate</p>
+                <p className={`text-lg sm:text-xl lg:text-2xl font-bold ${theme.textColors.primary}`}>{metrics.retentionRate}%</p>
+                <p className={`text-[10px] sm:text-xs ${theme.status.success.text} flex items-center mt-0.5 sm:mt-1`}>
+                  <Award className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-1" />
                   Above average
                 </p>
               </div>
-              <div className={`${theme.status.success.bg} p-3 rounded-lg`}>
-                <BarChart3 className={`w-6 h-6 ${theme.status.success.text}`} />
+              <div className={`${theme.status.success.bg} p-2 sm:p-3 rounded-lg`}>
+                <BarChart3 className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.success.text}`} />
               </div>
             </div>
           </GradientCard>
@@ -205,18 +205,18 @@ export default function LearningAnalyticsDashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <GradientCard variant="glass" gradient="yellow" className="p-6">
+          <GradientCard variant="glass" gradient="yellow" className="p-3 sm:p-4 lg:p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className={`text-sm font-medium ${theme.status.warning.text}`}>Learning Streak</p>
-                <p className={`text-2xl font-bold ${theme.textColors.primary}`}>{metrics.streakDays}</p>
-                <p className={`text-xs ${theme.status.warning.text} flex items-center mt-1`}>
-                  <Zap className="w-3 h-3 mr-1" />
+                <p className={`text-xs sm:text-sm font-medium ${theme.status.warning.text}`}>Learning Streak</p>
+                <p className={`text-lg sm:text-xl lg:text-2xl font-bold ${theme.textColors.primary}`}>{metrics.streakDays}</p>
+                <p className={`text-[10px] sm:text-xs ${theme.status.warning.text} flex items-center mt-0.5 sm:mt-1`}>
+                  <Zap className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-1" />
                   {metrics.streakDays > 3 ? 'On fire!' : 'Keep going!'}
                 </p>
               </div>
-              <div className={`${theme.status.warning.bg} p-3 rounded-lg`}>
-                <Zap className={`w-6 h-6 ${theme.status.warning.text}`} />
+              <div className={`${theme.status.warning.bg} p-2 sm:p-3 rounded-lg`}>
+                <Zap className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.warning.text}`} />
               </div>
             </div>
           </GradientCard>
@@ -224,43 +224,49 @@ export default function LearningAnalyticsDashboard() {
       </div>
 
       {/* Performance Trends */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <GradientCard variant="glass" className="p-6">
-            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center`}>
-              <TrendingUp className={`w-5 h-5 mr-2 ${theme.status.info.text}`} />
+          <GradientCard variant="glass" className="p-3 sm:p-4 lg:p-6">
+            <h3 className={`text-base sm:text-lg font-semibold ${theme.textColors.primary} mb-3 sm:mb-4 flex items-center gap-1.5 sm:gap-2`}>
+              <TrendingUp className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.status.info.text}`} />
               Learning Progress Trends
             </h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={performanceData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="week" />
-                <YAxis />
-                <Tooltip />
-                <Area
-                  type="monotone"
-                  dataKey="progress"
-                  stackId="1"
-                  stroke="#3B82F6"
-                  fill="#3B82F6"
-                  fillOpacity={0.6}
-                  name="Progress %"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="engagement"
-                  stackId="2"
-                  stroke="#8B5CF6"
-                  fill="#8B5CF6"
-                  fillOpacity={0.6}
-                  name="Engagement %"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <div className="h-48 sm:h-64 lg:h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={performanceData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="week" 
+                    tick={{ fontSize: 12 }}
+                    interval="preserveStartEnd"
+                  />
+                  <YAxis tick={{ fontSize: 12 }} />
+                  <Tooltip contentStyle={{ fontSize: '12px' }} />
+                  <Area
+                    type="monotone"
+                    dataKey="progress"
+                    stackId="1"
+                    stroke="#3B82F6"
+                    fill="#3B82F6"
+                    fillOpacity={0.6}
+                    name="Progress %"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="engagement"
+                    stackId="2"
+                    stroke="#8B5CF6"
+                    fill="#8B5CF6"
+                    fillOpacity={0.6}
+                    name="Engagement %"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
           </GradientCard>
         </motion.div>
 
@@ -269,30 +275,32 @@ export default function LearningAnalyticsDashboard() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.6 }}
         >
-          <GradientCard variant="glass" className="p-6">
-            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center`}>
-              <BarChart3 className={`w-5 h-5 mr-2 ${theme.status.info.text}`} />
+          <GradientCard variant="glass" className="p-3 sm:p-4 lg:p-6">
+            <h3 className={`text-base sm:text-lg font-semibold ${theme.textColors.primary} mb-3 sm:mb-4 flex items-center gap-1.5 sm:gap-2`}>
+              <BarChart3 className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.status.info.text}`} />
               Time Distribution
             </h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={timeDistribution}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {timeDistribution.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+            <div className="h-48 sm:h-64 lg:h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={timeDistribution}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
+                    outerRadius={Math.min(60, window.innerWidth / 6)}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {timeDistribution.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip contentStyle={{ fontSize: '12px' }} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           </GradientCard>
         </motion.div>
       </div>
@@ -303,64 +311,64 @@ export default function LearningAnalyticsDashboard() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7 }}
       >
-        <GradientCard variant="glass" className="p-6">
-          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-6 flex items-center`}>
-            <Brain className={`w-5 h-5 mr-2 ${theme.status.success.text}`} />
+        <GradientCard variant="glass" className="p-3 sm:p-4 lg:p-6">
+          <h3 className={`text-base sm:text-lg font-semibold ${theme.textColors.primary} mb-3 sm:mb-4 lg:mb-6 flex items-center gap-1.5 sm:gap-2`}>
+            <Brain className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.status.success.text}`} />
             Cognitive Load & Learning Efficiency
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             {/* Spaced Repetition Effectiveness */}
-            <div className={`bg-gradient-to-br ${theme.status.info.bg} rounded-lg p-4`}>
-              <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Spaced Repetition</h4>
-              <div className="space-y-2">
+            <div className={`bg-gradient-to-br ${theme.status.info.bg} rounded-lg p-3 sm:p-4`}>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-2 sm:mb-3 text-sm sm:text-base`}>Spaced Repetition</h4>
+              <div className="space-y-1.5 sm:space-y-2">
                 <div className="flex justify-between">
-                  <span className={`text-sm ${theme.textColors.secondary}`}>Due Today</span>
-                  <span className={`text-sm font-medium ${theme.textColors.primary}`}>3 concepts</span>
+                  <span className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Due Today</span>
+                  <span className={`text-xs sm:text-sm font-medium ${theme.textColors.primary}`}>3 concepts</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className={`text-sm ${theme.textColors.secondary}`}>Mastery Rate</span>
-                  <span className={`text-sm font-medium ${theme.textColors.primary}`}>87%</span>
+                  <span className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Mastery Rate</span>
+                  <span className={`text-xs sm:text-sm font-medium ${theme.textColors.primary}`}>87%</span>
                 </div>
-                <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-2`}>
-                  <div className={`${theme.status.info.bg.replace('/20', '')} h-2 rounded-full`} style={{ width: '87%' }}></div>
+                <div className={`w-full ${theme.backgrounds.cardDisabled} rounded-full h-1.5 sm:h-2`}>
+                  <div className={`${theme.status.info.bg.replace('/20', '')} h-1.5 sm:h-2 rounded-full`} style={{ width: '87%' }}></div>
                 </div>
               </div>
             </div>
 
             {/* Learning Velocity */}
-            <div className={`bg-gradient-to-br ${theme.status.warning.bg} rounded-lg p-4`}>
-              <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Learning Velocity</h4>
-              <div className="space-y-2">
+            <div className={`bg-gradient-to-br ${theme.status.warning.bg} rounded-lg p-3 sm:p-4`}>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-2 sm:mb-3 text-sm sm:text-base`}>Learning Velocity</h4>
+              <div className="space-y-1.5 sm:space-y-2">
                 <div className="flex justify-between">
-                  <span className={`text-sm ${theme.textColors.secondary}`}>Concepts/Hour</span>
-                  <span className={`text-sm font-medium ${theme.textColors.primary}`}>2.3</span>
+                  <span className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Concepts/Hour</span>
+                  <span className={`text-xs sm:text-sm font-medium ${theme.textColors.primary}`}>2.3</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className={`text-sm ${theme.textColors.secondary}`}>Optimal Range</span>
-                  <span className={`text-sm font-medium ${theme.textColors.primary}`}>2.0-2.5</span>
+                  <span className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Optimal Range</span>
+                  <span className={`text-xs sm:text-sm font-medium ${theme.textColors.primary}`}>2.0-2.5</span>
                 </div>
-                <div className={`flex items-center text-xs ${theme.status.warning.text}`}>
-                  <TrendingUp className="w-3 h-3 mr-1" />
+                <div className={`flex items-center text-[10px] sm:text-xs ${theme.status.warning.text}`}>
+                  <TrendingUp className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-1" />
                   Perfect pace for retention
                 </div>
               </div>
             </div>
 
             {/* Engagement Patterns */}
-            <div className={`bg-gradient-to-br ${theme.status.success.bg} rounded-lg p-4`}>
-              <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Peak Performance</h4>
-              <div className="space-y-2">
+            <div className={`bg-gradient-to-br ${theme.status.success.bg} rounded-lg p-3 sm:p-4`}>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-2 sm:mb-3 text-sm sm:text-base`}>Peak Performance</h4>
+              <div className="space-y-1.5 sm:space-y-2">
                 <div className="flex justify-between">
-                  <span className={`text-sm ${theme.textColors.secondary}`}>Best Time</span>
-                  <span className={`text-sm font-medium ${theme.textColors.primary}`}>2-4 PM</span>
+                  <span className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Best Time</span>
+                  <span className={`text-xs sm:text-sm font-medium ${theme.textColors.primary}`}>2-4 PM</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className={`text-sm ${theme.textColors.secondary}`}>Focus Score</span>
-                  <span className={`text-sm font-medium ${theme.textColors.primary}`}>8.4/10</span>
+                  <span className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Focus Score</span>
+                  <span className={`text-xs sm:text-sm font-medium ${theme.textColors.primary}`}>8.4/10</span>
                 </div>
-                <div className={`flex items-center text-xs ${theme.status.success.text}`}>
-                  <Target className="w-3 h-3 mr-1" />
+                <div className={`flex items-center text-[10px] sm:text-xs ${theme.status.success.text}`}>
+                  <Target className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-1" />
                   Excellent focus levels
                 </div>
               </div>
@@ -375,31 +383,31 @@ export default function LearningAnalyticsDashboard() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
       >
-        <GradientCard variant="glass" gradient="purple" className="p-6">
-          <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center`}>
-            <Brain className={`w-5 h-5 mr-2 ${theme.textColors.primary}`} />
+        <GradientCard variant="glass" gradient="purple" className="p-3 sm:p-4 lg:p-6">
+          <h3 className={`text-base sm:text-lg font-semibold ${theme.textColors.primary} mb-3 sm:mb-4 flex items-center gap-1.5 sm:gap-2`}>
+            <Brain className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.textColors.primary}`} />
             AI-Powered Learning Insights
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className={`${theme.backgrounds.glass} bg-opacity-50 rounded-lg p-4`}>
-              <h4 className={`font-semibold ${theme.textColors.primary} mb-2 flex items-center`}>
-                <Award className={`w-4 h-4 mr-2 ${theme.status.warning.text}`} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
+            <div className={`${theme.backgrounds.glass} bg-opacity-50 rounded-lg p-3 sm:p-4`}>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-1.5 sm:mb-2 text-sm sm:text-base flex items-center gap-1.5 sm:gap-2`}>
+                <Award className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${theme.status.warning.text}`} />
                 Strengths Identified
               </h4>
-              <ul className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
+              <ul className={`space-y-1 text-xs sm:text-sm ${theme.textColors.secondary}`}>
                 <li>• Excellent at compound interest calculations</li>
                 <li>• Strong understanding of paycheck components</li>
                 <li>• Consistent engagement with practice tools</li>
               </ul>
             </div>
 
-            <div className={`${theme.backgrounds.glass} bg-opacity-50 rounded-lg p-4`}>
-              <h4 className={`font-semibold ${theme.textColors.primary} mb-2 flex items-center`}>
-                <Target className={`w-4 h-4 mr-2 ${theme.textColors.primary}`} />
+            <div className={`${theme.backgrounds.glass} bg-opacity-50 rounded-lg p-3 sm:p-4`}>
+              <h4 className={`font-semibold ${theme.textColors.primary} mb-1.5 sm:mb-2 text-sm sm:text-base flex items-center gap-1.5 sm:gap-2`}>
+                <Target className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${theme.textColors.primary}`} />
                 Recommended Focus Areas
               </h4>
-              <ul className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
+              <ul className={`space-y-1 text-xs sm:text-sm ${theme.textColors.secondary}`}>
                 <li>• Review banking fee structures</li>
                 <li>• Practice more budgeting scenarios</li>
                 <li>• Explore advanced investment concepts</li>

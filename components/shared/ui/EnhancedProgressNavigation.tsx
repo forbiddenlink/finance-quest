@@ -86,8 +86,8 @@ const EnhancedProgressNavigation: React.FC = () => {
                 animate={{ y: 0 }}
                 transition={microAnimations.spring}
             >
-                <div className="w-full max-w-6xl mx-auto px-3 sm:px-4 lg:px-6">
-                    <div className="flex items-center justify-between h-16 lg:h-20">
+                <div className="w-full max-w-6xl mx-auto px-2 sm:px-4 lg:px-6">
+                    <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
                         {/* Logo and Brand */}
                         <motion.div
                             className="flex items-center space-x-2 lg:space-x-3 shrink-0 min-w-0"
@@ -96,11 +96,11 @@ const EnhancedProgressNavigation: React.FC = () => {
                         >
                             <Link href="/" className="flex items-center space-x-2 lg:space-x-3">
                                 <motion.div
-                                    className={`w-8 h-8 lg:w-10 lg:h-10 ${theme.buttons.primary} rounded-xl flex items-center justify-center relative overflow-hidden`}
+                                    className={`w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 ${theme.buttons.primary} rounded-lg sm:rounded-xl flex items-center justify-center relative overflow-hidden`}
                                     whileHover={{ rotate: 360 }}
                                     transition={{ duration: 0.8, ease: "easeInOut" }}
                                 >
-                                    <DollarSign className="w-4 h-4 lg:w-6 lg:h-6 text-white font-bold" />
+                                    <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-6 lg:h-6 text-white font-bold" />
                                     <motion.div
                                         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                                         animate={{ x: ['-100%', '200%'] }}
@@ -108,10 +108,10 @@ const EnhancedProgressNavigation: React.FC = () => {
                                     />
                                 </motion.div>
                                 <div className="hidden sm:block">
-                                    <h1 className={`text-base lg:text-lg font-bold ${theme.textColors.primary} truncate`}>
+                                    <h1 className={`text-sm sm:text-base lg:text-lg font-bold ${theme.textColors.primary} truncate`}>
                                         Finance Quest
                                     </h1>
-                                    <p className={`text-xs ${theme.textColors.muted} -mt-1 hidden lg:block`}>
+                                    <p className={`text-xs ${theme.textColors.muted} -mt-0.5 hidden lg:block`}>
                                         Master Your Money
                                     </p>
                                 </div>
@@ -184,24 +184,24 @@ const EnhancedProgressNavigation: React.FC = () => {
                             <div className="relative">
                                 <motion.button
                                     onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-                                    className={`flex items-center space-x-3 p-2 rounded-xl ${theme.backgrounds.cardHover} ${theme.borderColors.primary} border transition-all duration-200`}
+                                    className={`flex items-center space-x-2 sm:space-x-3 p-1.5 sm:p-2 rounded-lg sm:rounded-xl ${theme.backgrounds.cardHover} ${theme.borderColors.primary} border transition-all duration-200`}
                                     whileHover="hover"
                                     whileTap="tap"
                                     variants={microAnimations.variants.buttonPress}
                                 >
-                                    <div className="flex items-center space-x-2">
-                                        <div className={`w-8 h-8 ${theme.buttons.primary} rounded-lg flex items-center justify-center`}>
-                                            <User className="w-4 h-4 text-white" />
+                                    <div className="flex items-center space-x-1.5 sm:space-x-2">
+                                        <div className={`w-6 h-6 sm:w-8 sm:h-8 ${theme.buttons.primary} rounded-md sm:rounded-lg flex items-center justify-center`}>
+                                            <User className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                                         </div>
                                         <div className="hidden sm:block text-left">
-                                            <div className={`text-sm font-medium ${theme.textColors.primary}`}>
+                                            <div className={`text-xs sm:text-sm font-medium ${theme.textColors.primary}`}>
                                                 Level {currentLevel}
                                             </div>
-                                            <div className={`text-xs ${theme.textColors.muted}`}>
+                                            <div className={`text-[10px] sm:text-xs ${theme.textColors.muted}`}>
                                                 {typeof userRank === 'object' ? userRank.rank : userRank}
                                             </div>
                                         </div>
-                                        <ChevronDown className={`w-4 h-4 ${theme.textColors.muted} transition-transform ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
+                                        <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${theme.textColors.muted} transition-transform ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
                                     </div>
                                 </motion.button>
 
@@ -209,53 +209,53 @@ const EnhancedProgressNavigation: React.FC = () => {
                                 <AnimatePresence>
                                     {isProfileDropdownOpen && (
                                         <motion.div
-                                            className={`absolute right-0 top-full mt-2 w-72 ${theme.backgrounds.modal} border ${theme.borderColors.primary} rounded-xl shadow-2xl overflow-hidden`}
+                                            className={`absolute right-0 top-full mt-2 w-[280px] sm:w-72 ${theme.backgrounds.modal} border ${theme.borderColors.primary} rounded-lg sm:rounded-xl shadow-2xl overflow-hidden`}
                                             initial={{ opacity: 0, y: -10, scale: 0.95 }}
                                             animate={{ opacity: 1, y: 0, scale: 1 }}
                                             exit={{ opacity: 0, y: -10, scale: 0.95 }}
                                             transition={microAnimations.spring}
                                         >
                                             {/* Profile Header */}
-                                            <div className={`${theme.backgrounds.cardHover} p-4 border-b ${theme.borderColors.primary}`}>
+                                            <div className={`${theme.backgrounds.cardHover} p-3 sm:p-4 border-b ${theme.borderColors.primary}`}>
                                                 <div className="flex items-center space-x-3">
-                                                    <div className={`w-12 h-12 ${theme.buttons.primary} rounded-xl flex items-center justify-center`}>
-                                                        <User className="w-6 h-6 text-white" />
+                                                    <div className={`w-10 h-10 sm:w-12 sm:h-12 ${theme.buttons.primary} rounded-lg sm:rounded-xl flex items-center justify-center`}>
+                                                        <User className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                                                     </div>
                                                     <div>
-                                                        <h3 className={`font-semibold ${theme.textColors.primary}`}>
+                                                        <h3 className={`text-sm sm:text-base font-semibold ${theme.textColors.primary}`}>
                                                             Level {currentLevel} Learner
                                                         </h3>
-                                                        <p className={`text-sm ${theme.textColors.secondary}`}>
+                                                        <p className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>
                                                             {typeof userRank === 'object' ? userRank.rank : userRank}
                                                         </p>
                                                     </div>
                                                 </div>
 
                                                 {/* Progress Stats */}
-                                                <div className="grid grid-cols-3 gap-4 mt-4">
+                                                <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-3 sm:mt-4">
                                                     <div className="text-center">
-                                                        <div className={`text-lg font-bold ${theme.textColors.brand}`}>
+                                                        <div className={`text-base sm:text-lg font-bold ${theme.textColors.brand}`}>
                                                             {(totalXP || 0).toLocaleString()}
                                                         </div>
-                                                        <div className={`text-xs ${theme.textColors.muted}`}>XP</div>
+                                                        <div className={`text-[10px] sm:text-xs ${theme.textColors.muted}`}>XP</div>
                                                     </div>
                                                     <div className="text-center">
-                                                        <div className={`text-lg font-bold ${theme.textColors.primary}`}>
+                                                        <div className={`text-base sm:text-lg font-bold ${theme.textColors.primary}`}>
                                                             {completedChapters || 0}
                                                         </div>
-                                                        <div className={`text-xs ${theme.textColors.muted}`}>Lessons</div>
+                                                        <div className={`text-[10px] sm:text-xs ${theme.textColors.muted}`}>Lessons</div>
                                                     </div>
                                                     <div className="text-center">
-                                                        <div className={`text-lg font-bold ${theme.status.success.text}`}>
+                                                        <div className={`text-base sm:text-lg font-bold ${theme.status.success.text}`}>
                                                             {engagementScore || 0}%
                                                         </div>
-                                                        <div className={`text-xs ${theme.textColors.muted}`}>Engagement</div>
+                                                        <div className={`text-[10px] sm:text-xs ${theme.textColors.muted}`}>Engagement</div>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             {/* Quick Actions */}
-                                            <div className="p-2">
+                                            <div className="p-1.5 sm:p-2">
                                                 {[
                                                     { label: 'View Progress', href: '/progress', icon: TrendingUp },
                                                     { label: 'Learning Analytics', href: '/advanced-progress', icon: BarChart3, isPro: true },
@@ -266,11 +266,11 @@ const EnhancedProgressNavigation: React.FC = () => {
                                                         <Link
                                                             key={action.href}
                                                             href={action.href}
-                                                            className={`flex items-center space-x-3 p-3 rounded-lg hover:${theme.backgrounds.cardHover} transition-colors group`}
+                                                            className={`flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg hover:${theme.backgrounds.cardHover} transition-colors group`}
                                                             onClick={() => setIsProfileDropdownOpen(false)}
                                                         >
-                                                            <ActionIcon className={`w-4 h-4 ${theme.textColors.brand}`} />
-                                                            <span className={`${theme.textColors.primary} group-hover:${theme.textColors.primary}`}>
+                                                            <ActionIcon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${theme.textColors.brand}`} />
+                                                            <span className={`text-sm ${theme.textColors.primary} group-hover:${theme.textColors.primary}`}>
                                                                 {action.label}
                                                             </span>
                                                             {action.isPro && (
@@ -288,15 +288,15 @@ const EnhancedProgressNavigation: React.FC = () => {
                             {/* Mobile Menu Button */}
                             <motion.button
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className={`lg:hidden p-2 rounded-lg ${theme.backgrounds.cardHover} ${theme.borderColors.primary} border`}
+                                className={`lg:hidden p-1.5 sm:p-2 rounded-lg ${theme.backgrounds.cardHover} ${theme.borderColors.primary} border`}
                                 whileHover="hover"
                                 whileTap="tap"
                                 variants={microAnimations.variants.buttonPress}
                             >
                                 {isMobileMenuOpen ? (
-                                    <X className={`w-5 h-5 ${theme.textColors.primary}`} />
+                                    <X className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.textColors.primary}`} />
                                 ) : (
-                                    <Menu className={`w-5 h-5 ${theme.textColors.primary}`} />
+                                    <Menu className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.textColors.primary}`} />
                                 )}
                             </motion.button>
                         </div>
@@ -313,19 +313,19 @@ const EnhancedProgressNavigation: React.FC = () => {
                             exit={{ opacity: 0, height: 0 }}
                             transition={microAnimations.spring}
                         >
-                            <div className="px-4 py-6 space-y-6">
+                            <div className="px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
                                 {/* Streak Widget for Mobile */}
                                 <div className="md:hidden">
-                                    <StreakMotivationWidget size="default" />
+                                    <StreakMotivationWidget size="compact" />
                                 </div>
 
                                 {/* Navigation Sections */}
                                 {navigationSections.map((section) => (
                                     <div key={section.title}>
-                                        <h3 className={`text-sm font-semibold ${theme.textColors.muted} uppercase tracking-wide mb-3`}>
+                                        <h3 className={`text-xs sm:text-sm font-semibold ${theme.textColors.muted} uppercase tracking-wide mb-2 sm:mb-3 px-1`}>
                                             {section.title}
                                         </h3>
-                                        <div className="space-y-2">
+                                        <div className="space-y-1 sm:space-y-2">
                                             {section.items.map((item) => {
                                                 const IconComponent = item.icon;
                                                 const isActive = pathname === item.href;
@@ -334,35 +334,37 @@ const EnhancedProgressNavigation: React.FC = () => {
                                                     <Link
                                                         key={item.href}
                                                         href={item.href}
-                                                        className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${isActive
+                                                        className={`flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg transition-colors ${isActive
                                                             ? `${theme.status.info.bg} ${theme.status.info.text}`
                                                             : `hover:${theme.backgrounds.cardHover}`
                                                             }`}
                                                         onClick={() => setIsMobileMenuOpen(false)}
                                                     >
-                                                        <IconComponent className={`w-5 h-5 ${item.isPro ? 'text-purple-400' :
+                                                        <IconComponent className={`w-4 h-4 sm:w-5 sm:h-5 ${item.isPro ? 'text-purple-400' :
                                                             item.isNew ? 'text-green-400' :
                                                                 theme.textColors.brand
                                                             }`} />
-                                                        <div className="flex-1">
-                                                            <div className={`font-medium ${theme.textColors.primary} flex items-center`}>
-                                                                {item.label}
-                                                                {item.badge && (
-                                                                    <span className={`ml-2 px-2 py-0.5 text-xs font-semibold rounded-full ${theme.status.warning.bg} ${theme.status.warning.text}`}>
-                                                                        {item.badge}
-                                                                    </span>
-                                                                )}
-                                                                {item.isNew && (
-                                                                    <span className={`ml-2 px-2 py-0.5 text-xs font-semibold rounded-full ${theme.status.success.bg} ${theme.status.success.text}`}>
-                                                                        NEW
-                                                                    </span>
-                                                                )}
-                                                                {item.isPro && (
-                                                                    <Crown className="w-4 h-4 text-purple-400 ml-2" />
-                                                                )}
+                                                        <div className="flex-1 min-w-0">
+                                                            <div className={`font-medium ${theme.textColors.primary} flex items-center text-sm`}>
+                                                                <span className="truncate">{item.label}</span>
+                                                                <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 ml-2">
+                                                                    {item.badge && (
+                                                                        <span className={`px-1.5 py-0.5 text-[10px] sm:text-xs font-semibold rounded-full ${theme.status.warning.bg} ${theme.status.warning.text}`}>
+                                                                            {item.badge}
+                                                                        </span>
+                                                                    )}
+                                                                    {item.isNew && (
+                                                                        <span className={`px-1.5 py-0.5 text-[10px] sm:text-xs font-semibold rounded-full ${theme.status.success.bg} ${theme.status.success.text}`}>
+                                                                            NEW
+                                                                        </span>
+                                                                    )}
+                                                                    {item.isPro && (
+                                                                        <Crown className="w-3 h-3 sm:w-4 sm:h-4 text-purple-400" />
+                                                                    )}
+                                                                </div>
                                                             </div>
                                                             {item.description && (
-                                                                <div className={`text-sm ${theme.textColors.muted} mt-1`}>
+                                                                <div className={`text-xs ${theme.textColors.muted} mt-0.5 truncate`}>
                                                                     {item.description}
                                                                 </div>
                                                             )}

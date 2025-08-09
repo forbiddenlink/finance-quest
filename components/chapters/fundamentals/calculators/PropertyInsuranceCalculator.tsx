@@ -288,9 +288,9 @@ export default function PropertyInsuranceCalculator() {
 
   return (
     <div className={`p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-      <div className="flex items-center gap-3 mb-6">
-        <Shield className="w-6 h-6 text-purple-400" />
-        <h2 className={`text-xl font-bold ${theme.textColors.primary}`}>
+      <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+        <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400 flex-shrink-0" />
+        <h2 className={`text-lg sm:text-xl font-bold ${theme.textColors.primary} leading-tight`}>
           Property & Liability Insurance Calculator
         </h2>
       </div>
@@ -413,33 +413,33 @@ export default function PropertyInsuranceCalculator() {
               {properties.map((property) => {
                 const PropertyIcon = getPropertyIcon(property.type);
                 return (
-                  <div key={property.id} className={`p-4 bg-slate-800/50 border ${theme.borderColors.primary} rounded-lg`}>
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-2">
-                        <PropertyIcon className="w-5 h-5 text-blue-400" />
+                  <div key={property.id} className={`p-3 sm:p-4 bg-slate-800/50 border ${theme.borderColors.primary} rounded-lg`}>
+                    <div className="flex items-center justify-between mb-2 sm:mb-3">
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <PropertyIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
                         <input
                           type="text"
                           value={property.name}
                           onChange={(e) => updateProperty(property.id, 'name', e.target.value)}
-                          className={`bg-transparent ${theme.textColors.primary} font-medium border-none outline-none`}
+                          className={`bg-transparent ${theme.textColors.primary} font-medium border-none outline-none text-sm sm:text-base w-full`}
                         />
                       </div>
                       <button
                         onClick={() => removeProperty(property.id)}
-                        className="text-red-400 hover:text-red-300 text-sm"
+                        className="text-red-400 hover:text-red-300 text-xs sm:text-sm"
                       >
                         Remove
                       </button>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-xs sm:text-sm">
                       <div>
-                        <label htmlFor={`type-${property.id}`} className={`${theme.textColors.secondary}`}>Type</label>
+                        <label htmlFor={`type-${property.id}`} className={`${theme.textColors.secondary} text-[10px] sm:text-xs`}>Type</label>
                         <select
                           id={`type-${property.id}`}
                           value={property.type}
                           onChange={(e) => updateProperty(property.id, 'type', e.target.value)}
-                          className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs`}
+                          className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
                         >
                           <option value="home">Home</option>
                           <option value="condo">Condo</option>
@@ -450,42 +450,42 @@ export default function PropertyInsuranceCalculator() {
                         </select>
                       </div>
                       <div>
-                        <label htmlFor={`value-${property.id}`} className={`${theme.textColors.secondary}`}>Value</label>
+                        <label htmlFor={`value-${property.id}`} className={`${theme.textColors.secondary} text-[10px] sm:text-xs`}>Value</label>
                         <input
                           id={`value-${property.id}`}
                           type="number"
                           value={property.value}
                           onChange={(e) => updateProperty(property.id, 'value', Number(e.target.value))}
-                          className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs`}
+                          className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
                         />
                       </div>
                       <div>
-                        <label htmlFor={`liability-${property.id}`} className={`${theme.textColors.secondary}`}>Liability Limit</label>
+                        <label htmlFor={`liability-${property.id}`} className={`${theme.textColors.secondary} text-[10px] sm:text-xs`}>Liability Limit</label>
                         <input
                           id={`liability-${property.id}`}
                           type="number"
                           value={property.liability}
                           onChange={(e) => updateProperty(property.id, 'liability', Number(e.target.value))}
-                          className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs`}
+                          className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
                         />
                       </div>
                       <div>
-                        <label htmlFor={`deductible-${property.id}`} className={`${theme.textColors.secondary}`}>Deductible</label>
+                        <label htmlFor={`deductible-${property.id}`} className={`${theme.textColors.secondary} text-[10px] sm:text-xs`}>Deductible</label>
                         <input
                           id={`deductible-${property.id}`}
                           type="number"
                           value={property.deductible}
                           onChange={(e) => updateProperty(property.id, 'deductible', Number(e.target.value))}
-                          className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs`}
+                          className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
                         />
                       </div>
                       <div>
-                        <label htmlFor={`location-${property.id}`} className={`${theme.textColors.secondary}`}>Location</label>
+                        <label htmlFor={`location-${property.id}`} className={`${theme.textColors.secondary} text-[10px] sm:text-xs`}>Location</label>
                         <select
                           id={`location-${property.id}`}
                           value={property.location}
                           onChange={(e) => updateProperty(property.id, 'location', e.target.value)}
-                          className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs`}
+                          className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
                         >
                           <option value="urban">Urban</option>
                           <option value="suburban">Suburban</option>
@@ -495,13 +495,13 @@ export default function PropertyInsuranceCalculator() {
                         </select>
                       </div>
                       <div>
-                        <label htmlFor={`age-${property.id}`} className={`${theme.textColors.secondary}`}>Age (years)</label>
+                        <label htmlFor={`age-${property.id}`} className={`${theme.textColors.secondary} text-[10px] sm:text-xs`}>Age (years)</label>
                         <input
                           id={`age-${property.id}`}
                           type="number"
                           value={property.age}
                           onChange={(e) => updateProperty(property.id, 'age', Number(e.target.value))}
-                          className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs`}
+                          className={`w-full px-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
                         />
                       </div>
                     </div>
@@ -545,37 +545,37 @@ export default function PropertyInsuranceCalculator() {
           {analysis && (
             <>
               {/* Summary Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className={`p-4 bg-blue-900/20 border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Shield className="w-5 h-5 text-blue-400" />
-                    <h4 className={`font-semibold ${theme.textColors.primary}`}>Total Coverage</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+                <div className={`p-3 sm:p-4 bg-blue-900/20 border ${theme.borderColors.primary} rounded-lg`}>
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                    <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
+                    <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary}`}>Total Coverage</h4>
                   </div>
-                  <div className="text-xl font-bold text-blue-400">
+                  <div className="text-lg sm:text-xl font-bold text-blue-400">
                     {formatCurrency(analysis.totalCoverage)}
                   </div>
                 </div>
 
-                <div className={`p-4 bg-green-900/20 border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <DollarSign className="w-5 h-5 text-green-400" />
-                    <h4 className={`font-semibold ${theme.textColors.primary}`}>Annual Premiums</h4>
+                <div className={`p-3 sm:p-4 bg-green-900/20 border ${theme.borderColors.primary} rounded-lg`}>
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                    <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
+                    <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary}`}>Annual Premiums</h4>
                   </div>
-                  <div className="text-xl font-bold text-green-400">
+                  <div className="text-lg sm:text-xl font-bold text-green-400">
                     {formatCurrency(analysis.totalPremiums)}
                   </div>
                 </div>
 
-                <div className={`p-4 ${
+                <div className={`p-3 sm:p-4 ${
                   analysis.liabilityGap > 0 ? 'bg-red-900/20' : 'bg-green-900/20'
-                } border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className={`w-5 h-5 ${
+                } border ${theme.borderColors.primary} rounded-lg sm:col-span-2 md:col-span-1`}>
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                    <AlertTriangle className={`w-4 h-4 sm:w-5 sm:h-5 ${
                       analysis.liabilityGap > 0 ? 'text-red-400' : 'text-green-400'
                     }`} />
-                    <h4 className={`font-semibold ${theme.textColors.primary}`}>Liability Gap</h4>
+                    <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary}`}>Liability Gap</h4>
                   </div>
-                  <div className={`text-xl font-bold ${
+                  <div className={`text-lg sm:text-xl font-bold ${
                     analysis.liabilityGap > 0 ? 'text-red-400' : 'text-green-400'
                   }`}>
                     {analysis.liabilityGap > 0 ? formatCurrency(analysis.liabilityGap) : 'None'}
@@ -624,65 +624,67 @@ export default function PropertyInsuranceCalculator() {
                   </h3>
                 </div>
                 
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead className={`bg-slate-700/50 ${theme.textColors.secondary}`}>
-                      <tr>
-                        <th className="px-4 py-3 text-left">Property</th>
-                        <th className="px-4 py-3 text-left">Value</th>
-                        <th className="px-4 py-3 text-left">Liability</th>
-                        <th className="px-4 py-3 text-left">Deductible</th>
-                        <th className="px-4 py-3 text-left">Premium</th>
-                        <th className="px-4 py-3 text-left">Risk Factors</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {properties.map((property) => (
-                        <tr key={property.id} className={`border-t ${theme.borderColors.primary}`}>
-                          <td className={`px-4 py-3 ${theme.textColors.primary} font-medium`}>
-                            {property.name}
-                          </td>
-                          <td className={`px-4 py-3 ${theme.textColors.primary}`}>
-                            {formatCurrency(property.value)}
-                          </td>
-                          <td className={`px-4 py-3 ${theme.textColors.primary}`}>
-                            {formatCurrency(property.liability)}
-                          </td>
-                          <td className={`px-4 py-3 ${theme.textColors.primary}`}>
-                            {formatCurrency(property.deductible)}
-                          </td>
-                          <td className={`px-4 py-3 ${theme.textColors.primary} font-semibold`}>
-                            {formatCurrency(calculatePremium(property))}
-                          </td>
-                          <td className={`px-4 py-3 ${theme.textColors.secondary}`}>
-                            {property.riskFactors.length || 'None'}
-                          </td>
+                <div className="overflow-x-auto -mx-4 sm:mx-0">
+                  <div className="min-w-[800px] px-4 sm:px-0">
+                    <table className="w-full text-xs sm:text-sm">
+                      <thead className={`bg-slate-700/50 ${theme.textColors.secondary}`}>
+                        <tr>
+                          <th className="px-2 sm:px-4 py-2 sm:py-3 text-left">Property</th>
+                          <th className="px-2 sm:px-4 py-2 sm:py-3 text-left">Value</th>
+                          <th className="px-2 sm:px-4 py-2 sm:py-3 text-left">Liability</th>
+                          <th className="px-2 sm:px-4 py-2 sm:py-3 text-left">Deductible</th>
+                          <th className="px-2 sm:px-4 py-2 sm:py-3 text-left">Premium</th>
+                          <th className="px-2 sm:px-4 py-2 sm:py-3 text-left">Risk Factors</th>
                         </tr>
-                      ))}
-                      {hasUmbrellaPolicy && (
-                        <tr className={`border-t ${theme.borderColors.primary} bg-blue-900/10`}>
-                          <td className={`px-4 py-3 ${theme.textColors.primary} font-medium`}>
-                            Umbrella Policy
-                          </td>
-                          <td className={`px-4 py-3 ${theme.textColors.primary}`}>
-                            -
-                          </td>
-                          <td className={`px-4 py-3 ${theme.textColors.primary}`}>
-                            {formatCurrency(umbrellaAmount)}
-                          </td>
-                          <td className={`px-4 py-3 ${theme.textColors.primary}`}>
-                            -
-                          </td>
-                          <td className={`px-4 py-3 ${theme.textColors.primary} font-semibold`}>
-                            {formatCurrency(umbrellaAmount / 1000000 * 200)}
-                          </td>
-                          <td className={`px-4 py-3 ${theme.textColors.secondary}`}>
-                            Additional Liability
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {properties.map((property) => (
+                          <tr key={property.id} className={`border-t ${theme.borderColors.primary}`}>
+                            <td className={`px-2 sm:px-4 py-2 sm:py-3 ${theme.textColors.primary} font-medium`}>
+                              {property.name}
+                            </td>
+                            <td className={`px-2 sm:px-4 py-2 sm:py-3 ${theme.textColors.primary}`}>
+                              {formatCurrency(property.value)}
+                            </td>
+                            <td className={`px-2 sm:px-4 py-2 sm:py-3 ${theme.textColors.primary}`}>
+                              {formatCurrency(property.liability)}
+                            </td>
+                            <td className={`px-2 sm:px-4 py-2 sm:py-3 ${theme.textColors.primary}`}>
+                              {formatCurrency(property.deductible)}
+                            </td>
+                            <td className={`px-2 sm:px-4 py-2 sm:py-3 ${theme.textColors.primary} font-semibold`}>
+                              {formatCurrency(calculatePremium(property))}
+                            </td>
+                            <td className={`px-2 sm:px-4 py-2 sm:py-3 ${theme.textColors.secondary}`}>
+                              {property.riskFactors.length || 'None'}
+                            </td>
+                          </tr>
+                        ))}
+                        {hasUmbrellaPolicy && (
+                          <tr className={`border-t ${theme.borderColors.primary} bg-blue-900/10`}>
+                            <td className={`px-2 sm:px-4 py-2 sm:py-3 ${theme.textColors.primary} font-medium`}>
+                              Umbrella Policy
+                            </td>
+                            <td className={`px-2 sm:px-4 py-2 sm:py-3 ${theme.textColors.primary}`}>
+                              -
+                            </td>
+                            <td className={`px-2 sm:px-4 py-2 sm:py-3 ${theme.textColors.primary}`}>
+                              {formatCurrency(umbrellaAmount)}
+                            </td>
+                            <td className={`px-2 sm:px-4 py-2 sm:py-3 ${theme.textColors.primary}`}>
+                              -
+                            </td>
+                            <td className={`px-2 sm:px-4 py-2 sm:py-3 ${theme.textColors.primary} font-semibold`}>
+                              {formatCurrency(umbrellaAmount / 1000000 * 200)}
+                            </td>
+                            <td className={`px-2 sm:px-4 py-2 sm:py-3 ${theme.textColors.secondary}`}>
+                              Additional Liability
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
 

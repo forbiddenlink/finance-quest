@@ -281,20 +281,20 @@ export default function CreditScoreImpactSimulator() {
 
   return (
     <div className={`${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-xl p-6`}>
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center mb-4"
+          className="flex items-start sm:items-center gap-3 sm:gap-4 mb-3 sm:mb-4"
         >
-          <div className={`${theme.status.info.bg} p-3 rounded-xl mr-4`}>
-            <BarChart3 className={`w-6 h-6 ${theme.status.info.text}`} />
+          <div className={`${theme.status.info.bg} p-2 sm:p-3 rounded-lg sm:rounded-xl flex-shrink-0`}>
+            <BarChart3 className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.info.text}`} />
           </div>
           <div>
-            <h3 className={`text-xl font-bold ${theme.textColors.primary}`}>
+            <h3 className={`text-lg sm:text-xl font-bold ${theme.textColors.primary} mb-0.5 sm:mb-1 leading-tight`}>
               Credit Score Impact Simulator
             </h3>
-            <p className={`${theme.textColors.secondary}`}>
+            <p className={`${theme.textColors.secondary} text-sm sm:text-base`}>
               See how credit decisions affect your score and financial future
             </p>
           </div>
@@ -302,15 +302,15 @@ export default function CreditScoreImpactSimulator() {
       </div>
 
       {/* Current Credit Setup */}
-      <GradientCard variant="glass" gradient="blue" className="p-6 mb-8">
-        <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-          <Calculator className="w-5 h-5" />
+      <GradientCard variant="glass" gradient="blue" className="p-4 sm:p-6 mb-6 sm:mb-8">
+        <h4 className={`text-base sm:text-lg font-semibold ${theme.textColors.primary} mb-3 sm:mb-4 flex items-center gap-1.5 sm:gap-2`}>
+          <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />
           Your Current Credit Profile
         </h4>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           <div>
-            <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+            <label className={`block text-xs sm:text-sm font-medium ${theme.textColors.secondary} mb-1.5 sm:mb-2`}>
               Current Credit Score
             </label>
             <input
@@ -319,10 +319,10 @@ export default function CreditScoreImpactSimulator() {
               max="850"
               value={currentScore}
               onChange={(e) => setCurrentScore(parseInt(e.target.value))}
-              className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer slider"
+              className="w-full h-1.5 sm:h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer slider"
               aria-label="Current Credit Score"
             />
-            <div className="flex justify-between text-xs text-slate-400 mt-1">
+            <div className="flex justify-between text-[10px] sm:text-xs text-slate-400 mt-1">
               <span>300</span>
               <span className={`font-bold ${getScoreColor(currentScore)}`}>
                 {currentScore} ({getScoreGrade(currentScore)})
@@ -332,55 +332,55 @@ export default function CreditScoreImpactSimulator() {
           </div>
 
           <div>
-            <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+            <label className={`block text-xs sm:text-sm font-medium ${theme.textColors.secondary} mb-1.5 sm:mb-2`}>
               Mortgage Amount
             </label>
             <input
               type="number"
               value={loanAmount}
               onChange={(e) => setLoanAmount(parseInt(e.target.value) || 350000)}
-              className={`w-full px-4 py-2 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg ${theme.textColors.primary}`}
+              className={`w-full px-3 sm:px-4 py-1.5 sm:py-2 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg ${theme.textColors.primary} text-xs sm:text-sm`}
               placeholder="350000"
             />
-            <p className="text-xs text-slate-400 mt-1">30-year fixed mortgage</p>
+            <p className="text-[10px] sm:text-xs text-slate-400 mt-1">30-year fixed mortgage</p>
           </div>
         </div>
       </GradientCard>
 
       {/* Scenario Selection */}
-      <div className="mb-8">
-        <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-          <Zap className="w-5 h-5" />
+      <div className="mb-6 sm:mb-8">
+        <h4 className={`text-base sm:text-lg font-semibold ${theme.textColors.primary} mb-3 sm:mb-4 flex items-center gap-1.5 sm:gap-2`}>
+          <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
           Select Credit Scenarios to Simulate
         </h4>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {creditScenarios.map((scenario) => (
             <motion.div
               key={scenario.id}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => toggleScenario(scenario.id)}
-              className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${selectedScenarios.includes(scenario.id)
+              className={`p-3 sm:p-4 border-2 rounded-lg sm:rounded-xl cursor-pointer transition-all ${selectedScenarios.includes(scenario.id)
                   ? 'border-blue-500 bg-blue-500/10'
                   : 'border-slate-700 hover:border-slate-600'
                 }`}
             >
-              <div className="flex items-start gap-3">
-                <div className={`p-2 rounded-lg ${scenario.severity === 'positive' ? theme.status.success.bg :
+              <div className="flex items-start gap-2 sm:gap-3">
+                <div className={`p-1.5 sm:p-2 rounded-lg flex-shrink-0 ${scenario.severity === 'positive' ? theme.status.success.bg :
                     scenario.severity === 'negative' ? theme.status.error.bg :
                       theme.status.warning.bg
                   }`}>
-                  {scenario.icon}
+                  <div className="w-3.5 h-3.5 sm:w-4 sm:h-4">{scenario.icon}</div>
                 </div>
-                <div className="flex-1">
-                  <h5 className={`font-semibold ${theme.textColors.primary} mb-1`}>
+                <div className="flex-1 min-w-0">
+                  <h5 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary} mb-0.5 sm:mb-1 truncate`}>
                     {scenario.name}
                   </h5>
-                  <p className={`text-sm ${theme.textColors.secondary} mb-2`}>
+                  <p className={`text-xs sm:text-sm ${theme.textColors.secondary} mb-1.5 sm:mb-2 line-clamp-2`}>
                     {scenario.description}
                   </p>
-                  <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center justify-between text-[10px] sm:text-xs">
                     <span className={`font-medium ${scenario.scoreImpact > 0 ? 'text-emerald-400' : 'text-red-400'
                       }`}>
                       {scenario.scoreImpact > 0 ? '+' : ''}{scenario.scoreImpact} points
@@ -397,22 +397,22 @@ export default function CreditScoreImpactSimulator() {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={runSimulation}
           disabled={selectedScenarios.length === 0 || isSimulating}
-          className={`flex items-center gap-2 px-6 py-3 ${theme.buttons.primary} rounded-xl disabled:opacity-50 disabled:cursor-not-allowed`}
+          className={`flex items-center justify-center gap-1.5 sm:gap-2 w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 ${theme.buttons.primary} rounded-lg sm:rounded-xl disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base`}
         >
           {isSimulating ? (
             <>
-              <Clock className="w-4 h-4 animate-spin" />
+              <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" />
               Simulating...
             </>
           ) : (
             <>
-              <Calculator className="w-4 h-4" />
+              <Calculator className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               Run Simulation
             </>
           )}
@@ -423,7 +423,7 @@ export default function CreditScoreImpactSimulator() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={resetSimulation}
-            className={`px-6 py-3 border ${theme.borderColors.primary} ${theme.textColors.secondary} rounded-xl hover:border-white/20 transition-colors`}
+            className={`flex items-center justify-center w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 border ${theme.borderColors.primary} ${theme.textColors.secondary} rounded-lg sm:rounded-xl hover:border-white/20 transition-colors text-sm sm:text-base`}
           >
             Reset
           </motion.button>
@@ -440,42 +440,42 @@ export default function CreditScoreImpactSimulator() {
             className="space-y-8"
           >
             {/* Score Impact Summary */}
-            <GradientCard variant="glass" gradient="green" className="p-6">
-              <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
+            <GradientCard variant="glass" gradient="green" className="p-4 sm:p-6">
+              <h4 className={`text-base sm:text-lg font-semibold ${theme.textColors.primary} mb-3 sm:mb-4`}>
                 Credit Score Impact Analysis
               </h4>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                 <div className="text-center">
-                  <div className={`text-2xl font-bold ${getScoreColor(simulationResult.initialScore)} mb-1`}>
+                  <div className={`text-lg sm:text-2xl font-bold ${getScoreColor(simulationResult.initialScore)} mb-0.5 sm:mb-1`}>
                     {simulationResult.initialScore}
                   </div>
-                  <div className="text-sm text-slate-400">Initial Score</div>
+                  <div className="text-xs sm:text-sm text-slate-400">Initial Score</div>
                 </div>
 
                 <div className="text-center">
-                  <div className={`text-2xl font-bold ${getScoreColor(simulationResult.finalScore)} mb-1`}>
+                  <div className={`text-lg sm:text-2xl font-bold ${getScoreColor(simulationResult.finalScore)} mb-0.5 sm:mb-1`}>
                     {simulationResult.finalScore}
                   </div>
-                  <div className="text-sm text-slate-400">Final Score</div>
+                  <div className="text-xs sm:text-sm text-slate-400">Final Score</div>
                 </div>
 
                 <div className="text-center">
-                  <div className={`text-2xl font-bold ${simulationResult.finalScore > simulationResult.initialScore ? 'text-emerald-400' : 'text-red-400'
-                    } mb-1`}>
+                  <div className={`text-lg sm:text-2xl font-bold ${simulationResult.finalScore > simulationResult.initialScore ? 'text-emerald-400' : 'text-red-400'
+                    } mb-0.5 sm:mb-1`}>
                     {simulationResult.finalScore > simulationResult.initialScore ? '+' : ''}
                     {simulationResult.finalScore - simulationResult.initialScore}
                   </div>
-                  <div className="text-sm text-slate-400">Point Change</div>
+                  <div className="text-xs sm:text-sm text-slate-400">Point Change</div>
                 </div>
 
                 <div className="text-center">
-                  <div className={`text-2xl font-bold ${simulationResult.lifetimeSavings > 0 ? 'text-emerald-400' : 'text-red-400'
-                    } mb-1`}>
+                  <div className={`text-lg sm:text-2xl font-bold ${simulationResult.lifetimeSavings > 0 ? 'text-emerald-400' : 'text-red-400'
+                    } mb-0.5 sm:mb-1`}>
                     {simulationResult.lifetimeSavings > 0 ? '+' : ''}
                     {formatCurrency(Math.abs(simulationResult.lifetimeSavings))}
                   </div>
-                  <div className="text-sm text-slate-400">
+                  <div className="text-xs sm:text-sm text-slate-400">
                     {simulationResult.lifetimeSavings > 0 ? 'Savings' : 'Cost'}
                   </div>
                 </div>
@@ -483,31 +483,37 @@ export default function CreditScoreImpactSimulator() {
             </GradientCard>
 
             {/* Score Timeline */}
-            <GradientCard variant="glass" gradient="blue" className="p-6">
-              <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
+            <GradientCard variant="glass" gradient="blue" className="p-4 sm:p-6">
+              <h4 className={`text-base sm:text-lg font-semibold ${theme.textColors.primary} mb-3 sm:mb-4`}>
                 Credit Score Recovery Timeline
               </h4>
 
-              <div className="h-64">
+              <div className="h-48 sm:h-64">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={simulationResult.timeline}>
+                  <AreaChart data={simulationResult.timeline} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                     <XAxis
                       dataKey="month"
                       stroke="#9CA3AF"
-                      label={{ value: 'Months', position: 'insideBottom', offset: -5 }}
+                      fontSize={10}
+                      tickMargin={8}
+                      label={{ value: 'Months', position: 'insideBottom', offset: -5, fontSize: 10 }}
                     />
                     <YAxis
                       stroke="#9CA3AF"
                       domain={[300, 850]}
-                      label={{ value: 'Credit Score', angle: -90, position: 'insideLeft' }}
+                      fontSize={10}
+                      width={40}
+                      label={{ value: 'Credit Score', angle: -90, position: 'insideLeft', fontSize: 10 }}
                     />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: '#1F2937',
                         border: '1px solid #374151',
                         borderRadius: '8px',
-                        color: '#F9FAFB'
+                        color: '#F9FAFB',
+                        fontSize: '12px',
+                        padding: '8px'
                       }}
                       formatter={(value: number) => [
                         `${value} (${getScoreGrade(value)})`,
@@ -520,7 +526,7 @@ export default function CreditScoreImpactSimulator() {
                       dataKey="score"
                       stroke="#3B82F6"
                       fill="rgba(59, 130, 246, 0.2)"
-                      strokeWidth={2}
+                      strokeWidth={1.5}
                     />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -528,29 +534,29 @@ export default function CreditScoreImpactSimulator() {
             </GradientCard>
 
             {/* Financial Impact */}
-            <GradientCard variant="glass" gradient="yellow" className="p-6">
-              <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 flex items-center gap-2`}>
-                <DollarSign className="w-5 h-5" />
+            <GradientCard variant="glass" gradient="yellow" className="p-4 sm:p-6">
+              <h4 className={`text-base sm:text-lg font-semibold ${theme.textColors.primary} mb-3 sm:mb-4 flex items-center gap-1.5 sm:gap-2`}>
+                <DollarSign className="w-4 h-4 sm:w-5 sm:h-5" />
                 Lifetime Financial Impact
               </h4>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <h5 className="font-semibold text-white mb-3">Mortgage Rate Impact</h5>
-                  <div className="space-y-2">
+                  <h5 className="font-semibold text-sm sm:text-base text-white mb-2 sm:mb-3">Mortgage Rate Impact</h5>
+                  <div className="space-y-1.5 sm:space-y-2">
                     {mortgageRatesByScore.map((rate) => (
                       <div key={rate.range} className="flex justify-between items-center">
-                        <span className="text-slate-300">{rate.range}:</span>
-                        <span className="font-bold text-white">{rate.rate}%</span>
+                        <span className="text-xs sm:text-sm text-slate-300">{rate.range}:</span>
+                        <span className="font-bold text-xs sm:text-sm text-white">{rate.rate}%</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="space-y-4">
-                  <div className={`p-4 ${theme.status.info.bg} rounded-lg`}>
-                    <h6 className="font-semibold text-white mb-2">Key Insights</h6>
-                    <ul className="text-sm text-slate-300 space-y-1">
+                <div className="space-y-3 sm:space-y-4">
+                  <div className={`p-3 sm:p-4 ${theme.status.info.bg} rounded-lg`}>
+                    <h6 className="font-semibold text-sm sm:text-base text-white mb-1.5 sm:mb-2">Key Insights</h6>
+                    <ul className="text-xs sm:text-sm text-slate-300 space-y-0.5 sm:space-y-1">
                       <li>• A 100-point credit score increase can save $50,000+ on a mortgage</li>
                       <li>• Late payments stay on your report for 7 years</li>
                       <li>• Utilization has immediate impact on your score</li>
@@ -559,12 +565,12 @@ export default function CreditScoreImpactSimulator() {
                   </div>
 
                   {Math.abs(simulationResult.lifetimeSavings) > 10000 && (
-                    <div className={`p-4 ${simulationResult.lifetimeSavings > 0 ? theme.status.success.bg : theme.status.error.bg
+                    <div className={`p-3 sm:p-4 ${simulationResult.lifetimeSavings > 0 ? theme.status.success.bg : theme.status.error.bg
                       } rounded-lg`}>
-                      <h6 className="font-semibold text-white mb-2">
+                      <h6 className="font-semibold text-sm sm:text-base text-white mb-1.5 sm:mb-2">
                         {simulationResult.lifetimeSavings > 0 ? '💡 Smart Move!' : '⚠️ Consider the Cost'}
                       </h6>
-                      <p className="text-sm text-white">
+                      <p className="text-xs sm:text-sm text-white">
                         {simulationResult.lifetimeSavings > 0
                           ? `This credit improvement could save you ${formatCurrency(simulationResult.lifetimeSavings)} over the life of your mortgage!`
                           : `This credit damage could cost you ${formatCurrency(Math.abs(simulationResult.lifetimeSavings))} in extra interest payments.`
@@ -580,23 +586,23 @@ export default function CreditScoreImpactSimulator() {
       </AnimatePresence>
 
       {/* Educational Tips */}
-      <div className={`mt-8 p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`}>
-        <h5 className={`font-semibold ${theme.status.info.text} mb-2 flex items-center gap-2`}>
-          <Target className="w-4 h-4" />
+      <div className={`mt-6 sm:mt-8 p-3 sm:p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`}>
+        <h5 className={`font-semibold text-sm sm:text-base ${theme.status.info.text} mb-1.5 sm:mb-2 flex items-center gap-1.5 sm:gap-2`}>
+          <Target className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           Credit Score Optimization Tips
         </h5>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-300">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm text-slate-300">
           <div>
-            <h6 className="font-semibold text-white mb-1">Quick Wins (1-3 months):</h6>
-            <ul className="space-y-1">
+            <h6 className="font-semibold text-sm sm:text-base text-white mb-0.5 sm:mb-1">Quick Wins (1-3 months):</h6>
+            <ul className="space-y-0.5 sm:space-y-1">
               <li>• Pay down credit card balances below 30%</li>
               <li>• Request credit limit increases</li>
               <li>• Pay bills before statement closing date</li>
             </ul>
           </div>
           <div>
-            <h6 className="font-semibold text-white mb-1">Long-term Strategy:</h6>
-            <ul className="space-y-1">
+            <h6 className="font-semibold text-sm sm:text-base text-white mb-0.5 sm:mb-1">Long-term Strategy:</h6>
+            <ul className="space-y-0.5 sm:space-y-1">
               <li>• Never miss payments (set up autopay)</li>
               <li>• Keep old accounts open for history length</li>
               <li>• Diversify credit mix (cards + installment loans)</li>

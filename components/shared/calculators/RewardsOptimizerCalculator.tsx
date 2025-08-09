@@ -241,151 +241,151 @@ export default function RewardsOptimizerCalculator() {
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
             {/* Header */}
             <div className={`${theme.backgrounds.glass} backdrop-blur-xl border-b ${theme.borderColors.primary}`}>
-                <div className="max-w-7xl mx-auto px-4 py-6">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
                     <div className="text-center">
-                        <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2 flex items-center justify-center gap-3`}>
-                            <Award className={`w-8 h-8 ${theme.textColors.primary}`} />
+                        <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} mb-2 flex items-center justify-center gap-2 sm:gap-3 text-xl sm:text-2xl md:text-3xl`}>
+                            <Award className={`w-6 h-6 sm:w-8 sm:h-8 ${theme.textColors.primary}`} />
                             Credit Card Rewards Optimizer
                         </h2>
-                        <p className={`${theme.textColors.secondary}`}>
+                        <p className={`${theme.textColors.secondary} text-sm sm:text-base`}>
                             Maximize your credit card rewards with personalized recommendations based on your spending
                         </p>
                     </div>
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 py-8">
-                <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
                     {/* Input Controls */}
-                    <div className="xl:col-span-1 space-y-6">
+                    <div className="lg:col-span-1 space-y-4 sm:space-y-6">
                         {/* Monthly Spending */}
-                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-6`}>
-                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Monthly Spending by Category</h3>
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-4 sm:p-6`}>
+                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-3 sm:mb-4 text-lg sm:text-xl`}>Monthly Spending by Category</h3>
 
-                            <div className="space-y-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                 <div>
-                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                                    <label className={`block text-xs sm:text-sm font-medium ${theme.textColors.secondary} mb-1.5 sm:mb-2`}>
                                         🛒 Groceries
                                     </label>
                                     <div className="relative">
-                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                        <span className={`absolute left-2.5 sm:left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-xs sm:text-sm md:text-base`}>$</span>
                                         <input
                                             type="number"
                                             value={groceries}
                                             onChange={(e) => setGroceries(e.target.value)}
-                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
+                                            className={`pl-7 sm:pl-8 w-full px-2 sm:px-3 md:px-4 py-2 sm:py-2.5 md:py-3 text-sm sm:text-base ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
                                             placeholder="800"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                                    <label className={`block text-xs sm:text-sm font-medium ${theme.textColors.secondary} mb-1.5 sm:mb-2`}>
                                         ⛽ Gas & Fuel
                                     </label>
                                     <div className="relative">
-                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                        <span className={`absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-sm sm:text-base`}>$</span>
                                         <input
                                             type="number"
                                             value={gasoline}
                                             onChange={(e) => setGasoline(e.target.value)}
-                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
+                                            className={`pl-6 sm:pl-8 w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
                                             placeholder="200"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                                    <label className={`block text-xs sm:text-sm font-medium ${theme.textColors.secondary} mb-1.5 sm:mb-2`}>
                                         🍽️ Dining & Restaurants
                                     </label>
                                     <div className="relative">
-                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                        <span className={`absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-sm sm:text-base`}>$</span>
                                         <input
                                             type="number"
                                             value={dining}
                                             onChange={(e) => setDining(e.target.value)}
-                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
+                                            className={`pl-6 sm:pl-8 w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
                                             placeholder="400"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                                    <label className={`block text-xs sm:text-sm font-medium ${theme.textColors.secondary} mb-1.5 sm:mb-2`}>
                                         ✈️ Travel & Hotels
                                     </label>
                                     <div className="relative">
-                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                        <span className={`absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-sm sm:text-base`}>$</span>
                                         <input
                                             type="number"
                                             value={travel}
                                             onChange={(e) => setTravel(e.target.value)}
-                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
+                                            className={`pl-6 sm:pl-8 w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
                                             placeholder="300"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                                    <label className={`block text-xs sm:text-sm font-medium ${theme.textColors.secondary} mb-1.5 sm:mb-2`}>
                                         🎬 Entertainment
                                     </label>
                                     <div className="relative">
-                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                        <span className={`absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-sm sm:text-base`}>$</span>
                                         <input
                                             type="number"
                                             value={entertainment}
                                             onChange={(e) => setEntertainment(e.target.value)}
-                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
+                                            className={`pl-6 sm:pl-8 w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
                                             placeholder="200"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                                    <label className={`block text-xs sm:text-sm font-medium ${theme.textColors.secondary} mb-1.5 sm:mb-2`}>
                                         🛍️ Shopping & Retail
                                     </label>
                                     <div className="relative">
-                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                        <span className={`absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-sm sm:text-base`}>$</span>
                                         <input
                                             type="number"
                                             value={shopping}
                                             onChange={(e) => setShopping(e.target.value)}
-                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
+                                            className={`pl-6 sm:pl-8 w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
                                             placeholder="500"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                                    <label className={`block text-xs sm:text-sm font-medium ${theme.textColors.secondary} mb-1.5 sm:mb-2`}>
                                         🔌 Utilities & Bills
                                     </label>
                                     <div className="relative">
-                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                        <span className={`absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-sm sm:text-base`}>$</span>
                                         <input
                                             type="number"
                                             value={utilities}
                                             onChange={(e) => setUtilities(e.target.value)}
-                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
+                                            className={`pl-6 sm:pl-8 w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
                                             placeholder="150"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>
+                                    <label className={`block text-xs sm:text-sm font-medium ${theme.textColors.secondary} mb-1.5 sm:mb-2`}>
                                         💳 Other Purchases
                                     </label>
                                     <div className="relative">
-                                        <span className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted}`}>$</span>
+                                        <span className={`absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 ${theme.textColors.muted} text-sm sm:text-base`}>$</span>
                                         <input
                                             type="number"
                                             value={other}
                                             onChange={(e) => setOther(e.target.value)}
-                                            className={`pl-8 w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
+                                            className={`pl-6 sm:pl-8 w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
                                             placeholder="450"
                                         />
                                     </div>
@@ -394,16 +394,16 @@ export default function RewardsOptimizerCalculator() {
                         </div>
 
                         {/* Settings */}
-                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-6`}>
-                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Optimization Settings</h3>
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-4 sm:p-6`}>
+                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-3 sm:mb-4 text-lg sm:text-xl`}>Optimization Settings</h3>
 
-                            <div className="space-y-4">
+                            <div className="space-y-3 sm:space-y-4">
                                 <div>
-                                    <label className={`block text-sm font-medium ${theme.textColors.secondary} mb-2`}>Time Horizon</label>
+                                    <label className={`block text-xs sm:text-sm font-medium ${theme.textColors.secondary} mb-1.5 sm:mb-2`}>Time Horizon</label>
                                     <select
                                         value={timeHorizon}
                                         onChange={(e) => setTimeHorizon(e.target.value)}
-                                        className={`w-full px-4 py-3 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
+                                        className={`w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-md ${theme.textColors.primary} focus:ring-2 focus:ring-yellow-500 focus:border-transparent`}
                                     >
                                         <option value="6">6 months</option>
                                         <option value="12">1 year</option>
@@ -412,28 +412,28 @@ export default function RewardsOptimizerCalculator() {
                                     </select>
                                 </div>
 
-                                <div className="flex items-center space-x-3">
+                                <div className="flex items-center gap-2 sm:gap-3">
                                     <input
                                         type="checkbox"
                                         id="include-fees"
                                         checked={includeAnnualFees}
                                         onChange={(e) => setIncludeAnnualFees(e.target.checked)}
-                                        className={`w-4 h-4 ${theme.textColors.primary} ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded focus:ring-yellow-500`}
+                                        className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${theme.textColors.primary} ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded focus:ring-yellow-500`}
                                     />
-                                    <label htmlFor="include-fees" className={`text-sm ${theme.textColors.secondary}`}>
+                                    <label htmlFor="include-fees" className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>
                                         Include annual fees in calculation
                                     </label>
                                 </div>
 
-                                <div className="flex items-center space-x-3">
+                                <div className="flex items-center gap-2 sm:gap-3">
                                     <input
                                         type="checkbox"
                                         id="include-signup"
                                         checked={includeSignupBonus}
                                         onChange={(e) => setIncludeSignupBonus(e.target.checked)}
-                                        className={`w-4 h-4 ${theme.textColors.primary} ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded focus:ring-yellow-500`}
+                                        className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${theme.textColors.primary} ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded focus:ring-yellow-500`}
                                     />
-                                    <label htmlFor="include-signup" className={`text-sm ${theme.textColors.secondary}`}>
+                                    <label htmlFor="include-signup" className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>
                                         Include signup bonuses
                                     </label>
                                 </div>
@@ -442,59 +442,59 @@ export default function RewardsOptimizerCalculator() {
                     </div>
 
                     {/* Results and Charts */}
-                    <div className="xl:col-span-2 space-y-8">
+                    <div className="lg:col-span-2 space-y-4 sm:space-y-6 lg:space-y-8">
                         {/* Best Recommendation */}
                         {bestCard && (
-                            <div className={`bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 border ${theme.status.warning.border}/30 rounded-xl p-6`}>
-                                <h3 className={`${theme.typography.heading4} ${theme.status.warning.text} mb-4 flex items-center gap-2`}>
-                                    <Trophy className="w-6 h-6" />
+                            <div className={`bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 border ${theme.status.warning.border}/30 rounded-xl p-4 sm:p-6`}>
+                                <h3 className={`${theme.typography.heading4} ${theme.status.warning.text} mb-3 sm:mb-4 flex items-center gap-1.5 sm:gap-2 text-lg sm:text-xl`}>
+                                    <Trophy className="w-5 h-5 sm:w-6 sm:h-6" />
                                     Best Card for Your Spending
                                 </h3>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                                     <div>
-                                        <h4 className={`font-medium ${theme.textColors.primary} mb-1`}>{bestCard.cardName}</h4>
-                                        <p className={`text-sm ${theme.textColors.secondary}`}>Top recommendation</p>
+                                        <h4 className={`font-medium ${theme.textColors.primary} mb-0.5 sm:mb-1 text-sm sm:text-base`}>{bestCard.cardName}</h4>
+                                        <p className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Top recommendation</p>
                                     </div>
                                     <div>
-                                        <p className={`${theme.typography.heading2} ${theme.status.warning.text}`}>
+                                        <p className={`${theme.typography.heading2} ${theme.status.warning.text} text-xl sm:text-2xl lg:text-3xl`}>
                                             {formatCurrency(bestCard.netValue)}
                                         </p>
-                                        <p className={`text-sm ${theme.textColors.secondary}`}>Total value over {timeHorizon} months</p>
+                                        <p className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Total value over {timeHorizon} months</p>
                                     </div>
                                     <div>
-                                        <p className={`${theme.typography.heading4} ${getRewardCategory(bestCard.netValue).color}`}>
+                                        <p className={`${theme.typography.heading4} ${getRewardCategory(bestCard.netValue).color} text-lg sm:text-xl lg:text-2xl`}>
                                             {getRewardCategory(bestCard.netValue).label}
                                         </p>
-                                        <p className={`text-sm ${theme.textColors.secondary}`}>Reward optimization</p>
+                                        <p className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Reward optimization</p>
                                     </div>
                                 </div>
                             </div>
                         )}
 
                         {/* Spending Overview */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-6`}>
-                                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Monthly Spending</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-4 sm:p-6`}>
+                                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-3 sm:mb-4 text-lg sm:text-xl`}>Monthly Spending</h3>
                                 <div className="text-center">
-                                    <p className={`${theme.typography.heading2} ${theme.textColors.primary}`}>{formatCurrency(totalMonthlySpend)}</p>
-                                    <p className={`text-sm ${theme.textColors.secondary}`}>Total monthly spending</p>
-                                    <p className={`text-lg font-medium ${theme.textColors.primary} mt-2`}>
+                                    <p className={`${theme.typography.heading2} ${theme.textColors.primary} text-2xl sm:text-3xl lg:text-4xl`}>{formatCurrency(totalMonthlySpend)}</p>
+                                    <p className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>Total monthly spending</p>
+                                    <p className={`text-base sm:text-lg font-medium ${theme.textColors.primary} mt-1.5 sm:mt-2`}>
                                         {formatCurrency(totalMonthlySpend * 12)}/year
                                     </p>
                                 </div>
                             </div>
 
-                            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-6`}>
-                                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Spending Breakdown</h3>
-                                <div className="h-40">
+                            <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-4 sm:p-6`}>
+                                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-3 sm:mb-4 text-lg sm:text-xl`}>Spending Breakdown</h3>
+                                <div className="h-32 sm:h-40">
                                     <ResponsiveContainer width="100%" height="100%">
                                         <PieChart>
                                             <Pie
                                                 data={spendingBreakdown}
                                                 cx="50%"
                                                 cy="50%"
-                                                innerRadius={30}
-                                                outerRadius={60}
+                                                innerRadius={25}
+                                                outerRadius={50}
                                                 dataKey="amount"
                                                 nameKey="name"
                                             >
@@ -502,7 +502,16 @@ export default function RewardsOptimizerCalculator() {
                                                     <Cell key={`cell-${index}`} fill={entry.color} />
                                                 ))}
                                             </Pie>
-                                            <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                                            <Tooltip 
+                                                formatter={(value: number) => formatCurrency(value)}
+                                                contentStyle={{
+                                                    fontSize: '12px',
+                                                    padding: '8px',
+                                                    background: 'rgba(17, 24, 39, 0.9)',
+                                                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                                                    borderRadius: '6px'
+                                                }}
+                                            />
                                         </PieChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -510,11 +519,11 @@ export default function RewardsOptimizerCalculator() {
                         </div>
 
                         {/* Card Comparison */}
-                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-6`}>
-                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Card Recommendations</h3>
-                            <div className="h-64">
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-4 sm:p-6`}>
+                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-3 sm:mb-4 text-lg sm:text-xl`}>Card Recommendations</h3>
+                            <div className="h-48 sm:h-56 lg:h-64">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={cardRecommendations}>
+                                    <BarChart data={cardRecommendations} margin={{ top: 5, right: 10, bottom: 20, left: 10 }}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                                         <XAxis
                                             dataKey="cardName"
@@ -522,19 +531,24 @@ export default function RewardsOptimizerCalculator() {
                                             angle={-45}
                                             textAnchor="end"
                                             height={80}
-                                            fontSize={12}
+                                            fontSize={8}
                                             tick={{ fill: "#94a3b8" }}
+                                            interval={0}
+                                            tickMargin={10}
                                         />
                                         <YAxis
                                             stroke="#9CA3AF"
-                                            label={{ value: 'Net Value ($)', angle: -90, position: 'insideLeft' }}
-                                            tick={{ fill: "#94a3b8" }}
+                                            label={{ value: 'Net Value ($)', angle: -90, position: 'insideLeft', fontSize: 10 }}
+                                            tick={{ fill: "#94a3b8", fontSize: 10 }}
+                                            tickFormatter={(value) => formatCurrency(value)}
                                         />
                                         <Tooltip
                                             contentStyle={{
-                                                backgroundColor: '#1F2937',
-                                                border: '1px solid #374151',
-                                                borderRadius: '8px'
+                                                backgroundColor: 'rgba(17, 24, 39, 0.9)',
+                                                border: '1px solid rgba(255, 255, 255, 0.1)',
+                                                borderRadius: '6px',
+                                                fontSize: '12px',
+                                                padding: '8px'
                                             }}
                                             formatter={(value: number) => [formatCurrency(value), 'Net Value']}
                                         />
@@ -545,25 +559,25 @@ export default function RewardsOptimizerCalculator() {
                         </div>
 
                         {/* Detailed Comparison */}
-                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-6`}>
-                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Detailed Comparison</h3>
-                            <div className="space-y-3">
+                        <div className={`${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-4 sm:p-6`}>
+                            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-3 sm:mb-4 text-lg sm:text-xl`}>Detailed Comparison</h3>
+                            <div className="space-y-2 sm:space-y-3">
                                 {cardRecommendations.map((card, index) => (
                                     <div
                                         key={card.cardName}
-                                        className={`p-4 rounded-lg border-2 ${index === 0
+                                        className={`p-3 sm:p-4 rounded-lg border-2 ${index === 0
                                             ? '${theme.status.warning.bg.replace("/20", "")}/20 ${theme.status.warning.border}/30'
                                             : `${theme.backgrounds.card} ${theme.borderColors.primary}`
                                             }`}
                                     >
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-3">
-                                                <div className={`w-3 h-3 rounded-full`} style={{ backgroundColor: card.color }}></div>
-                                                <div>
-                                                    <h4 className={`font-medium ${index === 0 ? '${theme.status.warning.text}' : '${theme.textColors.primary}'}`}>
+                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+                                            <div className="flex items-center gap-2 sm:gap-3">
+                                                <div className={`w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full flex-shrink-0`} style={{ backgroundColor: card.color }}></div>
+                                                <div className="min-w-0 flex-1">
+                                                    <h4 className={`font-medium ${index === 0 ? '${theme.status.warning.text}' : '${theme.textColors.primary}'} text-sm sm:text-base truncate`}>
                                                         {card.cardName}
                                                     </h4>
-                                                    <div className={`flex gap-4 text-sm ${theme.textColors.secondary}`}>
+                                                    <div className={`flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm ${theme.textColors.secondary}`}>
                                                         <span>Rewards: {formatCurrency(card.totalRewards)}</span>
                                                         {card.signupBonus > 0 && (
                                                             <span>Bonus: {formatCurrency(card.signupBonus)}</span>
@@ -571,11 +585,11 @@ export default function RewardsOptimizerCalculator() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="text-right">
-                                                <div className={`text-lg font-bold ${index === 0 ? '${theme.status.warning.text}' : '${theme.textColors.primary}'}`}>
+                                            <div className="text-right flex-shrink-0">
+                                                <div className={`text-base sm:text-lg font-bold ${index === 0 ? '${theme.status.warning.text}' : '${theme.textColors.primary}'}`}>
                                                     {formatCurrency(card.netValue)}
                                                 </div>
-                                                <div className={`text-sm ${theme.textColors.muted}`}>Net value</div>
+                                                <div className={`text-xs sm:text-sm ${theme.textColors.muted}`}>Net value</div>
                                             </div>
                                         </div>
                                     </div>
@@ -586,25 +600,25 @@ export default function RewardsOptimizerCalculator() {
                 </div>
 
                 {/* Optimization Tips */}
-                <div className={`mt-8 ${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-6`}>
-                    <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>💡 Reward Optimization Tips</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-                        <div className={`${theme.status.info.bg}/20 border ${theme.status.info.border} rounded-lg p-4`}>
-                            <h4 className={`font-semibold mb-2 ${theme.status.info.text}`}>📊 Track Your Spending</h4>
+                <div className={`mt-6 sm:mt-8 ${theme.backgrounds.glass} border ${theme.borderColors.primary}/5 backdrop-blur-xl border ${theme.borderColors.muted}/10 rounded-xl shadow-lg p-4 sm:p-6`}>
+                    <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-3 sm:mb-4 text-lg sm:text-xl`}>💡 Reward Optimization Tips</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm">
+                        <div className={`${theme.status.info.bg}/20 border ${theme.status.info.border} rounded-lg p-3 sm:p-4`}>
+                            <h4 className={`font-semibold mb-1.5 sm:mb-2 ${theme.status.info.text} text-sm sm:text-base`}>📊 Track Your Spending</h4>
                             <p className={`${theme.textColors.secondary}`}>
                                 Monitor your actual spending patterns quarterly. Your categories may change, requiring different cards for optimal rewards.
                             </p>
                         </div>
 
-                        <div className={`${theme.status.success.bg}/20 border ${theme.status.success.border} rounded-lg p-4`}>
-                            <h4 className={`font-semibold mb-2 ${theme.status.success.text}`}>🎯 Maximize Signup Bonuses</h4>
+                        <div className={`${theme.status.success.bg}/20 border ${theme.status.success.border} rounded-lg p-3 sm:p-4`}>
+                            <h4 className={`font-semibold mb-1.5 sm:mb-2 ${theme.status.success.text} text-sm sm:text-base`}>🎯 Maximize Signup Bonuses</h4>
                             <p className={`${theme.textColors.secondary}`}>
                                 Plan large purchases around new card applications to easily meet minimum spending requirements for signup bonuses.
                             </p>
                         </div>
 
-                        <div className={`${theme.status.warning.bg.replace("/20", "")}/20 border ${theme.status.warning.border}/30 rounded-lg p-4`}>
-                            <h4 className={`font-semibold mb-2 ${theme.status.warning.text}`}>💳 Consider Multiple Cards</h4>
+                        <div className={`${theme.status.warning.bg.replace("/20", "")}/20 border ${theme.status.warning.border}/30 rounded-lg p-3 sm:p-4`}>
+                            <h4 className={`font-semibold mb-1.5 sm:mb-2 ${theme.status.warning.text} text-sm sm:text-base`}>💳 Consider Multiple Cards</h4>
                             <p className={`${theme.textColors.secondary}`}>
                                 Use different cards for different categories to maximize rewards. Just ensure you can manage multiple payments responsibly.
                             </p>

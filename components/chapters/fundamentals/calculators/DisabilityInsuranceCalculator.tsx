@@ -190,9 +190,9 @@ export default function DisabilityInsuranceCalculator() {
 
   return (
     <div className={`p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-      <div className="flex items-center gap-3 mb-6">
-        <Shield className="w-6 h-6 text-blue-400" />
-        <h2 className={`text-xl font-bold ${theme.textColors.primary}`}>
+      <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+        <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400 flex-shrink-0" />
+        <h2 className={`text-lg sm:text-xl font-bold ${theme.textColors.primary} leading-tight`}>
           Disability Insurance Calculator
         </h2>
       </div>
@@ -386,33 +386,33 @@ export default function DisabilityInsuranceCalculator() {
 
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {monthlyExpenses.map((expense) => (
-                <div key={expense.id} className={`p-2 bg-slate-800/50 border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center justify-between mb-1">
+                <div key={expense.id} className={`p-2 sm:p-3 bg-slate-800/50 border ${theme.borderColors.primary} rounded-lg`}>
+                  <div className="flex items-center justify-between mb-1 sm:mb-2">
                     <input
                       type="text"
                       value={expense.name}
                       onChange={(e) => updateExpense(expense.id, 'name', e.target.value)}
-                      className={`bg-transparent ${theme.textColors.primary} text-sm font-medium border-none outline-none flex-1`}
+                      className={`bg-transparent ${theme.textColors.primary} text-xs sm:text-sm font-medium border-none outline-none flex-1`}
                     />
                     <button
                       onClick={() => removeExpense(expense.id)}
-                      className="text-red-400 hover:text-red-300 text-xs ml-2"
+                      className="text-red-400 hover:text-red-300 text-[10px] sm:text-xs ml-2"
                     >
                       Remove
                     </button>
                   </div>
                   
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-col sm:flex-row gap-2">
                     <div className="relative flex-1">
                       <DollarSign className="absolute left-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-slate-400" />
                       <input
                         type="number"
                         value={expense.amount}
                         onChange={(e) => updateExpense(expense.id, 'amount', Number(e.target.value))}
-                        className={`w-full pl-6 pr-2 py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-sm`}
+                        className={`w-full pl-6 pr-2 py-1.5 sm:py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-xs sm:text-sm`}
                       />
                     </div>
-                    <label className="flex items-center text-xs">
+                    <label className="flex items-center text-[10px] sm:text-xs">
                       <input
                         type="checkbox"
                         checked={expense.essential}
@@ -433,36 +433,36 @@ export default function DisabilityInsuranceCalculator() {
           {analysis && (
             <>
               {/* Summary Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className={`p-4 bg-blue-900/20 border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Calculator className="w-5 h-5 text-blue-400" />
-                    <h4 className={`font-semibold ${theme.textColors.primary}`}>Monthly Coverage</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+                <div className={`p-3 sm:p-4 bg-blue-900/20 border ${theme.borderColors.primary} rounded-lg`}>
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                    <Calculator className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
+                    <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary}`}>Monthly Coverage</h4>
                   </div>
-                  <div className="text-xl font-bold text-blue-400">
+                  <div className="text-lg sm:text-xl font-bold text-blue-400">
                     {formatCurrency(analysis.monthlyCoverage)}
                   </div>
                 </div>
 
-                <div className={`p-4 bg-red-900/20 border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <TrendingDown className="w-5 h-5 text-red-400" />
-                    <h4 className={`font-semibold ${theme.textColors.primary}`}>Coverage Gap</h4>
+                <div className={`p-3 sm:p-4 bg-red-900/20 border ${theme.borderColors.primary} rounded-lg`}>
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                    <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+                    <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary}`}>Coverage Gap</h4>
                   </div>
-                  <div className="text-xl font-bold text-red-400">
+                  <div className="text-lg sm:text-xl font-bold text-red-400">
                     {formatCurrency(analysis.coverageGap)}
                   </div>
                 </div>
 
-                <div className={`p-4 bg-green-900/20 border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <DollarSign className="w-5 h-5 text-green-400" />
-                    <h4 className={`font-semibold ${theme.textColors.primary}`}>Est. Premium</h4>
+                <div className={`p-3 sm:p-4 bg-green-900/20 border ${theme.borderColors.primary} rounded-lg sm:col-span-2 md:col-span-1`}>
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                    <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
+                    <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary}`}>Est. Premium</h4>
                   </div>
-                  <div className="text-xl font-bold text-green-400">
+                  <div className="text-lg sm:text-xl font-bold text-green-400">
                     {formatCurrency(analysis.estimatedPremium)}
                   </div>
-                  <div className={`text-xs ${theme.textColors.secondary}`}>per year</div>
+                  <div className={`text-[10px] sm:text-xs ${theme.textColors.secondary}`}>per year</div>
                 </div>
               </div>
 
@@ -505,23 +505,23 @@ export default function DisabilityInsuranceCalculator() {
                   </h3>
                 </div>
                 
-                <div className="p-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="p-3 sm:p-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     <div>
-                      <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Essential Expenses</h4>
+                      <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary} mb-2 sm:mb-3`}>Essential Expenses</h4>
                       <div className="space-y-1">
                         {monthlyExpenses
                           .filter(expense => expense.essential)
                           .map(expense => (
-                            <div key={expense.id} className="flex justify-between text-sm">
-                              <span className={`${theme.textColors.secondary}`}>{expense.name}</span>
-                              <span className={`${theme.textColors.primary}`}>
+                            <div key={expense.id} className="flex justify-between text-xs sm:text-sm">
+                              <span className={`${theme.textColors.secondary} truncate mr-2`}>{expense.name}</span>
+                              <span className={`${theme.textColors.primary} flex-shrink-0`}>
                                 {formatCurrency(expense.amount)}
                               </span>
                             </div>
                           ))}
                         <div className={`border-t ${theme.borderColors.primary} pt-1 mt-2`}>
-                          <div className="flex justify-between font-semibold">
+                          <div className="flex justify-between font-semibold text-xs sm:text-sm">
                             <span className={`${theme.textColors.primary}`}>Total Essential</span>
                             <span className={`${theme.textColors.primary}`}>
                               {formatCurrency(
@@ -536,20 +536,20 @@ export default function DisabilityInsuranceCalculator() {
                     </div>
 
                     <div>
-                      <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Non-Essential Expenses</h4>
+                      <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary} mb-2 sm:mb-3`}>Non-Essential Expenses</h4>
                       <div className="space-y-1">
                         {monthlyExpenses
                           .filter(expense => !expense.essential)
                           .map(expense => (
-                            <div key={expense.id} className="flex justify-between text-sm">
-                              <span className={`${theme.textColors.secondary}`}>{expense.name}</span>
-                              <span className={`${theme.textColors.primary}`}>
+                            <div key={expense.id} className="flex justify-between text-xs sm:text-sm">
+                              <span className={`${theme.textColors.secondary} truncate mr-2`}>{expense.name}</span>
+                              <span className={`${theme.textColors.primary} flex-shrink-0`}>
                                 {formatCurrency(expense.amount)}
                               </span>
                             </div>
                           ))}
                         <div className={`border-t ${theme.borderColors.primary} pt-1 mt-2`}>
-                          <div className="flex justify-between font-semibold">
+                          <div className="flex justify-between font-semibold text-xs sm:text-sm">
                             <span className={`${theme.textColors.primary}`}>Total Non-Essential</span>
                             <span className={`${theme.textColors.primary}`}>
                               {formatCurrency(

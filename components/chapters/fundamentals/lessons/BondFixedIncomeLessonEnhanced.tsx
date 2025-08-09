@@ -494,12 +494,27 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
                   Purchase bonds with staggered maturity dates to reduce interest rate risk 
                   and provide regular reinvestment opportunities.
                 </p>
-                <div className="grid grid-cols-5 gap-2 text-center text-xs">
-                  <div className={`p-2 ${theme.status.success.bg}/20 rounded`}>Year 1<br/>$10k</div>
-                  <div className={`p-2 ${theme.status.info.bg}/20 rounded`}>Year 2<br/>$10k</div>
-                  <div className={`p-2 ${theme.status.warning.bg}/20 rounded`}>Year 3<br/>$10k</div>
-                  <div className={`p-2 ${theme.status.error.bg}/20 rounded`}>Year 4<br/>$10k</div>
-                  <div className={`p-2 ${theme.backgrounds.card} border rounded`}>Year 5<br/>$10k</div>
+                <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5 sm:gap-2 text-center text-[10px] sm:text-xs">
+                  <div className={`p-1.5 sm:p-2 ${theme.status.success.bg}/20 rounded`}>
+                    <div className="font-medium">Year 1</div>
+                    <div className="text-[10px] sm:text-xs">$10k</div>
+                  </div>
+                  <div className={`p-1.5 sm:p-2 ${theme.status.info.bg}/20 rounded`}>
+                    <div className="font-medium">Year 2</div>
+                    <div className="text-[10px] sm:text-xs">$10k</div>
+                  </div>
+                  <div className={`p-1.5 sm:p-2 ${theme.status.warning.bg}/20 rounded`}>
+                    <div className="font-medium">Year 3</div>
+                    <div className="text-[10px] sm:text-xs">$10k</div>
+                  </div>
+                  <div className={`p-1.5 sm:p-2 ${theme.status.error.bg}/20 rounded hidden sm:block`}>
+                    <div className="font-medium">Year 4</div>
+                    <div className="text-[10px] sm:text-xs">$10k</div>
+                  </div>
+                  <div className={`p-1.5 sm:p-2 ${theme.backgrounds.card} border rounded hidden sm:block`}>
+                    <div className="font-medium">Year 5</div>
+                    <div className="text-[10px] sm:text-xs">$10k</div>
+                  </div>
                 </div>
                 <p className={`text-xs ${theme.textColors.secondary} mt-2`}>
                   When Year 1 matures, reinvest in new Year 5 bond
@@ -515,18 +530,18 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
                   Combine short-term and long-term bonds while avoiding intermediate terms. 
                   Provides liquidity and higher yields.
                 </p>
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  <div className={`p-3 ${theme.status.success.bg}/20 rounded`}>
-                    <div className="font-bold">50%</div>
-                    <div className="text-xs">1-3 Year Bonds</div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 text-center">
+                  <div className={`p-2 sm:p-3 ${theme.status.success.bg}/20 rounded`}>
+                    <div className="font-bold text-sm sm:text-base">50%</div>
+                    <div className="text-[10px] sm:text-xs">1-3 Year Bonds</div>
                   </div>
-                  <div className={`p-3 ${theme.backgrounds.cardDisabled} rounded opacity-50`}>
-                    <div className="font-bold">0%</div>
-                    <div className="text-xs">5-7 Year Bonds</div>
+                  <div className={`p-2 sm:p-3 ${theme.backgrounds.cardDisabled} rounded opacity-50 hidden sm:block`}>
+                    <div className="font-bold text-sm sm:text-base">0%</div>
+                    <div className="text-[10px] sm:text-xs">5-7 Year Bonds</div>
                   </div>
-                  <div className={`p-3 ${theme.status.error.bg}/20 rounded`}>
-                    <div className="font-bold">50%</div>
-                    <div className="text-xs">10+ Year Bonds</div>
+                  <div className={`p-2 sm:p-3 ${theme.status.error.bg}/20 rounded`}>
+                    <div className="font-bold text-sm sm:text-base">50%</div>
+                    <div className="text-[10px] sm:text-xs">10+ Year Bonds</div>
                   </div>
                 </div>
               </div>
@@ -673,26 +688,26 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
       {/* Header */}
-      <div className="text-center space-y-4">
+      <div className="text-center space-y-3 sm:space-y-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className={`${theme.typography.heading1} ${theme.textColors.primary}`}>
+          <h1 className={`${theme.typography.heading1} ${theme.textColors.primary} text-xl sm:text-2xl md:text-3xl lg:text-4xl`}>
             Bond & Fixed Income Mastery
           </h1>
-          <p className={`${theme.typography.body} ${theme.textColors.secondary} max-w-2xl mx-auto`}>
+          <p className={`${theme.typography.body} ${theme.textColors.secondary} max-w-2xl mx-auto text-sm sm:text-base mt-2 sm:mt-3`}>
             Master conservative investing strategies, understand bond mechanics, and build stable income-generating portfolios
           </p>
         </motion.div>
 
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm text-gray-600">
+        <div className="space-y-1.5 sm:space-y-2">
+          <div className="flex justify-between text-xs sm:text-sm text-gray-600">
             <span>Progress</span>
             <span>{Math.round(progressPercentage)}% Complete</span>
           </div>
-          <Progress value={progressPercentage} className="w-full" />
+          <Progress value={progressPercentage} className="w-full h-2 sm:h-3" />
         </div>
       </div>
 
@@ -780,23 +795,24 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
             
             <Separator />
             
-            <div className="flex justify-between items-center pt-4">
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 pt-4">
               <Button
                 variant="outline"
                 onClick={() => setCurrentLesson(Math.max(0, currentLesson - 1))}
                 disabled={currentLesson === 0}
+                className="w-full sm:w-auto order-2 sm:order-1"
               >
                 Previous
               </Button>
               
-              <div className="flex space-x-3">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto order-1 sm:order-2 sm:ml-auto">
                 {!completedLessons[currentLesson] && (
                   <Button
                     onClick={() => handleLessonComplete(currentLesson)}
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto"
                   >
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    Complete Lesson
+                    <span className="text-sm sm:text-base">Complete Lesson</span>
                   </Button>
                 )}
                 
@@ -804,8 +820,9 @@ export default function BondFixedIncomeLessonEnhanced({ onComplete }: BondFixedI
                   variant="outline"
                   onClick={() => setCurrentLesson(Math.min(lessons.length - 1, currentLesson + 1))}
                   disabled={currentLesson === lessons.length - 1}
+                  className="w-full sm:w-auto"
                 >
-                  Next
+                  <span className="text-sm sm:text-base">Next</span>
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </div>

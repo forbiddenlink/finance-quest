@@ -295,41 +295,41 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
         transition={{ duration: 0.5 }}
       >
         <GradientCard variant="glass" gradient="blue" className="p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className={`${theme.status.info.bg} p-3 rounded-lg`}>
-              <TrendingUp className={`w-6 h-6 ${theme.status.info.text}`} />
+          <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <div className={`${theme.status.info.bg} p-2 sm:p-3 rounded-lg flex-shrink-0`}>
+              <TrendingUp className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.info.text}`} />
             </div>
             <div>
-              <h3 className={`text-2xl font-bold ${theme.textColors.primary}`}>
+              <h3 className={`text-lg sm:text-xl md:text-2xl font-bold ${theme.textColors.primary} mb-0.5 sm:mb-1 leading-tight`}>
                 Market Volatility Simulator
               </h3>
-              <p className={`${theme.textColors.secondary}`}>
+              <p className={`${theme.textColors.secondary} text-sm sm:text-base`}>
                 Test different investment strategies during market crises
               </p>
             </div>
           </div>
 
           {/* Strategy Selection */}
-          <div className="mb-6">
-            <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
+          <div className="mb-4 sm:mb-6">
+            <h4 className={`text-base sm:text-lg font-semibold ${theme.textColors.primary} mb-3 sm:mb-4`}>
               Choose Your Investment Strategy
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {strategies.map((strategy) => (
                 <motion.button
                   key={strategy.id}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setSelectedStrategy(strategy)}
-                  className={`p-4 border-2 rounded-lg transition-all text-left ${selectedStrategy.id === strategy.id
+                  className={`p-3 sm:p-4 border-2 rounded-lg transition-all text-left ${selectedStrategy.id === strategy.id
                       ? `border-[${strategy.color}] bg-[${strategy.color}]/10`
                       : `${theme.borderColors.muted} hover:${theme.borderColors.primary}`
                     }`}
                 >
-                  <h5 className={`font-semibold ${theme.textColors.primary} mb-2`}>
+                  <h5 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary} mb-1.5 sm:mb-2`}>
                     {strategy.name}
                   </h5>
-                  <p className={`text-sm ${theme.textColors.secondary}`}>
+                  <p className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>
                     {strategy.description}
                   </p>
                 </motion.button>
@@ -338,21 +338,21 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
           </div>
 
           {/* Controls */}
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsSimulating(!isSimulating)}
-              className={`flex items-center px-6 py-3 ${theme.buttons.primary} rounded-xl transition-all hover-lift`}
+              className={`flex items-center w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 ${theme.buttons.primary} rounded-lg sm:rounded-xl transition-all hover-lift text-sm sm:text-base`}
             >
               {isSimulating ? (
                 <>
-                  <Pause className="w-5 h-5 mr-2" />
+                  <Pause className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
                   Pause
                 </>
               ) : (
                 <>
-                  <Play className="w-5 h-5 mr-2" />
+                  <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
                   Start Simulation
                 </>
               )}
@@ -362,64 +362,64 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={resetSimulation}
-              className={`flex items-center px-6 py-3 ${theme.buttons.secondary} rounded-xl transition-all hover-lift`}
+              className={`flex items-center w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 ${theme.buttons.secondary} rounded-lg sm:rounded-xl transition-all hover-lift text-sm sm:text-base`}
             >
-              <RotateCcw className="w-5 h-5 mr-2" />
+              <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
               Reset
             </motion.button>
 
-            <div className={`flex items-center ${getEmotionalColor()}`}>
-              <Brain className="w-5 h-5 mr-2" />
+            <div className={`flex items-center ${getEmotionalColor()} text-sm sm:text-base`}>
+              <Brain className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
               <span className="font-medium capitalize">{emotionalState}</span>
             </div>
           </div>
 
           {/* Current Status */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div className={`p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`}>
-              <div className="flex items-center gap-2 mb-2">
-                <DollarSign className={`w-5 h-5 ${theme.status.info.text}`} />
-                <span className={`font-semibold ${theme.status.info.text}`}>Portfolio Value</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
+            <div className={`p-3 sm:p-4 ${theme.status.info.bg} border ${theme.status.info.border} rounded-lg`}>
+              <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                <DollarSign className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.status.info.text}`} />
+                <span className={`font-semibold text-sm sm:text-base ${theme.status.info.text}`}>Portfolio Value</span>
               </div>
-              <p className={`text-2xl font-bold ${theme.textColors.primary}`}>
+              <p className={`text-lg sm:text-2xl font-bold ${theme.textColors.primary}`}>
                 ${portfolioValue.toLocaleString()}
               </p>
             </div>
 
-            <div className={`p-4 ${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg`}>
-              <div className="flex items-center gap-2 mb-2">
-                <Zap className={`w-5 h-5 ${theme.status.warning.text}`} />
-                <span className={`font-semibold ${theme.status.warning.text}`}>Time Elapsed</span>
+            <div className={`p-3 sm:p-4 ${theme.status.warning.bg} border ${theme.status.warning.border} rounded-lg`}>
+              <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                <Zap className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.status.warning.text}`} />
+                <span className={`font-semibold text-sm sm:text-base ${theme.status.warning.text}`}>Time Elapsed</span>
               </div>
-              <p className={`text-2xl font-bold ${theme.textColors.primary}`}>
+              <p className={`text-lg sm:text-2xl font-bold ${theme.textColors.primary}`}>
                 {Math.floor(currentMonth / 12)} years {currentMonth % 12} months
               </p>
             </div>
 
             {performance && (
               <>
-                <div className={`p-4 ${performance.totalReturn >= 0 ? theme.status.success.bg : theme.status.error.bg} border ${performance.totalReturn >= 0 ? theme.status.success.border : theme.status.error.border} rounded-lg`}>
-                  <div className="flex items-center gap-2 mb-2">
+                <div className={`p-3 sm:p-4 ${performance.totalReturn >= 0 ? theme.status.success.bg : theme.status.error.bg} border ${performance.totalReturn >= 0 ? theme.status.success.border : theme.status.error.border} rounded-lg`}>
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
                     {performance.totalReturn >= 0 ? (
-                      <TrendingUp className={`w-5 h-5 ${theme.status.success.text}`} />
+                      <TrendingUp className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.status.success.text}`} />
                     ) : (
-                      <TrendingDown className={`w-5 h-5 ${theme.status.error.text}`} />
+                      <TrendingDown className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.status.error.text}`} />
                     )}
-                    <span className={`font-semibold ${performance.totalReturn >= 0 ? theme.status.success.text : theme.status.error.text}`}>
+                    <span className={`font-semibold text-sm sm:text-base ${performance.totalReturn >= 0 ? theme.status.success.text : theme.status.error.text}`}>
                       Total Return
                     </span>
                   </div>
-                  <p className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                  <p className={`text-lg sm:text-2xl font-bold ${theme.textColors.primary}`}>
                     {performance.totalReturn.toFixed(1)}%
                   </p>
                 </div>
 
-                <div className={`p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle className={`w-5 h-5 ${theme.status.success.text}`} />
-                    <span className={`font-semibold ${theme.status.success.text}`}>Contributions</span>
+                <div className={`p-3 sm:p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg`}>
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                    <CheckCircle className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.status.success.text}`} />
+                    <span className={`font-semibold text-sm sm:text-base ${theme.status.success.text}`}>Contributions</span>
                   </div>
-                  <p className={`text-2xl font-bold ${theme.textColors.primary}`}>
+                  <p className={`text-lg sm:text-2xl font-bold ${theme.textColors.primary}`}>
                     ${performance.totalContributions.toLocaleString()}
                   </p>
                 </div>
@@ -434,25 +434,25 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className={`mb-6 p-4 ${theme.status.error.bg} border ${theme.status.error.border} rounded-lg`}
+                className={`mb-4 sm:mb-6 p-3 sm:p-4 ${theme.status.error.bg} border ${theme.status.error.border} rounded-lg`}
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <AlertTriangle className={`w-5 h-5 ${theme.status.error.text}`} />
-                  <h5 className={`font-semibold ${theme.status.error.text}`}>
+                <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                  <AlertTriangle className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.status.error.text}`} />
+                  <h5 className={`font-semibold text-sm sm:text-base ${theme.status.error.text}`}>
                     Market Crisis: {currentEvent.name}
                   </h5>
                 </div>
-                <p className={`${theme.textColors.secondary} text-sm mb-3`}>
+                <p className={`${theme.textColors.secondary} text-xs sm:text-sm mb-2 sm:mb-3`}>
                   {currentEvent.description}
                 </p>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
-                    <h6 className={`font-medium ${theme.textColors.primary} mb-1`}>Emotional Trigger:</h6>
-                    <p className={`text-sm ${theme.status.error.text}`}>{currentEvent.emotionalTrigger}</p>
+                    <h6 className={`font-medium text-sm sm:text-base ${theme.textColors.primary} mb-0.5 sm:mb-1`}>Emotional Trigger:</h6>
+                    <p className={`text-xs sm:text-sm ${theme.status.error.text}`}>{currentEvent.emotionalTrigger}</p>
                   </div>
                   <div>
-                    <h6 className={`font-medium ${theme.textColors.primary} mb-1`}>Historical Example:</h6>
-                    <p className={`text-sm ${theme.textColors.secondary}`}>{currentEvent.historicalExample}</p>
+                    <h6 className={`font-medium text-sm sm:text-base ${theme.textColors.primary} mb-0.5 sm:mb-1`}>Historical Example:</h6>
+                    <p className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>{currentEvent.historicalExample}</p>
                   </div>
                 </div>
               </motion.div>
@@ -461,27 +461,33 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
 
           {/* Portfolio Chart */}
           {simulationData.length > 0 && (
-            <div className="h-64 mb-6">
-              <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
+            <div className="h-48 sm:h-64 mb-4 sm:mb-6">
+              <h4 className={`text-base sm:text-lg font-semibold ${theme.textColors.primary} mb-3 sm:mb-4`}>
                 Portfolio Performance Over Time
               </h4>
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={simulationData}>
+                <AreaChart data={simulationData} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                   <XAxis
                     dataKey="month"
                     stroke="#9CA3AF"
                     tickFormatter={(value) => `${Math.floor(value / 12)}y`}
+                    fontSize={10}
+                    tickMargin={8}
                   />
                   <YAxis
                     stroke="#9CA3AF"
                     tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                    fontSize={10}
+                    width={40}
                   />
                   <Tooltip
                     contentStyle={{
                       backgroundColor: '#1F2937',
                       border: '1px solid #374151',
-                      borderRadius: '8px'
+                      borderRadius: '8px',
+                      fontSize: '12px',
+                      padding: '8px'
                     }}
                     formatter={(value: number) => [`$${value.toLocaleString()}`, 'Portfolio Value']}
                     labelFormatter={(value) => `Month ${value}`}
@@ -491,7 +497,7 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
                     dataKey="portfolioValue"
                     stroke={selectedStrategy.color}
                     fill={`${selectedStrategy.color}20`}
-                    strokeWidth={2}
+                    strokeWidth={1.5}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -500,13 +506,13 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
 
           {/* Strategy Results Summary */}
           {performance && performance.years >= 5 && (
-            <div className={`p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg`}>
-              <h5 className={`font-semibold ${theme.status.success.text} mb-2`}>
+            <div className={`p-3 sm:p-4 ${theme.status.success.bg} border ${theme.status.success.border} rounded-lg`}>
+              <h5 className={`font-semibold text-sm sm:text-base ${theme.status.success.text} mb-1.5 sm:mb-2`}>
                 Strategy Performance Analysis
               </h5>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm">
                 <div>
-                  <p className={`${theme.textColors.secondary}`}>
+                  <p className={`${theme.textColors.secondary} mb-1`}>
                     <strong>Strategy:</strong> {selectedStrategy.name}
                   </p>
                   <p className={`${theme.textColors.secondary}`}>
@@ -514,15 +520,15 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
                   </p>
                 </div>
                 <div>
-                  <p className={`${theme.textColors.secondary}`}>
+                  <p className={`${theme.textColors.secondary} mb-1`}>
                     <strong>Total Invested:</strong> ${performance.totalContributions.toLocaleString()}
                   </p>
                   <p className={`${theme.textColors.secondary}`}>
                     <strong>Final Value:</strong> ${performance.finalValue.toLocaleString()}
                   </p>
                 </div>
-                <div>
-                  <p className={`${theme.textColors.secondary}`}>
+                <div className="sm:col-span-2 md:col-span-1">
+                  <p className={`${theme.textColors.secondary} mb-1`}>
                     <strong>Total Gain:</strong> ${(performance.finalValue - performance.totalContributions).toLocaleString()}
                   </p>
                   <p className={`${theme.textColors.secondary}`}>

@@ -315,43 +315,51 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
         className={`space-y-6 ${className}`}
       >
         <GradientCard variant="glass" gradient="green" className="p-6">
-          <div className="text-center mb-6">
-            <Brain className={`w-12 h-12 ${theme.status.success.text} mx-auto mb-4`} />
-            <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>
+          <div className="text-center mb-4 sm:mb-6">
+            <Brain className={`w-10 h-10 sm:w-12 sm:h-12 ${theme.status.success.text} mx-auto mb-3 sm:mb-4`} />
+            <h3 className={`text-xl sm:text-2xl font-bold ${theme.textColors.primary} mb-2`}>
               Behavioral Finance Assessment Complete
             </h3>
-            <p className={`text-4xl font-bold mb-2 ${getScoreColor(overallScore)}`}>
+            <p className={`text-3xl sm:text-4xl font-bold mb-2 ${getScoreColor(overallScore)}`}>
               {overallScore.toFixed(0)}%
             </p>
-            <p className={`${theme.textColors.secondary} mb-4`}>
+            <p className={`${theme.textColors.secondary} text-sm sm:text-base mb-3 sm:mb-4`}>
               {getScoreMessage(overallScore)}
             </p>
           </div>
 
           {/* Score Breakdown Chart */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
             <div>
-              <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 text-center`}>
+              <h4 className={`text-base sm:text-lg font-semibold ${theme.textColors.primary} mb-3 sm:mb-4 text-center`}>
                 Decision Quality by Bias Type
               </h4>
-              <div className="h-64">
+              <div className="h-48 sm:h-64">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={chartData}>
+                  <BarChart data={chartData} margin={{ top: 5, right: 10, bottom: 20, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                     <XAxis
                       dataKey="name"
                       stroke="#9CA3AF"
-                      fontSize={12}
+                      fontSize={10}
+                      angle={-45}
+                      textAnchor="end"
+                      height={60}
+                      tickMargin={5}
                     />
                     <YAxis
                       stroke="#9CA3AF"
                       domain={[0, 100]}
+                      fontSize={10}
+                      width={30}
                     />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: '#1F2937',
                         border: '1px solid #374151',
-                        borderRadius: '8px'
+                        borderRadius: '8px',
+                        fontSize: '12px',
+                        padding: '8px'
                       }}
                     />
                     <Bar
@@ -365,25 +373,35 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
             </div>
 
             <div>
-              <h4 className={`text-lg font-semibold ${theme.textColors.primary} mb-4 text-center`}>
+              <h4 className={`text-base sm:text-lg font-semibold ${theme.textColors.primary} mb-3 sm:mb-4 text-center`}>
                 Overall Decision Distribution
               </h4>
-              <div className="h-64">
+              <div className="h-48 sm:h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
                       data={biasDistribution}
                       cx="50%"
                       cy="50%"
-                      outerRadius={80}
+                      outerRadius="80%"
+                      innerRadius="40%"
                       dataKey="value"
                       label={({ name, value }) => `${name}: ${value}`}
+                      labelLine={false}
                     >
                       {biasDistribution.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
-                    <Tooltip />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: '#1F2937',
+                        border: '1px solid #374151',
+                        borderRadius: '8px',
+                        fontSize: '12px',
+                        padding: '8px'
+                      }}
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -453,15 +471,15 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
         transition={{ duration: 0.5 }}
       >
         <GradientCard variant="glass" gradient="purple" className="p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className={`${theme.status.info.bg} p-3 rounded-lg`}>
-              <Brain className={`w-6 h-6 ${theme.status.info.text}`} />
+          <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <div className={`${theme.status.info.bg} p-2 sm:p-3 rounded-lg flex-shrink-0`}>
+              <Brain className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.info.text}`} />
             </div>
             <div>
-              <h3 className={`text-2xl font-bold ${theme.textColors.primary}`}>
+              <h3 className={`text-lg sm:text-xl md:text-2xl font-bold ${theme.textColors.primary} mb-0.5 sm:mb-1`}>
                 Behavioral Finance Simulator
               </h3>
-              <p className={`${theme.textColors.secondary}`}>
+              <p className={`${theme.textColors.secondary} text-sm sm:text-base`}>
                 Test your resistance to cognitive biases that affect financial decisions
               </p>
             </div>
@@ -545,44 +563,44 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
                 className="space-y-4 mb-6"
               >
                 {/* Result */}
-                <div className={`p-4 border-l-4 rounded-lg ${selectedOptionData.isRational
+                <div className={`p-3 sm:p-4 border-l-4 rounded-lg ${selectedOptionData.isRational
                     ? `${theme.status.success.bg} ${theme.status.success.border}`
                     : `${theme.status.error.bg} ${theme.status.error.border}`
                   }`}>
-                  <div className="flex items-center gap-2 mb-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
                     {selectedOptionData.isRational ? (
-                      <CheckCircle className={`w-5 h-5 ${theme.status.success.text}`} />
+                      <CheckCircle className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.status.success.text}`} />
                     ) : (
-                      <AlertTriangle className={`w-5 h-5 ${theme.status.error.text}`} />
+                      <AlertTriangle className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.status.error.text}`} />
                     )}
-                    <h6 className={`font-semibold ${selectedOptionData.isRational ? theme.status.success.text : theme.status.error.text
+                    <h6 className={`font-semibold text-sm sm:text-base ${selectedOptionData.isRational ? theme.status.success.text : theme.status.error.text
                       }`}>
                       {selectedOptionData.isRational ? 'Rational Decision!' : 'Cognitive Bias Detected'}
                     </h6>
                   </div>
-                  <p className={`${theme.textColors.secondary} text-sm`}>
+                  <p className={`${theme.textColors.secondary} text-xs sm:text-sm`}>
                     {selectedOptionData.explanation}
                   </p>
                 </div>
 
                 {/* Real World Example */}
-                <div className={`p-4 ${theme.status.warning.bg} border-l-4 ${theme.status.warning.border} rounded-lg`}>
-                  <h6 className={`font-semibold ${theme.status.warning.text} mb-2 flex items-center`}>
-                    <DollarSign className="w-4 h-4 mr-1" />
+                <div className={`p-3 sm:p-4 ${theme.status.warning.bg} border-l-4 ${theme.status.warning.border} rounded-lg`}>
+                  <h6 className={`font-semibold text-sm sm:text-base ${theme.status.warning.text} mb-1.5 sm:mb-2 flex items-center gap-1.5 sm:gap-2`}>
+                    <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     Real World Impact
                   </h6>
-                  <p className={`${theme.textColors.secondary} text-sm`}>
+                  <p className={`${theme.textColors.secondary} text-xs sm:text-sm`}>
                     {bias.realWorldExample}
                   </p>
                 </div>
 
                 {/* Prevention Strategy */}
-                <div className={`p-4 ${theme.status.info.bg} border-l-4 ${theme.status.info.border} rounded-lg`}>
-                  <h6 className={`font-semibold ${theme.status.info.text} mb-2 flex items-center`}>
-                    <Lightbulb className="w-4 h-4 mr-1" />
+                <div className={`p-3 sm:p-4 ${theme.status.info.bg} border-l-4 ${theme.status.info.border} rounded-lg`}>
+                  <h6 className={`font-semibold text-sm sm:text-base ${theme.status.info.text} mb-1.5 sm:mb-2 flex items-center gap-1.5 sm:gap-2`}>
+                    <Lightbulb className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     Prevention Strategy
                   </h6>
-                  <p className={`${theme.textColors.secondary} text-sm`}>
+                  <p className={`${theme.textColors.secondary} text-xs sm:text-sm`}>
                     {bias.preventionStrategy}
                   </p>
                 </div>

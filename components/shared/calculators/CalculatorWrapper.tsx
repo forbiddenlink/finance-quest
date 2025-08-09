@@ -183,63 +183,63 @@ export default function CalculatorWrapper({
   return (
     <div className={`max-w-7xl mx-auto ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg shadow-lg ${className}`}>
       {/* Header */}
-      <div className={`${theme.backgrounds.cardHover} border-b ${theme.borderColors.primary} p-6 rounded-t-lg`}>
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-4">
-            <div className={`w-12 h-12 ${theme.status.info.bg} rounded-xl flex items-center justify-center shadow-lg`}>
-              <IconComponent className={`w-6 h-6 ${theme.status.info.text}`} />
+      <div className={`${theme.backgrounds.cardHover} border-b ${theme.borderColors.primary} p-4 sm:p-6 rounded-t-lg`}>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-start sm:items-center gap-3 sm:gap-4">
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 ${theme.status.info.bg} rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg flex-shrink-0`}>
+                <IconComponent className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.info.text}`} />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h2 className={`${theme.typography.heading2} ${theme.textColors.primary} text-lg sm:text-xl md:text-2xl truncate`}>{metadata.title}</h2>
+                <p className={`${theme.textColors.secondary} ${theme.typography.caption} text-xs sm:text-sm line-clamp-2`}>{metadata.description}</p>
+              </div>
             </div>
-            <div>
-              <h2 className={`${theme.typography.heading2} ${theme.textColors.primary}`}>{metadata.title}</h2>
-              <p className={`${theme.textColors.secondary} ${theme.typography.caption}`}>{metadata.description}</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-2">
-            {/* Category Badge */}
-            <div className={`px-3 py-1 rounded-full text-xs font-medium ${
-              metadata.category === 'basic' ? theme.status.success.bg + ' ' + theme.status.success.text :
-              metadata.category === 'intermediate' ? theme.status.warning.bg + ' ' + theme.status.warning.text :
-              theme.status.error.bg + ' ' + theme.status.error.text
-            }`}>
-              {metadata.category.toUpperCase()}
-            </div>
+            
+            <div className="flex flex-wrap items-center gap-2">
+              {/* Category Badge */}
+              <div className={`px-2.5 py-1 rounded-full text-xs font-medium ${
+                metadata.category === 'basic' ? theme.status.success.bg + ' ' + theme.status.success.text :
+                metadata.category === 'intermediate' ? theme.status.warning.bg + ' ' + theme.status.warning.text :
+                theme.status.error.bg + ' ' + theme.status.error.text
+              }`}>
+                {metadata.category.toUpperCase()}
+              </div>
 
-            {/* Action Buttons */}
-            <div className="flex gap-2">
-              {onReset && (
-                <Button
-                  onClick={onReset}
-                  variant="outline"
-                  size="sm"
-                  className={`${theme.buttons.ghost}`}
-                >
-                  <RotateCcw className="w-4 h-4" />
-                </Button>
-              )}
-              {onShare && (
-                <Button
-                  onClick={onShare}
-                  variant="outline"
-                  size="sm"
-                  className={`${theme.buttons.ghost}`}
-                >
-                  <Share2 className="w-4 h-4" />
-                </Button>
-              )}
-              {onExport && (
-                <Button
-                  onClick={onExport}
-                  variant="outline"
-                  size="sm"
-                  className={`${theme.buttons.ghost}`}
-                >
-                  <Download className="w-4 h-4" />
-                </Button>
-              )}
+              {/* Action Buttons */}
+              <div className="flex gap-1.5 sm:gap-2">
+                {onReset && (
+                  <Button
+                    onClick={onReset}
+                    variant="outline"
+                    size="sm"
+                    className={`${theme.buttons.ghost} p-1.5 sm:p-2`}
+                  >
+                    <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  </Button>
+                )}
+                {onShare && (
+                  <Button
+                    onClick={onShare}
+                    variant="outline"
+                    size="sm"
+                    className={`${theme.buttons.ghost} p-1.5 sm:p-2`}
+                  >
+                    <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  </Button>
+                )}
+                {onExport && (
+                  <Button
+                    onClick={onExport}
+                    variant="outline"
+                    size="sm"
+                    className={`${theme.buttons.ghost} p-1.5 sm:p-2`}
+                  >
+                    <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
-        </div>
 
         {/* Tags */}
         {metadata.tags && metadata.tags.length > 0 && (
@@ -275,13 +275,13 @@ export default function CalculatorWrapper({
           </div>
         )}
 
-        <div className={`grid grid-cols-1 ${results ? 'lg:grid-cols-2' : ''} gap-8`}>
+        <div className={`grid grid-cols-1 ${results ? 'lg:grid-cols-2' : ''} gap-6 lg:gap-8`}>
           {/* Input Section */}
-          <div className="space-y-6">
-            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Calculator Inputs</h3>
+          <div className="space-y-4">
+            <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-3`}>Calculator Inputs</h3>
             {isLoading ? (
-              <div className="flex items-center justify-center py-8">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-500"></div>
+              <div className="flex items-center justify-center py-6">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-yellow-500"></div>
               </div>
             ) : (
               children
@@ -290,19 +290,19 @@ export default function CalculatorWrapper({
 
           {/* Results Section */}
           {results && (
-            <div className="space-y-6">
-              <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-4`}>Results</h3>
+            <div className="space-y-4">
+              <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} mb-3`}>Results</h3>
               
               {/* Primary Result */}
-              <div className={`${getResultVariantStyles(results.primary.variant || 'primary').bg} border ${getResultVariantStyles(results.primary.variant || 'primary').border} rounded-xl p-6`}>
-                <div className={`text-sm font-medium ${getResultVariantStyles(results.primary.variant || 'primary').text} mb-2`}>
+              <div className={`${getResultVariantStyles(results.primary.variant || 'primary').bg} border ${getResultVariantStyles(results.primary.variant || 'primary').border} rounded-xl p-4 md:p-6`}>
+                <div className={`text-xs md:text-sm font-medium ${getResultVariantStyles(results.primary.variant || 'primary').text} mb-1 md:mb-2`}>
                   {results.primary.label}
                 </div>
-                <div className={`text-3xl font-bold ${theme.textColors.primary}`}>
+                <div className={`text-2xl md:text-3xl font-bold ${theme.textColors.primary}`}>
                   {formatValue(results.primary.value, results.primary.format)}
                 </div>
                 {results.primary.description && (
-                  <div className={`text-sm ${theme.textColors.muted} mt-2`}>
+                  <div className={`text-xs md:text-sm ${theme.textColors.muted} mt-1 md:mt-2`}>
                     {results.primary.description}
                   </div>
                 )}
@@ -310,24 +310,24 @@ export default function CalculatorWrapper({
 
               {/* Secondary Results */}
               {results.secondary && results.secondary.length > 0 && (
-                <div className="space-y-3">
+                <div className="space-y-2 md:space-y-3">
                   {results.secondary.map((result, index) => {
                     const variantStyles = getResultVariantStyles(result.variant || 'info');
                     return (
                       <div
                         key={index}
-                        className={`${variantStyles.bg} border ${variantStyles.border} rounded-lg p-4`}
+                        className={`${variantStyles.bg} border ${variantStyles.border} rounded-lg p-3 md:p-4`}
                       >
-                        <div className="flex justify-between items-center">
-                          <span className={`${theme.textColors.secondary} font-medium`}>
+                        <div className="flex flex-col md:flex-row justify-between md:items-center gap-1 md:gap-2">
+                          <span className={`${theme.textColors.secondary} text-xs md:text-sm font-medium`}>
                             {result.label}
                           </span>
-                          <span className={`${theme.textColors.primary} font-semibold`}>
+                          <span className={`${theme.textColors.primary} text-sm md:text-base font-semibold`}>
                             {formatValue(result.value, result.format)}
                           </span>
                         </div>
                         {result.description && (
-                          <div className={`text-xs ${theme.textColors.muted} mt-1`}>
+                          <div className={`text-xs ${theme.textColors.muted} mt-1 md:mt-2`}>
                             {result.description}
                           </div>
                         )}
@@ -351,15 +351,15 @@ export default function CalculatorWrapper({
               return (
                 <div
                   key={index}
-                  className={`${variantStyles.bg} border ${variantStyles.border} rounded-lg p-4`}
+                  className={`${variantStyles.bg} border ${variantStyles.border} rounded-lg p-3 sm:p-4`}
                 >
-                  <div className="flex items-start gap-3">
-                    <InsightIcon className={`w-5 h-5 ${variantStyles.text} mt-0.5 flex-shrink-0`} />
-                    <div>
-                      <h4 className={`font-semibold ${theme.textColors.primary} mb-1`}>
+                  <div className="flex items-start gap-2.5 sm:gap-3">
+                    <InsightIcon className={`w-4 h-4 sm:w-5 sm:h-5 ${variantStyles.text} mt-0.5 flex-shrink-0`} />
+                    <div className="min-w-0">
+                      <h4 className={`font-semibold ${theme.textColors.primary} mb-1 text-sm sm:text-base line-clamp-1`}>
                         {insight.title}
                       </h4>
-                      <p className={`text-sm ${theme.textColors.secondary}`}>
+                      <p className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>
                         {insight.message}
                       </p>
                     </div>
@@ -373,43 +373,45 @@ export default function CalculatorWrapper({
 
       {/* Educational Notes Section */}
       {metadata.educationalNotes && metadata.educationalNotes.length > 0 && (
-        <div className={`border-t ${theme.borderColors.primary} p-6`}>
+        <div className={`border-t ${theme.borderColors.primary} p-4 sm:p-6`}>
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className={`flex items-center gap-2 ${theme.textColors.primary} hover:${theme.textColors.secondary} transition-colors mb-4`}
+            className={`flex items-center gap-2 ${theme.textColors.primary} hover:${theme.textColors.secondary} transition-colors w-full`}
           >
-            <Lightbulb className="w-5 h-5" />
-            <span className={`${theme.typography.heading4}`}>Learn More</span>
-            <span className={`text-sm ${theme.textColors.muted}`}>
-              {isExpanded ? '(Hide)' : '(Show educational insights)'}
+            <div className="flex items-center gap-2 flex-1">
+              <Lightbulb className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+              <span className={`${theme.typography.heading4} text-base sm:text-lg`}>Learn More</span>
+            </div>
+            <span className={`text-xs sm:text-sm ${theme.textColors.muted}`}>
+              {isExpanded ? '(Hide)' : '(Show insights)'}
             </span>
           </button>
 
           {isExpanded && (
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6 mt-4">
               {metadata.educationalNotes.map((note, index) => (
                 <div
                   key={index}
-                  className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-6`}
+                  className={`${theme.status.info.bg} border ${theme.status.info.border} rounded-lg p-4 sm:p-6`}
                 >
-                  <h4 className={`${theme.typography.heading5} ${theme.status.info.text} mb-3`}>
+                  <h4 className={`${theme.typography.heading5} ${theme.status.info.text} mb-2 text-base sm:text-lg`}>
                     {note.title}
                   </h4>
-                  <p className={`${theme.textColors.secondary} mb-4 leading-relaxed`}>
+                  <p className={`${theme.textColors.secondary} mb-3 leading-relaxed text-sm`}>
                     {note.content}
                   </p>
                   
                   {note.tips && note.tips.length > 0 && (
                     <div>
-                      <h5 className={`font-semibold ${theme.textColors.primary} mb-2`}>Pro Tips:</h5>
-                      <ul className="space-y-1">
+                      <h5 className={`font-semibold ${theme.textColors.primary} mb-2 text-sm`}>Pro Tips:</h5>
+                      <ul className="space-y-2">
                         {note.tips.map((tip, tipIndex) => (
                           <li
                             key={tipIndex}
-                            className={`${theme.textColors.secondary} text-sm flex items-start gap-2`}
+                            className={`${theme.textColors.secondary} text-xs sm:text-sm flex items-start gap-2`}
                           >
-                            <span className={`${theme.textColors.primary} font-bold`}>•</span>
-                            {tip}
+                            <span className={`${theme.textColors.primary} font-bold flex-shrink-0`}>•</span>
+                            <span className="flex-1">{tip}</span>
                           </li>
                         ))}
                       </ul>

@@ -177,15 +177,15 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
         transition={{ duration: 0.5 }}
       >
         <GradientCard variant="glass" gradient="purple" className="p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className={`${theme.status.info.bg} p-3 rounded-lg`}>
-              <BarChart className={`w-6 h-6 ${theme.status.info.text}`} />
+          <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <div className={`${theme.status.info.bg} p-2 sm:p-3 rounded-lg flex-shrink-0`}>
+              <BarChart className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.info.text}`} />
             </div>
             <div>
-              <h3 className={`text-2xl font-bold ${theme.textColors.primary}`}>
+              <h3 className={`text-lg sm:text-xl md:text-2xl font-bold ${theme.textColors.primary} mb-0.5 sm:mb-1`}>
                 Monte Carlo Portfolio Simulation
               </h3>
-              <p className={`${theme.textColors.secondary}`}>
+              <p className={`${theme.textColors.secondary} text-sm sm:text-base`}>
                 Run 1,000 simulations to test your portfolio strategy against market uncertainty
               </p>
             </div>
@@ -322,18 +322,18 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
             whileTap={{ scale: 0.98 }}
             onClick={runSimulation}
             disabled={isSimulating}
-            className={`w-full md:w-auto px-8 py-3 ${theme.buttons.primary} rounded-xl transition-all hover-lift flex items-center justify-center mx-auto ${isSimulating ? 'opacity-50 cursor-not-allowed' : ''
+            className={`w-full md:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 ${theme.buttons.primary} rounded-lg sm:rounded-xl transition-all hover-lift flex items-center justify-center mx-auto ${isSimulating ? 'opacity-50 cursor-not-allowed' : ''
               }`}
           >
             {isSimulating ? (
               <>
-                <RefreshCw className="w-5 h-5 mr-2 animate-spin" />
-                Running Simulation...
+                <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 animate-spin" />
+                <span className="text-sm sm:text-base">Running Simulation...</span>
               </>
             ) : (
               <>
-                <Play className="w-5 h-5 mr-2" />
-                Run Monte Carlo Simulation
+                <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
+                <span className="text-sm sm:text-base">Run Monte Carlo Simulation</span>
               </>
             )}
           </motion.button>
@@ -358,37 +358,37 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
                 </h4>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                 <div className="text-center">
-                  <p className={`text-4xl font-bold mb-2 ${successRate >= 90 ? theme.status.success.text :
+                  <p className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-1.5 sm:mb-2 ${successRate >= 90 ? theme.status.success.text :
                       successRate >= 75 ? theme.status.warning.text :
                         theme.status.error.text
                     }`}>
                     {successRate.toFixed(1)}%
                   </p>
-                  <p className={`text-sm ${theme.textColors.secondary} mb-2`}>
+                  <p className={`text-xs sm:text-sm ${theme.textColors.secondary} mb-1.5 sm:mb-2`}>
                     Success Rate
                   </p>
-                  <p className={`text-xs ${theme.textColors.muted}`}>
+                  <p className={`text-[10px] sm:text-xs ${theme.textColors.muted}`}>
                     {getSuccessRateMessage(successRate)}
                   </p>
                 </div>
 
                 <div className="text-center">
-                  <p className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>
+                  <p className={`text-xl sm:text-2xl font-bold ${theme.textColors.primary} mb-1.5 sm:mb-2`}>
                     ${simulationResults[simulationResults.length - 1]?.percentile50.toLocaleString() || 0}
                   </p>
-                  <p className={`text-sm ${theme.textColors.secondary}`}>
+                  <p className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>
                     Median Final Value
                   </p>
                 </div>
 
                 <div className="text-center">
-                  <p className={`text-2xl font-bold ${theme.textColors.primary} mb-2`}>
+                  <p className={`text-xl sm:text-2xl font-bold ${theme.textColors.primary} mb-1.5 sm:mb-2`}>
                     ${((simulationResults[simulationResults.length - 1]?.percentile90 || 0) -
                       (simulationResults[simulationResults.length - 1]?.percentile10 || 0)).toLocaleString()}
                   </p>
-                  <p className={`text-sm ${theme.textColors.secondary}`}>
+                  <p className={`text-xs sm:text-sm ${theme.textColors.secondary}`}>
                     Range (10th-90th percentile)
                   </p>
                 </div>
@@ -401,19 +401,23 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
                 Portfolio Value Projections (1,000 Simulations)
               </h4>
 
-              <div className="h-96">
+              <div className="h-64 sm:h-80 md:h-96">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={simulationResults}>
+                  <AreaChart data={simulationResults} margin={{ top: 5, right: 10, bottom: 20, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                     <XAxis
                       dataKey="year"
                       stroke="#9CA3AF"
-                      label={{ value: 'Years', position: 'insideBottom', offset: -5 }}
+                      fontSize={10}
+                      tickMargin={5}
+                      label={{ value: 'Years', position: 'insideBottom', offset: -5, fontSize: 12 }}
                     />
                     <YAxis
                       stroke="#9CA3AF"
+                      fontSize={10}
+                      width={40}
                       tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
-                      label={{ value: 'Portfolio Value', angle: -90, position: 'insideLeft' }}
+                      label={{ value: 'Portfolio Value', angle: -90, position: 'insideLeft', fontSize: 12 }}
                     />
                     <Tooltip
                       formatter={(value: number, name: string) => [
@@ -428,10 +432,12 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
                       contentStyle={{
                         backgroundColor: '#1F2937',
                         border: '1px solid #374151',
-                        borderRadius: '8px'
+                        borderRadius: '8px',
+                        fontSize: '12px',
+                        padding: '8px'
                       }}
                     />
-                    <Legend />
+                    <Legend wrapperStyle={{ fontSize: '10px' }} />
 
                     <Area
                       type="monotone"

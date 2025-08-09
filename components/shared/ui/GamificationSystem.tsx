@@ -241,7 +241,7 @@ export default function GamificationSystem({ className = '' }: GamificationSyste
     
     return (
       <motion.div
-        className={`relative ${theme.utils.glass()} p-6 cursor-pointer group overflow-hidden ${
+        className={`relative ${theme.utils.glass()} p-4 sm:p-6 cursor-pointer group overflow-hidden ${
           achievement.unlocked ? '' : 'opacity-75'
         }`}
         whileHover={{ scale: 1.02, y: -2 }}
@@ -260,43 +260,43 @@ export default function GamificationSystem({ className = '' }: GamificationSyste
 
         {/* Lock overlay for locked achievements */}
         {!achievement.unlocked && (
-          <div className="absolute top-4 right-4">
-            <Lock className={`w-5 h-5 ${theme.textColors.muted}`} />
+          <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
+            <Lock className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.textColors.muted}`} />
           </div>
         )}
 
         {/* Achievement icon */}
-        <div className={`w-16 h-16 rounded-2xl ${tierStyle.bg} ${tierStyle.border} border-2 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200`}>
-          <Icon className={`w-8 h-8 ${tierStyle.text}`} />
+        <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl ${tierStyle.bg} ${tierStyle.border} border-2 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-200`}>
+          <Icon className={`w-6 h-6 sm:w-8 sm:h-8 ${tierStyle.text}`} />
         </div>
 
         {/* Achievement details */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <h3 className={`${theme.typography.heading6} ${theme.textColors.primary}`}>
+          <div className="flex items-center justify-between gap-2">
+            <h3 className={`${theme.typography.heading6} ${theme.textColors.primary} text-sm sm:text-base`}>
               {achievement.title}
             </h3>
-            <span className={`px-2 py-1 rounded-full text-xs ${tierStyle.bg} ${tierStyle.text} border ${tierStyle.border}`}>
+            <span className={`px-2 py-0.5 rounded-full text-xs ${tierStyle.bg} ${tierStyle.text} border ${tierStyle.border}`}>
               {achievement.tier.toUpperCase()}
             </span>
           </div>
           
-          <p className={`${theme.typography.bodySmall} ${theme.textColors.tertiary}`}>
+          <p className={`${theme.typography.bodySmall} ${theme.textColors.tertiary} text-xs sm:text-sm`}>
             {achievement.description}
           </p>
           
-          <div className="space-y-2">
+          <div className="space-y-1 sm:space-y-2">
             <div className="flex items-center justify-between">
-              <span className={`${theme.typography.caption} ${theme.textColors.muted}`}>
+              <span className={`${theme.typography.caption} ${theme.textColors.muted} text-xs`}>
                 Progress
               </span>
-              <span className={`${theme.typography.caption} ${achievement.unlocked ? theme.status.success.text : theme.textColors.primary}`}>
+              <span className={`${theme.typography.caption} ${achievement.unlocked ? theme.status.success.text : theme.textColors.primary} text-xs`}>
                 {achievement.unlocked ? 'Unlocked!' : `${Math.round(achievement.progress)}%`}
               </span>
             </div>
             
-            {!achievement.unlocked && (
-              <div className={`w-full h-2 ${theme.backgrounds.card} rounded-full overflow-hidden`}>
+                          {!achievement.unlocked && (
+              <div className={`w-full h-1 sm:h-1.5 ${theme.backgrounds.card} rounded-full overflow-hidden`}>
                 <motion.div
                   className={`h-full ${tierStyle.bg} rounded-full`}
                   initial={{ width: 0 }}
@@ -307,14 +307,14 @@ export default function GamificationSystem({ className = '' }: GamificationSyste
             )}
           </div>
 
-          <div className="flex items-center justify-between pt-2">
-            <div className="flex items-center space-x-1">
-              <Sparkles className={`w-4 h-4 ${theme.textColors.accent}`} />
-              <span className={`${theme.typography.caption} ${theme.textColors.accent}`}>
+          <div className="flex items-center justify-between pt-1 sm:pt-2">
+            <div className="flex items-center gap-1">
+              <Sparkles className={`w-3 h-3 sm:w-4 sm:h-4 ${theme.textColors.accent}`} />
+              <span className={`${theme.typography.caption} ${theme.textColors.accent} text-xs`}>
                 +{achievement.xpReward} XP
               </span>
             </div>
-            <span className={`${theme.typography.caption} ${theme.textColors.muted}`}>
+            <span className={`${theme.typography.caption} ${theme.textColors.muted} text-xs`}>
               {achievement.rarity}% have this
             </span>
           </div>
@@ -322,8 +322,8 @@ export default function GamificationSystem({ className = '' }: GamificationSyste
 
         {/* Unlocked date badge */}
         {achievement.unlocked && achievement.unlockedDate && (
-          <div className="absolute top-4 right-4">
-            <CheckCircle className={`w-5 h-5 ${theme.status.success.text}`} />
+          <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
+            <CheckCircle className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.status.success.text}`} />
           </div>
         )}
       </motion.div>
@@ -333,36 +333,36 @@ export default function GamificationSystem({ className = '' }: GamificationSyste
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Header */}
-      <div className="text-center">
-        <h2 className={`${theme.textColors.primary} ${theme.typography.heading2} mb-2 flex items-center justify-center`}>
-          <Trophy className="w-8 h-8 mr-3 text-amber-400" />
+      <div className="text-center px-4 sm:px-0">
+        <h2 className={`${theme.textColors.primary} ${theme.typography.heading2} mb-2 flex items-center justify-center text-xl sm:text-2xl md:text-3xl`}>
+          <Trophy className="w-6 h-6 sm:w-8 sm:h-8 mr-2 sm:mr-3 text-amber-400" />
           Achievement System
         </h2>
-        <p className={`${theme.textColors.tertiary}`}>
+        <p className={`${theme.textColors.tertiary} text-sm sm:text-base`}>
           Unlock achievements and level up your financial knowledge
         </p>
       </div>
 
       {/* User Level & Rank */}
       <motion.div
-        className={`${theme.utils.glass('strong')} p-6`}
+        className={`${theme.utils.glass('strong')} p-4 sm:p-6 mx-4 sm:mx-0`}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {/* Level Progress */}
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>
+              <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} text-lg sm:text-xl`}>
                 Level {userStats.level}
               </h3>
-              <span className={`${theme.typography.bodySmall} ${theme.textColors.secondary}`}>
+              <span className={`${theme.typography.bodySmall} ${theme.textColors.secondary} text-xs sm:text-sm`}>
                 {userStats.currentXP.toLocaleString()} / {userStats.xpToNextLevel.toLocaleString()} XP
               </span>
             </div>
             
             <div className="relative">
-              <div className={`w-full h-4 ${theme.backgrounds.card} rounded-full overflow-hidden`}>
+              <div className={`w-full h-3 sm:h-4 ${theme.backgrounds.card} rounded-full overflow-hidden`}>
                 <motion.div
                   className="h-full bg-gradient-to-r from-amber-500 to-blue-500 rounded-full relative"
                   initial={{ width: 0 }}
@@ -376,24 +376,24 @@ export default function GamificationSystem({ className = '' }: GamificationSyste
                   />
                 </motion.div>
               </div>
-              <span className={`absolute inset-0 flex items-center justify-center ${theme.typography.caption} font-bold text-white`}>
+              <span className={`absolute inset-0 flex items-center justify-center ${theme.typography.caption} font-bold text-white text-xs sm:text-sm`}>
                 {Math.round(calculateLevelProgress())}%
               </span>
             </div>
           </div>
 
           {/* Current Rank */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-3">
+          <div className="space-y-3 sm:space-y-4">
+            <div className="flex items-center gap-2 sm:gap-3">
               {React.createElement(getCurrentRank().icon, {
-                className: `w-8 h-8 ${getCurrentRank().color}`
+                className: `w-6 h-6 sm:w-8 sm:h-8 ${getCurrentRank().color}`
               })}
               <div>
-                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary}`}>
+                <h3 className={`${theme.typography.heading4} ${theme.textColors.primary} text-lg sm:text-xl`}>
                   {getCurrentRank().name}
                 </h3>
                 {getNextRank() && (
-                  <p className={`${theme.typography.bodySmall} ${theme.textColors.tertiary}`}>
+                  <p className={`${theme.typography.bodySmall} ${theme.textColors.tertiary} text-xs sm:text-sm`}>
                     {(getNextRank()!.minXP - userStats.totalXP).toLocaleString()} XP to {getNextRank()!.name}
                   </p>
                 )}
@@ -404,86 +404,98 @@ export default function GamificationSystem({ className = '' }: GamificationSyste
       </motion.div>
 
       {/* Stats Overview */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 px-4 sm:px-0">
         <motion.div
-          className={`${theme.utils.glass()} p-4 text-center`}
+          className={`${theme.utils.glass()} p-3 sm:p-4 text-center`}
           whileHover={{ scale: 1.02 }}
         >
-          <Flame className={`w-8 h-8 ${theme.status.warning.text} mx-auto mb-2`} />
-          <div className={`${theme.typography.heading4} ${theme.textColors.primary}`}>
+          <Flame className={`w-6 h-6 sm:w-8 sm:h-8 ${theme.status.warning.text} mx-auto mb-1 sm:mb-2`} />
+          <div className={`${theme.typography.heading4} ${theme.textColors.primary} text-lg sm:text-xl md:text-2xl`}>
             {userStats.streakDays}
           </div>
-          <div className={`${theme.typography.caption} ${theme.textColors.tertiary}`}>
+          <div className={`${theme.typography.caption} ${theme.textColors.tertiary} text-xs sm:text-sm`}>
             Day Streak
           </div>
         </motion.div>
 
         <motion.div
-          className={`${theme.utils.glass()} p-4 text-center`}
+          className={`${theme.utils.glass()} p-3 sm:p-4 text-center`}
           whileHover={{ scale: 1.02 }}
         >
-          <Star className={`w-8 h-8 ${theme.status.success.text} mx-auto mb-2`} />
-          <div className={`${theme.typography.heading4} ${theme.textColors.primary}`}>
+          <Star className={`w-6 h-6 sm:w-8 sm:h-8 ${theme.status.success.text} mx-auto mb-1 sm:mb-2`} />
+          <div className={`${theme.typography.heading4} ${theme.textColors.primary} text-lg sm:text-xl md:text-2xl`}>
             {userStats.averageQuizScore}%
           </div>
-          <div className={`${theme.typography.caption} ${theme.textColors.tertiary}`}>
+          <div className={`${theme.typography.caption} ${theme.textColors.tertiary} text-xs sm:text-sm`}>
             Avg Quiz Score
           </div>
         </motion.div>
 
         <motion.div
-          className={`${theme.utils.glass()} p-4 text-center`}
+          className={`${theme.utils.glass()} p-3 sm:p-4 text-center`}
           whileHover={{ scale: 1.02 }}
         >
-          <Clock className={`w-8 h-8 ${theme.status.info.text} mx-auto mb-2`} />
-          <div className={`${theme.typography.heading4} ${theme.textColors.primary}`}>
+          <Clock className={`w-6 h-6 sm:w-8 sm:h-8 ${theme.status.info.text} mx-auto mb-1 sm:mb-2`} />
+          <div className={`${theme.typography.heading4} ${theme.textColors.primary} text-lg sm:text-xl md:text-2xl`}>
             {userStats.totalStudyTime}h
           </div>
-          <div className={`${theme.typography.caption} ${theme.textColors.tertiary}`}>
+          <div className={`${theme.typography.caption} ${theme.textColors.tertiary} text-xs sm:text-sm`}>
             Study Time
           </div>
         </motion.div>
 
         <motion.div
-          className={`${theme.utils.glass()} p-4 text-center`}
+          className={`${theme.utils.glass()} p-3 sm:p-4 text-center`}
           whileHover={{ scale: 1.02 }}
         >
-          <Award className={`w-8 h-8 ${theme.textColors.accent} mx-auto mb-2`} />
-          <div className={`${theme.typography.heading4} ${theme.textColors.primary}`}>
+          <Award className={`w-6 h-6 sm:w-8 sm:h-8 ${theme.textColors.accent} mx-auto mb-1 sm:mb-2`} />
+          <div className={`${theme.typography.heading4} ${theme.textColors.primary} text-lg sm:text-xl md:text-2xl`}>
             {achievements.filter(a => a.unlocked).length}
           </div>
-          <div className={`${theme.typography.caption} ${theme.textColors.tertiary}`}>
+          <div className={`${theme.typography.caption} ${theme.textColors.tertiary} text-xs sm:text-sm`}>
             Achievements
           </div>
         </motion.div>
       </div>
 
       {/* Category Filter */}
-      <div className="flex flex-wrap gap-2">
-        {categories.map(category => {
-          const isActive = selectedCategory === category.id;
-          
-          return (
-            <motion.button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
-                isActive
-                  ? theme.buttons.accent
-                  : theme.buttons.ghost
-              }`}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {category.label}
-            </motion.button>
-          );
-        })}
+      <div className="px-4 sm:px-0 -mx-4 sm:mx-0">
+        <div className="flex overflow-x-auto pb-2 sm:pb-0 sm:flex-wrap gap-2 px-4 sm:px-0 hide-scrollbar">
+          {categories.map(category => {
+            const isActive = selectedCategory === category.id;
+            
+            return (
+              <motion.button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg font-medium text-xs sm:text-sm whitespace-nowrap transition-all duration-200 ${
+                  isActive
+                    ? theme.buttons.accent
+                    : theme.buttons.ghost
+                }`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                {category.label}
+              </motion.button>
+            );
+          })}
+        </div>
       </div>
+
+      <style jsx global>{`
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
 
       {/* Achievements Grid */}
       <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 px-4 sm:px-0"
         layout
       >
         <AnimatePresence>
@@ -531,43 +543,43 @@ export default function GamificationSystem({ className = '' }: GamificationSyste
                       </span>
                     </div>
 
-                    <div className="space-y-4">
-                      <p className={`${theme.typography.body} ${theme.textColors.secondary} text-center`}>
+                    <div className="space-y-3 sm:space-y-4">
+                      <p className={`${theme.typography.body} ${theme.textColors.secondary} text-center text-sm sm:text-base`}>
                         {achievement.description}
                       </p>
 
-                      <div className={`${theme.status.info.bg} rounded-lg p-4`}>
-                        <h4 className={`${theme.typography.label} ${theme.status.info.text} mb-2`}>
+                      <div className={`${theme.status.info.bg} rounded-lg p-3 sm:p-4`}>
+                        <h4 className={`${theme.typography.label} ${theme.status.info.text} mb-1.5 sm:mb-2 text-sm sm:text-base`}>
                           Requirement
                         </h4>
-                        <p className={`${theme.typography.bodySmall} ${theme.textColors.tertiary}`}>
+                        <p className={`${theme.typography.bodySmall} ${theme.textColors.tertiary} text-xs sm:text-sm`}>
                           {achievement.requirement.description}
                         </p>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-2 gap-3 sm:gap-4">
                         <div className="text-center">
-                          <div className={`${theme.typography.heading4} ${theme.textColors.accent}`}>
+                          <div className={`${theme.typography.heading4} ${theme.textColors.accent} text-lg sm:text-xl`}>
                             +{achievement.xpReward}
                           </div>
-                          <div className={`${theme.typography.caption} ${theme.textColors.tertiary}`}>
+                          <div className={`${theme.typography.caption} ${theme.textColors.tertiary} text-xs sm:text-sm`}>
                             XP Reward
                           </div>
                         </div>
                         <div className="text-center">
-                          <div className={`${theme.typography.heading4} ${theme.textColors.primary}`}>
+                          <div className={`${theme.typography.heading4} ${theme.textColors.primary} text-lg sm:text-xl`}>
                             {achievement.rarity}%
                           </div>
-                          <div className={`${theme.typography.caption} ${theme.textColors.tertiary}`}>
+                          <div className={`${theme.typography.caption} ${theme.textColors.tertiary} text-xs sm:text-sm`}>
                             Rarity
                           </div>
                         </div>
                       </div>
 
                       {achievement.unlocked && achievement.unlockedDate && (
-                        <div className={`${theme.status.success.bg} rounded-lg p-4 text-center`}>
-                          <CheckCircle className={`w-6 h-6 ${theme.status.success.text} mx-auto mb-2`} />
-                          <p className={`${theme.typography.bodySmall} ${theme.status.success.text}`}>
+                        <div className={`${theme.status.success.bg} rounded-lg p-3 sm:p-4 text-center`}>
+                          <CheckCircle className={`w-5 h-5 sm:w-6 sm:h-6 ${theme.status.success.text} mx-auto mb-1.5 sm:mb-2`} />
+                          <p className={`${theme.typography.bodySmall} ${theme.status.success.text} text-xs sm:text-sm`}>
                             Unlocked on {achievement.unlockedDate.toLocaleDateString()}
                           </p>
                         </div>
