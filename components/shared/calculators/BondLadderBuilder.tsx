@@ -311,10 +311,36 @@ export default function BondLadderBuilder() {
                         <Label className="text-xs">Principal ($)</Label>
                         <Input
                           type="number"
+                          step="0.01"
                           value={rung.principal}
-                          onChange={(e) => updateLadderRung(rung.id, 'principal', Number(e.target.value))}
+                          onChange={(e) => {
+                            const value = Number(e.target.value);
+                            updateLadderRung(rung.id, 'principal', value);
+                            if (value < 0) {
+                              e.target.setAttribute('aria-invalid', 'true');
+                              e.target.setAttribute('aria-describedby', `principal-${rung.id}-error`);
+                            } else {
+                              e.target.setAttribute('aria-invalid', 'false');
+                              e.target.removeAttribute('aria-describedby');
+                            }
+                          }}
+                          onBlur={(e) => {
+                            const value = Number(e.target.value);
+                            if (value < 0) {
+                              e.target.setAttribute('aria-invalid', 'true');
+                              e.target.setAttribute('aria-describedby', `principal-${rung.id}-error`);
+                            } else {
+                              e.target.setAttribute('aria-invalid', 'false');
+                              e.target.removeAttribute('aria-describedby');
+                            }
+                          }}
                           className="h-8 text-sm"
                         />
+                        {rung.principal < 0 && (
+                          <div id={`principal-${rung.id}-error`} role="alert" className="text-red-400 text-sm mt-1">
+                            Invalid value: must be positive
+                          </div>
+                        )}
                       </div>
                       <div className="space-y-1">
                         <Label className="text-xs">Maturity (Years)</Label>
@@ -329,7 +355,7 @@ export default function BondLadderBuilder() {
                         <Label className="text-xs">Coupon Rate (%)</Label>
                         <Input
                           type="number"
-                          step="0.1"
+                          step="0.01"
                           value={rung.couponRate}
                           onChange={(e) => updateLadderRung(rung.id, 'couponRate', Number(e.target.value))}
                           className="h-8 text-sm"
@@ -339,7 +365,7 @@ export default function BondLadderBuilder() {
                         <Label className="text-xs">Purchase Price</Label>
                         <Input
                           type="number"
-                          step="0.1"
+                          step="0.01"
                           value={rung.purchasePrice}
                           onChange={(e) => updateLadderRung(rung.id, 'purchasePrice', Number(e.target.value))}
                           className="h-8 text-sm"
@@ -349,7 +375,7 @@ export default function BondLadderBuilder() {
                         <Label className="text-xs">YTM (%)</Label>
                         <Input
                           type="number"
-                          step="0.1"
+                          step="0.01"
                           value={rung.yieldToMaturity}
                           onChange={(e) => updateLadderRung(rung.id, 'yieldToMaturity', Number(e.target.value))}
                           className="h-8 text-sm"
@@ -580,27 +606,38 @@ export default function BondLadderBuilder() {
               {/* Maturity Timeline */}
               <div>
                 <h4 className={`font-semibold ${theme.textColors.primary} mb-3`}>Maturity Timeline</h4>
-                <div className="space-y-2">
-                  {ladderRungs
-                    .sort((a, b) => a.maturity - b.maturity)
-                    .map((rung) => (
-                      <div key={rung.id} className={`p-3 ${theme.backgrounds.card} rounded border`}>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-3">
+                <table className="w-full">
+                  <thead>
+                    <tr>
+                      <th scope="col" className="text-left">Maturity</th>
+                      <th scope="col" className="text-left">Principal</th>
+                      <th scope="col" className="text-left">Coupon Rate</th>
+                      <th scope="col" className="text-left">Maturity Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {ladderRungs
+                      .sort((a, b) => a.maturity - b.maturity)
+                      .map((rung) => (
+                        <tr key={rung.id}>
+                          <td className="py-2">
                             <Badge variant="outline">
                               Year {rung.maturity}
                             </Badge>
-                            <span className={`text-sm ${theme.textColors.primary}`}>
-                              {formatCurrency(rung.principal)} @ {rung.couponRate}%
-                            </span>
-                          </div>
-                          <div className={`text-sm ${theme.textColors.secondary}`}>
+                          </td>
+                          <td className={`py-2 text-sm ${theme.textColors.primary}`}>
+                            {formatCurrency(rung.principal)}
+                          </td>
+                          <td className={`py-2 text-sm ${theme.textColors.primary}`}>
+                            {rung.couponRate}%
+                          </td>
+                          <td className={`py-2 text-sm ${theme.textColors.secondary}`}>
                             {rung.maturityDate.toLocaleDateString()}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                </div>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
               </div>
             </CardContent>
           </Card>

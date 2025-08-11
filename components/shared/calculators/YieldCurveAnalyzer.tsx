@@ -288,14 +288,42 @@ export default function YieldCurveAnalyzer() {
                     <Label htmlFor={`yield-${point.label}`}>
                       {point.label} ({point.maturity < 1 ? `${point.maturity * 12}M` : `${point.maturity}Y`})
                     </Label>
-                    <Input
-                      id={`yield-${point.label}`}
-                      type="number"
-                      step="0.01"
-                      value={point.yield}
-                      onChange={(e) => handleYieldChange(index, Number(e.target.value))}
-                      placeholder="4.5"
-                    />
+                    <div>
+                      <Input
+                        id={`yield-${point.label}`}
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        value={point.yield}
+                        onChange={(e) => {
+                          const value = Number(e.target.value);
+                          handleYieldChange(index, value);
+                          if (value < 0) {
+                            e.target.setAttribute('aria-invalid', 'true');
+                            e.target.setAttribute('aria-describedby', `yield-${point.label}-error`);
+                          } else {
+                            e.target.setAttribute('aria-invalid', 'false');
+                            e.target.removeAttribute('aria-describedby');
+                          }
+                        }}
+                        onBlur={(e) => {
+                          const value = Number(e.target.value);
+                          if (value < 0) {
+                            e.target.setAttribute('aria-invalid', 'true');
+                            e.target.setAttribute('aria-describedby', `yield-${point.label}-error`);
+                          } else {
+                            e.target.setAttribute('aria-invalid', 'false');
+                            e.target.removeAttribute('aria-describedby');
+                          }
+                        }}
+                        placeholder="4.5"
+                      />
+                      {point.yield < 0 && (
+                        <div id={`yield-${point.label}-error`} role="alert" className="text-red-400 text-sm mt-1">
+                          Invalid yield: must be positive
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>

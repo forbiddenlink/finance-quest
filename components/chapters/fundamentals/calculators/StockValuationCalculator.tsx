@@ -47,6 +47,7 @@ export default function StockValuationCalculator() {
   // Stock Information
   const [stockSymbol, setStockSymbol] = useState<string>('AAPL');
   const [currentPrice, setCurrentPrice] = useState<number>(175.50);
+  const [priceError, setPriceError] = useState<string | null>(null);
   const [sharesOutstanding, setSharesOutstanding] = useState<number>(15500); // millions
   const [marketCap, setMarketCap] = useState<number>(2720); // billions
 
@@ -381,24 +382,56 @@ export default function StockValuationCalculator() {
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    id="current-stock-price"
-                    type="number"
-                    step="0.01"
-                    value={currentPrice}
-                    onChange={(e) => setCurrentPrice(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
-                  />
+                                      <div>
+                        <input
+                          id="current-stock-price"
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          value={currentPrice}
+                          onChange={(e) => {
+                            const value = Number(e.target.value);
+                            setCurrentPrice(value);
+                            if (value < 0) {
+                              setPriceError('Invalid price: must be positive');
+                            } else {
+                              setPriceError(null);
+                            }
+                          }}
+                          onBlur={(e) => {
+                            const value = Number(e.target.value);
+                            if (value < 0) {
+                              setPriceError('Invalid price: must be positive');
+                            } else {
+                              setPriceError(null);
+                            }
+                          }}
+                          aria-invalid={priceError !== null}
+                          aria-describedby={priceError ? 'current-price-error' : undefined}
+                          className={`w-full pl-10 pr-4 py-2 bg-slate-800 border ${priceError ? 'border-red-500' : 'border-slate-600'} rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
+                        />
+                        {priceError && (
+                          <div id="current-price-error" role="alert" aria-live="polite" className="text-red-400 text-sm mt-1">
+                            {priceError}
+                          </div>
+                        )}
+                      </div>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label 
+                    htmlFor="shares-outstanding"
+                    className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}
+                  >
                     Shares Outstanding (M)
                   </label>
                   <input
+                    id="shares-outstanding"
                     type="number"
+                    step="1"
+                    min="0"
                     value={sharesOutstanding}
                     onChange={(e) => setSharesOutstanding(Number(e.target.value))}
                     className={`w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none text-sm`}
@@ -406,11 +439,17 @@ export default function StockValuationCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label 
+                    htmlFor="market-cap"
+                    className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}
+                  >
                     Market Cap (B)
                   </label>
                   <input
+                    id="market-cap"
                     type="number"
+                    step="0.01"
+                    min="0"
                     value={marketCap}
                     onChange={(e) => setMarketCap(Number(e.target.value))}
                     className={`w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none text-sm`}
@@ -674,7 +713,11 @@ export default function StockValuationCalculator() {
           {valuation && (
             <>
               {/* Valuation Summary */}
-              <div className={`p-6 border ${theme.borderColors.primary} rounded-lg bg-slate-800/50`}>
+              <div 
+                className={`p-6 border ${theme.borderColors.primary} rounded-lg bg-slate-800/50`}
+                role="region"
+                aria-label="Valuation Summary"
+              >
                 <div className="flex items-center justify-between mb-6">
                   <h3 className={`text-xl font-semibold ${theme.textColors.primary}`}>
                     {stockSymbol} Valuation Summary
@@ -751,10 +794,10 @@ export default function StockValuationCalculator() {
                   <table className="w-full text-sm">
                     <thead className={`bg-slate-700/50 ${theme.textColors.secondary}`}>
                       <tr>
-                        <th className="px-4 py-3 text-left">Metric</th>
-                        <th className="px-4 py-3 text-left">Current</th>
-                        <th className="px-4 py-3 text-left">Benchmark</th>
-                        <th className="px-4 py-3 text-left">Rating</th>
+                        <th scope="col" className="px-4 py-3 text-left">Metric</th>
+                        <th scope="col" className="px-4 py-3 text-left">Current</th>
+                        <th scope="col" className="px-4 py-3 text-left">Benchmark</th>
+                        <th scope="col" className="px-4 py-3 text-left">Rating</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -785,7 +828,11 @@ export default function StockValuationCalculator() {
               </div>
 
               {/* Investment Thesis */}
-              <div className={`p-4 bg-blue-900/20 border ${theme.borderColors.primary} rounded-lg`}>
+              <div 
+                className={`p-4 bg-blue-900/20 border ${theme.borderColors.primary} rounded-lg`}
+                role="region"
+                aria-label="Investment Thesis"
+              >
                 <div className="flex items-start gap-3">
                   <Target className="w-5 h-5 text-blue-400 mt-0.5" />
                   <div>
@@ -802,7 +849,11 @@ export default function StockValuationCalculator() {
               </div>
 
               {/* Risk Factors */}
-              <div className={`p-4 bg-red-900/20 border border-red-500/20 rounded-lg`}>
+              <div 
+                className={`p-4 bg-red-900/20 border border-red-500/20 rounded-lg`}
+                role="region"
+                aria-label="Risk Factors"
+              >
                 <div className="flex items-start gap-3">
                   <AlertCircle className="w-5 h-5 text-red-400 mt-0.5" />
                   <div>

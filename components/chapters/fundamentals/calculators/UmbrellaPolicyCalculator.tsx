@@ -336,12 +336,13 @@ export default function UmbrellaPolicyCalculator() {
             
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`} htmlFor="annual-income">
                   Annual Income
                 </label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="annual-income"
                     type="number"
                     value={annualIncome}
                     onChange={(e) => setAnnualIncome(Number(e.target.value))}
@@ -352,12 +353,13 @@ export default function UmbrellaPolicyCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`} htmlFor="net-worth">
                   Net Worth
                 </label>
                 <div className="relative">
                   <TrendingUp className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
+                    id="net-worth"
                     type="number"
                     value={netWorth}
                     onChange={(e) => setNetWorth(Number(e.target.value))}
@@ -368,12 +370,13 @@ export default function UmbrellaPolicyCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`} htmlFor="occupation">
                   Occupation
                 </label>
                 <div className="relative">
                   <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <select
+                    id="occupation"
                     value={occupation}
                     onChange={(e) => setOccupation(e.target.value)}
                     className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
@@ -392,10 +395,11 @@ export default function UmbrellaPolicyCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`} htmlFor="public-profile">
                   Public Profile
                 </label>
                 <select
+                  id="public-profile"
                   value={publicProfile}
                   onChange={(e) => setPublicProfile(e.target.value)}
                   className={`w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
@@ -408,12 +412,13 @@ export default function UmbrellaPolicyCalculator() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`} htmlFor="family-size">
                     Family Size
                   </label>
                   <div className="relative">
                     <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id="family-size"
                       type="number"
                       value={familySize}
                       onChange={(e) => setFamilySize(Number(e.target.value))}
@@ -424,10 +429,11 @@ export default function UmbrellaPolicyCalculator() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`} htmlFor="teen-drivers">
                     Teen Drivers
                   </label>
                   <input
+                    id="teen-drivers"
                     type="number"
                     value={teenDrivers}
                     onChange={(e) => setTeenDrivers(Number(e.target.value))}
@@ -446,12 +452,13 @@ export default function UmbrellaPolicyCalculator() {
             
             <div className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`} htmlFor="current-coverage">
                   Current Umbrella Coverage
                 </label>
                 <div className="relative">
                   <Umbrella className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <select
+                    id="current-coverage"
                     value={currentCoverage}
                     onChange={(e) => setCurrentCoverage(Number(e.target.value))}
                     className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
@@ -466,12 +473,13 @@ export default function UmbrellaPolicyCalculator() {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
+                <label className={`block text-sm font-medium ${theme.textColors.primary} mb-2`} htmlFor="desired-coverage">
                   Desired Coverage
                 </label>
                 <div className="relative">
                   <Calculator className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <select
+                    id="desired-coverage"
                     value={desiredCoverage}
                     onChange={(e) => setDesiredCoverage(Number(e.target.value))}
                     className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
@@ -525,8 +533,9 @@ export default function UmbrellaPolicyCalculator() {
                     
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       <div>
-                        <label className={`${theme.textColors.secondary}`}>Value</label>
+                        <label className={`${theme.textColors.secondary}`} htmlFor={`asset-${index}-value`}>Value</label>
                         <input
+                          id={`asset-${index}-value`}
                           type="number"
                           value={asset.value}
                           onChange={(e) => updateAsset(index, 'value', Number(e.target.value))}
@@ -534,8 +543,9 @@ export default function UmbrellaPolicyCalculator() {
                         />
                       </div>
                       <div>
-                        <label className={`${theme.textColors.secondary}`}>Liability</label>
+                        <label className={`${theme.textColors.secondary}`} htmlFor={`asset-${index}-liability`}>Liability</label>
                         <input
+                          id={`asset-${index}-liability`}
                           type="number"
                           value={asset.liability}
                           onChange={(e) => updateAsset(index, 'liability', Number(e.target.value))}

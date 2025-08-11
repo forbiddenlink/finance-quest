@@ -314,10 +314,26 @@ export default function RentalPropertyCalculator() {
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
                     type="number"
+                    step="0.01"
                     value={propertyValue}
-                    onChange={(e) => setPropertyValue(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setPropertyValue(value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'property-value-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
                     className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                   />
+                  {propertyValue < 0 && (
+                    <div id="property-value-error" role="alert" className="text-red-400 text-sm mt-1">
+                      Invalid amount: must be positive
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -329,10 +345,26 @@ export default function RentalPropertyCalculator() {
                   <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
                     type="number"
+                    step="0.01"
                     value={monthlyRent}
-                    onChange={(e) => setMonthlyRent(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setMonthlyRent(value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'monthly-rent-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
                     className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                   />
+                  {monthlyRent < 0 && (
+                    <div id="monthly-rent-error" role="alert" className="text-red-400 text-sm mt-1">
+                      Invalid amount: must be positive
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -423,7 +455,7 @@ export default function RentalPropertyCalculator() {
           </div>
 
           {/* Operating Expenses */}
-          <div>
+          <div role="region" aria-label="Operating Expenses">
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Monthly Operating Expenses
             </h3>
@@ -451,11 +483,28 @@ export default function RentalPropertyCalculator() {
                     <expense.icon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
                       type="number"
+                      step="0.01"
                       value={expense.value}
-                      onChange={(e) => expense.setter(Number(e.target.value))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        expense.setter(value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', `${expense.label.toLowerCase().replace(/\s+/g, '-')}-error`);
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none text-sm`}
                       placeholder="0"
+                      aria-label={expense.label}
                     />
+                    {expense.value < 0 && (
+                      <div id={`${expense.label.toLowerCase().replace(/\s+/g, '-')}-error`} role="alert" className="text-red-400 text-sm mt-1">
+                        Invalid amount: must be positive
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

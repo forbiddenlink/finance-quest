@@ -284,29 +284,106 @@ export default function FixedIncomePortfolioOptimizer() {
                   id="portfolioValue"
                   type="number"
                   value={portfolioValue}
-                  onChange={(e) => setPortfolioValue(Number(e.target.value))}
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    setPortfolioValue(value);
+                    if (value < 0) {
+                      e.target.setAttribute('aria-invalid', 'true');
+                      e.target.setAttribute('aria-describedby', 'portfolio-value-error');
+                    } else {
+                      e.target.setAttribute('aria-invalid', 'false');
+                      e.target.removeAttribute('aria-describedby');
+                    }
+                  }}
+                  onBlur={(e) => {
+                    const value = Number(e.target.value);
+                    if (value < 0) {
+                      e.target.setAttribute('aria-invalid', 'true');
+                      e.target.setAttribute('aria-describedby', 'portfolio-value-error');
+                    } else {
+                      e.target.setAttribute('aria-invalid', 'false');
+                      e.target.removeAttribute('aria-describedby');
+                    }
+                  }}
                   placeholder="500000"
                 />
+                {portfolioValue < 0 && (
+                  <div id="portfolio-value-error" role="alert" className="text-red-400 text-sm mt-1">
+                    Invalid amount: must be positive
+                  </div>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="incomeNeeds">Annual Income Needs ($)</Label>
                 <Input
                   id="incomeNeeds"
                   type="number"
+                  step="0.01"
                   value={incomeNeeds}
-                  onChange={(e) => setIncomeNeeds(Number(e.target.value))}
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    setIncomeNeeds(value);
+                    if (value < 0) {
+                      e.target.setAttribute('aria-invalid', 'true');
+                      e.target.setAttribute('aria-describedby', 'income-needs-error');
+                    } else {
+                      e.target.setAttribute('aria-invalid', 'false');
+                      e.target.removeAttribute('aria-describedby');
+                    }
+                  }}
+                  onBlur={(e) => {
+                    const value = Number(e.target.value);
+                    if (value < 0) {
+                      e.target.setAttribute('aria-invalid', 'true');
+                      e.target.setAttribute('aria-describedby', 'income-needs-error');
+                    } else {
+                      e.target.setAttribute('aria-invalid', 'false');
+                      e.target.removeAttribute('aria-describedby');
+                    }
+                  }}
                   placeholder="30000"
                 />
+                {incomeNeeds < 0 && (
+                  <div id="income-needs-error" role="alert" className="text-red-400 text-sm mt-1">
+                    Invalid amount: must be positive
+                  </div>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="investmentHorizon">Investment Horizon (Years)</Label>
                 <Input
                   id="investmentHorizon"
                   type="number"
+                  step="0.01"
                   value={investmentHorizon}
-                  onChange={(e) => setInvestmentHorizon(Number(e.target.value))}
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    setInvestmentHorizon(value);
+                    if (value < 0) {
+                      e.target.setAttribute('aria-invalid', 'true');
+                      e.target.setAttribute('aria-describedby', 'investment-horizon-error');
+                    } else {
+                      e.target.setAttribute('aria-invalid', 'false');
+                      e.target.removeAttribute('aria-describedby');
+                    }
+                  }}
+                  onBlur={(e) => {
+                    const value = Number(e.target.value);
+                    if (value < 0) {
+                      e.target.setAttribute('aria-invalid', 'true');
+                      e.target.setAttribute('aria-describedby', 'investment-horizon-error');
+                    } else {
+                      e.target.setAttribute('aria-invalid', 'false');
+                      e.target.removeAttribute('aria-describedby');
+                    }
+                  }}
                   placeholder="10"
                 />
+                {investmentHorizon < 0 && (
+                  <div id="investment-horizon-error" role="alert" className="text-red-400 text-sm mt-1">
+                    Invalid value: must be positive
+                  </div>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="riskTolerance">Risk Tolerance</Label>
@@ -326,10 +403,36 @@ export default function FixedIncomePortfolioOptimizer() {
                 <Input
                   id="taxRate"
                   type="number"
+                  step="0.01"
                   value={taxRate}
-                  onChange={(e) => setTaxRate(Number(e.target.value))}
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    setTaxRate(value);
+                    if (value < 0 || value > 100) {
+                      e.target.setAttribute('aria-invalid', 'true');
+                      e.target.setAttribute('aria-describedby', 'tax-rate-error');
+                    } else {
+                      e.target.setAttribute('aria-invalid', 'false');
+                      e.target.removeAttribute('aria-describedby');
+                    }
+                  }}
+                  onBlur={(e) => {
+                    const value = Number(e.target.value);
+                    if (value < 0 || value > 100) {
+                      e.target.setAttribute('aria-invalid', 'true');
+                      e.target.setAttribute('aria-describedby', 'tax-rate-error');
+                    } else {
+                      e.target.setAttribute('aria-invalid', 'false');
+                      e.target.removeAttribute('aria-describedby');
+                    }
+                  }}
                   placeholder="24"
                 />
+                {(taxRate < 0 || taxRate > 100) && (
+                  <div id="tax-rate-error" role="alert" className="text-red-400 text-sm mt-1">
+                    Invalid value: must be between 0 and 100
+                  </div>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="optimizationGoal">Optimization Goal</Label>
@@ -402,7 +505,7 @@ export default function FixedIncomePortfolioOptimizer() {
                         <Label className="text-xs">Allocation (%)</Label>
                         <Input
                           type="number"
-                          step="0.1"
+                          step="0.01"
                           value={allocation.allocation}
                           onChange={(e) => updateAllocation(index, 'allocation', Number(e.target.value))}
                           className="h-8 text-sm"
@@ -412,7 +515,7 @@ export default function FixedIncomePortfolioOptimizer() {
                         <Label className="text-xs">Expected Yield (%)</Label>
                         <Input
                           type="number"
-                          step="0.1"
+                          step="0.01"
                           value={allocation.expectedYield}
                           onChange={(e) => updateAllocation(index, 'expectedYield', Number(e.target.value))}
                           className="h-8 text-sm"
@@ -422,7 +525,7 @@ export default function FixedIncomePortfolioOptimizer() {
                         <Label className="text-xs">Duration (Years)</Label>
                         <Input
                           type="number"
-                          step="0.1"
+                          step="0.01"
                           value={allocation.duration}
                           onChange={(e) => updateAllocation(index, 'duration', Number(e.target.value))}
                           className="h-8 text-sm"

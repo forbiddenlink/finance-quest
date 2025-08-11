@@ -277,7 +277,7 @@ export default function PropertyInvestmentAnalyzer() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Input Section */}
         <div className="space-y-6">
-          <div>
+          <div role="region" aria-label="Property Details">
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Property Details
             </h3>
@@ -292,11 +292,37 @@ export default function PropertyInvestmentAnalyzer() {
                   <input
                     id="purchase-price"
                     type="number"
+                    step="0.01"
                     value={purchasePrice}
-                    onChange={(e) => setPurchasePrice(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setPurchasePrice(value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'purchase-price-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = Number(e.target.value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'purchase-price-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
                     className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                     placeholder="300000"
                   />
+                  {purchasePrice < 0 && (
+                    <div id="purchase-price-error" role="alert" className="text-red-400 text-sm mt-1">
+                      Invalid value: must be positive
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -310,12 +336,38 @@ export default function PropertyInvestmentAnalyzer() {
                     <input
                       id="down-payment-percent"
                       type="number"
+                      step="0.01"
                       value={downPaymentPercent}
-                      onChange={(e) => setDownPaymentPercent(Number(e.target.value))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        setDownPaymentPercent(value);
+                        if (value < 0 || value > 100) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'down-payment-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = Number(e.target.value);
+                        if (value < 0 || value > 100) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'down-payment-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                       min="0"
                       max="100"
                     />
+                    {(downPaymentPercent < 0 || downPaymentPercent > 100) && (
+                      <div id="down-payment-error" role="alert" className="text-red-400 text-sm mt-1">
+                        Invalid value: must be between 0 and 100
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -328,11 +380,36 @@ export default function PropertyInvestmentAnalyzer() {
                     <input
                       id="interest-rate"
                       type="number"
-                      step="0.1"
+                      step="0.01"
                       value={interestRate}
-                      onChange={(e) => setInterestRate(Number(e.target.value))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        setInterestRate(value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'interest-rate-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = Number(e.target.value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'interest-rate-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                     />
+                    {interestRate < 0 && (
+                      <div id="interest-rate-error" role="alert" className="text-red-400 text-sm mt-1">
+                        Invalid value: must be positive
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -367,10 +444,36 @@ export default function PropertyInvestmentAnalyzer() {
                     <input
                       id="closing-costs"
                       type="number"
+                      step="0.01"
                       value={closingCosts}
-                      onChange={(e) => setClosingCosts(Number(e.target.value))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        setClosingCosts(value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'closing-costs-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = Number(e.target.value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'closing-costs-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                     />
+                    {closingCosts < 0 && (
+                      <div id="closing-costs-error" role="alert" className="text-red-400 text-sm mt-1">
+                        Invalid value: must be positive
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -384,17 +487,43 @@ export default function PropertyInvestmentAnalyzer() {
                   <input
                     id="rehab-costs"
                     type="number"
+                    step="0.01"
                     value={rehabCosts}
-                    onChange={(e) => setRehabCosts(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setRehabCosts(value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'rehab-costs-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = Number(e.target.value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'rehab-costs-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
                     className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                     placeholder="0"
                   />
+                  {rehabCosts < 0 && (
+                    <div id="rehab-costs-error" role="alert" className="text-red-400 text-sm mt-1">
+                      Invalid value: must be positive
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
 
-          <div>
+          <div role="region" aria-label="Income">
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Income
             </h3>
@@ -409,10 +538,36 @@ export default function PropertyInvestmentAnalyzer() {
                   <input
                     id="monthly-rent"
                     type="number"
+                    step="0.01"
                     value={monthlyRent}
-                    onChange={(e) => setMonthlyRent(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setMonthlyRent(value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'monthly-rent-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = Number(e.target.value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'monthly-rent-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
                     className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                   />
+                  {monthlyRent < 0 && (
+                    <div id="monthly-rent-error" role="alert" className="text-red-400 text-sm mt-1">
+                      Invalid value: must be positive
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -426,12 +581,38 @@ export default function PropertyInvestmentAnalyzer() {
                     <input
                       id="vacancy-rate"
                       type="number"
+                      step="0.01"
                       value={vacancyRate}
-                      onChange={(e) => setVacancyRate(Number(e.target.value))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        setVacancyRate(value);
+                        if (value < 0 || value > 100) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'vacancy-rate-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = Number(e.target.value);
+                        if (value < 0 || value > 100) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'vacancy-rate-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                       min="0"
                       max="100"
                     />
+                    {(vacancyRate < 0 || vacancyRate > 100) && (
+                      <div id="vacancy-rate-error" role="alert" className="text-red-400 text-sm mt-1">
+                        Invalid value: must be between 0 and 100
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -444,18 +625,44 @@ export default function PropertyInvestmentAnalyzer() {
                     <input
                       id="other-income"
                       type="number"
+                      step="0.01"
                       value={otherIncome}
-                      onChange={(e) => setOtherIncome(Number(e.target.value))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        setOtherIncome(value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'other-income-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = Number(e.target.value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'other-income-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                       placeholder="0"
                     />
+                    {otherIncome < 0 && (
+                      <div id="other-income-error" role="alert" className="text-red-400 text-sm mt-1">
+                        Invalid value: must be positive
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div>
+          <div role="region" aria-label="Operating Expenses">
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Operating Expenses (Annual)
             </h3>
@@ -479,18 +686,44 @@ export default function PropertyInvestmentAnalyzer() {
                     <input
                       id={expense.id}
                       type="number"
+                      step="0.01"
                       value={expense.value}
-                      onChange={(e) => expense.setter(Number(e.target.value))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        expense.setter(value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', `${expense.id}-error`);
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = Number(e.target.value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', `${expense.id}-error`);
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none text-sm`}
                       placeholder="0"
                     />
+                    {expense.value < 0 && (
+                      <div id={`${expense.id}-error`} role="alert" className="text-red-400 text-sm mt-1">
+                        Invalid value: must be positive
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div>
+          <div role="region" aria-label="Market Assumptions">
             <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
               Market Assumptions
             </h3>
@@ -505,11 +738,36 @@ export default function PropertyInvestmentAnalyzer() {
                   <input
                     id="rent-growth-rate"
                     type="number"
-                    step="0.1"
+                    step="0.01"
                     value={rentGrowthRate}
-                    onChange={(e) => setRentGrowthRate(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setRentGrowthRate(value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'rent-growth-rate-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = Number(e.target.value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'rent-growth-rate-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
                     className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                   />
+                  {rentGrowthRate < 0 && (
+                    <div id="rent-growth-rate-error" role="alert" className="text-red-400 text-sm mt-1">
+                      Invalid value: must be positive
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -522,11 +780,36 @@ export default function PropertyInvestmentAnalyzer() {
                   <input
                     id="property-appreciation-rate"
                     type="number"
-                    step="0.1"
+                    step="0.01"
                     value={propertyAppreciationRate}
-                    onChange={(e) => setPropertyAppreciationRate(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setPropertyAppreciationRate(value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'property-appreciation-rate-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = Number(e.target.value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'property-appreciation-rate-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
                     className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                   />
+                  {propertyAppreciationRate < 0 && (
+                    <div id="property-appreciation-rate-error" role="alert" className="text-red-400 text-sm mt-1">
+                      Invalid value: must be positive
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -539,11 +822,36 @@ export default function PropertyInvestmentAnalyzer() {
                   <input
                     id="expense-growth-rate"
                     type="number"
-                    step="0.1"
+                    step="0.01"
                     value={expenseGrowthRate}
-                    onChange={(e) => setExpenseGrowthRate(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setExpenseGrowthRate(value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'expense-growth-rate-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = Number(e.target.value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'expense-growth-rate-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
                     className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                   />
+                  {expenseGrowthRate < 0 && (
+                    <div id="expense-growth-rate-error" role="alert" className="text-red-400 text-sm mt-1">
+                      Invalid value: must be positive
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

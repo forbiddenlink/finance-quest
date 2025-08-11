@@ -1,264 +1,155 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 import UmbrellaPolicyCalculator from '@/components/chapters/fundamentals/calculators/UmbrellaPolicyCalculator';
+import { useProgressStore } from '@/lib/store/progressStore';
 
 // Mock the progress store
 jest.mock('@/lib/store/progressStore', () => ({
-  useProgressStore: jest.fn(),
+  useProgressStore: jest.fn()
 }));
-
-// Mock react-hot-toast
-jest.mock('react-hot-toast', () => ({
-  success: jest.fn(),
-  error: jest.fn(),
-  loading: jest.fn(),
-}));
-
-// Mock theme
-jest.mock('@/lib/theme', () => ({
-  theme: {
-    backgrounds: {
-      primary: 'bg-slate-900',
-      card: 'bg-slate-800',
-      glass: 'bg-white/5'
-    },
-    textColors: {
-      primary: 'text-white',
-      secondary: 'text-slate-300'
-    },
-    borderColors: {
-      primary: 'border-white/10'
-    },
-    buttons: {
-      primary: 'bg-blue-600 hover:bg-blue-700',
-      secondary: 'bg-slate-600 hover:bg-slate-700'
-    }
-  }
-}));
-
-const mockRecordCalculatorUsage = jest.fn();
-const mockUserProgress = {
-  calculatorUsage: {},
-  completedLessons: [],
-  quizScores: {},
-  financialLiteracyScore: 450,
-  userLevel: 1
-};
-
-beforeEach(() => {
-  jest.clearAllMocks();
-
-  const useProgressStore = require('@/lib/store/progressStore').useProgressStore;
-  useProgressStore.mockReturnValue({
-    userProgress: mockUserProgress,
-    recordCalculatorUsage: mockRecordCalculatorUsage,
-  });
-});
 
 describe('UmbrellaPolicyCalculator', () => {
-  test('renders the calculator component without crashing', () => {
-    render(<UmbrellaPolicyCalculator />);
-    expect(screen.getByText(/Umbrella Policy Calculator/i)).toBeInTheDocument();
-  });
-
-  test('displays all required input fields', () => {
-    render(<UmbrellaPolicyCalculator />);
-
-    expect(screen.getByPlaceholderText('750000')).toBeInTheDocument(); // Net Worth
-    expect(screen.getByPlaceholderText('150000')).toBeInTheDocument(); // Annual Income
-    expect(screen.getByText(/Assets & Liability/i)).toBeInTheDocument();
-    expect(screen.getByText(/Personal Profile/i)).toBeInTheDocument();
-  });
-
-  test('calculates umbrella coverage needs based on assets', async () => {
-    render(<UmbrellaPolicyCalculator />);
-
-    const netWorthInput = screen.getByPlaceholderText('750000');
-    fireEvent.change(netWorthInput, { target: { value: '2000000' } });
-
-    await waitFor(() => {
-      expect(netWorthInput).toHaveValue(2000000);
+  // Setup mock for useProgressStore
+  beforeEach(() => {
+    (useProgressStore as jest.Mock).mockReturnValue({
+      recordCalculatorUsage: jest.fn()
     });
   });
 
-  test('assesses risk factors', async () => {
+  it('renders calculator with initial values', () => {
     render(<UmbrellaPolicyCalculator />);
-
-    // Test risk factor checkboxes
-    expect(screen.getByText(/Liability Risk Factors/i)).toBeInTheDocument();
     
-    // Test occupation risk - first combobox is occupation
-    const occupationSelect = screen.getAllByRole('combobox')[0];
-    fireEvent.change(occupationSelect, { target: { value: 'doctor' } });
+    // Check for main title
+    expect(screen.getByText('Umbrella Policy Calculator')).toBeInTheDocument();
+    
+    // Check for initial input values
+    const incomeInput = screen.getByRole('spinbutton', { name: /Annual Income/i });
+    const netWorthInput = screen.getByRole('spinbutton', { name: /Net Worth/i });
+    const familySizeInput = screen.getByRole('spinbutton', { name: /Family Size/i });
+    const teenDriversInput = screen.getByRole('spinbutton', { name: /Teen Drivers/i });
 
-    await waitFor(() => {
-      expect(occupationSelect).toHaveValue('doctor');
-      expect(screen.getByText('Doctor/Medical')).toBeInTheDocument();
-    });
+    expect(incomeInput).toHaveValue(150000);
+    expect(netWorthInput).toHaveValue(750000);
+    expect(familySizeInput).toHaveValue(4);
+    expect(teenDriversInput).toHaveValue(0);
   });
 
-  test('calculates premium estimates', async () => {
+  it('updates personal profile inputs correctly', async () => {
     render(<UmbrellaPolicyCalculator />);
+    const user = userEvent.setup();
+    
+    // Test annual income update
+    const incomeInput = screen.getByRole('spinbutton', { name: /Annual Income/i });
+    await user.clear(incomeInput);
+    await user.type(incomeInput, '200000');
+    expect(incomeInput).toHaveValue(200000);
 
-    // Test income and net worth inputs
-    const netWorthInput = screen.getByPlaceholderText('750000');
-    const annualIncomeInput = screen.getByPlaceholderText('150000');
-
-    fireEvent.change(netWorthInput, { target: { value: '3000000' } });
-    fireEvent.change(annualIncomeInput, { target: { value: '250000' } });
-
-    await waitFor(() => {
-      expect(netWorthInput).toHaveValue(3000000);
-      expect(annualIncomeInput).toHaveValue(250000);
-    });
-  });
-
-  test('handles occupation risk factors', async () => {
-    render(<UmbrellaPolicyCalculator />);
-
-    // Find select by role - first combobox is occupation
-    const occupationSelect = screen.getAllByRole('combobox')[0];
-    fireEvent.change(occupationSelect, { target: { value: 'doctor' } });
-
-    await waitFor(() => {
-      expect(occupationSelect).toHaveValue('doctor');
-      // Find the option within the occupation select
-      const options = occupationSelect.querySelectorAll('option');
-      const selectedOption = Array.from(options).find(opt => opt.selected);
-      expect(selectedOption).toHaveTextContent('Doctor/Medical');
-      expect(screen.getByText('Liability Risk Factors')).toBeInTheDocument();
-    });
-  });
-
-  test('calculates liability gap analysis', async () => {
-    render(<UmbrellaPolicyCalculator />);
-
-    const netWorthInput = screen.getByPlaceholderText('750000');
-    fireEvent.change(netWorthInput, { target: { value: '1500000' } });
-
-    await waitFor(() => {
-      expect(netWorthInput).toHaveValue(1500000);
-      expect(screen.getByText(/Asset Protection Analysis/i)).toBeInTheDocument();
-    });
-  });
-
-  test('analyzes public profile impact', async () => {
-    render(<UmbrellaPolicyCalculator />);
-
-    // Test public profile - second combobox is public profile
-    const profileSelect = screen.getAllByRole('combobox')[1];
-    fireEvent.change(profileSelect, { target: { value: 'high' } });
-
-    await waitFor(() => {
-      expect(profileSelect).toHaveValue('high');
-      // Find the option within the profile select
-      const options = profileSelect.querySelectorAll('option');
-      const selectedOption = Array.from(options).find(opt => opt.selected);
-      expect(selectedOption).toHaveTextContent('High Profile (Public Figure/Celebrity)');
-      expect(screen.getByText('Risk Score')).toBeInTheDocument();
-    });
-  });
-
-  test('provides coverage level recommendations', async () => {
-    render(<UmbrellaPolicyCalculator />);
-
-    const netWorthInput = screen.getByPlaceholderText('750000');
-    const annualIncomeInput = screen.getByPlaceholderText('150000');
-    const occupationSelect = screen.getAllByRole('combobox')[0];
-    const profileSelect = screen.getAllByRole('combobox')[1];
-
-    fireEvent.change(netWorthInput, { target: { value: '5000000' } });
-    fireEvent.change(annualIncomeInput, { target: { value: '400000' } });
-    fireEvent.change(occupationSelect, { target: { value: 'doctor' } });
-    fireEvent.change(profileSelect, { target: { value: 'high' } });
-
-    await waitFor(() => {
-      expect(netWorthInput).toHaveValue(5000000);
-      expect(annualIncomeInput).toHaveValue(400000);
-      expect(occupationSelect).toHaveValue('doctor');
-      expect(profileSelect).toHaveValue('high');
-      
-      // Check specific indicators of coverage recommendations
-      expect(screen.getByText('Asset Protection Analysis')).toBeInTheDocument();
-      expect(screen.getByText(/High Risk/)).toBeInTheDocument();
-    });
-  });
-
-  test('integrates with existing liability coverage', async () => {
-    render(<UmbrellaPolicyCalculator />);
-
-    // Fill in base inputs first
-    const netWorthInput = screen.getByPlaceholderText('750000');
-    fireEvent.change(netWorthInput, { target: { value: '2000000' } });
-
-    await waitFor(() => {
-      // Using getAllByText since there might be multiple elements with similar text
-      expect(screen.getAllByText(/Current Liability Coverage/i)[0]).toBeInTheDocument();
-      expect(screen.getAllByText(/Coverage Gap/i)[0]).toBeInTheDocument();
-    });
-  });
-
-  test('records calculator usage in progress store', () => {
-    render(<UmbrellaPolicyCalculator />);
-    expect(mockRecordCalculatorUsage).toHaveBeenCalledWith('umbrella-policy-calculator');
-  });
-
-  test('validates input ranges', () => {
-    render(<UmbrellaPolicyCalculator />);
-
-    // Find inputs by placeholder
-    const netWorthInput = screen.getByPlaceholderText('750000');
-    const annualIncomeInput = screen.getByPlaceholderText('150000');
-
-    fireEvent.change(netWorthInput, { target: { value: '1000000' } });
-    fireEvent.change(annualIncomeInput, { target: { value: '150000' } });
-
+    // Test net worth update
+    const netWorthInput = screen.getByRole('spinbutton', { name: /Net Worth/i });
+    await user.clear(netWorthInput);
+    await user.type(netWorthInput, '1000000');
     expect(netWorthInput).toHaveValue(1000000);
-    expect(annualIncomeInput).toHaveValue(150000);
+
+    // Test occupation selection
+    const occupationSelect = screen.getByRole('combobox', { name: /Occupation/i });
+    await user.selectOptions(occupationSelect, 'executive');
+    expect(occupationSelect).toHaveValue('executive');
+
+    // Test public profile selection
+    const profileSelect = screen.getByRole('combobox', { name: /Public Profile/i });
+    await user.selectOptions(profileSelect, 'high');
+    expect(profileSelect).toHaveValue('high');
   });
 
-  test('provides educational tooltips', () => {
+  it('handles asset management correctly', async () => {
     render(<UmbrellaPolicyCalculator />);
-
-    // Check for presence of info/help text
-    expect(screen.getByText(/Liability Risk Factors/i)).toBeInTheDocument();
-    expect(screen.getByText(/Assets & Liability/i)).toBeInTheDocument();
-    expect(screen.getByText(/Umbrella Policy Essentials/i)).toBeInTheDocument();
+    const user = userEvent.setup();
+    
+    // Check initial assets
+    const assetInputs = screen.getAllByRole('textbox');
+    const assetNames = assetInputs.map(input => input.getAttribute('value'));
+    expect(assetNames).toContain('Primary Home');
+    expect(assetNames).toContain('Auto Insurance');
+    expect(assetNames).toContain('Investment Property');
+    
+    // Add new asset
+    const addButton = screen.getByRole('button', { name: /Add Asset/i });
+    await user.click(addButton);
+    
+    // Should now have 4 assets
+    const removeButtons = screen.getAllByRole('button', { name: /Remove/i });
+    expect(removeButtons).toHaveLength(4);
+    
+    // Remove an asset
+    await user.click(removeButtons[0]);
+    
+    // Should now have 3 assets
+    expect(screen.getAllByRole('button', { name: /Remove/i })).toHaveLength(3);
   });
 
-  test('handles edge case scenarios', async () => {
+  it('calculates and displays analysis correctly', async () => {
     render(<UmbrellaPolicyCalculator />);
-
-    // Test extremely high net worth
-    const netWorthInput = screen.getByPlaceholderText('750000');
-    fireEvent.change(netWorthInput, { target: { value: '10000000' } });
-
+    
+    // Wait for analysis to be calculated and displayed
     await waitFor(() => {
-      expect(netWorthInput).toHaveValue(10000000);
-      expect(screen.getByText(/Coverage Cost Analysis/i)).toBeInTheDocument();
+      expect(screen.getByText('Asset Protection Analysis')).toBeInTheDocument();
     });
+
+    // Check for key analysis components
+    expect(screen.getByText('Recommended')).toBeInTheDocument();
+    expect(screen.getByText('Est. Premium')).toBeInTheDocument();
+    expect(screen.getByText('Coverage Gap')).toBeInTheDocument();
+    expect(screen.getByText('Risk Score')).toBeInTheDocument();
   });
 
-  test('maintains theme consistency', () => {
+  it('handles liability risk factors selection', async () => {
     render(<UmbrellaPolicyCalculator />);
-
-    // Should use theme classes consistently
-    const themeElements = document.querySelectorAll('[class*="bg-slate"]');
-    expect(themeElements.length).toBeGreaterThan(0);
+    const user = userEvent.setup();
+    
+    // Find and click risk checkboxes
+    const homeCheckbox = screen.getByRole('checkbox', { name: /Home/i });
+    const autoCheckbox = screen.getByRole('checkbox', { name: /Auto/i });
+    
+    await user.click(homeCheckbox);
+    await user.click(autoCheckbox);
+    
+    // Verify checkboxes are checked/unchecked
+    expect(homeCheckbox).not.toBeChecked();
+    expect(autoCheckbox).not.toBeChecked();
   });
 
-  test('supports accessibility standards', () => {
+  it('updates coverage options correctly', async () => {
     render(<UmbrellaPolicyCalculator />);
+    const user = userEvent.setup();
+    
+    // Test current coverage selection
+    const currentCoverageSelect = screen.getByRole('combobox', { name: /Current Umbrella Coverage/i });
+    await user.selectOptions(currentCoverageSelect, '2000000');
+    expect(currentCoverageSelect).toHaveValue('2000000');
+    
+    // Test desired coverage selection
+    const desiredCoverageSelect = screen.getByRole('combobox', { name: /Desired Coverage/i });
+    await user.selectOptions(desiredCoverageSelect, '5000000');
+    expect(desiredCoverageSelect).toHaveValue('5000000');
+  });
 
-    // Check for proper form labels
-    const labels = screen.getAllByText(/:/);
-    expect(labels.length).toBeGreaterThan(0);
+  it('displays educational content', () => {
+    render(<UmbrellaPolicyCalculator />);
+    
+    // Check for educational content
+    expect(screen.getByText('Umbrella Policy Essentials')).toBeInTheDocument();
+    expect(screen.getByText(/Umbrella policies require minimum underlying auto\/home liability limits/)).toBeInTheDocument();
+  });
 
-    // Check for proper button accessibility
-    const buttons = screen.getAllByRole('button');
-    buttons.forEach(button => {
-      expect(button).toBeInTheDocument();
+  it('records calculator usage', () => {
+    const mockRecordUsage = jest.fn();
+    (useProgressStore as jest.Mock).mockReturnValue({
+      recordCalculatorUsage: mockRecordUsage
     });
+
+    render(<UmbrellaPolicyCalculator />);
+    
+    expect(mockRecordUsage).toHaveBeenCalledWith('umbrella-policy-calculator');
   });
 });

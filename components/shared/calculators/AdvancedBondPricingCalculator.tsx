@@ -187,24 +187,78 @@ export default function AdvancedBondPricingCalculator() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="faceValue">Face Value ($)</Label>
-                  <Input
-                    id="faceValue"
-                    type="number"
-                    value={faceValue}
-                    onChange={(e) => setFaceValue(Number(e.target.value))}
-                    placeholder="1000"
-                  />
+                  <div>
+                    <Input
+                      id="faceValue"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      value={faceValue}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        setFaceValue(value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'face-value-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = Number(e.target.value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'face-value-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
+                      placeholder="1000"
+                    />
+                    {faceValue < 0 && (
+                      <div id="face-value-error" role="alert" className="text-red-400 text-sm mt-1">
+                        Invalid value: must be positive
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="couponRate">Coupon Rate (%)</Label>
                   <Input
                     id="couponRate"
                     type="number"
-                    step="0.1"
+                    step="0.01"
                     value={couponRate}
-                    onChange={(e) => setCouponRate(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setCouponRate(value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'coupon-rate-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = Number(e.target.value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'coupon-rate-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
                     placeholder="5.0"
                   />
+                  {couponRate < 0 && (
+                    <div id="coupon-rate-error" role="alert" className="text-red-400 text-sm mt-1">
+                      Invalid value: must be positive
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -214,21 +268,72 @@ export default function AdvancedBondPricingCalculator() {
                   <Input
                     id="yearsToMaturity"
                     type="number"
+                    step="0.01"
                     value={yearsToMaturity}
-                    onChange={(e) => setYearsToMaturity(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setYearsToMaturity(value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'years-to-maturity-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = Number(e.target.value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'years-to-maturity-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
                     placeholder="10"
                   />
+                  {yearsToMaturity < 0 && (
+                    <div id="years-to-maturity-error" role="alert" className="text-red-400 text-sm mt-1">
+                      Invalid value: must be positive
+                    </div>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="marketYield">Market Yield (%)</Label>
                   <Input
                     id="marketYield"
                     type="number"
-                    step="0.1"
+                    step="0.01"
                     value={marketYield}
-                    onChange={(e) => setMarketYield(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setMarketYield(value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'market-yield-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = Number(e.target.value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'market-yield-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
                     placeholder="4.5"
                   />
+                  {marketYield < 0 && (
+                    <div id="market-yield-error" role="alert" className="text-red-400 text-sm mt-1">
+                      Invalid value: must be positive
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -252,10 +357,36 @@ export default function AdvancedBondPricingCalculator() {
                   <Input
                     id="daysSinceLastPayment"
                     type="number"
+                    step="0.01"
                     value={daysSinceLastPayment}
-                    onChange={(e) => setDaysSinceLastPayment(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setDaysSinceLastPayment(value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'days-since-last-payment-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = Number(e.target.value);
+                      if (value < 0) {
+                        e.target.setAttribute('aria-invalid', 'true');
+                        e.target.setAttribute('aria-describedby', 'days-since-last-payment-error');
+                      } else {
+                        e.target.setAttribute('aria-invalid', 'false');
+                        e.target.removeAttribute('aria-describedby');
+                      }
+                    }}
                     placeholder="90"
                   />
+                  {daysSinceLastPayment < 0 && (
+                    <div id="days-since-last-payment-error" role="alert" className="text-red-400 text-sm mt-1">
+                      Invalid value: must be positive
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -304,20 +435,72 @@ export default function AdvancedBondPricingCalculator() {
                         <Input
                           id="callPrice"
                           type="number"
+                          step="0.01"
                           value={callPrice}
-                          onChange={(e) => setCallPrice(Number(e.target.value))}
+                          onChange={(e) => {
+                            const value = Number(e.target.value);
+                            setCallPrice(value);
+                            if (value < 0) {
+                              e.target.setAttribute('aria-invalid', 'true');
+                              e.target.setAttribute('aria-describedby', 'call-price-error');
+                            } else {
+                              e.target.setAttribute('aria-invalid', 'false');
+                              e.target.removeAttribute('aria-describedby');
+                            }
+                          }}
+                          onBlur={(e) => {
+                            const value = Number(e.target.value);
+                            if (value < 0) {
+                              e.target.setAttribute('aria-invalid', 'true');
+                              e.target.setAttribute('aria-describedby', 'call-price-error');
+                            } else {
+                              e.target.setAttribute('aria-invalid', 'false');
+                              e.target.removeAttribute('aria-describedby');
+                            }
+                          }}
                           placeholder="1050"
                         />
+                        {callPrice < 0 && (
+                          <div id="call-price-error" role="alert" className="text-red-400 text-sm mt-1">
+                            Invalid value: must be positive
+                          </div>
+                        )}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="yearsToCall">Years to Call</Label>
                         <Input
                           id="yearsToCall"
                           type="number"
+                          step="0.01"
                           value={yearsToCall}
-                          onChange={(e) => setYearsToCall(Number(e.target.value))}
+                          onChange={(e) => {
+                            const value = Number(e.target.value);
+                            setYearsToCall(value);
+                            if (value < 0) {
+                              e.target.setAttribute('aria-invalid', 'true');
+                              e.target.setAttribute('aria-describedby', 'years-to-call-error');
+                            } else {
+                              e.target.setAttribute('aria-invalid', 'false');
+                              e.target.removeAttribute('aria-describedby');
+                            }
+                          }}
+                          onBlur={(e) => {
+                            const value = Number(e.target.value);
+                            if (value < 0) {
+                              e.target.setAttribute('aria-invalid', 'true');
+                              e.target.setAttribute('aria-describedby', 'years-to-call-error');
+                            } else {
+                              e.target.setAttribute('aria-invalid', 'false');
+                              e.target.removeAttribute('aria-describedby');
+                            }
+                          }}
                           placeholder="5"
                         />
+                        {yearsToCall < 0 && (
+                          <div id="years-to-call-error" role="alert" className="text-red-400 text-sm mt-1">
+                            Invalid value: must be positive
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
@@ -327,11 +510,36 @@ export default function AdvancedBondPricingCalculator() {
                     <Input
                       id="taxRate"
                       type="number"
-                      step="0.1"
+                      step="0.01"
                       value={taxRate}
-                      onChange={(e) => setTaxRate(Number(e.target.value))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        setTaxRate(value);
+                        if (value < 0 || value > 100) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'tax-rate-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const value = Number(e.target.value);
+                        if (value < 0 || value > 100) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'tax-rate-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
                       placeholder="32"
                     />
+                    {(taxRate < 0 || taxRate > 100) && (
+                      <div id="tax-rate-error" role="alert" className="text-red-400 text-sm mt-1">
+                        Invalid value: must be between 0 and 100
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               )}

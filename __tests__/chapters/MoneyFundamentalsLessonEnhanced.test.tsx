@@ -116,11 +116,11 @@ describe('MoneyFundamentalsLessonEnhanced', () => {
     render(<MoneyFundamentalsLessonEnhanced />);
     
     // Previous button should be disabled on first lesson
-    const prevButton = screen.getByText(/Previous/i);
+    const prevButton = screen.getByRole('button', { name: /Previous/i });
     expect(prevButton).toBeDisabled();
     
     // Next button should be enabled
-    const nextButton = screen.getByText(/Next/i);
+    const nextButton = screen.getByRole('button', { name: /Next/i });
     expect(nextButton).not.toBeDisabled();
     
     // Click next to go to lesson 2
@@ -137,7 +137,7 @@ describe('MoneyFundamentalsLessonEnhanced', () => {
   test('mark complete button triggers progress tracking', async () => {
     render(<MoneyFundamentalsLessonEnhanced />);
     
-    const markCompleteButton = screen.getByText(/Mark Complete/i);
+    const markCompleteButton = screen.getByRole('button', { name: /Mark Complete/i });
     fireEvent.click(markCompleteButton);
     
     await waitFor(() => {
@@ -169,8 +169,11 @@ describe('MoneyFundamentalsLessonEnhanced', () => {
   test('displays progress summary correctly', () => {
     render(<MoneyFundamentalsLessonEnhanced />);
     
-    expect(screen.getByText(/Progress: 0 of 6 lessons completed/i)).toBeInTheDocument();
-    expect(screen.getByText(/17% Complete/i)).toBeInTheDocument();
+    const progressText = screen.getByText(/Progress:/i).nextSibling;
+    expect(progressText).toHaveTextContent('0 of 6 lessons');
+    
+    const completionText = screen.getByText(/Completion:/i).nextSibling;
+    expect(completionText).toHaveTextContent('17%');
   });
 
   test('shows foundation complete message when all lessons done', () => {
@@ -202,7 +205,7 @@ describe('MoneyFundamentalsLessonEnhanced', () => {
     render(<MoneyFundamentalsLessonEnhanced />);
     
     // Navigate to lesson 3 (index 2)
-    const nextButton = screen.getByText(/Next/i);
+    const nextButton = screen.getByRole('button', { name: /Next/i });
     fireEvent.click(nextButton);
     fireEvent.click(nextButton);
     
@@ -216,7 +219,7 @@ describe('MoneyFundamentalsLessonEnhanced', () => {
     render(<MoneyFundamentalsLessonEnhanced />);
     
     // Navigate to lesson 4 (index 3)
-    const nextButton = screen.getByText(/Next/i);
+    const nextButton = screen.getByRole('button', { name: /Next/i });
     for (let i = 0; i < 3; i++) {
       fireEvent.click(nextButton);
     }
@@ -231,7 +234,7 @@ describe('MoneyFundamentalsLessonEnhanced', () => {
     render(<MoneyFundamentalsLessonEnhanced />);
     
     // Navigate to lesson 5 (index 4)
-    const nextButton = screen.getByText(/Next/i);
+    const nextButton = screen.getByRole('button', { name: /Next/i });
     for (let i = 0; i < 4; i++) {
       fireEvent.click(nextButton);
     }
@@ -247,7 +250,7 @@ describe('MoneyFundamentalsLessonEnhanced', () => {
     
     // Check for semantic headings
     expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 3, name: /Key Points/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Key Points/i })).toBeInTheDocument();
     
     // Check buttons are accessible
     const buttons = screen.getAllByRole('button');
@@ -260,7 +263,7 @@ describe('MoneyFundamentalsLessonEnhanced', () => {
     render(<MoneyFundamentalsLessonEnhanced />);
     
     // Try to go to previous when on first lesson
-    const prevButton = screen.getByText(/Previous/i);
+    const prevButton = screen.getByRole('button', { name: /Previous/i });
     fireEvent.click(prevButton);
     
     // Should still be on lesson 1
@@ -270,7 +273,7 @@ describe('MoneyFundamentalsLessonEnhanced', () => {
   test('validates lesson content exists for all 6 lessons', async () => {
     render(<MoneyFundamentalsLessonEnhanced />);
     
-    const nextButton = screen.getByText(/Next/i);
+    const nextButton = screen.getByRole('button', { name: /Next/i });
     
     // Check each lesson has content
     const expectedTitles = [

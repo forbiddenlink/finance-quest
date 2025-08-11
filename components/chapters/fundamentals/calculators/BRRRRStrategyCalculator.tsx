@@ -581,13 +581,28 @@ export default function BRRRRStrategyCalculator() {
                     <input
                       id="refinance-rate"
                       type="number"
-                      step="0.1"
+                      step="0.01"
                       value={refinanceRate}
-                      onChange={(e) => setRefinanceRate(Number(e.target.value))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        setRefinanceRate(value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'refinance-rate-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                       aria-label="Refinance Interest Rate"
                       placeholder="Enter refinance interest rate"
                     />
+                    {refinanceRate < 0 && (
+                      <div id="refinance-rate-error" role="alert" className="text-red-400 text-sm mt-1">
+                        Invalid rate: must be positive
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -599,6 +614,7 @@ export default function BRRRRStrategyCalculator() {
                     <Calculator className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <select
                       id="refinance-term"
+                      role="combobox"
                       value={refinanceTerm}
                       onChange={(e) => setRefinanceTerm(Number(e.target.value))}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
@@ -650,13 +666,28 @@ export default function BRRRRStrategyCalculator() {
                     <input
                       id="rent-growth-rate"
                       type="number"
-                      step="0.1"
+                      step="0.01"
                       value={rentGrowthRate}
-                      onChange={(e) => setRentGrowthRate(Number(e.target.value))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        setRentGrowthRate(value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'rent-growth-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                       aria-label="Annual Rent Growth Rate"
                       placeholder="Enter expected annual rent increase"
                     />
+                    {rentGrowthRate < 0 && (
+                      <div id="rent-growth-error" role="alert" className="text-red-400 text-sm mt-1">
+                        Invalid rate: must be positive
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -669,13 +700,28 @@ export default function BRRRRStrategyCalculator() {
                     <input
                       id="appreciation-rate"
                       type="number"
-                      step="0.1"
+                      step="0.01"
                       value={appreciationRate}
-                      onChange={(e) => setAppreciationRate(Number(e.target.value))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        setAppreciationRate(value);
+                        if (value < 0) {
+                          e.target.setAttribute('aria-invalid', 'true');
+                          e.target.setAttribute('aria-describedby', 'appreciation-rate-error');
+                        } else {
+                          e.target.setAttribute('aria-invalid', 'false');
+                          e.target.removeAttribute('aria-describedby');
+                        }
+                      }}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
                       aria-label="Annual Property Appreciation Rate"
                       placeholder="Enter expected property appreciation"
                     />
+                    {appreciationRate < 0 && (
+                      <div id="appreciation-rate-error" role="alert" className="text-red-400 text-sm mt-1">
+                        Invalid rate: must be positive
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -852,7 +898,7 @@ export default function BRRRRStrategyCalculator() {
                       <h4 className={`font-semibold text-red-400 mb-2`}>
                         Risk Factors to Consider
                       </h4>
-                      <ul className={`space-y-1 text-sm ${theme.textColors.secondary}`}>
+                      <ul className={`space-y-1 text-sm ${theme.textColors.secondary}`} aria-label="BRRRR strategy steps">
                         {analysis.riskFactors.map((risk, index) => (
                           <li key={index}>• {risk}</li>
                         ))}

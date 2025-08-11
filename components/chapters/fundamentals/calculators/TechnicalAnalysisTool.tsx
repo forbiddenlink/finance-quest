@@ -849,11 +849,11 @@ export default function TechnicalAnalysisTool() {
                   <table className="w-full text-sm">
                     <thead className={`bg-slate-700/50 ${theme.textColors.secondary}`}>
                       <tr>
-                        <th className="px-4 py-3 text-left">Indicator</th>
-                        <th className="px-4 py-3 text-left">Value</th>
-                        <th className="px-4 py-3 text-left">Signal</th>
-                        <th className="px-4 py-3 text-left">Strength</th>
-                        <th className="px-4 py-3 text-left">Description</th>
+                        <th scope="col" className="px-4 py-3 text-left">Indicator</th>
+                        <th scope="col" className="px-4 py-3 text-left">Value</th>
+                        <th scope="col" className="px-4 py-3 text-left">Signal</th>
+                        <th scope="col" className="px-4 py-3 text-left">Strength</th>
+                        <th scope="col" className="px-4 py-3 text-left">Description</th>
                       </tr>
                     </thead>
                     <tbody>
