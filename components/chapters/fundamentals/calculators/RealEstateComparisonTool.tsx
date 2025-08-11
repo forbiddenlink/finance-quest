@@ -86,6 +86,7 @@ export default function RealEstateComparisonTool() {
     }
   ]);
 
+  const [calculatedProperties, setCalculatedProperties] = useState<Property[]>([]);
   const [comparison, setComparison] = useState<ComparisonResult | null>(null);
 
   useEffect(() => {
@@ -108,6 +109,14 @@ export default function RealEstateComparisonTool() {
       bathrooms: 0
     };
     setProperties([...properties, newProperty]);
+    
+    // Focus the new property name input after a brief delay
+    setTimeout(() => {
+      const newPropertyInput = document.querySelector(`input[value="${newProperty.name}"]`) as HTMLInputElement;
+      if (newPropertyInput) {
+        newPropertyInput.focus();
+      }
+    }, 100);
   };
 
   const removeProperty = (id: string) => {
@@ -122,155 +131,158 @@ export default function RealEstateComparisonTool() {
     ));
   };
 
-  const calculateMetrics = useCallback(() => {
-    const calculatedProperties = properties.map(property => {
-      const { price, downPayment, monthlyRent, monthlyExpenses, squareFootage } = property;
-      
-      // Basic calculations
-      const monthlyNetCashFlow = monthlyRent - monthlyExpenses;
-      const annualNetCashFlow = monthlyNetCashFlow * 12;
-      const annualGrossRent = monthlyRent * 12;
-      
-      // Investment metrics
-      const cashOnCashReturn = downPayment > 0 ? (annualNetCashFlow / downPayment) * 100 : 0;
-      const capRate = price > 0 ? (annualGrossRent / price) * 100 : 0;
-      const pricePerSqFt = squareFootage > 0 ? price / squareFootage : 0;
-      const rentToPrice = price > 0 ? (monthlyRent / price) * 100 : 0;
-      
-      // Scoring system (0-100)
-      let score = 0;
-      
-      // Cash flow score (30 points)
-      if (monthlyNetCashFlow >= 500) score += 30;
-      else if (monthlyNetCashFlow >= 300) score += 25;
-      else if (monthlyNetCashFlow >= 100) score += 20;
-      else if (monthlyNetCashFlow >= 0) score += 10;
-      
-      // Cash-on-cash return score (25 points)
-      if (cashOnCashReturn >= 15) score += 25;
-      else if (cashOnCashReturn >= 12) score += 20;
-      else if (cashOnCashReturn >= 8) score += 15;
-      else if (cashOnCashReturn >= 5) score += 10;
-      else if (cashOnCashReturn >= 0) score += 5;
-      
-      // Cap rate score (20 points)
-      if (capRate >= 10) score += 20;
-      else if (capRate >= 8) score += 16;
-      else if (capRate >= 6) score += 12;
-      else if (capRate >= 4) score += 8;
-      else if (capRate >= 2) score += 4;
-      
-      // 1% rule score (15 points)
-      const onePercentRule = rentToPrice >= 1;
-      if (onePercentRule) score += 15;
-      else if (rentToPrice >= 0.8) score += 10;
-      else if (rentToPrice >= 0.6) score += 5;
-      
-      // Property condition score (10 points)
-      const currentYear = new Date().getFullYear();
-      const propertyAge = currentYear - property.yearBuilt;
-      if (propertyAge <= 10) score += 10;
-      else if (propertyAge <= 20) score += 8;
-      else if (propertyAge <= 30) score += 6;
-      else if (propertyAge <= 40) score += 4;
-      else score += 2;
-
-      return {
-        ...property,
-        monthlyNetCashFlow,
-        cashOnCashReturn,
-        capRate,
-        pricePerSqFt,
-        rentToPrice,
-        score
-      };
-    });
-
-    // Add rankings
-    const propertiesWithRanks = calculatedProperties
-      .sort((a, b) => (b.score || 0) - (a.score || 0))
-      .map((property, index) => ({
-        ...property,
-        rank: index + 1
-      }));
-
-    setProperties(propertiesWithRanks);
-
-    // Generate comparison results
-    const bestCashFlow = [...propertiesWithRanks].sort((a, b) => 
-      (b.monthlyNetCashFlow || 0) - (a.monthlyNetCashFlow || 0)
-    )[0];
-
-    const bestCashOnCash = [...propertiesWithRanks].sort((a, b) => 
-      (b.cashOnCashReturn || 0) - (a.cashOnCashReturn || 0)
-    )[0];
-
-    const bestCapRate = [...propertiesWithRanks].sort((a, b) => 
-      (b.capRate || 0) - (a.capRate || 0)
-    )[0];
-
-    const bestValue = [...propertiesWithRanks].sort((a, b) => 
-      (b.score || 0) - (a.score || 0)
-    )[0];
-
-    // Generate recommendations
-    const recommendations: string[] = [];
-    const warnings: string[] = [];
-
-    if (bestValue && bestValue.score && bestValue.score >= 80) {
-      recommendations.push(`${bestValue.name} shows excellent investment potential with high overall score`);
-    }
-
-    if (bestCashFlow && bestCashFlow.monthlyNetCashFlow && bestCashFlow.monthlyNetCashFlow >= 300) {
-      recommendations.push(`${bestCashFlow.name} provides strong monthly cash flow for passive income`);
-    }
-
-    if (bestCashOnCash && bestCashOnCash.cashOnCashReturn && bestCashOnCash.cashOnCashReturn >= 12) {
-      recommendations.push(`${bestCashOnCash.name} offers excellent return on your cash investment`);
-    }
-
-    // Check for warnings
-    const negativeFlowProperties = propertiesWithRanks.filter(p => 
-      p.monthlyNetCashFlow && p.monthlyNetCashFlow < 0
-    );
-    
-    if (negativeFlowProperties.length > 0) {
-      warnings.push(`${negativeFlowProperties.length} property(ies) have negative cash flow`);
-    }
-
-    const lowReturnProperties = propertiesWithRanks.filter(p => 
-      p.cashOnCashReturn && p.cashOnCashReturn < 6
-    );
-    
-    if (lowReturnProperties.length > 0) {
-      warnings.push(`${lowReturnProperties.length} property(ies) have low cash-on-cash returns`);
-    }
-
-    const oldProperties = propertiesWithRanks.filter(p => 
-      new Date().getFullYear() - p.yearBuilt > 40
-    );
-    
-    if (oldProperties.length > 0) {
-      warnings.push(`${oldProperties.length} property(ies) are over 40 years old - consider renovation costs`);
-    }
-
-    const comparisonResult: ComparisonResult = {
-      bestCashFlow,
-      bestCashOnCash,
-      bestCapRate,
-      bestValue,
-      recommendations,
-      warnings
-    };
-
-    setComparison(comparisonResult);
-  }, [properties]);
-
   useEffect(() => {
     if (properties.every(p => p.price > 0 && p.monthlyRent > 0)) {
+      const calculateMetrics = () => {
+        const propertiesWithMetrics = properties.map(property => {
+          const { price, downPayment, monthlyRent, monthlyExpenses, squareFootage } = property;
+          
+          // Basic calculations
+          const monthlyNetCashFlow = monthlyRent - monthlyExpenses;
+          const annualNetCashFlow = monthlyNetCashFlow * 12;
+          const annualGrossRent = monthlyRent * 12;
+          
+          // Investment metrics
+          const cashOnCashReturn = downPayment > 0 ? (annualNetCashFlow / downPayment) * 100 : 0;
+          const capRate = price > 0 ? (annualGrossRent / price) * 100 : 0;
+          const pricePerSqFt = squareFootage > 0 ? price / squareFootage : 0;
+          const rentToPrice = price > 0 ? (monthlyRent / price) * 100 : 0;
+          
+          // Scoring system (0-100)
+          let score = 0;
+          
+          // Cash flow score (30 points)
+          if (monthlyNetCashFlow >= 500) score += 30;
+          else if (monthlyNetCashFlow >= 300) score += 25;
+          else if (monthlyNetCashFlow >= 100) score += 20;
+          else if (monthlyNetCashFlow >= 0) score += 10;
+          
+          // Cash-on-cash return score (25 points)
+          if (cashOnCashReturn >= 15) score += 25;
+          else if (cashOnCashReturn >= 12) score += 20;
+          else if (cashOnCashReturn >= 8) score += 15;
+          else if (cashOnCashReturn >= 5) score += 10;
+          else if (cashOnCashReturn >= 0) score += 5;
+          
+          // Cap rate score (20 points)
+          if (capRate >= 10) score += 20;
+          else if (capRate >= 8) score += 16;
+          else if (capRate >= 6) score += 12;
+          else if (capRate >= 4) score += 8;
+          else if (capRate >= 2) score += 4;
+          
+          // 1% rule score (15 points)
+          const onePercentRule = rentToPrice >= 1;
+          if (onePercentRule) score += 15;
+          else if (rentToPrice >= 0.8) score += 10;
+          else if (rentToPrice >= 0.6) score += 5;
+          
+          // Property condition score (10 points)
+          const currentYear = new Date().getFullYear();
+          const propertyAge = currentYear - property.yearBuilt;
+          if (propertyAge <= 10) score += 10;
+          else if (propertyAge <= 20) score += 8;
+          else if (propertyAge <= 30) score += 6;
+          else if (propertyAge <= 40) score += 4;
+          else score += 2;
+
+          return {
+            ...property,
+            monthlyNetCashFlow,
+            cashOnCashReturn,
+            capRate,
+            pricePerSqFt,
+            rentToPrice,
+            score
+          };
+        });
+
+        // Add rankings
+        const propertiesWithRanks = propertiesWithMetrics
+          .sort((a, b) => (b.score || 0) - (a.score || 0))
+          .map((property, index) => ({
+            ...property,
+            rank: index + 1
+          }));
+
+        setCalculatedProperties(propertiesWithRanks);
+
+        // Generate comparison results
+        const bestCashFlow = [...propertiesWithRanks].sort((a, b) => 
+          (b.monthlyNetCashFlow || 0) - (a.monthlyNetCashFlow || 0)
+        )[0];
+
+        const bestCashOnCash = [...propertiesWithRanks].sort((a, b) => 
+          (b.cashOnCashReturn || 0) - (a.cashOnCashReturn || 0)
+        )[0];
+
+        const bestCapRate = [...propertiesWithRanks].sort((a, b) => 
+          (b.capRate || 0) - (a.capRate || 0)
+        )[0];
+
+        const bestValue = [...propertiesWithRanks].sort((a, b) => 
+          (b.score || 0) - (a.score || 0)
+        )[0];
+
+        // Generate recommendations
+        const recommendations: string[] = [];
+        const warnings: string[] = [];
+
+        if (bestValue && bestValue.score && bestValue.score >= 80) {
+          recommendations.push(`${bestValue.name} shows excellent investment potential with high overall score`);
+        }
+
+        if (bestCashFlow && bestCashFlow.monthlyNetCashFlow && bestCashFlow.monthlyNetCashFlow >= 300) {
+          recommendations.push(`${bestCashFlow.name} provides strong monthly cash flow for passive income`);
+        }
+
+        if (bestCashOnCash && bestCashOnCash.cashOnCashReturn && bestCashOnCash.cashOnCashReturn >= 12) {
+          recommendations.push(`${bestCashOnCash.name} offers excellent return on your cash investment`);
+        }
+
+        // Check for warnings
+        const negativeFlowProperties = propertiesWithRanks.filter(p => 
+          p.monthlyNetCashFlow && p.monthlyNetCashFlow < 0
+        );
+        
+        if (negativeFlowProperties.length > 0) {
+          warnings.push(`${negativeFlowProperties.length} property(ies) have negative cash flow`);
+        }
+
+        const lowReturnProperties = propertiesWithRanks.filter(p => 
+          p.cashOnCashReturn && p.cashOnCashReturn < 6
+        );
+        
+        if (lowReturnProperties.length > 0) {
+          warnings.push(`${lowReturnProperties.length} property(ies) have low cash-on-cash returns`);
+        }
+
+        const oldProperties = propertiesWithRanks.filter(p => 
+          new Date().getFullYear() - p.yearBuilt > 40
+        );
+        
+        if (oldProperties.length > 0) {
+          warnings.push(`${oldProperties.length} property(ies) are over 40 years old - consider renovation costs`);
+        }
+
+        const comparisonResult: ComparisonResult = {
+          bestCashFlow,
+          bestCashOnCash,
+          bestCapRate,
+          bestValue,
+          recommendations,
+          warnings
+        };
+
+        setComparison(comparisonResult);
+      };
+
       calculateMetrics();
+    } else {
+      setCalculatedProperties(properties);
+      setComparison(null);
     }
-  }, [properties, calculateMetrics]);
+  }, [properties]);
 
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
@@ -320,7 +332,7 @@ export default function RealEstateComparisonTool() {
       <div className="space-y-8">
         {/* Property Input Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {properties.map((property) => (
+          {calculatedProperties.map((property) => (
             <div key={property.id} role="region" aria-label="Property Details" className={`p-4 border ${theme.borderColors.primary} rounded-lg bg-slate-800/50`}>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
@@ -342,6 +354,7 @@ export default function RealEstateComparisonTool() {
                   <button
                     onClick={() => removeProperty(property.id)}
                     className="text-red-400 hover:text-red-300 transition-colors"
+                    aria-label={`Remove ${property.name}`}
                   >
                     <MinusCircle className="w-5 h-5" />
                   </button>
@@ -350,12 +363,13 @@ export default function RealEstateComparisonTool() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor={`address-${property.id}`} className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Address
                   </label>
                   <div className="relative">
                     <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id={`address-${property.id}`}
                       type="text"
                       value={property.address}
                       onChange={(e) => updateProperty(property.id, 'address', e.target.value)}
@@ -366,12 +380,13 @@ export default function RealEstateComparisonTool() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor={`property-type-${property.id}`} className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Property Type
                   </label>
                   <div className="relative">
                     <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <select
+                      id={`property-type-${property.id}`}
                       value={property.propertyType}
                       onChange={(e) => updateProperty(property.id, 'propertyType', e.target.value)}
                       className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none text-sm`}
@@ -387,12 +402,13 @@ export default function RealEstateComparisonTool() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor={`purchase-price-${property.id}`} className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Purchase Price
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id={`purchase-price-${property.id}`}
                       type="number"
                       step="0.01"
                       value={property.price}
@@ -419,12 +435,13 @@ export default function RealEstateComparisonTool() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor={`down-payment-${property.id}`} className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Down Payment
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id={`down-payment-${property.id}`}
                       type="number"
                       step="0.01"
                       value={property.downPayment}
@@ -451,12 +468,13 @@ export default function RealEstateComparisonTool() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor={`monthly-rent-${property.id}`} className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Monthly Rent
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id={`monthly-rent-${property.id}`}
                       type="number"
                       step="0.01"
                       value={property.monthlyRent}
@@ -483,12 +501,13 @@ export default function RealEstateComparisonTool() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor={`monthly-expenses-${property.id}`} className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Monthly Expenses
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id={`monthly-expenses-${property.id}`}
                       type="number"
                       step="0.01"
                       value={property.monthlyExpenses}
@@ -515,12 +534,13 @@ export default function RealEstateComparisonTool() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor={`square-footage-${property.id}`} className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Square Footage
                   </label>
                   <div className="relative">
                     <Home className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id={`square-footage-${property.id}`}
                       type="number"
                       value={property.squareFootage}
                       onChange={(e) => updateProperty(property.id, 'squareFootage', Number(e.target.value))}
@@ -531,12 +551,13 @@ export default function RealEstateComparisonTool() {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
+                  <label htmlFor={`year-built-${property.id}`} className={`block text-sm font-medium ${theme.textColors.primary} mb-1`}>
                     Year Built
                   </label>
                   <div className="relative">
                     <Calculator className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
+                      id={`year-built-${property.id}`}
                       type="number"
                       value={property.yearBuilt}
                       onChange={(e) => updateProperty(property.id, 'yearBuilt', Number(e.target.value))}
@@ -580,7 +601,7 @@ export default function RealEstateComparisonTool() {
 
         {/* Comparison Results */}
         {comparison && (
-          <div className="space-y-6">
+          <div className="space-y-6" aria-live="polite" aria-label="Comparison results">
             {/* Winner Categories */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className={`p-4 bg-green-900/20 border ${theme.borderColors.primary} rounded-lg`}>
@@ -645,21 +666,21 @@ export default function RealEstateComparisonTool() {
               </div>
               
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full text-sm" role="table" aria-label="Property comparison details">
                   <thead className={`bg-slate-700/50 ${theme.textColors.secondary}`}>
                     <tr>
-                      <th className="px-4 py-3 text-left">Property</th>
-                      <th className="px-4 py-3 text-left">Price</th>
-                      <th className="px-4 py-3 text-left">Cash Flow</th>
-                      <th className="px-4 py-3 text-left">CoC Return</th>
-                      <th className="px-4 py-3 text-left">Cap Rate</th>
-                      <th className="px-4 py-3 text-left">Price/SqFt</th>
-                      <th className="px-4 py-3 text-left">Rent Ratio</th>
-                      <th className="px-4 py-3 text-left">Score</th>
+                      <th className="px-4 py-3 text-left" scope="col">Property</th>
+                      <th className="px-4 py-3 text-left" scope="col">Price</th>
+                      <th className="px-4 py-3 text-left" scope="col">Cash Flow</th>
+                      <th className="px-4 py-3 text-left" scope="col">CoC Return</th>
+                      <th className="px-4 py-3 text-left" scope="col">Cap Rate</th>
+                      <th className="px-4 py-3 text-left" scope="col">Price/SqFt</th>
+                      <th className="px-4 py-3 text-left" scope="col">Rent Ratio</th>
+                      <th className="px-4 py-3 text-left" scope="col">Score</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {properties.map((property) => (
+                    {calculatedProperties.map((property) => (
                       <tr key={property.id} className={`border-t ${theme.borderColors.primary}`}>
                         <td className={`px-4 py-3 ${theme.textColors.primary} font-medium`}>
                           <div className="flex items-center gap-2">
