@@ -1,8 +1,8 @@
 'use client';
 
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
-import AlternativeInvestmentsLesson from '@/components/chapters/fundamentals/lessons/AlternativeInvestmentsLesson';
-import AlternativeInvestmentsQuiz from '@/components/chapters/fundamentals/quizzes/AlternativeInvestmentsQuiz';
+import AlternativeInvestmentsLessonEnhanced from '@/components/chapters/fundamentals/lessons/AlternativeInvestmentsLessonEnhanced';
+import AlternativeInvestmentsQuizEnhanced from '@/components/chapters/fundamentals/quizzes/AlternativeInvestmentsQuizEnhanced';
 import REITInvestmentAnalyzer from '@/components/shared/calculators/REITInvestmentAnalyzer';
 import CommodityPortfolioBuilder from '@/components/shared/calculators/CommodityPortfolioBuilder';
 import CryptocurrencyAllocationCalculator from '@/components/shared/calculators/CryptocurrencyAllocationCalculator';
@@ -48,9 +48,9 @@ export default function Chapter15Page() {
       subtitle="Explore REITs, commodities, cryptocurrency, and other alternative assets for portfolio diversification"
       icon={Calculator}
       iconColor="text-purple-500"
-      lessonComponent={<AlternativeInvestmentsLesson />}
+      lessonComponent={<AlternativeInvestmentsLessonEnhanced />}
       calculatorComponent={<REITInvestmentAnalyzer />}
-      quizComponent={<AlternativeInvestmentsQuiz />}
+      quizComponent={<AlternativeInvestmentsQuizEnhanced />}
       calculatorTabs={calculatorTabs}
     />
   );

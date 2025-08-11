@@ -1,8 +1,8 @@
 'use client';
 
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
-import BusinessFinanceLesson from '@/components/chapters/fundamentals/lessons/BusinessFinanceLesson';
-import BusinessFinanceQuiz from '@/components/chapters/fundamentals/quizzes/BusinessFinanceQuiz';
+import BusinessFinanceLessonEnhanced from '@/components/chapters/fundamentals/lessons/BusinessFinanceLessonEnhanced';
+import BusinessFinanceQuizEnhanced from '@/components/chapters/fundamentals/quizzes/BusinessFinanceQuizEnhanced';
 import BusinessCashFlowAnalyzer from '@/components/shared/calculators/BusinessCashFlowAnalyzer';
 import CompoundInterestCalculator from '@/components/shared/calculators/CompoundInterestCalculator';
 import RewardsOptimizerCalculator from '@/components/shared/calculators/RewardsOptimizerCalculator';
@@ -48,9 +48,9 @@ export default function Chapter16Page() {
       subtitle="Master the financial fundamentals for starting, running, and scaling successful businesses"
       icon={Building2}
       iconColor="text-blue-500"
-      lessonComponent={<BusinessFinanceLesson />}
+      lessonComponent={<BusinessFinanceLessonEnhanced />}
       calculatorComponent={<BusinessCashFlowAnalyzer />}
-      quizComponent={<BusinessFinanceQuiz />}
+      quizComponent={<BusinessFinanceQuizEnhanced />}
       calculatorTabs={calculatorTabs}
     />
   );

@@ -1,12 +1,12 @@
 'use client';
 
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
-import EstatePlanningLesson from '@/components/chapters/fundamentals/lessons/EstatePlanningLesson';
+import EstatePlanningLessonEnhanced from '@/components/chapters/fundamentals/lessons/EstatePlanningLessonEnhanced';
 import EstatePlanningCalculator from '@/components/shared/calculators/EstatePlanningCalculator';
 import TrustAnalysisCalculator from '@/components/shared/calculators/TrustAnalysisCalculator';
 import InheritanceTaxCalculator from '@/components/shared/calculators/InheritanceTaxCalculator';
 import WealthTransferCalculator from '@/components/shared/calculators/WealthTransferCalculator';
-import EstatePlanningQuiz from '@/components/chapters/fundamentals/quizzes/EstatePlanningQuiz';
+import EstatePlanningQuizEnhanced from '@/components/chapters/fundamentals/quizzes/EstatePlanningQuizEnhanced';
 import { FileText, Calculator, Shield, Users, TrendingUp } from 'lucide-react';
 
 export default function Chapter17Page() {
@@ -48,9 +48,9 @@ export default function Chapter17Page() {
             subtitle="Master wealth preservation and transfer strategies across generations through strategic estate planning, trust structures, and tax-efficient strategies."
             icon={FileText}
             iconColor="text-purple-500"
-            lessonComponent={<EstatePlanningLesson />}
+            lessonComponent={<EstatePlanningLessonEnhanced />}
             calculatorComponent={<EstatePlanningCalculator />}
-            quizComponent={<EstatePlanningQuiz />}
+            quizComponent={<EstatePlanningQuizEnhanced />}
             calculatorTitle="Estate Planning Calculators"
             calculatorDescription="Professional tools for estate valuation, trust analysis, tax planning, and wealth transfer strategies."
             calculatorTabs={calculatorTabs}
