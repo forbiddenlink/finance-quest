@@ -1,0 +1,62 @@
+name: Type Safety Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  type-check:
+    name: Type Safety Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript compilation check
+        run: npx tsc --noEmit
+
+      - name: ESLint type safety check
+        run: |
+          npx eslint . \
+            --config .eslintrc.type-safety.json \
+            --ext .ts,.tsx \
+            --max-warnings 0 \
+            --format @microsoft/eslint-formatter-sarif \
+            --output-file eslint-results.sarif
+
+      - name: Upload ESLint results
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: eslint-results.sarif
+          category: ESLint-TypeSafety
+
+      - name: Run type safety analyzer
+        run: npx tsx scripts/analyzers/runTypeSafetyAnalysis.ts --ci
+        continue-on-error: true
+
+      - name: Check for type-safety regressions
+        run: |
+          if [ -f "type-safety-report.json" ]; then
+            CRITICAL_ISSUES=$(jq '.issues | map(select(.severity == "error")) | length' type-safety-report.json)
+            if [ "$CRITICAL_ISSUES" -gt 0 ]; then
+              echo "Found $CRITICAL_ISSUES critical type safety issues"
+              exit 1
+            fi
+          else
+            echo "No type safety report found"
+            exit 1
+          fi
+

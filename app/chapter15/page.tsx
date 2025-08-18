@@ -1,56 +1,61 @@
 'use client';
 
+import React from 'react';
 import ChapterLayout from '@/components/shared/layouts/ChapterLayout';
-import AlternativeInvestmentsLessonEnhanced from '@/components/chapters/fundamentals/lessons/AlternativeInvestmentsLessonEnhanced';
-import AlternativeInvestmentsQuizEnhanced from '@/components/chapters/fundamentals/quizzes/AlternativeInvestmentsQuizEnhanced';
-import REITInvestmentAnalyzer from '@/components/shared/calculators/REITInvestmentAnalyzer';
-import CommodityPortfolioBuilder from '@/components/shared/calculators/CommodityPortfolioBuilder';
-import CryptocurrencyAllocationCalculator from '@/components/shared/calculators/CryptocurrencyAllocationCalculator';
-import PortfolioAnalyzerCalculator from '@/components/shared/calculators/PortfolioAnalyzerCalculator';
-import { Building, Calculator, Package, Bitcoin, PieChart } from 'lucide-react';
+import { LineChart, Calculator, TrendingUp, FileText } from 'lucide-react';
+import CreditScoreSimulator from '@/components/chapters/fundamentals/calculators/CreditScoreSimulator';
+import CreditReportAnalyzer from '@/components/chapters/fundamentals/calculators/CreditReportAnalyzer';
+import CreditScoreOptimizer from '@/components/chapters/fundamentals/calculators/CreditScoreOptimizer';
+import CreditMonitoringTool from '@/components/chapters/fundamentals/calculators/CreditMonitoringTool';
+import CreditScoresLessonEnhanced from '@/components/chapters/fundamentals/lessons/CreditScoresLessonEnhanced';
+import CreditScoresQuizEnhanced from '@/components/chapters/fundamentals/quizzes/CreditScoresQuizEnhanced';
+
+const calculatorTabs = [
+  {
+    id: 'credit-score-simulator',
+    label: 'Score Simulator',
+    icon: Calculator,
+    component: CreditScoreSimulator,
+    description: 'Simulate how different actions affect your credit score'
+  },
+  {
+    id: 'credit-report-analyzer',
+    label: 'Report Analyzer',
+    icon: FileText,
+    component: CreditReportAnalyzer,
+    description: 'Analyze your credit report and identify improvement areas'
+  },
+  {
+    id: 'credit-score-optimizer',
+    label: 'Score Optimizer',
+    icon: TrendingUp,
+    component: CreditScoreOptimizer,
+    description: 'Get personalized recommendations to optimize your credit score'
+  },
+  {
+    id: 'credit-monitoring',
+    label: 'Credit Monitoring',
+    icon: LineChart,
+    component: CreditMonitoringTool,
+    description: 'Track your credit score progress and set alerts'
+  }
+];
 
 export default function Chapter15Page() {
-  const calculatorTabs = [
-    {
-      id: 'reit',
-      label: 'REIT Analysis',
-      icon: Building,
-      component: REITInvestmentAnalyzer,
-      description: 'Analyze Real Estate Investment Trust performance and yields'
-    },
-    {
-      id: 'commodity',
-      label: 'Commodities',
-      icon: Package,
-      component: CommodityPortfolioBuilder,
-      description: 'Evaluate commodity investment strategies and correlations'
-    },
-    {
-      id: 'crypto',
-      label: 'Cryptocurrency',
-      icon: Bitcoin,
-      component: CryptocurrencyAllocationCalculator,
-      description: 'Calculate crypto portfolio allocation and risk metrics'
-    },
-    {
-      id: 'optimizer',
-      label: 'Portfolio Optimizer',
-      icon: PieChart,
-      component: PortfolioAnalyzerCalculator,
-      description: 'Optimize portfolio allocation with alternative investments'
-    }
-  ];
-
   return (
     <ChapterLayout
       chapterNumber={15}
-      title="Alternative Investments"
-      subtitle="Explore REITs, commodities, cryptocurrency, and other alternative assets for portfolio diversification"
-      icon={Calculator}
-      iconColor="text-purple-500"
-      lessonComponent={<AlternativeInvestmentsLessonEnhanced />}
-      calculatorComponent={<REITInvestmentAnalyzer />}
-      quizComponent={<AlternativeInvestmentsQuizEnhanced />}
+      title="Credit Scores & Reports"
+      subtitle="Master your credit score and understand credit reporting to unlock better financial opportunities"
+      icon={LineChart}
+      iconColor="text-purple-400"
+      lessonComponent={<CreditScoresLessonEnhanced />}
+      calculatorComponent={<CreditScoreSimulator />}
+      quizComponent={<CreditScoresQuizEnhanced />}
+      calculatorTitle="Credit Score Suite"
+      calculatorDescription="Comprehensive tools for credit score simulation, report analysis, score optimization, and monitoring"
+      quizTitle="Credit Scores & Reports Quiz"
+      quizDescription="Test your understanding of credit scores and reports! You need 80% to unlock Chapter 16."
       calculatorTabs={calculatorTabs}
     />
   );

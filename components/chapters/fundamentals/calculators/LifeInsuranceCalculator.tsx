@@ -1,605 +1,593 @@
-'use client';
-
-import React, { useState, useEffect, useCallback } from 'react';
-import { useProgressStore } from '@/lib/store/progressStore';
-import { theme } from '@/lib/theme';
-import {
-  Heart,
-  DollarSign,
-  Calendar,
-  Home,
-  TrendingUp,
-  Calculator,
-  Shield,
-  Info
-} from 'lucide-react';
-
-interface FamilyMember {
-  id: string;
-  name: string;
-  age: number;
-  relationship: 'spouse' | 'child' | 'dependent';
-  monthlyExpenses: number;
-  yearsOfSupport: number;
-}
-
-interface InsuranceNeeds {
-  immediateExpenses: number;
-  incomeReplacement: number;
-  futureObligations: number;
-  totalNeeds: number;
-  existingAssets: number;
-  insuranceGap: number;
-  recommendedCoverage: number;
-}
+import React from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { useLifeInsurance } from '@/lib/hooks/calculators/useLifeInsurance';
+import { DollarSign, Heart, AlertTriangle, CheckCircle2, RefreshCw, BarChart3, Calculator, Shield } from 'lucide-react';
+import { formatCurrency, formatPercentage } from '@/lib/utils/financial';
 
 export default function LifeInsuranceCalculator() {
-  const { recordCalculatorUsage } = useProgressStore();
-  
-  const [annualIncome, setAnnualIncome] = useState<number>(75000);
-  const [currentAge, setCurrentAge] = useState<number>(35);
-  const [retirementAge, setRetirementAge] = useState<number>(65);
-  const [currentSavings, setCurrentSavings] = useState<number>(50000);
-  const [existingLifeInsurance, setExistingLifeInsurance] = useState<number>(100000);
-  const [mortgageBalance, setMortgageBalance] = useState<number>(250000);
-  const [otherDebts, setOtherDebts] = useState<number>(25000);
-  const [finalExpenses, setFinalExpenses] = useState<number>(15000);
-  const [inflationRate, setInflationRate] = useState<number>(3);
-  
-  const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>([
-    {
-      id: '1',
-      name: 'Spouse',
-      age: 33,
-      relationship: 'spouse',
-      monthlyExpenses: 3000,
-      yearsOfSupport: 30
-    },
-    {
-      id: '2',
-      name: 'Child 1',
-      age: 8,
-      relationship: 'child',
-      monthlyExpenses: 1500,
-      yearsOfSupport: 15
-    }
-  ]);
+  const [state, actions] = useLifeInsurance();
+  const { values, errors, result, isValid } = state;
+  const { setValues, reset } = actions;
 
-  const [insuranceNeeds, setInsuranceNeeds] = useState<InsuranceNeeds | null>(null);
-
-  useEffect(() => {
-    recordCalculatorUsage('life-insurance-calculator');
-  }, [recordCalculatorUsage]);
-
-  const addFamilyMember = () => {
-    const newMember: FamilyMember = {
-      id: Date.now().toString(),
-      name: `Family Member ${familyMembers.length + 1}`,
-      age: 10,
-      relationship: 'child',
-      monthlyExpenses: 1000,
-      yearsOfSupport: 18
-    };
-    setFamilyMembers([...familyMembers, newMember]);
-  };
-
-  const updateFamilyMember = (id: string, field: keyof FamilyMember, value: string | number) => {
-    setFamilyMembers(prev => prev.map(member => 
-      member.id === id ? { ...member, [field]: value } : member
-    ));
-  };
-
-  const removeFamilyMember = (id: string) => {
-    if (familyMembers.length > 1) {
-      setFamilyMembers(prev => prev.filter(member => member.id !== id));
+  const handleInputChange = (field: string, value: string | boolean) => {
+    if (field.startsWith('familyHistory.')) {
+      const historyField = field.split('.')[1];
+      setValues({
+        familyHistory: {
+          ...values.familyHistory,
+          [historyField]: value
+        }
+      });
+    } else {
+      setValues({ [field]: value });
     }
   };
 
-  const calculateInsuranceNeeds = useCallback(() => {
-    // 1. Immediate Expenses
-    const immediateExpenses = finalExpenses + mortgageBalance + otherDebts;
-
-    // 2. Income Replacement Calculation
-    const yearsToRetirement = retirementAge - currentAge;
-    const incomeReplacementMultiplier = Math.min(yearsToRetirement, 30); // Cap at 30 years
-    const adjustedIncome = annualIncome * 0.8; // 80% income replacement
-    
-    // Adjust for inflation
-    const inflationAdjustment = Math.pow(1 + inflationRate / 100, yearsToRetirement / 2);
-    const incomeReplacement = adjustedIncome * incomeReplacementMultiplier * inflationAdjustment;
-
-    // 3. Future Obligations (Family Support)
-    let futureObligations = 0;
-    familyMembers.forEach(member => {
-      const annualExpenses = member.monthlyExpenses * 12;
-      const inflationAdjustedExpenses = annualExpenses * Math.pow(1 + inflationRate / 100, member.yearsOfSupport / 2);
-      futureObligations += inflationAdjustedExpenses * member.yearsOfSupport;
-    });
-
-    // 4. Total Insurance Needs
-    const totalNeeds = immediateExpenses + incomeReplacement + futureObligations;
-
-    // 5. Available Assets
-    const futureValueOfSavings = currentSavings * Math.pow(1.07, yearsToRetirement); // Assuming 7% growth
-    const existingAssets = futureValueOfSavings + existingLifeInsurance;
-
-    // 6. Insurance Gap
-    const insuranceGap = Math.max(0, totalNeeds - existingAssets);
-
-    // 7. Recommended Coverage (add 20% buffer)
-    const recommendedCoverage = insuranceGap * 1.2;
-
-    const needs: InsuranceNeeds = {
-      immediateExpenses,
-      incomeReplacement,
-      futureObligations,
-      totalNeeds,
-      existingAssets,
-      insuranceGap,
-      recommendedCoverage
-    };
-
-    setInsuranceNeeds(needs);
-  }, [
-    annualIncome,
-    currentAge,
-    retirementAge,
-    currentSavings,
-    existingLifeInsurance,
-    mortgageBalance,
-    otherDebts,
-    finalExpenses,
-    inflationRate,
-    familyMembers
-  ]);
-
-  useEffect(() => {
-    calculateInsuranceNeeds();
-  }, [calculateInsuranceNeeds]);
-
-  const formatCurrency = (amount: number): string => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const getInsuranceTypeRecommendation = (coverage: number): string => {
-    if (coverage < 250000) return 'Term Life (10-20 years)';
-    if (coverage < 500000) return 'Term Life (20-30 years)';
-    if (coverage < 1000000) return 'Term Life (30 years) or Whole Life';
-    return 'Term Life + Whole Life combination';
-  };
-
-  const getEstimatedPremium = (coverage: number, age: number): number => {
-    // Simplified premium calculation (per $1000 of coverage annually)
-    let ratePerThousand = 1.50; // Base rate for healthy 30-year-old
-    
-    // Age adjustments
-    if (age > 40) ratePerThousand += 0.5;
-    if (age > 50) ratePerThousand += 1.0;
-    if (age > 60) ratePerThousand += 2.0;
-    
-    return (coverage / 1000) * ratePerThousand;
+  const getFieldError = (field: string) => {
+    return errors.find(error => error.field === field)?.message;
   };
 
   return (
-    <div data-testid="life-insurance-calculator" className={`p-6 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-      <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-        <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-red-400 flex-shrink-0" />
-        <h2 className={`text-lg sm:text-xl font-bold ${theme.textColors.primary} leading-tight`}>
-          Life Insurance Needs Calculator
-        </h2>
-      </div>
+    <div className="space-y-8">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Shield className="h-5 w-5" />
+            Life Insurance Calculator
+          </CardTitle>
+          <CardDescription>
+            Calculate recommended life insurance coverage and explore policy options
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="personal">
+            <TabsList>
+              <TabsTrigger value="personal">Personal Info</TabsTrigger>
+              <TabsTrigger value="financial">Financial Info</TabsTrigger>
+              <TabsTrigger value="coverage">Coverage</TabsTrigger>
+              <TabsTrigger value="results" disabled={!result}>Results</TabsTrigger>
+              <TabsTrigger value="recommendations" disabled={!result}>Recommendations</TabsTrigger>
+            </TabsList>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Personal Information */}
-        <div className="space-y-6">
-          <div>
-            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
-              Personal Information
-            </h3>
-            
-            <div className="space-y-4">
-              <div>
-                <label htmlFor="annual-income" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Annual Income
-                </label>
-                <div className="relative">
-                  <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    id="annual-income"
+            <TabsContent value="personal" className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Age */}
+                <div className="space-y-2">
+                  <Label htmlFor="age">Age</Label>
+                  <Input
+                    id="age"
                     type="number"
-                    value={annualIncome}
-                    onChange={(e) => setAnnualIncome(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
-                    placeholder="75000"
+                    value={values.age}
+                    onChange={(e) => handleInputChange('age', e.target.value)}
                   />
+                  {getFieldError('age') && (
+                    <Alert variant="destructive">
+                      <AlertDescription>{getFieldError('age')}</AlertDescription>
+                    </Alert>
+                  )}
                 </div>
-              </div>
 
-              <div>
-                <label htmlFor="current-age" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Current Age
-                </label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    id="current-age"
-                    type="number"
-                    value={currentAge}
-                    onChange={(e) => setCurrentAge(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
-                    placeholder="35"
-                  />
+                {/* Gender */}
+                <div className="space-y-2">
+                  <Label htmlFor="gender">Gender</Label>
+                  <Select
+                    value={values.gender}
+                    onValueChange={(value) => handleInputChange('gender', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select gender" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="male">Male</SelectItem>
+                      <SelectItem value="female">Female</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {getFieldError('gender') && (
+                    <Alert variant="destructive">
+                      <AlertDescription>{getFieldError('gender')}</AlertDescription>
+                    </Alert>
+                  )}
                 </div>
-              </div>
 
-              <div>
-                <label htmlFor="retirement-age" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Retirement Age
-                </label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    id="retirement-age"
-                    type="number"
-                    value={retirementAge}
-                    onChange={(e) => setRetirementAge(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
-                    placeholder="65"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="current-savings" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Current Savings & Investments
-                </label>
-                <div className="relative">
-                  <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    id="current-savings"
-                    type="number"
-                    value={currentSavings}
-                    onChange={(e) => setCurrentSavings(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
-                    placeholder="50000"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="existing-life-insurance" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Existing Life Insurance
-                </label>
-                <div className="relative">
-                  <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    id="existing-life-insurance"
-                    type="number"
-                    value={existingLifeInsurance}
-                    onChange={(e) => setExistingLifeInsurance(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
-                    placeholder="100000"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <h3 className={`text-lg font-semibold ${theme.textColors.primary} mb-4`}>
-              Financial Obligations
-            </h3>
-            
-            <div className="space-y-4">
-              <div>
-                <label htmlFor="mortgage-balance" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Mortgage Balance
-                </label>
-                <div className="relative">
-                  <Home className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    id="mortgage-balance"
-                    type="number"
-                    value={mortgageBalance}
-                    onChange={(e) => setMortgageBalance(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
-                    placeholder="250000"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="other-debts" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Other Debts
-                </label>
-                <div className="relative">
-                  <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    id="other-debts"
-                    type="number"
-                    value={otherDebts}
-                    onChange={(e) => setOtherDebts(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
-                    placeholder="25000"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="final-expenses" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Final Expenses
-                </label>
-                <div className="relative">
-                  <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    id="final-expenses"
-                    type="number"
-                    value={finalExpenses}
-                    onChange={(e) => setFinalExpenses(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
-                    placeholder="15000"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="inflation-rate" className={`block text-sm font-medium ${theme.textColors.primary} mb-2`}>
-                  Expected Inflation Rate (%)
-                </label>
-                <div className="relative">
-                  <TrendingUp className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    id="inflation-rate"
-                    type="number"
-                    value={inflationRate}
-                    onChange={(e) => setInflationRate(Number(e.target.value))}
-                    className={`w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-600 rounded-lg ${theme.textColors.primary} focus:border-blue-500 focus:outline-none`}
-                    placeholder="3"
-                    step="0.1"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className={`text-lg font-semibold ${theme.textColors.primary}`}>
-                Family Members
-              </h3>
-              <button
-                onClick={addFamilyMember}
-                className={`px-3 py-1 text-sm ${theme.buttons.secondary} rounded`}
-              >
-                Add Member
-              </button>
-            </div>
-
-            <div className="space-y-3 max-h-96 overflow-y-auto">
-              {familyMembers.map((member) => (
-                <div key={member.id} className={`p-2 sm:p-3 bg-slate-800/50 border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center justify-between mb-1.5 sm:mb-2">
-                    <label htmlFor={`member-name-${member.id}`} className="sr-only">Family member name</label>
-                    <input
-                      id={`member-name-${member.id}`}
-                      type="text"
-                      value={member.name}
-                      onChange={(e) => updateFamilyMember(member.id, 'name', e.target.value)}
-                      className={`bg-transparent ${theme.textColors.primary} text-xs sm:text-sm font-medium border-none outline-none`}
-                      placeholder="Family member name"
+                {/* Smoker Status */}
+                <div className="space-y-2">
+                  <Label htmlFor="smoker">Smoker</Label>
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      id="smoker"
+                      checked={values.smoker}
+                      onCheckedChange={(checked) => handleInputChange('smoker', checked)}
                     />
-                    <button
-                      onClick={() => removeFamilyMember(member.id)}
-                      className="text-red-400 hover:text-red-300 text-[10px] sm:text-xs ml-2"
-                    >
-                      Remove
-                    </button>
+                    <Label htmlFor="smoker">{values.smoker ? 'Yes' : 'No'}</Label>
                   </div>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] sm:text-xs">
-                    <div>
-                      <label htmlFor={`member-age-${member.id}`} className={`${theme.textColors.secondary} block mb-1`}>Age</label>
-                      <input
-                        id={`member-age-${member.id}`}
-                        type="number"
-                        value={member.age}
-                        onChange={(e) => updateFamilyMember(member.id, 'age', Number(e.target.value))}
-                        className={`w-full px-2 py-1.5 sm:py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
+                </div>
+
+                {/* Health Status */}
+                <div className="space-y-2">
+                  <Label htmlFor="healthStatus">Health Status</Label>
+                  <Select
+                    value={values.healthStatus}
+                    onValueChange={(value) => handleInputChange('healthStatus', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select health status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="excellent">Excellent</SelectItem>
+                      <SelectItem value="good">Good</SelectItem>
+                      <SelectItem value="fair">Fair</SelectItem>
+                      <SelectItem value="poor">Poor</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {getFieldError('healthStatus') && (
+                    <Alert variant="destructive">
+                      <AlertDescription>{getFieldError('healthStatus')}</AlertDescription>
+                    </Alert>
+                  )}
+                </div>
+
+                {/* Family History */}
+                <div className="space-y-4 col-span-2">
+                  <Label>Family History</Label>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        id="heartDisease"
+                        checked={values.familyHistory.heartDisease}
+                        onCheckedChange={(checked) => handleInputChange('familyHistory.heartDisease', checked)}
                       />
+                      <Label htmlFor="heartDisease">Heart Disease</Label>
                     </div>
-                    <div>
-                      <label htmlFor={`member-relationship-${member.id}`} className={`${theme.textColors.secondary} block mb-1`}>Relationship</label>
-                      <select
-                        id={`member-relationship-${member.id}`}
-                        value={member.relationship}
-                        onChange={(e) => updateFamilyMember(member.id, 'relationship', e.target.value)}
-                        className={`w-full px-2 py-1.5 sm:py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
-                      >
-                        <option value="spouse">Spouse</option>
-                        <option value="child">Child</option>
-                        <option value="dependent">Dependent</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label htmlFor={`member-expenses-${member.id}`} className={`${theme.textColors.secondary} block mb-1`}>Monthly Expenses</label>
-                      <input
-                        id={`member-expenses-${member.id}`}
-                        type="number"
-                        value={member.monthlyExpenses}
-                        onChange={(e) => updateFamilyMember(member.id, 'monthlyExpenses', Number(e.target.value))}
-                        className={`w-full px-2 py-1.5 sm:py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        id="cancer"
+                        checked={values.familyHistory.cancer}
+                        onCheckedChange={(checked) => handleInputChange('familyHistory.cancer', checked)}
                       />
+                      <Label htmlFor="cancer">Cancer</Label>
                     </div>
-                    <div>
-                      <label htmlFor={`member-support-${member.id}`} className={`${theme.textColors.secondary} block mb-1`}>Years of Support</label>
-                      <input
-                        id={`member-support-${member.id}`}
-                        type="number"
-                        value={member.yearsOfSupport}
-                        onChange={(e) => updateFamilyMember(member.id, 'yearsOfSupport', Number(e.target.value))}
-                        className={`w-full px-2 py-1.5 sm:py-1 bg-slate-700 border border-slate-600 rounded ${theme.textColors.primary} text-[10px] sm:text-xs`}
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        id="diabetes"
+                        checked={values.familyHistory.diabetes}
+                        onCheckedChange={(checked) => handleInputChange('familyHistory.diabetes', checked)}
                       />
+                      <Label htmlFor="diabetes">Diabetes</Label>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="financial" className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Annual Income */}
+                <div className="space-y-2">
+                  <Label htmlFor="annualIncome">Annual Income</Label>
+                  <div className="relative">
+                    <DollarSign className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="annualIncome"
+                      type="number"
+                      className="pl-8"
+                      value={values.annualIncome}
+                      onChange={(e) => handleInputChange('annualIncome', e.target.value)}
+                    />
+                  </div>
+                  {getFieldError('annualIncome') && (
+                    <Alert variant="destructive">
+                      <AlertDescription>{getFieldError('annualIncome')}</AlertDescription>
+                    </Alert>
+                  )}
+                </div>
+
+                {/* Total Debt */}
+                <div className="space-y-2">
+                  <Label htmlFor="totalDebt">Total Debt</Label>
+                  <div className="relative">
+                    <DollarSign className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="totalDebt"
+                      type="number"
+                      className="pl-8"
+                      value={values.totalDebt}
+                      onChange={(e) => handleInputChange('totalDebt', e.target.value)}
+                    />
+                  </div>
+                  {getFieldError('totalDebt') && (
+                    <Alert variant="destructive">
+                      <AlertDescription>{getFieldError('totalDebt')}</AlertDescription>
+                    </Alert>
+                  )}
+                </div>
+
+                {/* Mortgage Balance */}
+                <div className="space-y-2">
+                  <Label htmlFor="mortgageBalance">Mortgage Balance</Label>
+                  <div className="relative">
+                    <DollarSign className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="mortgageBalance"
+                      type="number"
+                      className="pl-8"
+                      value={values.mortgageBalance}
+                      onChange={(e) => handleInputChange('mortgageBalance', e.target.value)}
+                    />
+                  </div>
+                  {getFieldError('mortgageBalance') && (
+                    <Alert variant="destructive">
+                      <AlertDescription>{getFieldError('mortgageBalance')}</AlertDescription>
+                    </Alert>
+                  )}
+                </div>
+
+                {/* Dependents */}
+                <div className="space-y-2">
+                  <Label htmlFor="dependents">Number of Dependents</Label>
+                  <Input
+                    id="dependents"
+                    type="number"
+                    value={values.dependents}
+                    onChange={(e) => handleInputChange('dependents', e.target.value)}
+                  />
+                  {getFieldError('dependents') && (
+                    <Alert variant="destructive">
+                      <AlertDescription>{getFieldError('dependents')}</AlertDescription>
+                    </Alert>
+                  )}
+                </div>
+
+                {/* Years of Support */}
+                <div className="space-y-2">
+                  <Label htmlFor="yearsOfSupport">Years of Support Needed</Label>
+                  <Input
+                    id="yearsOfSupport"
+                    type="number"
+                    value={values.yearsOfSupport}
+                    onChange={(e) => handleInputChange('yearsOfSupport', e.target.value)}
+                  />
+                  {getFieldError('yearsOfSupport') && (
+                    <Alert variant="destructive">
+                      <AlertDescription>{getFieldError('yearsOfSupport')}</AlertDescription>
+                    </Alert>
+                  )}
+                </div>
+
+                {/* College Expenses */}
+                <div className="space-y-2">
+                  <Label htmlFor="collegeExpenses">Include College Expenses</Label>
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      id="collegeExpenses"
+                      checked={values.collegeExpenses}
+                      onCheckedChange={(checked) => handleInputChange('collegeExpenses', checked)}
+                    />
+                    <Label htmlFor="collegeExpenses">{values.collegeExpenses ? 'Yes' : 'No'}</Label>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="coverage" className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Coverage Type */}
+                <div className="space-y-2">
+                  <Label htmlFor="coverageType">Coverage Type</Label>
+                  <Select
+                    value={values.coverageType}
+                    onValueChange={(value) => handleInputChange('coverageType', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select coverage type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="term">Term Life</SelectItem>
+                      <SelectItem value="whole">Whole Life</SelectItem>
+                      <SelectItem value="universal">Universal Life</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {getFieldError('coverageType') && (
+                    <Alert variant="destructive">
+                      <AlertDescription>{getFieldError('coverageType')}</AlertDescription>
+                    </Alert>
+                  )}
+                </div>
+
+                {/* Term Length */}
+                {values.coverageType === 'term' && (
+                  <div className="space-y-2">
+                    <Label htmlFor="termLength">Term Length (Years)</Label>
+                    <Input
+                      id="termLength"
+                      type="number"
+                      value={values.termLength}
+                      onChange={(e) => handleInputChange('termLength', e.target.value)}
+                    />
+                    {getFieldError('termLength') && (
+                      <Alert variant="destructive">
+                        <AlertDescription>{getFieldError('termLength')}</AlertDescription>
+                      </Alert>
+                    )}
+                  </div>
+                )}
+
+                {/* Existing Coverage */}
+                <div className="space-y-2">
+                  <Label htmlFor="existingCoverage">Existing Coverage</Label>
+                  <div className="relative">
+                    <DollarSign className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="existingCoverage"
+                      type="number"
+                      className="pl-8"
+                      value={values.existingCoverage}
+                      onChange={(e) => handleInputChange('existingCoverage', e.target.value)}
+                    />
+                  </div>
+                  {getFieldError('existingCoverage') && (
+                    <Alert variant="destructive">
+                      <AlertDescription>{getFieldError('existingCoverage')}</AlertDescription>
+                    </Alert>
+                  )}
+                </div>
+
+                {/* Monthly Budget */}
+                <div className="space-y-2">
+                  <Label htmlFor="monthlyBudget">Monthly Budget (Optional)</Label>
+                  <div className="relative">
+                    <DollarSign className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="monthlyBudget"
+                      type="number"
+                      className="pl-8"
+                      value={values.monthlyBudget ?? ''}
+                      onChange={(e) => handleInputChange('monthlyBudget', e.target.value)}
+                    />
+                  </div>
+                  {getFieldError('monthlyBudget') && (
+                    <Alert variant="destructive">
+                      <AlertDescription>{getFieldError('monthlyBudget')}</AlertDescription>
+                    </Alert>
+                  )}
+                </div>
+              </div>
+            </TabsContent>
+
+            {result && (
+              <>
+                <TabsContent value="results" className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-lg">Recommended Coverage</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-2xl font-bold text-primary">
+                          {formatCurrency(result.recommendedCoverage)}
+                        </div>
+                        <div className="mt-4 space-y-2">
+                          <div className="flex justify-between">
+                            <span>Income Replacement</span>
+                            <span>{formatCurrency(result.coverageBreakdown.incomeReplacement)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Debt Payoff</span>
+                            <span>{formatCurrency(result.coverageBreakdown.debtPayoff)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Education</span>
+                            <span>{formatCurrency(result.coverageBreakdown.education)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Final Expenses</span>
+                            <span>{formatCurrency(result.coverageBreakdown.finalExpenses)}</span>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-lg">Premium Estimate</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-2xl font-bold text-primary">
+                          {formatCurrency(result.estimatedPremium.monthly)}/month
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          {formatCurrency(result.estimatedPremium.annual)}/year
+                        </p>
+                        <div className="mt-4 space-y-2">
+                          {result.premiumFactors.map((factor, index) => (
+                            <div key={index} className="flex items-start gap-2">
+                              <div className={`
+                                w-2 h-2 rounded-full mt-1.5
+                                ${factor.impact === 'high' ? 'bg-red-500' :
+                                  factor.impact === 'moderate' ? 'bg-yellow-500' :
+                                  'bg-green-500'}
+                              `} />
+                              <div>
+                                <div className="font-medium">{factor.factor}</div>
+                                <div className="text-sm text-muted-foreground">{factor.description}</div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="col-span-2">
+                      <CardHeader>
+                        <CardTitle className="text-lg">Risk Assessment</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                          <div>
+                            <div className="text-sm font-medium">Risk Score</div>
+                            <div className="text-2xl font-bold">{result.riskScore}</div>
+                            <div className="text-sm text-muted-foreground">
+                              Health Class: {result.healthClass.replace('_', ' ').toUpperCase()}
+                            </div>
+                          </div>
+                          <div className="md:col-span-2">
+                            <div className="text-sm font-medium">Risk Factors</div>
+                            <ul className="mt-2 space-y-2">
+                              {result.riskFactors.map((factor, index) => (
+                                <li key={index} className="flex items-center gap-2">
+                                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                                  <span>{factor}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="recommendations" className="space-y-6">
+                  <div className="grid grid-cols-1 gap-6">
+                    {result.recommendedPolicies.map((policy, index) => (
+                      <Card key={index}>
+                        <CardHeader>
+                          <CardTitle className="text-lg">{policy.type}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                              <div className="text-sm font-medium">Coverage Amount</div>
+                              <div className="text-xl font-bold">{formatCurrency(policy.coverage)}</div>
+                              {policy.term && (
+                                <div className="text-sm text-muted-foreground">
+                                  {policy.term} Year Term
+                                </div>
+                              )}
+                              <div className="mt-2 text-sm font-medium">Monthly Premium</div>
+                              <div className="text-xl font-bold">
+                                {formatCurrency(policy.monthlyPremium)}
+                              </div>
+                            </div>
+                            <div>
+                              <div className="text-sm font-medium">Key Features</div>
+                              <ul className="mt-2 space-y-2">
+                                {policy.features.map((feature, i) => (
+                                  <li key={i} className="flex items-center gap-2">
+                                    <CheckCircle2 className="h-4 w-4 text-green-500" />
+                                    <span>{feature}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div>
+                              <div className="text-sm font-medium">Pros</div>
+                              <ul className="mt-2 space-y-2">
+                                {policy.pros.map((pro, i) => (
+                                  <li key={i} className="flex items-center gap-2">
+                                    <CheckCircle2 className="h-4 w-4 text-green-500" />
+                                    <span>{pro}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div>
+                              <div className="text-sm font-medium">Cons</div>
+                              <ul className="mt-2 space-y-2">
+                                {policy.cons.map((con, i) => (
+                                  <li key={i} className="flex items-center gap-2">
+                                    <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                                    <span>{con}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-lg">Affordability Analysis</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <div className="text-sm font-medium">Affordability Score</div>
+                            <div className="text-2xl font-bold">
+                              {result.affordabilityAnalysis.affordabilityScore}
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              Budget Impact: {formatPercentage(result.affordabilityAnalysis.monthlyBudgetImpact)}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium">Recommendations</div>
+                            <ul className="mt-2 space-y-2">
+                              {result.affordabilityAnalysis.recommendations.map((rec, index) => (
+                                <li key={index} className="flex items-center gap-2">
+                                  <CheckCircle2 className="h-4 w-4 text-green-500" />
+                                  <span>{rec}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-lg">Additional Insights</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <div className="text-sm font-medium">Key Insights</div>
+                            <ul className="mt-2 space-y-2">
+                              {result.insights.map((insight, index) => (
+                                <li key={index} className="flex items-center gap-2">
+                                  <CheckCircle2 className="h-4 w-4 text-green-500" />
+                                  <span>{insight}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium">Warnings</div>
+                            <ul className="mt-2 space-y-2">
+                              {result.warnings.map((warning, index) => (
+                                <li key={index} className="flex items-center gap-2">
+                                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                                  <span>{warning}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </TabsContent>
+              </>
+            )}
+          </Tabs>
+
+          <div className="mt-6 flex justify-end gap-2">
+            <Button variant="outline" onClick={reset}>
+              <RefreshCw className="mr-2 h-4 w-4" />
+              Reset
+            </Button>
           </div>
-        </div>
-
-        {/* Results Section */}
-        <div className="lg:col-span-2 space-y-6">
-          {insuranceNeeds && (
-            <>
-              {/* Summary Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
-                <div className={`p-3 sm:p-4 bg-red-900/20 border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
-                    <Calculator className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
-                    <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary}`}>Total Needs</h4>
-                  </div>
-                  <div className="text-lg sm:text-xl font-bold text-red-400">
-                    {formatCurrency(insuranceNeeds.totalNeeds)}
-                  </div>
-                </div>
-
-                <div className={`p-3 sm:p-4 bg-blue-900/20 border ${theme.borderColors.primary} rounded-lg`}>
-                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
-                    <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
-                    <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary}`}>Insurance Gap</h4>
-                  </div>
-                  <div className="text-lg sm:text-xl font-bold text-blue-400">
-                    {formatCurrency(insuranceNeeds.insuranceGap)}
-                  </div>
-                </div>
-
-                <div className={`p-3 sm:p-4 bg-green-900/20 border ${theme.borderColors.primary} rounded-lg sm:col-span-2 md:col-span-1`}>
-                  <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
-                    <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
-                    <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary}`}>Recommended</h4>
-                  </div>
-                  <div className="text-lg sm:text-xl font-bold text-green-400">
-                    {formatCurrency(insuranceNeeds.recommendedCoverage)}
-                  </div>
-                </div>
-              </div>
-
-              {/* Detailed Breakdown */}
-              <div className={`border ${theme.borderColors.primary} rounded-lg overflow-hidden`}>
-                <div className={`bg-slate-800 px-4 py-3 border-b ${theme.borderColors.primary}`}>
-                  <h3 className={`font-semibold ${theme.textColors.primary}`}>
-                    Insurance Needs Breakdown
-                  </h3>
-                </div>
-                
-                <div className="p-3 sm:p-4 space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                    <div>
-                      <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary} mb-2 sm:mb-3`}>Needs Analysis</h4>
-                      <div className="space-y-1.5 sm:space-y-2">
-                        <div className="flex justify-between text-xs sm:text-sm">
-                          <span className={`${theme.textColors.secondary} truncate mr-2`}>Immediate Expenses</span>
-                          <span className={`${theme.textColors.primary} flex-shrink-0`}>
-                            {formatCurrency(insuranceNeeds.immediateExpenses)}
-                          </span>
-                        </div>
-                        <div className="flex justify-between text-xs sm:text-sm">
-                          <span className={`${theme.textColors.secondary} truncate mr-2`}>Income Replacement</span>
-                          <span className={`${theme.textColors.primary} flex-shrink-0`}>
-                            {formatCurrency(insuranceNeeds.incomeReplacement)}
-                          </span>
-                        </div>
-                        <div className="flex justify-between text-xs sm:text-sm">
-                          <span className={`${theme.textColors.secondary} truncate mr-2`}>Future Obligations</span>
-                          <span className={`${theme.textColors.primary} flex-shrink-0`}>
-                            {formatCurrency(insuranceNeeds.futureObligations)}
-                          </span>
-                        </div>
-                        <div className={`border-t ${theme.borderColors.primary} pt-1.5 sm:pt-2`}>
-                          <div className="flex justify-between font-semibold text-xs sm:text-sm">
-                            <span className={`${theme.textColors.primary}`}>Total Needs</span>
-                            <span className={`${theme.textColors.primary}`}>
-                              {formatCurrency(insuranceNeeds.totalNeeds)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <h4 className={`font-semibold text-sm sm:text-base ${theme.textColors.primary} mb-2 sm:mb-3`}>Available Resources</h4>
-                      <div className="space-y-1.5 sm:space-y-2">
-                        <div className="flex justify-between text-xs sm:text-sm">
-                          <span className={`${theme.textColors.secondary} truncate mr-2`}>Current Savings (Future Value)</span>
-                          <span className={`${theme.textColors.primary} flex-shrink-0`}>
-                            {formatCurrency(currentSavings * Math.pow(1.07, retirementAge - currentAge))}
-                          </span>
-                        </div>
-                        <div className="flex justify-between text-xs sm:text-sm">
-                          <span className={`${theme.textColors.secondary} truncate mr-2`}>Existing Life Insurance</span>
-                          <span className={`${theme.textColors.primary} flex-shrink-0`}>
-                            {formatCurrency(existingLifeInsurance)}
-                          </span>
-                        </div>
-                        <div className={`border-t ${theme.borderColors.primary} pt-1.5 sm:pt-2`}>
-                          <div className="flex justify-between font-semibold text-xs sm:text-sm">
-                            <span className={`${theme.textColors.primary}`}>Total Assets</span>
-                            <span className={`${theme.textColors.primary}`}>
-                              {formatCurrency(insuranceNeeds.existingAssets)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Recommendations */}
-              <div className={`p-4 bg-blue-900/20 border ${theme.borderColors.primary} rounded-lg`}>
-                <div className="flex items-start gap-3">
-                  <Info className="w-5 h-5 text-blue-400 mt-0.5" />
-                  <div>
-                    <h4 className={`font-semibold ${theme.textColors.primary} mb-2`}>
-                      Insurance Recommendations
-                    </h4>
-                    <div className="space-y-2 text-sm">
-                      <div>
-                        <span className={`font-medium ${theme.textColors.primary}`}>Recommended Coverage: </span>
-                        <span className={`${theme.textColors.secondary}`}>
-                          {formatCurrency(insuranceNeeds.recommendedCoverage)}
-                        </span>
-                      </div>
-                      <div>
-                        <span className={`font-medium ${theme.textColors.primary}`}>Insurance Type: </span>
-                        <span className={`${theme.textColors.secondary}`}>
-                          {getInsuranceTypeRecommendation(insuranceNeeds.recommendedCoverage)}
-                        </span>
-                      </div>
-                      <div>
-                        <span className={`font-medium ${theme.textColors.primary}`}>Estimated Annual Premium: </span>
-                        <span className={`${theme.textColors.secondary}`}>
-                          {formatCurrency(getEstimatedPremium(insuranceNeeds.recommendedCoverage, currentAge))}
-                        </span>
-                      </div>
-                      <div className={`mt-3 p-3 bg-yellow-900/20 border border-yellow-500/20 rounded text-xs ${theme.textColors.secondary}`}>
-                        <strong>Note:</strong> This is a simplified calculation. Consider consulting with a licensed insurance professional 
-                        for personalized advice. Factors like health, lifestyle, and specific insurance products can significantly 
-                        affect your actual coverage needs and premiums.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

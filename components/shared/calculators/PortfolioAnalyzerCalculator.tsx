@@ -6,66 +6,24 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useProgressStore } from '@/lib/store/progressStore';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { usePortfolioAnalyzer } from '@/lib/hooks/calculators/usePortfolioAnalyzer';
 import { PieChart as PieChartIcon, Target, DollarSign, Shield, TrendingUp, AlertTriangle, CheckCircle2, RefreshCw, BarChart3 } from 'lucide-react';
+import { formatCurrency, formatPercentage } from '@/lib/utils/financial';
 
 export default function PortfolioAnalyzerCalculator() {
-  const { recordCalculatorUsage } = useProgressStore();
+  const [state, actions] = usePortfolioAnalyzer();
+  const { values, errors, result, isValid } = state;
+  const { updateField, reset } = actions;
 
-  // Temporarily mock the hook until calculatorHooks.ts is available
-  const mockHook = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    values: {} as any,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    errors: {} as any,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    result: null as any,
-    isValid: false,
-    updateValue: (field: string, value: string) => { 
-      console.log(`Updating ${field} to ${value}`);
-    },
-    updateRiskTolerance: (value: string) => { 
-      console.log(`Updating risk tolerance to ${value}`);
-    },
-    autoRebalance: () => { 
-      console.log('Auto-rebalancing portfolio');
-    },
-    reset: () => { 
-      console.log('Resetting calculator');
-    }
+  const handleInputChange = (field: string, value: string) => {
+    updateField(field, value);
   };
 
-  const {
-    values,
-    errors,
-    result,
-    isValid,
-    updateValue,
-    updateRiskTolerance,
-    autoRebalance,
-    reset
-  } = mockHook;
-
-  // Record usage when component mounts
-  React.useEffect(() => {
-    recordCalculatorUsage('portfolio-analyzer');
-  }, [recordCalculatorUsage]);
-
-  const formatCurrency = (value: number): string => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
-
-  const formatPercentage = (value: number): string => {
-    return `${value.toFixed(1)}%`;
+  const getFieldError = (field: string) => {
+    return errors.find(error => error.field === field)?.message;
   };
 
   const getPriorityColor = (priority: string) => {
@@ -79,504 +37,341 @@ export default function PortfolioAnalyzerCalculator() {
 
   const getRiskLevelColor = (riskLevel: string) => {
     switch (riskLevel) {
-      case 'Conservative': return 'text-green-600';
-      case 'Moderate': return 'text-yellow-600';
-      case 'Aggressive': return 'text-red-600';
+      case 'High': return 'text-red-600';
+      case 'Medium': return 'text-yellow-600';
+      case 'Low': return 'text-green-600';
       default: return 'text-gray-600';
     }
   };
 
-  const riskToleranceOptions = [
-    { value: 'conservative', label: 'Conservative' },
-    { value: 'moderate', label: 'Moderate' },
-    { value: 'aggressive', label: 'Aggressive' }
-  ];
-
-  // Prepare chart data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const allocationChartData = result?.allocations.map((allocation: any) => ({
-    name: allocation.category,
-    value: allocation.allocation,
-    amount: allocation.value,
-    color: allocation.color
-  })) || [];
-
-  // Performance metrics for future chart implementation
-  // const performanceData = result ? [
-  //   { name: 'Expected Return', value: result.expectedReturn * 100 },
-  //   { name: 'Volatility', value: result.volatility * 100 }
-  // ] : [];
-
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-8">
+    <div className="space-y-8">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <PieChartIcon className="h-5 w-5" />
+            <PieChartIcon className="h-6 w-6" />
             Portfolio Analyzer
           </CardTitle>
           <CardDescription>
-            Analyze your portfolio allocation, risk profile, and get personalized recommendations
+            Analyze your investment portfolio&apos;s allocation, risk, and potential returns
           </CardDescription>
         </CardHeader>
-      </Card>
+        <CardContent>
+          <Tabs defaultValue="allocation" className="space-y-4">
+            <TabsList>
+              <TabsTrigger value="allocation">Allocation</TabsTrigger>
+              <TabsTrigger value="risk-profile">Risk Profile</TabsTrigger>
+              <TabsTrigger value="details">Details</TabsTrigger>
+              <TabsTrigger value="assumptions">Assumptions</TabsTrigger>
+            </TabsList>
 
-      <div className="grid lg:grid-cols-2 gap-8">
-        {/* Input Section */}
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Portfolio Overview</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="totalInvestment">Total Investment</Label>
-                <Input
-                  id="totalInvestment"
-                  type="number"
-                  value={values.totalInvestment}
-                  onChange={(e) => updateValue('totalInvestment', e.target.value)}
-                  placeholder="100000"
-                />
-                {errors.totalInvestment && (
-                  <p className="text-sm text-red-600 mt-1">{errors.totalInvestment}</p>
-                )}
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="age">Age</Label>
+            <TabsContent value="allocation" className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="totalValue">Total Portfolio Value</Label>
                   <Input
-                    id="age"
+                    id="totalValue"
                     type="number"
-                    value={values.age}
-                    onChange={(e) => updateValue('age', e.target.value)}
-                    placeholder="35"
+                    value={values.totalValue}
+                    onChange={(e) => handleInputChange('totalValue', e.target.value)}
+                    error={getFieldError('totalValue')}
                   />
-                  {errors.age && (
-                    <p className="text-sm text-red-600 mt-1">{errors.age}</p>
-                  )}
                 </div>
-
-                <div>
-                  <Label htmlFor="investmentHorizon">Investment Horizon (Years)</Label>
+                <div className="space-y-2">
+                  <Label htmlFor="cashAllocation">Cash Allocation (%)</Label>
                   <Input
-                    id="investmentHorizon"
+                    id="cashAllocation"
                     type="number"
-                    value={values.investmentHorizon}
-                    onChange={(e) => updateValue('investmentHorizon', e.target.value)}
-                    placeholder="25"
+                    value={values.cashAllocation}
+                    onChange={(e) => handleInputChange('cashAllocation', e.target.value)}
+                    error={getFieldError('cashAllocation')}
                   />
-                  {errors.investmentHorizon && (
-                    <p className="text-sm text-red-600 mt-1">{errors.investmentHorizon}</p>
-                  )}
                 </div>
-              </div>
-
-              <div>
-                <Label htmlFor="riskTolerance">Risk Tolerance</Label>
-                <select
-                  id="riskTolerance"
-                  value={values.riskTolerance}
-                  onChange={(e) => updateRiskTolerance(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  {riskToleranceOptions.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Asset Allocation (%)</CardTitle>
-              {result && (
-                <div className="text-sm text-gray-600">
-                  Total: {result.totalAllocation.toFixed(1)}%
-                  {Math.abs(result.totalAllocation - 100) > 1 && (
-                    <span className="text-red-600 ml-2">
-                      ⚠ Should equal 100%
-                    </span>
-                  )}
-                </div>
-              )}
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="usStocks">US Stocks</Label>
+                <div className="space-y-2">
+                  <Label htmlFor="bondAllocation">Bond Allocation (%)</Label>
                   <Input
-                    id="usStocks"
+                    id="bondAllocation"
                     type="number"
-                    value={values.usStocks}
-                    onChange={(e) => updateValue('usStocks', e.target.value)}
-                    placeholder="50"
+                    value={values.bondAllocation}
+                    onChange={(e) => handleInputChange('bondAllocation', e.target.value)}
+                    error={getFieldError('bondAllocation')}
                   />
-                  {errors.usStocks && (
-                    <p className="text-sm text-red-600 mt-1">{errors.usStocks}</p>
-                  )}
                 </div>
-
-                <div>
-                  <Label htmlFor="intlStocks">International Stocks</Label>
+                <div className="space-y-2">
+                  <Label htmlFor="stockAllocation">Stock Allocation (%)</Label>
                   <Input
-                    id="intlStocks"
+                    id="stockAllocation"
                     type="number"
-                    value={values.intlStocks}
-                    onChange={(e) => updateValue('intlStocks', e.target.value)}
-                    placeholder="20"
+                    value={values.stockAllocation}
+                    onChange={(e) => handleInputChange('stockAllocation', e.target.value)}
+                    error={getFieldError('stockAllocation')}
                   />
-                  {errors.intlStocks && (
-                    <p className="text-sm text-red-600 mt-1">{errors.intlStocks}</p>
-                  )}
                 </div>
-
-                <div>
-                  <Label htmlFor="bonds">Bonds</Label>
+                <div className="space-y-2">
+                  <Label htmlFor="realEstateAllocation">Real Estate Allocation (%)</Label>
                   <Input
-                    id="bonds"
+                    id="realEstateAllocation"
                     type="number"
-                    value={values.bonds}
-                    onChange={(e) => updateValue('bonds', e.target.value)}
-                    placeholder="20"
+                    value={values.realEstateAllocation}
+                    onChange={(e) => handleInputChange('realEstateAllocation', e.target.value)}
+                    error={getFieldError('realEstateAllocation')}
                   />
-                  {errors.bonds && (
-                    <p className="text-sm text-red-600 mt-1">{errors.bonds}</p>
-                  )}
                 </div>
-
-                <div>
-                  <Label htmlFor="realEstate">Real Estate</Label>
+                <div className="space-y-2">
+                  <Label htmlFor="alternativeAllocation">Alternative Allocation (%)</Label>
                   <Input
-                    id="realEstate"
+                    id="alternativeAllocation"
                     type="number"
-                    value={values.realEstate}
-                    onChange={(e) => updateValue('realEstate', e.target.value)}
-                    placeholder="5"
+                    value={values.alternativeAllocation}
+                    onChange={(e) => handleInputChange('alternativeAllocation', e.target.value)}
+                    error={getFieldError('alternativeAllocation')}
                   />
-                  {errors.realEstate && (
-                    <p className="text-sm text-red-600 mt-1">{errors.realEstate}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="commodities">Commodities</Label>
-                  <Input
-                    id="commodities"
-                    type="number"
-                    value={values.commodities}
-                    onChange={(e) => updateValue('commodities', e.target.value)}
-                    placeholder="3"
-                  />
-                  {errors.commodities && (
-                    <p className="text-sm text-red-600 mt-1">{errors.commodities}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="cash">Cash</Label>
-                  <Input
-                    id="cash"
-                    type="number"
-                    value={values.cash}
-                    onChange={(e) => updateValue('cash', e.target.value)}
-                    placeholder="2"
-                  />
-                  {errors.cash && (
-                    <p className="text-sm text-red-600 mt-1">{errors.cash}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="crypto">Cryptocurrency</Label>
-                  <Input
-                    id="crypto"
-                    type="number"
-                    value={values.crypto}
-                    onChange={(e) => updateValue('crypto', e.target.value)}
-                    placeholder="0"
-                  />
-                  {errors.crypto && (
-                    <p className="text-sm text-red-600 mt-1">{errors.crypto}</p>
-                  )}
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </TabsContent>
 
-          <div className="flex gap-3">
-            <Button onClick={autoRebalance} className="flex-1 flex items-center gap-2">
+            <TabsContent value="risk-profile" className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="riskTolerance">Risk Tolerance</Label>
+                  <Select
+                    value={values.riskTolerance}
+                    onValueChange={(value) => handleInputChange('riskTolerance', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select risk tolerance" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="conservative">Conservative</SelectItem>
+                      <SelectItem value="moderate">Moderate</SelectItem>
+                      <SelectItem value="aggressive">Aggressive</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="investmentTimeframe">Investment Timeframe (years)</Label>
+                  <Input
+                    id="investmentTimeframe"
+                    type="number"
+                    value={values.investmentTimeframe}
+                    onChange={(e) => handleInputChange('investmentTimeframe', e.target.value)}
+                    error={getFieldError('investmentTimeframe')}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="incomeRequirement">Income Requirement (%)</Label>
+                  <Input
+                    id="incomeRequirement"
+                    type="number"
+                    value={values.incomeRequirement}
+                    onChange={(e) => handleInputChange('incomeRequirement', e.target.value)}
+                    error={getFieldError('incomeRequirement')}
+                  />
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="details" className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="averageExpenseRatio">Average Expense Ratio (%)</Label>
+                  <Input
+                    id="averageExpenseRatio"
+                    type="number"
+                    value={values.averageExpenseRatio}
+                    onChange={(e) => handleInputChange('averageExpenseRatio', e.target.value)}
+                    error={getFieldError('averageExpenseRatio')}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="rebalanceFrequency">Rebalance Frequency</Label>
+                  <Select
+                    value={values.rebalanceFrequency}
+                    onValueChange={(value) => handleInputChange('rebalanceFrequency', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select frequency" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="quarterly">Quarterly</SelectItem>
+                      <SelectItem value="semi-annually">Semi-Annually</SelectItem>
+                      <SelectItem value="annually">Annually</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="taxBracket">Tax Bracket (%)</Label>
+                  <Input
+                    id="taxBracket"
+                    type="number"
+                    value={values.taxBracket}
+                    onChange={(e) => handleInputChange('taxBracket', e.target.value)}
+                    error={getFieldError('taxBracket')}
+                  />
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="assumptions" className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="expectedInflation">Expected Inflation (%)</Label>
+                  <Input
+                    id="expectedInflation"
+                    type="number"
+                    value={values.expectedInflation}
+                    onChange={(e) => handleInputChange('expectedInflation', e.target.value)}
+                    error={getFieldError('expectedInflation')}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="expectedVolatility">Expected Volatility (%)</Label>
+                  <Input
+                    id="expectedVolatility"
+                    type="number"
+                    value={values.expectedVolatility}
+                    onChange={(e) => handleInputChange('expectedVolatility', e.target.value)}
+                    error={getFieldError('expectedVolatility')}
+                  />
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+
+          <div className="mt-6 space-x-2">
+            <Button
+              onClick={reset}
+              variant="outline"
+              className="gap-2"
+            >
               <RefreshCw className="h-4 w-4" />
-              Auto-Rebalance
-            </Button>
-            <Button onClick={reset} variant="outline" className="flex-1">
               Reset
             </Button>
           </div>
-        </div>
+        </CardContent>
+      </Card>
 
-        {/* Results Section */}
+      {result && (
         <div className="space-y-6">
-          {result && (
-            <>
-              {/* Summary Cards */}
-              <div className="grid grid-cols-2 gap-4">
-                <Card>
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">Portfolio Value</p>
-                        <p className="text-2xl font-bold text-blue-600">
-                          {formatCurrency(result.totalValue)}
-                        </p>
-                      </div>
-                      <DollarSign className="h-8 w-8 text-blue-600" />
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">Risk Level</p>
-                        <p className={`text-2xl font-bold ${getRiskLevelColor(result.riskLevel)}`}>
-                          {result.riskLevel}
-                        </p>
-                      </div>
-                      <Shield className="h-8 w-8 text-gray-600" />
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">Expected Return</p>
-                        <p className="text-2xl font-bold text-green-600">
-                          {formatPercentage(result.expectedReturn * 100)}
-                        </p>
-                      </div>
-                      <TrendingUp className="h-8 w-8 text-green-600" />
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600">Diversification</p>
-                        <p className="text-2xl font-bold text-purple-600">
-                          {result.diversificationScore}/100
-                        </p>
-                      </div>
-                      <Target className="h-8 w-8 text-purple-600" />
-                    </div>
-                  </CardContent>
-                </Card>
+          {/* Analysis Results */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Target className="h-6 w-6" />
+                Portfolio Analysis
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Basic Metrics */}
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="space-y-2">
+                  <Label>Total Allocation</Label>
+                  <div className="text-2xl font-bold">
+                    {formatPercentage(result.totalAllocation)}
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>Effective Expense Ratio</Label>
+                  <div className="text-2xl font-bold">
+                    {formatPercentage(result.effectiveExpenseRatio)}
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>Diversification Score</Label>
+                  <div className="text-2xl font-bold">
+                    {result.diversificationScore.toFixed(0)}/100
+                  </div>
+                </div>
               </div>
 
-              {/* Detailed Analysis */}
-              <Tabs defaultValue="allocation" className="space-y-4">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="allocation">Allocation</TabsTrigger>
-                  <TabsTrigger value="analysis">Analysis</TabsTrigger>
-                  <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
-                </TabsList>
+              {/* Projected Returns */}
+              <div className="space-y-2">
+                <h3 className="font-semibold">Projected Returns</h3>
+                <div className="grid gap-4 md:grid-cols-3">
+                  <div>
+                    <Label>Conservative</Label>
+                    <div className="text-xl font-semibold text-yellow-600">
+                      {formatPercentage(result.projectedReturns.conservative)}
+                    </div>
+                  </div>
+                  <div>
+                    <Label>Expected</Label>
+                    <div className="text-xl font-semibold text-green-600">
+                      {formatPercentage(result.projectedReturns.expected)}
+                    </div>
+                  </div>
+                  <div>
+                    <Label>Optimistic</Label>
+                    <div className="text-xl font-semibold text-blue-600">
+                      {formatPercentage(result.projectedReturns.optimistic)}
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                <TabsContent value="allocation" className="space-y-4">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <PieChartIcon className="h-5 w-5" />
-                        Asset Allocation Breakdown
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid lg:grid-cols-2 gap-6">
-                        {/* Pie Chart */}
-                        <div className="h-64">
-                          <ResponsiveContainer width="100%" height="100%">
-                            <PieChart>
-                              <Pie
-                                data={allocationChartData}
-                                cx="50%"
-                                cy="50%"
-                                labelLine={false}
-                                label={({ name, value }) => `${name}: ${value}%`}
-                                outerRadius={80}
-                                fill="#8884d8"
-                                dataKey="value"
-                              >
-                                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                                {allocationChartData.map((entry: any, index: number) => (
-                                  <Cell key={`cell-${index}`} fill={entry.color} />
-                                ))}
-                              </Pie>
-                              <Tooltip formatter={(value: unknown) => [`${value}%`, 'Allocation']} />
-                            </PieChart>
-                          </ResponsiveContainer>
-                        </div>
+              {/* Risk Metrics */}
+              <div className="space-y-2">
+                <h3 className="font-semibold">Risk Metrics</h3>
+                <div className="grid gap-4 md:grid-cols-3">
+                  <div>
+                    <Label>Volatility</Label>
+                    <div className="text-xl font-semibold">
+                      {formatPercentage(result.riskMetrics.volatility)}
+                    </div>
+                  </div>
+                  <div>
+                    <Label>Sharpe Ratio</Label>
+                    <div className="text-xl font-semibold">
+                      {result.riskMetrics.sharpeRatio.toFixed(2)}
+                    </div>
+                  </div>
+                  <div>
+                    <Label>Max Drawdown</Label>
+                    <div className="text-xl font-semibold">
+                      {formatPercentage(result.riskMetrics.maxDrawdown)}
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                        {/* Allocation Details */}
-                        <div className="space-y-3">
-                          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                          {result.allocations.map((allocation: any, index: number) => (
-                            <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
-                              <div className="flex items-center gap-3">
-                                <div
-                                  className="w-4 h-4 rounded-full"
-                                  style={{ backgroundColor: allocation.color }}
-                                />
-                                <span className="font-medium">{allocation.category}</span>
-                              </div>
-                              <div className="text-right">
-                                <div className="font-semibold">{formatPercentage(allocation.allocation)}</div>
-                                <div className="text-sm text-gray-600">{formatCurrency(allocation.value)}</div>
-                                {allocation.target > 0 && (
-                                  <div className="text-xs text-gray-500">
-                                    Target: {formatPercentage(allocation.target)}
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
+              {/* Rebalancing Needs */}
+              {result.rebalancingNeeded && (
+                <div className="space-y-2">
+                  <h3 className="font-semibold">Suggested Rebalancing</h3>
+                  <div className="space-y-2">
+                    {result.suggestedChanges.map((change, index) => (
+                      <Alert key={index}>
+                        <AlertTriangle className="h-4 w-4" />
+                        <AlertDescription>
+                          {change.action === 'increase' ? 'Increase' : 'Decrease'} {change.assetClass} by{' '}
+                          {formatPercentage(change.amount)} (Current: {formatPercentage(change.currentAllocation)}, Target: {formatPercentage(change.targetAllocation)})
+                        </AlertDescription>
+                      </Alert>
+                    ))}
+                  </div>
+                </div>
+              )}
 
-                <TabsContent value="analysis" className="space-y-4">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <BarChart3 className="h-5 w-5" />
-                        Portfolio Analysis
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      <div className="grid grid-cols-2 gap-6">
-                        <div className="space-y-4">
-                          <div>
-                            <div className="flex justify-between items-center mb-2">
-                              <span className="text-sm font-medium">Risk Score</span>
-                              <span className="text-sm text-gray-600">{result.riskScore}/20</span>
-                            </div>
-                            <Progress value={(result.riskScore / 20) * 100} className="h-2" />
-                          </div>
-
-                          <div>
-                            <div className="flex justify-between items-center mb-2">
-                              <span className="text-sm font-medium">Diversification Score</span>
-                              <span className="text-sm text-gray-600">{result.diversificationScore}/100</span>
-                            </div>
-                            <Progress value={result.diversificationScore} className="h-2" />
-                          </div>
-
-                          <div>
-                            <div className="flex justify-between items-center mb-2">
-                              <span className="text-sm font-medium">Allocation Health</span>
-                              <span className="text-sm text-gray-600">{result.allocationHealthScore}/100</span>
-                            </div>
-                            <Progress value={result.allocationHealthScore} className="h-2" />
-                          </div>
-                        </div>
-
-                        <div className="space-y-4">
-                          <div className="p-4 bg-gray-50 rounded-lg">
-                            <h4 className="font-semibold mb-3">Key Metrics</h4>
-                            <div className="space-y-2 text-sm">
-                              <div className="flex justify-between">
-                                <span>Expected Annual Return:</span>
-                                <span className="font-medium">{formatPercentage(result.expectedReturn * 100)}</span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span>Portfolio Volatility:</span>
-                                <span className="font-medium">{formatPercentage(result.volatility * 100)}</span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span>Sharpe Ratio:</span>
-                                <span className="font-medium">{result.sharpeRatio.toFixed(2)}</span>
-                              </div>
-                            </div>
-                          </div>
-
-                          {result.rebalanceNeeded && (
-                            <Alert>
-                              <AlertTriangle className="h-4 w-4" />
-                              <AlertDescription>
-                                Your portfolio may benefit from rebalancing. See recommendations below.
-                              </AlertDescription>
-                            </Alert>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-
-                <TabsContent value="recommendations" className="space-y-4">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Target className="h-5 w-5" />
-                        Portfolio Recommendations
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        {result.recommendations.length > 0 ? (
-                          <>
-                            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                            {result.recommendations.map((rec: any, index: number) => (
-                              <div key={index} className="p-4 border rounded-lg">
-                                <div className="flex items-start justify-between mb-2">
-                                  <div className="flex-1">
-                                    <h4 className="font-semibold">{rec.title}</h4>
-                                    <p className="text-sm text-gray-600 mt-1">{rec.description}</p>
-                                  </div>
-                                  <Badge className={getPriorityColor(rec.priority)}>
-                                    {rec.priority}
-                                  </Badge>
-                                </div>
-                                <div className="text-sm text-gray-500">
-                                  <strong>Impact:</strong> {rec.impact}
-                                </div>
-                              </div>
-                            ))}
-                          </>
-                        ) : (
-                          <div className="text-center py-8">
-                            <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-4" />
-                            <h3 className="text-lg font-semibold text-green-700">Great Portfolio!</h3>
-                            <p className="text-gray-600">Your portfolio allocation looks well-balanced.</p>
-                          </div>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              </Tabs>
-            </>
-          )}
-
-          {!isValid && Object.keys(errors).length > 0 && (
-            <Alert variant="destructive">
-              <AlertTriangle className="h-4 w-4" />
-              <AlertDescription>
-                Please correct the input errors to see your portfolio analysis.
-              </AlertDescription>
-            </Alert>
-          )}
+              {/* Insights */}
+              <div className="space-y-2">
+                <h3 className="font-semibold">Portfolio Insights</h3>
+                <div className="space-y-2">
+                  {result.insights.map((insight, index) => (
+                    <Alert key={index} variant={insight.type === 'warning' ? 'destructive' : 'default'}>
+                      {insight.type === 'warning' ? (
+                        <AlertTriangle className="h-4 w-4" />
+                      ) : (
+                        <CheckCircle2 className="h-4 w-4" />
+                      )}
+                      <AlertDescription>{insight.message}</AlertDescription>
+                    </Alert>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
-      </div>
+      )}
     </div>
   );
 }

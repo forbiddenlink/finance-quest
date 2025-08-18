@@ -1,293 +1,498 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Shield, BarChart3, Calendar, Calculator as CalcIcon } from 'lucide-react';
-import { theme } from '@/lib/theme';
-import { useProgressStore } from '@/lib/store/progressStore';
-import { motion } from 'framer-motion';
-import EmergencyFundScenarioAnalyzer from '@/components/chapters/fundamentals/calculators/EmergencyFundScenarioAnalyzer';
-import EmergencyFundBuildingTimeline from '@/components/chapters/fundamentals/calculators/EmergencyFundBuildingTimeline';
-
-// Import the original calculator component
-import OriginalEmergencyFundCalculator from '@/app/calculators/emergency-fund/page';
-
-type CalculatorView = 'overview' | 'scenario' | 'timeline' | 'calculator';
+import React from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useEmergencyFund } from '@/lib/hooks/calculators/useEmergencyFund';
+import { Shield, BarChart3, Calendar, Calculator as CalcIcon, RefreshCw, AlertTriangle, CheckCircle2, Info, TrendingUp } from 'lucide-react';
+import { formatCurrency, formatPercentage } from '@/lib/utils/financial';
 
 export default function EmergencyFundCalculatorEnhanced() {
-  const [activeView, setActiveView] = useState<CalculatorView>('overview');
-  const recordCalculatorUsage = useProgressStore((state) => state.recordCalculatorUsage);
+  const [state, actions] = useEmergencyFund();
+  const { values, errors, result, isValid } = state;
+  const { updateField, reset } = actions;
 
-  useEffect(() => {
-    recordCalculatorUsage('emergency-fund-calculator-enhanced');
-  }, [recordCalculatorUsage]);
+  const handleInputChange = (field: string, value: string) => {
+    updateField(field, value);
+  };
 
-  const calculatorViews = [
-    {
-      id: 'overview' as const,
-      name: 'Overview',
-      icon: Shield,
-      description: 'Traditional emergency fund calculator with expense tracking'
-    },
-    {
-      id: 'scenario' as const,
-      name: 'Risk Analysis',
-      icon: BarChart3,
-      description: 'Analyze your personal risk factors and determine optimal fund size'
-    },
-    {
-      id: 'timeline' as const,
-      name: 'Building Plan',
-      icon: Calendar,
-      description: 'Create a personalized roadmap to build your emergency fund'
-    },
-    {
-      id: 'calculator' as const,
-      name: 'Full Calculator',
-      icon: CalcIcon,
-      description: 'Complete emergency fund calculator with charts and insights'
-    }
-  ];
+  const getFieldError = (field: string) => {
+    return errors.find(error => error.field === field)?.message;
+  };
 
-  const renderContent = () => {
-    switch (activeView) {
-      case 'scenario':
-        return <EmergencyFundScenarioAnalyzer />;
-      case 'timeline':
-        return <EmergencyFundBuildingTimeline />;
-      case 'calculator':
-        return <OriginalEmergencyFundCalculator />;
-      default:
-        return <EmergencyFundOverview />;
+  const getRiskLevelColor = (level: 'high' | 'medium' | 'low') => {
+    switch (level) {
+      case 'high': return 'text-red-600';
+      case 'medium': return 'text-yellow-600';
+      case 'low': return 'text-green-600';
+      default: return 'text-gray-600';
     }
   };
 
   return (
     <div className="space-y-8">
-      {/* Navigation Tabs */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex flex-wrap gap-2 p-4 bg-slate-900/50 backdrop-blur-xl border border-white/10 rounded-lg"
-      >
-        {calculatorViews.map((view) => {
-          const Icon = view.icon;
-          return (
-            <button
-              key={view.id}
-              onClick={() => setActiveView(view.id)}
-              className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all ${
-                activeView === view.id
-                  ? 'bg-amber-500/20 border-amber-500/30 text-amber-300 border'
-                  : 'bg-slate-800/50 border-white/10 text-gray-300 hover:bg-slate-700/50 border'
-              }`}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Shield className="h-6 w-6" />
+            Emergency Fund Calculator
+          </CardTitle>
+          <CardDescription>
+            Calculate and plan your ideal emergency fund based on your personal situation
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="basics" className="space-y-4">
+            <TabsList>
+              <TabsTrigger value="basics">Basic Info</TabsTrigger>
+              <TabsTrigger value="risk">Risk Factors</TabsTrigger>
+              <TabsTrigger value="strategy">Strategy</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="basics" className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="monthlyExpenses">Monthly Expenses</Label>
+                  <Input
+                    id="monthlyExpenses"
+                    type="number"
+                    value={values.monthlyExpenses}
+                    onChange={(e) => handleInputChange('monthlyExpenses', e.target.value)}
+                    error={getFieldError('monthlyExpenses')}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="monthlyIncome">Monthly Income</Label>
+                  <Input
+                    id="monthlyIncome"
+                    type="number"
+                    value={values.monthlyIncome}
+                    onChange={(e) => handleInputChange('monthlyIncome', e.target.value)}
+                    error={getFieldError('monthlyIncome')}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="currentSavings">Current Savings</Label>
+                  <Input
+                    id="currentSavings"
+                    type="number"
+                    value={values.currentSavings}
+                    onChange={(e) => handleInputChange('currentSavings', e.target.value)}
+                    error={getFieldError('currentSavings')}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="monthlySavingsTarget">Monthly Savings Target</Label>
+                  <Input
+                    id="monthlySavingsTarget"
+                    type="number"
+                    value={values.monthlySavingsTarget}
+                    onChange={(e) => handleInputChange('monthlySavingsTarget', e.target.value)}
+                    error={getFieldError('monthlySavingsTarget')}
+                  />
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="risk" className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="jobStability">Job Stability</Label>
+                  <Select
+                    value={values.jobStability}
+                    onValueChange={(value) => handleInputChange('jobStability', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select job stability" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="stable">Stable</SelectItem>
+                      <SelectItem value="variable">Variable</SelectItem>
+                      <SelectItem value="unstable">Unstable</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="incomeType">Income Type</Label>
+                  <Select
+                    value={values.incomeType}
+                    onValueChange={(value) => handleInputChange('incomeType', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select income type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="salary">Salary</SelectItem>
+                      <SelectItem value="hourly">Hourly</SelectItem>
+                      <SelectItem value="commission">Commission</SelectItem>
+                      <SelectItem value="self-employed">Self-employed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="healthStatus">Health Status</Label>
+                  <Select
+                    value={values.healthStatus}
+                    onValueChange={(value) => handleInputChange('healthStatus', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select health status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="excellent">Excellent</SelectItem>
+                      <SelectItem value="good">Good</SelectItem>
+                      <SelectItem value="fair">Fair</SelectItem>
+                      <SelectItem value="poor">Poor</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="dependents">Number of Dependents</Label>
+                  <Input
+                    id="dependents"
+                    type="number"
+                    value={values.dependents}
+                    onChange={(e) => handleInputChange('dependents', e.target.value)}
+                    error={getFieldError('dependents')}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="housingType">Housing Type</Label>
+                  <Select
+                    value={values.housingType}
+                    onValueChange={(value) => handleInputChange('housingType', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select housing type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="own">Own</SelectItem>
+                      <SelectItem value="mortgage">Mortgage</SelectItem>
+                      <SelectItem value="rent">Rent</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="debtLevel">Debt Level</Label>
+                  <Select
+                    value={values.debtLevel}
+                    onValueChange={(value) => handleInputChange('debtLevel', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select debt level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="none">None</SelectItem>
+                      <SelectItem value="low">Low</SelectItem>
+                      <SelectItem value="moderate">Moderate</SelectItem>
+                      <SelectItem value="high">High</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="insuranceCoverage">Insurance Coverage</Label>
+                  <Select
+                    value={values.insuranceCoverage}
+                    onValueChange={(value) => handleInputChange('insuranceCoverage', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select insurance coverage" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="comprehensive">Comprehensive</SelectItem>
+                      <SelectItem value="basic">Basic</SelectItem>
+                      <SelectItem value="minimal">Minimal</SelectItem>
+                      <SelectItem value="none">None</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="industryStability">Industry Stability</Label>
+                  <Select
+                    value={values.industryStability}
+                    onValueChange={(value) => handleInputChange('industryStability', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select industry stability" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="growing">Growing</SelectItem>
+                      <SelectItem value="stable">Stable</SelectItem>
+                      <SelectItem value="declining">Declining</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="strategy" className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="savingsStrategy">Savings Strategy</Label>
+                  <Select
+                    value={values.savingsStrategy}
+                    onValueChange={(value) => handleInputChange('savingsStrategy', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select savings strategy" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="conservative">Conservative</SelectItem>
+                      <SelectItem value="moderate">Moderate</SelectItem>
+                      <SelectItem value="aggressive">Aggressive</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="useHighYieldSavings">Use High-Yield Savings</Label>
+                  <Select
+                    value={values.useHighYieldSavings.toString()}
+                    onValueChange={(value) => handleInputChange('useHighYieldSavings', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select high-yield savings option" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="true">Yes</SelectItem>
+                      <SelectItem value="false">No</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="includeInflation">Include Inflation</Label>
+                  <Select
+                    value={values.includeInflation.toString()}
+                    onValueChange={(value) => handleInputChange('includeInflation', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select inflation option" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="true">Yes</SelectItem>
+                      <SelectItem value="false">No</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+
+          <div className="mt-6 space-x-2">
+            <Button
+              onClick={reset}
+              variant="outline"
+              className="gap-2"
             >
-              <Icon className="w-4 h-4" />
-              <span className="font-medium">{view.name}</span>
-            </button>
-          );
-        })}
-      </motion.div>
-
-      {/* Description */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.1 }}
-        className={`p-4 ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg`}
-      >
-        <p className={theme.textColors.secondary}>
-          {calculatorViews.find(v => v.id === activeView)?.description}
-        </p>
-      </motion.div>
-
-      {/* Content */}
-      <motion.div
-        key={activeView}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        {renderContent()}
-      </motion.div>
-    </div>
-  );
-}
-
-// Overview component showing key concepts
-function EmergencyFundOverview() {
-  return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="text-center">
-        <h2 className={`text-3xl font-bold ${theme.textColors.primary} mb-4 flex items-center justify-center gap-3`}>
-          <Shield className="w-8 h-8 text-amber-400" />
-          Emergency Fund Calculator Suite
-        </h2>
-        <p className={`${theme.textColors.secondary} max-w-2xl mx-auto`}>
-          Comprehensive tools to analyze, plan, and build your perfect emergency fund based on your unique situation
-        </p>
-      </div>
-
-      {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.1 }}
-          className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6 text-center`}
-        >
-          <div className="text-3xl font-bold text-red-400 mb-2">40%</div>
-          <p className={theme.textColors.secondary}>
-            of Americans can&apos;t cover a $400 emergency expense
-          </p>
-        </motion.div>
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6 text-center`}
-        >
-          <div className="text-3xl font-bold text-amber-400 mb-2">3-6</div>
-          <p className={theme.textColors.secondary}>
-            months of expenses is the standard recommendation
-          </p>
-        </motion.div>
-        
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
-          className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6 text-center`}
-        >
-          <div className="text-3xl font-bold text-green-400 mb-2">4%+</div>
-          <p className={theme.textColors.secondary}>
-            APY available in high-yield savings accounts
-          </p>
-        </motion.div>
-      </div>
-
-      {/* Emergency Fund Levels */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4 }}
-          className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}
-        >
-          <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-4`}>
-            Emergency Fund Levels
-          </h3>
-          <div className="space-y-4">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-red-500/20 border border-red-500/30 rounded-lg flex items-center justify-center">
-                <span className="text-red-400 font-bold">$0</span>
-              </div>
-              <div>
-                <div className={`font-medium ${theme.textColors.primary}`}>Crisis Mode</div>
-                <div className={`text-sm ${theme.textColors.secondary}`}>Any emergency becomes debt</div>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-yellow-500/20 border border-yellow-500/30 rounded-lg flex items-center justify-center">
-                <span className="text-yellow-400 font-bold">$1K</span>
-              </div>
-              <div>
-                <div className={`font-medium ${theme.textColors.primary}`}>Starter Fund</div>
-                <div className={`text-sm ${theme.textColors.secondary}`}>Covers small emergencies</div>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-blue-500/20 border border-blue-500/30 rounded-lg flex items-center justify-center">
-                <span className="text-blue-400 font-bold">3M</span>
-              </div>
-              <div>
-                <div className={`font-medium ${theme.textColors.primary}`}>Basic Security</div>
-                <div className={`text-sm ${theme.textColors.secondary}`}>3 months of expenses</div>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-green-500/20 border border-green-500/30 rounded-lg flex items-center justify-center">
-                <span className="text-green-400 font-bold">6M</span>
-              </div>
-              <div>
-                <div className={`font-medium ${theme.textColors.primary}`}>Full Protection</div>
-                <div className={`text-sm ${theme.textColors.secondary}`}>6 months of expenses</div>
-              </div>
-            </div>
+              <RefreshCw className="h-4 w-4" />
+              Reset
+            </Button>
           </div>
-        </motion.div>
+        </CardContent>
+      </Card>
 
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.5 }}
-          className={`${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg p-6`}
-        >
-          <h3 className={`text-xl font-semibold ${theme.textColors.primary} mb-4`}>
-            Building Strategy
-          </h3>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <h4 className="font-medium text-amber-400">Phase 1: Foundation</h4>
-              <p className={`text-sm ${theme.textColors.secondary}`}>
-                Save $1,000 first for immediate emergencies while paying down high-interest debt
-              </p>
-            </div>
-            
-            <div className="space-y-2">
-              <h4 className="font-medium text-amber-400">Phase 2: Core Fund</h4>
-              <p className={`text-sm ${theme.textColors.secondary}`}>
-                Build to 3 months of essential expenses for job loss protection
-              </p>
-            </div>
-            
-            <div className="space-y-2">
-              <h4 className="font-medium text-amber-400">Phase 3: Full Security</h4>
-              <p className={`text-sm ${theme.textColors.secondary}`}>
-                Extend to 6+ months based on your risk factors and situation
-              </p>
-            </div>
-            
-            <div className="space-y-2">
-              <h4 className="font-medium text-amber-400">Phase 4: Optimization</h4>
-              <p className={`text-sm ${theme.textColors.secondary}`}>
-                Use high-yield accounts and laddered CDs for maximum growth
-              </p>
-            </div>
-          </div>
-        </motion.div>
-      </div>
+      {result && (
+        <div className="space-y-6">
+          {/* Fund Size Analysis */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="h-6 w-6" />
+                Fund Size Analysis
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-3">
+                <div>
+                  <Label>Minimum Fund (3 months)</Label>
+                  <div className="text-2xl font-bold">
+                    {formatCurrency(result.minimumFund)}
+                  </div>
+                </div>
+                <div>
+                  <Label>Recommended Fund ({result.recommendedMonths} months)</Label>
+                  <div className="text-2xl font-bold">
+                    {formatCurrency(result.recommendedFund)}
+                  </div>
+                </div>
+                <div>
+                  <Label>Optimal Fund</Label>
+                  <div className="text-2xl font-bold">
+                    {formatCurrency(result.optimalFund)}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-      {/* Call to Action */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className={`${theme.backgrounds.glass} border-2 border-amber-500/30 rounded-lg p-8 text-center`}
-      >
-        <h3 className={`text-2xl font-bold ${theme.textColors.primary} mb-4`}>
-          Ready to Build Your Emergency Fund?
-        </h3>
-        <p className={`${theme.textColors.secondary} mb-6 max-w-2xl mx-auto`}>
-          Use our comprehensive tools to analyze your personal risk factors, determine your optimal fund size, 
-          and create a realistic building timeline that fits your budget and goals.
-        </p>
-        <div className="flex flex-wrap gap-4 justify-center">
-          <div className={`px-4 py-2 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-            <span className={`text-sm ${theme.textColors.secondary}`}>📊 Risk Analysis</span>
-          </div>
-          <div className={`px-4 py-2 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-            <span className={`text-sm ${theme.textColors.secondary}`}>📅 Building Timeline</span>
-          </div>
-          <div className={`px-4 py-2 ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg`}>
-            <span className={`text-sm ${theme.textColors.secondary}`}>🧮 Complete Calculator</span>
-          </div>
+          {/* Risk Analysis */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <AlertTriangle className="h-6 w-6" />
+                Risk Analysis
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <Label>Risk Score</Label>
+                  <div className="text-2xl font-bold">
+                    {result.riskScore.toFixed(1)} / 19
+                  </div>
+                </div>
+                <div>
+                  <Label>Recommended Coverage</Label>
+                  <div className="text-2xl font-bold">
+                    {result.recommendedMonths} months
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Risk Factors</Label>
+                <div className="space-y-2">
+                  {result.riskFactors.map((factor, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-2 border rounded-lg"
+                    >
+                      <div>
+                        <div className="font-medium">{factor.factor}</div>
+                        <div className="text-sm text-gray-500">{factor.recommendation}</div>
+                      </div>
+                      <div className={`font-medium ${getRiskLevelColor(factor.level)}`}>
+                        {factor.level.charAt(0).toUpperCase() + factor.level.slice(1)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Building Timeline */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Calendar className="h-6 w-6" />
+                Building Timeline
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-3">
+                <div>
+                  <Label>Months to Minimum</Label>
+                  <div className="text-2xl font-bold">
+                    {result.monthsToMinimum}
+                  </div>
+                </div>
+                <div>
+                  <Label>Months to Recommended</Label>
+                  <div className="text-2xl font-bold">
+                    {result.monthsToRecommended}
+                  </div>
+                </div>
+                <div>
+                  <Label>Months to Optimal</Label>
+                  <div className="text-2xl font-bold">
+                    {result.monthsToOptimal}
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Savings Projections</Label>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left py-2">Month</th>
+                        <th className="text-right py-2">Balance</th>
+                        <th className="text-right py-2">Milestone</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {result.projectedSavings.map((projection) => (
+                        <tr key={projection.month} className="border-b">
+                          <td className="py-2">{projection.month}</td>
+                          <td className="text-right">{formatCurrency(projection.balance)}</td>
+                          <td className="text-right">{projection.milestone}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Building Strategy */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingUp className="h-6 w-6" />
+                Building Strategy
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {result.buildingPhases.map((phase, index) => (
+                <div
+                  key={index}
+                  className="p-4 border rounded-lg space-y-2"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="font-medium">Phase {phase.phase}: {phase.name}</div>
+                    <div className="font-medium">
+                      {formatCurrency(phase.targetAmount)}
+                    </div>
+                  </div>
+                  <div className="text-sm text-gray-500">{phase.description}</div>
+                  <div className="space-y-1">
+                    {phase.tips.map((tip, tipIndex) => (
+                      <div key={tipIndex} className="text-sm flex items-start gap-2">
+                        <div className="w-1 h-1 rounded-full bg-gray-400 mt-2" />
+                        <div>{tip}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Insights */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Info className="h-6 w-6" />
+                Insights
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {result.insights.map((insight, index) => (
+                <Alert
+                  key={index}
+                  variant={insight.type === 'warning' ? 'destructive' : 'default'}
+                >
+                  {insight.type === 'warning' ? (
+                    <AlertTriangle className="h-4 w-4" />
+                  ) : insight.type === 'success' ? (
+                    <CheckCircle2 className="h-4 w-4" />
+                  ) : (
+                    <Info className="h-4 w-4" />
+                  )}
+                  <AlertDescription>{insight.message}</AlertDescription>
+                </Alert>
+              ))}
+            </CardContent>
+          </Card>
         </div>
-      </motion.div>
+      )}
     </div>
   );
 }
