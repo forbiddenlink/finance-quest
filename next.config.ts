@@ -76,12 +76,7 @@ const nextConfig: NextConfig = {
 
   // Enable experimental features
   experimental: {
-    // Enable React Server Components
-    serverComponents: true,
-    // Enable concurrent features
-    concurrentFeatures: true,
-    // Enable server actions
-    serverActions: true,
+    // Server actions are now stable in Next.js 15
   },
 
   // Configure headers for security and performance
