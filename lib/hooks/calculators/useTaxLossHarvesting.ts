@@ -1,7 +1,7 @@
 'use client';
 
 import { useCalculatorBase } from '../useCalculatorBase';
-import { financialUtils } from '@/lib/utils/financial';
+import { formatCurrency } from '@/lib/utils/financial';
 
 // Types
 interface TaxLossHarvestingValues {
@@ -245,7 +245,7 @@ function generateRecommendations(
     );
   } else {
     recommendations.push(
-      `Consider harvesting ${financialUtils.formatCurrency(results.optimalHarvestingAmount)} for an estimated net benefit of ${financialUtils.formatCurrency(results.netBenefit)}.`
+      `Consider harvesting ${formatCurrency(results.optimalHarvestingAmount)} for an estimated net benefit of ${formatCurrency(results.netBenefit)}.`
     );
   }
 

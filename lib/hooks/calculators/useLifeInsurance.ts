@@ -1,7 +1,7 @@
 'use client';
 
 import { useCalculatorBase } from '../useCalculatorBase';
-import { financialUtils } from '@/lib/utils/financial';
+import { formatCurrency } from '@/lib/utils/financial';
 
 // Types
 interface LifeInsuranceValues {
