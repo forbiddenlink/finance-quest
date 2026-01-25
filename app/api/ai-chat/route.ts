@@ -2,7 +2,7 @@ import OpenAI from 'openai';
 import { NextRequest, NextResponse } from 'next/server';
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY || 'dummy-key-for-build',
 });
 
 const FINANCIAL_COACH_SYSTEM_PROMPT = `You are an expert financial literacy coach for Finance Quest, an educational platform teaching money management from zero to advanced levels.

@@ -5,6 +5,9 @@ export const metadata = {
   description: 'Real-time monitoring of calculator performance and accessibility'
 };
 
+// Force dynamic rendering - this page needs runtime data
+export const dynamic = 'force-dynamic';
+
 export default function MonitoringPage() {
   return (
     <main className="min-h-screen bg-background">

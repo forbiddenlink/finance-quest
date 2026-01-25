@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { LineChart, BarChart, PieChart } from '@/components/shared/charts/ProfessionalCharts';
+import { MultiLineChart, BarChart, DonutChart } from '@/components/shared/charts/ProfessionalCharts';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Alert } from '@/components/ui/alert';
@@ -97,7 +97,7 @@ export function MonitoringDashboard() {
   };
 
   // Group violations by type and impact
-  const violationsByType: ViolationSummary[] = accessibility.getMetrics().violations
+  const violationsByType: ViolationSummary[] = (accessibility.getMetrics().violations || [])
     .reduce((acc, violation) => {
       const existing = acc.find(v => v.type === violation.type);
       if (existing) {
@@ -153,7 +153,7 @@ export function MonitoringDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <Card className="p-4">
             <h3 className="font-medium mb-4">Calculation Time Trend</h3>
-            <LineChart
+            <MultiLineChart
               data={performanceHistory}
               xKey="timestamp"
               yKey="calculationTime"
@@ -163,7 +163,7 @@ export function MonitoringDashboard() {
           </Card>
           <Card className="p-4">
             <h3 className="font-medium mb-4">Memory Usage Trend</h3>
-            <LineChart
+            <MultiLineChart
               data={performanceHistory}
               xKey="timestamp"
               yKey="memoryUsage"
@@ -202,7 +202,7 @@ export function MonitoringDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <Card className="p-4">
             <h3 className="font-medium mb-4">Violations by Type</h3>
-            <PieChart
+            <DonutChart
               data={violationsByType}
               nameKey="type"
               valueKey="count"
