@@ -150,7 +150,7 @@ export class VisualRegressionTester {
   }
 
   private generateFilename(name: string, component: string, viewport: { width: number; height: number }): string {
-    return \`\${component}-\${name}-\${viewport.width}x\${viewport.height}.png\`.toLowerCase().replace(/\\s+/g, '-');
+    return `${component}-${name}-${viewport.width}x${viewport.height}.png`.toLowerCase().replace(/\\s+/g, '-');
   }
 
   private async compareScreenshots(
@@ -193,19 +193,19 @@ export class VisualRegressionTester {
       '',
       '## Summary',
       '',
-      \`Total Tests: \${totalTests}\`,
-      \`Passed: \${passedTests}\`,
-      \`Failed: \${failedTests}\`,
+      `Total Tests: ${totalTests}`,
+      `Passed: ${passedTests}`,
+      `Failed: ${failedTests}`,
       '',
       '## Test Results',
       '',
       ...results.map(result => [
-        \`### \${result.component} - \${result.name}\`,
+        `### ${result.component} - ${result.name}`,
         '',
-        \`- Viewport: \${result.viewport.width}x\${result.viewport.height}\`,
-        \`- Status: \${result.passed ? '✅ Passed' : '❌ Failed'}\`,
-        \`- Diff Percentage: \${result.diffPercentage.toFixed(2)}%\`,
-        result.diffPath ? \`- Diff Image: \${result.diffPath}\` : '',
+        `- Viewport: ${result.viewport.width}x${result.viewport.height}`,
+        `- Status: ${result.passed ? '✅ Passed' : '❌ Failed'}`,
+        `- Diff Percentage: ${result.diffPercentage.toFixed(2)}%`,
+        result.diffPath ? `- Diff Image: ${result.diffPath}` : '',
         ''
       ].join('\\n')),
       '',

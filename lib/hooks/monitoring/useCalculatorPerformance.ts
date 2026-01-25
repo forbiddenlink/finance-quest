@@ -45,10 +45,10 @@ export function useCalculatorPerformance({
           onPerformanceIssue(issues);
         }
         if (enableLogging) {
-          console.warn(\`Performance issues detected for \${calculatorId}:\`);
-          issues.forEach(issue => console.warn(\`- \${issue}\`));
+          console.warn(`Performance issues detected for ${calculatorId}:`);
+          issues.forEach(issue => console.warn(`- ${issue}`));
           console.info('Recommendations:');
-          recommendations.forEach(rec => console.info(\`- \${rec}\`));
+          recommendations.forEach(rec => console.info(`- ${rec}`));
         }
       }
     };

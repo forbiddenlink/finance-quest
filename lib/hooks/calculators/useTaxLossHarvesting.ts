@@ -243,14 +243,14 @@ function generateRecommendations(
     );
   } else {
     recommendations.push(
-      \`Consider harvesting \${financialUtils.formatCurrency(results.optimalHarvestingAmount)} for an estimated net benefit of \${financialUtils.formatCurrency(results.netBenefit)}.\`
+      `Consider harvesting ${financialUtils.formatCurrency(results.optimalHarvestingAmount)} for an estimated net benefit of ${financialUtils.formatCurrency(results.netBenefit)}.`
     );
   }
 
   // Timing recommendation
   if (results.timing.waitPeriod > 0) {
     recommendations.push(
-      \`Wait \${results.timing.waitPeriod} days to qualify for long-term capital gains treatment.\`
+      `Wait ${results.timing.waitPeriod} days to qualify for long-term capital gains treatment.`
     );
   } else if (results.timing.bestTime === 'before year-end') {
     recommendations.push(

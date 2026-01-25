@@ -91,14 +91,14 @@ export class TestCoverageReportGenerator {
       // Collect critical gaps
       if (coverage.criticalPaths.length > 0) {
         criticalGaps.push(
-          \`Chapter \${chapter} critical paths:\\n\${coverage.criticalPaths.join('\\n')}\`
+          `Chapter ${chapter} critical paths:\\n${coverage.criticalPaths.join('\\n')}`
         );
       }
 
       // Collect recommendations
       if (coverage.recommendations.length > 0) {
         recommendations.push(
-          \`Chapter \${chapter} recommendations:\\n\${coverage.recommendations.join('\\n')}\`
+          `Chapter ${chapter} recommendations:\\n${coverage.recommendations.join('\\n')}`
         );
       }
     }
@@ -135,7 +135,7 @@ export class TestCoverageReportGenerator {
     let componentTests = 0;
 
     for (let chapter = startChapter; chapter <= endChapter; chapter++) {
-      const testFile = path.join('__tests__', 'chapters', \`Chapter\${chapter}.test.tsx\`);
+      const testFile = path.join('__tests__', 'chapters', `Chapter${chapter}.test.tsx`);
       
       try {
         const content = await fs.promises.readFile(testFile, 'utf-8');
@@ -157,7 +157,7 @@ export class TestCoverageReportGenerator {
         // Unit tests are those that aren't component, integration, or accessibility tests
         unitTests = totalTests - (componentTests + integrationTests + accessibilityTests);
       } catch (error) {
-        console.warn(\`Could not analyze test file for Chapter \${chapter}\`);
+        console.warn(`Could not analyze test file for Chapter ${chapter}`);
       }
     }
 
@@ -178,51 +178,51 @@ export class TestCoverageReportGenerator {
       '',
       '| Metric | Coverage |',
       '|--------|----------|',
-      \`| Statements | \${report.overallCoverage.statements.toFixed(1)}% |\\n\`,
-      \`| Branches | \${report.overallCoverage.branches.toFixed(1)}% |\\n\`,
-      \`| Functions | \${report.overallCoverage.functions.toFixed(1)}% |\\n\`,
-      \`| Lines | \${report.overallCoverage.lines.toFixed(1)}% |\\n\`,
+      `| Statements | ${report.overallCoverage.statements.toFixed(1)}% |\\n`,
+      `| Branches | ${report.overallCoverage.branches.toFixed(1)}% |\\n`,
+      `| Functions | ${report.overallCoverage.functions.toFixed(1)}% |\\n`,
+      `| Lines | ${report.overallCoverage.lines.toFixed(1)}% |\\n`,
       '',
       '## Test Quality Metrics',
       '',
       '| Metric | Count |',
       '|--------|--------|',
-      \`| Total Tests | \${report.testQualityMetrics.totalTests} |\\n\`,
-      \`| Accessibility Tests | \${report.testQualityMetrics.accessibilityTests} |\\n\`,
-      \`| Integration Tests | \${report.testQualityMetrics.integrationTests} |\\n\`,
-      \`| Unit Tests | \${report.testQualityMetrics.unitTests} |\\n\`,
-      \`| Component Tests | \${report.testQualityMetrics.componentTests} |\\n\`,
+      `| Total Tests | ${report.testQualityMetrics.totalTests} |\\n`,
+      `| Accessibility Tests | ${report.testQualityMetrics.accessibilityTests} |\\n`,
+      `| Integration Tests | ${report.testQualityMetrics.integrationTests} |\\n`,
+      `| Unit Tests | ${report.testQualityMetrics.unitTests} |\\n`,
+      `| Component Tests | ${report.testQualityMetrics.componentTests} |\\n`,
       '',
       '## Chapter Summaries',
       '',
       ...report.chapterSummaries.map(chapter => [
-        \`### Chapter \${chapter.chapterNumber}\`,
+        `### Chapter ${chapter.chapterNumber}`,
         '',
-        \`- Components: \${chapter.testedComponents}/\${chapter.totalComponents} tested\`,
-        \`- Statement Coverage: \${chapter.coverageMetrics.statements.toFixed(1)}%\`,
-        \`- Branch Coverage: \${chapter.coverageMetrics.branches.toFixed(1)}%\`,
-        \`- Function Coverage: \${chapter.coverageMetrics.functions.toFixed(1)}%\`,
-        \`- Line Coverage: \${chapter.coverageMetrics.lines.toFixed(1)}%\`,
+        `- Components: ${chapter.testedComponents}/${chapter.totalComponents} tested`,
+        `- Statement Coverage: ${chapter.coverageMetrics.statements.toFixed(1)}%`,
+        `- Branch Coverage: ${chapter.coverageMetrics.branches.toFixed(1)}%`,
+        `- Function Coverage: ${chapter.coverageMetrics.functions.toFixed(1)}%`,
+        `- Line Coverage: ${chapter.coverageMetrics.lines.toFixed(1)}%`,
         '',
         chapter.criticalPaths.length > 0 ? [
           'Critical Paths:',
-          ...chapter.criticalPaths.map(path => \`- \${path}\`),
+          ...chapter.criticalPaths.map(path => `- ${path}`),
           ''
         ].join('\\n') : '',
         chapter.recommendations.length > 0 ? [
           'Recommendations:',
-          ...chapter.recommendations.map(rec => \`- \${rec}\`),
+          ...chapter.recommendations.map(rec => `- ${rec}`),
           ''
         ].join('\\n') : ''
       ].join('\\n')),
       '',
       '## Critical Gaps',
       '',
-      ...report.criticalGaps.map(gap => \`- \${gap}\\n\`),
+      ...report.criticalGaps.map(gap => `- ${gap}\\n`),
       '',
       '## Recommendations',
       '',
-      ...report.recommendations.map(rec => \`- \${rec}\\n\`),
+      ...report.recommendations.map(rec => `- ${rec}\\n`),
       '',
       '## Next Steps',
       '',

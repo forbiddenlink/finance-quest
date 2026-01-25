@@ -234,14 +234,14 @@ export class CacheManager<T = unknown> {
    * Get namespaced key
    */
   private getNamespacedKey(key: string): string {
-    return \`\${this.config.namespace}:\${key}\`;
+    return `${this.config.namespace}:${key}`;
   }
 
   /**
    * Remove namespace from key
    */
   private removeNamespace(namespacedKey: string): string {
-    return namespacedKey.replace(\`\${this.config.namespace}:\`, '');
+    return namespacedKey.replace(`${this.config.namespace}:`, '');
   }
 
   /**
@@ -309,7 +309,7 @@ export class CalculatorCacheManager extends CacheManager<CalculatorState> {
   ): void {
     // Validate state before caching
     if (!this.isValidCalculatorState(state)) {
-      console.warn(\`Invalid calculator state for \${calculatorId}\`);
+      console.warn(`Invalid calculator state for ${calculatorId}`);
       return;
     }
 

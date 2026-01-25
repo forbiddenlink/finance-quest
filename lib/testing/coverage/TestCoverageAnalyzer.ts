@@ -59,7 +59,7 @@ export class TestCoverageAnalyzer {
   }
 
   public async analyzeChapter(chapterNumber: number): Promise<ChapterCoverage> {
-    const chapterPath = path.join('app', \`chapter\${chapterNumber}\`);
+    const chapterPath = path.join('app', `chapter${chapterNumber}`);
     const components = await this.findComponents(chapterPath);
     const componentCoverage = await Promise.all(
       components.map(comp => this.analyzeComponent(comp))
@@ -234,17 +234,17 @@ export class TestCoverageAnalyzer {
     // Check overall coverage
     if (aggregateMetrics.statements < this.thresholds.statements) {
       recommendations.push(
-        \`Increase statement coverage from \${aggregateMetrics.statements.toFixed(1)}% to meet \${this.thresholds.statements}% threshold\`
+        `Increase statement coverage from ${aggregateMetrics.statements.toFixed(1)}% to meet ${this.thresholds.statements}% threshold`
       );
     }
     if (aggregateMetrics.branches < this.thresholds.branches) {
       recommendations.push(
-        \`Increase branch coverage from \${aggregateMetrics.branches.toFixed(1)}% to meet \${this.thresholds.branches}% threshold\`
+        `Increase branch coverage from ${aggregateMetrics.branches.toFixed(1)}% to meet ${this.thresholds.branches}% threshold`
       );
     }
     if (aggregateMetrics.functions < this.thresholds.functions) {
       recommendations.push(
-        \`Increase function coverage from \${aggregateMetrics.functions.toFixed(1)}% to meet \${this.thresholds.functions}% threshold\`
+        `Increase function coverage from ${aggregateMetrics.functions.toFixed(1)}% to meet ${this.thresholds.functions}% threshold`
       );
     }
 
@@ -252,9 +252,9 @@ export class TestCoverageAnalyzer {
     const complexComponents = components.filter(comp => comp.complexity > 10);
     if (complexComponents.length > 0) {
       recommendations.push(
-        \`Reduce complexity in \${complexComponents.length} component(s): \${
+        `Reduce complexity in ${complexComponents.length} component(s): ${
           complexComponents.map(comp => path.basename(comp.path)).join(', ')
-        }\`
+        }`
       );
     }
 
@@ -264,7 +264,7 @@ export class TestCoverageAnalyzer {
     );
     if (componentsWithUncoveredFunctions.length > 0) {
       recommendations.push(
-        \`Add tests for uncovered functions in \${componentsWithUncoveredFunctions.length} component(s)\`
+        `Add tests for uncovered functions in ${componentsWithUncoveredFunctions.length} component(s)`
       );
     }
 
@@ -274,7 +274,7 @@ export class TestCoverageAnalyzer {
     );
     if (componentsWithUncoveredBranches.length > 0) {
       recommendations.push(
-        \`Add tests for uncovered branches in \${componentsWithUncoveredBranches.length} component(s)\`
+        `Add tests for uncovered branches in ${componentsWithUncoveredBranches.length} component(s)`
       );
     }
 
@@ -284,38 +284,38 @@ export class TestCoverageAnalyzer {
   public generateCoverageReport(chapterNumber: number): string {
     const coverage = this.coverageData.get(chapterNumber);
     if (!coverage) {
-      return \`No coverage data available for Chapter \${chapterNumber}\`;
+      return `No coverage data available for Chapter ${chapterNumber}`;
     }
 
     const report = [
-      \`Test Coverage Report for Chapter \${chapterNumber}\`,
+      `Test Coverage Report for Chapter ${chapterNumber}`,
       '==========================================',
       '',
       'Aggregate Metrics:',
-      \`- Statements: \${coverage.aggregateMetrics.statements.toFixed(1)}%\`,
-      \`- Branches: \${coverage.aggregateMetrics.branches.toFixed(1)}%\`,
-      \`- Functions: \${coverage.aggregateMetrics.functions.toFixed(1)}%\`,
-      \`- Lines: \${coverage.aggregateMetrics.lines.toFixed(1)}%\`,
+      `- Statements: ${coverage.aggregateMetrics.statements.toFixed(1)}%`,
+      `- Branches: ${coverage.aggregateMetrics.branches.toFixed(1)}%`,
+      `- Functions: ${coverage.aggregateMetrics.functions.toFixed(1)}%`,
+      `- Lines: ${coverage.aggregateMetrics.lines.toFixed(1)}%`,
       '',
       'Critical Paths:',
-      ...coverage.criticalPaths.map(path => \`- \${path}\`),
+      ...coverage.criticalPaths.map(path => `- ${path}`),
       '',
       'Recommendations:',
-      ...coverage.recommendations.map(rec => \`- \${rec}\`),
+      ...coverage.recommendations.map(rec => `- ${rec}`),
       '',
       'Component Details:',
       ...coverage.components.map(comp => [
-        \`\${comp.path}:`,
-        \`  Complexity: \${comp.complexity}\`,
-        \`  Statements: \${comp.metrics.statements.toFixed(1)}%\`,
-        \`  Branches: \${comp.metrics.branches.toFixed(1)}%\`,
-        \`  Functions: \${comp.metrics.functions.toFixed(1)}%\`,
-        \`  Lines: \${comp.metrics.lines.toFixed(1)}%\`,
+        `${comp.path}:`,
+        `  Complexity: ${comp.complexity}`,
+        `  Statements: ${comp.metrics.statements.toFixed(1)}%`,
+        `  Branches: ${comp.metrics.branches.toFixed(1)}%`,
+        `  Functions: ${comp.metrics.functions.toFixed(1)}%`,
+        `  Lines: ${comp.metrics.lines.toFixed(1)}%`,
         comp.uncoveredFunctions.length > 0
-          ? \`  Uncovered Functions: \${comp.uncoveredFunctions.join(', ')}\`
+          ? `  Uncovered Functions: ${comp.uncoveredFunctions.join(', ')}`
           : null,
         comp.uncoveredBranches.length > 0
-          ? \`  Uncovered Branches: \${comp.uncoveredBranches.join(', ')}\`
+          ? `  Uncovered Branches: ${comp.uncoveredBranches.join(', ')}`
           : null,
         ''
       ].filter(Boolean).join('\\n'))

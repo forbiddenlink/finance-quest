@@ -85,15 +85,15 @@ export class CalculatorPerformanceAnalyzer {
   }
 
   public startMeasurement(calculatorId: string, operation: string) {
-    performance.mark(\`\${calculatorId}-\${operation}-start\`);
+    performance.mark(`${calculatorId}-${operation}-start`);
   }
 
   public endMeasurement(calculatorId: string, operation: string) {
-    performance.mark(\`\${calculatorId}-\${operation}-end\`);
+    performance.mark(`${calculatorId}-${operation}-end`);
     performance.measure(
-      \`\${calculatorId}-\${operation}\`,
-      \`\${calculatorId}-\${operation}-start\`,
-      \`\${calculatorId}-\${operation}-end\`
+      `${calculatorId}-${operation}`,
+      `${calculatorId}-${operation}-start`,
+      `${calculatorId}-${operation}-end`
     );
   }
 
@@ -159,7 +159,7 @@ export class CalculatorPerformanceAnalyzer {
 
     // Analyze calculation time
     if (metrics.calculationTime > thresholds.maxCalculationTime) {
-      issues.push(\`High calculation time: \${metrics.calculationTime}ms (max: \${thresholds.maxCalculationTime}ms)\`);
+      issues.push(`High calculation time: ${metrics.calculationTime}ms (max: ${thresholds.maxCalculationTime}ms)`);
       recommendations.push(
         'Consider implementing memoization or breaking down complex calculations'
       );
@@ -168,9 +168,9 @@ export class CalculatorPerformanceAnalyzer {
     // Analyze memory usage
     if (metrics.memoryUsage.heapUsed > thresholds.maxMemoryUsage) {
       issues.push(
-        \`High memory usage: \${Math.round(metrics.memoryUsage.heapUsed / 1024 / 1024)}MB (max: \${
+        `High memory usage: ${Math.round(metrics.memoryUsage.heapUsed / 1024 / 1024)}MB (max: ${
           Math.round(thresholds.maxMemoryUsage / 1024 / 1024)
-        }MB)\`
+        }MB)`
       );
       recommendations.push(
         'Consider implementing cleanup of unused data and reducing state size'
@@ -179,7 +179,7 @@ export class CalculatorPerformanceAnalyzer {
 
     // Analyze render time
     if (metrics.renderTime && metrics.renderTime > (thresholds.maxRenderTime || 16.67)) {
-      issues.push(\`Slow render time: \${metrics.renderTime}ms (max: \${thresholds.maxRenderTime}ms)\`);
+      issues.push(`Slow render time: ${metrics.renderTime}ms (max: ${thresholds.maxRenderTime}ms)`);
       recommendations.push(
         'Consider implementing React.memo or useMemo for expensive components'
       );
@@ -187,7 +187,7 @@ export class CalculatorPerformanceAnalyzer {
 
     // Analyze recompute count
     if (metrics.recomputeCount > thresholds.maxRecomputeCount) {
-      issues.push(\`High recompute count: \${metrics.recomputeCount} (max: \${thresholds.maxRecomputeCount})\`);
+      issues.push(`High recompute count: ${metrics.recomputeCount} (max: ${thresholds.maxRecomputeCount})`);
       recommendations.push(
         'Consider implementing useCallback for handlers and reviewing dependency arrays'
       );
@@ -200,7 +200,7 @@ export class CalculatorPerformanceAnalyzer {
       : 0;
 
     if (cacheHitRate < thresholds.minCacheHitRate) {
-      issues.push(\`Low cache hit rate: \${Math.round(cacheHitRate)}% (min: \${thresholds.minCacheHitRate}%)\`);
+      issues.push(`Low cache hit rate: ${Math.round(cacheHitRate)}% (min: ${thresholds.minCacheHitRate}%)`);
       recommendations.push(
         'Consider reviewing cache key generation and cache invalidation strategy'
       );
@@ -217,23 +217,23 @@ export class CalculatorPerformanceAnalyzer {
     }
 
     const report = [
-      \`Performance Report for \${calculatorId}\`,
+      `Performance Report for ${calculatorId}`,
       '===================================',
       '',
       'Metrics:',
-      \`- Calculation Time: \${metrics.calculationTime}ms\`,
-      \`- Memory Usage: \${Math.round(metrics.memoryUsage.heapUsed / 1024 / 1024)}MB\`,
-      metrics.renderTime ? \`- Render Time: \${metrics.renderTime}ms\` : null,
-      \`- Recompute Count: \${metrics.recomputeCount}\`,
-      \`- Cache Hit Rate: \${
+      `- Calculation Time: ${metrics.calculationTime}ms`,
+      `- Memory Usage: ${Math.round(metrics.memoryUsage.heapUsed / 1024 / 1024)}MB`,
+      metrics.renderTime ? `- Render Time: ${metrics.renderTime}ms` : null,
+      `- Recompute Count: ${metrics.recomputeCount}`,
+      `- Cache Hit Rate: ${
         Math.round((metrics.cacheHits / (metrics.cacheHits + metrics.cacheMisses)) * 100)
-      }%\`,
+      }%`,
       '',
       issues.length ? 'Issues:' : 'No issues detected',
-      ...issues.map(issue => \`- \${issue}\`),
+      ...issues.map(issue => `- ${issue}`),
       '',
       recommendations.length ? 'Recommendations:' : 'No recommendations',
-      ...recommendations.map(rec => \`- \${rec}\`),
+      ...recommendations.map(rec => `- ${rec}`),
     ].filter(Boolean).join('\\n');
 
     return report;

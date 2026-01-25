@@ -331,7 +331,7 @@ function calculatePremiums(
   premiumFactors.push({
     factor: 'Age',
     impact: values.age > 50 ? 'high' : 'moderate',
-    description: \`Age \${values.age} affects base premium\`
+    description: `Age ${values.age} affects base premium`
   });
 
   // Health class factor
@@ -356,7 +356,7 @@ function calculatePremiums(
   premiumFactors.push({
     factor: 'Health Class',
     impact: healthFactor > 1.25 ? 'high' : 'moderate',
-    description: \`\${healthClass.replace('_', ' ').toUpperCase()} health classification\`
+    description: `${healthClass.replace('_', ' ').toUpperCase()} health classification`
   });
 
   // Smoking factor
@@ -539,13 +539,13 @@ function generateInsights(
   // Coverage insights
   const coverageToIncomeRatio = results.recommendedCoverage / values.annualIncome;
   insights.push(
-    \`Recommended coverage is \${coverageToIncomeRatio.toFixed(1)}x annual income\`
+    `Recommended coverage is ${coverageToIncomeRatio.toFixed(1)}x annual income`
   );
 
   if (values.existingCoverage > 0) {
     const totalCoverage = results.recommendedCoverage + values.existingCoverage;
     insights.push(
-      \`Total coverage with existing policy would be \${formatCurrency(totalCoverage)}\`
+      `Total coverage with existing policy would be ${formatCurrency(totalCoverage)}`
     );
   }
 
@@ -576,7 +576,7 @@ function generateInsights(
   switch (values.coverageType) {
     case 'term':
       insights.push(
-        \`Term policy provides coverage until age \${values.age + (values.termLength || 0)}\`
+        `Term policy provides coverage until age ${values.age + (values.termLength || 0)}`
       );
       break;
     case 'whole':
@@ -590,7 +590,7 @@ function generateInsights(
   // Dependent-related insights
   if (values.dependents > 0) {
     insights.push(
-      \`Coverage includes support for \${values.dependents} dependent(s) for \${values.yearsOfSupport} years\`
+      `Coverage includes support for ${values.dependents} dependent(s) for ${values.yearsOfSupport} years`
     );
   }
 

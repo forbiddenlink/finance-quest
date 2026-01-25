@@ -316,7 +316,7 @@ function calculateLifeExpectancy(values: LongevityRiskValues) {
   factors.push({
     factor: 'Health Status',
     impact: healthImpact,
-    description: \`\${values.healthStatus} health adds \${healthImpact} years\`
+    description: `${values.healthStatus} health adds ${healthImpact} years`
   });
 
   // Family longevity
@@ -349,7 +349,7 @@ function calculateLifeExpectancy(values: LongevityRiskValues) {
   factors.push({
     factor: 'Exercise',
     impact: exerciseImpact,
-    description: \`\${values.lifestyle.exercise} exercise level impact\`
+    description: `${values.lifestyle.exercise} exercise level impact`
   });
 
   const dietImpact = {
@@ -361,7 +361,7 @@ function calculateLifeExpectancy(values: LongevityRiskValues) {
   factors.push({
     factor: 'Diet',
     impact: dietImpact,
-    description: \`\${values.lifestyle.diet} diet impact\`
+    description: `${values.lifestyle.diet} diet impact`
   });
 
   // Health conditions
@@ -465,9 +465,9 @@ function analyzeRisks(
   riskFactors.push({
     factor: 'Longevity',
     severity: longevityRisk,
-    impact: \`Risk of outliving median life expectancy by \${
+    impact: `Risk of outliving median life expectancy by ${
       analysis.lifeExpectancy.percentile95 - analysis.lifeExpectancy.median
-    } years\`
+    } years`
   });
 
   // Analyze shortfall risk
