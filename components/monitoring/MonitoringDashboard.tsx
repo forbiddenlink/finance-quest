@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import { LineChart, BarChart, PieChart } from '@/components/shared/charts/ProfessionalCharts';
 import { Card } from '@/components/ui/card';
