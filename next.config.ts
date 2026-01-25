@@ -27,7 +27,7 @@ const nextConfig: NextConfig = {
               )[1];
 
               // Return a chunk name based on package name
-              return \`vendor.\${packageName.replace('@', '')}\`;
+              return `vendor.${packageName.replace('@', '')}`;
             },
             priority: 10,
             reuseExistingChunk: true,
