@@ -2,15 +2,7 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { Decimal } from 'decimal.js';
 
-// Configure Decimal.js for financial calculations
-if (typeof Decimal.set === 'function') {
-  Decimal.set({
-    precision: 20,
-    rounding: Decimal.ROUND_HALF_UP,
-    toExpNeg: -7,
-    toExpPos: 21
-  });
-}
+// Decimal.js is configured in lib/utils/financialCalculations.ts
 
 export interface ValidationRule {
   validate: (value: any, allValues?: any) => boolean;
