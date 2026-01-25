@@ -142,15 +142,15 @@ export function analyzeBenchmarkResults(results: BenchmarkResult[]): {
     if (result.name.includes('calculation')) {
       if (meanTime > PERFORMANCE_THRESHOLDS.CALCULATION_TIME) {
         warnings.push(
-          \`Slow calculation in \${result.name}: \${meanTime.toFixed(2)}ms (threshold: \${PERFORMANCE_THRESHOLDS.CALCULATION_TIME}ms)\`
+          `Slow calculation in \${result.name}: \${meanTime.toFixed(2)}ms (threshold: \${PERFORMANCE_THRESHOLDS.CALCULATION_TIME}ms)`
         );
         recommendations.push(
-          \`Consider optimizing \${result.name} by implementing memoization or reducing complexity\`
+          `Consider optimizing \${result.name} by implementing memoization or reducing complexity`
         );
       }
       if (opsPerSecond < PERFORMANCE_THRESHOLDS.OPERATIONS_PER_SECOND.CALCULATION) {
         warnings.push(
-          \`Low throughput in \${result.name}: \${opsPerSecond.toFixed(2)} ops/sec\`
+          `Low throughput in \${result.name}: \${opsPerSecond.toFixed(2)} ops/sec`
         );
       }
     }
@@ -158,15 +158,15 @@ export function analyzeBenchmarkResults(results: BenchmarkResult[]): {
     if (result.name.includes('state')) {
       if (meanTime > PERFORMANCE_THRESHOLDS.STATE_UPDATE_TIME) {
         warnings.push(
-          \`Slow state update in \${result.name}: \${meanTime.toFixed(2)}ms\`
+          `Slow state update in \${result.name}: \${meanTime.toFixed(2)}ms`
         );
         recommendations.push(
-          \`Consider using batch updates or reducing state complexity in \${result.name}\`
+          `Consider using batch updates or reducing state complexity in \${result.name}`
         );
       }
       if (opsPerSecond < PERFORMANCE_THRESHOLDS.OPERATIONS_PER_SECOND.STATE_UPDATE) {
         warnings.push(
-          \`Low state update throughput in \${result.name}: \${opsPerSecond.toFixed(2)} ops/sec\`
+          `Low state update throughput in \${result.name}: \${opsPerSecond.toFixed(2)} ops/sec`
         );
       }
     }
@@ -174,35 +174,35 @@ export function analyzeBenchmarkResults(results: BenchmarkResult[]): {
     if (result.name.includes('render')) {
       if (meanTime > PERFORMANCE_THRESHOLDS.RENDER_TIME) {
         warnings.push(
-          \`Slow rendering in \${result.name}: \${meanTime.toFixed(2)}ms\`
+          `Slow rendering in \${result.name}: \${meanTime.toFixed(2)}ms`
         );
         recommendations.push(
-          \`Consider implementing React.memo or useMemo in \${result.name}\`
+          `Consider implementing React.memo or useMemo in \${result.name}`
         );
       }
       if (opsPerSecond < PERFORMANCE_THRESHOLDS.OPERATIONS_PER_SECOND.RENDER) {
         warnings.push(
-          \`Low render throughput in \${result.name}: \${opsPerSecond.toFixed(2)} ops/sec\`
+          `Low render throughput in \${result.name}: \${opsPerSecond.toFixed(2)} ops/sec`
         );
       }
     }
 
     if (memoryUsed > PERFORMANCE_THRESHOLDS.MEMORY_INCREASE) {
       warnings.push(
-        \`High memory usage in \${result.name}: \${memoryUsed.toFixed(2)}MB\`
+        `High memory usage in \${result.name}: \${memoryUsed.toFixed(2)}MB`
       );
       recommendations.push(
-        \`Consider implementing cleanup or reducing memory allocation in \${result.name}\`
+        `Consider implementing cleanup or reducing memory allocation in \${result.name}`
       );
     }
 
     // Check statistical significance
     if (result.stats.rme > 5) {
       warnings.push(
-        \`High variance in \${result.name}: ±\${result.stats.rme.toFixed(2)}%\`
+        `High variance in \${result.name}: ±\${result.stats.rme.toFixed(2)}%`
       );
       recommendations.push(
-        \`Consider increasing sample size or stabilizing conditions for \${result.name}\`
+        `Consider increasing sample size or stabilizing conditions for \${result.name}`
       );
     }
   });
@@ -210,13 +210,13 @@ export function analyzeBenchmarkResults(results: BenchmarkResult[]): {
   // Generate summary
   const summary = results
     .map(result => {
-      return \`
+      return `
 \${result.name}:
   - Ops/sec: \${result.hz.toFixed(2)}
   - Mean time: \${(1000 / result.hz).toFixed(2)}ms
   - Memory: \${result.memory?.heapUsed.toFixed(2)}MB
   - Variance: ±\${result.stats.rme.toFixed(2)}%
-\`;
+`;
     })
     .join('\\n');
 

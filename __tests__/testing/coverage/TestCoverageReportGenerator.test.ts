@@ -79,14 +79,14 @@ describe('TestCoverageReportGenerator', () => {
       });
 
       // Mock test file content
-      (fs.promises.readFile as jest.Mock).mockResolvedValue(\`
+      (fs.promises.readFile as jest.Mock).mockResolvedValue(`
         describe('Component Tests', () => {
           it('renders component', () => {});
           it('handles accessibility', () => {});
           it('integrates with other components', () => {});
           it('calculates values', () => {});
         });
-      \`);
+      `);
     });
 
     it('should generate report for chapter range', async () => {

@@ -168,9 +168,9 @@ test.describe('REIT Investment Analyzer Visual Tests', () => {
     ];
 
     for (const [index, property] of properties.entries()) {
-      await page.fill(\`[data-testid="property-name-input-\${index}"]\`, property.name);
-      await page.fill(\`[data-testid="revenue-input-\${index}"]\`, property.revenue);
-      await page.fill(\`[data-testid="expenses-input-\${index}"]\`, property.expenses);
+      await page.fill(`[data-testid="property-name-input-\${index}"]`, property.name);
+      await page.fill(`[data-testid="revenue-input-\${index}"]`, property.revenue);
+      await page.fill(`[data-testid="expenses-input-\${index}"]`, property.expenses);
     }
 
     await page.click('[data-testid="compare-properties-button"]');

@@ -37,7 +37,7 @@ describe('TestCoverageAnalyzer', () => {
       ]);
 
       // Mock file content
-      const mockContent = \`
+      const mockContent = `
         function Component1() {
           if (condition) {
             return <div>True</div>;
@@ -56,7 +56,7 @@ describe('TestCoverageAnalyzer', () => {
               return 0;
           }
         }
-      \`;
+      `;
       (fs.promises.readFile as jest.Mock).mockResolvedValue(mockContent);
     });
 
@@ -74,7 +74,7 @@ describe('TestCoverageAnalyzer', () => {
 
     it('should identify critical paths', async () => {
       // Mock low coverage metrics
-      (fs.promises.readFile as jest.Mock).mockResolvedValue(\`
+      (fs.promises.readFile as jest.Mock).mockResolvedValue(`
         function UncoveredComponent() {
           if (a) {
             if (b) {
@@ -85,7 +85,7 @@ describe('TestCoverageAnalyzer', () => {
           }
           return y;
         }
-      \`);
+      `);
 
       const coverage = await analyzer.analyzeChapter(10);
       expect(coverage.criticalPaths.length).toBeGreaterThan(0);
@@ -136,7 +136,7 @@ describe('TestCoverageAnalyzer', () => {
   describe('Complex Code Analysis', () => {
     it('should identify complex components', async () => {
       // Mock a complex component
-      (fs.promises.readFile as jest.Mock).mockResolvedValue(\`
+      (fs.promises.readFile as jest.Mock).mockResolvedValue(`
         function ComplexComponent() {
           if (a) {
             if (b) {
@@ -157,7 +157,7 @@ describe('TestCoverageAnalyzer', () => {
             default: return 0;
           }
         }
-      \`);
+      `);
 
       const coverage = await analyzer.analyzeChapter(10);
       expect(coverage.recommendations).toContain(

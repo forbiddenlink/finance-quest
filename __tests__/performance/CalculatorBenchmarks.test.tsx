@@ -258,7 +258,7 @@ describe('Calculator Performance Benchmarks', () => {
         for (let i = 0; i < 50; i++) {
           act(() => {
             actionsResult.current.cacheCalculatorState(
-              \`calculator-\${i}\`,
+              `calculator-${i}`,
               { value: i * 1000 },
               { result: i * 1100 }
             );
