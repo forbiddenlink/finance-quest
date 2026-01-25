@@ -1,3 +1,5 @@
+'use client';
+
 import { useCalculatorBase } from '../useCalculatorBase';
 import { commonValidations } from '../useCalculatorBase';
 import { Decimal } from 'decimal.js';

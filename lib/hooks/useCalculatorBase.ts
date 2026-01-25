@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { Decimal } from 'decimal.js';
@@ -9,13 +11,13 @@ export interface ValidationRule {
   message: string;
 }
 
-export interface ValidationRules<T> {
+export type ValidationRules<T> = {
   [K in keyof T]?: ValidationRule[];
-}
+};
 
-export interface CalculatorDependencies<T> {
+export type CalculatorDependencies<T> = {
   [K in keyof T]?: Array<keyof T>;
-}
+};
 
 export interface CalculatorConfig<T, R> {
   id: string;

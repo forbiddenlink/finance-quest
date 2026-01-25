@@ -1,3 +1,5 @@
+'use client';
+
 import { useCalculatorBase, commonValidations } from '../useCalculatorBase';
 import {
   calculateMonthlyPayment,

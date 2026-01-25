@@ -1,3 +1,5 @@
+'use client';
+
 import { useCalculatorBase, commonValidations } from '../useCalculatorBase';
 import {
   formatCurrency,
@@ -93,7 +95,7 @@ const STANDARD_DEDUCTION = {
 };
 
 const RETIREMENT_LIMITS = {
-  401k: 23000,
+  '401k': 23000,
   ira: 7000,
   hsa: {
     single: 4150,

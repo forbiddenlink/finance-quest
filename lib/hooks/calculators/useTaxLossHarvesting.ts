@@ -1,3 +1,5 @@
+'use client';
+
 import { useCalculatorBase } from '../useCalculatorBase';
 import { financialUtils } from '@/lib/utils/financial';
 
