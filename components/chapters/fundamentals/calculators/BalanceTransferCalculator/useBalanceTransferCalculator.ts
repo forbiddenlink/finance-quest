@@ -32,7 +32,7 @@ export const useBalanceTransferCalculator: UseBalanceTransferCalculator = () => 
       const errors = validateInputs(
         newDebts,
         prev.selectedDebts,
-        prev.selectedCard,
+        prev.selectedCard ?? undefined,
         prev.monthlyPayment
       );
 
@@ -53,7 +53,7 @@ export const useBalanceTransferCalculator: UseBalanceTransferCalculator = () => 
       const errors = validateInputs(
         newDebts,
         newSelectedDebts,
-        prev.selectedCard,
+        prev.selectedCard ?? undefined,
         prev.monthlyPayment
       );
 
@@ -76,7 +76,7 @@ export const useBalanceTransferCalculator: UseBalanceTransferCalculator = () => 
       const errors = validateInputs(
         newDebts,
         prev.selectedDebts,
-        prev.selectedCard,
+        prev.selectedCard ?? undefined,
         prev.monthlyPayment
       );
 
@@ -96,7 +96,7 @@ export const useBalanceTransferCalculator: UseBalanceTransferCalculator = () => 
       const errors = validateInputs(
         prev.existingDebts,
         prev.selectedDebts,
-        card,
+        card ?? undefined,
         prev.monthlyPayment
       );
 
@@ -115,7 +115,7 @@ export const useBalanceTransferCalculator: UseBalanceTransferCalculator = () => 
       const errors = validateInputs(
         prev.existingDebts,
         debtIds,
-        prev.selectedCard,
+        prev.selectedCard ?? undefined,
         prev.monthlyPayment
       );
 
@@ -134,7 +134,7 @@ export const useBalanceTransferCalculator: UseBalanceTransferCalculator = () => 
       const errors = validateInputs(
         prev.existingDebts,
         prev.selectedDebts,
-        prev.selectedCard,
+        prev.selectedCard ?? undefined,
         amount
       );
 
@@ -154,7 +154,7 @@ export const useBalanceTransferCalculator: UseBalanceTransferCalculator = () => 
       const errors = validateInputs(
         prev.existingDebts,
         prev.selectedDebts,
-        prev.selectedCard,
+        prev.selectedCard ?? undefined,
         prev.monthlyPayment
       );
 
@@ -170,7 +170,7 @@ export const useBalanceTransferCalculator: UseBalanceTransferCalculator = () => 
       const analysis = generateDebtAnalysis(
         prev.existingDebts,
         prev.selectedDebts,
-        prev.selectedCard,
+        prev.selectedCard ?? undefined,
         prev.monthlyPayment
       );
 

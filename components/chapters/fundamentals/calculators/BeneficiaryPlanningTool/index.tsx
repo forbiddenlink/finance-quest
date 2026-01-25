@@ -374,7 +374,7 @@ export default function BeneficiaryPlanningTool() {
                   />
                 </TableCell>
                 <TableCell>
-                  <Select
+                  <select
                     multiple
                     value={event.impactedAccounts}
                     onChange={(e) =>
@@ -382,13 +382,14 @@ export default function BeneficiaryPlanningTool() {
                         ...event,
                         impactedAccounts: Array.from(e.target.selectedOptions, option => option.value)
                       })}
+                    className="w-full border rounded-md px-3 py-2"
                   >
                     {inputs.accounts.map((account, i) => (
                       <option key={i} value={account.description}>
                         {account.description}
                       </option>
                     ))}
-                  </Select>
+                  </select>
                 </TableCell>
                 <TableCell>
                   <Button
