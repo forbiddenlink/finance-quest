@@ -119,6 +119,25 @@ export default function RootLayout({
                 {children}
               </div>
             </main>
+
+            {/* Footer */}
+            <footer className="relative z-10 border-t border-white/10 mt-auto">
+              <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <p className="text-sm text-gray-400">
+                    &copy; {new Date().getFullYear()} Finance Quest. For educational purposes only.
+                  </p>
+                  <nav className="flex items-center gap-6">
+                    <a href="/privacy" className="text-sm text-gray-400 hover:text-white transition-colors">
+                      Privacy Policy
+                    </a>
+                    <a href="/terms" className="text-sm text-gray-400 hover:text-white transition-colors">
+                      Terms of Service
+                    </a>
+                  </nav>
+                </div>
+              </div>
+            </footer>
           </ToastProvider>
         </ErrorBoundary>
       </body>
