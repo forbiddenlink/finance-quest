@@ -166,8 +166,9 @@ export default function PublicRecordsSection({
                             value={record.courtInfo.name}
                             onChange={(e) => onUpdateRecord(record.id, {
                               courtInfo: {
-                                ...record.courtInfo,
-                                name: e.target.value
+                                name: e.target.value,
+                                caseNumber: record.courtInfo?.caseNumber || '',
+                                jurisdiction: record.courtInfo?.jurisdiction || ''
                               }
                             })}
                           />
@@ -178,8 +179,9 @@ export default function PublicRecordsSection({
                             value={record.courtInfo.caseNumber}
                             onChange={(e) => onUpdateRecord(record.id, {
                               courtInfo: {
-                                ...record.courtInfo,
-                                caseNumber: e.target.value
+                                name: record.courtInfo?.name || '',
+                                caseNumber: e.target.value,
+                                jurisdiction: record.courtInfo?.jurisdiction || ''
                               }
                             })}
                           />
@@ -190,7 +192,8 @@ export default function PublicRecordsSection({
                             value={record.courtInfo.jurisdiction}
                             onChange={(e) => onUpdateRecord(record.id, {
                               courtInfo: {
-                                ...record.courtInfo,
+                                name: record.courtInfo?.name || '',
+                                caseNumber: record.courtInfo?.caseNumber || '',
                                 jurisdiction: e.target.value
                               }
                             })}

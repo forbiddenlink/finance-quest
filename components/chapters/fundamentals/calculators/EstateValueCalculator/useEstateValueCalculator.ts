@@ -1,5 +1,4 @@
 import { useState, useCallback, useMemo } from 'react';
-import { useCalculatorBase } from '@/lib/hooks/useCalculatorBase';
 import { EstateValueInputs, EstateValueResults, EstateValueError, Asset, Liability } from './types';
 import { calculateEstateValue, validateEstateInputs } from './utils';
 
@@ -15,18 +14,9 @@ const DEFAULT_INPUTS: EstateValueInputs = {
 export function useEstateValueCalculator() {
   const [localInputs, setLocalInputs] = useState<EstateValueInputs>(DEFAULT_INPUTS);
   const [errors, setErrors] = useState<EstateValueError[]>([]);
-
-  const { 
-    calculate,
-    isCalculating,
-    lastCalculated,
-    resetCalculator,
-    saveToHistory,
-    history
-  } = useCalculatorBase<EstateValueInputs, EstateValueResults>({
-    calculateFn: calculateEstateValue,
-    validateFn: validateEstateInputs
-  });
+  const [results, setResults] = useState<EstateValueResults | null>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [history, setHistory] = useState<Array<{ inputs: EstateValueInputs; results: EstateValueResults; timestamp: number }>>([]);
 
   const addAsset = useCallback((asset: Asset) => {
     setLocalInputs(prev => ({
@@ -131,35 +121,39 @@ export function useEstateValueCalculator() {
 
   const handleCalculate = useCallback(async () => {
     if (!validateInputs()) return;
-    
-    const results = await calculate(localInputs);
-    if (results) {
-      saveToHistory(localInputs, results);
+
+    setIsCalculating(true);
+    try {
+      const calculatedResults = await calculateEstateValue(localInputs);
+      setResults(calculatedResults);
+      setHistory(prev => [...prev, { inputs: localInputs, results: calculatedResults, timestamp: Date.now() }]);
+    } finally {
+      setIsCalculating(false);
     }
-  }, [localInputs, calculate, saveToHistory, validateInputs]);
+  }, [localInputs, validateInputs]);
 
   const reset = useCallback(() => {
     setLocalInputs(DEFAULT_INPUTS);
     setErrors([]);
-    resetCalculator();
-  }, [resetCalculator]);
+    setResults(null);
+  }, []);
 
   const summaryStats = useMemo(() => {
-    if (!lastCalculated) return null;
+    if (!results) return null;
 
     return {
-      totalAssets: lastCalculated.grossEstateValue,
-      totalLiabilities: lastCalculated.totalLiabilities,
-      netEstate: lastCalculated.netEstateValue,
-      totalTax: lastCalculated.totalTaxLiability,
-      netToHeirs: lastCalculated.netToHeirs,
-      potentialSavings: lastCalculated.potentialTaxSavings
+      totalAssets: results.grossEstateValue,
+      totalLiabilities: results.totalLiabilities,
+      netEstate: results.netEstateValue,
+      totalTax: results.totalTaxLiability,
+      netToHeirs: results.netToHeirs,
+      potentialSavings: results.potentialTaxSavings
     };
-  }, [lastCalculated]);
+  }, [results]);
 
   return {
     inputs: localInputs,
-    results: lastCalculated,
+    results,
     errors,
     isCalculating,
     history,

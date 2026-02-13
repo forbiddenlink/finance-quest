@@ -114,15 +114,15 @@ export const POPULAR_CARDS: CreditCard[] = [
 ] as const;
 
 export const DEFAULT_MONTHLY_SPENDING = [
-  { category: 'groceries', amount: 500 },
-  { category: 'dining', amount: 300 },
-  { category: 'gas', amount: 200 },
-  { category: 'travel', amount: 200 },
-  { category: 'entertainment', amount: 100 },
-  { category: 'shopping', amount: 300 },
-  { category: 'utilities', amount: 200 },
-  { category: 'other', amount: 500 }
-] as const;
+  { category: 'groceries' as const, amount: 500 },
+  { category: 'dining' as const, amount: 300 },
+  { category: 'gas' as const, amount: 200 },
+  { category: 'travel' as const, amount: 200 },
+  { category: 'entertainment' as const, amount: 100 },
+  { category: 'shopping' as const, amount: 300 },
+  { category: 'utilities' as const, amount: 200 },
+  { category: 'other' as const, amount: 500 }
+];
 
 export const POINT_VALUES = {
   'chase-sapphire-preferred': {

@@ -16,12 +16,12 @@ const styleConfig: StyleConfig = {
   }
 } as const;
 
-export default function PortfolioAnalyzerCalculator(): JSX.Element {
+export default function PortfolioAnalyzerCalculator() {
   const [state, actions] = usePortfolioAnalyzer();
   const { values, errors, result, isValid } = state;
   const { updateField, reset, calculate } = actions;
 
-  const handleInputChange = (field: string, value: string): void => {
+  const handleInputChange = (field: string, value: string) => {
     updateField(field, value);
   };
 

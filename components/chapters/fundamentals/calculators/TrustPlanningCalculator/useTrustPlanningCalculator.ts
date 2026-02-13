@@ -1,5 +1,4 @@
 import { useState, useCallback, useMemo } from 'react';
-import { useCalculatorBase } from '@/lib/hooks/useCalculatorBase';
 import {
   TrustPlanningInputs,
   TrustPlanningResults,
@@ -26,18 +25,9 @@ const DEFAULT_INPUTS: TrustPlanningInputs = {
 export function useTrustPlanningCalculator() {
   const [localInputs, setLocalInputs] = useState<TrustPlanningInputs>(DEFAULT_INPUTS);
   const [errors, setErrors] = useState<TrustPlanningError[]>([]);
-
-  const {
-    calculate,
-    isCalculating,
-    lastCalculated,
-    resetCalculator,
-    saveToHistory,
-    history
-  } = useCalculatorBase<TrustPlanningInputs, TrustPlanningResults>({
-    calculateFn: calculateTrustPlan,
-    validateFn: validateTrustInputs
-  });
+  const [results, setResults] = useState<TrustPlanningResults | null>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [history, setHistory] = useState<Array<{ inputs: TrustPlanningInputs; results: TrustPlanningResults; timestamp: number }>>([]);
 
   const addAsset = useCallback((asset: TrustAsset) => {
     setLocalInputs(prev => ({
@@ -170,33 +160,37 @@ export function useTrustPlanningCalculator() {
 
   const handleCalculate = useCallback(async () => {
     if (!validateInputs()) return;
-    
-    const results = await calculate(localInputs);
-    if (results) {
-      saveToHistory(localInputs, results);
+
+    setIsCalculating(true);
+    try {
+      const calculatedResults = await calculateTrustPlan(localInputs);
+      setResults(calculatedResults);
+      setHistory(prev => [...prev, { inputs: localInputs, results: calculatedResults, timestamp: Date.now() }]);
+    } finally {
+      setIsCalculating(false);
     }
-  }, [localInputs, calculate, saveToHistory, validateInputs]);
+  }, [localInputs, validateInputs]);
 
   const reset = useCallback(() => {
     setLocalInputs(DEFAULT_INPUTS);
     setErrors([]);
-    resetCalculator();
-  }, [resetCalculator]);
+    setResults(null);
+  }, []);
 
   const summaryStats = useMemo(() => {
-    if (!lastCalculated) return null;
+    if (!results) return null;
 
     return {
-      totalAssets: lastCalculated.totalAssetValue,
-      projectedGrowth: lastCalculated.projectedGrowth,
-      taxSavings: lastCalculated.estateTaxSavings,
-      annualCost: lastCalculated.annualMaintenanceCost
+      totalAssets: results.totalAssetValue,
+      projectedGrowth: results.projectedGrowth,
+      taxSavings: results.estateTaxSavings,
+      annualCost: results.annualMaintenanceCost
     };
-  }, [lastCalculated]);
+  }, [results]);
 
   return {
     inputs: localInputs,
-    results: lastCalculated,
+    results,
     errors,
     isCalculating,
     history,

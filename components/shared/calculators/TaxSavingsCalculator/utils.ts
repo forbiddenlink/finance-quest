@@ -99,7 +99,8 @@ export function calculateTaxes(
   deductions: Deduction[],
   credits: Credit[]
 ): TaxCalculation {
-  const config = TAX_YEAR_CONFIG[taxYear][filingStatus];
+  const yearConfig = TAX_YEAR_CONFIG[taxYear as keyof typeof TAX_YEAR_CONFIG];
+  const config = yearConfig[filingStatus as keyof typeof yearConfig];
 
   // Calculate total income
   const totalIncome = incomes.reduce(

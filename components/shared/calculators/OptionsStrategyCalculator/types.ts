@@ -152,7 +152,7 @@ export interface ChartOptions {
   };
 }
 
-export interface StrategyConfig {
+export type StrategyConfig = {
   readonly [key in StrategyType]: {
     name: string;
     description: string;
@@ -161,16 +161,16 @@ export interface StrategyConfig {
     riskLevel: RiskLevel;
     profitPotential: ProfitPotential;
   };
-}
+};
 
-export interface ExpiryConfig {
+export type ExpiryConfig = {
   readonly [key in ExpiryTerm]: {
     minDays: number;
     maxDays: number;
     label: string;
     description: string;
   };
-}
+};
 
 export interface GreeksConfig {
   readonly deltaThresholds: {

@@ -335,7 +335,7 @@ export default function EstateValueCalculator() {
           <div>
             <h4 className="font-semibold mb-2">Recommended Strategies</h4>
             <ul className="list-disc list-inside space-y-1">
-              {results.recommendedStrategies.map((strategy, index) => (
+              {results.recommendedStrategies.map((strategy: string, index: number) => (
                 <li key={index} className="text-gray-700">{strategy}</li>
               ))}
             </ul>

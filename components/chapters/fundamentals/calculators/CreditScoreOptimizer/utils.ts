@@ -358,7 +358,7 @@ export function generateOptimizationPlan(
 
   // Generate actions for each factor
   for (const factor of sortedFactors) {
-    const strategy = OPTIMIZATION_STRATEGIES[factor.factor];
+    const strategy = OPTIMIZATION_STRATEGIES[factor.factor as keyof typeof OPTIMIZATION_STRATEGIES];
     if (!strategy) continue;
 
     // Calculate how many points we can get from this factor
@@ -369,7 +369,7 @@ export function generateOptimizationPlan(
 
     if (potentialPoints > 0) {
       // Add relevant actions from the strategy
-      strategy.actions.forEach((actionDesc, index) => {
+      strategy.actions.forEach((actionDesc: string, index: number) => {
         actions.push({
           id: `${factor.factor}_${index}`,
           type: factor.factor,

@@ -110,8 +110,8 @@ export const useDebtPayoffCalculator: UseDebtPayoffCalculator = () => {
         if (field === 'type') {
           processedValue = value as DebtType;
           // Update interest rate to default for new type if it hasn't been manually changed
-          if (debt.interestRate === DEBT_TYPES[debt.type].defaultInterestRate) {
-            debt.interestRate = DEBT_TYPES[processedValue].defaultInterestRate;
+          if (debt.interestRate === DEBT_TYPES[debt.type as keyof typeof DEBT_TYPES].defaultInterestRate) {
+            debt.interestRate = DEBT_TYPES[processedValue as keyof typeof DEBT_TYPES].defaultInterestRate;
           }
         } else if (field !== 'name') {
           processedValue = safeParseFloat(value as string);

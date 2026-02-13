@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
-import { PortfolioHolding, PortfolioState, PortfolioActions, AnalysisParameters } from './types';
+import { PortfolioHolding, PortfolioState, PortfolioActions, AnalysisParameters, PortfolioMetrics } from './types';
 import { DEFAULT_HOLDINGS, DEFAULT_PARAMETERS } from './constants';
 import { calculatePortfolioMetrics } from './utils';
 
@@ -9,7 +9,7 @@ export function usePortfolioRiskAnalyzer(): [PortfolioState, PortfolioActions] {
 
   const [holdings, setHoldings] = useState<PortfolioHolding[]>(DEFAULT_HOLDINGS);
   const [parameters, setParameters] = useState<AnalysisParameters>(DEFAULT_PARAMETERS);
-  const [metrics, setMetrics] = useState(null);
+  const [metrics, setMetrics] = useState<PortfolioMetrics | null>(null);
 
   useEffect(() => {
     recordCalculatorUsage('portfolio-risk-analyzer');

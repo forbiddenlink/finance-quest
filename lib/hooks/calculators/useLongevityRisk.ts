@@ -4,7 +4,7 @@ import { useCalculatorBase } from '../useCalculatorBase';
 import Decimal from 'decimal.js';
 
 // Types
-interface LongevityRiskValues {
+export interface LongevityRiskValues {
   // Personal Information
   currentAge: number;
   gender: 'male' | 'female';
@@ -45,7 +45,7 @@ interface LongevityRiskValues {
   medicareSupplement: boolean;
 }
 
-interface LongevityRiskResult {
+export interface LongevityRiskResult {
   // Life Expectancy Analysis
   lifeExpectancy: {
     median: number;

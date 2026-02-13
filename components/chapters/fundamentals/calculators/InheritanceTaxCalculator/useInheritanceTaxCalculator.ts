@@ -1,5 +1,4 @@
 import { useState, useCallback, useMemo } from 'react';
-import { useCalculatorBase } from '@/lib/hooks/useCalculatorBase';
 import {
   InheritanceTaxInputs,
   InheritanceTaxResults,
@@ -29,18 +28,9 @@ const DEFAULT_INPUTS: InheritanceTaxInputs = {
 export function useInheritanceTaxCalculator() {
   const [localInputs, setLocalInputs] = useState<InheritanceTaxInputs>(DEFAULT_INPUTS);
   const [errors, setErrors] = useState<InheritanceTaxError[]>([]);
-
-  const {
-    calculate,
-    isCalculating,
-    lastCalculated,
-    resetCalculator,
-    saveToHistory,
-    history
-  } = useCalculatorBase<InheritanceTaxInputs, InheritanceTaxResults>({
-    calculateFn: calculateInheritanceTax,
-    validateFn: validateInheritanceTaxInputs
-  });
+  const [results, setResults] = useState<InheritanceTaxResults | null>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [history, setHistory] = useState<Array<{ inputs: InheritanceTaxInputs; results: InheritanceTaxResults; timestamp: number }>>([]);
 
   const addAsset = useCallback((asset: InheritedAsset) => {
     setLocalInputs(prev => ({
@@ -180,33 +170,37 @@ export function useInheritanceTaxCalculator() {
 
   const handleCalculate = useCallback(async () => {
     if (!validateInputs()) return;
-    
-    const results = await calculate(localInputs);
-    if (results) {
-      saveToHistory(localInputs, results);
+
+    setIsCalculating(true);
+    try {
+      const calculatedResults = await calculateInheritanceTax(localInputs);
+      setResults(calculatedResults);
+      setHistory(prev => [...prev, { inputs: localInputs, results: calculatedResults, timestamp: Date.now() }]);
+    } finally {
+      setIsCalculating(false);
     }
-  }, [localInputs, calculate, saveToHistory, validateInputs]);
+  }, [localInputs, validateInputs]);
 
   const reset = useCallback(() => {
     setLocalInputs(DEFAULT_INPUTS);
     setErrors([]);
-    resetCalculator();
-  }, [resetCalculator]);
+    setResults(null);
+  }, []);
 
   const summaryStats = useMemo(() => {
-    if (!lastCalculated) return null;
+    if (!results) return null;
 
     return {
-      grossEstate: lastCalculated.grossEstate,
-      totalTax: lastCalculated.totalTaxLiability,
-      netInheritance: lastCalculated.netInheritance,
-      effectiveRate: lastCalculated.effectiveTaxRate
+      grossEstate: results.grossEstate,
+      totalTax: results.totalTaxLiability,
+      netInheritance: results.netInheritance,
+      effectiveRate: results.effectiveTaxRate
     };
-  }, [lastCalculated]);
+  }, [results]);
 
   return {
     inputs: localInputs,
-    results: lastCalculated,
+    results,
     errors,
     isCalculating,
     history,

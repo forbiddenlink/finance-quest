@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Alert } from '@/components/ui/alert';
 import { useCalculatorPerformance } from '@/lib/monitoring/useCalculatorPerformance';
 import { useAccessibilityMonitoring } from '@/lib/monitoring/useAccessibilityMonitoring';
+import type { TimeSeriesData } from '@/lib/monitoring/types';
 
 interface MetricCard {
   title: string;
@@ -138,7 +139,7 @@ export function MonitoringDashboard() {
                     {metric.value.toFixed(1)} {metric.unit}
                   </p>
                 </div>
-                <Badge variant={metric.status}>
+                <Badge variant={metric.status === 'error' ? 'destructive' : metric.status === 'warning' ? 'secondary' : 'default'}>
                   {metric.status.toUpperCase()}
                 </Badge>
               </div>
@@ -154,21 +155,21 @@ export function MonitoringDashboard() {
           <Card className="p-4">
             <h3 className="font-medium mb-4">Calculation Time Trend</h3>
             <MultiLineChart
-              data={performanceHistory}
-              xKey="timestamp"
-              yKey="calculationTime"
+              series={[{
+                name: 'Calculation Time',
+                data: performanceHistory.map(p => ({ timestamp: p.timestamp, value: p.calculationTime || 0 })) as TimeSeriesData[]
+              }]}
               height={200}
-              aria-label="Calculation time trend chart"
             />
           </Card>
           <Card className="p-4">
             <h3 className="font-medium mb-4">Memory Usage Trend</h3>
             <MultiLineChart
-              data={performanceHistory}
-              xKey="timestamp"
-              yKey="memoryUsage"
+              series={[{
+                name: 'Memory Usage',
+                data: performanceHistory.map(p => ({ timestamp: p.timestamp, value: p.memoryUsage || 0 })) as TimeSeriesData[]
+              }]}
               height={200}
-              aria-label="Memory usage trend chart"
             />
           </Card>
         </div>
@@ -203,22 +204,15 @@ export function MonitoringDashboard() {
           <Card className="p-4">
             <h3 className="font-medium mb-4">Violations by Type</h3>
             <DonutChart
-              data={violationsByType}
-              nameKey="type"
-              valueKey="count"
+              data={violationsByType.map(v => ({ label: v.type, value: v.count }))}
               height={200}
-              aria-label="Violations by type chart"
             />
           </Card>
           <Card className="p-4">
             <h3 className="font-medium mb-4">Violations by Impact</h3>
             <BarChart
-              data={violationsByType}
-              xKey="type"
-              yKey="count"
-              categoryKey="impact"
+              data={violationsByType.map(v => ({ category: v.type, value: v.count }))}
               height={200}
-              aria-label="Violations by impact chart"
             />
           </Card>
         </div>
@@ -242,7 +236,7 @@ export function MonitoringDashboard() {
               </Alert>
             ))}
           {accessibilitySummary.totalViolations > 0 && (
-            <Alert variant="warning">
+            <Alert variant="default">
               <p>
                 {accessibilitySummary.totalViolations} accessibility violations detected.
                 Please review and fix.

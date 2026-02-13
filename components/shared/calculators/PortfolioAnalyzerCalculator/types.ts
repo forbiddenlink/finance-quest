@@ -6,6 +6,7 @@ export type Priority = 'High' | 'Medium' | 'Low';
 export type RiskLevel = Priority;
 
 export interface PortfolioValues {
+  totalValue: number;
   cashAllocation: number;
   bondAllocation: number;
   stockAllocation: number;
@@ -15,15 +16,19 @@ export interface PortfolioValues {
   expectedVolatility: number;
   investmentTimeframe: number;
   rebalancingFrequency: number;
+  incomeRequirement: number;
+  averageExpenseRatio: number;
+  taxBracket: number;
+  expectedInflation: number;
 }
 
-export interface BaseReturns {
+export type BaseReturns = {
   readonly [key in AssetClass]: number;
-}
+};
 
-export interface RiskAdjustments {
+export type RiskAdjustments = {
   readonly [key in RiskTolerance]: number;
-}
+};
 
 export interface ProjectedReturns {
   conservative: number;
@@ -38,29 +43,44 @@ export interface RiskMetrics {
   diversificationScore: number;
 }
 
-export interface TargetAllocations {
+export type TargetAllocations = {
   readonly [key in AssetClass]: {
     readonly [key in RiskTolerance]: {
       min: number;
       max: number;
     };
   };
-}
+};
 
 export interface ValidationError {
   field: string;
   message: string;
 }
 
+export interface PortfolioResult {
+  totalAllocation: number;
+  effectiveExpenseRatio: number;
+  projectedReturns: ProjectedReturns;
+  riskMetrics: RiskMetrics;
+  recommendations: string[];
+  rebalancingSchedule: Date[];
+  rebalancingNeeded: boolean;
+  suggestedChanges: Array<{
+    asset: string;
+    current: number;
+    target: number;
+    change: number;
+  }>;
+  insights: Array<{
+    type: string;
+    message: string;
+  }>;
+}
+
 export interface PortfolioAnalyzerState {
   values: PortfolioValues;
   errors: ValidationError[];
-  result: {
-    projectedReturns: ProjectedReturns;
-    riskMetrics: RiskMetrics;
-    recommendations: string[];
-    rebalancingSchedule: Date[];
-  } | null;
+  result: PortfolioResult | null;
   isValid: boolean;
 }
 

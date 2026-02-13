@@ -2,7 +2,7 @@ import { Decimal } from 'decimal.js';
 
 export type FilingStatus = 'single' | 'married_joint' | 'married_separate' | 'head_household';
 export type TaxYear = '2023' | '2024';
-export type ConversionStrategy = 'lump_sum' | 'gradual' | 'opportunistic';
+export type ConversionStrategyType = 'lump_sum' | 'gradual' | 'opportunistic';
 export type AccountType = 'traditional_ira' | 'sep_ira' | 'simple_ira' | 'rollover_ira' | 'roth_ira';
 export type InvestmentType = 'stocks' | 'bonds' | 'cash' | 'other';
 export type RiskLevel = 'low' | 'medium' | 'high';
@@ -42,9 +42,11 @@ export interface FilingStatusConfig {
   };
 }
 
-export interface TaxYearConfig {
-  readonly [key in FilingStatus]: FilingStatusConfig;
-}
+export type TaxYearConfig = {
+  readonly [year in TaxYear]: {
+    readonly [status in FilingStatus]: FilingStatusConfig;
+  };
+};
 
 export interface ConversionPlan {
   year: number;
@@ -163,14 +165,14 @@ export interface ChartOptions {
   };
 }
 
-export interface InvestmentConfig {
+export type InvestmentConfig = {
   readonly [key in InvestmentType]: {
     defaultReturn: number;
     volatility: number;
     riskLevel: RiskLevel;
     description: string;
   };
-}
+};
 
 export interface RMDConfig {
   readonly startAge: number;

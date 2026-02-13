@@ -63,7 +63,7 @@ export interface DebtPayoffActions {
   reset: () => void;
 }
 
-export interface DebtTypeConfig {
+export type DebtTypeConfig = {
   readonly [key in DebtType]: {
     label: string;
     defaultInterestRate: number;

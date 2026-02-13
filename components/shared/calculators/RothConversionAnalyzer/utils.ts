@@ -140,7 +140,8 @@ export function analyzeConversion(
   currentIncome: number,
   projectedRetirementIncome: number
 ): [ConversionAnalysis, ConversionPlan[]] {
-  const config = TAX_YEAR_CONFIG[taxYear][filingStatus];
+  const yearConfig = TAX_YEAR_CONFIG[taxYear as keyof typeof TAX_YEAR_CONFIG];
+  const config = yearConfig[filingStatus as keyof typeof yearConfig];
   const conversionPlan: ConversionPlan[] = [];
   let remainingBalance = accounts.reduce(
     (sum, account) => sum.plus(account.type !== 'roth_ira' ? account.balance : 0),

@@ -106,14 +106,14 @@ export function analyzeScoreChanges(
         type: bureauHistory.trends.shortTerm === 'increase' ? 'achievement' : 'warning',
         title: `Short-term Trend - ${BUREAU_INFO[bureau].name}`,
         description: `Your score is showing a ${bureauHistory.trends.shortTerm} trend over the past 3 months`,
-        impact: bureauHistory.averageMonthlyChange,
+        impact: bureauHistory.trends.averageMonthlyChange,
         timeFrame: '3 months',
         actions: bureauHistory.trends.shortTerm === 'decrease' ? [
           'Review recent changes',
           'Check payment history',
           'Monitor credit utilization'
         ] : undefined,
-        priority: Math.abs(bureauHistory.averageMonthlyChange) >= 10 ? 2 : 3
+        priority: Math.abs(bureauHistory.trends.averageMonthlyChange) >= 10 ? 2 : 3
       });
     }
   });

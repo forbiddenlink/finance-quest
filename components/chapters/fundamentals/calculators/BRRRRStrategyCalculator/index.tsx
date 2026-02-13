@@ -26,12 +26,15 @@ export default function BRRRRStrategyCalculator() {
   const handleInputChange = (field: string, value: string | number) => {
     if (field.includes('.')) {
       const [parent, child] = field.split('.');
-      setValues({
-        [parent]: {
-          ...values[parent as keyof typeof values],
-          [child]: typeof value === 'string' ? Number(value) : value
-        }
-      });
+      const parentValue = values[parent as keyof typeof values];
+      if (parentValue && typeof parentValue === 'object') {
+        setValues({
+          [parent]: {
+            ...(parentValue as Record<string, any>),
+            [child]: typeof value === 'string' ? Number(value) : value
+          }
+        });
+      }
     } else {
       setValues({ [field]: typeof value === 'string' ? Number(value) : value });
     }

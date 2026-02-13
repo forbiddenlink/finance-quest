@@ -16,6 +16,7 @@ import {
 } from './utils';
 
 const initialValues: PortfolioValues = {
+  totalValue: 100000,
   cashAllocation: 10,
   bondAllocation: 30,
   stockAllocation: 40,
@@ -24,7 +25,11 @@ const initialValues: PortfolioValues = {
   riskTolerance: 'moderate',
   expectedVolatility: 15,
   investmentTimeframe: 10,
-  rebalancingFrequency: 3
+  rebalancingFrequency: 3,
+  incomeRequirement: 40000,
+  averageExpenseRatio: 0.5,
+  taxBracket: 22,
+  expectedInflation: 3
 };
 
 export const usePortfolioAnalyzer: UsePortfolioAnalyzer = () => {

@@ -105,9 +105,8 @@ export function ExportMetricsButton({
                     Start Date
                   </label>
                   <DatePicker
-                    selected={startDate}
-                    onChange={setStartDate}
-                    maxDate={endDate || new Date()}
+                    date={startDate || undefined}
+                    onDateChange={(date) => setStartDate(date || null)}
                   />
                 </div>
                 <div>
@@ -115,10 +114,8 @@ export function ExportMetricsButton({
                     End Date
                   </label>
                   <DatePicker
-                    selected={endDate}
-                    onChange={setEndDate}
-                    minDate={startDate || undefined}
-                    maxDate={new Date()}
+                    date={endDate || undefined}
+                    onDateChange={(date) => setEndDate(date || null)}
                   />
                 </div>
               </div>
@@ -144,7 +141,7 @@ export function ExportMetricsButton({
                 <Checkbox
                   id="includeAlerts"
                   checked={includeAlerts}
-                  onCheckedChange={(checked) => setIncludeAlerts(!!checked)}
+                  onCheckedChange={(checked: boolean) => setIncludeAlerts(!!checked)}
                 />
                 <label htmlFor="includeAlerts" className="ml-2">
                   Include Alerts
@@ -154,7 +151,7 @@ export function ExportMetricsButton({
                 <Checkbox
                   id="includeViolations"
                   checked={includeViolations}
-                  onCheckedChange={(checked) => setIncludeViolations(!!checked)}
+                  onCheckedChange={(checked: boolean) => setIncludeViolations(!!checked)}
                 />
                 <label htmlFor="includeViolations" className="ml-2">
                   Include Accessibility Violations

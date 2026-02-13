@@ -453,13 +453,13 @@ export default function BeneficiaryPlanningTool() {
               <div>
                 <Label>Incomplete Designations</Label>
                 <div className="text-2xl font-bold text-red-600">
-                  {results.designationStatus.filter(s => s.status === 'incomplete').length}
+                  {results.designationStatus.filter((s: { accountDescription: string; status: 'complete' | 'incomplete' | 'review_needed'; issues: string[] }) => s.status === 'incomplete').length}
                 </div>
               </div>
               <div>
                 <Label>High Priority Reviews</Label>
                 <div className="text-2xl font-bold text-yellow-600">
-                  {results.reviewSchedule.filter(r => r.priority === 'high').length}
+                  {results.reviewSchedule.filter((r: { accountDescription: string; lastReview: string; nextReview: string; priority: 'high' | 'medium' | 'low' }) => r.priority === 'high').length}
                 </div>
               </div>
             </div>
@@ -479,7 +479,7 @@ export default function BeneficiaryPlanningTool() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {results.beneficiarySummary.map((summary, index) => (
+                {results.beneficiarySummary.map((summary: { beneficiaryName: string; totalValue: number; percentageOfEstate: number; accountTypes: string[]; isContingent: boolean }, index: number) => (
                   <TableRow key={index}>
                     <TableCell>{summary.beneficiaryName}</TableCell>
                     <TableCell>${summary.totalValue.toLocaleString()}</TableCell>
@@ -504,7 +504,7 @@ export default function BeneficiaryPlanningTool() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {results.designationStatus.map((status, index) => (
+                {results.designationStatus.map((status: { accountDescription: string; status: 'complete' | 'incomplete' | 'review_needed'; issues: string[] }, index: number) => (
                   <TableRow key={index}>
                     <TableCell>{status.accountDescription}</TableCell>
                     <TableCell>
@@ -520,7 +520,7 @@ export default function BeneficiaryPlanningTool() {
                     </TableCell>
                     <TableCell>
                       <ul className="list-disc list-inside">
-                        {status.issues.map((issue, i) => (
+                        {status.issues.map((issue: string, i: number) => (
                           <li key={i}>{issue}</li>
                         ))}
                       </ul>
@@ -534,12 +534,12 @@ export default function BeneficiaryPlanningTool() {
           {/* Distribution Analysis */}
           <Card className="p-6">
             <h3 className="text-lg font-semibold mb-4">Distribution Analysis</h3>
-            {results.distributionAnalysis.map((analysis, index) => (
+            {results.distributionAnalysis.map((analysis: { category: string; analysis: string; recommendations: string[] }, index: number) => (
               <div key={index} className="mb-6 last:mb-0">
                 <h4 className="font-semibold mb-2">{analysis.category}</h4>
                 <p className="text-gray-700 mb-2">{analysis.analysis}</p>
                 <ul className="list-disc list-inside space-y-1">
-                  {analysis.recommendations.map((rec, i) => (
+                  {analysis.recommendations.map((rec: string, i: number) => (
                     <li key={i} className="text-gray-600">{rec}</li>
                   ))}
                 </ul>
@@ -560,7 +560,7 @@ export default function BeneficiaryPlanningTool() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {results.reviewSchedule.map((review, index) => (
+                {results.reviewSchedule.map((review: { accountDescription: string; lastReview: string; nextReview: string; priority: 'high' | 'medium' | 'low' }, index: number) => (
                   <TableRow key={index}>
                     <TableCell>{review.accountDescription}</TableCell>
                     <TableCell>{review.lastReview}</TableCell>
@@ -586,7 +586,7 @@ export default function BeneficiaryPlanningTool() {
           {results.warnings.length > 0 && (
             <Card className="p-6">
               <h3 className="text-lg font-semibold mb-4">Important Considerations</h3>
-              {results.warnings.map((warning, index) => (
+              {results.warnings.map((warning: { severity: 'high' | 'medium' | 'low'; message: string; accountsAffected: string[] }, index: number) => (
                 <div
                   key={index}
                   className={`mb-4 last:mb-0 p-4 rounded-md ${

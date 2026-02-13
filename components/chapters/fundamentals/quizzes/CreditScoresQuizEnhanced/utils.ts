@@ -5,7 +5,7 @@ export function calculateScore(progress: QuizProgress): number {
   if (progress.answers.length === 0) return 0;
 
   const totalPoints = progress.answers.reduce((sum, answer) => {
-    const question = progress.questions?.find(q => q.id === answer.questionId);
+    const question = (progress as QuizProgress & { questions?: QuizQuestion[] }).questions?.find((q: QuizQuestion) => q.id === answer.questionId);
     return sum + (answer.isCorrect ? (question?.points || 0) : 0);
   }, 0);
 

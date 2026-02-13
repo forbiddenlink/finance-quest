@@ -474,7 +474,7 @@ export default function TrustPlanningCalculator() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {results.beneficiaryDistributions.map((dist, index) => (
+                {results.beneficiaryDistributions.map((dist: { beneficiaryName: string; amount: number; timing: string }, index: number) => (
                   <TableRow key={index}>
                     <TableCell>{dist.beneficiaryName}</TableCell>
                     <TableCell>${dist.amount.toLocaleString()}</TableCell>
@@ -489,7 +489,7 @@ export default function TrustPlanningCalculator() {
           <div className="mb-6">
             <h4 className="font-semibold mb-2">Recommended Features</h4>
             <ul className="list-disc list-inside space-y-1">
-              {results.recommendedFeatures.map((feature, index) => (
+              {results.recommendedFeatures.map((feature: string, index: number) => (
                 <li key={index} className="text-gray-700">{feature}</li>
               ))}
             </ul>
@@ -500,7 +500,7 @@ export default function TrustPlanningCalculator() {
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
               <h4 className="font-semibold mb-2">Important Considerations</h4>
               <ul className="list-disc list-inside space-y-1">
-                {results.warnings.map((warning, index) => (
+                {results.warnings.map((warning: string, index: number) => (
                   <li key={index} className="text-yellow-700">{warning}</li>
                 ))}
               </ul>

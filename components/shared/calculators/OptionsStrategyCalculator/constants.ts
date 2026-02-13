@@ -4,7 +4,8 @@ import {
   StrategyConfig,
   ExpiryConfig,
   GreeksConfig,
-  StyleConfig
+  StyleConfig,
+  Option
 } from './types';
 
 export const STRATEGY_CONFIG: StrategyConfig = {
@@ -12,7 +13,7 @@ export const STRATEGY_CONFIG: StrategyConfig = {
     name: 'Single Option',
     description: 'A simple long or short position in a call or put option',
     maxLegs: 1,
-    marginRequirement: (options, underlyingPrice) => {
+    marginRequirement: (options: Option[], underlyingPrice: number) => {
       const option = options[0];
       if (option.position === 'long') {
         return option.premium * option.quantity * 100;
@@ -28,7 +29,7 @@ export const STRATEGY_CONFIG: StrategyConfig = {
     name: 'Vertical Spread',
     description: 'A combination of a long and short option of the same type and expiration but different strikes',
     maxLegs: 2,
-    marginRequirement: (options, _) => {
+    marginRequirement: (options: Option[], _underlyingPrice: number) => {
       const width = Math.abs(options[0].strike - options[1].strike);
       return width * options[0].quantity * 100;
     },
@@ -39,7 +40,7 @@ export const STRATEGY_CONFIG: StrategyConfig = {
     name: 'Iron Condor',
     description: 'A combination of a bull put spread and a bear call spread',
     maxLegs: 4,
-    marginRequirement: (options, _) => {
+    marginRequirement: (options: Option[], _underlyingPrice: number) => {
       const putWidth = Math.abs(options[0].strike - options[1].strike);
       const callWidth = Math.abs(options[2].strike - options[3].strike);
       return Math.max(putWidth, callWidth) * options[0].quantity * 100;
@@ -51,7 +52,7 @@ export const STRATEGY_CONFIG: StrategyConfig = {
     name: 'Butterfly Spread',
     description: 'A three-legged options strategy using calls or puts with different strikes',
     maxLegs: 3,
-    marginRequirement: (options, _) => {
+    marginRequirement: (options: Option[], _underlyingPrice: number) => {
       const width = Math.abs(options[0].strike - options[1].strike);
       return width * options[0].quantity * 100;
     },
@@ -62,7 +63,7 @@ export const STRATEGY_CONFIG: StrategyConfig = {
     name: 'Straddle',
     description: 'A combination of a call and put with the same strike and expiration',
     maxLegs: 2,
-    marginRequirement: (options, _) => {
+    marginRequirement: (options: Option[], _underlyingPrice: number) => {
       return options[0].strike * options[0].quantity * 100;
     },
     riskLevel: 'high',
@@ -72,7 +73,7 @@ export const STRATEGY_CONFIG: StrategyConfig = {
     name: 'Strangle',
     description: 'A combination of a call and put with different strikes but same expiration',
     maxLegs: 2,
-    marginRequirement: (options, _) => {
+    marginRequirement: (options: Option[], _underlyingPrice: number) => {
       return Math.min(options[0].strike, options[1].strike) * options[0].quantity * 100;
     },
     riskLevel: 'high',
@@ -82,7 +83,7 @@ export const STRATEGY_CONFIG: StrategyConfig = {
     name: 'Covered Call',
     description: 'A long stock position combined with a short call option',
     maxLegs: 1,
-    marginRequirement: (options, underlyingPrice) => {
+    marginRequirement: (options: Option[], underlyingPrice: number) => {
       return underlyingPrice * options[0].quantity * 100;
     },
     riskLevel: 'low',
@@ -92,7 +93,7 @@ export const STRATEGY_CONFIG: StrategyConfig = {
     name: 'Protective Put',
     description: 'A long stock position combined with a long put option',
     maxLegs: 1,
-    marginRequirement: (options, underlyingPrice) => {
+    marginRequirement: (options: Option[], underlyingPrice: number) => {
       return (underlyingPrice + options[0].premium) * options[0].quantity * 100;
     },
     riskLevel: 'low',

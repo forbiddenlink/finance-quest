@@ -4,7 +4,7 @@ import { useCalculatorBase } from '../useCalculatorBase';
 import Decimal from 'decimal.js';
 
 // Types
-interface BRRRRValues {
+export interface BRRRRValues {
   // Buy Phase
   purchasePrice: number;
   downPayment: number;
@@ -48,7 +48,7 @@ interface BRRRRValues {
   inflationRate: number;
 }
 
-interface BRRRRResult {
+export interface BRRRRResult {
   // Initial Investment Analysis
   initialInvestment: {
     totalCosts: number;

@@ -1,5 +1,4 @@
 import { useState, useCallback, useMemo } from 'react';
-import { useCalculatorBase } from '@/lib/hooks/useCalculatorBase';
 import {
   BeneficiaryPlanningInputs,
   BeneficiaryPlanningResults,
@@ -18,18 +17,9 @@ const DEFAULT_INPUTS: BeneficiaryPlanningInputs = {
 export function useBeneficiaryPlanningTool() {
   const [localInputs, setLocalInputs] = useState<BeneficiaryPlanningInputs>(DEFAULT_INPUTS);
   const [errors, setErrors] = useState<BeneficiaryPlanningError[]>([]);
-
-  const {
-    calculate,
-    isCalculating,
-    lastCalculated,
-    resetCalculator,
-    saveToHistory,
-    history
-  } = useCalculatorBase<BeneficiaryPlanningInputs, BeneficiaryPlanningResults>({
-    calculateFn: calculateBeneficiaryPlan,
-    validateFn: validateBeneficiaryPlanningInputs
-  });
+  const [results, setResults] = useState<BeneficiaryPlanningResults | null>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [history, setHistory] = useState<Array<{ inputs: BeneficiaryPlanningInputs; results: BeneficiaryPlanningResults; timestamp: number }>>([]);
 
   const addAccount = useCallback((account: Account) => {
     setLocalInputs(prev => ({
@@ -204,37 +194,41 @@ export function useBeneficiaryPlanningTool() {
 
   const handleCalculate = useCallback(async () => {
     if (!validateInputs()) return;
-    
-    const results = await calculate(localInputs);
-    if (results) {
-      saveToHistory(localInputs, results);
+
+    setIsCalculating(true);
+    try {
+      const calculatedResults = await calculateBeneficiaryPlan(localInputs);
+      setResults(calculatedResults);
+      setHistory(prev => [...prev, { inputs: localInputs, results: calculatedResults, timestamp: Date.now() }]);
+    } finally {
+      setIsCalculating(false);
     }
-  }, [localInputs, calculate, saveToHistory, validateInputs]);
+  }, [localInputs, validateInputs]);
 
   const reset = useCallback(() => {
     setLocalInputs(DEFAULT_INPUTS);
     setErrors([]);
-    resetCalculator();
-  }, [resetCalculator]);
+    setResults(null);
+  }, []);
 
   const summaryStats = useMemo(() => {
-    if (!lastCalculated) return null;
+    if (!results) return null;
 
     return {
-      totalAssets: lastCalculated.totalAssets,
-      totalBeneficiaries: lastCalculated.beneficiarySummary.length,
-      incompleteDesignations: lastCalculated.designationStatus.filter(
-        s => s.status === 'incomplete'
+      totalAssets: results.totalAssets,
+      totalBeneficiaries: results.beneficiarySummary.length,
+      incompleteDesignations: results.designationStatus.filter(
+        (s: { accountDescription: string; status: 'complete' | 'incomplete' | 'review_needed'; issues: string[] }) => s.status === 'incomplete'
       ).length,
-      highPriorityReviews: lastCalculated.reviewSchedule.filter(
-        r => r.priority === 'high'
+      highPriorityReviews: results.reviewSchedule.filter(
+        (r: { accountDescription: string; lastReview: string; nextReview: string; priority: 'high' | 'medium' | 'low' }) => r.priority === 'high'
       ).length
     };
-  }, [lastCalculated]);
+  }, [results]);
 
   return {
     inputs: localInputs,
-    results: lastCalculated,
+    results,
     errors,
     isCalculating,
     history,

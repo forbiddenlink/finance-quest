@@ -17,7 +17,7 @@ export default function RentalPropertyCalculator() {
   const { updateField, reset } = actions;
 
   const handleInputChange = (field: string, value: string) => {
-    updateField(field, value);
+    updateField(field as keyof typeof values, value);
   };
 
   const getFieldError = (field: string) => {

@@ -147,7 +147,7 @@ export function useTaxCalculator() {
         commonValidations.min(0),
         {
           validate: (value) => value <= RETIREMENT_LIMITS['401k'],
-          message: `401(k) contributions cannot exceed $${RETIREMENT_LIMITS['401k']}`
+          message: `401k contributions cannot exceed $${RETIREMENT_LIMITS['401k']}`
         }
       ],
       traditionalIRA: [
@@ -176,14 +176,11 @@ export function useTaxCalculator() {
         commonValidations.required(),
         commonValidations.min(0),
         {
-          validate: (value, allValues) => {
+          validate: (value: number, allValues?: TaxCalculatorValues) => {
             const limit = allValues?.dependents ? RETIREMENT_LIMITS.hsa.family : RETIREMENT_LIMITS.hsa.single;
             return value <= limit;
           },
-          message: (value, allValues) => {
-            const limit = allValues?.dependents ? RETIREMENT_LIMITS.hsa.family : RETIREMENT_LIMITS.hsa.single;
-            return `HSA contributions cannot exceed $${limit}`;
-          }
+          message: `HSA contributions cannot exceed limit (${RETIREMENT_LIMITS.hsa.single} single / ${RETIREMENT_LIMITS.hsa.family} family)`
         }
       ],
       stateTaxRate: [
@@ -267,7 +264,10 @@ export function useTaxCalculator() {
       const taxSavings = (totalDeductions * marginalTaxRate) / 100;
 
       // Generate insights
-      const insights = [];
+      const insights: Array<{
+        type: 'success' | 'warning' | 'info';
+        message: string;
+      }> = [];
 
       // Retirement contribution insights
       const maxRetirement = RETIREMENT_LIMITS['401k'] + RETIREMENT_LIMITS.ira;

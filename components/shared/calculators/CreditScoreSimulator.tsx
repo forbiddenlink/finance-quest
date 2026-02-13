@@ -17,7 +17,7 @@ export default function CreditScoreSimulator() {
   const { updateField, reset } = actions;
 
   const handleInputChange = (profile: 'current' | 'target', field: string, value: string) => {
-    updateField(`${profile}.${field}`, value);
+    updateField(`${profile}.${field}` as keyof typeof values, value);
   };
 
   const getFieldError = (profile: 'current' | 'target', field: string) => {

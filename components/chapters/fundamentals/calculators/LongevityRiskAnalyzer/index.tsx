@@ -23,12 +23,15 @@ export default function LongevityRiskAnalyzer() {
   const handleInputChange = (field: string, value: string | number | boolean) => {
     if (field.includes('.')) {
       const [parent, child] = field.split('.');
-      setValues({
-        [parent]: {
-          ...values[parent as keyof typeof values],
-          [child]: value
-        }
-      });
+      const parentValue = values[parent as keyof typeof values];
+      if (parentValue && typeof parentValue === 'object') {
+        setValues({
+          [parent]: {
+            ...(parentValue as Record<string, any>),
+            [child]: value
+          }
+        });
+      }
     } else {
       setValues({ [field]: value });
     }

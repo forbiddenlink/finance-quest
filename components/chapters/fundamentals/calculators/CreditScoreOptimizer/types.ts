@@ -40,6 +40,7 @@ export interface OptimizationAction {
 }
 
 export interface ScoreGoal {
+  id: string;
   targetScore: number;
   timeFrame: TimeFrame;
   purpose: string;

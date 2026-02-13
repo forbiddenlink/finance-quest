@@ -101,7 +101,7 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({ result }) => {
             <div className="space-y-2">
               <h3 className="font-semibold">Suggested Rebalancing</h3>
               <div className="space-y-2">
-                {result.suggestedChanges.map((change, index) => (
+                {result.suggestedChanges.map((change: { action: string; assetClass: string; amount: number; currentAllocation: number; targetAllocation: number }, index: number) => (
                   <Alert key={index}>
                     <AlertTriangle className="h-4 w-4" />
                     <AlertDescription>
@@ -118,7 +118,7 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({ result }) => {
           <div className="space-y-2">
             <h3 className="font-semibold">Portfolio Insights</h3>
             <div className="space-y-2">
-              {result.insights.map((insight, index) => (
+              {result.insights.map((insight: { type: string; message: string }, index: number) => (
                 <Alert key={index} variant={insight.type === 'warning' ? 'destructive' : 'default'}>
                   {insight.type === 'warning' ? (
                     <AlertTriangle className="h-4 w-4" />

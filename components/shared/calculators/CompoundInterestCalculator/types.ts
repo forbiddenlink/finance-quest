@@ -88,7 +88,7 @@ export interface ChartOptions {
   };
 }
 
-export interface CompoundingFrequencyConfig {
+export type CompoundingFrequencyConfig = {
   readonly [key in CompoundingFrequency]: {
     periodsPerYear: number;
     label: string;
@@ -96,7 +96,7 @@ export interface CompoundingFrequencyConfig {
   };
 }
 
-export interface ContributionFrequencyConfig {
+export type ContributionFrequencyConfig = {
   readonly [key in ContributionFrequency]: {
     periodsPerYear: number;
     label: string;
@@ -104,7 +104,7 @@ export interface ContributionFrequencyConfig {
   };
 }
 
-export interface InvestmentGoalConfig {
+export type InvestmentGoalConfig = {
   readonly [key in InvestmentGoal]: {
     label: string;
     description: string;

@@ -461,7 +461,7 @@ export default function InheritanceTaxCalculator() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {results.stepUpBasis.map((item, index) => (
+                  {results.stepUpBasis.map((item: { asset: string; oldBasis: number; newBasis: number; taxSavings: number }, index: number) => (
                     <TableRow key={index}>
                       <TableCell>{item.asset}</TableCell>
                       <TableCell>${item.oldBasis.toLocaleString()}</TableCell>
@@ -488,7 +488,7 @@ export default function InheritanceTaxCalculator() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {results.taxSavingOpportunities.map((opportunity, index) => (
+                {results.taxSavingOpportunities.map((opportunity: { strategy: string; potentialSavings: number; description: string }, index: number) => (
                   <TableRow key={index}>
                     <TableCell>{opportunity.strategy}</TableCell>
                     <TableCell className="text-green-600">
@@ -506,7 +506,7 @@ export default function InheritanceTaxCalculator() {
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
               <h4 className="font-semibold mb-2">Important Considerations</h4>
               <ul className="list-disc list-inside space-y-1">
-                {results.warnings.map((warning, index) => (
+                {results.warnings.map((warning: string, index: number) => (
                   <li key={index} className="text-yellow-700">{warning}</li>
                 ))}
               </ul>

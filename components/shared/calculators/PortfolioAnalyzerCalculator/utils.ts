@@ -10,6 +10,27 @@ import {
   RiskMetrics
 } from './types';
 
+// Utility functions
+export const formatCurrency = (value: number): string => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(value);
+};
+
+export const formatPercentage = (value: number): string => {
+  return `${value.toFixed(2)}%`;
+};
+
+export const TABS = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'allocation', label: 'Allocation' },
+  { id: 'risk', label: 'Risk Analysis' },
+  { id: 'recommendations', label: 'Recommendations' }
+] as const;
+
 // Base return assumptions
 const baseReturns: BaseReturns = {
   cash: 2,

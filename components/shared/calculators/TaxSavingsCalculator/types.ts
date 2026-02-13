@@ -59,20 +59,22 @@ export interface FilingStatusConfig {
   };
 }
 
-export interface TaxYearConfig {
-  readonly [key in FilingStatus]: FilingStatusConfig;
-}
+export type TaxYearConfig = {
+  readonly [year in TaxYear]: {
+    readonly [status in FilingStatus]: FilingStatusConfig;
+  };
+};
 
-export interface DeductionLimits {
+export type DeductionLimits = {
   readonly [key in DeductionCategory]: {
     maxAmount?: number;
     phaseOutStart?: number;
     phaseOutEnd?: number;
     specialRules?: string[];
   };
-}
+};
 
-export interface CreditLimits {
+export type CreditLimits = {
   readonly [key in CreditType]: {
     maxCredit: number;
     refundable: boolean;

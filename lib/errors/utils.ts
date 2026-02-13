@@ -7,7 +7,8 @@ import {
   CalculatorInfo,
   ErrorCodes,
   ErrorContext,
-  ErrorReportingOptions
+  ErrorReportingOptions,
+  ErrorSeverity
 } from './types';
 
 /**

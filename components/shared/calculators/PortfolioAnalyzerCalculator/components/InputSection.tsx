@@ -20,13 +20,13 @@ export const InputSection: React.FC<InputSectionProps> = ({
   onInputChange
 }) => {
   const getFieldError = (field: string) => {
-    return errors.find(error => error.field === field)?.message;
+    return errors.find((error: { field: string; message: string }) => error.field === field)?.message;
   };
 
   return (
     <Tabs defaultValue="allocation" className="space-y-4">
       <TabsList>
-        {TABS.map(tab => (
+        {TABS.map((tab: { id: string; label: string }) => (
           <TabsTrigger key={tab.id} value={tab.id}>
             {tab.label}
           </TabsTrigger>
@@ -152,10 +152,10 @@ export const InputSection: React.FC<InputSectionProps> = ({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="rebalanceFrequency">Rebalance Frequency</Label>
+            <Label htmlFor="rebalancingFrequency">Rebalance Frequency</Label>
             <Select
-              value={values.rebalanceFrequency}
-              onValueChange={(value) => onInputChange('rebalanceFrequency', value)}
+              value={String(values.rebalancingFrequency)}
+              onValueChange={(value) => onInputChange('rebalancingFrequency', value)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select frequency" />
