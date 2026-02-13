@@ -128,6 +128,9 @@ export default function RootLayout({
                     &copy; {new Date().getFullYear()} Finance Quest. For educational purposes only.
                   </p>
                   <nav className="flex items-center gap-6">
+                    <a href="/about" className="text-sm text-gray-400 hover:text-white transition-colors">
+                      About
+                    </a>
                     <a href="/privacy" className="text-sm text-gray-400 hover:text-white transition-colors">
                       Privacy Policy
                     </a>
