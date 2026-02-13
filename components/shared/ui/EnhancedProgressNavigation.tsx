@@ -188,6 +188,8 @@ const EnhancedProgressNavigation: React.FC = () => {
                                     whileHover="hover"
                                     whileTap="tap"
                                     variants={microAnimations.variants.buttonPress}
+                                    aria-label="User profile menu"
+                                    aria-expanded={isProfileDropdownOpen}
                                 >
                                     <div className="flex items-center space-x-1.5 sm:space-x-2">
                                         <div className={`w-6 h-6 sm:w-8 sm:h-8 ${theme.buttons.primary} rounded-md sm:rounded-lg flex items-center justify-center`}>
@@ -292,6 +294,8 @@ const EnhancedProgressNavigation: React.FC = () => {
                                 whileHover="hover"
                                 whileTap="tap"
                                 variants={microAnimations.variants.buttonPress}
+                                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                                aria-expanded={isMobileMenuOpen}
                             >
                                 {isMobileMenuOpen ? (
                                     <X className={`w-4 h-4 sm:w-5 sm:h-5 ${theme.textColors.primary}`} />
