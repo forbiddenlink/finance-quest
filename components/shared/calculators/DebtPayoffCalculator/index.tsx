@@ -26,7 +26,7 @@ const styleConfig: StyleConfig = {
   }
 } as const;
 
-export default function DebtPayoffCalculator(): JSX.Element {
+export default function DebtPayoffCalculator() {
   const [state, actions] = useDebtPayoffCalculator();
   const {
     debts,
@@ -75,27 +75,31 @@ export default function DebtPayoffCalculator(): JSX.Element {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium">Name</label>
+                <label htmlFor={`debt-${debt.id}-name`} className="block text-sm font-medium">Name</label>
                 <input
+                  id={`debt-${debt.id}-name`}
                   type="text"
                   value={debt.name}
                   onChange={(e) => updateDebt(debt.id, 'name', e.target.value)}
                   className="mt-1 w-full px-3 py-2 border rounded-md"
                   placeholder="e.g., Credit Card 1"
+                  aria-describedby={getFieldError(`debt-${debt.id}-name`) ? `debt-${debt.id}-name-error` : undefined}
                 />
                 {getFieldError(`debt-${debt.id}-name`) && (
-                  <p className="mt-1 text-sm text-red-600">
+                  <p id={`debt-${debt.id}-name-error`} className="mt-1 text-sm text-red-600">
                     {getFieldError(`debt-${debt.id}-name`)}
                   </p>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium">Type</label>
+                <label htmlFor={`debt-${debt.id}-type`} className="block text-sm font-medium">Type</label>
                 <select
+                  id={`debt-${debt.id}-type`}
                   value={debt.type}
                   onChange={(e) => updateDebt(debt.id, 'type', e.target.value as DebtType)}
                   className="mt-1 w-full px-3 py-2 border rounded-md"
+                  aria-label="Debt type"
                 >
                   {Object.entries(DEBT_TYPES).map(([type, config]) => (
                     <option key={type} value={type}>
@@ -106,30 +110,33 @@ export default function DebtPayoffCalculator(): JSX.Element {
               </div>
 
               <div>
-                <label className="block text-sm font-medium">Balance</label>
+                <label htmlFor={`debt-${debt.id}-balance`} className="block text-sm font-medium">Balance</label>
                 <div className="mt-1 relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <span className="text-gray-500 sm:text-sm">$</span>
                   </div>
                   <input
+                    id={`debt-${debt.id}-balance`}
                     type="number"
                     value={debt.balance || ''}
                     onChange={(e) => updateDebt(debt.id, 'balance', e.target.value)}
                     className="pl-7 w-full px-3 py-2 border rounded-md"
                     min="0"
                     step="0.01"
+                    aria-describedby={getFieldError(`debt-${debt.id}-balance`) ? `debt-${debt.id}-balance-error` : undefined}
                   />
                 </div>
                 {getFieldError(`debt-${debt.id}-balance`) && (
-                  <p className="mt-1 text-sm text-red-600">
+                  <p id={`debt-${debt.id}-balance-error`} className="mt-1 text-sm text-red-600">
                     {getFieldError(`debt-${debt.id}-balance`)}
                   </p>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium">Interest Rate (%)</label>
+                <label htmlFor={`debt-${debt.id}-rate`} className="block text-sm font-medium">Interest Rate (%)</label>
                 <input
+                  id={`debt-${debt.id}-rate`}
                   type="number"
                   value={debt.interestRate || ''}
                   onChange={(e) => updateDebt(debt.id, 'interestRate', e.target.value)}
@@ -137,31 +144,34 @@ export default function DebtPayoffCalculator(): JSX.Element {
                   min="0"
                   max="100"
                   step="0.01"
+                  aria-describedby={getFieldError(`debt-${debt.id}-rate`) ? `debt-${debt.id}-rate-error` : undefined}
                 />
                 {getFieldError(`debt-${debt.id}-rate`) && (
-                  <p className="mt-1 text-sm text-red-600">
+                  <p id={`debt-${debt.id}-rate-error`} className="mt-1 text-sm text-red-600">
                     {getFieldError(`debt-${debt.id}-rate`)}
                   </p>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium">Minimum Payment</label>
+                <label htmlFor={`debt-${debt.id}-minimum`} className="block text-sm font-medium">Minimum Payment</label>
                 <div className="mt-1 relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <span className="text-gray-500 sm:text-sm">$</span>
                   </div>
                   <input
+                    id={`debt-${debt.id}-minimum`}
                     type="number"
                     value={debt.minimumPayment || ''}
                     onChange={(e) => updateDebt(debt.id, 'minimumPayment', e.target.value)}
                     className="pl-7 w-full px-3 py-2 border rounded-md"
                     min="0"
                     step="0.01"
+                    aria-describedby={getFieldError(`debt-${debt.id}-minimum`) ? `debt-${debt.id}-minimum-error` : undefined}
                   />
                 </div>
                 {getFieldError(`debt-${debt.id}-minimum`) && (
-                  <p className="mt-1 text-sm text-red-600">
+                  <p id={`debt-${debt.id}-minimum-error`} className="mt-1 text-sm text-red-600">
                     {getFieldError(`debt-${debt.id}-minimum`)}
                   </p>
                 )}
@@ -169,8 +179,9 @@ export default function DebtPayoffCalculator(): JSX.Element {
 
               {payoffStrategy === 'custom' && (
                 <div>
-                  <label className="block text-sm font-medium">Priority (Optional)</label>
+                  <label htmlFor={`debt-${debt.id}-priority`} className="block text-sm font-medium">Priority (Optional)</label>
                   <input
+                    id={`debt-${debt.id}-priority`}
                     type="number"
                     value={debt.priority || ''}
                     onChange={(e) => updateDebt(debt.id, 'priority', e.target.value)}

@@ -113,6 +113,10 @@ const nextConfig: NextConfig = {
           {
             key: 'Referrer-Policy',
             value: 'origin-when-cross-origin'
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.openai.com https://*.vercel.app;"
           }
         ],
       },
@@ -121,13 +125,7 @@ const nextConfig: NextConfig = {
 
   // Configure redirects for optimized routing
   async redirects() {
-    return [
-      {
-        source: '/calculators',
-        destination: '/calculators/all',
-        permanent: true,
-      },
-    ];
+    return [];
   },
 
   // Configure performance monitoring
