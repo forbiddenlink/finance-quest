@@ -1335,7 +1335,7 @@ export default function HomePage() {
                   Real-time market data integrated with educational content. Learn about economic indicators,
                   market sentiment, and investment analysis with live, contextual examples.
                 </p>
-                <Link href="/calculators/business-valuation" className="inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium group-hover:translate-x-1 transition-transform">
+                <Link href="/calculators/stock-analysis" className="inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium group-hover:translate-x-1 transition-transform">
                   Try Enhanced Calculators
                   <ArrowRight className="ml-1 w-4 h-4" />
                 </Link>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Your Progress | Finance Quest',
+  title: 'Track Your Learning Progress | Finance Quest',
   description: 'Track your financial literacy journey with achievements, streaks, and personalized learning analytics.',
 };
 

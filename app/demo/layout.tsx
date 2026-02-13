@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Demo | Finance Quest',
+  title: 'Interactive Platform Demo | Finance Quest',
   description: 'Experience Finance Quest with a live demo of our financial literacy platform features.',
 };
 
