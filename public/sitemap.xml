@@ -1,222 +1,222 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://finance-quest.vercel.app/</loc>
+    <loc>https://financequest.fyi/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/curriculum</loc>
+    <loc>https://financequest.fyi/curriculum</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators</loc>
+    <loc>https://financequest.fyi/calculators</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/progress</loc>
+    <loc>https://financequest.fyi/progress</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/assessment</loc>
+    <loc>https://financequest.fyi/assessment</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/health-assessment</loc>
+    <loc>https://financequest.fyi/health-assessment</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter1</loc>
+    <loc>https://financequest.fyi/chapter1</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter2</loc>
+    <loc>https://financequest.fyi/chapter2</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter3</loc>
+    <loc>https://financequest.fyi/chapter3</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter4</loc>
+    <loc>https://financequest.fyi/chapter4</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter5</loc>
+    <loc>https://financequest.fyi/chapter5</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter6</loc>
+    <loc>https://financequest.fyi/chapter6</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter7</loc>
+    <loc>https://financequest.fyi/chapter7</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter8</loc>
+    <loc>https://financequest.fyi/chapter8</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter9</loc>
+    <loc>https://financequest.fyi/chapter9</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter10</loc>
+    <loc>https://financequest.fyi/chapter10</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter11</loc>
+    <loc>https://financequest.fyi/chapter11</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter12</loc>
+    <loc>https://financequest.fyi/chapter12</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter13</loc>
+    <loc>https://financequest.fyi/chapter13</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter14</loc>
+    <loc>https://financequest.fyi/chapter14</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter15</loc>
+    <loc>https://financequest.fyi/chapter15</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter16</loc>
+    <loc>https://financequest.fyi/chapter16</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter17</loc>
+    <loc>https://financequest.fyi/chapter17</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/chapter18</loc>
+    <loc>https://financequest.fyi/chapter18</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators/compound-interest</loc>
+    <loc>https://financequest.fyi/calculators/compound-interest</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators/debt-payoff</loc>
+    <loc>https://financequest.fyi/calculators/debt-payoff</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators/budget-builder</loc>
+    <loc>https://financequest.fyi/calculators/budget-builder</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators/mortgage</loc>
+    <loc>https://financequest.fyi/calculators/mortgage</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators/emergency-fund</loc>
+    <loc>https://financequest.fyi/calculators/emergency-fund</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators/paycheck</loc>
+    <loc>https://financequest.fyi/calculators/paycheck</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators/credit-score</loc>
+    <loc>https://financequest.fyi/calculators/credit-score</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators/retirement-planner</loc>
+    <loc>https://financequest.fyi/calculators/retirement-planner</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators/portfolio-analyzer</loc>
+    <loc>https://financequest.fyi/calculators/portfolio-analyzer</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators/tax-optimizer</loc>
+    <loc>https://financequest.fyi/calculators/tax-optimizer</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators/stock-analysis</loc>
+    <loc>https://financequest.fyi/calculators/stock-analysis</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators/bond</loc>
+    <loc>https://financequest.fyi/calculators/bond</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/calculators/rewards-optimizer</loc>
+    <loc>https://financequest.fyi/calculators/rewards-optimizer</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/market</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://finance-quest.vercel.app/market-dashboard</loc>
+    <loc>https://financequest.fyi/market</loc>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/learning-analytics</loc>
+    <loc>https://financequest.fyi/market-dashboard</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://financequest.fyi/learning-analytics</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/advanced-progress</loc>
+    <loc>https://financequest.fyi/advanced-progress</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/crisis-simulation</loc>
+    <loc>https://financequest.fyi/crisis-simulation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/impact</loc>
+    <loc>https://financequest.fyi/impact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://finance-quest.vercel.app/demo</loc>
+    <loc>https://financequest.fyi/demo</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>

@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://finance-quest.vercel.app/sitemap.xml
+Sitemap: https://financequest.fyi/sitemap.xml
 
 # Crawl-delay for politeness
 Crawl-delay: 1
