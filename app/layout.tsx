@@ -35,7 +35,7 @@ export { viewport };
 
 export const metadata: Metadata = {
   title: "Finance Quest - Master Your Money, Master Your Future",
-  description: "Transform from financial novice to money master through AI-powered coaching, 17 interactive chapters, 13+ professional calculators, and real-world financial scenarios. Built for the 64% of Americans struggling with financial literacy.",
+  description: "Master personal finance with AI coaching, 17 chapters, and professional calculators. Learn budgeting, investing, and debt management.",
   keywords: "financial literacy, personal finance education, money management, investment calculator, budgeting, debt payoff, retirement planning, AI financial coaching",
   authors: [{ name: "Finance Quest Team" }],
   creator: "Finance Quest",

@@ -1,0 +1,9 @@
+# Finance Quest - robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://finance-quest.vercel.app/sitemap.xml
+
+# Crawl-delay for politeness
+Crawl-delay: 1
