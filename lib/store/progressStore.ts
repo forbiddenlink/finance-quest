@@ -27,6 +27,7 @@ export interface UserProgress {
   streakDays: number;
   longestStreak: number;
   streakFreezesUsed: number;
+  streakFreezesAvailable: number;
   weeklyGoal: number;
   weeklyProgress: number;
   achievements: string[];
@@ -89,6 +90,7 @@ export interface ProgressStore {
   updateTimeSpent: (seconds: number) => void;
   updateStreak: () => void;
   useStreakFreeze: () => boolean;
+  purchaseStreakFreeze: () => boolean;
 
   // Engagement and gamification
   startStudySession: () => void;
@@ -125,6 +127,7 @@ const initialProgress: UserProgress = {
   streakDays: 0,
   longestStreak: 0,
   streakFreezesUsed: 0,
+  streakFreezesAvailable: 0,
   weeklyGoal: 3, // Default: 3 lessons per week
   weeklyProgress: 0,
   achievements: [],
@@ -448,13 +451,33 @@ export const useProgressStore = create<ProgressStore>()(
         const lastActive = new Date(userProgress.lastActiveDate).toDateString();
         const yesterday = new Date(Date.now() - 86400000).toDateString();
 
-        // Can only use streak freeze if streak would be broken and user hasn't used all freezes
-        if (lastActive !== today && lastActive !== yesterday && userProgress.streakFreezesUsed < 3) {
+        // Can only use streak freeze if streak would be broken and user has freezes available
+        if (lastActive !== today && lastActive !== yesterday && userProgress.streakFreezesAvailable > 0) {
           set((state) => ({
             userProgress: {
               ...state.userProgress,
+              streakFreezesAvailable: state.userProgress.streakFreezesAvailable - 1,
               streakFreezesUsed: state.userProgress.streakFreezesUsed + 1,
               lastActiveDate: new Date().toISOString()
+            }
+          }));
+          return true;
+        }
+        return false;
+      },
+
+      purchaseStreakFreeze: () => {
+        const { userProgress } = get();
+        const freezeCost = 500; // 500 XP per streak freeze
+        const maxFreezes = 5; // Maximum freezes you can hold
+
+        // Check if user has enough XP and hasn't reached max freezes
+        if (userProgress.totalXP >= freezeCost && userProgress.streakFreezesAvailable < maxFreezes) {
+          set((state) => ({
+            userProgress: {
+              ...state.userProgress,
+              totalXP: state.userProgress.totalXP - freezeCost,
+              streakFreezesAvailable: state.userProgress.streakFreezesAvailable + 1
             }
           }));
           return true;

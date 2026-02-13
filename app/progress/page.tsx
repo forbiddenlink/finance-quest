@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import React from 'react';
 import AnimatedCounter from '@/components/shared/ui/AnimatedCounter';
+import StreakFreezeCard from '@/components/shared/ui/StreakFreezeCard';
 
 export default function ProgressPage() {
   const progress = useEnhancedProgress();
@@ -238,6 +239,9 @@ export default function ProgressPage() {
 
           {/* Right Column */}
           <div className="space-y-8">
+            {/* Streak Freeze */}
+            <StreakFreezeCard />
+
             {/* Next Action */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
