@@ -331,6 +331,8 @@ export const NotificationBell: React.FC<{ className?: string }> = ({ className =
         <div className={`relative ${className}`}>
             <motion.button
                 onClick={() => setShowPanel(!showPanel)}
+                aria-label={showPanel ? 'Close notifications' : 'Open notifications'}
+                aria-expanded={showPanel}
                 className={`relative p-2 ${theme.backgrounds.glass}/20 border ${theme.borderColors.primary} rounded-lg hover:${theme.backgrounds.glass}/30 transition-all duration-200`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

@@ -499,6 +499,7 @@ export default function SalaryNegotiationSimulator({ onComplete }: SalaryNegotia
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   onClick={() => handleOptionSelect(option)}
+                  aria-label={`Select response: ${option.text}`}
                   className={`w-full p-4 text-left ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg hover:${theme.borderColors.focus} hover:shadow-lg transition-all group`}
                 >
                   <div className="flex items-start gap-3">

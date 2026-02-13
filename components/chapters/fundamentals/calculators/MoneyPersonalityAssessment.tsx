@@ -371,6 +371,8 @@ export default function MoneyPersonalityAssessment() {
             <motion.button
               key={option.id}
               onClick={() => handleAnswerSelect(currentQ.id, option.id)}
+              aria-label={option.text}
+              aria-pressed={selectedAnswer === option.id}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className={`w-full text-left p-4 rounded-lg border transition-all duration-200 ${

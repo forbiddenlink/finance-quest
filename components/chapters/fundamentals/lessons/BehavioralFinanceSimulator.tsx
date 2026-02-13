@@ -452,6 +452,7 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={resetSimulator}
+              aria-label="Take assessment again"
               className={`px-8 py-3 ${theme.buttons.primary} rounded-xl transition-all hover-lift flex items-center mx-auto`}
             >
               <RefreshCw className="w-5 h-5 mr-2" />
@@ -541,6 +542,8 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
                 whileTap={{ scale: 0.99 }}
                 onClick={() => handleOptionSelect(option.id)}
                 disabled={showResult}
+                aria-label={option.text}
+                aria-pressed={selectedOption === option.id}
                 className={`w-full p-4 text-left border-2 rounded-lg transition-all ${selectedOption === option.id
                     ? `${theme.borderColors.primary} ${theme.status.info.bg}`
                     : `${theme.borderColors.muted} hover:${theme.borderColors.primary}`
@@ -610,6 +613,7 @@ export default function BehavioralFinanceSimulator({ className = '' }: Behaviora
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={nextBias}
+                    aria-label={currentBias < cognitiveBiases.length - 1 ? 'Go to next scenario' : 'View results'}
                     className={`px-8 py-3 ${theme.buttons.primary} rounded-xl transition-all hover-lift`}
                   >
                     {currentBias < cognitiveBiases.length - 1 ? 'Next Scenario' : 'View Results'}

@@ -241,6 +241,7 @@ export default function VoiceQA({ isQuizMode = false }: VoiceQAProps) {
         <motion.button
           onClick={isListening ? stopListening : startListening}
           disabled={isQuizMode || isLoading}
+          aria-label={isListening ? 'Stop listening' : 'Start listening'}
           className={`relative p-6 rounded-full transition-all ${isListening
             ? `${theme.buttons.secondary} ${theme.textColors.primary} shadow-lg`
             : isQuizMode

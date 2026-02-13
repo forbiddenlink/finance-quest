@@ -471,6 +471,7 @@ export default function EmergencyFundPersonalityAssessment({ onComplete }: Emerg
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 onClick={() => handleAnswer(option)}
+                aria-label={option.text}
                 className={`w-full p-6 text-left ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg hover:${theme.borderColors.accent} hover:shadow-lg transition-all group`}
               >
                 <div className="flex items-center justify-between">

@@ -213,6 +213,7 @@ export default function BudgetOptimizerCalculator() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={optimizeBudget}
+              aria-label="Auto-optimize budget allocation"
               className={`w-full mt-6 py-3 px-4 ${theme.buttons.primary} rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2`}
             >
               <Zap className="w-5 h-5" />

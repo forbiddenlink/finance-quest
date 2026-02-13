@@ -610,6 +610,8 @@ export default function BankingPersonalityAssessment() {
                 <motion.button
                   key={option.id}
                   onClick={() => handleAnswerSelect(option.id)}
+                  aria-label={option.text}
+                  aria-pressed={selectedAnswer === option.id}
                   className={`w-full p-4 text-left border-2 rounded-lg transition-all ${
                     selectedAnswer === option.id
                       ? `${theme.borderColors.primary} ${theme.status.info.bg}`

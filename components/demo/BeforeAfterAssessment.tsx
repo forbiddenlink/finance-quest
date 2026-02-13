@@ -361,6 +361,7 @@ export default function BeforeAfterAssessment({ isDemo = false, onComplete }: Be
                       <motion.button
                         key={index}
                         onClick={() => handleAnswer(index)}
+                        aria-label={option}
                         className={`w-full text-left p-4 rounded-lg border ${theme.borderColors.primary} hover:${theme.borderColors.primary} hover:${theme.backgrounds.card} transition-all`}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}

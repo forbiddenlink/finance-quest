@@ -321,6 +321,8 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setSelectedStrategy(strategy)}
+                  aria-label={`Select ${strategy.name} strategy`}
+                  aria-pressed={selectedStrategy.id === strategy.id}
                   className={`p-3 sm:p-4 border-2 rounded-lg transition-all text-left ${selectedStrategy.id === strategy.id
                       ? `border-[${strategy.color}] bg-[${strategy.color}]/10`
                       : `${theme.borderColors.muted} hover:${theme.borderColors.primary}`
@@ -343,6 +345,7 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsSimulating(!isSimulating)}
+              aria-label={isSimulating ? 'Pause simulation' : 'Start simulation'}
               className={`flex items-center w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 ${theme.buttons.primary} rounded-lg sm:rounded-xl transition-all hover-lift text-sm sm:text-base`}
             >
               {isSimulating ? (
@@ -362,6 +365,7 @@ export default function MarketVolatilitySimulator({ className = '' }: MarketVola
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={resetSimulation}
+              aria-label="Reset simulation"
               className={`flex items-center w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 ${theme.buttons.secondary} rounded-lg sm:rounded-xl transition-all hover-lift text-sm sm:text-base`}
             >
               <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />

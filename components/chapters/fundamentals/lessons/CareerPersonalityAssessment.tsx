@@ -362,6 +362,7 @@ export default function CareerPersonalityAssessment({ onComplete }: CareerPerson
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 onClick={() => handleAnswer(questions[currentQuestion].id, option.value)}
+                aria-label={option.label}
                 className={`w-full p-4 text-left ${theme.backgrounds.card} border ${theme.borderColors.primary} rounded-lg hover:${theme.borderColors.focus} hover:shadow-lg transition-all group`}
               >
                 <div className="flex items-center justify-between">

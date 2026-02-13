@@ -325,6 +325,7 @@ export default function SavingsGoalPlannerCalculator() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={addGoal}
+                aria-label="Add savings goal"
                 className={`w-full py-3 px-4 ${theme.buttons.primary} rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2`}
               >
                 <PiggyBank className="w-5 h-5" />

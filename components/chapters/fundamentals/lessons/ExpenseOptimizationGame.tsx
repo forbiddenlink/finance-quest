@@ -611,9 +611,11 @@ export default function ExpenseOptimizationGame() {
               <motion.button
                 key={suggestion.id}
                 onClick={() => handleStrategySelect(suggestion)}
+                aria-label={`${isSelected ? 'Deselect' : 'Select'} strategy: ${suggestion.strategy}`}
+                aria-pressed={isSelected}
                 className={`p-4 text-left border-2 rounded-lg transition-all ${
-                  isSelected 
-                    ? `${theme.borderColors.accent} bg-blue-500/20` 
+                  isSelected
+                    ? `${theme.borderColors.accent} bg-blue-500/20`
                     : `${theme.borderColors.primary} ${theme.backgrounds.glass} hover:${theme.borderColors.accent}`
                 }`}
                 whileHover={{ scale: 1.02 }}

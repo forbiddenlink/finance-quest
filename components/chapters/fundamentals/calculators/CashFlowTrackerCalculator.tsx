@@ -274,6 +274,7 @@ export default function CashFlowTrackerCalculator() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={addCashFlowItem}
+                aria-label="Add cash flow item"
                 className={`w-full py-3 px-4 ${theme.buttons.primary} rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2`}
               >
                 <Plus className="w-5 h-5" />

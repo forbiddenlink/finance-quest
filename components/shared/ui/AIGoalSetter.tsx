@@ -452,6 +452,8 @@ export default function AIGoalSetter({ className = '' }: AIGoalSetterProps) {
               <motion.button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
+                aria-label={`Select ${category.label} category`}
+                aria-pressed={isActive}
                 className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg font-medium text-xs sm:text-sm whitespace-nowrap transition-all duration-200 ${
                   isActive
                     ? theme.buttons.accent

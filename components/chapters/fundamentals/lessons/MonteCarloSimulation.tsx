@@ -322,6 +322,7 @@ export default function MonteCarloSimulation({ className = '' }: MonteCarloSimul
             whileTap={{ scale: 0.98 }}
             onClick={runSimulation}
             disabled={isSimulating}
+            aria-label={isSimulating ? 'Running simulation' : 'Run Monte Carlo simulation'}
             className={`w-full md:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 ${theme.buttons.primary} rounded-lg sm:rounded-xl transition-all hover-lift flex items-center justify-center mx-auto ${isSimulating ? 'opacity-50 cursor-not-allowed' : ''
               }`}
           >

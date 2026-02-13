@@ -288,6 +288,7 @@ export default function FinancialHealthScoreCalculator() {
                   <motion.button
                     key={index}
                     onClick={() => handleAnswer(option.points)}
+                    aria-label={option.text}
                     className={`w-full text-left p-4 rounded-lg border ${theme.borderColors.primary} hover:${theme.borderColors.primary} ${theme.interactive.hover} transition-all group`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -466,6 +467,7 @@ export default function FinancialHealthScoreCalculator() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
               <motion.button
                 onClick={resetAssessment}
+                aria-label="Retake assessment"
                 className={`px-6 py-3 ${theme.buttons.ghost} rounded-lg font-semibold transition-colors`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -475,6 +477,7 @@ export default function FinancialHealthScoreCalculator() {
 
               <motion.button
                 onClick={() => window.location.href = '/calculators'}
+                aria-label="Use financial tools"
                 className={`px-6 py-3 bg-gradient-to-r from-slate-900 to-blue-900 ${theme.textColors.primary} rounded-lg font-semibold hover:from-slate-900 hover:to-blue-900 transition-colors`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

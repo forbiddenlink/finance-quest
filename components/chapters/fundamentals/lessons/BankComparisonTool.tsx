@@ -159,6 +159,8 @@ export default function BankComparisonTool() {
           <motion.button
             key={scenario.name}
             onClick={() => setSelectedScenario(scenario)}
+            aria-label={`Select ${scenario.name} scenario`}
+            aria-pressed={selectedScenario.name === scenario.name}
             className={`p-4 border-2 rounded-lg text-left transition-all ${
               selectedScenario.name === scenario.name
                 ? `${theme.borderColors.primary} ${theme.status.info.bg}`

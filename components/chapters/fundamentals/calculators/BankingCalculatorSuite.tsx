@@ -105,10 +105,12 @@ export default function BankingCalculatorSuite() {
               <motion.button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
+                aria-label={`Select ${tab.label} calculator`}
+                aria-pressed={isActive}
                 className={`
                   p-4 rounded-lg transition-all duration-200 text-left group
-                  ${isActive 
-                    ? `${theme.backgrounds.primary} text-white shadow-lg` 
+                  ${isActive
+                    ? `${theme.backgrounds.primary} text-white shadow-lg`
                     : `hover:bg-white/5 ${theme.textColors.secondary}`
                   }
                 `}

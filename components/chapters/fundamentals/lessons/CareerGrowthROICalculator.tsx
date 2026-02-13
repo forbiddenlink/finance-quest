@@ -463,6 +463,7 @@ export default function CareerGrowthROICalculator() {
             whileTap={{ scale: 0.98 }}
             onClick={handleCalculate}
             disabled={isCalculating}
+            aria-label={isCalculating ? 'Calculating career ROI' : 'Calculate career growth ROI'}
             className={`w-full py-4 px-6 rounded-xl font-semibold text-white transition-all duration-300 ${isCalculating
                 ? 'bg-slate-600 cursor-not-allowed'
                 : 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700'
@@ -689,6 +690,7 @@ export default function CareerGrowthROICalculator() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={resetCalculation}
+                aria-label="Compare another career path"
                 className="px-8 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-xl font-semibold transition-all duration-300 flex items-center gap-2"
               >
                 <Calculator className="w-5 h-5" />

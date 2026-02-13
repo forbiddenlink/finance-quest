@@ -478,6 +478,8 @@ export default function RiskToleranceAssessment() {
                 <motion.button
                   key={index}
                   onClick={() => handleAnswer(option.value)}
+                  aria-label={option.text}
+                  aria-pressed={selectedOption === option.value || currentAnswer === option.value}
                   className={`w-full p-4 text-left border-2 rounded-lg transition-all ${
                     selectedOption === option.value
                       ? `${theme.status.success.bg} ${theme.status.success.border} ${theme.status.success.text}`

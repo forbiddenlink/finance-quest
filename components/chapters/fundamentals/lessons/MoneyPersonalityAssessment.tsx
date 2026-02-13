@@ -316,6 +316,7 @@ export default function MoneyPersonalityAssessment({ onComplete }: MoneyPersonal
         <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
           <motion.button
             onClick={resetAssessment}
+            aria-label="Retake assessment"
             className={`px-6 py-3 ${theme.buttons.ghost} rounded-lg font-semibold transition-colors`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -324,6 +325,7 @@ export default function MoneyPersonalityAssessment({ onComplete }: MoneyPersonal
           </motion.button>
           <motion.button
             onClick={() => window.location.href = '/calculators'}
+            aria-label="Try financial tools"
             className={`px-6 py-3 bg-gradient-to-r ${result.color} text-white rounded-lg font-semibold transition-colors`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -394,6 +396,7 @@ export default function MoneyPersonalityAssessment({ onComplete }: MoneyPersonal
               <motion.button
                 key={index}
                 onClick={() => handleAnswer(option)}
+                aria-label={option.text}
                 className={`w-full text-left p-4 rounded-lg border ${theme.borderColors.primary} hover:${theme.borderColors.primary} ${theme.interactive.hover} transition-all group`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}

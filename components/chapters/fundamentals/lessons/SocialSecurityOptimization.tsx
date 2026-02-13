@@ -266,6 +266,7 @@ export default function SocialSecurityOptimization({ className = '' }: SocialSec
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleCalculate}
+            aria-label="Calculate optimal Social Security strategy"
             className={`w-full md:w-auto px-8 py-3 ${theme.buttons.primary} rounded-xl transition-all hover-lift flex items-center justify-center mx-auto`}
           >
             <Calculator className="w-5 h-5 mr-2" />

@@ -87,6 +87,8 @@ export default function BudgetingCalculatorSuite() {
                   <motion.button
                     key={calculator.id}
                     onClick={() => setActiveCalculator(calculator.id)}
+                    aria-label={`Select ${calculator.name} calculator`}
+                    aria-pressed={isActive}
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap ${
                       isActive
                         ? 'bg-white/10 text-white border border-white/20'

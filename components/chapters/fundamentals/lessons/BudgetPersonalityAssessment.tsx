@@ -455,6 +455,7 @@ export default function BudgetPersonalityAssessment() {
                 <motion.button
                   key={index}
                   onClick={() => handleAnswer(questions[currentQuestion].id, option.value, option.points)}
+                  aria-label={option.text}
                   className={`w-full p-4 text-left ${theme.backgrounds.glass} border ${theme.borderColors.primary} rounded-lg transition-all hover:${theme.borderColors.accent} hover:scale-102 group`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}

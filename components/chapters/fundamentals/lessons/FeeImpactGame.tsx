@@ -431,6 +431,7 @@ export default function FeeImpactGame() {
                   <motion.button
                     key={strategy.id}
                     onClick={() => handleStrategySelect(strategy.id)}
+                    aria-label={`Select ${strategy.name} strategy`}
                     className={`p-4 border-2 rounded-lg text-left transition-all ${theme.borderColors.muted} hover:${theme.borderColors.primary} hover:${theme.status.info.bg}`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}

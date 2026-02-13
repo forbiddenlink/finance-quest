@@ -403,6 +403,7 @@ export default function CreditScoreImpactSimulator() {
           whileTap={{ scale: 0.95 }}
           onClick={runSimulation}
           disabled={selectedScenarios.length === 0 || isSimulating}
+          aria-label={isSimulating ? 'Simulating credit score impact' : 'Run credit score simulation'}
           className={`flex items-center justify-center gap-1.5 sm:gap-2 w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 ${theme.buttons.primary} rounded-lg sm:rounded-xl disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base`}
         >
           {isSimulating ? (
@@ -423,6 +424,7 @@ export default function CreditScoreImpactSimulator() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={resetSimulation}
+            aria-label="Reset simulation"
             className={`flex items-center justify-center w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 border ${theme.borderColors.primary} ${theme.textColors.secondary} rounded-lg sm:rounded-xl hover:border-white/20 transition-colors text-sm sm:text-base`}
           >
             Reset

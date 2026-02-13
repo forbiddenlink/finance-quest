@@ -329,6 +329,8 @@ export default function AssetAllocationOptimizer() {
             <motion.button
               key={key}
               onClick={() => applyPreset(key)}
+              aria-label={`Apply ${preset.name} allocation preset`}
+              aria-pressed={selectedPreset === key}
               className={`p-4 rounded-lg border-2 transition-all text-left ${
                 selectedPreset === key
                   ? `${theme.status.success.bg} ${theme.status.success.border} ${theme.status.success.text}`
